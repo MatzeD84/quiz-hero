@@ -1,0 +1,50 @@
+{
+    "italien": [
+        {
+            "type": "text",
+            "question": "Was ist die Hauptstadt von Italien?",
+            "answers": ["Mailand", "Rom", "Venedig", "Florenz"],
+            "correct": 1,
+            "difficult": false
+        },
+        {
+            "type": "image",
+            "imageUrl": "images/kolosseum.jpg",
+            "question": "Was ist auf dem Bild zu erkennen?",
+            "answers": ["Kolosseum", "Pantheon", "Markusplatz", "Trevi-Brunnen"],
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "type": "text",
+            "question": "Welche Sprache wird in Italien gesprochen?",
+            "answers": ["Spanisch", "Französisch", "Italienisch", "Deutsch"],
+            "correct": 2,
+            "difficult": false
+        }
+    ],
+    "hamburg": [
+        {
+            "type": "text",
+            "question": "Welcher Fluss fließt durch Hamburg?",
+            "answers": ["Rhein", "Elbe", "Donau", "Weser"],
+            "correct": 1,
+            "difficult": false
+        },
+        {
+            "type": "image",
+            "imageUrl": "images/michel.jpg",
+            "question": "Was ist auf dem Bild zu erkennen?",
+            "answers": ["Berliner Dom", "Kölner Dom", "Frauenkirche", "Michel"],
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "type": "text",
+            "question": "Wie heißt der größte Hafen Deutschlands?",
+            "answers": ["Bremerhaven", "Hamburger Hafen", "Kieler Hafen", "Rostocker Hafen"],
+            "correct": 1,
+            "difficult": false
+        }
+    ]
+}
