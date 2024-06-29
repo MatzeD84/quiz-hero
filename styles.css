@@ -62,3 +62,9 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
+/* Weiterer Stil für besonders schwere Fragen */
+.difficult-question {
+    border: 4px solid #FF5733; /* Rote Border für schweres Frage */
+    padding: 15px; /* Zusätzlicher Innenabstand für hervorgehobene Fragen */
+}
