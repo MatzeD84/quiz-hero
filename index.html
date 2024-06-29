@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="quiz-container">
+        <div id="category-container">
+            <h2>Wähle eine Kategorie:</h2>
+            <button class="btn" onclick="selectCategory('italien')">Italien</button>
+            <button class="btn" onclick="selectCategory('hamburg')">Hamburg</button>
+        </div>
+        <div id="quiz-content" class="hide">
+            <h2>Punkte: <span id="score">0</span></h2>
+            <div id="question-container">
+                <h2 id="question">Frage wird geladen...</h2>
+                <div class="answer-buttons">
+                    <button class="btn answer-btn" onclick="selectAnswer(0)">Antwort 1</button>
+                    <button class="btn answer-btn" onclick="selectAnswer(1)">Antwort 2</button>
+                    <button class="btn answer-btn" onclick="selectAnswer(2)">Antwort 3</button>
+                    <button class="btn answer-btn" onclick="selectAnswer(3)">Antwort 4</button>
+                </div>
+            </div>
+            <button id="next-btn" class="btn hide" onclick="nextQuestion()">Weiter</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
