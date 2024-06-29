@@ -1,91 +1,64 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     background-color: #1a1a1a; /* Dunkler Hintergrund */
     color: #f0f0f0; /* Helle Schriftfarbe */
-    margin: 0;
-}
-
-#quiz-container {
-    background: #333; /* Dunkleres Grau für den Quiz-Bereich */
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    font-family: Arial, sans-serif;
     text-align: center;
-    padding: 20px;
-}
-
-.btn {
-    background: #007BFF; /* Blaue Farbe für die Buttons */
-    color: white;
-    border: none;
-    border-radius: 0; /* Keine abgerundeten Ecken */
-    padding: 10px 20px;
-    margin: 5px 0;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background: #0056b3; /* Dunklere Blaufarbe im Hover-Zustand */
-}
-
-.correct {
-    border: 2px solid #28a745; /* Grüner Rand für korrekte Antworten */
-}
-
-.incorrect {
-    border: 2px solid #dc3545; /* Roter Rand für falsche Antworten */
+    margin: 0;
+    padding: 0;
 }
 
 .hide {
     display: none;
 }
 
-#quiz-content {
-    margin-top: 20px;
+#category-container, #quiz-content {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333; /* Dunkles Grau für Container */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-#score {
-    font-size: 1.5em;
-    font-weight: bold;
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Grüner Button */
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
 }
 
-.answer-buttons {
-    margin-top: 20px;
+button:hover {
+    opacity: 0.8;
 }
 
 .answer-btn {
-    background: #343a40; /* Dunkelgrau für Antwort-Buttons */
-    color: #f0f0f0; /* Helle Schriftfarbe für Antwort-Buttons */
-    border-radius: 0;
-    padding: 10px 20px;
-    margin: 5px 0;
-    cursor: pointer;
+    display: block;
     width: 100%;
-    transition: background-color 0.3s ease;
+    margin: 10px auto;
+    padding: 15px;
+    background-color: #555; /* Dunkelgrau für Antwortbuttons */
+    color: #f0f0f0;
+    border: none;
+    cursor: pointer;
 }
 
 .answer-btn:hover {
-    background: #23272b; /* Dunkleres Grau im Hover-Zustand */
+    opacity: 0.8;
 }
 
-#next-btn {
-    background: #007BFF; /* Blaue Farbe für den Weiter-Button */
-    color: white;
-    border: none;
-    border-radius: 0; /* Keine abgerundeten Ecken */
-    padding: 10px 20px;
-    margin: 5px 0;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
+.correct {
+    border: 2px solid #4CAF50; /* Grüner Rahmen für richtige Antwort */
 }
 
-#next-btn:hover {
-    background: #0056b3; /* Dunklere Blaufarbe im Hover-Zustand */
+.incorrect {
+    border: 2px solid #FF5733; /* Roter Rahmen für falsche Antwort */
+}
+
+#question-image {
+    max-width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
