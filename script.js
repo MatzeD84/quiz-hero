@@ -1,4 +1,3 @@
-// Fragen für das Quiz, unterteilt in Kategorien
 const questions = {
     italien: [
         {
@@ -10,7 +9,7 @@ const questions = {
         },
         {
             type: 'image',
-            imageUrl: 'images/kolosseum.jpg', // Beispielbildpfad
+            imageUrl: 'images/kolosseum.jpg',
             question: 'Was ist auf dem Bild zu erkennen?',
             answers: ['Kolosseum', 'Pantheon', 'Markusplatz', 'Trevi-Brunnen'],
             correct: 0,
@@ -34,7 +33,7 @@ const questions = {
         },
         {
             type: 'image',
-            imageUrl: 'images/michel.jpg', // Beispielbildpfad
+            imageUrl: 'images/michel.jpg',
             question: 'Was ist auf dem Bild zu erkennen?',
             answers: ['Berliner Dom', 'Kölner Dom', 'Frauenkirche', 'Michel'],
             correct: 3,
@@ -50,126 +49,130 @@ const questions = {
     ]
 };
 
-// Globale Variablen für das Quiz
 let currentQuestions = [];
 let currentQuestionIndex = 0;
 let attempts = 0;
 let score = 0;
 
-// Funktion, um eine Kategorie auszuwählen und das Quiz zu starten
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryContainer = document.getElementById('category-container');
+    const quizContent = document.getElementById('quiz-content');
+    const nextButton = document.getElementById('next-btn');
+    const abortButton = document.getElementById('abort-btn');
+
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectCategory(btn.dataset.category));
+    });
+
+    nextButton.addEventListener('click', nextQuestion);
+    abortButton.addEventListener('click', abortQuiz);
+
+    document.querySelectorAll('.answer-btn').forEach((btn, index) => {
+        btn.addEventListener('click', () => selectAnswer(index));
+    });
+
+    showElement(categoryContainer);
+    hideElement(quizContent);
+    hideElement(nextButton);
+});
+
 function selectCategory(category) {
     currentQuestions = questions[category];
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById('score').textContent = 'Punktestand: 0';
-    document.getElementById('category-container').classList.add('hide');
-    document.getElementById('quiz-content').classList.remove('hide');
+    updateScore();
+    showElement(document.getElementById('quiz-content'));
+    hideElement(document.getElementById('category-container'));
     loadQuestion();
 }
 
-// Funktion, um eine Frage zu laden
 function loadQuestion() {
+    const { type, question, answers, imageUrl, difficult } = currentQuestions[currentQuestionIndex];
     const questionElement = document.getElementById('question');
     const imageElement = document.getElementById('question-image');
-    const quizContent = document.getElementById('quiz-content');
     const buttons = document.querySelectorAll('.answer-btn');
-    const currentQuestion = currentQuestions[currentQuestionIndex];
     const feedbackElement = document.getElementById('feedback');
-    
-    feedbackElement.classList.add('hide'); // Verstecke das Feedback-Element
-    feedbackElement.textContent = ''; // Leere das Feedback-Element
-    questionElement.textContent = currentQuestion.question;
-    
-    if (currentQuestion.type === 'image') {
-        imageElement.src = currentQuestion.imageUrl;
-        imageElement.classList.remove('hide');
-    } else {
-        imageElement.classList.add('hide');
-    }
+    const quizContent = document.getElementById('quiz-content');
 
-    buttons.forEach((button, index) => {
-        button.textContent = currentQuestion.answers[index];
-        button.classList.remove('correct', 'incorrect'); // Entferne vorherige Klassen
-        button.disabled = false; // Aktiviere die Buttons
+    feedbackElement.classList.add('hide');
+    feedbackElement.textContent = '';
+
+    questionElement.textContent = question;
+    imageElement.classList.toggle('hide', type !== 'image');
+    if (type === 'image') imageElement.src = imageUrl;
+
+    buttons.forEach((btn, idx) => {
+        btn.textContent = answers[idx];
+        btn.classList.remove('correct', 'incorrect');
+        btn.disabled = false;
     });
 
-    attempts = 0; // Zurücksetzen der Versuche für die nächste Frage
-
-    // Stil für besonders schwere Fragen hinzufügen
-    if (currentQuestion.difficult) {
-        quizContent.classList.add('difficult-question');
-    } else {
-        quizContent.classList.remove('difficult-question');
-    }
+    attempts = 0;
+    quizContent.classList.toggle('difficult-question', difficult);
 }
 
-// Funktion, um eine Antwort auszuwählen und zu überprüfen
 function selectAnswer(selectedAnswerIndex) {
     const buttons = document.querySelectorAll('.answer-btn');
-    const currentQuestion = currentQuestions[currentQuestionIndex];
-    const nextButton = document.getElementById('next-btn');
+    const { correct, difficult } = currentQuestions[currentQuestionIndex];
     const feedbackElement = document.getElementById('feedback');
+    const nextButton = document.getElementById('next-btn');
 
-    if (selectedAnswerIndex === currentQuestion.correct) {
-        buttons[selectedAnswerIndex].classList.add('correct');
-        if (attempts === 0) {
-            feedbackElement.textContent = 'Super!';
-            if (currentQuestion.difficult) {
-                score += 5; // Punkte für besonders schwere Frage
-            } else {
-                score += 3; // Punkte für normale richtige Antwort
-            }
-        } else if (attempts === 1) {
-            feedbackElement.textContent = 'Nicht schlecht!';
-            score += 1; // Punkte für zweite richtige Antwort
-        }
-        feedbackElement.classList.remove('hide');
-        nextButton.classList.remove('hide');
-        buttons.forEach(button => button.disabled = true); // Deaktiviere alle Buttons
+    const isCorrect = selectedAnswerIndex === correct;
+    buttons[selectedAnswerIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+
+    if (isCorrect) {
+        feedbackElement.textContent = attempts === 0 ? 'Super!' : 'Nicht schlecht!';
+        score += attempts === 0 ? (difficult ? 5 : 3) : 1;
+        endQuestion(buttons, feedbackElement, nextButton);
     } else {
-        buttons[selectedAnswerIndex].classList.add('incorrect');
-        attempts++;
-        
+        feedbackElement.textContent = attempts === 0 ? 'Falsch, letzte Chance!' : 'Falsch, keine Punkte!';
         if (attempts === 1) {
-            feedbackElement.textContent = 'Falsch, letzte Chance!';
-        } else if (attempts >= 2) {
-            feedbackElement.textContent = 'Falsch, keine Punkte!';
-            buttons[currentQuestion.correct].classList.add('correct');
-            nextButton.classList.remove('hide');
-            buttons.forEach(button => button.disabled = true); // Deaktiviere alle Buttons
+            buttons[correct].classList.add('correct');
+            endQuestion(buttons, feedbackElement, nextButton);
+        } else {
+            feedbackElement.classList.remove('hide');
         }
-        feedbackElement.classList.remove('hide');
     }
-
-    document.getElementById('score').textContent = 'Punktestand: ' + score; // Aktualisiere die Punktzahl
+    attempts++;
+    updateScore();
 }
 
-// Funktion, um zur nächsten Frage zu wechseln
+function endQuestion(buttons, feedbackElement, nextButton) {
+    buttons.forEach(btn => btn.disabled = true);
+    feedbackElement.classList.remove('hide');
+    nextButton.classList.remove('hide');
+}
+
 function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < currentQuestions.length) {
         loadQuestion();
-        document.getElementById('next-btn').classList.add('hide');
+        hideElement(document.getElementById('next-btn'));
     } else {
-        alert('Quiz beendet! Deine Punktzahl ist: ' + score);
-        document.getElementById('category-container').classList.remove('hide');
-        document.getElementById('quiz-content').classList.add('hide');
-        document.getElementById('next-btn').classList.add('hide');
+        alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
+        toggleVisibility('quiz-content', 'category-container');
     }
 }
 
-// Funktion, um das Quiz abzubrechen und zur Kategorieübersicht zurückzukehren
 function abortQuiz() {
-    document.getElementById('category-container').classList.remove('hide');
-    document.getElementById('quiz-content').classList.add('hide');
-    document.getElementById('next-btn').classList.add('hide');
-    document.getElementById('quiz-content').classList.remove('difficult-question'); // Zurücksetzen des Stils für schwierige Fragen, falls vorhanden
-    score = 0; // Zurücksetzen des Punktestands
-    document.getElementById('score').textContent = 'Punktestand: 0';
+    toggleVisibility('quiz-content', 'category-container');
+    score = 0;
+    updateScore();
 }
 
-// Eventlistener für das Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('category-container').classList.remove('hide');
-    document.getElementById('quiz-content').classList.add('hide');
-});
+function updateScore() {
+    document.getElementById('score').textContent = `Punktestand: ${score}`;
+}
+
+function toggleVisibility(hideId, showId) {
+    hideElement(document.getElementById(hideId));
+    showElement(document.getElementById(showId));
+}
+
+function showElement(element) {
+    element.classList.remove('hide');
+}
+
+function hideElement(element) {
+    element.classList.add('hide');
+}
