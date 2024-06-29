@@ -61,7 +61,7 @@ function selectCategory(category) {
     currentQuestions = questions[category];
     currentQuestionIndex = 0;
     score = 0;
-    document.getElementById('score').textContent = score;
+    document.getElementById('score').textContent = 'Punktestand: 0';
     document.getElementById('category-container').classList.add('hide');
     document.getElementById('quiz-content').classList.remove('hide');
     loadQuestion();
@@ -74,7 +74,10 @@ function loadQuestion() {
     const quizContent = document.getElementById('quiz-content');
     const buttons = document.querySelectorAll('.answer-btn');
     const currentQuestion = currentQuestions[currentQuestionIndex];
+    const feedbackElement = document.getElementById('feedback');
     
+    feedbackElement.classList.add('hide'); // Verstecke das Feedback-Element
+    feedbackElement.textContent = ''; // Leere das Feedback-Element
     questionElement.textContent = currentQuestion.question;
     
     if (currentQuestion.type === 'image') {
@@ -105,32 +108,40 @@ function selectAnswer(selectedAnswerIndex) {
     const buttons = document.querySelectorAll('.answer-btn');
     const currentQuestion = currentQuestions[currentQuestionIndex];
     const nextButton = document.getElementById('next-btn');
+    const feedbackElement = document.getElementById('feedback');
 
     if (selectedAnswerIndex === currentQuestion.correct) {
         buttons[selectedAnswerIndex].classList.add('correct');
         if (attempts === 0) {
+            feedbackElement.textContent = 'Super!';
             if (currentQuestion.difficult) {
                 score += 5; // Punkte für besonders schwere Frage
             } else {
                 score += 3; // Punkte für normale richtige Antwort
             }
         } else if (attempts === 1) {
+            feedbackElement.textContent = 'Nicht schlecht!';
             score += 1; // Punkte für zweite richtige Antwort
         }
+        feedbackElement.classList.remove('hide');
         nextButton.classList.remove('hide');
         buttons.forEach(button => button.disabled = true); // Deaktiviere alle Buttons
     } else {
         buttons[selectedAnswerIndex].classList.add('incorrect');
         attempts++;
         
-        if (attempts >= 2) {
+        if (attempts === 1) {
+            feedbackElement.textContent = 'Falsch, letzte Chance!';
+        } else if (attempts >= 2) {
+            feedbackElement.textContent = 'Falsch, keine Punkte!';
             buttons[currentQuestion.correct].classList.add('correct');
             nextButton.classList.remove('hide');
             buttons.forEach(button => button.disabled = true); // Deaktiviere alle Buttons
         }
+        feedbackElement.classList.remove('hide');
     }
 
-    document.getElementById('score').textContent = score; // Aktualisiere die Punktzahl
+    document.getElementById('score').textContent = 'Punktestand: ' + score; // Aktualisiere die Punktzahl
 }
 
 // Funktion, um zur nächsten Frage zu wechseln
@@ -147,12 +158,6 @@ function nextQuestion() {
     }
 }
 
-// Eventlistener für das Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('category-container').classList.remove('hide');
-    document.getElementById('quiz-content').classList.add('hide');
-});
-
 // Funktion, um das Quiz abzubrechen und zur Kategorieübersicht zurückzukehren
 function abortQuiz() {
     document.getElementById('category-container').classList.remove('hide');
@@ -162,3 +167,9 @@ function abortQuiz() {
     score = 0; // Zurücksetzen des Punktestands
     document.getElementById('score').textContent = 'Punktestand: 0';
 }
+
+// Eventlistener für das Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('category-container').classList.remove('hide');
+    document.getElementById('quiz-content').classList.add('hide');
+});
