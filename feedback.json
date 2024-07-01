@@ -1,0 +1,40 @@
+{
+    "correctFirstTry": [
+        "Super!", "Klasse gemacht!", "Hervorragend!", "Sehr gut!", "Fantastisch!",
+        "Perfekt!", "Du bist Spitze!", "Bravo!", "Ausgezeichnet!", "Glanzleistung!",
+        "Wunderbar!", "Exzellent!", "Meisterhaft!", "Toll gemacht!", "Grandios!",
+        "Erstklassig!", "Du bist ein Star!", "Unglaublich gut!", "Vorbildlich!", "Königlich!"
+    ],
+    "correctSecondTry": [
+        "Nicht schlecht!", "Gut gemacht!", "In Ordnung!", "Passt!", "Akzeptabel!",
+        "Gut genug!", "Schön!", "Solide Arbeit!", "Du lernst!", "Erfreulich!",
+        "Ordentlich!", "Beachtlich!", "Anständig!", "Fabelhaft!", "Prima!",
+        "Bewundernswert!", "Lobenswert!", "Ermutigend!", "Befriedigend!", "Verlässlich!"
+    ],
+    "incorrectFirstTry": [
+        "Falsch, letzte Chance!", "Leider falsch, nochmal!", "Versuch es nochmal!", "Falsche Antwort, weiter!",
+        "Nicht korrekt, versuch's nochmal!", "Nächster Versuch!", "Leider daneben, weiter!", "Falsch geraten, noch ein Versuch!",
+        "Ein Fehlversuch, probiere es nochmal!", "Das war nicht richtig, nochmal!", "Schade, nochmal versuchen!", "Das war nichts, nochmal!",
+        "Leider nein, noch eine Chance!", "Falsche Wahl, versuch's nochmal!", "Fast, aber falsch, nochmal!", "Nicht richtig, nochmal probieren!",
+        "Das war falsch, nochmal!", "Nicht korrekt, nochmal eine Chance!", "Leider falsch, nochmal probieren!", "Ein Versuch noch!"
+    ],
+    "incorrectSecondTry": [
+        "Falsch, keine Punkte!", "Leider falsch!", "Das war nicht richtig!", "Keine Punkte, falsche Antwort!",
+        "Leider daneben!", "Punkte verfehlt!", "Keine Punkte, leider!", "Falsch geraten, keine Punkte!",
+        "Kein Treffer!", "Nicht korrekt, keine Punkte!", "Fehlversuch, keine Punkte!", "Keine Punkte diesmal!",
+        "Leider kein Erfolg!", "Das war nichts!", "Schade, keine Punkte!", "Nicht richtig, keine Punkte!",
+        "Falsche Antwort, keine Punkte!", "Das war leider falsch!", "Keine Punkte für diese Antwort!", "Leider nein!",
+        "Versuch's mal mit Raten!", "Naja, jeder hat mal einen schlechten Tag!", "Das war daneben!", "Ups, das war wohl nix!",
+        "Das war's wohl nicht!", "Falsch, aber kreativ!", "Hättest du mal geraten!", "Oh nein, total daneben!",
+        "Das ist doch ein Scherz, oder?", "Vielleicht nächstes Mal!", "Hoffentlich lacht niemand!", "Du hast es fast geschafft... nicht!",
+        "Das war echt daneben!", "Macht nichts, lachen wir darüber!", "Ein Versuch mehr, trotzdem nix!", "Das ist mal eine falsche Antwort!",
+        "Wow, das war falsch!", "Naja, du hast es versucht!", "Knapp daneben ist auch vorbei!", "Oh, nicht dein Tag!"
+    ],
+    "difficultCorrectFirstTry": [
+        "Du bist Gott!", "Du bist ultra mega heftig!", "Unfassbar gut!", "Du bist ein Genie!", "Unglaublich!",
+        "Phänomenal!", "Das ist Wahnsinn!", "Du bist ein Naturtalent!", "Unvergleichlich!", "Göttlich!",
+        "Meisterhaft!", "Unübertroffen!", "Spektakulär!", "Das ist einzigartig!", "Du bist ein Ass!",
+        "Sensationell!", "Überragend!", "Extravagant!", "Du bist der Beste!", "Erstaunlich!",
+        "Einfach nur krass!", "Du bist eine Legende!", "Das ist absolute Spitzenklasse!", "Du bist eine Wucht!"
+    ]
+}

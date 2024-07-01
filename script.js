@@ -3,15 +3,19 @@ let currentQuestionIndex = 0;
 let attempts = 0;
 let score = 0;
 let questions = {};
+let feedbackMessages = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('questions.json')
-        .then(response => response.json())
-        .then(data => {
-            questions = data;
-            initializeQuiz();
-        })
-        .catch(error => console.error('Error loading questions:', error));
+    Promise.all([
+        fetch('questions.json').then(response => response.json()),
+        fetch('feedback.json').then(response => response.json())
+    ])
+    .then(([questionsData, feedbackData]) => {
+        questions = questionsData;
+        feedbackMessages = feedbackData;
+        initializeQuiz();
+    })
+    .catch(error => console.error('Error loading data:', error));
 });
 
 function initializeQuiz() {
@@ -81,11 +85,20 @@ function selectAnswer(selectedAnswerIndex) {
     buttons[selectedAnswerIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
 
     if (isCorrect) {
-        feedbackElement.textContent = attempts === 0 ? 'Super!' : 'Nicht schlecht!';
+        let feedbackArray;
+        if (difficult && attempts === 0) {
+            feedbackArray = feedbackMessages.difficultCorrectFirstTry;
+        } else if (attempts === 0) {
+            feedbackArray = feedbackMessages.correctFirstTry;
+        } else {
+            feedbackArray = feedbackMessages.correctSecondTry;
+        }
+        feedbackElement.textContent = getRandomFeedback(feedbackArray);
         score += attempts === 0 ? (difficult ? 5 : 3) : 1;
         endQuestion(buttons, feedbackElement, nextButton);
     } else {
-        feedbackElement.textContent = attempts === 0 ? 'Falsch, letzte Chance!' : 'Falsch, keine Punkte!';
+        const feedbackArray = attempts === 0 ? feedbackMessages.incorrectFirstTry : feedbackMessages.incorrectSecondTry;
+        feedbackElement.textContent = getRandomFeedback(feedbackArray);
         if (attempts === 1) {
             buttons[correct].classList.add('correct');
             endQuestion(buttons, feedbackElement, nextButton);
@@ -135,4 +148,8 @@ function showElement(element) {
 
 function hideElement(element) {
     element.classList.add('hide');
+}
+
+function getRandomFeedback(feedbackArray) {
+    return feedbackArray[Math.floor(Math.random() * feedbackArray.length)];
 }
