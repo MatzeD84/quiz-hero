@@ -42,12 +42,20 @@ function initializeQuiz() {
 
 function selectCategory(category) {
     currentQuestions = questions[category];
+    shuffleArray(currentQuestions);
     currentQuestionIndex = 0;
     score = 0;
     updateScore();
     showElement(document.getElementById('quiz-content'));
     hideElement(document.getElementById('category-container'));
     loadQuestion();
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 function loadQuestion() {

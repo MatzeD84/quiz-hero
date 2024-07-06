@@ -1,49 +1,135 @@
 {
-    "italien": [
-        {
-            "type": "text",
-            "question": "Was ist die Hauptstadt von Italien?",
-            "answers": ["Mailand", "Rom", "Venedig", "Florenz"],
-            "correct": 1,
-            "difficult": false
-        },
-        {
-            "type": "image",
-            "imageUrl": "images/kolosseum.jpg",
-            "question": "Was ist auf dem Bild zu erkennen?",
-            "answers": ["Kolosseum", "Pantheon", "Markusplatz", "Trevi-Brunnen"],
-            "correct": 0,
-            "difficult": true
-        },
-        {
-            "type": "text",
-            "question": "Welche Sprache wird in Italien gesprochen?",
-            "answers": ["Spanisch", "Französisch", "Italienisch", "Deutsch"],
-            "correct": 2,
-            "difficult": false
-        }
-    ],
     "hamburg": [
         {
             "type": "text",
-            "question": "Welcher Fluss fließt durch Hamburg?",
-            "answers": ["Rhein", "Elbe", "Donau", "Weser"],
+            "question": "Welches Gebäude ist das höchste in Hamburg?",
+            "answers": ["Elbphilharmonie", "Heinrich-Hertz-Turm", "Chilehaus", "Empire Riverside Hotel"],
             "correct": 1,
             "difficult": false
         },
         {
-            "type": "image",
-            "imageUrl": "images/michel.jpg",
-            "question": "Was ist auf dem Bild zu erkennen?",
-            "answers": ["Berliner Dom", "Kölner Dom", "Frauenkirche", "Michel"],
-            "correct": 3,
-            "difficult": true
+            "type": "text",
+            "question": "Welche Insel gehört zu Hamburg?",
+            "answers": ["Neuwerk", "Helgoland", "Sylt", "Föhr"],
+            "correct": 0,
+            "difficult": false
         },
         {
             "type": "text",
-            "question": "Wie heißt der größte Hafen Deutschlands?",
-            "answers": ["Bremerhaven", "Hamburger Hafen", "Kieler Hafen", "Rostocker Hafen"],
-            "correct": 1,
+            "question": "Wie viele Bezirke hat Hamburg?",
+            "answers": ["7", "10", "12", "5"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Wie heißt der Bürgermeister von Hamburg (Stand 2024)?",
+            "answers": ["Peter Tschentscher", "Olaf Scholz", "Angela Merkel", "Helmut Schmidt"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Welcher Fluss fließt durch Hamburg?",
+            "answers": ["Elbe", "Rhein", "Donau", "Weser"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "image",
+            "question": "Welches Wahrzeichen ist auf diesem Bild zu sehen?",
+            "imageUrl": "path/to/elbphilharmonie.jpg",
+            "answers": ["Elbphilharmonie", "Hamburger Rathaus", "St. Michaelis Kirche", "Miniatur Wunderland"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Welches Fest wird jährlich in Hamburg gefeiert?",
+            "answers": ["Hafengeburtstag", "Oktoberfest", "Karneval", "Schützenfest"],
+            "correct": 0,
+            "difficult": false
+        }
+    ],
+    "neapel": [
+        {
+            "type": "text",
+            "question": "Welcher Vulkan liegt in der Nähe von Neapel?",
+            "answers": ["Vesuv", "Ätna", "Stromboli", "Campi Flegrei"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Welche historische Stadt liegt südlich von Neapel?",
+            "answers": ["Pompeji", "Herculaneum", "Paestum", "Oplontis"],
+            "correct": 0,
+            "difficult": false
+        }
+    ],
+    "amalfi_kuste": [
+        {
+            "type": "text",
+            "question": "Welcher Ort ist ein berühmter Urlaubsort an der Amalfi Küste?",
+            "answers": ["Positano", "Sorrento", "Capri", "Ischia"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Wie heißt die Hauptstraße in Amalfi?",
+            "answers": ["Via Lorenzo d'Amalfi", "Corso Italia", "Via Roma", "Via Marina Grande"],
+            "correct": 0,
+            "difficult": false
+        }
+    ],
+    "rom": [
+        {
+            "type": "text",
+            "question": "Welche Sprache wurde im alten Rom gesprochen?",
+            "answers": ["Latein", "Griechisch", "Italienisch", "Römisch"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "image",
+            "question": "Welches berühmte Gebäude ist auf diesem Bild zu sehen?",
+            "imageUrl": "path/to/colosseum.jpg",
+            "answers": ["Pantheon", "Colosseum", "Forum Romanum", "Kapitol"],
+            "correct": 0,
+            "difficult": false
+        }
+    ],
+    "siena": [
+        {
+            "type": "text",
+            "question": "Welches berühmte Pferderennen findet in Siena statt?",
+            "answers": ["Palio di Siena", "Kentucky Derby", "Grand National", "Prix de l'Arc de Triomphe"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "text",
+            "question": "Wie heißt der Hauptplatz in Siena?",
+            "answers": ["Piazza del Campo", "Piazza della Signoria", "Piazza San Marco", "Piazza Navona"],
+            "correct": 0,
+            "difficult": false
+        }
+    ],
+    "florenz": [
+        {
+            "type": "text",
+            "question": "Welche berühmte Statue steht in Florenz?",
+            "answers": ["David von Michelangelo", "Venus von Milo", "Nike von Samothrake", "Augustus von Prima Porta"],
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "type": "image",
+            "question": "Welche Brücke ist auf diesem Bild zu sehen?",
+            "imageUrl": "path/to/colosseum.jpg",
+            "answers": ["Ponte Vecchio", "Ponte di Rialto", "Ponte Sant'Angelo", "Ponte Milvio"],
+            "correct": 0,
             "difficult": false
         }
     ]
