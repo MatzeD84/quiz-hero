@@ -142,7 +142,7 @@ function abortQuiz() {
 }
 
 function updateScore() {
-    document.getElementById('score').textContent = `Punktestand: ${score}`;
+    document.getElementById('score').textContent = `Punkte: ${score}`;
 }
 
 function toggleVisibility(hideId, showId) {
