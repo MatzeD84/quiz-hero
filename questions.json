@@ -87,7 +87,7 @@
         {
             "type": "image",
             "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
-            "imageUrl": "italien/rom/kolosseum.jpg",
+            "imageUrl": "/images/italien/kolosseum.jpg",
             "answers": ["Colosseum", "Pantheon", "Trevi-Brunnen", "Petersdom"],
             "correct": 0,
             "difficult": false
@@ -251,7 +251,7 @@
         {
             "type": "image",
             "question": "Welche Stadt auf der Amalfiküste ist auf diesem Bild zu sehen?",
-            "imageUrl": "images/italien/pos",
+            "imageUrl": "images/italien/Positano.jpg",
             "answers": ["Positano", "Amalfi", "Ravello", "Praiano"],
             "correct": 0,
             "difficult": false
@@ -443,7 +443,7 @@
         {
             "type": "image",
             "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
-            "imageUrl": "path/to/vesuvio.jpg",
+            "imageUrl": "/images/italien/mount-vesuvius.jpg",
             "answers": ["Vesuv", "Ätna", "Stromboli", "Vulcano"],
             "correct": 0,
             "difficult": false
@@ -642,7 +642,7 @@
         {
             "type": "image",
             "question": "Welches berühmte Kunstwerk ist auf diesem Bild zu sehen?",
-            "imageUrl": "path/to/david.jpg",
+            "imageUrl": "/images/italien/Michelangelo_David.jpg",
             "answers": ["David", "Venus von Milo", "Apollo und Daphne", "Der Denker"],
             "correct": 0,
             "difficult": false
