@@ -5,6 +5,9 @@ let score = 0;
 let questions = {};
 let feedbackMessages = {};
 
+const feedbackIconCorrect = document.getElementById('js-feedback-icon-correct');
+const feedbackIconIncorrect = document.getElementById('js-feedback-icon-incorrect');
+
 document.addEventListener('DOMContentLoaded', () => {
     Promise.all([
         fetch('questions.json').then(response => response.json()),
@@ -65,6 +68,12 @@ function loadQuestion() {
     const buttons = document.querySelectorAll('.js-answer-btn');
     const feedbackElement = document.getElementById('js-feedback');
     const quizContent = document.getElementById('js-quiz-content');
+    const currentQuestionElement = document.getElementById('js-current-question');
+    const totalQuestionsElement = document.getElementById('js-total-questions');
+
+    // Aktualisieren der Anzeige für die aktuelle Frage und die Gesamtzahl der Fragen
+    currentQuestionElement.textContent = `${currentQuestionIndex + 1}/`;
+    totalQuestionsElement.textContent = `${currentQuestions.length}`;
 
     feedbackElement.classList.add('hide');
     feedbackElement.textContent = '';
@@ -100,13 +109,16 @@ function selectAnswer(selectedAnswerIndex) {
             feedbackArray = feedbackMessages.correctFirstTry;
         } else {
             feedbackArray = feedbackMessages.correctSecondTry;
+            feedbackIconIncorrect.classList.add('hide');
         }
         feedbackElement.textContent = getRandomFeedback(feedbackArray);
+        feedbackIconCorrect.classList.remove('hide');
         score += attempts === 0 ? (difficult ? 5 : 3) : 1;
         endQuestion(buttons, feedbackElement, nextButton);
     } else {
         const feedbackArray = attempts === 0 ? feedbackMessages.incorrectFirstTry : feedbackMessages.incorrectSecondTry;
         feedbackElement.textContent = getRandomFeedback(feedbackArray);
+        feedbackIconIncorrect.classList.remove('hide');
         if (attempts === 1) {
             buttons[correct].classList.add('correct');
             endQuestion(buttons, feedbackElement, nextButton);
@@ -127,6 +139,8 @@ function endQuestion(buttons, feedbackElement, nextButton) {
 function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < currentQuestions.length) {
+        feedbackIconCorrect.classList.add('hide');
+        feedbackIconIncorrect.classList.add('hide');
         loadQuestion();
         hideElement(document.getElementById('js-next-btn'));
     } else {
@@ -138,6 +152,8 @@ function nextQuestion() {
 function abortQuiz() {
     toggleVisibility('js-quiz-content', 'js-category-container');
     score = 0;
+    feedbackIconIncorrect.classList.add('hide');
+    feedbackIconCorrect.classList.add('hide');
     updateScore();
 }
 
@@ -161,3 +177,5 @@ function hideElement(element) {
 function getRandomFeedback(feedbackArray) {
     return feedbackArray[Math.floor(Math.random() * feedbackArray.length)];
 }
+
+
