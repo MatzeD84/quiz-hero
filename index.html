@@ -9,28 +9,28 @@
 </head>
 
 <body>
-    <main>
+    <main class="container">
         <h1>Quiz-Guru</h1>
-        <div id="category-container">
-            <button class="category-btn" data-category="rom">Rom</button>
-            <button class="category-btn" data-category="amalfi">Amalfi Küste</button>
-            <button class="category-btn" data-category="neapel">Neapel</button>
-            <button class="category-btn" data-category="florenz">Florenz</button>
-            <button class="category-btn" data-category="siena">Siena</button>
+        <div id="js-category-container" class="category">
+            <button class="category__btn" data-category="rom">Rom</button>
+            <button class="category__btn" data-category="amalfi">Amalfi Küste</button>
+            <button class="category__btn" data-category="neapel">Neapel</button>
+            <button class="category__btn" data-category="florenz">Florenz</button>
+            <button class="category__btn" data-category="siena">Siena</button>
         </div>
-        <div id="quiz-content" class="hide">
-            <p id="score">Punkte: 0</p>
-            <p id="question"></p>
-            <img id="question-image" class="hide" alt="Quiz Bild" />
-            <div id="answers">
-                <button class="answer-btn"></button>
-                <button class="answer-btn"></button>
-                <button class="answer-btn"></button>
-                <button class="answer-btn"></button>
+        <div id="js-quiz-content" class="quiz hide">
+            <p id="js-score" class="quiz__score">Punkte: 0</p>
+            <p id="js-question" class="quiz__question"></p> 
+            <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" />
+            <div id="js-answers">
+                <button class="js-answer-btn quiz__answer_btn"></button>
+                <button class="js-answer-btn quiz__answer_btn"></button>
+                <button class="js-answer-btn quiz__answer_btn"></button>
+                <button class="js-answer-btn quiz__answer_btn"></button>
             </div>
-            <p id="feedback" class="hide"></p>
-            <button id="next-btn" class="hide">Nächste Frage</button>
-            <button id="abort-btn">Abbrechen</button>
+            <p id="js-feedback" class="quiz__feedback hide"></p>
+            <button id="js-next-btn" class="quiz__next_btn hide">Nächste Frage</button>
+            <button id="js-abort-btn" class="quiz__abort_btn">Abbrechen</button>
         </div>
         <script src="script.js"></script>
     </main>

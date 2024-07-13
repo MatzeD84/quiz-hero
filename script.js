@@ -19,19 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initializeQuiz() {
-    const categoryContainer = document.getElementById('category-container');
-    const quizContent = document.getElementById('quiz-content');
-    const nextButton = document.getElementById('next-btn');
-    const abortButton = document.getElementById('abort-btn');
+    const categoryContainer = document.getElementById('js-category-container');
+    const quizContent = document.getElementById('js-quiz-content');
+    const nextButton = document.getElementById('js-next-btn');
+    const abortButton = document.getElementById('js-abort-btn');
 
-    document.querySelectorAll('.category-btn').forEach(btn => {
+    document.querySelectorAll('.category__btn').forEach(btn => {
         btn.addEventListener('click', () => selectCategory(btn.dataset.category));
     });
 
     nextButton.addEventListener('click', nextQuestion);
     abortButton.addEventListener('click', abortQuiz);
 
-    document.querySelectorAll('.answer-btn').forEach((btn, index) => {
+    document.querySelectorAll('.js-answer-btn').forEach((btn, index) => {
         btn.addEventListener('click', () => selectAnswer(index));
     });
 
@@ -46,8 +46,8 @@ function selectCategory(category) {
     currentQuestionIndex = 0;
     score = 0;
     updateScore();
-    showElement(document.getElementById('quiz-content'));
-    hideElement(document.getElementById('category-container'));
+    showElement(document.getElementById('js-quiz-content'));
+    hideElement(document.getElementById('js-category-container'));
     loadQuestion();
 }
 
@@ -60,11 +60,11 @@ function shuffleArray(array) {
 
 function loadQuestion() {
     const { type, question, answers, imageUrl, difficult } = currentQuestions[currentQuestionIndex];
-    const questionElement = document.getElementById('question');
-    const imageElement = document.getElementById('question-image');
-    const buttons = document.querySelectorAll('.answer-btn');
-    const feedbackElement = document.getElementById('feedback');
-    const quizContent = document.getElementById('quiz-content');
+    const questionElement = document.getElementById('js-question');
+    const imageElement = document.getElementById('js-question-image');
+    const buttons = document.querySelectorAll('.js-answer-btn');
+    const feedbackElement = document.getElementById('js-feedback');
+    const quizContent = document.getElementById('js-quiz-content');
 
     feedbackElement.classList.add('hide');
     feedbackElement.textContent = '';
@@ -80,14 +80,14 @@ function loadQuestion() {
     });
 
     attempts = 0;
-    quizContent.classList.toggle('difficult-question', difficult);
+    quizContent.classList.toggle('quiz__difficult_question', difficult);
 }
 
 function selectAnswer(selectedAnswerIndex) {
-    const buttons = document.querySelectorAll('.answer-btn');
+    const buttons = document.querySelectorAll('.js-answer-btn');
     const { correct, difficult } = currentQuestions[currentQuestionIndex];
-    const feedbackElement = document.getElementById('feedback');
-    const nextButton = document.getElementById('next-btn');
+    const feedbackElement = document.getElementById('js-feedback');
+    const nextButton = document.getElementById('js-next-btn');
 
     const isCorrect = selectedAnswerIndex === correct;
     buttons[selectedAnswerIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
@@ -128,21 +128,21 @@ function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < currentQuestions.length) {
         loadQuestion();
-        hideElement(document.getElementById('next-btn'));
+        hideElement(document.getElementById('js-next-btn'));
     } else {
         alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
-        toggleVisibility('quiz-content', 'category-container');
+        toggleVisibility('js-quiz-content', 'js-category-container');
     }
 }
 
 function abortQuiz() {
-    toggleVisibility('quiz-content', 'category-container');
+    toggleVisibility('js-quiz-content', 'js-category-container');
     score = 0;
     updateScore();
 }
 
 function updateScore() {
-    document.getElementById('score').textContent = `Punkte: ${score}`;
+    document.getElementById('js-score').textContent = `Punkte: ${score}`;
 }
 
 function toggleVisibility(hideId, showId) {
