@@ -23,12 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeQuiz() {
     const categoryContainer = document.getElementById('js-category-container');
+    const questionCountContainer = document.getElementById('js-question-count-container');
     const quizContent = document.getElementById('js-quiz-content');
     const nextButton = document.getElementById('js-next-btn');
     const abortButton = document.getElementById('js-abort-btn');
 
     document.querySelectorAll('.category__btn').forEach(btn => {
-        btn.addEventListener('click', () => selectCategory(btn.dataset.category));
+        btn.addEventListener('click', () => showQuestionCountOptions(btn.dataset.category));
+    });
+
+    document.querySelectorAll('.question-count__btn').forEach(btn => {
+        btn.addEventListener('click', () => selectCategory(btn.dataset.count));
     });
 
     nextButton.addEventListener('click', nextQuestion);
@@ -39,18 +44,39 @@ function initializeQuiz() {
     });
 
     showElement(categoryContainer);
+    hideElement(questionCountContainer);
     hideElement(quizContent);
     hideElement(nextButton);
 }
 
-function selectCategory(category) {
-    currentQuestions = questions[category];
-    shuffleArray(currentQuestions);
+function showQuestionCountOptions(category) {
+    const questionCountContainer = document.getElementById('js-question-count-container');
+    questionCountContainer.dataset.category = category;
+    hideElement(document.getElementById('js-category-container'));
+    showElement(questionCountContainer);
+}
+
+function selectCategory(count) {
+    const category = document.getElementById('js-question-count-container').dataset.category;
+    let selectedQuestions = questions[category];
+    shuffleArray(selectedQuestions);
+
+    if (count !== 'all') {
+        const questionCount = parseInt(count, 10);
+        selectedQuestions = selectedQuestions.slice(0, questionCount);
+    }
+
+    currentQuestions = selectedQuestions;
     currentQuestionIndex = 0;
     score = 0;
     updateScore();
-    showElement(document.getElementById('js-quiz-content'));
-    hideElement(document.getElementById('js-category-container'));
+
+    const quizContent = document.getElementById('js-quiz-content');
+    const questionCountContainer = document.getElementById('js-question-count-container');
+
+    showElement(quizContent);
+    hideElement(questionCountContainer);
+
     loadQuestion();
 }
 
@@ -67,13 +93,11 @@ function loadQuestion() {
     const imageElement = document.getElementById('js-question-image');
     const buttons = document.querySelectorAll('.js-answer-btn');
     const feedbackElement = document.getElementById('js-feedback');
-    const quizContent = document.getElementById('js-quiz-content');
     const currentQuestionElement = document.getElementById('js-current-question');
     const totalQuestionsElement = document.getElementById('js-total-questions');
 
-    // Aktualisieren der Anzeige für die aktuelle Frage und die Gesamtzahl der Fragen
-    currentQuestionElement.textContent = `${currentQuestionIndex + 1}/`;
-    totalQuestionsElement.textContent = `${currentQuestions.length}`;
+    currentQuestionElement.textContent = `${currentQuestionIndex + 1}`;
+    totalQuestionsElement.textContent = `/${currentQuestions.length}`;
 
     feedbackElement.classList.add('hide');
     feedbackElement.textContent = '';
@@ -89,7 +113,6 @@ function loadQuestion() {
     });
 
     attempts = 0;
-    quizContent.classList.toggle('quiz__difficult_question', difficult);
 }
 
 function selectAnswer(selectedAnswerIndex) {
@@ -146,6 +169,7 @@ function nextQuestion() {
     } else {
         alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
         toggleVisibility('js-quiz-content', 'js-category-container');
+        hideElement(feedbackIconCorrect);
     }
 }
 
@@ -177,5 +201,3 @@ function hideElement(element) {
 function getRandomFeedback(feedbackArray) {
     return feedbackArray[Math.floor(Math.random() * feedbackArray.length)];
 }
-
-
