@@ -28,11 +28,11 @@ function initializeQuiz() {
     const nextButton = document.getElementById('js-next-btn');
     const abortButton = document.getElementById('js-abort-btn');
 
-    document.querySelectorAll('.category__btn').forEach(btn => {
+    document.querySelectorAll('.js-category-btn').forEach(btn => {
         btn.addEventListener('click', () => showQuestionCountOptions(btn.dataset.category));
     });
 
-    document.querySelectorAll('.question-count__btn').forEach(btn => {
+    document.querySelectorAll('.js-question-count-btn').forEach(btn => {
         btn.addEventListener('click', () => selectCategory(btn.dataset.count));
     });
 

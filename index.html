@@ -10,17 +10,17 @@
     <main class="container">
         <h1>Quiz-Guru</h1>
         <div id="js-category-container" class="category">
-            <button class="category__btn" data-category="rom">Rom</button>
-            <button class="category__btn" data-category="amalfi">Amalfi Küste</button>
-            <button class="category__btn" data-category="neapel">Neapel</button>
-            <button class="category__btn" data-category="florenz">Florenz</button>
-            <button class="category__btn" data-category="siena">Siena</button>
+            <button class="js-category-btn btn btn--category" data-category="rom">Rom</button>
+            <button class="js-category-btn btn btn--category" data-category="amalfi">Amalfi Küste</button>
+            <button class="js-category-btn btn btn--category" data-category="neapel">Neapel</button>
+            <button class="js-category-btn btn btn--category" data-category="florenz">Florenz</button>
+            <button class="js-category-btn btn btn--category" data-category="siena">Siena</button>
         </div>
-        <div id="js-question-count-container" class="question-count hide">
+        <div id="js-question-count-container" class="question_count hide">
             <h1>Wähle die Anzahl der Fragen</h1>
-            <button class="question-count__btn" data-count="10">10 Fragen</button>
-            <button class="question-count__btn" data-count="25">25 Fragen</button>
-            <button class="question-count__btn" data-count="all">Alle Fragen</button>
+            <button class="js-question-count-btn btn btn--question_count" data-count="25">25 Fragen</button>
+            <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>
+            <button class="js-question-count-btn btn btn--question_count" data-count="all">Alle Fragen</button>
         </div>
         <div id="js-quiz-content" class="quiz hide">
             <div class="quiz__score_container">
@@ -38,10 +38,10 @@
                     <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" />
                 </div>
                 <div id="js-answers" class="quiz__answer">
-                    <button class="js-answer-btn quiz__answer_btn"></button>
-                    <button class="js-answer-btn quiz__answer_btn"></button>
-                    <button class="js-answer-btn quiz__answer_btn"></button>
-                    <button class="js-answer-btn quiz__answer_btn"></button>
+                    <button class="js-answer-btn btn btn--quiz_answer"></button>
+                    <button class="js-answer-btn btn btn--quiz_answer"></button>
+                    <button class="js-answer-btn btn btn--quiz_answer"></button>
+                    <button class="js-answer-btn btn btn--quiz_answer"></button>
                 </div>
                 <div class="quiz__feedback_container">
                     <svg id="js-feedback-icon-incorrect" class="quiz__feedback_icon hide" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" fill="var(--mandarin-color)" xmlns="http://www.w3.org/2000/svg">
@@ -52,8 +52,8 @@
                     </svg>
                     <p id="js-feedback" class="quiz__feedback hide"></p>
                 </div>
-                <button id="js-next-btn" class="quiz__next_btn hide">Nächste Frage</button>
-                <button id="js-abort-btn" class="quiz__abort_btn">Abbrechen</button>
+                <button id="js-next-btn" class="btn btn--next hide">Nächste Frage</button>
+                <button id="js-abort-btn" class="btn btn--quiz_abort">Abbrechen</button>
             </div>
         </div>
         <script src="script.js"></script>
