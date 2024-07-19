@@ -17,10 +17,18 @@
             <button class="js-category-btn btn btn--category" data-category="siena">Siena</button>
         </div>
         <div id="js-question-count-container" class="question_count hide">
-            <h1>Wähle die Anzahl der Fragen</h1>
-            <button class="js-question-count-btn btn btn--question_count" data-count="25">25 Fragen</button>
-            <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>
-            <button class="js-question-count-btn btn btn--question_count" data-count="all">Alle Fragen</button>
+            <h2>Wähle die Anzahl der Fragen</h2>
+            <div class="quiz__question_count_select">
+                <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
+                <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>
+                <button class="js-question-count-btn btn btn--question_count" data-count="25">25 Fragen</button>
+                <button class="js-question-count-btn btn btn--question_count" data-count="all">Alle Fragen</button>
+            </div>
+            <div>
+                <div id="js-back-to-category-page" class="question_count_back_btn" role="button">
+                    <small>zurück</small>
+                </div>
+            </div>
         </div>
         <div id="js-quiz-content" class="quiz hide">
             <div class="quiz__score_container">
@@ -33,6 +41,14 @@
                 </div>
             </div>
             <div class="quiz__container">
+                <div class="quiz__abort">
+                    <div id="js-abort-btn" class="quiz__abort_btn" title="Quiz Abbrechen">
+                        <svg class="quiz__abort_svg" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">^
+                            <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                        </svg>
+                    </div>
+                </div>
                 <p id="js-question" class="quiz__question"></p>
                 <div class="quiz__question_image_container">
                     <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" />
@@ -52,8 +68,9 @@
                     </svg>
                     <p id="js-feedback" class="quiz__feedback hide"></p>
                 </div>
-                <button id="js-next-btn" class="btn btn--next hide">Nächste Frage</button>
-                <button id="js-abort-btn" class="btn btn--quiz_abort">Abbrechen</button>
+                <div class="quiz__footer">
+                    <button id="js-next-btn" class="btn btn--next hide">Nächste Frage</button>
+                </div>
             </div>
         </div>
         <script src="script.js"></script>
