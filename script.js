@@ -50,10 +50,13 @@ function initializeQuiz() {
 }
 
 function showQuestionCountOptions(category) {
+    const abortButton = document.getElementById('js-back-to-category-page');
+
     const questionCountContainer = document.getElementById('js-question-count-container');
     questionCountContainer.dataset.category = category;
     hideElement(document.getElementById('js-category-container'));
     showElement(questionCountContainer);
+    abortButton.addEventListener('click', abortQuiz);
 }
 
 function selectCategory(count) {
@@ -176,10 +179,14 @@ function nextQuestion() {
 }
 
 function abortQuiz() {
+    const questionCountContainer = document.getElementById('js-question-count-container');
     toggleVisibility('js-quiz-content', 'js-category-container');
     score = 0;
     feedbackIconIncorrect.classList.add('hide');
     feedbackIconCorrect.classList.add('hide');
+    if (!questionCountContainer.classList.contains('hide')) {
+        hideElement(questionCountContainer);
+    }
     updateScore();
 }
 
