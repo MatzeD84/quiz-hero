@@ -95,6 +95,7 @@ function loadQuestion() {
     const feedbackElement = document.getElementById('js-feedback');
     const currentQuestionElement = document.getElementById('js-current-question');
     const totalQuestionsElement = document.getElementById('js-total-questions');
+    const quizContent = document.getElementById('js-quiz-content');
 
     currentQuestionElement.textContent = `${currentQuestionIndex + 1}`;
     totalQuestionsElement.textContent = `/${currentQuestions.length}`;
@@ -113,6 +114,7 @@ function loadQuestion() {
     });
 
     attempts = 0;
+    quizContent.classList.toggle('quiz__difficult_question', difficult);
 }
 
 function selectAnswer(selectedAnswerIndex) {
