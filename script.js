@@ -99,12 +99,15 @@ function loadQuestion() {
     const currentQuestionElement = document.getElementById('js-current-question');
     const totalQuestionsElement = document.getElementById('js-total-questions');
     const quizContent = document.getElementById('js-quiz-content');
+    const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
 
     currentQuestionElement.textContent = `${currentQuestionIndex + 1}`;
     totalQuestionsElement.textContent = `/${currentQuestions.length}`;
 
     feedbackElement.classList.add('hide');
     feedbackElement.textContent = '';
+    backgroundKnowledgeElement.classList.add('hide');
+    backgroundKnowledgeElement.textContent = '';
 
     questionElement.textContent = question;
     imageElement.classList.toggle('hide', type !== 'image');
@@ -122,12 +125,17 @@ function loadQuestion() {
 
 function selectAnswer(selectedAnswerIndex) {
     const buttons = document.querySelectorAll('.js-answer-btn');
-    const { correct, difficult } = currentQuestions[currentQuestionIndex];
+    const { correct, difficult, backgroundKnowledge } = currentQuestions[currentQuestionIndex];
     const feedbackElement = document.getElementById('js-feedback');
     const nextButton = document.getElementById('js-next-btn');
+    const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
 
     const isCorrect = selectedAnswerIndex === correct;
     buttons[selectedAnswerIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+
+    if (backgroundKnowledge) {
+        backgroundKnowledgeElement.textContent = backgroundKnowledge;
+    }
 
     if (isCorrect) {
         let feedbackArray;
@@ -142,14 +150,15 @@ function selectAnswer(selectedAnswerIndex) {
         feedbackElement.textContent = getRandomFeedback(feedbackArray);
         feedbackIconCorrect.classList.remove('hide');
         score += attempts === 0 ? (difficult ? 5 : 3) : 1;
-        endQuestion(buttons, feedbackElement, nextButton);
+        endQuestion(buttons, feedbackElement, nextButton, backgroundKnowledgeElement);
+
     } else {
         const feedbackArray = attempts === 0 ? feedbackMessages.incorrectFirstTry : feedbackMessages.incorrectSecondTry;
         feedbackElement.textContent = getRandomFeedback(feedbackArray);
         feedbackIconIncorrect.classList.remove('hide');
         if (attempts === 1) {
             buttons[correct].classList.add('correct');
-            endQuestion(buttons, feedbackElement, nextButton);
+            endQuestion(buttons, feedbackElement, nextButton, backgroundKnowledgeElement);
         } else {
             feedbackElement.classList.remove('hide');
         }
@@ -158,13 +167,15 @@ function selectAnswer(selectedAnswerIndex) {
     updateScore();
 }
 
-function endQuestion(buttons, feedbackElement, nextButton) {
+function endQuestion(buttons, feedbackElement, nextButton, backgroundKnowledgeElement) {
     buttons.forEach(btn => btn.disabled = true);
     feedbackElement.classList.remove('hide');
     nextButton.classList.remove('hide');
+    backgroundKnowledgeElement.classList.remove('hide');
 }
 
 function nextQuestion() {
+    const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
     currentQuestionIndex++;
     if (currentQuestionIndex < currentQuestions.length) {
         feedbackIconCorrect.classList.add('hide');
@@ -175,6 +186,9 @@ function nextQuestion() {
         alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
         toggleVisibility('js-quiz-content', 'js-category-container');
         hideElement(feedbackIconCorrect);
+        if (!backgroundKnowledgeElement.classList.contains('hide')) {
+            hideElement(backgroundKnowledgeElement);
+        }
     }
 }
 
@@ -184,6 +198,10 @@ function abortQuiz() {
     score = 0;
     feedbackIconIncorrect.classList.add('hide');
     feedbackIconCorrect.classList.add('hide');
+    const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
+    if (!backgroundKnowledgeElement.classList.contains('hide')) {
+        hideElement(backgroundKnowledgeElement);
+    }
     if (!questionCountContainer.classList.contains('hide')) {
         hideElement(questionCountContainer);
     }
