@@ -1,1688 +1,3304 @@
 {
     "rom": [
         {
+            "tag": [],
             "type": "image",
             "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
             "imageUrl": "/images/italien/kolosseum.jpg",
-            "answers": ["Colosseum", "Pantheon", "Trevi-Brunnen", "Petersdom"],
+            "answers": [
+                "Colosseum",
+                "Pantheon",
+                "Trevi-Brunnen",
+                "Petersdom"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
-            "type": "text",
+            "tag": [],
+            "type": "image",
             "question": "Welche der folgenden Strukturen ist nicht in Rom zu finden?",
-            "answers": ["Colosseum", "Pantheon", "Uffizien", "Forum Romanum"],
+            "answers": [
+                "Colosseum",
+                "Pantheon",
+                "Uffizien",
+                "Forum Romanum"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher römische Kaiser baute das Pantheon?",
-            "answers": ["Hadrian", "Nero", "Trajan", "Augustus"],
+            "answers": [
+                "Hadrian",
+                "Nero",
+                "Trajan",
+                "Augustus"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche der folgenden Thermen wurden von Kaiser Caracalla erbaut?",
-            "answers": ["Thermen des Diokletian", "Thermen des Caracalla", "Thermen des Nero", "Thermen des Titus"],
+            "answers": [
+                "Thermen des Diokletian",
+                "Thermen des Caracalla",
+                "Thermen des Nero",
+                "Thermen des Titus"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher römische Tempel war allen Göttern geweiht?",
-            "answers": ["Tempel des Jupiter", "Tempel des Saturn", "Tempel des Mars Ultor", "Pantheon"],
+            "answers": [
+                "Tempel des Jupiter",
+                "Tempel des Saturn",
+                "Tempel des Mars Ultor",
+                "Pantheon"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Platz in Rom war ursprünglich ein Stadion für athletische Wettkämpfe?",
-            "answers": ["Piazza Venezia", "Piazza del Popolo", "Piazza di Spagna", "Piazza Navona"],
+            "answers": [
+                "Piazza Venezia",
+                "Piazza del Popolo",
+                "Piazza di Spagna",
+                "Piazza Navona"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche antike Straße führte von Rom bis nach Brindisi?",
-            "answers": ["Via Aurelia", "Via Salaria", "Via Appia", "Via Flaminia"],
+            "answers": [
+                "Via Aurelia",
+                "Via Salaria",
+                "Via Appia",
+                "Via Flaminia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Säule in Rom wurde zu Ehren von Kaiser Trajan errichtet?",
-            "answers": ["Nerosäule", "Hadrianssäule", "Trajanssäule", "Augustussäule"],
+            "answers": [
+                "Nerosäule",
+                "Hadrianssäule",
+                "Trajanssäule",
+                "Augustussäule"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Straße in Rom ist bekannt für ihre prächtigen Gräber?",
-            "answers": ["Via Appia", "Via Flaminia", "Via Aurelia", "Via Salaria"],
+            "answers": [
+                "Via Appia",
+                "Via Flaminia",
+                "Via Aurelia",
+                "Via Salaria"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Villa wurde von Kaiser Hadrian als seine Residenz erbaut?",
-            "answers": ["Villa Adriana", "Villa d'Este", "Villa Medici", "Villa Borghese"],
+            "answers": [
+                "Villa Adriana",
+                "Villa d'Este",
+                "Villa Medici",
+                "Villa Borghese"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Kaiser ließ das Pantheon und den Hadrianstempel errichten?",
-            "answers": ["Hadrian", "Nero", "Trajan", "Augustus"],
+            "answers": [
+                "Hadrian",
+                "Nero",
+                "Trajan",
+                "Augustus"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wer entwarf das Pantheon, das für seine beeindruckende Kuppel bekannt ist?",
-            "answers": ["Apollodorus von Damaskus", "Vitruvius", "Hadrian", "Palladio"],
+            "answers": [
+                "Apollodorus von Damaskus",
+                "Vitruvius",
+                "Hadrian",
+                "Palladio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Aquädukt versorgte Rom mit Wasser aus den Albaner Bergen?",
-            "answers": ["Aqua Claudia", "Aqua Anio Novus", "Aqua Marcia", "Aqua Appia"],
+            "answers": [
+                "Aqua Claudia",
+                "Aqua Anio Novus",
+                "Aqua Marcia",
+                "Aqua Appia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Struktur wurde als 'Domus Aurea' bekannt und diente Nero als Residenz?",
-            "answers": ["Domus Aurea", "Palatin", "Forum Romanum", "Thermen des Caracalla"],
+            "answers": [
+                "Domus Aurea",
+                "Palatin",
+                "Forum Romanum",
+                "Thermen des Caracalla"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher moderne Bau wurde von Renzo Piano in Rom entworfen und ist ein Paradebeispiel für zeitgenössische Architektur?",
-            "answers": ["Auditorium Parco della Musica", "MAXXI Museum", "Palazzo della Civiltà Italiana", "Fuksas Cloud"],
+            "answers": [
+                "Auditorium Parco della Musica",
+                "MAXXI Museum",
+                "Palazzo della Civiltà Italiana",
+                "Fuksas Cloud"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
-            "answers": ["Päpstliche Bibliothek", "Vatikanisches Archiv", "Vatikanische Kapelle", "Biblioteca Apostolica Vaticana"],
+            "answers": [
+                "Päpstliche Bibliothek",
+                "Vatikanisches Archiv",
+                "Vatikanische Kapelle",
+                "Biblioteca Apostolica Vaticana"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Platz in Rom ist bekannt für seine berühmte Spanische Treppe?",
-            "answers": ["Piazza Navona", "Piazza Venezia", "Piazza del Popolo", "Piazza di Spagna"],
+            "answers": [
+                "Piazza Navona",
+                "Piazza Venezia",
+                "Piazza del Popolo",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
-            "answers": ["Colosseum", "Thermen des Caracalla", "Augustusbogen", "Pantheon"],
+            "answers": [
+                "Colosseum",
+                "Thermen des Caracalla",
+                "Augustusbogen",
+                "Pantheon"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wer entwarf die Kirche 'San Giovanni in Laterano' in Rom?",
-            "answers": ["Francesco Borromini", "Gian Lorenzo Bernini", "Giovanni Battista Soria", "Carlo Maderno"],
+            "answers": [
+                "Francesco Borromini",
+                "Gian Lorenzo Bernini",
+                "Giovanni Battista Soria",
+                "Carlo Maderno"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Brunnen in Rom ist bekannt für seine imposante Größe und seine Reiterfiguren?",
-            "answers": ["Tritonenbrunnen", "Trevi-Brunnen", "Vierströmebrunnen", "Barcaccia-Brunnen"],
+            "answers": [
+                "Tritonenbrunnen",
+                "Trevi-Brunnen",
+                "Vierströmebrunnen",
+                "Barcaccia-Brunnen"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie hieß der römische Kaiser, der das Kolosseum errichten ließ?",
-            "answers": ["Vespasian", "Nero", "Trajan", "Hadrian"],
+            "answers": [
+                "Vespasian",
+                "Nero",
+                "Trajan",
+                "Hadrian"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Monument in Rom wird oft als das Symbol des römischen Imperiums angesehen?",
-            "answers": ["Pantheon", "Kolosseum", "Kapitol", "Trajanssäule"],
+            "answers": [
+                "Pantheon",
+                "Kolosseum",
+                "Kapitol",
+                "Trajanssäule"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Bauwerk in Rom ist für seine mächtigen Ruinen und seinen Einfluss auf die Architektur bekannt?",
-            "answers": ["Pantheon", "Thermen des Caracalla", "Forum Romanum", "Kolosseum"],
+            "answers": [
+                "Pantheon",
+                "Thermen des Caracalla",
+                "Forum Romanum",
+                "Kolosseum"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Kirche in Rom ist die Hauptkirche des Papstes?",
-            "answers": ["Santa Maria Maggiore", "Petersdom", "San Giovanni in Laterano", "Sant'Agnese in Agone"],
+            "answers": [
+                "Santa Maria Maggiore",
+                "Petersdom",
+                "San Giovanni in Laterano",
+                "Sant'Agnese in Agone"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Platz in Rom ist bekannt für seine herausragende Barockarchitektur und seine Kirche 'Sant'Agnese in Agone'?",
-            "answers": ["Piazza del Popolo", "Piazza Venezia", "Piazza Navona", "Piazza di Spagna"],
+            "answers": [
+                "Piazza del Popolo",
+                "Piazza Venezia",
+                "Piazza Navona",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches römische Monument wurde als Dank für die Siege des Imperators über die Barbaren errichtet?",
-            "answers": ["Kolosseum", "Konstantinsbogen", "Septimius-Severus-Bogen", "Trajanssäule"],
+            "answers": [
+                "Kolosseum",
+                "Konstantinsbogen",
+                "Septimius-Severus-Bogen",
+                "Trajanssäule"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Bauwerk in Rom wurde speziell zur Erhöhung des römischen Prestiges errichtet?",
-            "answers": ["Pantheon", "Colosseum", "Trajansforum", "Petersdom"],
+            "answers": [
+                "Pantheon",
+                "Colosseum",
+                "Trajansforum",
+                "Petersdom"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Architektur in Rom ist für ihre massiven Zinnen und den imposanten Eingang bekannt?",
-            "answers": ["Aurelianischer Wall", "Kolosseum", "Thermen des Caracalla", "Petersdom"],
+            "answers": [
+                "Aurelianischer Wall",
+                "Kolosseum",
+                "Thermen des Caracalla",
+                "Petersdom"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches monumentale Gebäude in Rom wurde als Gedächtnisstätte für einen römischen Kaiser erbaut?",
-            "answers": ["Mausoleum des Hadrian", "Mausoleum des Augustus", "Mausoleum des Alexander", "Mausoleum des Trajan"],
+            "answers": [
+                "Mausoleum des Hadrian",
+                "Mausoleum des Augustus",
+                "Mausoleum des Alexander",
+                "Mausoleum des Trajan"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Platz in Rom ist für seine Renaissance-Architektur und seine bedeutenden historischen Gebäude bekannt?",
-            "answers": ["Piazza Navona", "Piazza Venezia", "Piazza del Popolo", "Piazza di Spagna"],
+            "answers": [
+                "Piazza Navona",
+                "Piazza Venezia",
+                "Piazza del Popolo",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Gebäude in Rom ist für seine beeindruckende Freiluftarchitektur berühmt?",
-            "answers": ["Pantheon", "Forum Romanum", "Kolosseum", "Circus Maximus"],
+            "answers": [
+                "Pantheon",
+                "Forum Romanum",
+                "Kolosseum",
+                "Circus Maximus"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher römische Kaiser ließ das größte Amphitheater der Antike bauen?",
-            "answers": ["Vespasian", "Augustus", "Trajan", "Hadrian"],
+            "answers": [
+                "Vespasian",
+                "Augustus",
+                "Trajan",
+                "Hadrian"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Straße in Rom führt zur spanischen Treppe?",
-            "answers": ["Via del Corso", "Via dei Condotti", "Via Nazionale", "Via del Tritone"],
+            "answers": [
+                "Via del Corso",
+                "Via dei Condotti",
+                "Via Nazionale",
+                "Via del Tritone"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Platz in Rom wird von der berühmten Fontana dei Quattro Fiumi geschmückt?",
-            "answers": ["Piazza Navona", "Piazza del Popolo", "Piazza Venezia", "Piazza di Spagna"],
+            "answers": [
+                "Piazza Navona",
+                "Piazza del Popolo",
+                "Piazza Venezia",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche römische Kirche ist für ihre bedeutenden Kunstwerke von Michelangelo und Bernini bekannt?",
-            "answers": ["Santa Maria Maggiore", "San Giovanni in Laterano", "Sant'Agnese in Agone", "Petersdom"],
+            "answers": [
+                "Santa Maria Maggiore",
+                "San Giovanni in Laterano",
+                "Sant'Agnese in Agone",
+                "Petersdom"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche antike Struktur wurde als prächtige Wasserleitung für die Stadt Rom gebaut?",
-            "answers": ["Aqua Anio Novus", "Aqua Claudia", "Aqua Marcia", "Aqua Appia"],
+            "answers": [
+                "Aqua Anio Novus",
+                "Aqua Claudia",
+                "Aqua Marcia",
+                "Aqua Appia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Bauwerk in Rom war ein Symbol für die Macht und den Einfluss des Römischen Reiches?",
-            "answers": ["Pantheon", "Trajansforum", "Kapitol", "Kolosseum"],
+            "answers": [
+                "Pantheon",
+                "Trajansforum",
+                "Kapitol",
+                "Kolosseum"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches architektonische Meisterwerk in Rom wurde zur Zeit des römischen Imperiums erbaut?",
-            "answers": ["Thermen des Caracalla", "Colosseum", "Pantheon", "Augustusbogen"],
+            "answers": [
+                "Thermen des Caracalla",
+                "Colosseum",
+                "Pantheon",
+                "Augustusbogen"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Monument in Rom wurde zu Ehren von Kaiser Konstantin errichtet?",
-            "answers": ["Trajanssäule", "Augustusbogen", "Konstantinsbogen", "Nerosäule"],
+            "answers": [
+                "Trajanssäule",
+                "Augustusbogen",
+                "Konstantinsbogen",
+                "Nerosäule"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Bau in Rom wurde nach der römischen Eroberung des Herculaneums und Pompeji errichtet?",
-            "answers": ["Thermen des Caracalla", "Petersdom", "Pantheon", "Kolosseum"],
+            "answers": [
+                "Thermen des Caracalla",
+                "Petersdom",
+                "Pantheon",
+                "Kolosseum"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher römische Tempel wurde speziell zu Ehren der Götter errichtet?",
-            "answers": ["Pantheon", "Tempel des Jupiter", "Tempel des Mars Ultor", "Tempel des Saturn"],
+            "answers": [
+                "Pantheon",
+                "Tempel des Jupiter",
+                "Tempel des Mars Ultor",
+                "Tempel des Saturn"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         }
     ],
     "amalfi": [
         {
+            "tag": [],
             "type": "image",
             "question": "Welche Stadt auf der Amalfiküste ist auf diesem Bild zu sehen?",
             "imageUrl": "images/italien/Positano.jpg",
-            "answers": ["Positano", "Amalfi", "Ravello", "Praiano"],
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Ravello",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte historische Gebäude in Amalfi ist bekannt für seine beeindruckende Kathedrale?",
-            "answers": ["Kathedrale von Amalfi", "Villa Rufolo", "Tempel von Minerva", "Kreuzfahrtmuseum"],
+            "answers": [
+                "Kathedrale von Amalfi",
+                "Villa Rufolo",
+                "Tempel von Minerva",
+                "Kreuzfahrtmuseum"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Stadt an der Amalfiküste ist bekannt für ihre charmanten engen Gassen und den Hauptplatz, Piazza Duomo?",
-            "answers": ["Amalfi", "Positano", "Ravello", "Praiano"],
+            "answers": [
+                "Amalfi",
+                "Positano",
+                "Ravello",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Meer erstreckt sich entlang der Amalfiküste?",
-            "answers": ["Tyrrhenisches Meer", "Adriatisches Meer", "Ionisches Meer", "Kreta Meer"],
+            "answers": [
+                "Tyrrhenisches Meer",
+                "Adriatisches Meer",
+                "Ionisches Meer",
+                "Kreta Meer"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher historische Ort an der Amalfiküste ist bekannt für seine mittelalterlichen Türme und die beeindruckende Kathedrale?",
-            "answers": ["Amalfi", "Positano", "Sorrent", "Ravello"],
+            "answers": [
+                "Amalfi",
+                "Positano",
+                "Sorrent",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Aussichtspunkt in Ravello bietet einen spektakulären Blick auf die Amalfiküste?",
-            "answers": ["Villa Rufolo", "Villa Cimbrone", "Piazza del Duomo", "Monte Faito"],
+            "answers": [
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Piazza del Duomo",
+                "Monte Faito"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Ort an der Amalfiküste ist für seine bunten Häuser und die atemberaubende Aussicht auf das Meer bekannt?",
-            "answers": ["Positano", "Amalfi", "Praiano", "Sorrent"],
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Praiano",
+                "Sorrent"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte kulinarische Produkt stammt von der Amalfiküste und wird oft in der italienischen Küche verwendet?",
-            "answers": ["Limoncello", "Balsamico-Essig", "Trüffelöl", "Pesto"],
+            "answers": [
+                "Limoncello",
+                "Balsamico-Essig",
+                "Trüffelöl",
+                "Pesto"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches alte Kloster auf der Amalfiküste ist für seine historische Bedeutung und seine beeindruckende Architektur bekannt?",
-            "answers": ["Kloster von San Francesco", "Kloster von Montecassino", "Kloster von San Domenico", "Kloster von Sant'Antonio"],
+            "answers": [
+                "Kloster von San Francesco",
+                "Kloster von Montecassino",
+                "Kloster von San Domenico",
+                "Kloster von Sant'Antonio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Ort an der Amalfiküste ist bekannt für seine atemberaubenden Strände und das kristallklare Wasser?",
-            "answers": ["Praiano", "Amalfi", "Positano", "Sorrent"],
+            "answers": [
+                "Praiano",
+                "Amalfi",
+                "Positano",
+                "Sorrent"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Kunstwerk ist ein bemerkenswerter Bestandteil der Kathedrale von Amalfi?",
-            "answers": ["Krypta von St. Andreas", "Fresken von Michelangelo", "Mosaike von Pompeji", "Statuen von Bernini"],
+            "answers": [
+                "Krypta von St. Andreas",
+                "Fresken von Michelangelo",
+                "Mosaike von Pompeji",
+                "Statuen von Bernini"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Amalfi war früher ein wichtiger Ort für die Seefahrt und die Schifffahrt?",
-            "answers": ["Krypta von St. Andreas", "Amalfi-Dom", "Rathaus von Amalfi", "Palast der Seefahrer"],
+            "answers": [
+                "Krypta von St. Andreas",
+                "Amalfi-Dom",
+                "Rathaus von Amalfi",
+                "Palast der Seefahrer"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Ort an der Amalfiküste ist bekannt für seine exzellenten Weinberge und die Herstellung von Qualitätsweinen?",
-            "answers": ["Furore", "Positano", "Sorrent", "Ravello"],
+            "answers": [
+                "Furore",
+                "Positano",
+                "Sorrent",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches charmante Dorf an der Amalfiküste ist bekannt für seine außergewöhnliche Architektur und seine malerischen Gassen?",
-            "answers": ["Ravello", "Amalfi", "Positano", "Praiano"],
+            "answers": [
+                "Ravello",
+                "Amalfi",
+                "Positano",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches spektakuläre Gebäude in Amalfi wurde im 9. Jahrhundert erbaut und ist ein bedeutendes historisches Wahrzeichen?",
-            "answers": ["Amalfi-Dom", "Villa Cimbrone", "Villa Rufolo", "Kapelle von San Pietro"],
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Kloster in Positano ist ein bedeutendes religiöses und kulturelles Zentrum?",
-            "answers": ["Kloster von San Domenico", "Kloster von Santa Maria", "Kloster von Sant'Antonio", "Kloster von San Francesco"],
+            "answers": [
+                "Kloster von San Domenico",
+                "Kloster von Santa Maria",
+                "Kloster von Sant'Antonio",
+                "Kloster von San Francesco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bekannte Bauwerk in Ravello bietet einen spektakulären Blick auf die Amalfiküste?",
-            "answers": ["Villa Cimbrone", "Villa Rufolo", "Villa Adriana", "Villa Borghese"],
+            "answers": [
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Villa Adriana",
+                "Villa Borghese"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Region ist bekannt für ihre atemberaubende Küstenlinie und ihre beeindruckende Architektur?",
-            "answers": ["Amalfi-Küste", "Cinque Terre", "Toskana", "Sizilien"],
+            "answers": [
+                "Amalfi-Küste",
+                "Cinque Terre",
+                "Toskana",
+                "Sizilien"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Bauwerk in Amalfi wurde im 9. Jahrhundert erbaut und diente als religiöses Zentrum?",
-            "answers": ["Kathedrale von Amalfi", "Villa Rufolo", "Villa Cimbrone", "Kapelle von San Pietro"],
+            "answers": [
+                "Kathedrale von Amalfi",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches architektonische Meisterwerk in Positano ist für seine besondere Gestaltung und seine historische Bedeutung bekannt?",
-            "answers": ["Kirche von Santa Maria Assunta", "Kirche von San Giovanni", "Kirche von Sant'Antonio", "Kirche von San Francesco"],
+            "answers": [
+                "Kirche von Santa Maria Assunta",
+                "Kirche von San Giovanni",
+                "Kirche von Sant'Antonio",
+                "Kirche von San Francesco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches kleine Dorf an der Amalfiküste ist für seine steilen Gassen und seine spektakuläre Aussicht bekannt?",
-            "answers": ["Furore", "Positano", "Sorrent", "Praiano"],
+            "answers": [
+                "Furore",
+                "Positano",
+                "Sorrent",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Ort an der Amalfiküste ist für seine einzigartigen Strände und sein kristallklares Wasser bekannt?",
-            "answers": ["Praiano", "Amalfi", "Positano", "Ravello"],
+            "answers": [
+                "Praiano",
+                "Amalfi",
+                "Positano",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Bauwerk in Amalfi ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
-            "answers": ["Amalfi-Dom", "Villa Cimbrone", "Villa Rufolo", "Kapelle von San Pietro"],
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Gebäude in Ravello bietet einen spektakulären Blick auf die Amalfiküste und die Umgebung?",
-            "answers": ["Villa Rufolo", "Villa Cimbrone", "Villa Adriana", "Villa Medici"],
+            "answers": [
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Villa Adriana",
+                "Villa Medici"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Amalfi ist bekannt für seine beeindruckenden Mosaike und seine religiöse Bedeutung?",
-            "answers": ["Amalfi-Dom", "Villa Rufolo", "Villa Cimbrone", "Kapelle von San Pietro"],
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Ort an der Amalfiküste ist bekannt für seine malerischen Strände und seine lebhafte Atmosphäre?",
-            "answers": ["Positano", "Amalfi", "Praiano", "Ravello"],
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Praiano",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Bauwerk in Amalfi war ein bedeutendes Zentrum der Schifffahrt und der Wirtschaft im Mittelalter?",
-            "answers": ["Amalfi-Dom", "Villa Rufolo", "Villa Cimbrone", "Kapelle von San Pietro"],
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         }
-       
     ],
     "neapel": [
         {
+            "tag": [],
             "type": "image",
             "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
             "imageUrl": "/images/italien/mount-vesuvius.jpg",
-            "answers": ["Vesuv", "Ätna", "Stromboli", "Vulcano"],
+            "answers": [
+                "Vesuv",
+                "Ätna",
+                "Stromboli",
+                "Vulcano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Bauwerk in Neapel ist als eines der wichtigsten archäologischen Stätten der antiken Welt bekannt?",
-            "answers": ["Pompeji", "Herculaneum", "Stabiae", "Oplontis"],
+            "answers": [
+                "Pompeji",
+                "Herculaneum",
+                "Stabiae",
+                "Oplontis"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gericht stammt ursprünglich aus Neapel und ist heute weltweit bekannt?",
-            "answers": ["Pizza", "Lasagne", "Spaghetti Carbonara", "Ravioli"],
+            "answers": [
+                "Pizza",
+                "Lasagne",
+                "Spaghetti Carbonara",
+                "Ravioli"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bekannte Museum in Neapel beherbergt viele bedeutende antike Artefakte und Kunstwerke?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Burg in Neapel wurde ursprünglich im 13. Jahrhundert erbaut und bietet einen fantastischen Blick auf die Stadt?",
-            "answers": ["Castel Nuovo", "Castel dell'Ovo", "Castel Sant'Elmo", "Castel Capuano"],
+            "answers": [
+                "Castel Nuovo",
+                "Castel dell'Ovo",
+                "Castel Sant'Elmo",
+                "Castel Capuano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
-            "type": "text",
-            "question": "Welche bedeutende Kirche in Neapel ist für ihre Barockarchitektur und ihre religiöse Bedeutung bekannt?",
-            "answers": ["Sant'Andrea delle Fratte", "San Lorenzo Maggiore", "Gesù Nuovo", "San Domenico Maggiore"],
-            "correct": 0,
-            "difficult": false
-        },
-        {
+            "tag": [],
             "type": "text",
             "question": "Welches große, historische Gebäude in Neapel diente als königliche Residenz und ist heute ein Museum?",
-            "answers": ["Palazzo Reale", "Palazzo Farnese", "Palazzo Vecchio", "Palazzo dei Papi"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Farnese",
+                "Palazzo Vecchio",
+                "Palazzo dei Papi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Wahrzeichen in Neapel bietet einen atemberaubenden Blick auf den Vesuv?",
-            "answers": ["Castel Sant'Elmo", "Vesuv", "Castel dell'Ovo", "Palazzo Reale"],
+            "answers": [
+                "Castel Sant'Elmo",
+                "Vesuv",
+                "Castel dell'Ovo",
+                "Palazzo Reale"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine kulturelle Bedeutung?",
-            "answers": ["Teatro di San Carlo", "Teatro Nazionale", "Teatro di Tordinona", "Teatro dell'Opera"],
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro di Tordinona",
+                "Teatro dell'Opera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher bedeutende Platz in Neapel ist bekannt für seine lebhafte Atmosphäre und seine historischen Gebäude?",
-            "answers": ["Piazza del Plebiscito", "Piazza San Domenico Maggiore", "Piazza del Gesù Nuovo", "Piazza Cavour"],
+            "answers": [
+                "Piazza del Plebiscito",
+                "Piazza San Domenico Maggiore",
+                "Piazza del Gesù Nuovo",
+                "Piazza Cavour"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel diente als Residenz des Vizekönigs und ist für seine beeindruckende Architektur bekannt?",
-            "answers": ["Palazzo Reale", "Palazzo Vecchio", "Palazzo Farnese", "Palazzo dei Normanni"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Vecchio",
+                "Palazzo Farnese",
+                "Palazzo dei Normanni"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Straße in Neapel ist bekannt für ihre historischen Gebäude und ihre Einkaufsstraßen?",
-            "answers": ["Via Toledo", "Via Roma", "Via San Gregorio Armeno", "Via Chiaia"],
+            "answers": [
+                "Via Toledo",
+                "Via Roma",
+                "Via San Gregorio Armeno",
+                "Via Chiaia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gebäude in Neapel wurde im 18. Jahrhundert erbaut und ist bekannt für seine luxuriöse Innenausstattung?",
-            "answers": ["Palazzo Reale", "Palazzo della Prefettura", "Palazzo delle Arti", "Palazzo del Governo"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo della Prefettura",
+                "Palazzo delle Arti",
+                "Palazzo del Governo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
-            "type": "text",
-            "question": "Welche historische Basilika in Neapel ist für ihre beeindruckende Architektur und ihre religiöse Bedeutung bekannt?",
-            "answers": ["San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara", "Santa Maria la Nova"],
-            "correct": 0,
-            "difficult": false
-        },
-        {
+            "tag": [],
             "type": "text",
             "question": "Welches archäologische Ausgrabungsgebiet in Neapel ist für seine antiken Ruinen und seine historische Bedeutung bekannt?",
-            "answers": ["Pompeji", "Herculaneum", "Stabiae", "Oplontis"],
+            "answers": [
+                "Palazzo Reale",
+                "Herculaneum",
+                "Stabiae",
+                "Oplontis"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches große historische Gebäude in Neapel wurde ursprünglich als Palast erbaut und bietet heute kulturelle Veranstaltungen?",
-            "answers": ["Palazzo Reale", "Palazzo dei Normanni", "Palazzo Vecchio", "Palazzo della Cancelleria"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo dei Normanni",
+                "Palazzo Vecchio",
+                "Palazzo della Cancelleria"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
-            "type": "text",
-            "question": "Welches bekannte religiöse Gebäude in Neapel ist für seine prächtige Architektur und seine bedeutende historische Bedeutung bekannt?",
-            "answers": ["San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara", "Santa Maria la Nova"],
-            "correct": 1,
-            "difficult": false
-        },
-        {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel wurde im 17. Jahrhundert erbaut und diente als königlicher Palast?",
-            "answers": ["Palazzo Reale", "Palazzo Farnese", "Palazzo Medici", "Palazzo dei Papi"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Farnese",
+                "Palazzo Medici",
+                "Palazzo dei Papi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
-            "type": "text",
-            "question": "Welches architektonische Meisterwerk in Neapel ist für seine Barockarchitektur und seine religiöse Bedeutung bekannt?",
-            "answers": ["Gesù Nuovo", "San Domenico Maggiore", "Santa Chiara", "San Lorenzo Maggiore"],
-            "correct": 1,
-            "difficult": false
-        },
-        {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine bedeutenden Aufführungen?",
-            "answers": ["Teatro di San Carlo", "Teatro Nazionale", "Teatro dell'Opera", "Teatro di Tordinona"],
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro dell'Opera",
+                "Teatro di Tordinona"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel war einst ein Kloster und bietet heute einen Blick auf die Stadt und den Vesuv?",
-            "answers": ["Certosa di San Martino", "San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara"],
+            "answers": [
+                "Certosa di San Martino",
+                "San Lorenzo Maggiore",
+                "Santa Chiara",
+                "San Giovanni a Carbonara"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende archäologische Museum in Neapel beherbergt viele antike Artefakte aus Pompeji und Herculaneum?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches architektonische Meisterwerk in Neapel ist bekannt für seine barocke Fassade und seine prächtige Innenausstattung?",
-            "answers": ["Gesù Nuovo", "Santa Chiara", "San Lorenzo Maggiore", "San Giovanni a Carbonara"],
+            "answers": [
+                "Gesù Nuovo",
+                "Santa Chiara",
+                "San Lorenzo Maggiore",
+                "San Giovanni a Carbonara"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel ist bekannt für seine bedeutenden archäologischen Entdeckungen?",
-            "answers": ["Pompeji", "Herculaneum", "Stabiae", "Oplontis"],
+            "answers": [
+                "Pompeji",
+                "Herculaneum",
+                "Stabiae",
+                "Oplontis"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende religiöse Gebäude in Neapel ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
-            "answers": ["Santa Chiara", "San Lorenzo Maggiore", "San Giovanni a Carbonara", "Santa Maria la Nova"],
+            "answers": [
+                "Santa Chiara",
+                "San Lorenzo Maggiore",
+                "San Giovanni a Carbonara",
+                "Santa Maria la Nova"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches architektonische Meisterwerk in Neapel wurde im 17. Jahrhundert erbaut und ist für seine prächtige Barockarchitektur bekannt?",
-            "answers": ["Gesù Nuovo", "San Domenico Maggiore", "Santa Chiara", "San Lorenzo Maggiore"],
+            "answers": [
+                "Gesù Nuovo",
+                "San Domenico Maggiore",
+                "Santa Chiara",
+                "San Lorenzo Maggiore"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel war einst eine bedeutende Residenz und ist heute für seine kulturellen Veranstaltungen bekannt?",
-            "answers": ["Palazzo Reale", "Palazzo Vecchio", "Palazzo Farnese", "Palazzo dei Papi"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Vecchio",
+                "Palazzo Farnese",
+                "Palazzo dei Papi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte archäologische Museum in Neapel beherbergt viele bedeutende antike Artefakte?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel diente einst als königliche Residenz und bietet heute kulturelle Veranstaltungen?",
-            "answers": ["Palazzo Reale", "Palazzo Vecchio", "Palazzo Farnese", "Palazzo dei Normanni"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Vecchio",
+                "Palazzo Farnese",
+                "Palazzo dei Normanni"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bekannte historische Theater in Neapel ist für seine beeindruckende Architektur und seine bedeutenden Aufführungen bekannt?",
-            "answers": ["Teatro di San Carlo", "Teatro Nazionale", "Teatro dell'Opera", "Teatro di Tordinona"],
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro dell'Opera",
+                "Teatro di Tordinona"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Wahrzeichen in Neapel bietet einen fantastischen Blick auf die Stadt und den Vesuv?",
-            "answers": ["Castel Sant'Elmo", "Vesuv", "Castel dell'Ovo", "Palazzo Reale"],
+            "answers": [
+                "Castel Sant'Elmo",
+                "Vesuv",
+                "Castel dell'Ovo",
+                "Palazzo Reale"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches große historische Gebäude in Neapel wurde ursprünglich im 18. Jahrhundert erbaut und dient heute als kulturelles Zentrum?",
-            "answers": ["Palazzo Reale", "Palazzo della Prefettura", "Palazzo delle Arti", "Palazzo del Governo"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo della Prefettura",
+                "Palazzo delle Arti",
+                "Palazzo del Governo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende religiöse Gebäude in Neapel ist für seine beeindruckende Barockarchitektur bekannt?",
-            "answers": ["San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara", "Santa Maria la Nova"],
+            "answers": [
+                "San Lorenzo Maggiore",
+                "Santa Chiara",
+                "San Giovanni a Carbonara",
+                "Santa Maria la Nova"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel war einst ein Kloster und bietet heute einen fantastischen Blick auf die Stadt und den Vesuv?",
-            "answers": ["Certosa di San Martino", "San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara"],
+            "answers": [
+                "Certosa di San Martino",
+                "San Lorenzo Maggiore",
+                "Santa Chiara",
+                "San Giovanni a Carbonara"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende archäologische Museum in Neapel ist für seine umfangreiche Sammlung antiker Artefakte bekannt?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel wurde im 19. Jahrhundert erbaut und dient heute als kulturelles Zentrum?",
-            "answers": ["Palazzo Reale", "Palazzo dei Normanni", "Palazzo Vecchio", "Palazzo delle Arti"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo dei Normanni",
+                "Palazzo Vecchio",
+                "Palazzo delle Arti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Theater in Neapel ist für seine bedeutenden Aufführungen und seine beeindruckende Architektur bekannt?",
-            "answers": ["Teatro di San Carlo", "Teatro Nazionale", "Teatro dell'Opera", "Teatro di Tordinona"],
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro dell'Opera",
+                "Teatro di Tordinona"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende religiöse Gebäude in Neapel ist bekannt für seine beeindruckende Barockarchitektur?",
-            "answers": ["San Lorenzo Maggiore", "Santa Chiara", "San Giovanni a Carbonara", "Santa Maria la Nova"],
+            "answers": [
+                "San Lorenzo Maggiore",
+                "Santa Chiara",
+                "San Giovanni a Carbonara",
+                "Santa Maria la Nova"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte historische Gebäude in Neapel diente als königliche Residenz und bietet heute kulturelle Veranstaltungen?",
-            "answers": ["Palazzo Reale", "Palazzo Farnese", "Palazzo Medici", "Palazzo dei Papi"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Farnese",
+                "Palazzo Medici",
+                "Palazzo dei Papi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bekannte archäologische Museum in Neapel beherbergt viele bedeutende antike Artefakte aus Pompeji und Herculaneum?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel bietet heute einen fantastischen Blick auf die Stadt und den Vesuv?",
-            "answers": ["Castel Sant'Elmo", "Vesuv", "Castel dell'Ovo", "Palazzo Reale"],
+            "answers": [
+                "Castel Sant'Elmo",
+                "Vesuv",
+                "Castel dell'Ovo",
+                "Palazzo Reale"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende religiöse Gebäude in Neapel ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
-            "answers": ["Santa Chiara", "San Lorenzo Maggiore", "San Giovanni a Carbonara", "Santa Maria la Nova"],
+            "answers": [
+                "Santa Chiara",
+                "San Lorenzo Maggiore",
+                "San Giovanni a Carbonara",
+                "Santa Maria la Nova"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende archäologische Museum in Neapel beherbergt viele bedeutende antike Artefakte aus der Region?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Neapel diente als Residenz des Vizekönigs und ist heute ein Museum?",
-            "answers": ["Palazzo Reale", "Palazzo Vecchio", "Palazzo Farnese", "Palazzo dei Normanni"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo Vecchio",
+                "Palazzo Farnese",
+                "Palazzo dei Normanni"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte archäologische Museum in Neapel ist bekannt für seine umfassende Sammlung antiker Artefakte?",
-            "answers": ["Archäologisches Nationalmuseum", "Museo di Capodimonte", "Museo di San Martino", "Museo del Tesoro di San Gennaro"],
+            "answers": [
+                "Archäologisches Nationalmuseum",
+                "Museo di Capodimonte",
+                "Museo di San Martino",
+                "Museo del Tesoro di San Gennaro"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches große historische Gebäude in Neapel diente ursprünglich als Palast und bietet heute kulturelle Veranstaltungen?",
-            "answers": ["Palazzo Reale", "Palazzo della Prefettura", "Palazzo delle Arti", "Palazzo del Governo"],
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo della Prefettura",
+                "Palazzo delle Arti",
+                "Palazzo del Governo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches antike neapolitanische Monument, ursprünglich als Tempel des Augustus erbaut, wurde später in eine christliche Kirche umgewandelt?",
-            "answers": ["San Paolo Maggiore", "Santa Maria della Sanità", "Basilica di Santa Restituta", "Chiesa di San Giovanni a Carbonara"],
+            "answers": [
+                "San Paolo Maggiore",
+                "Santa Maria della Sanità",
+                "Basilica di Santa Restituta",
+                "Chiesa di San Giovanni a Carbonara"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche mittelalterliche Festung in Neapel, die ursprünglich im 13. Jahrhundert erbaut wurde, diente später als königliche Residenz und bietet heute einen beeindruckenden Blick auf die Stadt?",
-            "answers": ["Castel Nuovo", "Castel Sant'Elmo", "Castel dell'Ovo", "Castel Capuano"],
+            "answers": [
+                "Castel Nuovo",
+                "Castel Sant'Elmo",
+                "Castel dell'Ovo",
+                "Castel Capuano"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Ereignis im Jahr 79 n. Chr. führte zur Zerstörung von Pompeji, Herculaneum und anderen römischen Städten nahe Neapel?",
-            "answers": ["Der Ausbruch des Vesuv", "Ein Erdbeben", "Ein Vulkanausbruch des Ätna", "Der Einfall der Goten"],
+            "answers": [
+                "Der Ausbruch des Vesuv",
+                "Ein Erdbeben",
+                "Ein Vulkanausbruch des Ätna",
+                "Der Einfall der Goten"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk 'Die sieben Werke der Barmherzigkeit'?",
-            "answers": ["Caravaggio", "Mattia Preti", "Giambattista Tiepolo", "Jusepe de Ribera"],
+            "answers": [
+                "Caravaggio",
+                "Mattia Preti",
+                "Giambattista Tiepolo",
+                "Jusepe de Ribera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Theater in Neapel, bekannt für seine historische Architektur und seine Rolle im italienischen Opernleben, wurde im Jahr 1737 eröffnet?",
-            "answers": ["Teatro di San Carlo", "Teatro Mercadante", "Teatro Nuovo", "Teatro Bellini"],
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Mercadante",
+                "Teatro Nuovo",
+                "Teatro Bellini"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches von der UNESCO als Weltkulturerbe anerkanntes archäologisches Gebiet bietet umfassende Einblicke in die römische Architektur und das Alltagsleben vor dem Vesuv-Ausbruch?",
-            "answers": ["Pompeji", "Herculaneum", "Ostia Antica", "Stabiae"],
+            "answers": [
+                "Pompeji",
+                "Herculaneum",
+                "Ostia Antica",
+                "Stabiae"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die bedeutende Kathedrale in Neapel, die für ihre kunstvollen Kapellen und den Altar von San Gennaro bekannt ist, der jedes Jahr einem Ritual unterzogen wird?",
-            "answers": ["Cattedrale di San Gennaro", "Basilica di Santa Chiara", "Chiesa del Gesù Nuovo", "Basilica di San Lorenzo Maggiore"],
+            "answers": [
+                "Cattedrale di San Gennaro",
+                "Basilica di Santa Chiara",
+                "Chiesa del Gesù Nuovo",
+                "Basilica di San Lorenzo Maggiore"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche archäologische Stätte nahe Neapel, die von einem früheren Erdbeben verschüttet wurde, ist berühmt für ihre gut erhaltenen Wandmalereien und antiken Villa-Ruinen?",
-            "answers": ["Oplontis", "Stabiae", "Herculaneum", "Baiae"],
+            "answers": [
+                "Oplontis",
+                "Stabiae",
+                "Herculaneum",
+                "Baiae"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         }
     ],
     "florenz": [
         {
+            "tag": [],
             "type": "image",
             "question": "Welches berühmte Kunstwerk ist auf diesem Bild zu sehen?",
             "imageUrl": "/images/italien/Michelangelo_David.jpg",
-            "answers": ["David", "Venus von Milo", "Apollo und Daphne", "Der Denker"],
+            "answers": [
+                "David",
+                "Venus von Milo",
+                "Apollo und Daphne",
+                "Der Denker"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galerie der Akademie in Florenz?",
-            "answers": ["David", "Pietà", "Die Erschaffung Adams", "Das letzte Gericht"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz war einst die Residenz der Medici-Dynastie?",
-            "answers": ["Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Bauwerk in Florenz ist für seine beeindruckende Kuppel bekannt, die von Brunelleschi entworfen wurde?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Brücke in Florenz ist bekannt für ihre Geschäfte und ihre historische Bedeutung?",
-            "answers": ["Ponte Vecchio", "Ponte Santa Trinita", "Ponte alle Grazie", "Ponte della Carraia"],
+            "answers": [
+                "Ponte Vecchio",
+                "Ponte Santa Trinita",
+                "Ponte alle Grazie",
+                "Ponte della Carraia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstmuseum in Florenz beherbergt Meisterwerke von Botticelli, Leonardo da Vinci und Michelangelo?",
-            "answers": ["Uffizien", "Galleria dell'Accademia", "Palazzo Pitti", "Museo San Salvatore"],
+            "answers": [
+                "Uffizien",
+                "Galleria dell'Accademia",
+                "Palazzo Pitti",
+                "Museo San Salvatore"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches beeindruckende Gebäude in Florenz diente als Sitz der Florentiner Republik und ist heute ein Museum?",
-            "answers": ["Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Statue von Michelangelo befindet sich in der Piazza della Signoria in Florenz?",
-            "answers": ["David", "Pietà", "Der Denker", "Apollo"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Der Denker",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche bedeutende Kirche in Florenz ist bekannt für ihre beeindruckende Fassade und ihre historischen Fresken?",
-            "answers": ["Basilika Santa Maria Novella", "Basilika Santa Croce", "Basilika San Lorenzo", "Basilika San Miniato al Monte"],
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz diente als Residenz der Großherzöge von Toskana und beherbergt heute Kunstwerke und Möbel?",
-            "answers": ["Palazzo Pitti", "Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Sandro Botticelli ist in den Uffizien in Florenz zu sehen?",
-            "answers": ["Die Geburt der Venus", "Primavera", "Das letzte Abendmahl", "Madonna mit Kind"],
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gebäude in Florenz ist bekannt für seine prächtige Fassade und seine historische Bedeutung als Sitz der Regierung?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Bauwerk in Florenz ist für seine beeindruckende Kuppel bekannt, die von Filippo Brunelleschi entworfen wurde?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz war einst der Sitz der mächtigen Medici-Familie und beherbergt heute ein beeindruckendes Museum?",
-            "answers": ["Palazzo Pitti", "Palazzo Vecchio", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Kirche in Florenz ist bekannt für ihre kunstvolle Fassade und ihre beeindruckenden Fresken?",
-            "answers": ["Basilika Santa Maria Novella", "Basilika Santa Croce", "Basilika San Lorenzo", "Basilika San Miniato al Monte"],
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche bekannte Statue von Michelangelo befindet sich im Freien auf der Piazza della Signoria?",
-            "answers": ["David", "Pietà", "Der Denker", "Apollo"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Der Denker",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Leonardo da Vinci ist in der Uffizien-Galerie in Florenz zu sehen?",
-            "answers": ["Das letzte Abendmahl", "Mona Lisa", "Die Taufe Christi", "Das Heilige Antlitz"],
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz diente einst als Residenz der Medici-Dynastie und ist heute ein bedeutendes Museum?",
-            "answers": ["Palazzo Pitti", "Palazzo Vecchio", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz ist bekannt für seine beeindruckende Architektur und seine historische Bedeutung als Sitz der Regierung?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Sandro Botticelli zeigt die Geburt einer Göttin aus dem Meer?",
-            "answers": ["Die Geburt der Venus", "Primavera", "Das letzte Abendmahl", "Madonna mit Kind"],
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine beeindruckende Kuppel?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Bauwerk in Florenz diente als Palast der Medici-Familie und bietet heute eine beeindruckende Sammlung von Kunstwerken?",
-            "answers": ["Palazzo Pitti", "Palazzo Vecchio", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
-            "answers": ["Basilika Santa Maria Novella", "Basilika Santa Croce", "Basilika San Lorenzo", "Basilika San Miniato al Monte"],
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Leonardo da Vinci zeigt Jesus bei seinem letzten Abendmahl mit den Jüngern?",
-            "answers": ["Das letzte Abendmahl", "Mona Lisa", "Die Taufe Christi", "Das Heilige Antlitz"],
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gebäude in Florenz ist bekannt für seine eindrucksvolle Fassade und seine historische Bedeutung?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue eines biblischen Helden, der den Goliath besiegt?",
-            "answers": ["David", "Pietà", "Die Erschaffung Adams", "Das letzte Gericht"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz diente als Regierungsgebäude und ist heute ein bedeutendes Museum?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches beeindruckende Gebäude in Florenz ist bekannt für seine prächtige Kuppel und seine architektonische Bedeutung?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Sandro Botticelli zeigt die Göttin Venus, die aus dem Meer geboren wird?",
-            "answers": ["Die Geburt der Venus", "Primavera", "Das letzte Abendmahl", "Madonna mit Kind"],
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Bauwerk in Florenz wurde von Filippo Brunelleschi entworfen und ist für seine beeindruckende Kuppel bekannt?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz ist für seine bemerkenswerte Architektur und seine historische Bedeutung bekannt?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue eines biblischen Helden, der Goliath besiegt?",
-            "answers": ["David", "Pietà", "Die Erschaffung Adams", "Das letzte Gericht"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Leonardo da Vinci ist in der Uffizien-Galerie in Florenz zu sehen?",
-            "answers": ["Das letzte Abendmahl", "Mona Lisa", "Die Taufe Christi", "Das Heilige Antlitz"],
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Bauwerk in Florenz diente als Palast der Medici-Familie und bietet heute eine beeindruckende Sammlung von Kunstwerken?",
-            "answers": ["Palazzo Pitti", "Palazzo Vecchio", "Palazzo Medici-Riccardi", "Palazzo Strozzi"],
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz ist bekannt für seine beeindruckende Fassade und seine historische Bedeutung als Sitz der Regierung?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine beeindruckende Kuppel?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Sandro Botticelli zeigt die Geburt der Venus aus dem Meer?",
-            "answers": ["Die Geburt der Venus", "Primavera", "Das letzte Abendmahl", "Madonna mit Kind"],
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine eindrucksvolle Kuppel?",
-            "answers": ["Kathedrale von Florenz", "Basilika Santa Croce", "Basilika San Lorenzo", "Palazzo Vecchio"],
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue des biblischen Helden David?",
-            "answers": ["David", "Pietà", "Die Erschaffung Adams", "Das letzte Gericht"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Leonardo da Vinci zeigt das letzte Abendmahl von Jesus Christus?",
-            "answers": ["Das letzte Abendmahl", "Mona Lisa", "Die Taufe Christi", "Das Heilige Antlitz"],
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Bauwerk in Florenz ist bekannt für seine prächtige Fassade und seine historische Bedeutung als Sitz der Regierung?",
-            "answers": ["Palazzo Vecchio", "Palazzo Strozzi", "Palazzo Medici-Riccardi", "Palazzo Pitti"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Michelangelo zeigt die Statue des David, der den Goliath besiegt?",
-            "answers": ["David", "Pietà", "Die Erschaffung Adams", "Das letzte Gericht"],
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galleria dell'Accademia in Florenz?",
-            "answers": ["David", "Die Erschaffung Adams", "Die Geburt der Venus", "Das letzte Abendmahl"],
+            "answers": [
+                "David",
+                "Die Erschaffung Adams",
+                "Die Geburt der Venus",
+                "Das letzte Abendmahl"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die berühmte Kathedrale in Florenz, die für ihre Kuppel von Filippo Brunelleschi bekannt ist?",
-            "answers": ["Kathedrale von Florenz (Duomo)", "Basilica di Santa Croce", "Basilica di San Lorenzo", "Santa Maria Novella"],
+            "answers": [
+                "Kathedrale von Florenz (Duomo)",
+                "Basilica di Santa Croce",
+                "Basilica di San Lorenzo",
+                "Santa Maria Novella"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche bedeutende Galerie in Florenz beherbergt eine der größten Sammlungen von Renaissance-Kunstwerken?",
-            "answers": ["Uffizien", "Palazzo Vecchio", "Galleria dell'Accademia", "Museo di San Marco"],
+            "answers": [
+                "Uffizien",
+                "Palazzo Vecchio",
+                "Galleria dell'Accademia",
+                "Museo di San Marco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche Brücke in Florenz ist bekannt für die Läden, die entlang ihrer Brücke gebaut sind?",
-            "answers": ["Ponte Vecchio", "Ponte alle Grazie", "Ponte Santa Trinita", "Ponte di Mezzo"],
+            "answers": [
+                "Ponte Vecchio",
+                "Ponte alle Grazie",
+                "Ponte Santa Trinita",
+                "Ponte di Mezzo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher bedeutende Florentiner Politiker und Philosoph schrieb das Werk 'Il Principe', das als bedeutendes Werk der politischen Philosophie gilt?",
-            "answers": ["Niccolò Machiavelli", "Dante Alighieri", "Francesco Petrarca", "Lorenzo de' Medici"],
+            "answers": [
+                "Niccolò Machiavelli",
+                "Dante Alighieri",
+                "Francesco Petrarca",
+                "Lorenzo de' Medici"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Michelangelo befindet sich in der Accademia di Belle Arti in Florenz?",
-            "answers": ["David", "Die Pietà", "Die Huldigung der Heiligen Drei Könige", "Der Moses"],
+            "answers": [
+                "David",
+                "Die Pietà",
+                "Die Huldigung der Heiligen Drei Könige",
+                "Der Moses"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie lautet der Name des berühmten Platzes in Florenz, auf dem sich die Kathedrale Santa Maria del Fiore befindet?",
-            "answers": ["Piazza del Duomo", "Piazza della Signoria", "Piazza San Lorenzo", "Piazza Santa Croce"],
+            "answers": [
+                "Piazza del Duomo",
+                "Piazza della Signoria",
+                "Piazza San Lorenzo",
+                "Piazza Santa Croce"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Florentiner Künstler malte das ikonische Gemälde 'Das letzte Abendmahl', das sich im Kloster Santa Maria delle Grazie befindet?",
-            "answers": ["Leonardo da Vinci", "Sandro Botticelli", "Filippo Lippi", "Alessandro Allori"],
+            "answers": [
+                "Leonardo da Vinci",
+                "Sandro Botticelli",
+                "Filippo Lippi",
+                "Alessandro Allori"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Florenz war das politische Zentrum der Stadt während der Renaissance und ist heute ein bedeutendes Museum?",
-            "answers": ["Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi", "Palazzo della Signoria"],
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo della Signoria"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche bekannte florentinische Familie war besonders einflussreich in der Kunstförderung während der Renaissance?",
-            "answers": ["Die Medici", "Die Borgia", "Die Sforza", "Die Farnese"],
+            "answers": [
+                "Die Medici",
+                "Die Borgia",
+                "Die Sforza",
+                "Die Farnese"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches monumentale Gebäude in Florenz wird oft als das Symbol der Renaissance-Architektur bezeichnet und beherbergt die berühmte Kuppel von Brunelleschi?",
-            "answers": ["Santa Maria del Fiore", "San Lorenzo", "Santa Croce", "San Miniato al Monte"],
+            "answers": [
+                "Santa Maria del Fiore",
+                "San Lorenzo",
+                "Santa Croce",
+                "San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches florentinische Kunstwerk von Botticelli zeigt die Geburt der Venus aus dem Meer?",
-            "answers": ["La Nascita di Venere", "Primavera", "Madonna del Magnificat", "La Mystica"],
+            "answers": [
+                "La Nascita di Venere",
+                "Primavera",
+                "Madonna del Magnificat",
+                "La Mystica"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches Florentiner Bauwerk ist für seine zahlreichen Fresken von Giotto bekannt und befindet sich neben der Kathedrale Santa Maria del Fiore?",
-            "answers": ["Campanile di Giotto", "Battistero di San Giovanni", "Palazzo Vecchio", "Basilica di San Lorenzo"],
+            "answers": [
+                "Campanile di Giotto",
+                "Battistero di San Giovanni",
+                "Palazzo Vecchio",
+                "Basilica di San Lorenzo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         }
     ],
     "siena": [
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu sehen?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt das historische Stadtfest, das zweimal jährlich in Siena stattfindet und ein Pferderennen auf dem Piazza del Campo beinhaltet?",
-            "answers": ["Palio", "Festa della Madonna", "Sagra di San Giovanni", "Festa della Fiorita"],
+            "answers": [
+                "Palio",
+                "Festa della Madonna",
+                "Sagra di San Giovanni",
+                "Festa della Fiorita"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte gotische Kathedrale befindet sich in Siena und ist bekannt für ihre beeindruckende Fassade?",
-            "answers": ["Kathedrale von Siena", "Kathedrale von Florenz", "Kathedrale von Pisa", "Kathedrale von Arezzo"],
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Platz in Siena ist bekannt für seine einzigartige Muschelform und seine historische Bedeutung?",
-            "answers": ["Piazza del Campo", "Piazza della Signoria", "Piazza della Repubblica", "Piazza San Marco"],
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und ist heute ein Museum?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches wichtige Kunstwerk von Simone Martini befindet sich in der Kathedrale von Siena?",
-            "answers": ["Annunziata-Altarpiece", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Künstler malte die 'Madonna del Parto', die in der Umgebung von Siena zu finden ist?",
-            "answers": ["Piero della Francesca", "Leonardo da Vinci", "Michelangelo", "Raphael"],
+            "answers": [
+                "Piero della Francesca",
+                "Leonardo da Vinci",
+                "Michelangelo",
+                "Raphael"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Brunnen in Siena ist bekannt für seine beeindruckende Architektur und seine historische Bedeutung?",
-            "answers": ["Fonte Gaia", "Trevi-Brunnen", "Brunnen von Pisa", "Brunnen von Florenz"],
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die berühmte gotische Kirche in Siena, die für ihre beeindruckende Architektur und ihre Kunstwerke bekannt ist?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Platz in Siena ist das Zentrum der Stadt und der Schauplatz des jährlichen Palio-Pferderennens?",
-            "answers": ["Piazza del Campo", "Piazza della Signoria", "Piazza della Repubblica", "Piazza San Marco"],
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst das Zentrum der politischen Macht der Stadt?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die 'Madonna' in der Kathedrale von Siena?",
-            "answers": ["Annunziata-Altarpiece", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena diente als Palast der Stadtregierung und enthält bedeutende Kunstwerke?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte gotische Kirche in Siena ist bekannt für ihre beeindruckende Architektur und Kunstwerke?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna befindet sich in der Kathedrale von Siena?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte gotische Kathedrale in Siena ist bekannt für ihre beeindruckende Fassade und ihre Kunstwerke?",
-            "answers": ["Kathedrale von Siena", "Kathedrale von Florenz", "Kathedrale von Pisa", "Kathedrale von Arezzo"],
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält heute bedeutende Kunstwerke?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher bedeutende Brunnen in Siena ist bekannt für seine eindrucksvolle Architektur und historische Bedeutung?",
-            "answers": ["Fonte Gaia", "Trevi-Brunnen", "Brunnen von Pisa", "Brunnen von Florenz"],
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die bedeutende gotische Kirche in Siena, die für ihre beeindruckende Architektur und Kunstwerke bekannt ist?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu finden?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die 'Madonna' in der Kathedrale von Siena?",
-            "answers": ["Annunziata-Altarpiece", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält heute bedeutende Kunstwerke?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena diente als Palast der Stadtregierung und enthält bedeutende Kunstwerke?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna mit Kind in der Umgebung von Siena?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna befindet sich in der Kathedrale von Siena?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher bedeutende Brunnen in Siena ist bekannt für seine eindrucksvolle Architektur und historische Bedeutung?",
-            "answers": ["Fonte Gaia", "Trevi-Brunnen", "Brunnen von Pisa", "Brunnen von Florenz"],
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die bedeutende gotische Kirche in Siena, die für ihre beeindruckende Architektur und Kunstwerke bekannt ist?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält bedeutende Kunstwerke?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
-            "answers": ["Santa Maria della Scala", "San Francesco", "Santa Maria Novella", "San Domenico"],
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu finden?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
-            "answers": ["Fresken des Palazzo Pubblico", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna mit Kind in der Umgebung von Siena?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
-            "answers": ["Madonna del Parto", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu sehen?",
-            "answers": ["Maestà", "Das letzte Abendmahl", "Die Geburt der Venus", "Primavera"],
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt das historische Stadtfest, das zweimal jährlich in Siena stattfindet und ein Pferderennen auf dem Piazza del Campo beinhaltet?",
-            "answers": ["Palio", "Festa della Madonna", "Sagra di San Giovanni", "Festa della Fiorita"],
+            "answers": [
+                "Palio",
+                "Festa della Madonna",
+                "Sagra di San Giovanni",
+                "Festa della Fiorita"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte gotische Kathedrale befindet sich in Siena und ist bekannt für ihre beeindruckende Fassade?",
-            "answers": ["Kathedrale von Siena", "Kathedrale von Florenz", "Kathedrale von Pisa", "Kathedrale von Arezzo"],
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher berühmte Platz in Siena ist bekannt für seine einzigartige Muschelform und seine historische Bedeutung?",
-            "answers": ["Piazza del Campo", "Piazza della Signoria", "Piazza della Repubblica", "Piazza San Marco"],
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und ist heute ein Museum?",
-            "answers": ["Palazzo Pubblico", "Palazzo Vecchio", "Palazzo Pitti", "Palazzo Medici-Riccardi"],
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": false
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches jährliche Rennen auf der Piazza del Campo in Siena ist bekannt für seine historischen Wurzeln und Traditionen?",
-            "answers": ["Il Palio", "Il Carnevale", "La Fiera di Siena", "La Regata di Siena"],
+            "answers": [
+                "Il Palio",
+                "Il Carnevale",
+                "La Fiera di Siena",
+                "La Regata di Siena"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie lautet der Name der markanten Kathedrale in Siena, die für ihre schwarz-weiße Marmorfassade bekannt ist?",
-            "answers": ["Duomo di Siena", "Basilica di San Francesco", "Chiesa di San Domenico", "Santa Maria del Carmine"],
+            "answers": [
+                "Duomo di Siena",
+                "Basilica di San Francesco",
+                "Chiesa di San Domenico",
+                "Santa Maria del Carmine"
+            ],
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Künstler, bekannt für seine Werkstatt in Siena, schuf das Altarbild 'Maestà', das heute in der Kathedrale von Siena ausgestellt ist?",
-            "answers": ["Duccio di Buoninsegna", "Simone Martini", "Ambrogio Lorenzetti", "Giotto di Bondone"],
+            "answers": [
+                "Duccio di Buoninsegna",
+                "Simone Martini",
+                "Ambrogio Lorenzetti",
+                "Giotto di Bondone"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche berühmte Bibliothek in Siena ist für ihre Sammlung historischer Manuskripte und Dokumente bekannt?",
-            "answers": ["Biblioteca Comunale degli Intronati", "Biblioteca Medicea Laurenziana", "Biblioteca Nazionale Centrale di Firenze", "Biblioteca Apostolica Vaticana"],
+            "answers": [
+                "Biblioteca Comunale degli Intronati",
+                "Biblioteca Medicea Laurenziana",
+                "Biblioteca Nazionale Centrale di Firenze",
+                "Biblioteca Apostolica Vaticana"
+            ],
+            "backgroundKnowledge": "",
             "correct": 1,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welcher Sieneser Künstler ist bekannt für seine prächtigen Fresken, die im Palazzo Pubblico von Siena zu sehen sind?",
-            "answers": ["Ambrogio Lorenzetti", "Giovanni di Paolo", "Simone Martini", "Bernardo Rossellino"],
+            "answers": [
+                "Ambrogio Lorenzetti",
+                "Giovanni di Paolo",
+                "Simone Martini",
+                "Bernardo Rossellino"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Wie heißt die mittelalterliche Festung, die eine zentrale Rolle in der Geschichte von Siena gespielt hat und heute teilweise erhalten ist?",
-            "answers": ["Rocca Salimbeni", "Castello di Monteriggioni", "Castello di Belcaro", "Rocca di Campi"],
+            "answers": [
+                "Rocca Salimbeni",
+                "Castello di Monteriggioni",
+                "Castello di Belcaro",
+                "Rocca di Campi"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welches bedeutende religiöse Fest, das auf Traditionen von Siena zurückgeht, wird seit dem 13. Jahrhundert gefeiert?",
-            "answers": ["Il Palio", "La Festa della Madonna", "La Sagra del Vino", "La Fiera di San Giovanni"],
+            "answers": [
+                "Il Palio",
+                "La Festa della Madonna",
+                "La Sagra del Vino",
+                "La Fiera di San Giovanni"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         },
         {
+            "tag": [],
             "type": "text",
             "question": "Welche architektonische Besonderheit prägt das Stadtbild von Siena und ist typisch für die mittelalterliche Stadtplanung?",
-            "answers": ["Eng verwinkelte Gassen", "Große Stadttore", "Weitläufige Stadtmauern", "Erheblich große Plätze"],
+            "answers": [
+                "Eng verwinkelte Gassen",
+                "Große Stadttore",
+                "Weitläufige Stadtmauern",
+                "Erheblich große Plätze"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         }
