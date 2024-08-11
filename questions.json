@@ -25,50 +25,8 @@
                 "Uffizien",
                 "Forum Romanum"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Die Uffizien sind ein Kunstmuseum in Florenz.",
             "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher römische Kaiser baute das Pantheon?",
-            "answers": [
-                "Hadrian",
-                "Nero",
-                "Trajan",
-                "Augustus"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welche der folgenden Thermen wurden von Kaiser Caracalla erbaut?",
-            "answers": [
-                "Thermen des Diokletian",
-                "Thermen des Caracalla",
-                "Thermen des Nero",
-                "Thermen des Titus"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher römische Tempel war allen Göttern geweiht?",
-            "answers": [
-                "Tempel des Jupiter",
-                "Tempel des Saturn",
-                "Tempel des Mars Ultor",
-                "Pantheon"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
             "difficult": false
         },
         {
@@ -81,7 +39,7 @@
                 "Piazza di Spagna",
                 "Piazza Navona"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "In seiner Hochphase, während des Kaiserreichs, konnte das Stadion 30.000 Zuschauer aufnehmen.",
             "correct": 3,
             "difficult": false
         },
@@ -95,7 +53,7 @@
                 "Via Appia",
                 "Via Flaminia"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Die Via Appia Antica, die berühmtesten und ältesten der römischen Straßen, die auch „Regina Viarum“ (Königin der Straßen) genannt wird, ließ der Zensor Appius Claudius Caecus im Jahr 312 v. Chr. anlegen.",
             "correct": 2,
             "difficult": false
         },
@@ -144,20 +102,6 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher Kaiser ließ das Pantheon und den Hadrianstempel errichten?",
-            "answers": [
-                "Hadrian",
-                "Nero",
-                "Trajan",
-                "Augustus"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": true
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Wer entwarf das Pantheon, das für seine beeindruckende Kuppel bekannt ist?",
             "answers": [
                 "Apollodorus von Damaskus",
@@ -167,20 +111,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Aquädukt versorgte Rom mit Wasser aus den Albaner Bergen?",
-            "answers": [
-                "Aqua Claudia",
-                "Aqua Anio Novus",
-                "Aqua Marcia",
-                "Aqua Appia"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
             "difficult": true
         },
         {
@@ -219,7 +149,7 @@
                 "Päpstliche Bibliothek",
                 "Vatikanisches Archiv",
                 "Vatikanische Kapelle",
-                "Biblioteca Apostolica Vaticana"
+                "Vatikanpalast"
             ],
             "backgroundKnowledge": "",
             "correct": 3,
@@ -256,20 +186,6 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Wer entwarf die Kirche 'San Giovanni in Laterano' in Rom?",
-            "answers": [
-                "Francesco Borromini",
-                "Gian Lorenzo Bernini",
-                "Giovanni Battista Soria",
-                "Carlo Maderno"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Welcher berühmte Brunnen in Rom ist bekannt für seine imposante Größe und seine Reiterfiguren?",
             "answers": [
                 "Tritonenbrunnen",
@@ -278,7 +194,7 @@
                 "Barcaccia-Brunnen"
             ],
             "backgroundKnowledge": "",
-            "correct": 0,
+            "correct": 1,
             "difficult": false
         },
         {
@@ -293,34 +209,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Monument in Rom wird oft als das Symbol des römischen Imperiums angesehen?",
-            "answers": [
-                "Pantheon",
-                "Kolosseum",
-                "Kapitol",
-                "Trajanssäule"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Bauwerk in Rom ist für seine mächtigen Ruinen und seinen Einfluss auf die Architektur bekannt?",
-            "answers": [
-                "Pantheon",
-                "Thermen des Caracalla",
-                "Forum Romanum",
-                "Kolosseum"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
             "difficult": false
         },
         {
@@ -396,48 +284,6 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Welches monumentale Gebäude in Rom wurde als Gedächtnisstätte für einen römischen Kaiser erbaut?",
-            "answers": [
-                "Mausoleum des Hadrian",
-                "Mausoleum des Augustus",
-                "Mausoleum des Alexander",
-                "Mausoleum des Trajan"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher Platz in Rom ist für seine Renaissance-Architektur und seine bedeutenden historischen Gebäude bekannt?",
-            "answers": [
-                "Piazza Navona",
-                "Piazza Venezia",
-                "Piazza del Popolo",
-                "Piazza di Spagna"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Gebäude in Rom ist für seine beeindruckende Freiluftarchitektur berühmt?",
-            "answers": [
-                "Pantheon",
-                "Forum Romanum",
-                "Kolosseum",
-                "Circus Maximus"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Welcher römische Kaiser ließ das größte Amphitheater der Antike bauen?",
             "answers": [
                 "Vespasian",
@@ -485,7 +331,7 @@
                 "Santa Maria Maggiore",
                 "San Giovanni in Laterano",
                 "Sant'Agnese in Agone",
-                "Petersdom"
+                "Basilika St. Peter"
             ],
             "backgroundKnowledge": "",
             "correct": 3,
@@ -517,20 +363,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches architektonische Meisterwerk in Rom wurde zur Zeit des römischen Imperiums erbaut?",
-            "answers": [
-                "Thermen des Caracalla",
-                "Colosseum",
-                "Pantheon",
-                "Augustusbogen"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
             "difficult": false
         },
         {
@@ -573,6 +405,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche römischen Münzen gehörten zu wichtigsten der Antike?",
+            "answers": [
+                "Florin",
+                "Talero",
+                "Poundus",
+                "Sesterz "
+            ],
+            "backgroundKnowledge": "Sesterz: Eine große Bronze- oder Kupfermünze, die in der Kaiserzeit populär war. Der Sesterz war ein häufig verwendetes Zahlungsmittel und diente oft auch als Recheneinheit in der Buchhaltung.",
+            "correct": 3,
             "difficult": false
         }
     ],
