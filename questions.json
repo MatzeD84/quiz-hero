@@ -1,7 +1,10 @@
 {
     "test": [
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike",
+                "Test"
+            ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
             "imageUrl": "/images/italien/mund_der_wahrheit.jpg",
@@ -18,7 +21,9 @@
     ],
     "rom": [
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "image",
             "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
             "imageUrl": "/images/italien/kolosseum.jpg",
@@ -33,7 +38,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Wie hieß der römische Kaiser, der das Kolosseum errichten ließ?",
             "answers": [
@@ -47,7 +54,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Wie viele Eingänge besaß das Kolosseum?",
             "answers": [
@@ -61,7 +70,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": " Woher stammt der Name Kolosseum ab?",
             "answers": [
@@ -74,70 +85,134 @@
             "correct": 2,
             "difficult": false
         },
-
-
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welche innovative architektonische Technik wurde beim Bau des Kolosseums verwendet, um die massive Struktur zu stützen und gleichzeitig ein beeindruckendes Design zu ermöglichen?",
-            "answers": ["Gewölbter Beton", "Hypokausten-System", "Aquädukt-Technik", "Säulenarchitektur"],
+            "answers": [
+                "Gewölbter Beton",
+                "Hypokausten-System",
+                "Aquädukt-Technik",
+                "Säulenarchitektur"
+            ],
             "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
-            "question": "Welcher Kaiser erweiterte das Kolosseum durch den Bau des vierten Rangs, der es den unteren Gesellschaftsschichten ermöglichte, Veranstaltungen zu besuchen?",
-            "answers": ["Kaiser Domitian", "Kaiser Vespasian", "Kaiser Titus", "Kaiser Hadrian"],
-            "backgroundKnowledge": "",
+            "question": "Welcher Kaiser erweiterte das Kolosseum durch den Bau des vierten Rangs?",
+            "answers": [
+                "Kaiser Domitian",
+                "Kaiser Vespasian",
+                "Kaiser Titus",
+                "Kaiser Hadrian"
+            ],
+            "backgroundKnowledge": "Kaiser Domitian, der jüngere Bruder von Kaiser Titus, erweiterte das Kolosseum durch den Bau des vierten Rangs, um den unteren Gesellschaftsschichten den Besuch von Veranstaltungen zu ermöglichen.",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Das Kolosseum war bekannt für seine aufwändigen Inszenierungen. Welcher Begriff beschreibt die nachgestellten Seeschlachten, die im gefluteten Kolosseum stattfanden?",
-            "answers": ["Circensia", "Venatio", "Munera", "Naumachia"],
+            "answers": [
+                "Nautica",
+                "Maritima",
+                "Aquatica",
+                "Naumachia"
+            ],
+            "backgroundKnowledge": "",
             "correct": 3,
             "difficult": true
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welcher römische Kaiser war Zeuge der Fertigstellung des Kolosseums und weihte es mit einer Feier ein, die 100 Tage dauerte?",
-            "answers": ["Kaiser Titus", "Kaiser Vespasian", "Kaiser Trajan", "Kaiser Domitian"],
-            "correct": 0,
+            "answers": [
+                "Kaiser Vespasian",
+                "Kaiser Titus",
+                "Kaiser Trajan",
+                "Kaiser Domitian"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
             "difficult": false
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welche Rolle spielte die sogenannte 'Hypogeum'-Struktur im Kolosseum, die nach der ursprünglichen Konstruktion hinzugefügt wurde?",
-            "answers": ["Unterirdische Räume für Tiere und Gladiatoren", "Verstärkung der Außenwände", "Erweiterung der Zuschauerplätze", "Einbau von Kaisersitzen"],
+            "answers": [
+                "Unterirdische Räume für Tiere und Gladiatoren",
+                "Verstärkung der Außenwände",
+                "Erweiterung der Zuschauerplätze",
+                "Einbau von Kaisersitzen"
+            ],
+            "backgroundKnowledge": "Es ermöglichte den schnellen und dramatischen Auftritt während der Spiele. Mit Hebevorrichtungen und Falltüren konnten Tiere und Kämpfer direkt in die Arena gebracht werden, was die Inszenierungen noch spektakulärer machte.",
             "correct": 0,
             "difficult": true
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welches Material, das auch in vielen anderen römischen Bauwerken verwendet wurde, trug maßgeblich zur Stabilität und Langlebigkeit des Kolosseums bei?",
-            "answers": ["Travertin", "Marmor", "Tuffstein", "Granit"],
+            "answers": [
+                "Travertin",
+                "Marmor",
+                "Tuffstein",
+                "Granit"
+            ],
+            "backgroundKnowledge": "Halb Rom besteht aus Travertin. Kaiser, Päpste, Fürsten und Faschistenführer nutzten den eleganten und dabei ganz pflegeleichten Stein.",
             "correct": 0,
             "difficult": false
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Wie viele Menschen konnten schätzungsweise im Kolosseum Platz finden, als es in seiner Blütezeit vollständig in Betrieb war?",
-            "answers": ["Bis zu 50.000", "Bis zu 30.000", "Bis zu 80.000", "Bis zu 60.000"],
+            "answers": [
+                "Bis zu 50.000",
+                "Bis zu 30.000",
+                "Bis zu 80.000",
+                "Bis zu 60.000"
+            ],
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": true
         },
         {
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "In welchem Jahr wurde das Kolosseum von einem verheerenden Erdbeben getroffen, das Teile seiner südlichen Seite zerstörte?",
-            "answers": ["1349", "1024", "832", "1787"],
-            "correct": 0,
+            "answers": [
+                "1024",
+                "832",
+                "1349",
+                "1787"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
             "difficult": true
         },
-
-
         {
             "tag": [],
             "type": "text",
@@ -169,6 +244,146 @@
         {
             "tag": [],
             "type": "text",
+            "question": "Welcher Platz in Rom ist bekannt für seine herausragende Barockarchitektur und seine Kirche 'Sant'Agnese in Agone'?",
+            "answers": [
+                "Piazza del Popolo",
+                "Piazza Venezia",
+                "Piazza Navona",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Platz in Rom wird von der berühmten Fontana dei Quattro Fiumi geschmückt?",
+            "answers": [
+                "Piazza del Popolo",
+                "Piazza Venezia",
+                "Piazza Navona",
+                "Piazza di Spagna"
+            ],
+            "backgroundKnowledge": "Fontana dei Quattro Fiumi (Vierströmebrunnen)",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": [""],
+            "type": "text",
+            "question": "Welcher Architekt entwarf den berühmten Vierströmebrunnen (Fontana dei Quattro Fiumi) auf der Piazza Navona?",
+            "answers": [
+                "Francesco Borromini",
+                "Michelangelo Buonarroti",
+                "Carlo Maderno",
+                "Gian Lorenzo Bernini"
+            ],
+            "backgroundKnowledge": "Der Brunnen symbolisiert vier große Flüsse der damaligen Welt: den Nil, die Donau, den Ganges und den Río de la Plata.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Die Piazza Navona wurde auf den Überresten welches antiken römischen Stadions errichtet?",
+            "answers": [
+                "Stadion des Domitian",
+                "Circus Maximus",
+                "Stadion des Augustus",
+                "Stadion des Nero"
+            ],
+            "backgroundKnowledge":"Die charakteristische längliche Form der Piazza Navona folgt noch heute dem Grundriss des antiken Stadions.",
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches Gebäude auf der Piazza Navona wurde von Francesco Borromini im Auftrag von Papst Innozenz X. entworfen?",
+            "answers": [
+                "Sant'Agnese in Agone",
+                "Santa Maria della Pace",
+                "Sant'Andrea della Valle",
+                "San Carlo alle Quattro Fontane"
+            ],
+            "backgroundKnowledge": "Diese barocke Kirche ist eines der bekanntesten Bauwerke auf der Piazza Navona und ein herausragendes Beispiel für Borrominis Architektur.",
+            "correct": 1,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Flüsse sind durch die Statuen des Vierströmebrunnens auf der Piazza Navona symbolisiert?",
+            "answers": [
+                "Tiber, Euphrat, Indus, Amazonas",
+                "Seine, Mississippi, Nil, Ganges",
+                "Nil, Ganges, Donau, Rio della Plata",
+                "Donau, Mississippi, Wolga, Nil"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Kirche auf der Piazza Navona beherbergt das Grab von Papst Innozenz X., der die Gestaltung des Platzes maßgeblich beeinflusste?",
+            "answers": [
+                "Santa Maria sopra Minerva",
+                "Santa Maria dell'Anima",
+                "Sant'Agnese in Agone",
+                "San Luigi dei Francesi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "In welchem Stil wurde die Kirche Sant'Agnese in Agone auf der Piazza Navona erbaut?",
+            "answers": [
+                "Gotik",
+                "Renaissance",
+                "Neoklassizismus",
+                "Barock"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Papst war verantwortlich für die Umgestaltung der Piazza Navona in den heutigen barocken Platz?",
+            "answers": [
+                "Papst Alexander VII.",
+                "Papst Urban VIII.",
+                "Papst Clemens XI.",
+                "Papst Innozenz X."
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk auf der Piazza Navona stellt den Triumph des Papsttums über die vier bekannten Kontinente der damaligen Zeit dar?",
+            "answers": [
+                "Fontana dei Quattro Fiumi",
+                "Fontana del Moro",
+                "Fontana di Nettuno",
+                "Obelisco Agonale"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
             "question": "Welche antike Straße führte von Rom bis nach Brindisi?",
             "answers": [
                 "Via Aurelia",
@@ -190,7 +405,7 @@
                 "Trajanssäule",
                 "Augustussäule"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Sie wurde zu Ehren des Kaisers Trajan zum Gedenken an seine Siege in Dakien (dem heutigen Rumänien) errichtet.",
             "correct": 2,
             "difficult": false
         },
@@ -204,7 +419,7 @@
                 "Via Aurelia",
                 "Via Salaria"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Diese alte Straße, die aus dem 4. Jahrhundert v. Chr. stammt, führt von Rom nach Süditalien und ist gesäumt von monumentalen Gräbern und Katakomben, darunter die Gräber der Familien der römischen Aristokratie und verschiedene historische Nekropolen.",
             "correct": 0,
             "difficult": false
         },
@@ -213,13 +428,13 @@
             "type": "text",
             "question": "Welche Villa wurde von Kaiser Hadrian als seine Residenz erbaut?",
             "answers": [
-                "Villa Adriana",
                 "Villa d'Este",
+                "Villa Adriana",
                 "Villa Medici",
                 "Villa Borghese"
             ],
             "backgroundKnowledge": "",
-            "correct": 0,
+            "correct": 1,
             "difficult": true
         },
         {
@@ -337,20 +552,6 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher Platz in Rom ist bekannt für seine herausragende Barockarchitektur und seine Kirche 'Sant'Agnese in Agone'?",
-            "answers": [
-                "Piazza del Popolo",
-                "Piazza Venezia",
-                "Piazza Navona",
-                "Piazza di Spagna"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Welches Bauwerk in Rom wurde speziell zur Erhöhung des römischen Prestiges errichtet?",
             "answers": [
                 "Pantheon",
@@ -402,20 +603,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher Platz in Rom wird von der berühmten Fontana dei Quattro Fiumi geschmückt?",
-            "answers": [
-                "Piazza Navona",
-                "Piazza del Popolo",
-                "Piazza Venezia",
-                "Piazza di Spagna"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
             "difficult": false
         },
         {
@@ -503,7 +690,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welches Paar eines römischen Gottes und eines griechischen Gottes stimmt?",
             "answers": [
@@ -517,7 +706,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Welche römischen Münzen gehörten zu wichtigsten der Antike?",
             "answers": [
@@ -531,7 +722,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "text",
             "question": "Was erhielten in der Antike römische Kinder wenige Tage nach ihrer Geburt?",
             "answers": [
@@ -545,7 +738,9 @@
             "difficult": false
         },
         {
-            "tag": ["Antike"],
+            "tag": [
+                "Antike"
+            ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
             "imageUrl": "/images/italien/mund_der_wahrheit.jpg",
@@ -574,7 +769,9 @@
             "difficult": false
         },
         {
-            "tag": ["Geographie"],
+            "tag": [
+                "Geographie"
+            ],
             "type": "text",
             "question": "In welcher Region Italiens liegt Rom?",
             "answers": [
@@ -588,7 +785,9 @@
             "difficult": false
         },
         {
-            "tag": ["Geographie"],
+            "tag": [
+                "Geographie"
+            ],
             "type": "text",
             "question": "In welcher Region Italiens liegt Rom?",
             "answers": [
