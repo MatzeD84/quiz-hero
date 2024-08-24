@@ -48,6 +48,12 @@ body {
     background-color: var(--carrot-color);
 }
 
+.btm--disabled {
+    opacity: 0.25;
+    background-color: var(--dark-gray-color) !important;
+    cursor: not-allowed;
+}
+
 .category {
     display: grid;
     gap: var(--gap);

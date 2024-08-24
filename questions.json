@@ -7,7 +7,7 @@
             ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
-            "imageUrl": "/images/italien/mund_der_wahrheit.jpg",
+            "imageUrl": "/image/italien/trevi_brunnen.jpg",
             "answers": [
                 "Das Auge der Weisheit",
                 "Der Mund der Wahrheit ",
@@ -82,7 +82,7 @@
                 "Von in der Nähe einer gigantischen Statue"
             ],
             "backgroundKnowledge": "Der Name stammt nicht von seiner Größe ab, sondern weil es nebenan eine riesige Statue des Kaisers Nero stand, der sogenannte Kolossal des Nero",
-            "correct": 2,
+            "correct": 3,
             "difficult": false
         },
         {
@@ -165,6 +165,217 @@
             "correct": 0,
             "difficult": true
         },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Architekt begann den Bau des Trevi-Brunnens im Jahr 1732, obwohl der Brunnen erst nach seinem Tod im Jahr 1762 fertiggestellt wurde?",
+            "answers": [
+                "Luigi Vanvitelli",
+                "Carlo Fontana",
+                "Gian Lorenzo Bernini",
+                "Nicola Salvi"
+            ],
+            "backgroundKnowledge": " ",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Der Trevi-Brunnen steht am Endpunkt eines antiken römischen Aquädukts, der Rom seit der Antike mit Wasser versorgt. Wie heißt dieser Aquädukt?",
+            "answers": [
+                "Aqua Claudia",
+                "Aqua Virgo",
+                "Aqua Anio Novus",
+                "Aqua Appia"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche zentrale Figur des Trevi-Brunnens, die auf einem Muschelwagen steht, wird von zwei Tritonen flankiert?",
+            "answers": [
+                "Poseidon",
+                "Triton",
+                "Neptun",
+                "Oceanus"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Symbolik steht hinter dem Werfen einer Münze über die linke Schulter in den Trevi-Brunnen?",
+            "answers": [
+                "Rückkehr nach Rom",
+                "Wunscherfüllung",
+                "Langes Leben",
+                "Liebe finden"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher italienische Papst beauftragte die Fertigstellung des Trevi-Brunnens und ist auf einer Inschrift am Brunnen verewigt?",
+            "answers": [
+                "Papst Alexander VII",
+                "Papst Urban VIII",
+                "Papst Sixtus V",
+                "Papst Clemens XII"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welche der folgenden Statuen am Trevi-Brunnen symbolisiert die „Fruchtbarkeit“, die aus der Reinheit des Wassers hervorgeht?",
+            "imageUrl": "/images/italien/Trevi_Statue.jpg",
+            "answers": [
+                "Statue der Abundantia",
+                "Statue der Salubrity",
+                "Statue der Aequitas",
+                "Statue der Nymphe"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Wie heißt der berühmte Brunnen auf diesem Bild?",
+            "imageUrl": "/images/italien/trevi_brunnen.jpg",
+            "answers": [
+                "Triton-Brunnen",
+                "Vierströmebrunnen",
+                "Trevi-Brunnen",
+                "Neptunbrunnen"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": ["Antike"],
+            "type": "text",
+            "question": "Welcher Tempel im Forum Romanum, der Julius Caesar gewidmet ist, markiert den Ort, an dem sein Leichnam verbrannt wurde?",
+            "answers": [
+                "Tempel der Venus und Roma",
+                "Tempel des Vesta",
+                "Tempel des Divus Iulius",
+                "Tempel des Saturn"
+            ],
+            "backgroundKnowledge": "Der Tempel ist weitgehend zerstört, da gerade dieses Areal in Renaissance und Barock als Steinbruch genutzt wurde. Lediglich die drei mächtigen Kerne des Tempelpodiums sind erhalten.",
+            "correct": 2,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Welche antike Straße, die durch das Forum Romanum verläuft, war der traditionelle Weg für Triumphzüge römischer Generäle?",
+            "imageUrl": "/images/italien/forum_romanum_viasacra.jpg",
+            "answers": [
+                "Via Sacra",
+                "Via Aurelia",
+                "Via Flaminia",
+                "Via Appia"
+            ],
+            "backgroundKnowledge": "Die Via Sacra (heilige Straße) war der Hauptweg des Forum Romanum. Sie führte vom Colosseum zum Kapitol.",
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Welche der folgenden Strukturen auf dem Palatin war der Palast des ersten römischen Kaisers Augustus, der als Zentrum der Macht diente?",
+            "imageUrl": "/images/italien/palatin_domus_augusti.jpg",
+            "answers": [
+                "Domus Flavia",
+                "Domus Tiberiana",
+                "Domus Aurea",
+                "Domus Augusti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Welche der Säulen im Forum Romanum wurde zu Ehren eines Kaisers errichtet, der eine bedeutende Niederlage der Goten erzielte und ein Reformprogramm zur Stabilisierung des Reiches durchführte?",
+            "imageUrl": "/images/italien/forum_romanum_viasacra.jpg",
+            "answers": [
+                "Trajanssäule",
+                "Marcus-Aurelius-Säule",
+                "Säule des Phokas",
+                "Antoninssäule"
+            ],
+            "backgroundKnowledge": "Die Säule gilt als das letzte öffentliche Bauwerk, das während der Antike auf dem römischen Forum errichtet wurde.",
+            "correct": 2,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Welcher Triumphbogen im Forum Romanum, ist bekannt für seine detaillierten Reliefs?",
+            "imageUrl": "/images/italien/forum_romanum_titusbogen.png",
+            "answers": [
+                "Septimius-Severus-Bogen",
+                "Titusbogen",
+                "Konstantinsbogen",
+                "Trajansbogen"
+            ],
+            "backgroundKnowledge": "Anlässlich der Vergöttlichung von Kaiser Titus ließ dessen jüngerer Bruder und Nachfolger Domitian den Titusbogen auf dem Forum errichten, der an dessen größten Triumph erinnert: die Niederschlagung eines Judäeraufstandes und die Eroberung Jerusalems.",
+            "correct": 1,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Welches Gebäude auf dem Forum Romanum, ursprünglich als Tempel erbaut, wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
+            "imageUrl": "/images/italien/tempel_Antoninus_Pius_Faustina.jpg",
+            "answers": [
+                "Regia",
+                "Curia Julia",
+                "Basilika Maxentius",
+                "Tempel des Antoninus und der Faustina"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+        {
+            "tag": ["Antike"],
+            "type": "text",
+            "question": "Welches Gebäude auf dem Forum Romanum, ursprünglich als Tempel erbaut, wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
+            "answers": [
+                "Regia",
+                "Curia Julia",
+                "Basilika Maxentius",
+                "Tempel des Antoninus und der Faustina"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficult": true
+        },
+       
+
+
+
+
+
+
+
         {
             "tag": [
                 "Antike"
@@ -270,7 +481,9 @@
             "difficult": false
         },
         {
-            "tag": [""],
+            "tag": [
+                ""
+            ],
             "type": "text",
             "question": "Welcher Architekt entwarf den berühmten Vierströmebrunnen (Fontana dei Quattro Fiumi) auf der Piazza Navona?",
             "answers": [
@@ -293,7 +506,7 @@
                 "Stadion des Augustus",
                 "Stadion des Nero"
             ],
-            "backgroundKnowledge":"Die charakteristische längliche Form der Piazza Navona folgt noch heute dem Grundriss des antiken Stadions.",
+            "backgroundKnowledge": "Die charakteristische längliche Form der Piazza Navona folgt noch heute dem Grundriss des antiken Stadions.",
             "correct": 0,
             "difficult": true
         },
@@ -440,44 +653,100 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Wer entwarf das Pantheon, das für seine beeindruckende Kuppel bekannt ist?",
+            "question": "Wer entwarf das Pantheon?",
             "answers": [
                 "Apollodorus von Damaskus",
                 "Vitruvius",
                 "Hadrian",
                 "Palladio"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Kaiser Hadrian war der Bauherr und Hauptverantwortliche für die erneute Gestaltung und den Bau des Pantheons, das um 118-125 n. Chr. fertiggestellt wurde.",
             "correct": 2,
             "difficult": true
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welche Struktur wurde als 'Domus Aurea' bekannt und diente Nero als Residenz?",
+            "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
             "answers": [
-                "Domus Aurea",
-                "Palatin",
-                "Forum Romanum",
-                "Thermen des Caracalla"
+                "Colosseum",
+                "Thermen des Caracalla",
+                "Augustusbogen",
+                "Pantheon"
+            ],
+            "backgroundKnowledge": "Die Kuppel des Pantheons ist ein Meisterwerk der antiken Architektur und bleibt bis heute die größte ununterstützte Kuppel der Welt.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher römische Tempel wurde speziell zu Ehren der Götter errichtet?",
+            "answers": [
+                "Pantheon",
+                "Tempel des Jupiter",
+                "Tempel des Mars Ultor",
+                "Tempel des Saturn"
+            ],
+            "backgroundKnowledge": "Der Name „Pantheon“ bedeutet „All-Götter“ und reflektiert den Zweck des Tempels als eine allgemeine Verehrungsstätte für alle römischen Götter.",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches architektonische Element des Pantheons ermöglicht es, dass das Licht in den Innenraum eindringt?",
+            "answers": [
+                "Die Gewölbedecke",
+                "Pfeiler",
+                "Oculus",
+                "Die Apsis"
+            ],
+            "backgroundKnowledge":"Das Oculus ist ein rundes Loch in der Mitte der Kuppel, durch das Tageslicht strömt und einen dramatischen Lichtstrahl auf den Innenraum des Tempels wirft.",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "In welchem Jahr wurde das Pantheon von Hadrian neu erbaut?",
+            "answers": [
+                "70-80 n. Chr.",
+                "118-125 n. Chr.",
+                "96-98 n. Chr.",
+                "130-140 n. Chr."
             ],
             "backgroundKnowledge": "",
-            "correct": 0,
+            "correct": 1,
             "difficult": true
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher moderne Bau wurde von Renzo Piano in Rom entworfen und ist ein Paradebeispiel für zeitgenössische Architektur?",
+            "question": "Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt?",
             "answers": [
-                "Auditorium Parco della Musica",
-                "MAXXI Museum",
-                "Palazzo della Civiltà Italiana",
-                "Fuksas Cloud"
+                "Michelangelo",
+                "Leonardo da Vinci",
+                "Raphael",
+                "Titian"
             ],
-            "backgroundKnowledge": "",
-            "correct": 1,
+            "backgroundKnowledge":"",
+            "correct": 3,
             "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Struktur diente Nero als Residenz?",
+            "answers": [
+                "Palatin",
+                "Forum Romanum",
+                "Thermen des Caracalla",
+                "Domus Aurea"
+            ],
+            "backgroundKnowledge": "Die Domus Aurea (Goldenes Haus) war eine riesige Palastanlage, die von Kaiser Nero nach dem großen Brand von 64 n. Chr. in Rom erbaut wurde. Die prächtige Residenz erstreckte sich über große Teile des Stadtgebiets und war für ihren Luxus und ihre Opulenz bekannt.",
+            "correct": 3,
+            "difficult": true
         },
         {
             "tag": [],
@@ -489,7 +758,7 @@
                 "Vatikanische Kapelle",
                 "Vatikanpalast"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Der Biblioteca Apostolica Vaticana (Vatikanische Bibliothek) befindet sich im Vatikanischen Palast (Palazzo Vaticano). Die Bibliothek ist in einem speziellen Gebäudetrakt des Vatikanischen Palastes untergebracht.",
             "correct": 3,
             "difficult": false
         },
@@ -510,85 +779,15 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
-            "answers": [
-                "Colosseum",
-                "Thermen des Caracalla",
-                "Augustusbogen",
-                "Pantheon"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher berühmte Brunnen in Rom ist bekannt für seine imposante Größe und seine Reiterfiguren?",
-            "answers": [
-                "Tritonenbrunnen",
-                "Trevi-Brunnen",
-                "Vierströmebrunnen",
-                "Barcaccia-Brunnen"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Welche Kirche in Rom ist die Hauptkirche des Papstes?",
             "answers": [
                 "Santa Maria Maggiore",
-                "Petersdom",
+                "St. Peter's Basilica",
                 "San Giovanni in Laterano",
                 "Sant'Agnese in Agone"
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Bauwerk in Rom wurde speziell zur Erhöhung des römischen Prestiges errichtet?",
-            "answers": [
-                "Pantheon",
-                "Colosseum",
-                "Trajansforum",
-                "Petersdom"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welche Architektur in Rom ist für ihre massiven Zinnen und den imposanten Eingang bekannt?",
-            "answers": [
-                "Aurelianischer Wall",
-                "Kolosseum",
-                "Thermen des Caracalla",
-                "Petersdom"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher römische Kaiser ließ das größte Amphitheater der Antike bauen?",
-            "answers": [
-                "Vespasian",
-                "Augustus",
-                "Trajan",
-                "Hadrian"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
             "difficult": false
         },
         {
@@ -631,62 +830,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches Bauwerk in Rom war ein Symbol für die Macht und den Einfluss des Römischen Reiches?",
-            "answers": [
-                "Pantheon",
-                "Trajansforum",
-                "Kapitol",
-                "Kolosseum"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches bedeutende Monument in Rom wurde zu Ehren von Kaiser Konstantin errichtet?",
-            "answers": [
-                "Trajanssäule",
-                "Augustusbogen",
-                "Konstantinsbogen",
-                "Nerosäule"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher Bau in Rom wurde nach der römischen Eroberung des Herculaneums und Pompeji errichtet?",
-            "answers": [
-                "Thermen des Caracalla",
-                "Petersdom",
-                "Pantheon",
-                "Kolosseum"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welcher römische Tempel wurde speziell zu Ehren der Götter errichtet?",
-            "answers": [
-                "Pantheon",
-                "Tempel des Jupiter",
-                "Tempel des Mars Ultor",
-                "Tempel des Saturn"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
             "difficult": false
         },
         {
@@ -769,19 +912,89 @@
             "difficult": false
         },
         {
-            "tag": [
-                "Geographie"
-            ],
+            "tag": ["Essen"],
             "type": "text",
-            "question": "In welcher Region Italiens liegt Rom?",
+            "question": "Welcher Klassiker der römischen Küche hat seinen Ursprung in den alte Arbeitervierteln Roms?",
             "answers": [
-                "Etruria",
-                "Samnium",
-                "Umbria",
-                "Latium"
+                "Lasagne",
+                "Risotto alla Milanese",
+                "Fettuccine Alfredo",
+                "Cacio e Pepe"
             ],
-            "backgroundKnowledge": "Die Region Latium unterteilt sich wiederum in fünf Provinzen: Frosinone, Latina, Rieti, Rom und Viterbo.",
+            "backgroundKnowledge": "Es besteht hauptsächlich aus Pecorino-Käse, Pfeffer und Pasta.",
             "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "text",
+            "question": "Welches traditionelle römische Gericht, das aus Artischocken zubereitet wird und in der jüdischen Küche der Stadt seinen Ursprung hat, ist unter dem Namen „Carciofi alla Giudia“ bekannt?",
+            "answers": [
+                "Gefüllte Artischocken",
+                "Frittierte Artischocken",
+                "Geschmorte Artischocken mit Minze",
+                "Gebratene Artischocken mit Knoblauch"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "text",
+            "question": "Wie nennt man das traditionelle römische Gericht, das aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
+            "answers": [
+                "Saltimbocca",
+                "Abbacchio alla Romana",
+                "Porchetta",
+                "Coda alla Vaccinara"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "image",
+            "question": "Wie heißt der beliebte frittierter Reisball in Rom welcher umhüllt ist mit Eiern und Paniermehl und gefüllt ist mit Tomatenragout und Mozzarellakäse?",
+            "imageUrl": "/images/italien/suppli.jpg",
+            "answers": [
+                "Suppli",
+                "L'arancino",
+                "Arancini",
+                "Crocchetta"
+            ],
+            "backgroundKnowledge": "ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "image",
+            "question": "Wie heißen die kleinen, leckeren süßen Hefebrötchen, die meist mit einer fast unanständigen Menge Sahne gefüllt sind?",
+            "imageUrl": "/images/italien/maritozz.jpg",
+            "answers": [
+                "Suppli",
+                "Biscotti",
+                "Maritozzo",
+                "Panino"
+            ],
+            "backgroundKnowledge": "ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "text",
+            "question": "Wie nennt man das traditionelle römische Gericht, das aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
+            "answers": [
+                "Saltimbocca",
+                "Abbacchio alla Romana",
+                "Porchetta",
+                "Coda alla Vaccinara"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
             "difficult": false
         },
         {
@@ -791,13 +1004,13 @@
             "type": "text",
             "question": "In welcher Region Italiens liegt Rom?",
             "answers": [
-                "Etna",
-                "Kapitol",
-                "Monte Parioli",
-                "Vatikan"
+                "Toskana",
+                "Kampanien",
+                "Venetien",
+                "Lazio"
             ],
-            "backgroundKnowledge": "Zu den Sieben Hügeln gehören folgende Anhöhen, die früher die Stadttopographie entscheidend prägten: Aventin, Kapitol, Caelius, Palatin, Viminal, Quirinal, Esquilin. Es liegen heute noch mehr Anhöhen im Stadtgebiet, die allerdings nicht zu den klassischen Sieben Hügeln zählen - so zum Beispiel der Vatikan oder der Monte Parioli.",
-            "correct": 1,
+            "backgroundKnowledge": "Die Region Latium unterteilt sich wiederum in fünf Provinzen: Frosinone, Latina, Rieti, Rom und Viterbo.",
+            "correct": 3,
             "difficult": false
         }
     ],
