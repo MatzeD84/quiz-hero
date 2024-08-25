@@ -731,7 +731,7 @@
                 "Titian"
             ],
             "backgroundKnowledge":"",
-            "correct": 3,
+            "correct": 2,
             "difficult": false
         },
         {
@@ -979,7 +979,7 @@
                 "Maritozzo",
                 "Panino"
             ],
-            "backgroundKnowledge": "ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse",
+            "backgroundKnowledge": "",
             "correct": 2,
             "difficult": false
         },
