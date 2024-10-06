@@ -176,24 +176,28 @@ function endQuestion(buttons, feedbackElement, nextButton, backgroundKnowledgeEl
 
 function nextQuestion() {
     const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
+    const nextButton = document.getElementById('js-next-btn');
     currentQuestionIndex++;
     if (currentQuestionIndex < currentQuestions.length) {
         feedbackIconCorrect.classList.add('hide');
         feedbackIconIncorrect.classList.add('hide');
         loadQuestion();
-        hideElement(document.getElementById('js-next-btn'));
+        hideElement(nextButton);
     } else {
         alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
         toggleVisibility('js-quiz-content', 'js-category-container');
         hideElement(feedbackIconCorrect);
+        hideElement(feedbackIconIncorrect);
         if (!backgroundKnowledgeElement.classList.contains('hide')) {
             hideElement(backgroundKnowledgeElement);
         }
+        hideElement(nextButton);
     }
 }
 
 function abortQuiz() {
     const questionCountContainer = document.getElementById('js-question-count-container');
+    const nextButton = document.getElementById('js-next-btn');
     toggleVisibility('js-quiz-content', 'js-category-container');
     score = 0;
     feedbackIconIncorrect.classList.add('hide');
@@ -204,6 +208,9 @@ function abortQuiz() {
     }
     if (!questionCountContainer.classList.contains('hide')) {
         hideElement(questionCountContainer);
+    }
+    if (!nextButton.classList.contains('hide')) {
+        hideElement(nextButton);
     }
     updateScore();
 }

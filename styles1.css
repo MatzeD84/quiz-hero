@@ -201,3 +201,37 @@ body {
     height: 24px;
     fill: var(--clouds-color);
 }
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--dark-color);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid var(--dark-gray-color);
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.modal-close {
+    color: var(--clouds-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--mandarin-color);
+}

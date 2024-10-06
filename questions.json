@@ -7,7 +7,7 @@
             ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
-            "imageUrl": "/image/italien/trevi_brunnen.jpg",
+            "imageUrl": "/images/italien/mund_der_wahrheit.jpg",
             "answers": [
                 "Das Auge der Weisheit",
                 "Der Mund der Wahrheit ",
@@ -251,6 +251,7 @@
             "difficult": true
         },
         {
+            
             "tag": [],
             "type": "image",
             "question": "Wie heißt der berühmte Brunnen auf diesem Bild?",
