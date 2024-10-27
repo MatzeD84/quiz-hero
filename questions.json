@@ -41,8 +41,9 @@
             "tag": [
                 "Antike"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie hieß der römische Kaiser, der das Kolosseum errichten ließ?",
+            "imageUrl": "/images/italien/titus_flavius_vespasian.png",
             "answers": [
                 "Vespasian",
                 "Nero",
