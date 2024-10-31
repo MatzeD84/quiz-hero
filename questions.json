@@ -376,6 +376,36 @@
             "difficult": true
         },
         {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Wie heißt der Platz, der Mittelpunkt des politischen, wirtschaftlichen, kulturellen und religiösen Lebens im antiken Rom war?",
+            "imageUrl": "/images/italien/rom-forum-romanum.jpg",
+            "answers": [
+                "Forum Traian",
+                "Campo de' Fiori",
+                "Piazza Iulium",
+                "Forum Romanum"
+            ],
+            "backgroundKnowledge": "Das Forum Romanum (Römischer Marktplatz) ist das älteste römische Forum.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Einer der sieben Hügel Roms, welcher heute ein großer archäologischer Park ist und mit dem Forum Romanum verbunden, gilt als ältester bewohnter Teil der Stadt, wie heißt er?",
+            "imageUrl": "/images/italien/palatin_domus_augusti.jpg",
+            "answers": [
+                "Palatin",
+                "Kapitol",
+                "Esquilin",
+                "Viminal"
+            ],
+            "backgroundKnowledge": "Der Palatin war einst eine elegante Wohngegend für römische Eliten, einschließlich Kaiser wie Augustus und Tiberius.",
+            "correct": 0,
+            "difficult": false
+        },
+        {
             "tag": [
                 "Antike"
             ],
@@ -561,6 +591,51 @@
         {
             "tag": [],
             "type": "image",
+            "question": "Einer der dreizehn Obelisken in Rom, steht auf der Piazza Navona. Wie heißt dieser Obelisk?",
+            "imageUrl": "/images/italien/rom-piazza-navona-obelisk.jpg",
+            "answers": [
+                "Obelisco Agonale",
+                "Obelisk Sallustiano",
+                "Obelisk Vaticano",
+                "Obelisk Flaminio"
+            ],
+            "backgroundKnowledge": "Der Obelisk steht in der Mitte der Piazza Navona und ist Teil des Vierströmebrunnen von Bernini.",
+            "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Wie heißt der barocker Zierbrunnen auf der nördlichen Piazza Navona?",
+            "imageUrl": "/images/italien/rom-piazza-navona-neptunbrunnen.jpg",
+            "answers": [
+                "Vierströmebrunnen",
+                "Mohrenbrunnen",
+                "Neptunbrunnen",
+                "Tritonbrunnen"
+            ],
+            "backgroundKnowledge": "Die zentrale Figur zeigt Neptun, den römischen Meeresgott, im Kampf gegen einen Oktopus, umgeben von Nereiden (Meerjungfrauen) und Seepferdchen.",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Wie heißt der barocker Zierbrunnen auf der südlichen Piazza Navona?",
+            "imageUrl": "/images/italien/rom-piazza-navona-mohren-brunnen.jpg",
+            "answers": [
+                "Vierströmebrunnen",
+                "Tritonbrunnen",
+                "Neptunbrunnen",
+                "Mohrenbrunnen"
+            ],
+            "backgroundKnowledge": "Die zentrale Figur, die später von Bernini hinzugefügt wurde, zeigt einen muskulösen „Mohren“ (einen Afrikaner oder Triton), der mit einem Delfin kämpft.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "image",
             "question": "Welcher Papst war verantwortlich für die Umgestaltung der Piazza Navona in den heutigen barocken Platz?",
             "imageUrl": "/images/italien/papst-innocent-x.jpg",
             "answers": [
@@ -585,6 +660,21 @@
             ],
             "backgroundKnowledge": "Fontana dei Quattro Fiumi (Vierströmebrunnen)",
             "correct": 0,
+            "difficult": true
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Wie heißt einer der bekanntesten Plätze im Zentrum von Rom?",
+            "imageUrl": "/images/italien/piazza-navona.jpg",
+            "answers": [
+                "Piazza del Popol",
+                "Piazza Navona",
+                "Piazza di Spagna",
+                "Piazza Venezia"
+            ],
+            "backgroundKnowledge": "Der Platz ist bekannt für seine drei beeindruckenden Brunnen, darunter der berühmte Vierströmebrunnen, der von Gian Lorenzo Bernini entworfen wurde.",
+            "correct": 1,
             "difficult": true
         },
         {
@@ -641,21 +731,21 @@
                 "Villa Medici",
                 "Villa Borghese"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Die Villa Adriana (Hadriansvilla) in Tivoli nahe Rom ist eine weitläufige antike Residenz, die Kaiser Hadrian im 2. Jahrhundert n. Chr. als luxuriösen Rückzugsort errichten ließ. Die Anlage umfasst Tempel, Bibliotheken, Theater und Bäder und spiegelt Hadrians Interesse an der Architektur und den Kulturen des gesamten Römischen Reiches wider.",
             "correct": 1,
             "difficult": true
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Wer entwarf das Pantheon?",
+            "question": "Wer entwarf das heutige Pantheon?",
             "answers": [
                 "Apollodorus von Damaskus",
                 "Vitruvius",
                 "Hadrian",
                 "Palladio"
             ],
-            "backgroundKnowledge": "Kaiser Hadrian war der Bauherr und Hauptverantwortliche für die erneute Gestaltung und den Bau des Pantheons, das um 118-125 n. Chr. fertiggestellt wurde.",
+            "backgroundKnowledge": "Das Pantheon in Rom wurde ursprünglich von Marcus Vipsanius Agrippa entworfen, wurde jedoch durch Brände beschädigt. Kaiser Hadrian war der Bauherr und Hauptverantwortliche für die erneute Gestaltung und den Bau des Pantheons, das um 118-125 n. Chr. fertiggestellt wurde.",
             "correct": 2,
             "difficult": true
         },
@@ -681,7 +771,7 @@
                 "Pantheon",
                 "Tempel des Jupiter",
                 "Tempel des Mars Ultor",
-                "Tempel des Saturn"
+                "Domus Aurea"
             ],
             "backgroundKnowledge": "Der Name „Pantheon“ bedeutet „All-Götter“ und reflektiert den Zweck des Tempels als eine allgemeine Verehrungsstätte für alle römischen Götter.",
             "correct": 0,
@@ -693,7 +783,7 @@
             "question": "Welches architektonische Element des Pantheons ermöglicht es, dass das Licht in den Innenraum eindringt?",
             "answers": [
                 "Die Gewölbedecke",
-                "Pfeiler",
+                "Spezielle Pfeiler",
                 "Oculus",
                 "Die Apsis"
             ],
@@ -703,25 +793,12 @@
         },
         {
             "tag": [],
-            "type": "text",
-            "question": "In welchem Jahr wurde das Pantheon von Hadrian neu erbaut?",
-            "answers": [
-                "70-80 n. Chr.",
-                "118-125 n. Chr.",
-                "96-98 n. Chr.",
-                "130-140 n. Chr."
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": true
-        },
-        {
-            "tag": [],
-            "type": "text",
+            "type": "image",
             "question": "Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt?",
+            "imageUrl": "/images/italien/rom-pantheon-grab-raffael.jpg",
             "answers": [
                 "Michelangelo",
-                "Leonardo da Vinci",
+                "Hadrian",
                 "Raphael",
                 "Titian"
             ],
@@ -729,6 +806,37 @@
             "correct": 2,
             "difficult": false
         },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "de im Pantheon beigesetzt?",
+            "imageUrl": "/images/italien/rom-pantheon.jpg",
+            "answers": [
+                "Ara Pacis",
+                "Mausoleum des Augustus",
+                "Pantheon",
+                "Tempel des Portunus"
+            ],
+            "backgroundKnowledge":"Die Kuppel hat einen Durchmesser von 43,3 Metern und ist die größte nicht verstärkte Betonkuppel der Welt.",
+            "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": ["Antike"],
+            "type": "image",
+            "question": "Wie heißt da ursprünglich im 2. Jahrhundert als Mausoleum für Kaiser Hadrian erbaute Gebäude?",
+            "imageUrl": "/images/italien/rom-engelsburg.png",
+            "answers": [
+                "Engelsburg",
+                "Mausoleum der Constantina",
+                "Pantheon",
+                "Grab des Scipio"
+            ],
+            "backgroundKnowledge":"Im Mittelalter wurde sie zur Festung und Zufluchtsstätte für Päpste umgebaut und über einen geheimen Gang, den Passetto di Borgo, mit dem Vatikan verbunden.",
+            "correct": 2,
+            "difficult": false
+        },
+
         {
             "tag": [],
             "type": "text",
@@ -745,8 +853,9 @@
         },
         {
             "tag": [],
-            "type": "text",
+            "type": "img",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
             "answers": [
                 "Päpstliche Bibliothek",
                 "Vatikanisches Archiv",
@@ -800,34 +909,6 @@
             "difficult": false
         },
         {
-            "tag": [],
-            "type": "text",
-            "question": "Welche römische Kirche ist für ihre bedeutenden Kunstwerke von Michelangelo und Bernini bekannt?",
-            "answers": [
-                "Santa Maria Maggiore",
-                "San Giovanni in Laterano",
-                "Sant'Agnese in Agone",
-                "Basilika St. Peter"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welche antike Struktur wurde als prächtige Wasserleitung für die Stadt Rom gebaut?",
-            "answers": [
-                "Aqua Anio Novus",
-                "Aqua Claudia",
-                "Aqua Marcia",
-                "Aqua Appia"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": false
-        },
-        {
             "tag": [
                 "Antike"
             ],
@@ -853,7 +934,7 @@
                 "Florin",
                 "Talero",
                 "Poundus",
-                "Sesterz "
+                "Sesterz"
             ],
             "backgroundKnowledge": "Sesterz: Eine große Bronze- oder Kupfermünze, die in der Kaiserzeit populär war. Der Sesterz war ein häufig verwendetes Zahlungsmittel und diente oft auch als Recheneinheit in der Buchhaltung.",
             "correct": 3,
@@ -916,14 +997,14 @@
                 "Fettuccine Alfredo",
                 "Cacio e Pepe"
             ],
-            "backgroundKnowledge": "Es besteht hauptsächlich aus Pecorino-Käse, Pfeffer und Pasta.",
+            "backgroundKnowledge": "Das Pastagericht besteht hauptsächlich aus Pecorino-Käse und Pfeffer.",
             "correct": 3,
             "difficult": false
         },
         {
             "tag": ["Essen"],
             "type": "text",
-            "question": "Welches traditionelle römische Gericht, das aus Artischocken zubereitet wird und in der jüdischen Küche der Stadt seinen Ursprung hat, ist unter dem Namen „Carciofi alla Giudia“ bekannt?",
+            "question": "Welches traditionelle römische Gericht, welches aus Artischocken zubereitet wird und in der jüdischen Küche der Stadt seinen Ursprung hat, ist unter dem Namen „Carciofi alla Giudia“ bekannt?",
             "answers": [
                 "Gefüllte Artischocken",
                 "Frittierte Artischocken",
@@ -959,7 +1040,7 @@
                 "Arancini",
                 "Crocchetta"
             ],
-            "backgroundKnowledge": "ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse",
+            "backgroundKnowledge": "Ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse.",
             "correct": 0,
             "difficult": false
         },
@@ -980,8 +1061,9 @@
         },
         {
             "tag": ["Essen"],
-            "type": "text",
-            "question": "Wie nennt man das traditionelle römische Gericht, das aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
+            "type": "image",
+            "question": "Wie nennt man das traditionelle römische Gericht, welches aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
+            "imageUrl": "/images/italien/rom-porchetta.png",
             "answers": [
                 "Saltimbocca",
                 "Abbacchio alla Romana",
@@ -990,6 +1072,51 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "image",
+            "question": "Das gefüllte Pizza-Sandwich ist der neueste Food-Trend aus Rom. Wie heißt diese Pizza-Variante?",
+            "imageUrl": "/images/italien/rom-trapizzino.jpg",
+            "answers": [
+                "Panzerotto",
+                "Trapizzino",
+                "Scrocchiarella",
+                "Pizzetta"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "image",
+            "question": "Dieser Klassiker der italienischen Küche stammt ursprünglich aus Rom, wie heißt er?",
+            "imageUrl": "/images/italien/rom-penne-all-arrabbiata.jpg",
+            "answers": [
+                "Risotto alla Milanese",
+                "Lasagne alla Bolognese",
+                "Spaghetti alla Puttanesca",
+                "Penne all'Arrabbiata"
+            ],
+            "backgroundKnowledge": "'Arrabbiata' bedeutet auf Italienisch „wütend“. Der Name spielt auf die Schärfe der Sauce an, die einem so richtig einheizen kann – so sehr, dass man beim Essen „vor Wut rot wird“.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": ["Essen"],
+            "type": "image",
+            "question": "Diese köstlichen viereckigen Pizzaschnitten werden auf großen Blechen gebacken. Wie heißt dieser Pizza-To-Go-Snack?",
+            "imageUrl": "/images/italien/rom-pizza-al-taglio.jpg",
+            "answers": [
+                "Pizza al Taglio",
+                "Pizza Marinara",
+                "Pizza Calzone",
+                "Pizza Focaccia"
+            ],
+            "backgroundKnowledge": "Neben Klassikern wie Pomodoro und Mozzarella findet man auch Beläge wie Kartoffeln und Rosmarin, Kürbis und Speck, oder auch Zucchini und Ziegenkäse.",
+            "correct": 0,
             "difficult": false
         },
         {
