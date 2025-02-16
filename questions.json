@@ -32,7 +32,7 @@
                 "Circus Maximus",
                 "Forum Romanum"
             ],
-            "backgroundKnowledge": "Die antike Bezeichnung Amphitheatrum Flavium leitet sich von den Kaisern der flavischen Dynastie her, in deren Herrschaftszeit das Kolosseum errichtet wurde. Heute kennen wir es als Kolosseum.",
+            "backgroundKnowledge": "Die antike Bezeichnung Amphitheatrum Flavium leitet sich von den Kaisern der flavischen Dynastie her, in deren Herrschaftszeit das Kolosseum errichtet wurde.",
             "correct": 0,
             "difficult": false
         },
@@ -77,7 +77,7 @@
             "question": " Woher stammt der Name Kolosseum ab?",
             "answers": [
                 "Von der Form des Gebäudes",
-                "Von der Lage auf einem Hügel namens Colossus",
+                "Von der Lage auf einem Hügel namens Kolossus",
                 "Von der Größe der Gladiatoren",
                 "Von einer gigantischen Statue in der Nähe"
             ],
@@ -297,7 +297,7 @@
                 "Via Flaminia",
                 "Via Appia"
             ],
-            "backgroundKnowledge": "Die Via Sacra (heilige Straße) war der Hauptweg des Forum Romanum. Sie führte vom Colosseum zum Kapitol.",
+            "backgroundKnowledge": "Die Via Sacra (heilige Straße) war der Hauptweg des Forum Romanum. Sie führte vom Kolosseum zum Kapitol.",
             "correct": 0,
             "difficult": true
         },
@@ -320,7 +320,7 @@
             "tag": ["Antike"],
             "type": "image",
             "question": "Welche der Säulen im Forum Romanum wurde zu Ehren eines Kaisers errichtet, der eine bedeutende Niederlage der Goten erzielte und ein Reformprogramm zur Stabilisierung des Reiches durchführte?",
-            "imageUrl": "/images/italien//forum-romanum-trajanssaeule.jpg",
+            "imageUrl": "/images/italien/trajanssaeule.jpg",
             "answers": [
                 "Trajanssäule",
                 "Marcus-Aurelius-Säule",
@@ -349,22 +349,8 @@
         {
             "tag": ["Antike"],
             "type": "image",
-            "question": "Welches Gebäude auf dem Forum Romanum, ursprünglich als Tempel erbaut, wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
+            "question": "Welches Gebäude auf dem Forum Romanum - ursprünglich als Tempel erbaut - wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
             "imageUrl": "/images/italien/tempel_Antoninus_Pius_Faustina.jpg",
-            "answers": [
-                "Regia",
-                "Curia Julia",
-                "Basilika Maxentius",
-                "Tempel des Antoninus und der Faustina"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficult": true
-        },
-        {
-            "tag": ["Antike"],
-            "type": "text",
-            "question": "Welches Gebäude auf dem Forum Romanum, ursprünglich als Tempel erbaut, wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
             "answers": [
                 "Regia",
                 "Curia Julia",
@@ -393,7 +379,7 @@
         {
             "tag": ["Antike"],
             "type": "image",
-            "question": "Einer der sieben Hügel Roms, welcher heute ein großer archäologischer Park ist und mit dem Forum Romanum verbunden, gilt als ältester bewohnter Teil der Stadt, wie heißt er?",
+            "question": "Einer der sieben Hügel Roms, welcher heute ein großer archäologischer Park ist und mit dem Forum Romanum verbunden, gilt als ältester bewohnter Teil der Stadt?",
             "imageUrl": "/images/italien/palatin_domus_augusti.jpg",
             "answers": [
                 "Palatin",
@@ -594,7 +580,7 @@
             "question": "Einer der dreizehn Obelisken in Rom, steht auf der Piazza Navona. Wie heißt dieser Obelisk?",
             "imageUrl": "/images/italien/rom-piazza-navona-obelisk.jpg",
             "answers": [
-                "Obelisco Agonale",
+                "Obelisk Agonale",
                 "Obelisk Sallustiano",
                 "Obelisk Vaticano",
                 "Obelisk Flaminio"
@@ -688,7 +674,7 @@
                 "Via Appia",
                 "Via Flaminia"
             ],
-            "backgroundKnowledge": "Die Via Appia Antica, die berühmtesten und ältesten der römischen Straßen, die auch „Regina Viarum“ (Königin der Straßen) genannt wird, ließ der Zensor Appius Claudius Caecus im Jahr 312 v. Chr. anlegen.",
+            "backgroundKnowledge": "Die Via Appia Antica, ist die berühmteste und älteste der römischen Straßen, sie wird auch „Regina Viarum“ (Königin der Straßen) genannt.",
             "correct": 2,
             "difficult": true
         },
@@ -754,12 +740,12 @@
             "type": "text",
             "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
             "answers": [
-                "Colosseum",
+                "Kolosseum",
                 "Thermen des Caracalla",
                 "Augustusbogen",
                 "Pantheon"
             ],
-            "backgroundKnowledge": "Die Kuppel des Pantheons ist ein Meisterwerk der antiken Architektur und bleibt bis heute die größte ununterstützte Kuppel der Welt.",
+            "backgroundKnowledge": "Die Kuppel hat einen Durchmesser von 43,3 Metern und ist die größte nicht verstärkte Betonkuppel der Welt.",
             "correct": 3,
             "difficult": false
         },
@@ -807,24 +793,9 @@
             "difficult": false
         },
         {
-            "tag": [],
-            "type": "image",
-            "question": "de im Pantheon beigesetzt?",
-            "imageUrl": "/images/italien/rom-pantheon.jpg",
-            "answers": [
-                "Ara Pacis",
-                "Mausoleum des Augustus",
-                "Pantheon",
-                "Tempel des Portunus"
-            ],
-            "backgroundKnowledge":"Die Kuppel hat einen Durchmesser von 43,3 Metern und ist die größte nicht verstärkte Betonkuppel der Welt.",
-            "correct": 2,
-            "difficult": false
-        },
-        {
             "tag": ["Antike"],
             "type": "image",
-            "question": "Wie heißt da ursprünglich im 2. Jahrhundert als Mausoleum für Kaiser Hadrian erbaute Gebäude?",
+            "question": "Wie heißt das ursprünglich im 2. Jahrhundert als Mausoleum für Kaiser Hadrian erbaute Gebäude?",
             "imageUrl": "/images/italien/rom-engelsburg.png",
             "answers": [
                 "Engelsburg",
@@ -832,8 +803,8 @@
                 "Pantheon",
                 "Grab des Scipio"
             ],
-            "backgroundKnowledge":"Im Mittelalter wurde sie zur Festung und Zufluchtsstätte für Päpste umgebaut und über einen geheimen Gang, den Passetto di Borgo, mit dem Vatikan verbunden.",
-            "correct": 2,
+            "backgroundKnowledge":"Im Mittelalter wurde die Engelsburg zur Festung und Zufluchtsstätte für Päpste umgebaut und über einen geheimen Gang, den Passetto di Borgo, mit dem Vatikan verbunden.",
+            "correct": 0,
             "difficult": false
         },
 
@@ -952,7 +923,7 @@
                 "Pädagogische Schulbücher",
                 "Fußkette"
             ],
-            "backgroundKnowledge": "Sie erhielten ein Amulett, die 'bulla'. Am 9. Tag nach der Geburt erhielten römische Babys ihre Namen und dieses Amulett, das als unheilabwehrend galt.",
+            "backgroundKnowledge": "Am 9. Tag nach der Geburt erhielten römische Babys ihre Namen und ein Amulett. Die Bulla galt als unheilabwehrend.",
             "correct": 0,
             "difficult": false
         },
@@ -1040,14 +1011,14 @@
                 "Arancini",
                 "Crocchetta"
             ],
-            "backgroundKnowledge": "Ein frittierter Reisball, umhüllt mit Eiern und Paniermehl, gefüllt mit Tomatenragout und Mozzarellakäse.",
+            "backgroundKnowledge": "",
             "correct": 0,
             "difficult": false
         },
         {
             "tag": ["Essen"],
             "type": "image",
-            "question": "Wie heißen die kleinen, leckeren süßen Hefebrötchen, die meist mit einer fast unanständigen Menge Sahne gefüllt sind?",
+            "question": "Wie heißen die kleinen, leckeren, süßen Hefebrötchen, die meist mit einer fast unanständigen Menge Sahne gefüllt sind?",
             "imageUrl": "/images/italien/maritozz.jpg",
             "answers": [
                 "Suppli",
@@ -1077,7 +1048,7 @@
         {
             "tag": ["Essen"],
             "type": "image",
-            "question": "Das gefüllte Pizza-Sandwich ist der neueste Food-Trend aus Rom. Wie heißt diese Pizza-Variante?",
+            "question": "Die gefüllten Pizza-Sandwiche sind der neueste Food-Trend aus Rom. Wie heißt diese Pizza-Variante?",
             "imageUrl": "/images/italien/rom-trapizzino.jpg",
             "answers": [
                 "Panzerotto",
@@ -1100,7 +1071,7 @@
                 "Spaghetti alla Puttanesca",
                 "Penne all'Arrabbiata"
             ],
-            "backgroundKnowledge": "'Arrabbiata' bedeutet auf Italienisch „wütend“. Der Name spielt auf die Schärfe der Sauce an, die einem so richtig einheizen kann – so sehr, dass man beim Essen „vor Wut rot wird“.",
+            "backgroundKnowledge": "Arrabbiata bedeutet auf Italienisch „wütend“. Der Name spielt auf die Schärfe der Sauce an, die einem so richtig einheizen kann – so sehr, dass man beim Essen „vor Wut rot wird“.",
             "correct": 3,
             "difficult": false
         },
@@ -1536,57 +1507,15 @@
         {
             "tag": [],
             "type": "text",
-            "question": "Welches historische Bauwerk in Neapel ist als eines der wichtigsten archäologischen Stätten der antiken Welt bekannt?",
-            "answers": [
-                "Pompeji",
-                "Herculaneum",
-                "Stabiae",
-                "Oplontis"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
             "question": "Welches berühmte Gericht stammt ursprünglich aus Neapel und ist heute weltweit bekannt?",
             "answers": [
-                "Pizza",
+                "Ravioli",
                 "Lasagne",
                 "Spaghetti Carbonara",
-                "Ravioli"
+                "Pizza"
             ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches bekannte Museum in Neapel beherbergt viele bedeutende antike Artefakte und Kunstwerke?",
-            "answers": [
-                "Archäologisches Nationalmuseum",
-                "Museo di Capodimonte",
-                "Museo di San Martino",
-                "Museo del Tesoro di San Gennaro"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welche berühmte Burg in Neapel wurde ursprünglich im 13. Jahrhundert erbaut und bietet einen fantastischen Blick auf die Stadt?",
-            "answers": [
-                "Castel Nuovo",
-                "Castel dell'Ovo",
-                "Castel Sant'Elmo",
-                "Castel Capuano"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
+            "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
+            "correct": 3,
             "difficult": false
         },
         {
@@ -1595,11 +1524,11 @@
             "question": "Welches große, historische Gebäude in Neapel diente als königliche Residenz und ist heute ein Museum?",
             "answers": [
                 "Palazzo Reale",
-                "Palazzo Farnese",
-                "Palazzo Vecchio",
-                "Palazzo dei Papi"
+                "Palazzo dello Spagnolo",
+                "Maschio Angioino (Castel Nuovo)",
+                "Villa Pignatelli"
             ],
-            "backgroundKnowledge": "",
+            "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
             "correct": 0,
             "difficult": false
         },
