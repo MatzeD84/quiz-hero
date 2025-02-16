@@ -76,7 +76,7 @@ p {
     background-color: var(--carrot-color);
 }
 
-.btm--disabled {
+.btn--disabled {
     opacity: 0.25;
     background-color: var(--dark-gray-color) !important;
     cursor: not-allowed;
@@ -210,11 +210,14 @@ p {
 }
 
 .quiz__abort_btn {
+    appearance: none;
     display: grid;
     place-items: center;
     padding: 5px;
     cursor: pointer;
     transition: var(--transition-fade);
+    background-color: unset;
+    border: none;
 }
 
 .quiz__abort_btn:hover {

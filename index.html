@@ -19,9 +19,9 @@
             <button class="js-category-btn btn btn--category" data-category="test">test</button>
             <button class="js-category-btn btn btn--category" data-category="rom">Rom</button>
             <button class="js-category-btn btn btn--category" data-category="neapel">Neapel</button>
-            <button class="js-category-btn btn btn--category btm--disabled" disabled data-category="amalfi">Amalfi Küste</button>
-            <button class="js-category-btn btn btn--category btm--disabled" disabled data-category="florenz">Florenz</button>
-            <button class="js-category-btn btn btn--category btm--disabled" disabled data-category="siena">Siena</button>
+            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="amalfi">Amalfi Küste</button>
+            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="florenz">Florenz</button>
+            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="siena">Siena</button>
         </div>
         <div id="js-question-count-container" class="question_count hide">
             <h2>Wähle die Anzahl der Fragen</h2>
@@ -40,12 +40,12 @@
         <div id="js-quiz-content" class="quiz hide">
             <div class="quiz__container">
                 <div class="quiz__abort">
-                    <div id="js-abort-btn" class="quiz__abort_btn" title="Quiz Abbrechen">
+                    <button id="js-abort-btn" class="quiz__abort_btn" title="Quiz Abbrechen">
                         <svg class="quiz__abort_svg" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">^
                             <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                         </svg>
-                    </div>
+                    </button>
                 </div>
                 <p id="js-question" class="quiz__question"></p>
                 <div class="quiz__question_image_container">
@@ -83,7 +83,7 @@
         </div>
         <div id="js-modal" class="modal hide">
             <div class="modal-content">
-                <span id="js-modal-close" class="modal-close">&times;</span>
+                <button id="js-modal-close" class="modal-close">&times;</button>
                 <p id="js-modal-score"></p>
             </div>
         </div>
