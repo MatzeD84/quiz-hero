@@ -144,6 +144,7 @@ function selectAnswer(selectedAnswerIndex) {
     }
 
     if (isCorrect) {
+        currentQuestions[currentQuestionIndex].answeredCorrectly = true;
         let feedbackArray;
         if (difficult && attempts === 0) {
             feedbackArray = feedbackMessages.difficultCorrectFirstTry;
@@ -223,7 +224,8 @@ function abortQuiz() {
 }
 
 function showResultModal() {
-    modalContent.innerHTML = `<h2>Quiz beendet!</h2><p>Deine Punktzahl ist: <strong>${score}</strong></p>`;
+    const correctPercentage = calculateCorrectPercentage();
+    modalContent.innerHTML = `<h2>Quiz beendet!</h2><p>Deine Punktzahl ist: <strong>${score}</strong> (${correctPercentage}%)</p>`;
     showElement(modal);
 }
 
@@ -262,4 +264,11 @@ function animateScoreIncrease() {
     setTimeout(() => {
         scoreElement.classList.remove('quiz__score--animation');
     }, 800);
+}
+
+function calculateCorrectPercentage() {
+    const totalQuestions = currentQuestions.length;
+    const correctAnswers = currentQuestions.filter(q => q.answeredCorrectly).length;
+    const percentage = (correctAnswers / totalQuestions) * 100;
+    return Math.round(percentage);
 }
