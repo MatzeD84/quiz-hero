@@ -156,6 +156,7 @@ function selectAnswer(selectedAnswerIndex) {
         feedbackElement.textContent = getRandomFeedback(feedbackArray);
         feedbackIconCorrect.classList.remove('hide');
         score += attempts === 0 ? (difficult ? 5 : 3) : 1;
+        animateScoreIncrease();
         endQuestion(buttons, feedbackElement, nextButton, backgroundKnowledgeElement);
 
     } else {
@@ -251,4 +252,14 @@ function hideElement(element) {
 
 function getRandomFeedback(feedbackArray) {
     return feedbackArray[Math.floor(Math.random() * feedbackArray.length)];
+}
+
+
+function animateScoreIncrease() {
+    const scoreElement = document.getElementById('js-score');
+    scoreElement.classList.add('quiz__score--animation');
+
+    setTimeout(() => {
+        scoreElement.classList.remove('quiz__score--animation');
+    }, 800);
 }

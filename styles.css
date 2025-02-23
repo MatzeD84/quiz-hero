@@ -279,12 +279,20 @@ p {
 
 
 .quiz__score--animation {
-    color: red;
-    animation: scoreIncrease 0.3s ease-in-out;
+    color: var(--greensea-color);
+    animation: scoreIncrease 0.8s ease-in-out;
 }
 
 @keyframes scoreIncrease {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
+    0% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.4); 
+        font-weight: 500;
+    }
+    100% { 
+        transform: scale(1); 
+        font-weight: 200;
+    }
 }
