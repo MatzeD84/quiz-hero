@@ -8,6 +8,11 @@ let feedbackMessages = {};
 const feedbackIconCorrect = document.getElementById('js-feedback-icon-correct');
 const feedbackIconIncorrect = document.getElementById('js-feedback-icon-incorrect');
 
+const modal = document.getElementById('js-result-modal');
+const modalContent = document.getElementById('js-result-content');
+const modalClose = document.getElementById('js-modal-close');
+
+
 document.addEventListener('DOMContentLoaded', () => {
     Promise.all([
         fetch('questions.json').then(response => response.json()),
@@ -44,6 +49,7 @@ function initializeQuiz() {
     });
 
     showElement(categoryContainer);
+    modalClose.addEventListener('click', closeModal);
     hideElement(questionCountContainer);
     hideElement(quizContent);
     hideElement(nextButton);
@@ -184,7 +190,7 @@ function nextQuestion() {
         loadQuestion();
         hideElement(nextButton);
     } else {
-        alert(`Quiz beendet! Deine Punktzahl ist: ${score}`);
+        showResultModal();
         toggleVisibility('js-quiz-content', 'js-category-container');
         hideElement(feedbackIconCorrect);
         hideElement(feedbackIconIncorrect);
@@ -215,9 +221,20 @@ function abortQuiz() {
     updateScore();
 }
 
-function updateScore() {
-    document.getElementById('js-score').textContent = `Punkte: ${score}`;
+function showResultModal() {
+    modalContent.innerHTML = `<h2>Quiz beendet!</h2><p>Deine Punktzahl ist: <strong>${score}</strong></p>`;
+    showElement(modal);
 }
+
+function closeModal() {
+    hideElement(modal);
+}
+
+function updateScore() {
+    const scoreElement =  document.getElementById('js-score')
+    scoreElement.textContent = `Punkte: ${score}`;
+}
+
 
 function toggleVisibility(hideId, showId) {
     hideElement(document.getElementById(hideId));
