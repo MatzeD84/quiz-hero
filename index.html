@@ -8,23 +8,31 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles-v1.css" />
 </head>
 <body>
     <main class="container">
-        <h1 class="main_headline">Quiz-Hero</h1>
-        <div id="js-category-container" class="category">
-            <button class="js-category-btn btn btn--category" data-category="test">test</button>
-            <button class="js-category-btn btn btn--category" data-category="rom">Rom</button>
-            <button class="js-category-btn btn btn--category" data-category="neapel">Neapel</button>
-            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="amalfi">Amalfi Küste</button>
-            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="florenz">Florenz</button>
-            <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="siena">Siena</button>
+        <div id="js-category-container">
+            <div class="main__header">
+                <img class="main_image" src="images/website/logo.png" alt="Logo">
+                <h1 class="main_headline">Quiz-Hero</h1>
+            </div>
+            <div class="category">
+                <button class="js-category-btn btn btn--category" data-category="test">test</button>
+                <button class="js-category-btn btn btn--category" data-category="rom">Rom</button>
+                <button class="js-category-btn btn btn--category" data-category="neapel">Neapel</button>
+                <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="amalfi">Amalfi Küste</button>
+                <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="florenz">Florenz</button>
+                <button class="js-category-btn btn btn--category btn--disabled" disabled data-category="siena">Siena</button>
+            </div>
         </div>
         <div id="js-question-count-container" class="question_count hide">
-            <h2>Wähle die Anzahl der Fragen</h2>
+            <div class="question_count__header">
+                 <img class="main_image" src="images/website/logo.png" alt="Logo">
+                 <h2>Wähle die Anzahl der Fragen</h2>
+            </div>
             <div class="quiz__question_count_select">
                 <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
                 <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>
@@ -33,7 +41,7 @@
             </div>
             <div>
                 <div id="js-back-to-category-page" class="question_count_back_btn" role="button">
-                    <small>zurück</small>
+                    <small class="question_count_back_btn__text">zurück</small>
                 </div>
             </div>
         </div>
@@ -56,7 +64,7 @@
                         </svg>
                     </button>
                 </div>
-                <p id="js-question" class="quiz__question"></p>
+                <p id="js-question" class="quiz__question headline"></p>
                 <div class="quiz__question_image_container">
                     <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" />
                 </div>
@@ -75,10 +83,10 @@
                     </svg>
                     <p id="js-feedback" class="quiz__feedback hide"></p>
                 </div>
-                <div id="js-background-knowledge" class="background-knowledge hide"></div>
                 <div class="quiz__footer">
                     <button id="js-next-btn" class="btn btn--next hide">Weiter</button>
                 </div>
+                <div id="js-background-knowledge" class="background-knowledge hide"></div>
             </div>
         </div>
         <div id="js-result-modal" class="modal hide">
@@ -96,5 +104,7 @@
         </div>
         <script src="script.js"></script>
     </main>
+    <div id="tag-container"></div>
+<div id="question-container"></div>
 </body>
 </html>

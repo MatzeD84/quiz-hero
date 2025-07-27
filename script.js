@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMessages = feedbackData;
         // Quiz vorbereiten
         initializeQuiz();
+        //processTags();
     })
     .catch(error => console.error('Error loading data:', error));
 });
@@ -454,7 +455,7 @@ function showResultModal() {
 
     //  Die Korrektheitsrate (in Prozent) berechnen
     const correctPercentage = calculateCorrectPercentage();
-    modalContent.innerHTML = `<h2>Quiz beendet!</h2><p>Deine Punktzahl ist: <strong>${score}</strong> (${correctPercentage}%)</p>`;
+    modalContent.innerHTML = `<h2 class="modal__headline">Quiz beendet!</h2><p>Deine Punktzahl ist: <strong>${score}</strong> (${correctPercentage}%)</p>`;
     showElement(modal);
 }
 
@@ -499,4 +500,76 @@ function calculateCorrectPercentage() {
     const correctAnswers = currentQuestions.filter(q => q.answeredCorrectly).length;
     const percentage = (correctAnswers / totalQuestions) * 100;
     return Math.round(percentage);
+}
+
+
+// Funktion zum Verarbeiten der Tags, nachdem questions geladen wurde
+function processTags() {
+    const tagCounter = {};  // Speichert die Anzahl der Tags
+    const tagToQuestions = {}; // Speichert Fragen nach Tags gruppiert
+
+    // 🔍 Alle Fragen durchsuchen und Tags gruppieren
+    for (const category in questions) {
+        questions[category].forEach(question => {
+            question.tag.forEach(tag => {
+                if (!tagCounter[tag]) {
+                    tagCounter[tag] = 0;
+                    tagToQuestions[tag] = [];
+                }
+                tagCounter[tag]++;
+                tagToQuestions[tag].push(question);
+            });
+        });
+    }
+
+    createTagButtons(tagCounter, tagToQuestions);
+}
+
+
+function createTagButtons(tagCounter, tagToQuestions) {
+    const tagContainer = document.getElementById('tag-container');
+    tagContainer.innerHTML = ''; // Vorherige Inhalte entfernen
+
+    for (const tag in tagCounter) {
+        const button = document.createElement('button');
+        button.textContent = `${tag} (${tagCounter[tag]})`;
+        button.classList.add('tag-button');
+        button.addEventListener('click', () => displayQuestionsByTag(tag, tagToQuestions));
+        tagContainer.appendChild(button);
+    }
+}
+
+function displayQuestionsByTag(tag, tagToQuestions) {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.innerHTML = ''; // Vorherige Inhalte entfernen
+
+    tagToQuestions[tag].forEach(question => {
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('question-item');
+
+        // Falls ein Bild vorhanden ist, hinzufügen
+        if (question.type === 'image' && question.imageUrl) {
+            const imageElement = document.createElement('img');
+            imageElement.src = question.imageUrl;
+            imageElement.alt = 'Fragenbild';
+            imageElement.classList.add('question-image');
+            questionElement.appendChild(imageElement);
+        }
+
+        // Frage hinzufügen
+        const questionText = document.createElement('h3');
+        questionText.textContent = question.question;
+        questionElement.appendChild(questionText);
+
+        // Antwortmöglichkeiten hinzufügen
+        const answerList = document.createElement('ul');
+        question.answers.forEach(answer => {
+            const answerItem = document.createElement('li');
+            answerItem.textContent = answer;
+            answerList.appendChild(answerItem);
+        });
+        questionElement.appendChild(answerList);
+
+        questionContainer.appendChild(questionElement);
+    });
 }
