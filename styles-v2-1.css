@@ -38,7 +38,7 @@ body {
 
 @media (max-width: 768px) {
     body {
-        margin: 0 8px;
+        margin: 0 8px 8px;
     }
 }
 
@@ -179,13 +179,21 @@ p {
 
 @media (max-width: 768px) {
     .quiz__container {
-        padding: 1rem 0;
+        padding: 1rem 0.5rem;
     }
 }
 
 .quiz__score_container {
     display: flex;
     justify-content: space-between;
+}
+
+.quiz__headertext p {
+    font-weight: 700;
+}
+
+.quiz__headertext--difficult {
+    color: var(--amethyst-color);
 }
 
 

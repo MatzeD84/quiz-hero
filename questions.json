@@ -6,7 +6,7 @@
             ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
-            "imageUrl": "/images/italien/mund_der_wahrheit.jpg",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
             "answers": [
                 "Das Auge der Weisheit",
                 "Der Mund der Wahrheit ",
@@ -123,7 +123,7 @@
                 "Antike"
             ],
             "type": "image",
-            "question": "Das Kolosseum war bekannt für seine aufwändigen Inszenierungen. Welcher Begriff beschreibt die nachgestellten Seeschlachten, die im gefluteten Kolosseum stattfanden?",
+            "question": "Das Kolosseum war bekannt für seine aufwändigen Inszenierungen. Welcher Begriff beschreibt die nachgestellten Seeschlachten, die im gefluteten Kolosseum vermutlich stattfanden?",
             "imageUrl": "/images/italien/naumachia-colosseum.png",
             "answers": [
                 "Nautica",
@@ -418,7 +418,7 @@
             "answers": [
                 "Bis zu 5.000",
                 "Bis zu 30.000",
-                "Bis zu 80.000",
+                "Bis zu 50.000",
                 "Bis zu 120.000"
             ],
             "backgroundKnowledge": "",
@@ -691,7 +691,7 @@
             ],
             "backgroundKnowledge": "Sie wurde zu Ehren des Kaisers Trajan zum Gedenken an seine Siege in Dakien (dem heutigen Rumänien) errichtet.",
             "correct": 2,
-            "difficult": false
+            "difficult": true
         },
         {
             "tag": [],
@@ -793,6 +793,21 @@
             "difficult": false
         },
         {
+            "tag": [],
+            "type": "image",
+            "question": "Welches antike Bauwerk ist auf dem Bild zu sehen?",
+            "imageUrl": "/images/italien/rom-pantheon.jpg",
+            "answers": [
+                "Pantheon",
+                "Tempel des Hadrian",
+                "Maison Carrée",
+                "Engelsburg"
+            ],
+            "backgroundKnowledge":"",
+            "correct": 0,
+            "difficult": false
+        },
+        {
             "tag": ["Antike"],
             "type": "image",
             "question": "Wie heißt das ursprünglich im 2. Jahrhundert als Mausoleum für Kaiser Hadrian erbaute Gebäude?",
@@ -824,7 +839,7 @@
         },
         {
             "tag": [],
-            "type": "img",
+            "type": "image",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
             "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
             "answers": [
@@ -984,20 +999,6 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": ["Essen"],
-            "type": "text",
-            "question": "Wie nennt man das traditionelle römische Gericht, das aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
-            "answers": [
-                "Saltimbocca",
-                "Abbacchio alla Romana",
-                "Porchetta",
-                "Coda alla Vaccinara"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
             "difficult": false
         },
         {

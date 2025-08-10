@@ -201,6 +201,8 @@ function loadQuestion() {
     const currentQuestionElement = document.getElementById('js-current-question');
     const totalQuestionsElement = document.getElementById('js-total-questions');
     const quizContent = document.getElementById('js-quiz-content');
+    const quizHeadertext = document.getElementById('js-quiz-headertext');
+    quizHeadertext.textContent = "Frage:";
     const backgroundKnowledgeElement = document.getElementById('js-background-knowledge');
 
     // Aktualisiert die Anzeige der aktuellen Frage (z. B. "3 / 10")
@@ -237,6 +239,11 @@ function loadQuestion() {
 
     // Falls die Frage als "schwer" markiert ist, wird das Styling angepasst
     quizContent.classList.toggle('quiz__difficult_question', difficult);
+    quizHeadertext.classList.toggle('quiz__headertext--difficult', difficult);
+    // Aktualisiert den Headertext
+    if (difficult) {
+        quizHeadertext.textContent = "Hero-Frage:";
+    };
 }
 
 /**
