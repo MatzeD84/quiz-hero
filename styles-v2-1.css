@@ -122,11 +122,6 @@ p {
     display: grid;
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-
-}
-
-.question_count {
-
 }
 
 .question_count__header {
@@ -147,10 +142,6 @@ p {
 .quiz__question {
     margin-bottom: 1rem;
     font-weight: 400;
-}
-
-.question_count__btn {
-
 }
 
 .question_count_back_btn {
