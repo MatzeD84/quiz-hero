@@ -10,7 +10,7 @@
         {
           "tag": ["Antike"],
           "type": "image",
-          "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+          "question": "1. EASY Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
           "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
           "answers": [
             "Das Auge der Weisheit",
@@ -20,7 +20,37 @@
           ],
           "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
           "correct": 1,
-          "difficult": false
+          "difficulty": "easy"
+        },
+        {
+          "tag": ["Antike"],
+          "type": "image",
+          "question": "2. HERO Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+          "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+          "answers": [
+            "Das Auge der Weisheit",
+            "Der Mund der Wahrheit",
+            "Die Nase der Würde",
+            "Der Nichtsehende"
+          ],
+          "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+          "correct": 1,
+          "difficulty": "hero"
+        },
+        {
+          "tag": ["Antike"],
+          "type": "image",
+          "question": "3. MEDIUM Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+          "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+          "answers": [
+            "Das Auge der Weisheit",
+            "Der Mund der Wahrheit",
+            "Die Nase der Würde",
+            "Der Nichtsehende"
+          ],
+          "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+          "correct": 1,
+          "difficulty": "me medium"
         }
       ]
     },
@@ -44,7 +74,7 @@
           ],
           "backgroundKnowledge": "Die antike Bezeichnung Amphitheatrum Flavium ...",
           "correct": 0,
-          "difficult": false
+          "difficulty": "easy"
         },
         {
           "tag": ["Antike"],
@@ -54,7 +84,7 @@
           "answers": ["Vespasian", "Nero", "Trajan", "Hadrian"],
           "backgroundKnowledge": "Der flavische Kaiser Titus Flavius Vespasian ließ ...",
           "correct": 0,
-          "difficult": false
+          "difficulty": "easy"
         },
         {
             "tag": [
@@ -70,7 +100,7 @@
             ],
             "backgroundKnowledge": "Das Kolosseum besaß etwa 80 Ein- (und Aus-)gänge. So konnten die Menschenmassen schnell hinein- und wieder hinauskommen.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -86,7 +116,7 @@
             ],
             "backgroundKnowledge": "Der Name stammt nicht von seiner Größe ab, sondern weil es nebenan eine riesige Statue des Kaisers Nero stand, der sogenannte Kolossal des Nero",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -102,7 +132,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -119,7 +149,7 @@
             ],
             "backgroundKnowledge": "Kaiser Domitian, der jüngere Bruder von Kaiser Titus, erweiterte das Kolosseum durch den Bau des vierten Rangs, um den unteren Gesellschaftsschichten den Besuch von Veranstaltungen zu ermöglichen.",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [
@@ -136,7 +166,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [
@@ -152,7 +182,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -168,7 +198,7 @@
             ],
             "backgroundKnowledge": "Es ermöglichte den schnellen und dramatischen Auftritt während der Spiele. Mit Hebevorrichtungen und Falltüren konnten Tiere und Kämpfer direkt in die Arena gebracht werden, was die Inszenierungen noch spektakulärer machte.",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -183,7 +213,7 @@
             ],
             "backgroundKnowledge": " ",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -197,7 +227,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -212,7 +242,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -227,7 +257,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -241,7 +271,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -256,7 +286,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             
@@ -272,7 +302,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Antike"],
@@ -287,7 +317,7 @@
             ],
             "backgroundKnowledge": "Der Tempel ist weitgehend zerstört, da gerade dieses Areal in Renaissance und Barock als Steinbruch genutzt wurde. Lediglich die drei mächtigen Kerne des Tempelpodiums sind erhalten.",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -302,7 +332,7 @@
             ],
             "backgroundKnowledge": "Die Via Sacra (heilige Straße) war der Hauptweg des Forum Romanum. Sie führte vom Kolosseum zum Kapitol.",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -317,7 +347,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -332,7 +362,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -347,7 +377,7 @@
             ],
             "backgroundKnowledge": "Anlässlich der Vergöttlichung von Kaiser Titus ließ dessen jüngerer Bruder und Nachfolger Domitian den Titusbogen auf dem Forum errichten, der an dessen größten Triumph erinnert: die Niederschlagung eines Judäeraufstandes und die Eroberung Jerusalems.",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -362,7 +392,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": ["Antike"],
@@ -377,7 +407,7 @@
             ],
             "backgroundKnowledge": "Das Forum Romanum (Römischer Marktplatz) ist das älteste römische Forum.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Antike"],
@@ -392,7 +422,7 @@
             ],
             "backgroundKnowledge": "Der Palatin war einst eine elegante Wohngegend für römische Eliten, einschließlich Kaiser wie Augustus und Tiberius.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -409,7 +439,7 @@
             ],
             "backgroundKnowledge": "Halb Rom besteht aus Travertin. Kaiser, Päpste, Fürsten und Faschistenführer nutzten den eleganten und dabei ganz pflegeleichten Kalkstein.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
 
         {
@@ -426,7 +456,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -442,7 +472,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -456,7 +486,7 @@
             ],
             "backgroundKnowledge": "Die Uffizien sind ein Kunstmuseum in Florenz.",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -471,7 +501,7 @@
             ],
             "backgroundKnowledge": "In seiner Hochphase, während des Kaiserreichs, konnte das Stadion 30.000 Zuschauer aufnehmen.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -486,7 +516,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -501,7 +531,7 @@
             ],
             "backgroundKnowledge": "Fontana dei Quattro Fiumi (Vierströmebrunnen)",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -518,7 +548,7 @@
             ],
             "backgroundKnowledge": "Der Brunnen symbolisiert vier große Flüsse der damaligen Welt: den Nil, die Donau, den Ganges und den Río de la Plata.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -532,7 +562,7 @@
             ],
             "backgroundKnowledge": "Die charakteristische längliche Form der Piazza Navona folgt noch heute dem Grundriss des antiken Stadions.",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -546,7 +576,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -561,7 +591,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -575,7 +605,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -590,7 +620,7 @@
             ],
             "backgroundKnowledge": "Der Obelisk steht in der Mitte der Piazza Navona und ist Teil des Vierströmebrunnen von Bernini.",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -605,7 +635,7 @@
             ],
             "backgroundKnowledge": "Die zentrale Figur zeigt Neptun, den römischen Meeresgott, im Kampf gegen einen Oktopus, umgeben von Nereiden (Meerjungfrauen) und Seepferdchen.",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -620,7 +650,7 @@
             ],
             "backgroundKnowledge": "Die zentrale Figur, die später von Bernini hinzugefügt wurde, zeigt einen muskulösen „Mohren“ (einen Afrikaner oder Triton), der mit einem Delfin kämpft.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -635,7 +665,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -649,7 +679,7 @@
             ],
             "backgroundKnowledge": "Fontana dei Quattro Fiumi (Vierströmebrunnen)",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -664,7 +694,7 @@
             ],
             "backgroundKnowledge": "Der Platz ist bekannt für seine drei beeindruckenden Brunnen, darunter der berühmte Vierströmebrunnen, der von Gian Lorenzo Bernini entworfen wurde.",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -679,7 +709,7 @@
             ],
             "backgroundKnowledge": "Die Via Appia Antica, ist die berühmteste und älteste der römischen Straßen, sie wird auch „Regina Viarum“ (Königin der Straßen) genannt.",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -694,7 +724,7 @@
             ],
             "backgroundKnowledge": "Sie wurde zu Ehren des Kaisers Trajan zum Gedenken an seine Siege in Dakien (dem heutigen Rumänien) errichtet.",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -708,7 +738,7 @@
             ],
             "backgroundKnowledge": "Diese alte Straße, die aus dem 4. Jahrhundert v. Chr. stammt, führt von Rom nach Süditalien und ist gesäumt von monumentalen Gräbern und Katakomben, darunter die Gräber der Familien der römischen Aristokratie und verschiedene historische Nekropolen.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -722,7 +752,7 @@
             ],
             "backgroundKnowledge": "Die Villa Adriana (Hadriansvilla) in Tivoli nahe Rom ist eine weitläufige antike Residenz, die Kaiser Hadrian im 2. Jahrhundert n. Chr. als luxuriösen Rückzugsort errichten ließ. Die Anlage umfasst Tempel, Bibliotheken, Theater und Bäder und spiegelt Hadrians Interesse an der Architektur und den Kulturen des gesamten Römischen Reiches wider.",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -736,7 +766,7 @@
             ],
             "backgroundKnowledge": "Das Pantheon in Rom wurde ursprünglich von Marcus Vipsanius Agrippa entworfen, wurde jedoch durch Brände beschädigt. Kaiser Hadrian war der Bauherr und Hauptverantwortliche für die erneute Gestaltung und den Bau des Pantheons, das um 118-125 n. Chr. fertiggestellt wurde.",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -750,7 +780,7 @@
             ],
             "backgroundKnowledge": "Die Kuppel hat einen Durchmesser von 43,3 Metern und ist die größte nicht verstärkte Betonkuppel der Welt.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -764,7 +794,7 @@
             ],
             "backgroundKnowledge": "Der Name „Pantheon“ bedeutet „All-Götter“ und reflektiert den Zweck des Tempels als eine allgemeine Verehrungsstätte für alle römischen Götter.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -778,7 +808,7 @@
             ],
             "backgroundKnowledge":"Das Oculus ist ein rundes Loch in der Mitte der Kuppel, durch das Tageslicht strömt und einen dramatischen Lichtstrahl auf den Innenraum des Tempels wirft.",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -793,7 +823,7 @@
             ],
             "backgroundKnowledge":"",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -808,7 +838,7 @@
             ],
             "backgroundKnowledge":"",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Antike"],
@@ -823,7 +853,7 @@
             ],
             "backgroundKnowledge":"Im Mittelalter wurde die Engelsburg zur Festung und Zufluchtsstätte für Päpste umgebaut und über einen geheimen Gang, den Passetto di Borgo, mit dem Vatikan verbunden.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
 
         {
@@ -838,7 +868,7 @@
             ],
             "backgroundKnowledge": "Die Domus Aurea (Goldenes Haus) war eine riesige Palastanlage, die von Kaiser Nero nach dem großen Brand von 64 n. Chr. in Rom erbaut wurde. Die prächtige Residenz erstreckte sich über große Teile des Stadtgebiets und war für ihren Luxus und ihre Opulenz bekannt.",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -853,7 +883,7 @@
             ],
             "backgroundKnowledge": "Der Biblioteca Apostolica Vaticana (Vatikanische Bibliothek) befindet sich im Vatikanischen Palast (Palazzo Vaticano). Die Bibliothek ist in einem speziellen Gebäudetrakt des Vatikanischen Palastes untergebracht.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -867,7 +897,7 @@
             ],
             "backgroundKnowledge": "An der Piazza di Spagna (übersetzt: Spanischer Platz) verbindet die Spanische Treppe die Kirche Santa Trinità dei Monti mit dem Platz im Zentrum der Stadt.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -881,7 +911,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -895,7 +925,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -911,7 +941,7 @@
             ],
             "backgroundKnowledge": "Die römische Göttin Minerva hat ihre griechische Entsprechung in Athene (Schutzgöttin).",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -927,7 +957,7 @@
             ],
             "backgroundKnowledge": "Sesterz: Eine große Bronze- oder Kupfermünze, die in der Kaiserzeit populär war. Der Sesterz war ein häufig verwendetes Zahlungsmittel und diente oft auch als Recheneinheit in der Buchhaltung.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -943,7 +973,7 @@
             ],
             "backgroundKnowledge": "Am 9. Tag nach der Geburt erhielten römische Babys ihre Namen und ein Amulett. Die Bulla galt als unheilabwehrend.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -960,7 +990,7 @@
             ],
             "backgroundKnowledge": "Am Eingang der Kirche Santa Maria legen die Menschen ihre Hand in den marmornen Mund der Wahrheit (Bocca della Verità). Im Mittelalter soll er der Wahrheitsfindung gedient haben: Wer beim Lügen ertappt wurde, dem biss der Mund der Sage nach die Hand ab.",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -974,7 +1004,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -988,7 +1018,7 @@
             ],
             "backgroundKnowledge": "Das Pastagericht besteht hauptsächlich aus Pecorino-Käse und Pfeffer.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1002,7 +1032,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1017,7 +1047,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1032,7 +1062,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1047,7 +1077,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1062,7 +1092,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1077,7 +1107,7 @@
             ],
             "backgroundKnowledge": "Arrabbiata bedeutet auf Italienisch „wütend“. Der Name spielt auf die Schärfe der Sauce an, die einem so richtig einheizen kann – so sehr, dass man beim Essen „vor Wut rot wird“.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": ["Essen"],
@@ -1092,7 +1122,7 @@
             ],
             "backgroundKnowledge": "Neben Klassikern wie Pomodoro und Mozzarella findet man auch Beläge wie Kartoffeln und Rosmarin, Kürbis und Speck, oder auch Zucchini und Ziegenkäse.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [
@@ -1108,7 +1138,7 @@
             ],
             "backgroundKnowledge": "Die Region Latium unterteilt sich wiederum in fünf Provinzen: Frosinone, Latina, Rieti, Rom und Viterbo.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         }
       ]
     },
@@ -1131,7 +1161,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1145,7 +1175,7 @@
             ],
             "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1159,7 +1189,7 @@
             ],
             "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1174,7 +1204,7 @@
             ],
             "backgroundKnowledge": "Das Teatro di San Carlo wurde 1737 eröffnet und ist das älteste noch aktive Opernhaus in Europa.",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1188,7 +1218,7 @@
             ],
             "backgroundKnowledge": "Sie verbindet das Piazza Dante mit dem Piazza del Plebiscito und ist heute ein wichtiges Einkaufs- und Geschäftsviertel",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1202,7 +1232,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1217,7 +1247,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         }
       ]
     },
@@ -1240,7 +1270,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1254,7 +1284,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1268,7 +1298,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1282,7 +1312,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1296,7 +1326,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1310,7 +1340,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1324,7 +1354,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1338,7 +1368,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1352,7 +1382,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1366,7 +1396,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1380,7 +1410,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1394,7 +1424,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1408,7 +1438,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1422,7 +1452,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1436,7 +1466,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1450,7 +1480,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1464,7 +1494,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1478,7 +1508,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1492,7 +1522,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1506,7 +1536,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1520,7 +1550,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1534,7 +1564,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1548,7 +1578,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1562,7 +1592,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1576,7 +1606,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1590,7 +1620,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1604,7 +1634,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         }
       ]
     },
@@ -1627,7 +1657,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1641,7 +1671,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1655,7 +1685,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1669,7 +1699,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1683,7 +1713,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1697,7 +1727,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1711,7 +1741,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1725,7 +1755,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1739,7 +1769,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1753,7 +1783,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1767,7 +1797,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1781,7 +1811,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1795,7 +1825,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1809,7 +1839,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1823,7 +1853,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1837,7 +1867,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1851,7 +1881,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1865,7 +1895,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1879,7 +1909,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1893,7 +1923,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1907,7 +1937,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1921,7 +1951,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1935,7 +1965,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1949,7 +1979,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1963,7 +1993,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1977,7 +2007,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -1991,7 +2021,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2005,7 +2035,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2019,7 +2049,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2033,7 +2063,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2047,7 +2077,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2061,7 +2091,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2075,7 +2105,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2089,7 +2119,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2103,7 +2133,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2117,7 +2147,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2131,7 +2161,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2145,7 +2175,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2159,7 +2189,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2173,7 +2203,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2187,7 +2217,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2201,7 +2231,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2215,7 +2245,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2229,7 +2259,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2243,7 +2273,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2257,7 +2287,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2271,7 +2301,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2285,7 +2315,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2299,7 +2329,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2313,7 +2343,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2327,7 +2357,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2341,7 +2371,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2355,7 +2385,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2369,7 +2399,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2383,7 +2413,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -2397,7 +2427,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         }
       ]
     },
@@ -2419,7 +2449,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2433,7 +2463,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2447,7 +2477,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2461,7 +2491,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2475,7 +2505,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2489,7 +2519,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2503,7 +2533,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2517,7 +2547,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2531,7 +2561,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2545,7 +2575,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2559,7 +2589,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2573,7 +2603,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2587,7 +2617,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2601,7 +2631,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2615,7 +2645,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2629,7 +2659,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2643,7 +2673,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2657,7 +2687,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2671,7 +2701,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2685,7 +2715,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2699,7 +2729,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2713,7 +2743,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2727,7 +2757,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2741,7 +2771,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2755,7 +2785,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2769,7 +2799,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2783,7 +2813,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2797,7 +2827,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2811,7 +2841,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2825,7 +2855,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2839,7 +2869,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2853,7 +2883,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2867,7 +2897,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2881,7 +2911,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2895,7 +2925,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2909,7 +2939,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2923,7 +2953,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2937,7 +2967,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2951,7 +2981,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2965,7 +2995,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2979,7 +3009,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -2993,7 +3023,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3007,7 +3037,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3021,7 +3051,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3035,7 +3065,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3049,7 +3079,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3063,7 +3093,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3077,7 +3107,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3091,7 +3121,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3105,7 +3135,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3119,7 +3149,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3133,7 +3163,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3147,7 +3177,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": false
+            "difficulty": "easy"
         },
         {
             "tag": [],
@@ -3161,7 +3191,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3175,7 +3205,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3189,7 +3219,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3203,7 +3233,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3217,7 +3247,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3231,7 +3261,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3245,7 +3275,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         },
         {
             "tag": [],
@@ -3259,7 +3289,7 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficult": true
+            "difficulty": "hero"
         }
       ]
     }

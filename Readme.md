@@ -1,10 +1,13 @@
 ToDos:
+- über data-difficulty="easy|medium|hero" CSS anpassen
+
+ToDos ChatGPT:
+
+- Sinnvoll die JS Klassen auf mehrere files zu verteilen?
+- Mehrere json-Datein anlegen pro Kategorie?
 
 
 
-
-
-Mehrere Texte enthalten Mojibake (W��hle, Amalfi KǬste, zurǬck, ^ im SVG bei index.html:75/109), ein Zeichen dafür, dass Dateien nicht konsistent als UTF‑8 gespeichert sind. Das wirkt unseriös und erschwert Suchen in JSON/JS.
 
 
 Fragen enthalten nur boolesches difficult (questions.json:17-18). Mit einem enumartigen Feld (difficulty: 'easy'|'hero') und einer separaten Punktetabelle ließen sich spätere Erweiterungen (z. B. mehr als zwei Stufen) einfacher abbilden.

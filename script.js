@@ -3,9 +3,13 @@
         questionsUrl: 'questions.json',
         feedbackUrl: 'feedback.json',
         score: {
-            normal: 3,
-            difficult: 5,
-            secondTry: 1
+            secondTry: 1,
+            difficulties: {
+                easy: 2,
+                medium: 3,
+                hero: 5
+            },
+            defaultDifficulty: 'easy'
         },
         maxAttempts: 2
     };
@@ -33,6 +37,15 @@
         modal: '#js-result-modal',
         modalContent: '#js-result-content',
         modalCloseButton: '#js-modal-close'
+    };
+
+    const getPointsForDifficulty = (difficulty, attempt) => {
+        if (attempt > 0) {
+            return CONFIG.score.secondTry;
+        }
+        const level = difficulty || CONFIG.score.defaultDifficulty;
+        const table = CONFIG.score.difficulties;
+        return table[level] ?? table[CONFIG.score.defaultDifficulty];
     };
 
     class QuizDataService {
@@ -120,14 +133,10 @@
             return this.currentSequence[this.currentIndex] ?? null;
         }
 
-        registerAttempt(isCorrect, isDifficult) {
+        registerAttempt(isCorrect, difficulty) {
             if (isCorrect) {
                 this.getCurrentQuestion().answeredCorrectly = true;
-                if (this.attempts === 0) {
-                    this.score += isDifficult ? CONFIG.score.difficult : CONFIG.score.normal;
-                } else {
-                    this.score += CONFIG.score.secondTry;
-                }
+                this.score += getPointsForDifficulty(difficulty, this.attempts);
             }
             this.attempts += 1;
         }
@@ -279,12 +288,15 @@
 
         renderQuestion(question, meta) {
             const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, backgroundKnowledge, feedbackElement, nextButton } = this.elements;
-            const { type, imageUrl, answers, difficult } = question;
+            const { type, imageUrl, answers } = question;
+            const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
+            const isHero = difficulty === 'hero';
 
             questionElement.textContent = question.question;
-            quizHeadertext.textContent = difficult ? 'Hero-Frage:' : 'Frage:';
-            quizContent.classList.toggle('quiz__difficult_question', Boolean(difficult));
-            quizHeadertext.classList.toggle('quiz__headertext--difficult', Boolean(difficult));
+            quizHeadertext.textContent = isHero ? 'Hero-Frage:' : 'Frage:';
+            quizContent.dataset.difficulty = difficulty;
+            quizContent.classList.toggle('quiz__difficult_question', isHero);
+            quizHeadertext.classList.toggle('quiz__headertext--difficult', isHero);
 
             const showImage = type === 'image' && Boolean(imageUrl);
             questionImage.classList.toggle('hide', !showImage);
@@ -457,6 +469,8 @@
             }
 
             const isCorrect = index === question.correct;
+            const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
+
             this.view.markAnswerButton(index, isCorrect);
 
             if (question.backgroundKnowledge) {
@@ -466,7 +480,7 @@
             const feedbackArray = this.pickFeedbackArray(question, isCorrect);
             const message = this.pickRandomEntry(feedbackArray);
             this.view.renderFeedback(message, { isCorrect });
-            this.state.registerAttempt(isCorrect, Boolean(question.difficult));
+            this.state.registerAttempt(isCorrect, difficulty);
             this.view.updateScore(this.state.score);
 
             if (isCorrect || this.state.attempts >= CONFIG.maxAttempts) {
@@ -479,12 +493,15 @@
 
         pickFeedbackArray(question, isCorrect) {
             const messages = this.state.feedbackMessages;
+            const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
+
             if (isCorrect) {
-                if (question.difficult && this.state.attempts === 0) {
-                    return messages.difficultCorrectFirstTry;
+                if (difficulty === 'hero' && this.state.attempts === 0) {
+                    return messages.difficultCorrectFirstTry ?? messages.correctFirstTry;
                 }
                 return this.state.attempts === 0 ? messages.correctFirstTry : messages.correctSecondTry;
             }
+
             return this.state.attempts === 0 ? messages.incorrectFirstTry : messages.incorrectSecondTry;
         }
 
