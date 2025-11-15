@@ -12,12 +12,12 @@
 
     const SELECTORS = {
         categoryContainer: '#js-category-container',
+        categoryList: '#js-category-container .category',
         questionCountContainer: '#js-question-count-container',
         quizContent: '#js-quiz-content',
         questionElement: '#js-question',
         questionImage: '#js-question-image',
         answerButtons: '.js-answer-btn',
-        categoryButtons: '.js-category-btn',
         questionCountButtons: '.js-question-count-btn',
         backToCategoryButton: '#js-back-to-category-page',
         abortButton: '#js-abort-btn',
@@ -40,20 +40,21 @@
             this.questionsUrl = questionsUrl;
             this.feedbackUrl = feedbackUrl;
             this.fetchFn = fetchFn;
-            this.cache = {};
+            this.cache = null;
         }
 
         async loadAll() {
-            if (this.cache.questions && this.cache.feedback) {
+            if (this.cache) {
                 return this.cache;
             }
 
-            const [questions, feedback] = await Promise.all([
+            const [questionsPayload, feedback] = await Promise.all([
                 this.fetchJson(this.questionsUrl),
                 this.fetchJson(this.feedbackUrl)
             ]);
 
-            this.cache = { questions, feedback };
+            const categories = questionsPayload.categories ?? [];
+            this.cache = { categories, feedback };
             return this.cache;
         }
 
@@ -68,32 +69,36 @@
 
     class QuizState {
         constructor() {
-            this.sourceQuestions = {};
+            this.categories = [];
             this.feedbackMessages = {};
-            this.activeCategory = null;
+            this.activeCategoryId = null;
             this.currentSequence = [];
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
         }
 
-        setData({ questions, feedback }) {
-            this.sourceQuestions = questions;
+        setData({ categories, feedback }) {
+            this.categories = categories;
             this.feedbackMessages = feedback;
         }
 
-        hasCategory(categoryId) {
-            return Boolean(this.sourceQuestions[categoryId]);
+        getCategory(categoryId) {
+            return this.categories.find(cat => cat.id === categoryId) || null;
+        }
+
+        getActiveCategory() {
+            return this.getCategory(this.activeCategoryId);
         }
 
         prepareRound(categoryId, count) {
-            if (!this.hasCategory(categoryId)) {
+            const category = this.getCategory(categoryId);
+            if (!category) {
                 throw new Error(`Unknown category: ${categoryId}`);
             }
 
-            this.activeCategory = categoryId;
-            const cloned = this.sourceQuestions[categoryId].map(item => QuizState.cloneQuestion(item));
-            const randomized = QuizState.shuffleArray(cloned);
+            const clonedQuestions = category.questions.map(question => QuizState.cloneQuestion(question));
+            const randomized = QuizState.shuffleArray(clonedQuestions);
 
             if (count !== 'all') {
                 const limit = Number.parseInt(count, 10);
@@ -105,6 +110,7 @@
                 this.currentSequence = randomized;
             }
 
+            this.activeCategoryId = categoryId;
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
@@ -123,7 +129,6 @@
                     this.score += CONFIG.score.secondTry;
                 }
             }
-
             this.attempts += 1;
         }
 
@@ -138,7 +143,7 @@
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
-            this.activeCategory = null;
+            this.activeCategoryId = null;
         }
 
         getStats() {
@@ -173,12 +178,12 @@
         mapElements(selectors) {
             return {
                 categoryContainer: document.querySelector(selectors.categoryContainer),
+                categoryList: document.querySelector(selectors.categoryList) ?? document.querySelector(selectors.categoryContainer),
                 questionCountContainer: document.querySelector(selectors.questionCountContainer),
                 quizContent: document.querySelector(selectors.quizContent),
                 questionElement: document.querySelector(selectors.questionElement),
                 questionImage: document.querySelector(selectors.questionImage),
                 answerButtons: Array.from(document.querySelectorAll(selectors.answerButtons)),
-                categoryButtons: Array.from(document.querySelectorAll(selectors.categoryButtons)),
                 questionCountButtons: Array.from(document.querySelectorAll(selectors.questionCountButtons)),
                 backToCategoryButton: document.querySelector(selectors.backToCategoryButton),
                 abortButton: document.querySelector(selectors.abortButton),
@@ -197,9 +202,34 @@
             };
         }
 
+        renderCategoryButtons(categories) {
+            const wrapper = this.elements.categoryList;
+            if (!wrapper) return;
+
+            wrapper.innerHTML = '';
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = 'js-category-btn btn btn--category';
+                button.dataset.category = category.id;
+                button.textContent = category.title;
+
+                if (!category.enabled) {
+                    button.disabled = true;
+                    button.classList.add('btn--disabled');
+                    if (category.unlockHint) {
+                        button.title = category.unlockHint;
+                    }
+                }
+
+                wrapper.appendChild(button);
+            });
+        }
+
         onCategorySelected(callback) {
-            this.elements.categoryButtons.forEach(btn => {
-                btn.addEventListener('click', () => callback(btn.dataset.category));
+            this.elements.categoryList?.addEventListener('click', event => {
+                const target = event.target.closest('.js-category-btn');
+                if (!target || target.disabled) return;
+                callback(target.dataset.category);
             });
         }
 
@@ -367,6 +397,7 @@
             try {
                 const data = await this.dataService.loadAll();
                 this.state.setData(data);
+                this.view.renderCategoryButtons(data.categories);
                 this.registerEvents();
                 this.view.showCategories();
             } catch (error) {
@@ -385,16 +416,19 @@
         }
 
         handleCategorySelected(categoryId) {
-            if (!this.state.hasCategory(categoryId)) {
+            const category = this.state.getCategory(categoryId);
+            if (!category || !category.enabled) {
                 return;
             }
-            this.state.activeCategory = categoryId;
+            this.state.activeCategoryId = categoryId;
             this.view.showQuestionCount();
         }
 
         handleQuestionCountSelected(count) {
             try {
-                this.state.prepareRound(this.state.activeCategory, count);
+                const categoryId = this.state.activeCategoryId;
+                if (!categoryId) return;
+                this.state.prepareRound(categoryId, count);
                 this.view.showQuiz();
                 this.renderCurrentQuestion();
                 this.view.updateScore(this.state.score);
@@ -482,13 +516,14 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const dataService = new QuizDataService({
-            questionsUrl: CONFIG.questionsUrl,
-            feedbackUrl: CONFIG.feedbackUrl
+        const controller = new QuizController({
+            dataService: new QuizDataService({
+                questionsUrl: CONFIG.questionsUrl,
+                feedbackUrl: CONFIG.feedbackUrl
+            }),
+            state: new QuizState(),
+            view: new QuizView(SELECTORS)
         });
-        const state = new QuizState();
-        const view = new QuizView(SELECTORS);
-        const controller = new QuizController({ dataService, state, view });
 
         controller.init();
     });

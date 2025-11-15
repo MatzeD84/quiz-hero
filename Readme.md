@@ -1,12 +1,11 @@
 ToDos:
 
-Kategorie-Button hart verdrahtet; sobald du eine neue Kategorie in questions.json anlegst, musst du HTML + JS anfassen. Sinnvoller wäre ein datengetriebener Aufbau: JSON liefert Slug, Label, evtl. Status, und JS rendert daraus Buttons (gleiches gilt für die Frageanzahl-Buttons in index.html (lines 47-50), die aktuell auch manuell gepflegt werden).
 
-Der Footer außerhalb von <main> (index.html (lines 120-121)) enthält zwei Container, die in JS zwar vorbereitet werden (processTags), aber nie eingeblendet werden, weil der Aufruf in script.js (lines 30-31) auskommentiert ist – entweder entfernen oder richtig in den Flow integrieren.
+
+
 
 Mehrere Texte enthalten Mojibake (W��hle, Amalfi KǬste, zurǬck, ^ im SVG bei index.html:75/109), ein Zeichen dafür, dass Dateien nicht konsistent als UTF‑8 gespeichert sind. Das wirkt unseriös und erschwert Suchen in JSON/JS.
 
-questions.json speichert Kategorien als Objektkeys (questions.json (lines 1-21)). Damit fehlt jegliche Metadatenebene (Anzeige-Name, Icon, Freischaltstatus), weshalb das HTML wieder hart verdrahtet werden muss. Ein Array categories: [{ id, title, enabled, questions: [...] }] würde UI-Generierung und Sortierung erlauben.
 
 Fragen enthalten nur boolesches difficult (questions.json:17-18). Mit einem enumartigen Feld (difficulty: 'easy'|'hero') und einer separaten Punktetabelle ließen sich spätere Erweiterungen (z. B. mehr als zwei Stufen) einfacher abbilden.
 

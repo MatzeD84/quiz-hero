@@ -145,6 +145,8 @@ p {
 }
 
 .question_count_back_btn {
+    background: none;
+    border: none;
     margin-top: 1.5rem;
     transition: var(--transition-fade);
     cursor: pointer;

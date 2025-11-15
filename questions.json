@@ -1,57 +1,60 @@
 {
-    "test": [
+  "categories": [
+    {
+      "id": "test",
+      "title": "Test",
+      "enabled": true,
+      "icon": "images/website/logo.png",
+      "description": "Interner Schnelltest",
+      "questions": [
         {
-            "tag": [
-                "Antike"
-            ],
-            "type": "image",
-            "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
-            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
-            "answers": [
-                "Das Auge der Weisheit",
-                "Der Mund der Wahrheit ",
-                "Die Nase der Würde",
-                "Der Nichtsehende"
-            ],
-            "backgroundKnowledge": "Am Eingang der Kirche Santa Maria legen die Menschen ihre Hand in den marmornen Mund der Wahrheit (Bocca della Verità). Im Mittelalter soll er der Wahrheitsfindung gedient haben: Wer beim Lügen ertappt wurde, dem biss der Mund der Sage nach die Hand ab.",
-            "correct": 1,
-            "difficult": false
+          "tag": ["Antike"],
+          "type": "image",
+          "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+          "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+          "answers": [
+            "Das Auge der Weisheit",
+            "Der Mund der Wahrheit",
+            "Die Nase der Würde",
+            "Der Nichtsehende"
+          ],
+          "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+          "correct": 1,
+          "difficult": false
         }
-    ],
-    "rom": [
+      ]
+    },
+    {
+      "id": "rom",
+      "title": "Rom",
+      "enabled": true,
+      "icon": "images/website/logo.png",
+      "description": "Kolosseum, Forum & Co.",
+      "questions": [
         {
-            "tag": [
-                "Antike"
-            ],
-            "type": "image",
-            "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
-            "imageUrl": "/images/italien/kolosseum.jpg",
-            "answers": [
-                "Amphitheatrum Flavium",
-                "Pantheon",
-                "Circus Maximus",
-                "Forum Romanum"
-            ],
-            "backgroundKnowledge": "Die antike Bezeichnung Amphitheatrum Flavium leitet sich von den Kaisern der flavischen Dynastie her, in deren Herrschaftszeit das Kolosseum errichtet wurde.",
-            "correct": 0,
-            "difficult": false
+          "tag": ["Antike"],
+          "type": "image",
+          "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
+          "imageUrl": "/images/italien/kolosseum.jpg",
+          "answers": [
+            "Amphitheatrum Flavium",
+            "Pantheon",
+            "Circus Maximus",
+            "Forum Romanum"
+          ],
+          "backgroundKnowledge": "Die antike Bezeichnung Amphitheatrum Flavium ...",
+          "correct": 0,
+          "difficult": false
         },
         {
-            "tag": [
-                "Antike"
-            ],
-            "type": "image",
-            "question": "Wie hieß der römische Kaiser, der den Bau des Kolosseums in Auftrag gab?",
-            "imageUrl": "/images/italien/titus_flavius_vespasian.png",
-            "answers": [
-                "Vespasian",
-                "Nero",
-                "Trajan",
-                "Hadrian"
-            ],
-            "backgroundKnowledge": "Der flavische Kaiser Titus Flavius Vespasian ließ im Jahr 72 n. Chr. dieses Amphitheater in Rom errichten.",
-            "correct": 0,
-            "difficult": false
+          "tag": ["Antike"],
+          "type": "image",
+          "question": "Wie hieß der römische Kaiser, der den Bau des Kolosseums in Auftrag gab?",
+          "imageUrl": "/images/italien/titus_flavius_vespasian.png",
+          "answers": ["Vespasian", "Nero", "Trajan", "Hadrian"],
+          "backgroundKnowledge": "Der flavische Kaiser Titus Flavius Vespasian ließ ...",
+          "correct": 0,
+          "difficult": false
         },
         {
             "tag": [
@@ -1107,9 +1110,124 @@
             "correct": 3,
             "difficult": false
         }
-    ],
-    "amalfi": [
+      ]
+    },
+    {
+      "id": "neapel",
+      "title": "Neapel",
+      "enabled": false,
+      "icon": "images/website/logo.png",
+      "questions": [
         {
+            "tag": [],
+            "type": "image",
+            "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
+            "imageUrl": "/images/italien/mount-vesuvius.jpg",
+            "answers": [
+                "Vesuv",
+                "Ätna",
+                "Stromboli",
+                "Vulcano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gericht stammt ursprünglich aus Neapel und ist heute weltweit bekannt?",
+            "answers": [
+                "Ravioli",
+                "Lasagne",
+                "Spaghetti Carbonara",
+                "Pizza"
+            ],
+            "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
+            "correct": 3,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches große, historische Gebäude in Neapel diente als königliche Residenz und ist heute ein Museum?",
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo dello Spagnolo",
+                "Maschio Angioino (Castel Nuovo)",
+                "Villa Pignatelli"
+            ],
+            "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine kulturelle Bedeutung?",
+            "imageUrl":"/images/italien/neapel/Teatro-di-San-Carlo.jpg",
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro di Tordinona",
+                "Teatro dell'Opera"
+            ],
+            "backgroundKnowledge": "Das Teatro di San Carlo wurde 1737 eröffnet und ist das älteste noch aktive Opernhaus in Europa.",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Straße in Neapel ist bekannt für ihre historischen Gebäude und ihre Einkaufsstraßen?",
+            "answers": [
+                "Via Toledo",
+                "Spaccanapoli",
+                "Via San Gregorio Armeno",
+                "Via Chiaia"
+            ],
+            "backgroundKnowledge": "Sie verbindet das Piazza Dante mit dem Piazza del Plebiscito und ist heute ein wichtiges Einkaufs- und Geschäftsviertel",
+            "correct": 0,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches archäologische Ausgrabungsgebiet in Neapel ist für seine antiken Ruinen und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Palazzo Reale",
+                "Herculaneum",
+                "Stabiae",
+                "Oplontis"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficult": false
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk 'Die sieben Werke der Barmherzigkeit'?",
+            "imageUrl": "/images/italien/neapel/The_Seven_Works_of_Mercy-Caravaggio_1607.jpg",
+            "answers": [
+                "Caravaggio",
+                "Mattia Preti",
+                "Giambattista Tiepolo",
+                "Jusepe de Ribera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficult": true
+        }
+      ]
+    },
+    {
+      "id": "amalfi",
+      "title": "Amalfi Küste",
+      "enabled": true,
+      "unlockHint": "Coming soon",
+      "questions": [
+         {
             "tag": [],
             "type": "image",
             "question": "Welche Stadt auf der Amalfiküste ist auf diesem Bild zu sehen?",
@@ -1488,111 +1606,14 @@
             "correct": 3,
             "difficult": false
         }
-    ],
-    "neapel": [
-        {
-            "tag": [],
-            "type": "image",
-            "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
-            "imageUrl": "/images/italien/mount-vesuvius.jpg",
-            "answers": [
-                "Vesuv",
-                "Ätna",
-                "Stromboli",
-                "Vulcano"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches berühmte Gericht stammt ursprünglich aus Neapel und ist heute weltweit bekannt?",
-            "answers": [
-                "Ravioli",
-                "Lasagne",
-                "Spaghetti Carbonara",
-                "Pizza"
-            ],
-            "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
-            "correct": 3,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches große, historische Gebäude in Neapel diente als königliche Residenz und ist heute ein Museum?",
-            "answers": [
-                "Palazzo Reale",
-                "Palazzo dello Spagnolo",
-                "Maschio Angioino (Castel Nuovo)",
-                "Villa Pignatelli"
-            ],
-            "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "image",
-            "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine kulturelle Bedeutung?",
-            "imageUrl":"/images/italien/neapel/Teatro-di-San-Carlo.jpg",
-            "answers": [
-                "Teatro di San Carlo",
-                "Teatro Nazionale",
-                "Teatro di Tordinona",
-                "Teatro dell'Opera"
-            ],
-            "backgroundKnowledge": "Das Teatro di San Carlo wurde 1737 eröffnet und ist das älteste noch aktive Opernhaus in Europa.",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welche berühmte Straße in Neapel ist bekannt für ihre historischen Gebäude und ihre Einkaufsstraßen?",
-            "answers": [
-                "Via Toledo",
-                "Spaccanapoli",
-                "Via San Gregorio Armeno",
-                "Via Chiaia"
-            ],
-            "backgroundKnowledge": "Sie verbindet das Piazza Dante mit dem Piazza del Plebiscito und ist heute ein wichtiges Einkaufs- und Geschäftsviertel",
-            "correct": 0,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "text",
-            "question": "Welches archäologische Ausgrabungsgebiet in Neapel ist für seine antiken Ruinen und seine historische Bedeutung bekannt?",
-            "answers": [
-                "Palazzo Reale",
-                "Herculaneum",
-                "Stabiae",
-                "Oplontis"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 1,
-            "difficult": false
-        },
-        {
-            "tag": [],
-            "type": "image",
-            "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk 'Die sieben Werke der Barmherzigkeit'?",
-            "imageUrl": "/images/italien/neapel/The_Seven_Works_of_Mercy-Caravaggio_1607.jpg",
-            "answers": [
-                "Caravaggio",
-                "Mattia Preti",
-                "Giambattista Tiepolo",
-                "Jusepe de Ribera"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 0,
-            "difficult": true
-        }
-    ],
-    "florenz": [
+      ]
+    },
+    {
+      "id": "florenz",
+      "title": "Florenz",
+      "enabled": false,
+      "unlockHint": "Coming soon",
+      "questions": [
         {
             "tag": [],
             "type": "image",
@@ -2378,8 +2399,14 @@
             "correct": 3,
             "difficult": true
         }
-    ],
-    "siena": [
+      ]
+    },
+    {
+      "id": "siena",
+      "title": "Siena",
+      "enabled": false,
+      "unlockHint": "Coming soon",
+      "questions": [
         {
             "tag": [],
             "type": "text",
@@ -3234,5 +3261,9 @@
             "correct": 3,
             "difficult": true
         }
-    ]
+      ]
+    }
+  ]
 }
+
+
