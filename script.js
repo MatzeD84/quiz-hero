@@ -36,6 +36,8 @@
         totalQuestions: '#js-total-questions',
         score: '#js-score',
         quizHeadertext: '#js-quiz-headertext',
+        selectionLabel: '#js-selection-label',
+        quizSelectionLabel: '#js-quiz-selection',
         modal: '#js-result-modal',
         modalContent: '#js-result-content',
         modalCloseButton: '#js-modal-close'
@@ -89,6 +91,7 @@
             this.tagIndex = new Map();
             this.activeCategoryId = null;
             this.activeTag = null;
+            this.selectionLabel = '';
             this.currentSequence = [];
             this.currentIndex = 0;
             this.score = 0;
@@ -148,6 +151,7 @@
             this.currentSequence = this.applyCountLimit(randomized, count);
             this.activeCategoryId = categoryId;
             this.activeTag = null;
+            this.selectionLabel = category.title || category.id;
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
@@ -167,6 +171,7 @@
             this.currentSequence = this.applyCountLimit(randomized, count);
             this.activeCategoryId = null;
             this.activeTag = tag;
+            this.selectionLabel = tag;
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
@@ -208,6 +213,7 @@
             this.attempts = 0;
             this.activeCategoryId = null;
             this.activeTag = null;
+            this.selectionLabel = '';
         }
 
         getStats() {
@@ -262,6 +268,8 @@
                 totalQuestions: document.querySelector(selectors.totalQuestions),
                 score: document.querySelector(selectors.score),
                 quizHeadertext: document.querySelector(selectors.quizHeadertext),
+                selectionLabel: document.querySelector(selectors.selectionLabel),
+                quizSelectionLabel: document.querySelector(selectors.quizSelectionLabel),
                 modal: document.querySelector(selectors.modal),
                 modalContent: document.querySelector(selectors.modalContent),
                 modalCloseButton: document.querySelector(selectors.modalCloseButton)
@@ -311,6 +319,18 @@
             } else {
                 this.elements.tagContainer?.classList.remove('hide');
             }
+        }
+
+        renderSelectionLabel(labelText) {
+            if (!this.elements.selectionLabel) return;
+            this.elements.selectionLabel.textContent = labelText || '';
+            this.elements.selectionLabel.classList.toggle('hide', !labelText);
+        }
+
+        renderQuizSelectionLabel(labelText) {
+            if (!this.elements.quizSelectionLabel) return;
+            this.elements.quizSelectionLabel.textContent = labelText || '';
+            this.elements.quizSelectionLabel.classList.remove('hide');
         }
 
         onCategorySelected(callback) {
@@ -407,6 +427,9 @@
 
             this.elements.currentQuestion.textContent = `${meta.index}`;
             this.elements.totalQuestions.textContent = `/${meta.total}`;
+            if (meta.selectionLabel) {
+                this.renderQuizSelectionLabel(meta.selectionLabel);
+            }
         }
 
         renderBackgroundKnowledge(text) {
@@ -523,6 +546,8 @@
             }
             this.state.activeCategoryId = categoryId;
             this.state.activeTag = null;
+            this.state.selectionLabel = category.title || category.id;
+            this.view.renderSelectionLabel(this.state.selectionLabel);
             this.view.showQuestionCount();
         }
 
@@ -532,6 +557,8 @@
             }
             this.state.activeTag = tag;
             this.state.activeCategoryId = null;
+            this.state.selectionLabel = tag;
+            this.view.renderSelectionLabel(this.state.selectionLabel);
             this.view.showQuestionCount();
         }
 
@@ -544,6 +571,7 @@
                 } else {
                     return;
                 }
+                this.view.renderQuizSelectionLabel(this.state.selectionLabel);
                 this.view.showQuiz();
                 this.renderCurrentQuestion();
                 this.view.updateScore(this.state.score);
@@ -561,7 +589,8 @@
             }
             this.view.renderQuestion(question, {
                 index: this.state.currentIndex + 1,
-                total: this.state.currentSequence.length
+                total: this.state.currentSequence.length,
+                selectionLabel: this.state.selectionLabel
             });
         }
 
@@ -632,6 +661,10 @@
             this.view.showCategories();
             this.view.hideResultModal();
             this.view.updateScore(this.state.score);
+            this.view.renderSelectionLabel('');
+            if (this.view.elements.quizSelectionLabel) {
+                this.view.elements.quizSelectionLabel.textContent = '';
+            }
         }
     }
 

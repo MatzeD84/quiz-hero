@@ -29,7 +29,7 @@
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             <section>
-                <h2>Kategorien</h2>
+                <h2>Städte</h2>
                 <div class="category" aria-live="polite">
                     <!-- Buttons werden per JS generiert -->
                 </div>
@@ -47,6 +47,7 @@
             <header class="question_count__header">
                 <img class="main_image" src="images/website/logo.png" alt="Logo">
                 <h2>Wähle die Anzahl der Fragen</h2>
+                <h3 id="js-selection-label" class="question_count__selection"></h3>
             </header>
             <div class="quiz__question_count_select">
                 <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
@@ -70,6 +71,7 @@
                 </div>
                 <div class="quiz__headertext">
                     <p id="js-quiz-headertext"></p>
+                    <p id="js-quiz-selection" class="quiz__selection"></p>
                 </div>
                 <p id="js-score" class="quiz__score">Punkte: 0</p>
             </header>

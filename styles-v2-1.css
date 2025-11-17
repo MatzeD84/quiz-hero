@@ -126,11 +126,19 @@ p {
 
 .question_count__header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     text-align: left;
 }
+
+.question_count__selection {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    }
 
 .quiz__question_count_select {
     display: grid;
@@ -179,6 +187,11 @@ p {
 .quiz__score_container {
     display: flex;
     justify-content: space-between;
+}
+
+.quiz__headertext {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .quiz__headertext p {
