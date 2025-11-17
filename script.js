@@ -177,6 +177,17 @@
             this.attempts = 0;
         }
 
+        getAvailableCountForSelection() {
+            if (this.activeTag) {
+                return (this.tagIndex.get(this.activeTag) || []).length;
+            }
+            if (this.activeCategoryId) {
+                const category = this.getCategory(this.activeCategoryId);
+                return category ? category.questions.length : 0;
+            }
+            return 0;
+        }
+
         applyCountLimit(questions, count) {
             if (count === 'all') {
                 return questions;
@@ -466,6 +477,24 @@
             }, 800);
         }
 
+        updateQuestionCountButtons(maxAvailable) {
+            this.elements.questionCountButtons.forEach(btn => {
+                const count = btn.dataset.count;
+                if (count === 'all') {
+                    btn.disabled = maxAvailable === 0;
+                    btn.classList.toggle('btn--disabled', maxAvailable === 0);
+                    return;
+                }
+                const numeric = Number.parseInt(count, 10);
+                const disable = Number.isNaN(numeric) || numeric > maxAvailable || maxAvailable === 0;
+                btn.disabled = disable;
+                btn.classList.toggle('btn--disabled', disable);
+            });
+            if (this.elements.quizHeadertext && maxAvailable === 0) {
+                this.elements.quizHeadertext.textContent = 'Keine Fragen verfügbar.';
+            }
+        }
+
         showResultModal({ score, percentage }) {
             this.elements.modalContent.innerHTML = `
                 <h2 class="modal__headline">Quiz beendet!</h2>
@@ -548,6 +577,7 @@
             this.state.activeTag = null;
             this.state.selectionLabel = category.title || category.id;
             this.view.renderSelectionLabel(this.state.selectionLabel);
+            this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
             this.view.showQuestionCount();
         }
 
@@ -559,6 +589,7 @@
             this.state.activeCategoryId = null;
             this.state.selectionLabel = tag;
             this.view.renderSelectionLabel(this.state.selectionLabel);
+            this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
             this.view.showQuestionCount();
         }
 
