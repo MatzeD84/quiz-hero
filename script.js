@@ -17,6 +17,8 @@
     const SELECTORS = {
         categoryContainer: '#js-category-container',
         categoryList: '#js-category-container .category',
+        tagContainer: '#js-tag-container',
+        tagList: '#js-tag-container .tag-filter__list',
         questionCountContainer: '#js-question-count-container',
         quizContent: '#js-quiz-content',
         questionElement: '#js-question',
@@ -84,7 +86,9 @@
         constructor() {
             this.categories = [];
             this.feedbackMessages = {};
+            this.tagIndex = new Map();
             this.activeCategoryId = null;
+            this.activeTag = null;
             this.currentSequence = [];
             this.currentIndex = 0;
             this.score = 0;
@@ -94,6 +98,33 @@
         setData({ categories, feedback }) {
             this.categories = categories;
             this.feedbackMessages = feedback;
+            this.buildTagIndex();
+        }
+
+        buildTagIndex() {
+            this.tagIndex.clear();
+            this.categories
+                .filter(category => category.enabled)
+                .forEach(category => {
+                    category.questions.forEach(question => {
+                        (question.tag || []).forEach(tag => {
+                            if (!tag) {
+                                return;
+                            }
+                            if (!this.tagIndex.has(tag)) {
+                                this.tagIndex.set(tag, []);
+                            }
+                            this.tagIndex.get(tag).push({
+                                question: QuizState.cloneQuestion(question),
+                                categoryId: category.id
+                            });
+                        });
+                    });
+                });
+        }
+
+        getAvailableTags() {
+            return Array.from(this.tagIndex.keys()).sort((a, b) => a.localeCompare(b, 'de'));
         }
 
         getCategory(categoryId) {
@@ -104,29 +135,52 @@
             return this.getCategory(this.activeCategoryId);
         }
 
-        prepareRound(categoryId, count) {
+        prepareRoundFromCategory(categoryId, count) {
             const category = this.getCategory(categoryId);
             if (!category) {
                 throw new Error(`Unknown category: ${categoryId}`);
             }
 
-            const clonedQuestions = category.questions.map(question => QuizState.cloneQuestion(question));
-            const randomized = QuizState.shuffleArray(clonedQuestions);
+            const randomized = QuizState.shuffleArray(
+                category.questions.map(question => QuizState.cloneQuestion(question))
+            );
 
-            if (count !== 'all') {
-                const limit = Number.parseInt(count, 10);
-                if (Number.isNaN(limit)) {
-                    throw new Error('Invalid question count');
-                }
-                this.currentSequence = randomized.slice(0, Math.min(limit, randomized.length));
-            } else {
-                this.currentSequence = randomized;
-            }
-
+            this.currentSequence = this.applyCountLimit(randomized, count);
             this.activeCategoryId = categoryId;
+            this.activeTag = null;
             this.currentIndex = 0;
             this.score = 0;
             this.attempts = 0;
+        }
+
+        prepareRoundFromTag(tag, count) {
+            const entries = this.tagIndex.get(tag) || [];
+            if (!entries.length) {
+                throw new Error(`Unknown or empty tag: ${tag}`);
+            }
+
+            const randomized = QuizState.shuffleArray(entries.map(entry => ({
+                ...QuizState.cloneQuestion(entry.question),
+                categoryId: entry.categoryId
+            })));
+
+            this.currentSequence = this.applyCountLimit(randomized, count);
+            this.activeCategoryId = null;
+            this.activeTag = tag;
+            this.currentIndex = 0;
+            this.score = 0;
+            this.attempts = 0;
+        }
+
+        applyCountLimit(questions, count) {
+            if (count === 'all') {
+                return questions;
+            }
+            const limit = Number.parseInt(count, 10);
+            if (Number.isNaN(limit)) {
+                throw new Error('Invalid question count');
+            }
+            return questions.slice(0, Math.min(limit, questions.length));
         }
 
         getCurrentQuestion() {
@@ -153,6 +207,7 @@
             this.score = 0;
             this.attempts = 0;
             this.activeCategoryId = null;
+            this.activeTag = null;
         }
 
         getStats() {
@@ -188,6 +243,8 @@
             return {
                 categoryContainer: document.querySelector(selectors.categoryContainer),
                 categoryList: document.querySelector(selectors.categoryList) ?? document.querySelector(selectors.categoryContainer),
+                tagContainer: document.querySelector(selectors.tagContainer),
+                tagList: document.querySelector(selectors.tagList),
                 questionCountContainer: document.querySelector(selectors.questionCountContainer),
                 quizContent: document.querySelector(selectors.quizContent),
                 questionElement: document.querySelector(selectors.questionElement),
@@ -234,11 +291,41 @@
             });
         }
 
+        renderTagButtons(tags) {
+            const wrapper = this.elements.tagList;
+            if (!wrapper) return;
+
+            wrapper.innerHTML = '';
+
+            tags.forEach(tag => {
+                const button = document.createElement('button');
+                button.className = 'js-tag-btn btn btn--tag';
+                button.dataset.tag = tag;
+                button.type = 'button';
+                button.textContent = tag;
+                wrapper.appendChild(button);
+            });
+
+            if (tags.length === 0 && this.elements.tagContainer) {
+                this.elements.tagContainer.classList.add('hide');
+            } else {
+                this.elements.tagContainer?.classList.remove('hide');
+            }
+        }
+
         onCategorySelected(callback) {
             this.elements.categoryList?.addEventListener('click', event => {
                 const target = event.target.closest('.js-category-btn');
                 if (!target || target.disabled) return;
                 callback(target.dataset.category);
+            });
+        }
+
+        onTagSelected(callback) {
+            this.elements.tagList?.addEventListener('click', event => {
+                const target = event.target.closest('.js-tag-btn');
+                if (!target) return;
+                callback(target.dataset.tag);
             });
         }
 
@@ -410,6 +497,7 @@
                 const data = await this.dataService.loadAll();
                 this.state.setData(data);
                 this.view.renderCategoryButtons(data.categories);
+                this.view.renderTagButtons(this.state.getAvailableTags());
                 this.registerEvents();
                 this.view.showCategories();
             } catch (error) {
@@ -420,6 +508,7 @@
 
         registerEvents() {
             this.view.onCategorySelected(categoryId => this.handleCategorySelected(categoryId));
+            this.view.onTagSelected(tag => this.handleTagSelected(tag));
             this.view.onQuestionCountSelected(count => this.handleQuestionCountSelected(count));
             this.view.onAnswerSelected(index => this.handleAnswerSelected(index));
             this.view.onNext(() => this.handleNextQuestion());
@@ -433,14 +522,28 @@
                 return;
             }
             this.state.activeCategoryId = categoryId;
+            this.state.activeTag = null;
+            this.view.showQuestionCount();
+        }
+
+        handleTagSelected(tag) {
+            if (!this.state.tagIndex.has(tag)) {
+                return;
+            }
+            this.state.activeTag = tag;
+            this.state.activeCategoryId = null;
             this.view.showQuestionCount();
         }
 
         handleQuestionCountSelected(count) {
             try {
-                const categoryId = this.state.activeCategoryId;
-                if (!categoryId) return;
-                this.state.prepareRound(categoryId, count);
+                if (this.state.activeTag) {
+                    this.state.prepareRoundFromTag(this.state.activeTag, count);
+                } else if (this.state.activeCategoryId) {
+                    this.state.prepareRoundFromCategory(this.state.activeCategoryId, count);
+                } else {
+                    return;
+                }
                 this.view.showQuiz();
                 this.renderCurrentQuestion();
                 this.view.updateScore(this.state.score);

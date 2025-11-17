@@ -8,7 +8,7 @@
       "description": "Interner Schnelltest",
       "questions": [
         {
-          "tag": ["Antike"],
+          "tag": ["Antike", "Test"],
           "type": "image",
           "question": "1. EASY Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
           "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
@@ -23,7 +23,7 @@
           "difficulty": "easy"
         },
         {
-          "tag": ["Antike"],
+          "tag": ["Antike", "Test"],
           "type": "image",
           "question": "2. HERO Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
           "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
@@ -38,7 +38,7 @@
           "difficulty": "hero"
         },
         {
-          "tag": ["Antike"],
+          "tag": ["Antike", "Test"],
           "type": "image",
           "question": "3. MEDIUM Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
           "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",

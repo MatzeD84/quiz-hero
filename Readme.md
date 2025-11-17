@@ -5,18 +5,8 @@ ToDos ChatGPT:
 
 - Sinnvoll die JS Klassen auf mehrere files zu verteilen?
 - Mehrere json-Datein anlegen pro Kategorie?
+- 
 
-
-
-
-
-Fragen enthalten nur boolesches difficult (questions.json:17-18). Mit einem enumartigen Feld (difficulty: 'easy'|'hero') und einer separaten Punktetabelle ließen sich spätere Erweiterungen (z. B. mehr als zwei Stufen) einfacher abbilden.
-
-imageUrl-Werte beginnen mit Slash und enthalten Leerzeichen (questions.json (lines 8-13)). Das funktioniert lokal, bricht aber auf einem Subfolder-Deploy. Halte Pfade relativ zum aktuellen Dokument oder speichere Asset-IDs und leite sie im Build auf optimierte Größen um.
-
-Die Texte sind ebenfalls mit falscher Kodierung gespeichert (z. B. Wie hei�Yt in questions.json (line 8)). Neu speichern als UTF‑8 ohne BOM (gleiches Problem wie in HTML/JS) verhindert kryptische Zeichen im UI.
-
-feedback.json enthält riesige Stringlisten pro Szenario (feedback.json (lines 2-120)). Das steigert Ladezeit und Speicher, während nur ein zufälliger Eintrag genutzt wird. Überlege, Feedbacks nach Tonalität zu gruppieren und dynamisch Kombinationen zu bauen (z. B. [{tone:'sarcastic', templates:[...]}]), oder generiere Sätze on-the-fly aus Bausteinen. Außerdem wäre eine klare Struktur (correct: { firstTry: [], secondTry: [] }, incorrect: { firstTry: [], secondTry: [] }, difficult: {...}) lesbarer als fünf flache Arrays.
 
 
 
