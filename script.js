@@ -14,6 +14,22 @@
         maxAttempts: 2
     };
 
+    const LABELS = {
+        questions: {
+            default: 'Frage:',
+            hero: 'Hero-Frage:'
+        },
+        status: {
+            loading: 'Lade Fragen...',
+            loadError: 'Fehler beim Laden. Bitte später erneut versuchen.',
+            noQuestions: 'Keine Fragen verfügbar.',
+            fetchError: 'Fragen konnten nicht geladen werden.'
+        },
+        scorePrefix: 'Punkte:',
+        modalTitle: 'Quiz beendet!',
+        modalResult: (score, percentage) => `Deine Punktzahl ist: <strong>${score}</strong> (${percentage}%)`
+    };
+
     const SELECTORS = {
         categoryContainer: '#js-category-container',
         categoryList: '#js-category-container .category',
@@ -411,7 +427,7 @@
             const isHero = difficulty === 'hero';
 
             questionElement.textContent = question.question;
-            quizHeadertext.textContent = isHero ? 'Hero-Frage:' : 'Frage:';
+            quizHeadertext.textContent = isHero ? LABELS.questions.hero : LABELS.questions.default;
             quizContent.dataset.difficulty = difficulty;
             quizContent.classList.toggle('quiz__difficult_question', isHero);
             quizHeadertext.classList.toggle('quiz__headertext--difficult', isHero);
@@ -470,7 +486,7 @@
         }
 
         updateScore(score) {
-            this.elements.score.textContent = `Punkte: ${score}`;
+            this.elements.score.textContent = `${LABELS.scorePrefix} ${score}`;
             this.elements.score.classList.add('quiz__score--animation');
             window.setTimeout(() => {
                 this.elements.score.classList.remove('quiz__score--animation');
@@ -491,14 +507,14 @@
                 btn.classList.toggle('btn--disabled', disable);
             });
             if (this.elements.quizHeadertext && maxAvailable === 0) {
-                this.elements.quizHeadertext.textContent = 'Keine Fragen verfügbar.';
+                this.elements.quizHeadertext.textContent = LABELS.status.noQuestions;
             }
         }
 
         showResultModal({ score, percentage }) {
             this.elements.modalContent.innerHTML = `
-                <h2 class="modal__headline">Quiz beendet!</h2>
-                <p>Deine Punktzahl ist: <strong>${score}</strong> (${percentage}%)</p>
+                <h2 class="modal__headline">${LABELS.modalTitle}</h2>
+                <p>${LABELS.modalResult(score, percentage)}</p>
             `;
             this.elements.modal.classList.remove('hide');
         }
@@ -544,7 +560,7 @@
         }
 
         async init() {
-            this.view.showLoadingMessage('Lade Fragen...');
+            this.view.showLoadingMessage(LABELS.status.loading);
             try {
                 const data = await this.dataService.loadAll();
                 this.state.setData(data);
@@ -554,7 +570,7 @@
                 this.view.showCategories();
             } catch (error) {
                 console.error(error);
-                this.view.showLoadingMessage('Fehler beim Laden. Bitte später erneut versuchen.');
+                this.view.showLoadingMessage(LABELS.status.loadError);
             }
         }
 
@@ -608,7 +624,7 @@
                 this.view.updateScore(this.state.score);
             } catch (error) {
                 console.error(error);
-                this.view.showLoadingMessage('Fragen konnten nicht geladen werden.');
+                this.view.showLoadingMessage(LABELS.status.fetchError);
             }
         }
 

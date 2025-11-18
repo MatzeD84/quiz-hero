@@ -116,6 +116,7 @@ p {
     opacity: 0.25;
     background-color: var(--dark-gray-color) !important;
     cursor: not-allowed;
+    display: none;
 }
 
 .category {

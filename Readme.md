@@ -1,13 +1,25 @@
 ToDos:
 - über data-difficulty="easy|medium|hero" CSS anpassen
+- questions.json --> data-difficulty per chatGPT bewerten
+- questions.json --> sinvolle tag per chatGPT ergänzen
 
 ToDos ChatGPT:
+- Konstanten für Textbausteine: Statt Strings im Code („Hero-Frage“, „Frage“) eine kleine LABELS-Map; erleichtert Internationalisierung später.
 
 - Sinnvoll die JS Klassen auf mehrere files zu verteilen?
 - Mehrere json-Datein anlegen pro Kategorie?
-- 
+- Leaderboard/Lokale Highscores: Speichere die besten Runs pro Kategorie/Tag (lokal im Browser). Sichtbares Ziel motiviert.
+- Hintergrundwissen ausbauen: Nach der Antwort einen kurzen „Fun Fact“ oder Link anbieten; optional nur bei Interesse einklappbar.
 
 
+- Preload/Cache-Busting: Wenn du oft an questions.json schraubst, hänge einen kurzen Cache-Buster an den Fetch (z. B. ?v=...) oder setze cache: 'no-store' im Fetch, damit alte Daten nicht im Browser hängenbleiben.
+
+
+Tiefe Validierung der Daten: Beim Laden der Questions kurz Schematests (hat answers 4 Einträge, correct ist Zahl im Bereich usw.). Dann bricht das Quiz nicht unerwartet, wenn jemand im JSON einen Fehler macht.
+
+
+
+-Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 
 
 -------------------------------------------------------------
