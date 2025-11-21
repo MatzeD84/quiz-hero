@@ -61,6 +61,88 @@
         modalCloseButton: '#js-modal-close'
     };
 
+    const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));
+
+    const isNonEmptyString = value => typeof value === 'string' && value.trim().length > 0;
+
+    function validateCategories(categories) {
+        const errors = [];
+
+        if (!Array.isArray(categories)) {
+            errors.push('categories muss ein Array sein.');
+            return errors;
+        }
+
+        categories.forEach((category, catIndex) => {
+            if (!category || typeof category !== 'object') {
+                errors.push(`Kategorie #${catIndex + 1} ist kein Objekt.`);
+                return;
+            }
+
+            if (!isNonEmptyString(category.id)) {
+                errors.push(`Kategorie #${catIndex + 1} besitzt keine gültige id.`);
+            }
+
+            if (!isNonEmptyString(category.title)) {
+                errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt keinen gültigen Titel.`);
+            }
+
+            if (!Array.isArray(category.questions)) {
+                errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt kein Fragen-Array.`);
+                return;
+            }
+
+            category.questions.forEach((question, questionIndex) => {
+                if (!question || typeof question !== 'object') {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} ist kein Objekt.`);
+                    return;
+                }
+
+                if (!isNonEmptyString(question.question)) {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt keinen Fragetext.`);
+                }
+
+                if (!Array.isArray(question.answers) || question.answers.length < 2) {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} benötigt mindestens zwei Antworten.`);
+                }
+
+                if (Array.isArray(question.answers)) {
+                    question.answers.forEach((answer, answerIndex) => {
+                        if (!isNonEmptyString(answer)) {
+                            errors.push(`Antwort ${answerIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungültig.`);
+                        }
+                    });
+                }
+
+                if (typeof question.correct !== 'number' || Number.isNaN(question.correct)) {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt keinen gültigen "correct"-Index.`);
+                } else if (
+                    !Array.isArray(question.answers) ||
+                    question.correct < 0 ||
+                    question.correct >= question.answers.length
+                ) {
+                    errors.push(`"correct" in Frage ${questionIndex + 1} von Kategorie ${category.id} liegt außerhalb des Antwortbereichs.`);
+                }
+
+                if (question.tag && !Array.isArray(question.tag)) {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt ein ungültiges tag-Feld.`);
+                } else if (Array.isArray(question.tag)) {
+                    question.tag.forEach((tagValue, tagIndex) => {
+                        if (!isNonEmptyString(tagValue)) {
+                            errors.push(`Tag ${tagIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungültig.`);
+                        }
+                    });
+                }
+
+                if (question.difficulty && !ALLOWED_DIFFICULTIES.has(question.difficulty)) {
+                    errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt eine unbekannte difficulty (${question.difficulty}).`);
+                }
+            });
+        });
+
+        return errors;
+    }
+
     const getPointsForDifficulty = (difficulty, attempt) => {
         if (attempt > 0) {
             return CONFIG.score.secondTry;
@@ -89,6 +171,10 @@
             ]);
 
             const categories = questionsPayload.categories ?? [];
+            const validationErrors = validateCategories(categories);
+            if (validationErrors.length > 0) {
+                throw new Error(`Ungültige questions.json:\n${validationErrors.join('\n')}`);
+            }
             this.cache = { categories, feedback };
             return this.cache;
         }

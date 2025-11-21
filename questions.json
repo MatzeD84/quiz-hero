@@ -50,7 +50,7 @@
           ],
           "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
           "correct": 1,
-          "difficulty": "me medium"
+          "difficulty": "medium"
         }
       ]
     },
@@ -201,7 +201,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Antike"],
             "type": "image",
             "question": "Welcher Architekt begann den Bau des Trevi-Brunnens im Jahr 1732, obwohl der Brunnen erst nach seinem Tod im Jahr 1762 fertiggestellt wurde?",
             "imageUrl": "/images/italien/gian-lorenzo-bernini.png",
@@ -216,7 +216,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Antike"],
             "type": "text",
             "question": "Der Trevi-Brunnen steht am Endpunkt eines antiken römischen Aquädukts, der Rom seit der Antike mit Wasser versorgt. Wie heißt dieser Aquädukt?",
             "answers": [
@@ -230,7 +230,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Antike"],
             "type": "image",
             "question": "Welche zentrale Figur des Trevi-Brunnens, die auf einem Muschelwagen steht, wird von zwei Tritonen flankiert?",
             "imageUrl": "/images/italien/trevi_brunnen.jpg",
@@ -535,7 +535,7 @@
         },
         {
             "tag": [
-                ""
+                "Antike"
             ],
             "type": "image",
             "question": "Welcher Architekt entwarf den berühmten Vierströmebrunnen (Fontana dei Quattro Fiumi) auf der Piazza Navona?",
