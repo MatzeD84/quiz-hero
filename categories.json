@@ -1,0 +1,52 @@
+﻿{
+    "categories": [
+        {
+            "id": "test",
+            "title": "Test",
+            "enabled": true,
+            "icon": "images/website/logo.png",
+            "description": "Interner Schnelltest",
+            "questionsFile": "data/questions-test.json"
+        },
+        {
+            "id": "rom",
+            "title": "Rom",
+            "enabled": true,
+            "icon": "images/website/logo.png",
+            "description": "Kolosseum, Forum \u0026 Co.",
+            "questionsFile": "data/questions-rom.json"
+        },
+        {
+            "id": "neapel",
+            "title": "Neapel",
+            "enabled": false,
+            "icon": "images/website/logo.png",
+            "description": null,
+            "questionsFile": "data/questions-neapel.json"
+        },
+        {
+            "id": "amalfi",
+            "title": "Amalfi Küste",
+            "enabled": true,
+            "icon": null,
+            "description": null,
+            "questionsFile": "data/questions-amalfi.json"
+        },
+        {
+            "id": "florenz",
+            "title": "Florenz",
+            "enabled": false,
+            "icon": null,
+            "description": null,
+            "questionsFile": "data/questions-florenz.json"
+        },
+        {
+            "id": "siena",
+            "title": "Siena",
+            "enabled": false,
+            "icon": null,
+            "description": null,
+            "questionsFile": "data/questions-siena.json"
+        }
+    ]
+}

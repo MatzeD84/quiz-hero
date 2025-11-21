@@ -1,5 +1,5 @@
 export const CONFIG = {
-    questionsUrl: 'questions.json',
+    questionsUrl: 'categories.json',
     feedbackUrl: 'feedback.json',
     score: {
         secondTry: 1,

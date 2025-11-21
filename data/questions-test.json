@@ -1,0 +1,58 @@
+﻿{
+    "questions": [
+        {
+            "tag": [
+                "Antike",
+                "Test"
+            ],
+            "type": "image",
+            "question": "1. EASY Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+            "answers": [
+                "Das Auge der Weisheit",
+                "Der Mund der Wahrheit",
+                "Die Nase der Würde",
+                "Der Nichtsehende"
+            ],
+            "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [
+                "Antike",
+                "Test"
+            ],
+            "type": "image",
+            "question": "2. HERO Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+            "answers": [
+                "Das Auge der Weisheit",
+                "Der Mund der Wahrheit",
+                "Die Nase der Würde",
+                "Der Nichtsehende"
+            ],
+            "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+            "correct": 1,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [
+                "Antike",
+                "Test"
+            ],
+            "type": "image",
+            "question": "3. MEDIUM Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+            "answers": [
+                "Das Auge der Weisheit",
+                "Der Mund der Wahrheit",
+                "Die Nase der Würde",
+                "Der Nichtsehende"
+            ],
+            "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
+            "correct": 1,
+            "difficulty": "medium"
+        }
+    ]
+}

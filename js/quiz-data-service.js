@@ -14,7 +14,7 @@ export class QuizDataService {
             return this.cache;
         }
 
-        const [questionsPayload, feedback] = await Promise.all([
+        const [categoriesManifest, feedback] = await Promise.all([
             this.fetchJson(this.questionsUrl),
             this.fetchJson(this.feedbackUrl)
         ]);
@@ -24,10 +24,22 @@ export class QuizDataService {
             throw new Error(`Ungültige feedback.json:\n${feedbackErrors.join('\n')}`);
         }
 
-        const categories = questionsPayload.categories ?? [];
+        const categories = categoriesManifest.categories ?? [];
+
+        await Promise.all(
+            categories.map(async category => {
+                if (!category.questionsFile) {
+                    category.questions = [];
+                    return;
+                }
+                const questionData = await this.fetchJson(category.questionsFile);
+                category.questions = questionData.questions ?? [];
+            })
+        );
+
         const validationErrors = validateCategories(categories);
         if (validationErrors.length > 0) {
-            throw new Error(`Ungültige questions.json:\n${validationErrors.join('\n')}`);
+            throw new Error(`Ungültige categories/questions Daten:\n${validationErrors.join('\n')}`);
         }
 
         this.cache = { categories, feedback };

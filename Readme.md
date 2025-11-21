@@ -3,8 +3,8 @@ ToDos:
     - Styling Icons für Kategorien/Tags
     - Erstellung und Styling von decription für Kategorien/Tags
 - über data-difficulty="easy|medium|hero" CSS anpassen
-- questions.json --> data-difficulty per chatGPT bewerten
-- questions.json --> sinvolle tag per chatGPT ergänzen
+- categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
+- categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - detail-element stylen
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
@@ -16,8 +16,6 @@ ToDos ChatGPT:
 - SEO
 - Datenbank: Aufwand, sinvoll?
 
-- Sinnvoll die JS Klassen auf mehrere files zu verteilen?
-- Mehrere json-Datein anlegen pro Kategorie?
 
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
@@ -31,7 +29,7 @@ Highlights JS
 Wir haben das ursprüngliche monolithische script.js in einzelne ES‑Module aufgeteilt, damit Logik, Konfiguration und DOM-Anbindung sauber gekapselt und leichter wartbar sind:
 
 js/config.js: Enthält alle Konfigurationswerte (URLs, Punktelogik, Labels, Selektoren, Cache-Version) sowie Hilfsfunktionen wie getPointsForDifficulty. So musst du künftige Anpassungen nur an einer Stelle ändern.
-js/validators.js: Bündelt Schema-Prüfungen für questions.json und feedback.json. Manipulierte oder fehlerhafte Daten werden erkannt, bevor das Quiz startet, und halten so den Rest des Codes sauber.
+js/validators.js: Bündelt Schema-Prüfungen für categories.json + data/questions-*.json sowie feedback.json. Manipulierte oder fehlerhafte Daten werden erkannt, bevor das Quiz startet, und halten so den Rest des Codes sauber.
 js/quiz-data-service.js: Lädt Fragen/Feedback, führt die Validatoren aus und hängt einen Cache-Buster an die Fetch-Requests. Dadurch bleiben Datenkonsistenz und Cache-Verhalten zentral steuerbar.
 js/quiz-state.js: Verwaltet Zustand (Kategorie/Tag, Fragenfolge, Score, Versuche). Fragen werden tief kopiert und über einen Tag-Index organisiert, wodurch du Kategorien/Tags sauber trennen und testen kannst.
 js/quiz-view.js: Kümmert sich ausschließlich um DOM-Referenzen, Rendering und UI-Ereignisse (inkl. ESC-/Overlay-Schließen des Modals). Alle sichtbaren Texte nutzen LABELS, was Internationalisierung erleichtert.
@@ -41,7 +39,20 @@ index.html lädt nun styles.css?v=20250210 und das neue js/main.js?v=20250210 al
 
 
 ------
+Neue Datenstruktur
 
+categories.json plus einzelne Dateien data/questions-<id>.json ersetzen die bisherige questions.json. Jede Kategorie enthält nur noch Metadaten und einen Pfad zu ihrem Fragenpaket; alle Fragen liegen in den jeweiligen Dateien.
+Code-Updates
+
+js/config.js (lines 1-58) verweist jetzt auf categories.json. Alle übrigen Konstanten bleiben im selben Modul.
+js/quiz-data-service.js (lines 1-43) lädt zuerst das Manifest, holt anschließend für jede Kategorie ihre questionsFile und hängt die Fragen an, bevor die bestehenden Validatoren greifen.
+Readme.md verweist nun auf die neue Struktur (categories.json + data/questions-*.json), damit klar bleibt, wo Fragen gepflegt werden.
+HTML
+
+index.html (lines 18-20) lädt weiterhin Fonts/CSS und bindet jetzt das modulare Entry-Script js/main.js?v=20250210 ein.
+Damit ist die Fragenverwaltung deutlich übersichtlicher: Du kannst Kategorien getrennt bearbeiten oder austauschen, ohne eine riesige JSON-Datei anfassen zu müssen. Beim Start lädt der DataService automatisch alle Dateien und die App funktioniert wie gewohnt (Tags, Kategorien, Validierungen etc.). Teste einmal lokal (python -m http.server o. Ä.), um sicherzugehen, dass alle Dateien gefunden werden.s
+
+------
 
 Eine Offline-PWA ist machbar, aber ein paar Bausteine sind nötig:
 
@@ -64,7 +75,7 @@ Kurz: Nein, kein riesiger Aufwand – aber ein paar Schritte sind nötig. Fang m
 
 Ja, kannst du – nur muss der Inhalt für Suchmaschinen aufbereitet werden, obwohl er clientseitig aus JSON kommt. Typische Wege:
 
-Prerender/SSR: Erzeuge beim Deploy eine statische Variante Ihrer Seite mit allen relevanten Inhalten (z. B. per Node-Skript, das questions.json einliest und ein fertiges HTML rendert). Suchbots sehen dann sofort Text, Kategorien etc., statt auf JavaScript warten zu müssen.
+Prerender/SSR: Erzeuge beim Deploy eine statische Variante deiner Seite mit allen relevanten Inhalten (z. B. per Node-Skript, das categories.json + data/questions-*.json einliest und ein fertiges HTML rendert). Suchbots sehen dann sofort Text, Kategorien etc., statt auf JavaScript warten zu müssen.
 Dynamisches Rendering/Prerendering-Service: Tools wie Rendertron, Prerender.io oder dein eigener Puppeteer-Worker liefern Bots eine vorgerenderte HTML-Version, während echte Nutzer weiterhin die SPA bekommen.
 Structured Data (Schema.org): Du kannst JSON-LD in dein HTML einbetten (z. B. FAQPage oder Quiz-ähnliche Strukturen), damit Google versteht, dass es Fragen+Antworten sind, auch wenn der sichtbare Content erst per JS kommt.
 Fallback-Serverrender: Wenn du langfristig planst, kannst du auf ein Framework wechseln, das SSR/SSG von Haus aus bietet (Next.js, Astro etc.) – dann ist SEO inhärent einfacher.

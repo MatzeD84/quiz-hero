@@ -1,0 +1,383 @@
+﻿{
+    "questions": [
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welche Stadt auf der Amalfiküste ist auf diesem Bild zu sehen?",
+            "imageUrl": "images/italien/Positano.jpg",
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Ravello",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte historische Gebäude in Amalfi ist bekannt für seine beeindruckende Kathedrale?",
+            "answers": [
+                "Kathedrale von Amalfi",
+                "Villa Rufolo",
+                "Tempel von Minerva",
+                "Kreuzfahrtmuseum"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Stadt an der Amalfiküste ist bekannt für ihre charmanten engen Gassen und den Hauptplatz, Piazza Duomo?",
+            "answers": [
+                "Amalfi",
+                "Positano",
+                "Ravello",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches Meer erstreckt sich entlang der Amalfiküste?",
+            "answers": [
+                "Tyrrhenisches Meer",
+                "Adriatisches Meer",
+                "Ionisches Meer",
+                "Kreta Meer"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher historische Ort an der Amalfiküste ist bekannt für seine mittelalterlichen Türme und die beeindruckende Kathedrale?",
+            "answers": [
+                "Amalfi",
+                "Positano",
+                "Sorrent",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher berühmte Aussichtspunkt in Ravello bietet einen spektakulären Blick auf die Amalfiküste?",
+            "answers": [
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Piazza del Duomo",
+                "Monte Faito"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Ort an der Amalfiküste ist für seine bunten Häuser und die atemberaubende Aussicht auf das Meer bekannt?",
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Praiano",
+                "Sorrent"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte kulinarische Produkt stammt von der Amalfiküste und wird oft in der italienischen Küche verwendet?",
+            "answers": [
+                "Limoncello",
+                "Balsamico-Essig",
+                "Trüffelöl",
+                "Pesto"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches alte Kloster auf der Amalfiküste ist für seine historische Bedeutung und seine beeindruckende Architektur bekannt?",
+            "answers": [
+                "Kloster von San Francesco",
+                "Kloster von Montecassino",
+                "Kloster von San Domenico",
+                "Kloster von Sant\u0027Antonio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Ort an der Amalfiküste ist bekannt für seine atemberaubenden Strände und das kristallklare Wasser?",
+            "answers": [
+                "Praiano",
+                "Amalfi",
+                "Positano",
+                "Sorrent"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches Kunstwerk ist ein bemerkenswerter Bestandteil der Kathedrale von Amalfi?",
+            "answers": [
+                "Krypta von St. Andreas",
+                "Fresken von Michelangelo",
+                "Mosaike von Pompeji",
+                "Statuen von Bernini"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Amalfi war früher ein wichtiger Ort für die Seefahrt und die Schifffahrt?",
+            "answers": [
+                "Krypta von St. Andreas",
+                "Amalfi-Dom",
+                "Rathaus von Amalfi",
+                "Palast der Seefahrer"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Ort an der Amalfiküste ist bekannt für seine exzellenten Weinberge und die Herstellung von Qualitätsweinen?",
+            "answers": [
+                "Furore",
+                "Positano",
+                "Sorrent",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches charmante Dorf an der Amalfiküste ist bekannt für seine außergewöhnliche Architektur und seine malerischen Gassen?",
+            "answers": [
+                "Ravello",
+                "Amalfi",
+                "Positano",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches spektakuläre Gebäude in Amalfi wurde im 9. Jahrhundert erbaut und ist ein bedeutendes historisches Wahrzeichen?",
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Kloster in Positano ist ein bedeutendes religiöses und kulturelles Zentrum?",
+            "answers": [
+                "Kloster von San Domenico",
+                "Kloster von Santa Maria",
+                "Kloster von Sant\u0027Antonio",
+                "Kloster von San Francesco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bekannte Bauwerk in Ravello bietet einen spektakulären Blick auf die Amalfiküste?",
+            "answers": [
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Villa Adriana",
+                "Villa Borghese"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Region ist bekannt für ihre atemberaubende Küstenlinie und ihre beeindruckende Architektur?",
+            "answers": [
+                "Amalfi-Küste",
+                "Cinque Terre",
+                "Toskana",
+                "Sizilien"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Bauwerk in Amalfi wurde im 9. Jahrhundert erbaut und diente als religiöses Zentrum?",
+            "answers": [
+                "Kathedrale von Amalfi",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches architektonische Meisterwerk in Positano ist für seine besondere Gestaltung und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Kirche von Santa Maria Assunta",
+                "Kirche von San Giovanni",
+                "Kirche von Sant\u0027Antonio",
+                "Kirche von San Francesco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches kleine Dorf an der Amalfiküste ist für seine steilen Gassen und seine spektakuläre Aussicht bekannt?",
+            "answers": [
+                "Furore",
+                "Positano",
+                "Sorrent",
+                "Praiano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Ort an der Amalfiküste ist für seine einzigartigen Strände und sein kristallklares Wasser bekannt?",
+            "answers": [
+                "Praiano",
+                "Amalfi",
+                "Positano",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Bauwerk in Amalfi ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Cimbrone",
+                "Villa Rufolo",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Gebäude in Ravello bietet einen spektakulären Blick auf die Amalfiküste und die Umgebung?",
+            "answers": [
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Villa Adriana",
+                "Villa Medici"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Amalfi ist bekannt für seine beeindruckenden Mosaike und seine religiöse Bedeutung?",
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Ort an der Amalfiküste ist bekannt für seine malerischen Strände und seine lebhafte Atmosphäre?",
+            "answers": [
+                "Positano",
+                "Amalfi",
+                "Praiano",
+                "Ravello"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches Bauwerk in Amalfi war ein bedeutendes Zentrum der Schifffahrt und der Wirtschaft im Mittelalter?",
+            "answers": [
+                "Amalfi-Dom",
+                "Villa Rufolo",
+                "Villa Cimbrone",
+                "Kapelle von San Pietro"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        }
+    ]
+}

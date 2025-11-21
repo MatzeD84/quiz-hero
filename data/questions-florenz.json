@@ -1,0 +1,789 @@
+﻿{
+    "questions": [
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welches berühmte Kunstwerk ist auf diesem Bild zu sehen?",
+            "imageUrl": "/images/italien/Michelangelo_David.jpg",
+            "answers": [
+                "David",
+                "Venus von Milo",
+                "Apollo und Daphne",
+                "Der Denker"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galerie der Akademie in Florenz?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz war einst die Residenz der Medici-Dynastie?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Bauwerk in Florenz ist für seine beeindruckende Kuppel bekannt, die von Brunelleschi entworfen wurde?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Brücke in Florenz ist bekannt für ihre Geschäfte und ihre historische Bedeutung?",
+            "answers": [
+                "Ponte Vecchio",
+                "Ponte Santa Trinita",
+                "Ponte alle Grazie",
+                "Ponte della Carraia"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstmuseum in Florenz beherbergt Meisterwerke von Botticelli, Leonardo da Vinci und Michelangelo?",
+            "answers": [
+                "Uffizien",
+                "Galleria dell\u0027Accademia",
+                "Palazzo Pitti",
+                "Museo San Salvatore"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches beeindruckende Gebäude in Florenz diente als Sitz der Florentiner Republik und ist heute ein Museum?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Statue von Michelangelo befindet sich in der Piazza della Signoria in Florenz?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Der Denker",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche bedeutende Kirche in Florenz ist bekannt für ihre beeindruckende Fassade und ihre historischen Fresken?",
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz diente als Residenz der Großherzöge von Toskana und beherbergt heute Kunstwerke und Möbel?",
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Sandro Botticelli ist in den Uffizien in Florenz zu sehen?",
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gebäude in Florenz ist bekannt für seine prächtige Fassade und seine historische Bedeutung als Sitz der Regierung?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Bauwerk in Florenz ist für seine beeindruckende Kuppel bekannt, die von Filippo Brunelleschi entworfen wurde?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz war einst der Sitz der mächtigen Medici-Familie und beherbergt heute ein beeindruckendes Museum?",
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Kirche in Florenz ist bekannt für ihre kunstvolle Fassade und ihre beeindruckenden Fresken?",
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche bekannte Statue von Michelangelo befindet sich im Freien auf der Piazza della Signoria?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Der Denker",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Leonardo da Vinci ist in der Uffizien-Galerie in Florenz zu sehen?",
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz diente einst als Residenz der Medici-Dynastie und ist heute ein bedeutendes Museum?",
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz ist bekannt für seine beeindruckende Architektur und seine historische Bedeutung als Sitz der Regierung?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Sandro Botticelli zeigt die Geburt einer Göttin aus dem Meer?",
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine beeindruckende Kuppel?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Bauwerk in Florenz diente als Palast der Medici-Familie und bietet heute eine beeindruckende Sammlung von Kunstwerken?",
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
+            "answers": [
+                "Basilika Santa Maria Novella",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Basilika San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Leonardo da Vinci zeigt Jesus bei seinem letzten Abendmahl mit den Jüngern?",
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gebäude in Florenz ist bekannt für seine eindrucksvolle Fassade und seine historische Bedeutung?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue eines biblischen Helden, der den Goliath besiegt?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz diente als Regierungsgebäude und ist heute ein bedeutendes Museum?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches beeindruckende Gebäude in Florenz ist bekannt für seine prächtige Kuppel und seine architektonische Bedeutung?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Sandro Botticelli zeigt die Göttin Venus, die aus dem Meer geboren wird?",
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Bauwerk in Florenz wurde von Filippo Brunelleschi entworfen und ist für seine beeindruckende Kuppel bekannt?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz ist für seine bemerkenswerte Architektur und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue eines biblischen Helden, der Goliath besiegt?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Leonardo da Vinci ist in der Uffizien-Galerie in Florenz zu sehen?",
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Bauwerk in Florenz diente als Palast der Medici-Familie und bietet heute eine beeindruckende Sammlung von Kunstwerken?",
+            "answers": [
+                "Palazzo Pitti",
+                "Palazzo Vecchio",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz ist bekannt für seine beeindruckende Fassade und seine historische Bedeutung als Sitz der Regierung?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine beeindruckende Kuppel?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Sandro Botticelli zeigt die Geburt der Venus aus dem Meer?",
+            "answers": [
+                "Die Geburt der Venus",
+                "Primavera",
+                "Das letzte Abendmahl",
+                "Madonna mit Kind"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz wurde von Filippo Brunelleschi entworfen und ist bekannt für seine eindrucksvolle Kuppel?",
+            "answers": [
+                "Kathedrale von Florenz",
+                "Basilika Santa Croce",
+                "Basilika San Lorenzo",
+                "Palazzo Vecchio"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Michelangelo zeigt eine Statue des biblischen Helden David?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz ist für seine beeindruckende Architektur und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Leonardo da Vinci zeigt das letzte Abendmahl von Jesus Christus?",
+            "answers": [
+                "Das letzte Abendmahl",
+                "Mona Lisa",
+                "Die Taufe Christi",
+                "Das Heilige Antlitz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Bauwerk in Florenz ist bekannt für seine prächtige Fassade und seine historische Bedeutung als Sitz der Regierung?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Strozzi",
+                "Palazzo Medici-Riccardi",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Michelangelo zeigt die Statue des David, der den Goliath besiegt?",
+            "answers": [
+                "David",
+                "Pietà",
+                "Die Erschaffung Adams",
+                "Das letzte Gericht"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galleria dell\u0027Accademia in Florenz?",
+            "answers": [
+                "David",
+                "Die Erschaffung Adams",
+                "Die Geburt der Venus",
+                "Das letzte Abendmahl"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt die berühmte Kathedrale in Florenz, die für ihre Kuppel von Filippo Brunelleschi bekannt ist?",
+            "answers": [
+                "Kathedrale von Florenz (Duomo)",
+                "Basilica di Santa Croce",
+                "Basilica di San Lorenzo",
+                "Santa Maria Novella"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche bedeutende Galerie in Florenz beherbergt eine der größten Sammlungen von Renaissance-Kunstwerken?",
+            "answers": [
+                "Uffizien",
+                "Palazzo Vecchio",
+                "Galleria dell\u0027Accademia",
+                "Museo di San Marco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche Brücke in Florenz ist bekannt für die Läden, die entlang ihrer Brücke gebaut sind?",
+            "answers": [
+                "Ponte Vecchio",
+                "Ponte alle Grazie",
+                "Ponte Santa Trinita",
+                "Ponte di Mezzo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher bedeutende Florentiner Politiker und Philosoph schrieb das Werk \u0027Il Principe\u0027, das als bedeutendes Werk der politischen Philosophie gilt?",
+            "answers": [
+                "Niccolò Machiavelli",
+                "Dante Alighieri",
+                "Francesco Petrarca",
+                "Lorenzo de\u0027 Medici"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Michelangelo befindet sich in der Accademia di Belle Arti in Florenz?",
+            "answers": [
+                "David",
+                "Die Pietà",
+                "Die Huldigung der Heiligen Drei Könige",
+                "Der Moses"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie lautet der Name des berühmten Platzes in Florenz, auf dem sich die Kathedrale Santa Maria del Fiore befindet?",
+            "answers": [
+                "Piazza del Duomo",
+                "Piazza della Signoria",
+                "Piazza San Lorenzo",
+                "Piazza Santa Croce"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Florentiner Künstler malte das ikonische Gemälde \u0027Das letzte Abendmahl\u0027, das sich im Kloster Santa Maria delle Grazie befindet?",
+            "answers": [
+                "Leonardo da Vinci",
+                "Sandro Botticelli",
+                "Filippo Lippi",
+                "Alessandro Allori"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Florenz war das politische Zentrum der Stadt während der Renaissance und ist heute ein bedeutendes Museum?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi",
+                "Palazzo della Signoria"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche bekannte florentinische Familie war besonders einflussreich in der Kunstförderung während der Renaissance?",
+            "answers": [
+                "Die Medici",
+                "Die Borgia",
+                "Die Sforza",
+                "Die Farnese"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches monumentale Gebäude in Florenz wird oft als das Symbol der Renaissance-Architektur bezeichnet und beherbergt die berühmte Kuppel von Brunelleschi?",
+            "answers": [
+                "Santa Maria del Fiore",
+                "San Lorenzo",
+                "Santa Croce",
+                "San Miniato al Monte"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches florentinische Kunstwerk von Botticelli zeigt die Geburt der Venus aus dem Meer?",
+            "answers": [
+                "La Nascita di Venere",
+                "Primavera",
+                "Madonna del Magnificat",
+                "La Mystica"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches Florentiner Bauwerk ist für seine zahlreichen Fresken von Giotto bekannt und befindet sich neben der Kathedrale Santa Maria del Fiore?",
+            "answers": [
+                "Campanile di Giotto",
+                "Battistero di San Giovanni",
+                "Palazzo Vecchio",
+                "Basilica di San Lorenzo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "hero"
+        }
+    ]
+}

@@ -1,0 +1,105 @@
+﻿{
+    "questions": [
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
+            "imageUrl": "/images/italien/mount-vesuvius.jpg",
+            "answers": [
+                "Vesuv",
+                "Ätna",
+                "Stromboli",
+                "Vulcano"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Gericht stammt ursprünglich aus Neapel und ist heute weltweit bekannt?",
+            "answers": [
+                "Ravioli",
+                "Lasagne",
+                "Spaghetti Carbonara",
+                "Pizza"
+            ],
+            "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches große, historische Gebäude in Neapel diente als königliche Residenz und ist heute ein Museum?",
+            "answers": [
+                "Palazzo Reale",
+                "Palazzo dello Spagnolo",
+                "Maschio Angioino (Castel Nuovo)",
+                "Villa Pignatelli"
+            ],
+            "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine kulturelle Bedeutung?",
+            "imageUrl": "/images/italien/neapel/Teatro-di-San-Carlo.jpg",
+            "answers": [
+                "Teatro di San Carlo",
+                "Teatro Nazionale",
+                "Teatro di Tordinona",
+                "Teatro dell\u0027Opera"
+            ],
+            "backgroundKnowledge": "Das Teatro di San Carlo wurde 1737 eröffnet und ist das älteste noch aktive Opernhaus in Europa.",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Straße in Neapel ist bekannt für ihre historischen Gebäude und ihre Einkaufsstraßen?",
+            "answers": [
+                "Via Toledo",
+                "Spaccanapoli",
+                "Via San Gregorio Armeno",
+                "Via Chiaia"
+            ],
+            "backgroundKnowledge": "Sie verbindet das Piazza Dante mit dem Piazza del Plebiscito und ist heute ein wichtiges Einkaufs- und Geschäftsviertel",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches archäologische Ausgrabungsgebiet in Neapel ist für seine antiken Ruinen und seine historische Bedeutung bekannt?",
+            "answers": [
+                "Palazzo Reale",
+                "Herculaneum",
+                "Stabiae",
+                "Oplontis"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "image",
+            "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk \u0027Die sieben Werke der Barmherzigkeit\u0027?",
+            "imageUrl": "/images/italien/neapel/The_Seven_Works_of_Mercy-Caravaggio_1607.jpg",
+            "answers": [
+                "Caravaggio",
+                "Mattia Preti",
+                "Giambattista Tiepolo",
+                "Jusepe de Ribera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        }
+    ]
+}

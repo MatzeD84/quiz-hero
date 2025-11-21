@@ -1,0 +1,858 @@
+﻿{
+    "questions": [
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu sehen?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt das historische Stadtfest, das zweimal jährlich in Siena stattfindet und ein Pferderennen auf dem Piazza del Campo beinhaltet?",
+            "answers": [
+                "Palio",
+                "Festa della Madonna",
+                "Sagra di San Giovanni",
+                "Festa della Fiorita"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte gotische Kathedrale befindet sich in Siena und ist bekannt für ihre beeindruckende Fassade?",
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher berühmte Platz in Siena ist bekannt für seine einzigartige Muschelform und seine historische Bedeutung?",
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und ist heute ein Museum?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches wichtige Kunstwerk von Simone Martini befindet sich in der Kathedrale von Siena?",
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher berühmte Künstler malte die \u0027Madonna del Parto\u0027, die in der Umgebung von Siena zu finden ist?",
+            "answers": [
+                "Piero della Francesca",
+                "Leonardo da Vinci",
+                "Michelangelo",
+                "Raphael"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Brunnen in Siena ist bekannt für seine beeindruckende Architektur und seine historische Bedeutung?",
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt die berühmte gotische Kirche in Siena, die für ihre beeindruckende Architektur und ihre Kunstwerke bekannt ist?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher berühmte Platz in Siena ist das Zentrum der Stadt und der Schauplatz des jährlichen Palio-Pferderennens?",
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst das Zentrum der politischen Macht der Stadt?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die \u0027Madonna\u0027 in der Kathedrale von Siena?",
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena diente als Palast der Stadtregierung und enthält bedeutende Kunstwerke?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte gotische Kirche in Siena ist bekannt für ihre beeindruckende Architektur und Kunstwerke?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna befindet sich in der Kathedrale von Siena?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte gotische Kathedrale in Siena ist bekannt für ihre beeindruckende Fassade und ihre Kunstwerke?",
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält heute bedeutende Kunstwerke?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher bedeutende Brunnen in Siena ist bekannt für seine eindrucksvolle Architektur und historische Bedeutung?",
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt die bedeutende gotische Kirche in Siena, die für ihre beeindruckende Architektur und Kunstwerke bekannt ist?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu finden?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die \u0027Madonna\u0027 in der Kathedrale von Siena?",
+            "answers": [
+                "Annunziata-Altarpiece",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält heute bedeutende Kunstwerke?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena diente als Palast der Stadtregierung und enthält bedeutende Kunstwerke?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna mit Kind in der Umgebung von Siena?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna befindet sich in der Kathedrale von Siena?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna del Parto?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher bedeutende Brunnen in Siena ist bekannt für seine eindrucksvolle Architektur und historische Bedeutung?",
+            "answers": [
+                "Fonte Gaia",
+                "Trevi-Brunnen",
+                "Brunnen von Pisa",
+                "Brunnen von Florenz"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt die bedeutende gotische Kirche in Siena, die für ihre beeindruckende Architektur und Kunstwerke bekannt ist?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und enthält bedeutende Kunstwerke?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst ein Kloster und beherbergt heute ein bedeutendes Kunstmuseum?",
+            "answers": [
+                "Santa Maria della Scala",
+                "San Francesco",
+                "Santa Maria Novella",
+                "San Domenico"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu finden?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Ambrogio Lorenzetti zeigt die Allegorie des Guten und des Schlechten Regierens?",
+            "answers": [
+                "Fresken des Palazzo Pubblico",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca zeigt die Madonna mit Kind in der Umgebung von Siena?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende Kunstwerk von Piero della Francesca ist in der Umgebung von Siena zu finden?",
+            "answers": [
+                "Madonna del Parto",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches berühmte Kunstwerk von Duccio di Buoninsegna ist in der Kathedrale von Siena zu sehen?",
+            "answers": [
+                "Maestà",
+                "Das letzte Abendmahl",
+                "Die Geburt der Venus",
+                "Primavera"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt das historische Stadtfest, das zweimal jährlich in Siena stattfindet und ein Pferderennen auf dem Piazza del Campo beinhaltet?",
+            "answers": [
+                "Palio",
+                "Festa della Madonna",
+                "Sagra di San Giovanni",
+                "Festa della Fiorita"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte gotische Kathedrale befindet sich in Siena und ist bekannt für ihre beeindruckende Fassade?",
+            "answers": [
+                "Kathedrale von Siena",
+                "Kathedrale von Florenz",
+                "Kathedrale von Pisa",
+                "Kathedrale von Arezzo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher berühmte Platz in Siena ist bekannt für seine einzigartige Muschelform und seine historische Bedeutung?",
+            "answers": [
+                "Piazza del Campo",
+                "Piazza della Signoria",
+                "Piazza della Repubblica",
+                "Piazza San Marco"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches historische Gebäude in Siena war einst der Sitz der Stadtregierung und ist heute ein Museum?",
+            "answers": [
+                "Palazzo Pubblico",
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici-Riccardi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches jährliche Rennen auf der Piazza del Campo in Siena ist bekannt für seine historischen Wurzeln und Traditionen?",
+            "answers": [
+                "Il Palio",
+                "Il Carnevale",
+                "La Fiera di Siena",
+                "La Regata di Siena"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie lautet der Name der markanten Kathedrale in Siena, die für ihre schwarz-weiße Marmorfassade bekannt ist?",
+            "answers": [
+                "Duomo di Siena",
+                "Basilica di San Francesco",
+                "Chiesa di San Domenico",
+                "Santa Maria del Carmine"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Künstler, bekannt für seine Werkstatt in Siena, schuf das Altarbild \u0027Maestà\u0027, das heute in der Kathedrale von Siena ausgestellt ist?",
+            "answers": [
+                "Duccio di Buoninsegna",
+                "Simone Martini",
+                "Ambrogio Lorenzetti",
+                "Giotto di Bondone"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche berühmte Bibliothek in Siena ist für ihre Sammlung historischer Manuskripte und Dokumente bekannt?",
+            "answers": [
+                "Biblioteca Comunale degli Intronati",
+                "Biblioteca Medicea Laurenziana",
+                "Biblioteca Nazionale Centrale di Firenze",
+                "Biblioteca Apostolica Vaticana"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 1,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welcher Sieneser Künstler ist bekannt für seine prächtigen Fresken, die im Palazzo Pubblico von Siena zu sehen sind?",
+            "answers": [
+                "Ambrogio Lorenzetti",
+                "Giovanni di Paolo",
+                "Simone Martini",
+                "Bernardo Rossellino"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Wie heißt die mittelalterliche Festung, die eine zentrale Rolle in der Geschichte von Siena gespielt hat und heute teilweise erhalten ist?",
+            "answers": [
+                "Rocca Salimbeni",
+                "Castello di Monteriggioni",
+                "Castello di Belcaro",
+                "Rocca di Campi"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welches bedeutende religiöse Fest, das auf Traditionen von Siena zurückgeht, wird seit dem 13. Jahrhundert gefeiert?",
+            "answers": [
+                "Il Palio",
+                "La Festa della Madonna",
+                "La Sagra del Vino",
+                "La Fiera di San Giovanni"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "hero"
+        },
+        {
+            "tag": [],
+            "type": "text",
+            "question": "Welche architektonische Besonderheit prägt das Stadtbild von Siena und ist typisch für die mittelalterliche Stadtplanung?",
+            "answers": [
+                "Eng verwinkelte Gassen",
+                "Große Stadttore",
+                "Weitläufige Stadtmauern",
+                "Erheblich große Plätze"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "hero"
+        }
+    ]
+}
