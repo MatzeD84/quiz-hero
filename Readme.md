@@ -2,6 +2,7 @@ ToDos:
 - über data-difficulty="easy|medium|hero" CSS anpassen
 - questions.json --> data-difficulty per chatGPT bewerten
 - questions.json --> sinvolle tag per chatGPT ergänzen
+- detail-element stylen
 
 
 ToDos ChatGPT:

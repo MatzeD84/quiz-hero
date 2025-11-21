@@ -572,8 +572,7 @@
                 btn.classList.remove('correct', 'incorrect');
             });
 
-            backgroundKnowledge.textContent = '';
-            backgroundKnowledge.classList.add('hide');
+            this.renderBackgroundKnowledge('');
             feedbackElement.textContent = '';
             feedbackElement.classList.add('hide');
             nextButton.classList.add('hide');
@@ -588,9 +587,19 @@
         }
 
         renderBackgroundKnowledge(text) {
-            if (!text) return;
-            this.elements.backgroundKnowledge.textContent = text;
-            this.elements.backgroundKnowledge.classList.remove('hide');
+            if (!this.elements.backgroundKnowledge) return;
+            const contentElement = this.elements.backgroundKnowledge.querySelector('.background-knowledge__content');
+            if (!contentElement) return;
+
+            if (text) {
+                contentElement.textContent = text;
+                this.elements.backgroundKnowledge.open = false;
+                this.elements.backgroundKnowledge.classList.remove('hide');
+            } else {
+                contentElement.textContent = '';
+                this.elements.backgroundKnowledge.classList.add('hide');
+                this.elements.backgroundKnowledge.open = false;
+            }
         }
 
         renderFeedback(message, { isCorrect }) {
@@ -780,19 +789,23 @@
 
             this.view.markAnswerButton(index, isCorrect);
 
-            if (question.backgroundKnowledge) {
-                this.view.renderBackgroundKnowledge(question.backgroundKnowledge);
-            }
-
             const feedbackArray = this.pickFeedbackArray(question, isCorrect);
             const message = this.pickRandomEntry(feedbackArray);
             this.view.renderFeedback(message, { isCorrect });
             this.state.registerAttempt(isCorrect, difficulty);
             this.view.updateScore(this.state.score);
 
+            const backgroundKnowledgeText = (question.backgroundKnowledge || '').trim();
+            const shouldRevealBackgroundKnowledge = Boolean(backgroundKnowledgeText) && (isCorrect || this.state.attempts >= CONFIG.maxAttempts);
+
             if (isCorrect || this.state.attempts >= CONFIG.maxAttempts) {
                 if (!isCorrect) {
                     this.view.highlightCorrectAnswer(question.correct);
+                }
+                if (shouldRevealBackgroundKnowledge) {
+                    this.view.renderBackgroundKnowledge(backgroundKnowledgeText);
+                } else if (!backgroundKnowledgeText) {
+                    this.view.renderBackgroundKnowledge('');
                 }
                 this.view.lockAnswers();
             }
