@@ -6,8 +6,10 @@ ToDos:
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - detail-element stylen
+- Animation bei Punkte anpassen --> bei alscher antwort keine Animation
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
+
 
 ToDos ChatGPT:
 

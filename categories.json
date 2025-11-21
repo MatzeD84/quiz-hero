@@ -12,7 +12,7 @@
             "id": "rom",
             "title": "Rom",
             "enabled": true,
-            "icon": "images/website/logo.png",
+            "icon": "images/website/kategorie-rom.png",
             "description": "Kolosseum, Forum \u0026 Co.",
             "questionsFile": "data/questions-rom.json"
         },

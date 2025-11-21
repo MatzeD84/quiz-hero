@@ -262,7 +262,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: var(--gap);
     gap: 0.25rem;
 }
 
@@ -274,6 +274,7 @@ p {
 .quiz__feedback {
     font-size: 18px;
     font-weight: bold;
+    margin: 0;
 }
 
 
@@ -285,7 +286,7 @@ p {
 }
 
 .btn--next {
-    margin: 10px 0;
+    margin: var(--gap) 0;
     padding: 10px 20px;
     max-width: max-content;
     background-color: var(--light-gray-color);
