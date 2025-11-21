@@ -143,6 +143,36 @@
         return errors;
     }
 
+    function validateFeedback(feedback) {
+        const requiredKeys = [
+            'correctFirstTry',
+            'correctSecondTry',
+            'incorrectFirstTry',
+            'incorrectSecondTry',
+            'difficultCorrectFirstTry'
+        ];
+        const errors = [];
+
+        if (!feedback || typeof feedback !== 'object') {
+            return ['feedback.json ist kein Objekt.'];
+        }
+
+        requiredKeys.forEach(key => {
+            if (!Array.isArray(feedback[key]) || feedback[key].length === 0) {
+            errors.push(`Feedback-Schlüssel "${key}" fehlt oder ist leer.`);
+            return;
+            }
+            feedback[key].forEach((entry, index) => {
+            if (typeof entry !== 'string' || !entry.trim()) {
+                errors.push(`Eintrag ${index + 1} in "${key}" ist kein gültiger Text.`);
+            }
+            });
+        });
+
+        return errors;
+    }
+
+
     const getPointsForDifficulty = (difficulty, attempt) => {
         if (attempt > 0) {
             return CONFIG.score.secondTry;
@@ -169,6 +199,11 @@
                 this.fetchJson(this.questionsUrl),
                 this.fetchJson(this.feedbackUrl)
             ]);
+
+            const feedbackErrors = validateFeedback(feedback);
+            if (feedbackErrors.length) {
+                throw new Error(`Ungültige feedback.json:\n${feedbackErrors.join('\n')}`);
+            }
 
             const categories = questionsPayload.categories ?? [];
             const validationErrors = validateCategories(categories);
