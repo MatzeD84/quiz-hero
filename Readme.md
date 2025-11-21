@@ -10,7 +10,7 @@ ToDos ChatGPT:
   die richtigen antworten zu sehen
 
 - sicherheit
-
+- end-zu-ent-Tests, Test
 - SEO
 
 - Datenbank: Aufwand, sinvoll?
@@ -21,14 +21,12 @@ ToDos ChatGPT:
 - Hintergrundwissen ausbauen: Nach der Antwort einen kurzen „Fun Fact“ oder Link anbieten; optional nur bei Interesse einklappbar.
 
 
-- Preload/Cache-Busting: Wenn du oft an questions.json schraubst, hänge einen kurzen Cache-Buster an den Fetch (z. B. ?v=...) oder setze cache: 'no-store' im Fetch, damit alte Daten nicht im Browser hängenbleiben.
 
-
-Tiefe Validierung der Daten: Beim Laden der Questions kurz Schematests (hat answers 4 Einträge, correct ist Zahl im Bereich usw.). Dann bricht das Quiz nicht unerwartet, wenn jemand im JSON einen Fehler macht.
 
 
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
+
 
 
 -------------------------------------------------------------

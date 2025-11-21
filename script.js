@@ -137,6 +137,12 @@
                 if (question.difficulty && !ALLOWED_DIFFICULTIES.has(question.difficulty)) {
                     errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt eine unbekannte difficulty (${question.difficulty}).`);
                 }
+
+                if (question.type === 'image') {
+                    if (!isNonEmptyString(question.imageUrl)) {
+                        errors.push(`Bildfrage ${questionIndex + 1} in Kategorie ${category.id} benötigt ein gültiges imageUrl.`);
+                    }
+                }
             });
         });
 
