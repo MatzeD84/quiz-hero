@@ -3,7 +3,8 @@ ToDos:
 - questions.json --> data-difficulty per chatGPT bewerten
 - questions.json --> sinvolle tag per chatGPT ergänzen
 - detail-element stylen
-
+- Service Worker / PWA: 
+    Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
 
 ToDos ChatGPT:
 
@@ -44,3 +45,23 @@ Konfigurierbarkeit: URLs, Punktelogik und Selektoren sind zentral definiert. Anp
 Sauberer Zustand: Fragen werden kopiert, der State verwaltet Versuche/Score, und UI-Zustände hängen nicht mehr an globalen Variablen.
 Tests & Erweiterungen: Durch die Aufteilung kannst du QuizState oder QuizDataService isoliert testen, ein anderes View-System anschließen oder neue Features (z. B. Tags, Timer) gezielt ergänzen.
 Kurz: weniger Spaghetti, mehr Struktur – also ja, besser als die vorherige Variante.
+
+
+------
+
+
+Eine Offline-PWA ist machbar, aber ein paar Bausteine sind nötig:
+
+HTTPS + Manifest: Deine Seite muss über HTTPS laufen, dazu kommt ein manifest.json mit Icons, Name, Start-URL etc. – schnell erledigt.
+
+Service Worker registrieren: Kleine JS-Datei, die du via navigator.serviceWorker.register('/sw.js') beim Laden startest. Das sw.js kümmert sich um Caching.
+
+Caching-Strategie überlegen: Du definierst, welche Assets (HTML, CSS, JS, JSON, Bilder) beim Installieren gecacht werden und wie Requests bedient werden. Für eine Quiz-App brauchst du z. B.:
+
+install-Event: caches.open('quiz-v1').then(cache => cache.addAll([...])), damit die wichtigsten Dateien offline verfügbar sind.
+fetch-Event: Strategie wie „Cache-first mit Network-Fallback“ für Assets, und evtl. „Network-first“ für JSON, damit Fragen aktualisiert werden, wenn online.
+Offline-Fallbacks: Überleg dir, was passieren soll, wenn jemand offline startet und die JSON-Dateien nicht im Cache sind (z. B. Hinweis anzeigen oder eine kleine Offline-Version mit zuletzt geladenen Fragen anbieten).
+
+Vom Aufwand her: Ein Basis-Service-Worker ist in ein paar Stunden aufgesetzt. Komplex wird es, wenn du dynamische Inhalte synchron halten willst (z. B. Fragekatalog aktualisieren, während Nutzer offline waren) oder wenn du eigene Datenbanken nutzen willst (IndexedDB). Für eine erste „Offline nutzbar + installierbar“-Variante reicht es, die statischen Assets plus Fragen/Feedback zu cachen und beim Start zu prüfen, ob du online bist.
+
+Kurz: Nein, kein riesiger Aufwand – aber ein paar Schritte sind nötig. Fang mit Manifest + einfachem Service Worker an, teste offline im Browser (DevTools → Application → Service Workers), und erweitere später, wenn du mehr brauchst.
