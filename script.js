@@ -529,6 +529,16 @@
 
         onModalClose(callback) {
             this.elements.modalCloseButton.addEventListener('click', callback);
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    callback();
+                }
+            });
+            this.elements.modal?.addEventListener('click', event => {
+                if (event.target === this.elements.modal) {
+                    callback();
+                }
+            });
         }
 
         showCategories() {

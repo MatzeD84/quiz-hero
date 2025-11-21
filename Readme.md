@@ -19,12 +19,6 @@ ToDos ChatGPT:
 - Sinnvoll die JS Klassen auf mehrere files zu verteilen?
 - Mehrere json-Datein anlegen pro Kategorie?
 
-- Hintergrundwissen ausbauen: Nach der Antwort einen kurzen „Fun Fact“ oder Link anbieten; optional nur bei Interesse einklappbar.
-
-
-
-
-
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 
