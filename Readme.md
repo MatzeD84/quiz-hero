@@ -28,22 +28,16 @@ ToDos ChatGPT:
 
 Highlights JS
 
-Getrennte Klassen (QuizDataService, QuizState, QuizView, QuizController) sorgen für klare Verantwortlichkeiten; jede lässt sich eigenständig testen oder austauschen.
-Alle Selektoren und Konfigurationen (URLs, Scores, maximale Versuche) stecken in Konstanten am Anfang – spätere Anpassungen brauchen nur hier geändert zu werden.
-Fragen werden tief kopiert und per QuizState verwaltet; Originaldaten bleiben unverändert und mehrere Runden sind sauber möglich.
-UI-Updates laufen über QuizView, d. h. DOM-Manipulation hängt nicht mehr im Controller – erleichtert Theme-Wechsel oder das Umsteigen auf ein anderes View-System.
-Fehlerfälle (ungenützte Kategorien, Fetch-Probleme) werden geloggt und mit kurzen Mitteilungen im UI abgefedert.
-Alle Event-Listener sind an einer Stelle registriert, wodurch sie zentral anpassbar bleiben (z. B. für Keyboard-Steuerung).
-Animations-/Feedback-Logik (Score-Animation, Korrektur-Icons, Hintergrundwissen) sitzt im View und reduziert Code-Duplizierung.
-Anpassbar: Du kannst weitere Kategorien oder andere Punkteregeln einführen, ohne tief in die Logik zu greifen; falls du später z. B. eine Tag-Übersicht brauchst, ergänzt du nur View + Controller.
+Wir haben das ursprüngliche monolithische script.js in einzelne ES‑Module aufgeteilt, damit Logik, Konfiguration und DOM-Anbindung sauber gekapselt und leichter wartbar sind:
 
-Der neue Aufbau ist deutlich robuster und wartbarer:
-
-Klare Verantwortlichkeiten: Datenzugriff, State-Management, View und Controller sind getrennt. So lassen sich Teile austauschen oder testen, ohne dass der Rest betroffen ist.
-Konfigurierbarkeit: URLs, Punktelogik und Selektoren sind zentral definiert. Anpassungen brauchen keine Code-Suche mehr im gesamten Skript.
-Sauberer Zustand: Fragen werden kopiert, der State verwaltet Versuche/Score, und UI-Zustände hängen nicht mehr an globalen Variablen.
-Tests & Erweiterungen: Durch die Aufteilung kannst du QuizState oder QuizDataService isoliert testen, ein anderes View-System anschließen oder neue Features (z. B. Tags, Timer) gezielt ergänzen.
-Kurz: weniger Spaghetti, mehr Struktur – also ja, besser als die vorherige Variante.
+js/config.js: Enthält alle Konfigurationswerte (URLs, Punktelogik, Labels, Selektoren, Cache-Version) sowie Hilfsfunktionen wie getPointsForDifficulty. So musst du künftige Anpassungen nur an einer Stelle ändern.
+js/validators.js: Bündelt Schema-Prüfungen für questions.json und feedback.json. Manipulierte oder fehlerhafte Daten werden erkannt, bevor das Quiz startet, und halten so den Rest des Codes sauber.
+js/quiz-data-service.js: Lädt Fragen/Feedback, führt die Validatoren aus und hängt einen Cache-Buster an die Fetch-Requests. Dadurch bleiben Datenkonsistenz und Cache-Verhalten zentral steuerbar.
+js/quiz-state.js: Verwaltet Zustand (Kategorie/Tag, Fragenfolge, Score, Versuche). Fragen werden tief kopiert und über einen Tag-Index organisiert, wodurch du Kategorien/Tags sauber trennen und testen kannst.
+js/quiz-view.js: Kümmert sich ausschließlich um DOM-Referenzen, Rendering und UI-Ereignisse (inkl. ESC-/Overlay-Schließen des Modals). Alle sichtbaren Texte nutzen LABELS, was Internationalisierung erleichtert.
+js/quiz-controller.js: Verbindet DataService, State und View; behandelt die Nutzerflüsse (Kategorie/Tag wählen, Antworten prüfen, Hintergrundwissen erst nach Abschluss zeigen, Ergebnis-Modal).
+js/main.js: Bootstrap-Datei, die beim DOMContentLoaded den Controller instanziiert und das Quiz startet.
+index.html lädt nun styles.css?v=20250210 und das neue js/main.js?v=20250210 als Modul. Damit hast du klare Verantwortlichkeiten, bessere Testbarkeit und keine riesige JS-Datei mehr, was sowohl Wartung als auch zukünftige Erweiterungen (z. B. SSR/PWA) deutlich vereinfacht.
 
 
 ------
