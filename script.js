@@ -61,6 +61,14 @@
         modalCloseButton: '#js-modal-close'
     };
 
+    const REQUIRED_FEEDBACK_KEYS = [
+        'correctFirstTry',
+        'correctSecondTry',
+        'incorrectFirstTry',
+        'incorrectSecondTry',
+        'difficultCorrectFirstTry'
+    ];
+
     const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));
 
     const isNonEmptyString = value => typeof value === 'string' && value.trim().length > 0;
@@ -150,20 +158,13 @@
     }
 
     function validateFeedback(feedback) {
-        const requiredKeys = [
-            'correctFirstTry',
-            'correctSecondTry',
-            'incorrectFirstTry',
-            'incorrectSecondTry',
-            'difficultCorrectFirstTry'
-        ];
         const errors = [];
 
         if (!feedback || typeof feedback !== 'object') {
             return ['feedback.json ist kein Objekt.'];
         }
 
-        requiredKeys.forEach(key => {
+        REQUIRED_FEEDBACK_KEYS.forEach(key => {
             if (!Array.isArray(feedback[key]) || feedback[key].length === 0) {
             errors.push(`Feedback-Schlüssel "${key}" fehlt oder ist leer.`);
             return;
