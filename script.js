@@ -14,6 +14,8 @@
         maxAttempts: 2
     };
 
+    const ASSET_VERSION = '0.0.1'; // bei Änderungen hochzählen
+
     const LABELS = {
         questions: {
             default: 'Frage:',
@@ -92,10 +94,9 @@
         }
 
         async fetchJson(url) {
-            const response = await this.fetchFn(url);
-            if (!response.ok) {
-                throw new Error(`Request failed for ${url} (${response.status})`);
-            }
+            const bustUrl = url.includes('?') ? `${url}&v=${ASSET_VERSION}` : `${url}?v=${ASSET_VERSION}`;
+            const response = await this.fetchFn(bustUrl, { cache: 'no-store' }); // optional kombinierten Schutz
+            if (!response.ok) throw new Error(`Request failed for ${bustUrl} (${response.status})`);
             return response.json();
         }
     }

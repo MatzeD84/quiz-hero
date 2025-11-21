@@ -3,12 +3,21 @@ ToDos:
 - questions.json --> data-difficulty per chatGPT bewerten
 - questions.json --> sinvolle tag per chatGPT ergänzen
 
+
 ToDos ChatGPT:
-- Konstanten für Textbausteine: Statt Strings im Code („Hero-Frage“, „Frage“) eine kleine LABELS-Map; erleichtert Internationalisierung später.
+
+- ChatGPT fragen ob ajax sin macht, um nicht vorher schon im quellcode 
+  die richtigen antworten zu sehen
+
+- sicherheit
+
+- SEO
+
+- Datenbank: Aufwand, sinvoll?
 
 - Sinnvoll die JS Klassen auf mehrere files zu verteilen?
 - Mehrere json-Datein anlegen pro Kategorie?
-- Leaderboard/Lokale Highscores: Speichere die besten Runs pro Kategorie/Tag (lokal im Browser). Sichtbares Ziel motiviert.
+
 - Hintergrundwissen ausbauen: Nach der Antwort einen kurzen „Fun Fact“ oder Link anbieten; optional nur bei Interesse einklappbar.
 
 
