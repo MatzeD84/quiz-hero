@@ -1,0 +1,72 @@
+export const CONFIG = {
+    questionsUrl: 'questions.json',
+    feedbackUrl: 'feedback.json',
+    score: {
+        secondTry: 1,
+        difficulties: {
+            easy: 2,
+            medium: 3,
+            hero: 5
+        },
+        defaultDifficulty: 'easy'
+    },
+    maxAttempts: 2
+};
+
+export const ASSET_VERSION = '20250210';
+
+export const LABELS = {
+    questions: {
+        default: 'Frage:',
+        hero: 'Hero-Frage:'
+    },
+    status: {
+        loading: 'Lade Fragen...',
+        loadError: 'Fehler beim Laden. Bitte später erneut versuchen.',
+        noQuestions: 'Keine Fragen verfügbar.',
+        fetchError: 'Fragen konnten nicht geladen werden.'
+    },
+    scorePrefix: 'Punkte:',
+    modalTitle: 'Quiz beendet!',
+    modalResult: (score, percentage) => `Deine Punktzahl ist: <strong>${score}</strong> (${percentage}%)`
+};
+
+export const SELECTORS = {
+    categoryContainer: '#js-category-container',
+    categoryList: '#js-category-container .category',
+    tagContainer: '#js-tag-container',
+    tagList: '#js-tag-container .tag-filter__list',
+    questionCountContainer: '#js-question-count-container',
+    quizContent: '#js-quiz-content',
+    questionElement: '#js-question',
+    questionImage: '#js-question-image',
+    answerButtons: '.js-answer-btn',
+    questionCountButtons: '.js-question-count-btn',
+    backToCategoryButton: '#js-back-to-category-page',
+    abortButton: '#js-abort-btn',
+    nextButton: '#js-next-btn',
+    feedbackElement: '#js-feedback',
+    feedbackIconCorrect: '#js-feedback-icon-correct',
+    feedbackIconIncorrect: '#js-feedback-icon-incorrect',
+    backgroundKnowledge: '#js-background-knowledge',
+    currentQuestion: '#js-current-question',
+    totalQuestions: '#js-total-questions',
+    score: '#js-score',
+    quizHeadertext: '#js-quiz-headertext',
+    selectionLabel: '#js-selection-label',
+    quizSelectionLabel: '#js-quiz-selection',
+    modal: '#js-result-modal',
+    modalContent: '#js-result-content',
+    modalCloseButton: '#js-modal-close'
+};
+
+export const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));
+
+export const getPointsForDifficulty = (difficulty, attempt) => {
+    if (attempt > 0) {
+        return CONFIG.score.secondTry;
+    }
+    const level = difficulty || CONFIG.score.defaultDifficulty;
+    const table = CONFIG.score.difficulties;
+    return table[level] ?? table[CONFIG.score.defaultDifficulty];
+};

@@ -1,4 +1,7 @@
 ToDos:
+- Übersichtsseite
+    - Styling Icons für Kategorien/Tags
+    - Erstellung und Styling von decription für Kategorien/Tags
 - über data-difficulty="easy|medium|hero" CSS anpassen
 - questions.json --> data-difficulty per chatGPT bewerten
 - questions.json --> sinvolle tag per chatGPT ergänzen
@@ -8,13 +11,9 @@ ToDos:
 
 ToDos ChatGPT:
 
-- ChatGPT fragen ob ajax sin macht, um nicht vorher schon im quellcode 
-  die richtigen antworten zu sehen
 
-- sicherheit
 - end-zu-ent-Tests, Test
 - SEO
-
 - Datenbank: Aufwand, sinvoll?
 
 - Sinnvoll die JS Klassen auf mehrere files zu verteilen?
@@ -65,3 +64,14 @@ Offline-Fallbacks: Überleg dir, was passieren soll, wenn jemand offline startet
 Vom Aufwand her: Ein Basis-Service-Worker ist in ein paar Stunden aufgesetzt. Komplex wird es, wenn du dynamische Inhalte synchron halten willst (z. B. Fragekatalog aktualisieren, während Nutzer offline waren) oder wenn du eigene Datenbanken nutzen willst (IndexedDB). Für eine erste „Offline nutzbar + installierbar“-Variante reicht es, die statischen Assets plus Fragen/Feedback zu cachen und beim Start zu prüfen, ob du online bist.
 
 Kurz: Nein, kein riesiger Aufwand – aber ein paar Schritte sind nötig. Fang mit Manifest + einfachem Service Worker an, teste offline im Browser (DevTools → Application → Service Workers), und erweitere später, wenn du mehr brauchst.
+
+
+-----------
+
+Ja, kannst du – nur muss der Inhalt für Suchmaschinen aufbereitet werden, obwohl er clientseitig aus JSON kommt. Typische Wege:
+
+Prerender/SSR: Erzeuge beim Deploy eine statische Variante Ihrer Seite mit allen relevanten Inhalten (z. B. per Node-Skript, das questions.json einliest und ein fertiges HTML rendert). Suchbots sehen dann sofort Text, Kategorien etc., statt auf JavaScript warten zu müssen.
+Dynamisches Rendering/Prerendering-Service: Tools wie Rendertron, Prerender.io oder dein eigener Puppeteer-Worker liefern Bots eine vorgerenderte HTML-Version, während echte Nutzer weiterhin die SPA bekommen.
+Structured Data (Schema.org): Du kannst JSON-LD in dein HTML einbetten (z. B. FAQPage oder Quiz-ähnliche Strukturen), damit Google versteht, dass es Fragen+Antworten sind, auch wenn der sichtbare Content erst per JS kommt.
+Fallback-Serverrender: Wenn du langfristig planst, kannst du auf ein Framework wechseln, das SSR/SSG von Haus aus bietet (Next.js, Astro etc.) – dann ist SEO inhärent einfacher.
+Kurz: Es reicht nicht, nur JSON per JS einzubinden. Entweder renderst du beim Build eine statische HTML-Ausgabe, nutzt einen Prerender-Service oder ergänzt strukturierte Daten, damit Bots deine Inhalte zuverlässig sehen.
