@@ -43,9 +43,8 @@ export class QuizView {
         wrapper.innerHTML = '';
         categories.forEach(category => {
             const button = document.createElement('button');
-            button.className = 'js-category-btn btn btn--category';
+            button.className = 'js-category-btn btn btn--category category-card';
             button.dataset.category = category.id;
-            button.textContent = category.title;
 
             if (!category.enabled) {
                 button.disabled = true;
@@ -54,6 +53,31 @@ export class QuizView {
                     button.title = category.unlockHint;
                 }
             }
+
+            if (category.icon) {
+                const icon = document.createElement('img');
+                icon.src = category.icon;
+                icon.alt = `${category.title} Icon`;
+                icon.classList.add('category-card__icon');
+                button.appendChild(icon);
+            }
+
+            const textWrapper = document.createElement('div');
+            textWrapper.className = 'category-card__text';
+
+            const titleEl = document.createElement('span');
+            titleEl.className = 'category-card__title';
+            titleEl.textContent = category.title;
+            textWrapper.appendChild(titleEl);
+
+            if (category.description) {
+                const descriptionEl = document.createElement('span');
+                descriptionEl.className = 'category-card__description';
+                descriptionEl.textContent = category.description;
+                textWrapper.appendChild(descriptionEl);
+            }
+
+            button.appendChild(textWrapper);
 
             wrapper.appendChild(button);
         });

@@ -4,7 +4,7 @@
             "id": "test",
             "title": "Test",
             "enabled": true,
-            "icon": "images/website/logo.png",
+            "icon": "images/website/kategorie-oldenburg.png",
             "description": "Interner Schnelltest",
             "questionsFile": "data/questions-test.json"
         },
@@ -19,8 +19,8 @@
         {
             "id": "neapel",
             "title": "Neapel",
-            "enabled": false,
-            "icon": "images/website/logo.png",
+            "enabled": true,
+            "icon": "images/website/kategorie-neapel.png",
             "description": null,
             "questionsFile": "data/questions-neapel.json"
         },
@@ -28,23 +28,23 @@
             "id": "amalfi",
             "title": "Amalfi Küste",
             "enabled": true,
-            "icon": null,
+            "icon": "images/website/kategorie-amalfikueste.png",
             "description": null,
             "questionsFile": "data/questions-amalfi.json"
         },
         {
             "id": "florenz",
             "title": "Florenz",
-            "enabled": false,
-            "icon": null,
+            "enabled": true,
+            "icon": "images/website/kategorie-florenz.png",
             "description": null,
             "questionsFile": "data/questions-florenz.json"
         },
         {
             "id": "siena",
             "title": "Siena",
-            "enabled": false,
-            "icon": null,
+            "enabled": true,
+            "icon": "images/website/kategorie-siena.png",
             "description": null,
             "questionsFile": "data/questions-siena.json"
         }
