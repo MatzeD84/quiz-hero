@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const controller = new QuizController({
         dataService: new QuizDataService({
             questionsUrl: CONFIG.questionsUrl,
+            tagsUrl: CONFIG.tagsUrl,
             feedbackUrl: CONFIG.feedbackUrl
         }),
         state: new QuizState(),

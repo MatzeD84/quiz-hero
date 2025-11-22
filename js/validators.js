@@ -110,3 +110,26 @@ export function validateFeedback(feedback) {
 
     return errors;
 }
+
+export function validateTags(tags) {
+    const errors = [];
+
+    if (!Array.isArray(tags)) {
+        return ['tags.json ist kein Array.'];
+    }
+
+    tags.forEach((tag, index) => {
+        if (!tag || typeof tag !== 'object') {
+            errors.push(`Tag #${index + 1} ist kein Objekt.`);
+            return;
+        }
+        if (!isNonEmptyString(tag.id)) {
+            errors.push(`Tag #${index + 1} besitzt keine gültige id.`);
+        }
+        if (!isNonEmptyString(tag.title)) {
+            errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt keinen gültigen Titel.`);
+        }
+    });
+
+    return errors;
+}

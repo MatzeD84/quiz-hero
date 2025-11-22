@@ -10,6 +10,7 @@ const cloneDeep = value => {
 export class QuizState {
     constructor() {
         this.categories = [];
+        this.tagsMeta = new Map();
         this.feedbackMessages = {};
         this.tagIndex = new Map();
         this.activeCategoryId = null;
@@ -21,14 +22,16 @@ export class QuizState {
         this.attempts = 0;
     }
 
-    setData({ categories, feedback }) {
+    setData({ categories, tags, feedback }) {
         this.categories = categories;
+        this.tagsMeta = new Map(tags.map(tag => [tag.id, tag]));
         this.feedbackMessages = feedback;
         this.buildTagIndex();
     }
 
     buildTagIndex() {
         this.tagIndex.clear();
+        const missingTags = new Set();
         this.categories
             .filter(category => category.enabled)
             .forEach(category => {
@@ -36,6 +39,9 @@ export class QuizState {
                     (question.tag || []).forEach(tag => {
                         if (!tag) {
                             return;
+                        }
+                        if (!this.tagsMeta.has(tag)) {
+                            missingTags.add(tag);
                         }
                         if (!this.tagIndex.has(tag)) {
                             this.tagIndex.set(tag, []);
@@ -47,10 +53,15 @@ export class QuizState {
                     });
                 });
             });
+        if (missingTags.size > 0) {
+            console.warn(`Tags ohne Metadaten in tags.json: ${Array.from(missingTags).join(', ')}`);
+        }
     }
 
     getAvailableTags() {
-        return Array.from(this.tagIndex.keys()).sort((a, b) => a.localeCompare(b, 'de'));
+        return Array.from(this.tagIndex.keys())
+            .map(tagId => this.tagsMeta.get(tagId) || { id: tagId, title: tagId })
+            .sort((a, b) => a.title.localeCompare(b.title, 'de'));
     }
 
     getCategory(categoryId) {

@@ -1,9 +1,10 @@
-import { ASSET_VERSION } from './config.js';
-import { validateCategories, validateFeedback } from './validators.js';
+import { ASSET_VERSION, CONFIG } from './config.js';
+import { validateCategories, validateFeedback, validateTags } from './validators.js';
 
 export class QuizDataService {
-    constructor({ questionsUrl, feedbackUrl, fetchFn = window.fetch.bind(window) }) {
+    constructor({ questionsUrl, tagsUrl, feedbackUrl, fetchFn = window.fetch.bind(window) }) {
         this.questionsUrl = questionsUrl;
+        this.tagsUrl = tagsUrl;
         this.feedbackUrl = feedbackUrl;
         this.fetchFn = fetchFn;
         this.cache = null;
@@ -14,14 +15,20 @@ export class QuizDataService {
             return this.cache;
         }
 
-        const [categoriesManifest, feedback] = await Promise.all([
+        const [categoriesManifest, tagsData, feedback] = await Promise.all([
             this.fetchJson(this.questionsUrl),
+            this.fetchJson(this.tagsUrl),
             this.fetchJson(this.feedbackUrl)
         ]);
 
         const feedbackErrors = validateFeedback(feedback);
         if (feedbackErrors.length) {
             throw new Error(`Ungültige feedback.json:\n${feedbackErrors.join('\n')}`);
+        }
+
+        const tagErrors = validateTags(tagsData.tags ?? []);
+        if (tagErrors.length) {
+            throw new Error(`Ungültige tags.json:\n${tagErrors.join('\n')}`);
         }
 
         const categories = categoriesManifest.categories ?? [];
@@ -42,7 +49,9 @@ export class QuizDataService {
             throw new Error(`Ungültige categories/questions Daten:\n${validationErrors.join('\n')}`);
         }
 
-        this.cache = { categories, feedback };
+        const tags = tagsData.tags ?? [];
+
+        this.cache = { categories, tags, feedback };
         return this.cache;
     }
 

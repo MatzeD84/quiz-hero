@@ -1,0 +1,28 @@
+{
+    "tags": [
+         {
+            "id": "Test",
+            "title": "Test",
+            "icon": "images/website/tag-antike.png",
+            "description": "Interner Test-Tag"
+        },
+        {
+            "id": "Antike",
+            "title": "Antike",
+            "icon": "images/website/tag-antike-2.png",
+            "description": "Fragen rund um antike Bauwerke und Geschichte"
+        },
+        {
+            "id": "Essen",
+            "title": "Essen",
+            "icon": "images/website/tag-essen.png",
+            "description": "Kulinarische Spezialitäten und Gerichte"
+        },
+        {
+            "id": "Geographie",
+            "title": "Geographie",
+            "icon": "images/website/tag-geographie.png",
+            "description": "Fragen zur Geographie und Landschaft"
+        }
+    ]
+}

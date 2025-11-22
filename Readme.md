@@ -82,3 +82,27 @@ Dynamisches Rendering/Prerendering-Service: Tools wie Rendertron, Prerender.io o
 Structured Data (Schema.org): Du kannst JSON-LD in dein HTML einbetten (z. B. FAQPage oder Quiz-ähnliche Strukturen), damit Google versteht, dass es Fragen+Antworten sind, auch wenn der sichtbare Content erst per JS kommt.
 Fallback-Serverrender: Wenn du langfristig planst, kannst du auf ein Framework wechseln, das SSR/SSG von Haus aus bietet (Next.js, Astro etc.) – dann ist SEO inhärent einfacher.
 Kurz: Es reicht nicht, nur JSON per JS einzubinden. Entweder renderst du beim Build eine statische HTML-Ausgabe, nutzt einen Prerender-Service oder ergänzt strukturierte Daten, damit Bots deine Inhalte zuverlässig sehen.
+
+-----------
+
+Was neu ist
+
+Manifest + geteilte Fragen: categories.json verweist auf einzelne Dateien data/questions-<id>.json. Der QuizDataService lädt zuerst das Manifest und pro Kategorie deren Fragen-Datei, validiert alles und fügt es zusammen.
+Tags-Manifest: Neue tags.json mit Tag-Metadaten (id, title, optional icon/description). Der DataService lädt und validiert auch diese Daten.
+State/Tag-Metadaten: QuizState speichert tagsMeta und baut den Tag-Index mit Metadaten. getAvailableTags() liefert angereicherte Tag-Objekte (Titel/Icon/Beschreibung).
+Tag-Karten: renderTagButtons baut nun „Tag-Cards“ (Icon, Titel, Beschreibung), analog zu den Kategorie-Cards. Tag-Buttons tragen data-tag mit der Tag-ID.
+Konfiguration: CONFIG.questionsUrl zeigt auf categories.json, CONFIG.tagsUrl ist neu.
+Dateien
+
+Neu: tags.json, data/questions-*.json (aus der alten questions.json generiert), categories.json als Manifest.
+Geändert: js/config.js, js/validators.js, js/quiz-data-service.js, js/quiz-state.js, js/quiz-view.js, index.html (lädt js/main.js als Modul).
+Was du noch tun solltest
+
+Styles für .tag-card, .tag-card__icon, .tag-card__text, .tag-card__title, .tag-card__description ergänzen, damit die neuen Tag-Karten zum Layout passen.
+Wenn du mehr Tags nutzt, tags.json um weitere Einträge ergänzen (IDs müssen zu den tag-Strings in den Fragen passen).
+Optional: README-Hinweise auf die neue Manifest-Struktur erweitern.
+
+Ich habe eine Warnung für fehlende Tag-Metadaten ergänzt:
+
+In js/quiz-state.js sammelt buildTagIndex() jetzt Tags, die in Fragen vorkommen, aber nicht in tags.json stehen, und gibt eine console.warn aus (Tags ohne Metadaten in tags.json: …). Die Tags werden trotzdem normal verarbeitet, du bekommst nur den Hinweis.
+Damit bleiben die Buttons flexibel, Inkonsistenzen fallen aber sofort auf.

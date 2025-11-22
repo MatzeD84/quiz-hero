@@ -91,10 +91,35 @@ export class QuizView {
 
         tags.forEach(tag => {
             const button = document.createElement('button');
-            button.className = 'js-tag-btn btn btn--tag';
-            button.dataset.tag = tag;
+            button.className = 'js-tag-btn btn btn--tag tag-card';
+            button.dataset.tag = tag.id;
             button.type = 'button';
-            button.textContent = tag;
+
+            if (tag.icon) {
+                const icon = document.createElement('img');
+                icon.src = tag.icon;
+                icon.alt = `${tag.title} Icon`;
+                icon.classList.add('tag-card__icon');
+                button.appendChild(icon);
+            }
+
+            const textWrapper = document.createElement('div');
+            textWrapper.className = 'tag-card__text';
+
+            const titleEl = document.createElement('span');
+            titleEl.className = 'tag-card__title';
+            titleEl.textContent = tag.title || tag.id;
+            textWrapper.appendChild(titleEl);
+
+            if (tag.description) {
+                const descEl = document.createElement('span');
+                descEl.className = 'tag-card__description';
+                descEl.textContent = tag.description;
+                textWrapper.appendChild(descEl);
+            }
+
+            button.appendChild(textWrapper);
+
             wrapper.appendChild(button);
         });
 
