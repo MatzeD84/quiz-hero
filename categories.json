@@ -4,7 +4,7 @@
             "id": "test",
             "title": "Test",
             "enabled": true,
-            "icon": "images/website/kategorie-oldenburg.png",
+            "icon": "images/website/kategorie-mordor.png",
             "description": "Interner Schnelltest",
             "questionsFile": "data/questions-test.json"
         },
@@ -12,7 +12,7 @@
             "id": "rom",
             "title": "Rom",
             "enabled": true,
-            "icon": "images/website/kategorie-rom.png",
+            "icon": "images/website/kategorie-rom-2.png",
             "description": "Kolosseum, Forum \u0026 Co.",
             "questionsFile": "data/questions-rom.json"
         },
@@ -21,7 +21,7 @@
             "title": "Neapel",
             "enabled": true,
             "icon": "images/website/kategorie-neapel.png",
-            "description": null,
+            "description": "Pizza, Vesuv \u0026 Meer",
             "questionsFile": "data/questions-neapel.json"
         },
         {
@@ -29,7 +29,7 @@
             "title": "Amalfi Küste",
             "enabled": true,
             "icon": "images/website/kategorie-amalfikueste.png",
-            "description": null,
+            "description": "Landschaft, Dörfer \u0026 Meer",
             "questionsFile": "data/questions-amalfi.json"
         },
         {
@@ -37,7 +37,7 @@
             "title": "Florenz",
             "enabled": true,
             "icon": "images/website/kategorie-florenz.png",
-            "description": null,
+            "description": "Kunst, Dom \u0026 Renaissance",
             "questionsFile": "data/questions-florenz.json"
         },
         {
@@ -45,7 +45,7 @@
             "title": "Siena",
             "enabled": true,
             "icon": "images/website/kategorie-siena.png",
-            "description": null,
+            "description": "Piazza del Campo \u0026 Palio",
             "questionsFile": "data/questions-siena.json"
         }
     ]
