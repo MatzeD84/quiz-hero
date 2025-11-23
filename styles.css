@@ -57,10 +57,16 @@ h1, h2, h3, h4, h5, h6, .headline {
     letter-spacing: 2px;
 }
 
+@media (max-width: 576px) {
+    h2 {
+        margin: var(--gap-small) 0;
+        font-size: 1.3rem;
+    }
+}
+
 p {
     margin: 0.5rem 0;
 }
-
 
 
 .container {
@@ -87,14 +93,33 @@ p {
     margin: 1rem 0;
 }
 
+@media (max-width: 576px) {
+    .main__header {
+        margin: var(--gap-small) 0;
+    }
+}
+
 .main_headline {
     margin: 0.5rem 0;
     font-size: 2.5rem;
     font-weight: 350;
 }
 
+@media (max-width: 576px) {
+    .main_headline {
+        margin: 0.5rem 0;
+        font-size: 2rem;
+    }
+}
+
 .main_image {
     max-height: 75px;
+}
+
+@media (max-width: 576px) {
+    .main_image {
+        max-height: 40px;
+    }
 }
 
 .btn {
