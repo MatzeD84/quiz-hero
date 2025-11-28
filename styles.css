@@ -370,6 +370,10 @@ p {
     margin-top: var(--gap-small);
 }
 
+.background-knowledge__content {
+    text-wrap: auto;
+}
+
 .btn--next {
     margin-top: var(--gap);
     padding: 10px 20px;

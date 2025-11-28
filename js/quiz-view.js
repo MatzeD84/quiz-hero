@@ -281,12 +281,10 @@ export class QuizView {
 
         if (text) {
             contentElement.textContent = text;
-            this.elements.backgroundKnowledge.open = false;
             this.elements.backgroundKnowledge.classList.remove('hide');
         } else {
             contentElement.textContent = '';
             this.elements.backgroundKnowledge.classList.add('hide');
-            this.elements.backgroundKnowledge.open = false;
         }
     }
 
