@@ -12,6 +12,7 @@ ToDos:
 
 
 ToDos ChatGPT:
+- alle dom elemente auf die direkt über JS zugegriffen wird, sollen eine extra css klasse bekommen js-klassenname
 - Frage was passirt bei ein tag der gesetzt wurde aber nicht in tags-json vorhanden ist und umgekehrt?
 - "enabled": true auch auf tags anwenden
 - einen "störer" / flag implementieren, der auf den Kategorie-Übersicht auf den

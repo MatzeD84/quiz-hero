@@ -46,6 +46,7 @@ export const SELECTORS = {
     backToCategoryButton: '#js-back-to-category-page',
     abortButton: '#js-abort-btn',
     nextButton: '#js-next-btn',
+    feedbackContainer: '.js-quiz-feedback-container',
     feedbackElement: '#js-feedback',
     feedbackIconCorrect: '#js-feedback-icon-correct',
     feedbackIconIncorrect: '#js-feedback-icon-incorrect',

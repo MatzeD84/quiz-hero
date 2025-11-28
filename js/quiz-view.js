@@ -20,6 +20,7 @@ export class QuizView {
             backToCategoryButton: document.querySelector(selectors.backToCategoryButton),
             abortButton: document.querySelector(selectors.abortButton),
             nextButton: document.querySelector(selectors.nextButton),
+            feedbackContainer: document.querySelector(selectors.feedbackContainer),
             feedbackElement: document.querySelector(selectors.feedbackElement),
             feedbackIconCorrect: document.querySelector(selectors.feedbackIconCorrect),
             feedbackIconIncorrect: document.querySelector(selectors.feedbackIconIncorrect),
@@ -235,7 +236,7 @@ export class QuizView {
     }
 
     renderQuestion(question, meta) {
-        const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, feedbackElement, nextButton } = this.elements;
+        const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, feedbackContainer, feedbackElement, nextButton } = this.elements;
         const { type, imageUrl, answers } = question;
         const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
         const isHero = difficulty === 'hero';
@@ -259,6 +260,7 @@ export class QuizView {
         });
 
         this.renderBackgroundKnowledge('');
+        this.hideElement(feedbackContainer);
         feedbackElement.textContent = '';
         feedbackElement.classList.add('hide');
         nextButton.classList.add('hide');
@@ -289,6 +291,7 @@ export class QuizView {
     }
 
     renderFeedback(message, { isCorrect }) {
+        this.showElement(this.elements.feedbackContainer);
         this.elements.feedbackElement.textContent = message;
         this.elements.feedbackElement.classList.remove('hide');
 
