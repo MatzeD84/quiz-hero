@@ -26,7 +26,11 @@ export class QuizState {
 
     setData({ categories, tags, feedback }) {
         this.categories = categories;
-        this.tagsMeta = new Map(tags.map(tag => [tag.id, tag]));
+        const normalizedTags = tags.map(tag => ({
+            ...tag,
+            enabled: tag.enabled !== false
+        }));
+        this.tagsMeta = new Map(normalizedTags.map(tag => [tag.id, tag]));
         this.feedbackMessages = feedback;
         this.buildTagIndex();
     }
@@ -34,6 +38,7 @@ export class QuizState {
     buildTagIndex() {
         this.tagIndex.clear();
         const missingTags = new Set();
+        const disabledTags = new Set();
         this.categories
             .filter(category => category.enabled)
             .forEach(category => {
@@ -42,8 +47,14 @@ export class QuizState {
                         if (!tag) {
                             return;
                         }
-                        if (!this.tagsMeta.has(tag)) {
+                        const meta = this.tagsMeta.get(tag);
+                        if (!meta) {
                             missingTags.add(tag);
+                            return;
+                        }
+                        if (meta.enabled === false) {
+                            disabledTags.add(tag);
+                            return;
                         }
                         if (!this.tagIndex.has(tag)) {
                             this.tagIndex.set(tag, []);
@@ -58,6 +69,9 @@ export class QuizState {
         if (missingTags.size > 0) {
             console.warn(`Tags ohne Metadaten in tags.json: ${Array.from(missingTags).join(', ')}`);
         }
+        if (disabledTags.size > 0) {
+            console.info(`Deaktivierte Tags (tags.json enabled:false) wurden übersprungen: ${Array.from(disabledTags).join(', ')}`);
+        }
     }
 
     getAvailableTags() {
@@ -67,7 +81,7 @@ export class QuizState {
     }
 
     getTagMeta(tagId) {
-        return this.tagsMeta.get(tagId) || { id: tagId, title: tagId, description: '', icon: '' };
+        return this.tagsMeta.get(tagId) || { id: tagId, title: tagId, description: '', icon: '', enabled: true };
     }
 
     getCategory(categoryId) {

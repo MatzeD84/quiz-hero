@@ -1,11 +1,9 @@
 ToDos:
 - Übersichtsseite
     - Styling Icons für Kategorien/Tags
-    - Erstellung und Styling von decription für Kategorien/Tags
 - über data-difficulty="easy|medium|hero" CSS anpassen
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
-- detail-element stylen
 - Animation bei Punkte anpassen --> bei alscher antwort keine Animation
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
@@ -13,7 +11,6 @@ ToDos:
 
 ToDos ChatGPT:
 - alle dom elemente auf die direkt über JS zugegriffen wird, sollen eine extra css klasse bekommen js-klassenname
-- Frage was passirt bei ein tag der gesetzt wurde aber nicht in tags-json vorhanden ist und umgekehrt?
 - "enabled": true auch auf tags anwenden
 - einen "störer" / flag implementieren, der auf den Kategorie-Übersicht auf den
   Bildern angezeigt wird, sobald es "neue" Fragen zu dem Thame gibt "x Neue Fragen" 

@@ -1,28 +1,32 @@
 {
     "tags": [
-         {
+        {
             "id": "Test",
             "title": "Test",
             "icon": "images/website/tag-antike-2.png",
-            "description": "Interner Test-Tag"
+            "description": "Interner Test-Tag",
+            "enabled": false
         },
         {
             "id": "Antike",
             "title": "Antike",
             "icon": "images/website/tag-antike.png",
-            "description": "Antike Bauwerke und Geschichte"
+            "description": "Antike Bauwerke und Geschichte",
+            "enabled": true
         },
         {
             "id": "Essen",
             "title": "Essen",
             "icon": "images/website/tag-essen.png",
-            "description": "Typischen Gerichte und Spezialitäten"
+            "description": "Typischen Gerichte und Spezialit\u00e4ten",
+            "enabled": true
         },
         {
             "id": "Geographie",
             "title": "Geographie",
             "icon": "images/website/tag-geographie.png",
-            "description": "Geographie und Landschaft"
+            "description": "Geographie und Landschaft",
+            "enabled": false
         }
     ]
 }
