@@ -1,6 +1,5 @@
 ToDos:
-- Übersichtsseite
-    - Styling Icons für Kategorien/Tags
+
 - über data-difficulty="easy|medium|hero" CSS anpassen
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
@@ -10,8 +9,6 @@ ToDos:
 
 
 ToDos ChatGPT:
-- alle dom elemente auf die direkt über JS zugegriffen wird, sollen eine extra css klasse bekommen js-klassenname
-- "enabled": true auch auf tags anwenden
 - einen "störer" / flag implementieren, der auf den Kategorie-Übersicht auf den
   Bildern angezeigt wird, sobald es "neue" Fragen zu dem Thame gibt "x Neue Fragen" 
 - end-zu-ent-Tests, Test

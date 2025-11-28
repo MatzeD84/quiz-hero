@@ -199,7 +199,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welche Symbolik steht hinter dem Werfen einer Münze über die linke Schulter in den Trevi-Brunnen?",
             "imageUrl": "/images/italien/trevi_brunnen.jpg",
@@ -214,7 +214,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welcher italienische Papst beauftragte die Fertigstellung des Trevi-Brunnens und ist auf einer Inschrift am Brunnen verewigt?",
             "answers": [
@@ -228,7 +228,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welche der folgenden Statuen am Trevi-Brunnen symbolisiert die „Fruchtbarkeit“, die aus der Reinheit des Wassers hervorgeht?",
             "imageUrl": "/images/italien/Trevi_Statue.jpg",
@@ -243,7 +243,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Wie heißt der berühmte Brunnen auf diesem Bild?",
             "imageUrl": "/images/italien/trevi_brunnen.jpg",
@@ -443,7 +443,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche der folgenden Strukturen ist nicht in Rom zu finden?",
             "answers": [
@@ -457,7 +457,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welcher Platz in Rom war ursprünglich ein Stadion für athletische Wettkämpfe?",
             "imageUrl": "/images/italien/piazza-navona.jpg",
@@ -472,7 +472,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welcher Platz in Rom ist bekannt für seine herausragende Barockarchitektur und seine Kirche Sant\u0027Agnese in Agone?",
             "imageUrl": "/images/italien/piazza-navona-sant-agnese-in-agone.jpg",
@@ -487,7 +487,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welcher Platz in Rom wird von der berühmten Fontana dei Quattro Fiumi geschmückt?",
             "imageUrl": "/images/italien/vierstroemebrunnen.jpg",
@@ -519,7 +519,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Die Piazza Navona wurde auf den Überresten welches antiken römischen Stadions errichtet?",
             "answers": [
@@ -533,7 +533,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche Flüsse sind durch die Statuen des Vierströmebrunnens auf der Piazza Navona symbolisiert?",
             "answers": [
@@ -547,7 +547,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welche Kirche auf der Piazza Navona beherbergt das Grab von Papst Innozenz X., der die Gestaltung des Platzes maßgeblich beeinflusste?",
             "imageUrl": "/images/italien/piazza-navona-sant-agnese-in-agone.jpg",
@@ -562,7 +562,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "In welchem Stil wurde die Kirche Sant\u0027Agnese in Agone auf der Piazza Navona erbaut?",
             "answers": [
@@ -576,7 +576,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Einer der dreizehn Obelisken in Rom, steht auf der Piazza Navona. Wie heißt dieser Obelisk?",
             "imageUrl": "/images/italien/rom-piazza-navona-obelisk.jpg",
@@ -591,7 +591,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Wie heißt der barocker Zierbrunnen auf der nördlichen Piazza Navona?",
             "imageUrl": "/images/italien/rom-piazza-navona-neptunbrunnen.jpg",
@@ -606,7 +606,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Wie heißt der barocker Zierbrunnen auf der südlichen Piazza Navona?",
             "imageUrl": "/images/italien/rom-piazza-navona-mohren-brunnen.jpg",
@@ -621,7 +621,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welcher Papst war verantwortlich für die Umgestaltung der Piazza Navona in den heutigen barocken Platz?",
             "imageUrl": "/images/italien/papst-innocent-x.jpg",
@@ -636,7 +636,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welches berühmte Kunstwerk auf der Piazza Navona stellt den Triumph des Papsttums über die vier bekannten Kontinente der damaligen Zeit dar?",
             "answers": [
@@ -650,7 +650,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Wie heißt einer der bekanntesten Plätze im Zentrum von Rom?",
             "imageUrl": "/images/italien/piazza-navona.jpg",
@@ -665,7 +665,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welche antike Straße führte von Rom bis nach Brindisi?",
             "imageUrl": "/images/italien/via-appia-antica.png",
@@ -680,7 +680,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welche Säule in Rom ist im Bild zu sehen?",
             "imageUrl": "/images/italien/trajanssaeule.jpg",
@@ -695,7 +695,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche Straße in Rom ist bekannt für ihre prächtigen Gräber?",
             "answers": [
@@ -709,7 +709,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche Villa wurde von Kaiser Hadrian als seine Residenz erbaut?",
             "answers": [
@@ -723,7 +723,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Wer entwarf das heutige Pantheon?",
             "answers": [
@@ -737,7 +737,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
             "answers": [
@@ -751,7 +751,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welcher römische Tempel wurde speziell zu Ehren der Götter errichtet?",
             "answers": [
@@ -765,7 +765,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welches architektonische Element des Pantheons ermöglicht es, dass das Licht in den Innenraum eindringt?",
             "answers": [
@@ -779,7 +779,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt?",
             "imageUrl": "/images/italien/rom-pantheon-grab-raffael.jpg",
@@ -794,7 +794,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welches antike Bauwerk ist auf dem Bild zu sehen?",
             "imageUrl": "/images/italien/rom-pantheon.jpg",
@@ -826,7 +826,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche Struktur diente Nero als Residenz?",
             "answers": [
@@ -840,7 +840,7 @@
             "difficulty": "hero"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "image",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
             "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
@@ -855,7 +855,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welcher Platz in Rom ist bekannt für seine berühmte Spanische Treppe?",
             "answers": [
@@ -869,7 +869,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche Kirche in Rom ist die Hauptkirche des Papstes?",
             "answers": [
@@ -883,7 +883,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Welche berühmte Straße in Rom führt zur spanischen Treppe?",
             "answers": [
@@ -962,7 +962,7 @@
             "difficulty": "easy"
         },
         {
-            "tag": [],
+            "tag": ["Italien"],
             "type": "text",
             "question": "Am 29. Juni feiern die Bürger Roms das Fest ihrer Stadtpatrone. Wie heißen sie? ",
             "answers": [

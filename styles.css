@@ -269,6 +269,21 @@ p {
 .quiz__score_container {
     display: flex;
     justify-content: space-between;
+    margin-bottom: var(--gap-small);
+}
+
+.quiz__headerlogo {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.quiz__headerlogo_image {
+  max-height: 40px;
+}
+
+.quiz__selection {
+    margin: 0;
 }
 
 .quiz__headertext {

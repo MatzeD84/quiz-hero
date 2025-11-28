@@ -1,5 +1,19 @@
 {
     "tags": [
+         {
+            "id": "Italien",
+            "title": "Italien",
+            "icon": "images/website/tag-italien.png",
+            "description": "Italienische Bauwerke und Geschichte",
+            "enabled": true
+        },
+         {
+            "id": "Test",
+            "title": "Test",
+            "icon": "images/website/tag-antike-2.png",
+            "description": "Interner Test-Tag",
+            "enabled": false
+        },
         {
             "id": "Test",
             "title": "Test",
