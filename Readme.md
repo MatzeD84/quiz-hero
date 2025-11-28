@@ -12,8 +12,10 @@ ToDos:
 
 
 ToDos ChatGPT:
-
-
+- Frage was passirt bei ein tag der gesetzt wurde aber nicht in tags-json vorhanden ist und umgekehrt?
+- "enabled": true auch auf tags anwenden
+- einen "störer" / flag implementieren, der auf den Kategorie-Übersicht auf den
+  Bildern angezeigt wird, sobald es "neue" Fragen zu dem Thame gibt "x Neue Fragen" 
 - end-zu-ent-Tests, Test
 - SEO
 - Datenbank: Aufwand, sinvoll?

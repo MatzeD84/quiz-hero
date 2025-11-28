@@ -16,6 +16,8 @@ export class QuizState {
         this.activeCategoryId = null;
         this.activeTag = null;
         this.selectionLabel = '';
+        this.selectionDescription = '';
+        this.selectionIcon = '';
         this.currentSequence = [];
         this.currentIndex = 0;
         this.score = 0;
@@ -64,6 +66,10 @@ export class QuizState {
             .sort((a, b) => a.title.localeCompare(b.title, 'de'));
     }
 
+    getTagMeta(tagId) {
+        return this.tagsMeta.get(tagId) || { id: tagId, title: tagId, description: '', icon: '' };
+    }
+
     getCategory(categoryId) {
         return this.categories.find(cat => cat.id === categoryId) || null;
     }
@@ -82,6 +88,8 @@ export class QuizState {
         this.activeCategoryId = categoryId;
         this.activeTag = null;
         this.selectionLabel = category.title || category.id;
+        this.selectionDescription = category.description || '';
+        this.selectionIcon = category.icon || '';
         this.currentIndex = 0;
         this.score = 0;
         this.attempts = 0;
@@ -102,6 +110,8 @@ export class QuizState {
         this.activeCategoryId = null;
         this.activeTag = tag;
         this.selectionLabel = tag;
+        this.selectionDescription = '';
+        this.selectionIcon = '';
         this.currentIndex = 0;
         this.score = 0;
         this.attempts = 0;
@@ -155,6 +165,8 @@ export class QuizState {
         this.activeCategoryId = null;
         this.activeTag = null;
         this.selectionLabel = '';
+        this.selectionDescription = '';
+        this.selectionIcon = '';
     }
 
     getStats() {

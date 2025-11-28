@@ -55,6 +55,8 @@ export const SELECTORS = {
     score: '#js-score',
     quizHeadertext: '#js-quiz-headertext',
     selectionLabel: '#js-selection-label',
+    selectionDescription: '#js-selection-description',
+    selectionIcon: '#js-selection-icon',
     quizSelectionLabel: '#js-quiz-selection',
     modal: '#js-result-modal',
     modalContent: '#js-result-content',

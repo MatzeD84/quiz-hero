@@ -54,8 +54,14 @@
             <header class="question_count__header">
                 <img class="main_image" src="images/website/logo-weihnachtsheld.png" alt="Logo">
                 <h2>Wähle die Anzahl der Fragen</h2>
-                <h3 id="js-selection-label" class="question_count__selection"></h3>
             </header>
+            <div class="question_count__meta">
+                <div class="question_count__selection_wrapper">
+                    <h3 id="js-selection-label" class="question_count__selection"></h3>
+                    <p id="js-selection-description" class="question_count__description"></p>
+                </div>
+                <img id="js-selection-icon" class="question_count__icon hide" alt="">
+            </div>
             <div class="quiz__question_count_select">
                 <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
                 <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>

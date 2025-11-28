@@ -40,7 +40,7 @@ body {
 
 @media (max-width: 768px) {
     body {
-        margin: 0 8px 8px;
+        margin: 8px;
     }
 }
 
@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6, .headline {
 }
 
 p {
-    margin: 0.5rem 0;
+    margin: var(--gap-small) 0;
 }
 
 
@@ -87,7 +87,7 @@ p {
 
 .main__header {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--gap-small);
     justify-content: center;
     align-items: center;
     margin: 1rem 0;
@@ -100,14 +100,14 @@ p {
 }
 
 .main_headline {
-    margin: 0.5rem 0;
+    margin: var(--gap-small) 0;
     font-size: 2.5rem;
     font-weight: 350;
 }
 
 @media (max-width: 576px) {
     .main_headline {
-        margin: 0.5rem 0;
+        margin: var(--gap-small) 0;
         font-size: 2rem;
     }
 }
@@ -193,13 +193,26 @@ p {
     display: block;
 }
 
+.question_count {
+    width: 100%;
+    max-width: 470px;
+    margin: 0 auto;
+}
+
 .question_count__header {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    text-align: left;
+    gap: var(--gap-small);
+}
+
+.question_count__description {
+    display: none;
+}
+
+.question_count__selection_wrapper {
+ margin-bottom: var(--gap-small);
 }
 
 .question_count__selection {
@@ -213,7 +226,7 @@ p {
     display: grid;
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-    margin-top: 2rem;
+    margin-top: var(--gap-small);
 }
 
 .quiz__question {
@@ -249,7 +262,7 @@ p {
 
 @media (max-width: 768px) {
     .quiz__container {
-        padding: 1rem 0.5rem;
+        padding: 1rem var(--gap-small);
     }
 }
 
@@ -260,7 +273,7 @@ p {
 
 .quiz__headertext {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--gap-small);
 }
 
 .quiz__headertext p {
@@ -350,7 +363,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--gap-small);
 }
 
 .btn--next {

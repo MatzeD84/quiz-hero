@@ -40,7 +40,14 @@ export class QuizController {
         this.state.activeCategoryId = categoryId;
         this.state.activeTag = null;
         this.state.selectionLabel = category.title || category.id;
+        this.state.selectionDescription = category.description || '';
+        this.state.selectionIcon = category.icon || '';
         this.view.renderSelectionLabel(this.state.selectionLabel);
+        this.view.renderSelectionDetails({
+            description: this.state.selectionDescription,
+            icon: this.state.selectionIcon,
+            label: this.state.selectionLabel
+        });
         this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
         this.view.showQuestionCount();
     }
@@ -51,8 +58,16 @@ export class QuizController {
         }
         this.state.activeTag = tag;
         this.state.activeCategoryId = null;
-        this.state.selectionLabel = tag;
+        const meta = this.state.getTagMeta(tag);
+        this.state.selectionLabel = meta.title || meta.id;
+        this.state.selectionDescription = meta.description || '';
+        this.state.selectionIcon = meta.icon || '';
         this.view.renderSelectionLabel(this.state.selectionLabel);
+        this.view.renderSelectionDetails({
+            description: this.state.selectionDescription,
+            icon: this.state.selectionIcon,
+            label: this.state.selectionLabel
+        });
         this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
         this.view.showQuestionCount();
     }
@@ -161,6 +176,7 @@ export class QuizController {
         this.view.hideResultModal();
         this.view.updateScore(this.state.score);
         this.view.renderSelectionLabel('');
+        this.view.renderSelectionDetails({ description: '', icon: '', label: '' });
         if (this.view.elements.quizSelectionLabel) {
             this.view.elements.quizSelectionLabel.textContent = '';
         }

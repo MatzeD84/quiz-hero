@@ -4,7 +4,7 @@
             "id": "test",
             "title": "Test",
             "enabled": true,
-            "icon": "images/website/kategorie-mordor.png",
+            "icon": "images/website/kategorie-hamburg-nacht.png",
             "description": "Interner Schnelltest",
             "questionsFile": "data/questions-test.json"
         },

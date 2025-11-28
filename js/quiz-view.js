@@ -29,6 +29,8 @@ export class QuizView {
             score: document.querySelector(selectors.score),
             quizHeadertext: document.querySelector(selectors.quizHeadertext),
             selectionLabel: document.querySelector(selectors.selectionLabel),
+            selectionDescription: document.querySelector(selectors.selectionDescription),
+            selectionIcon: document.querySelector(selectors.selectionIcon),
             quizSelectionLabel: document.querySelector(selectors.quizSelectionLabel),
             modal: document.querySelector(selectors.modal),
             modalContent: document.querySelector(selectors.modalContent),
@@ -134,6 +136,26 @@ export class QuizView {
         if (!this.elements.selectionLabel) return;
         this.elements.selectionLabel.textContent = labelText || '';
         this.elements.selectionLabel.classList.toggle('hide', !labelText);
+    }
+
+    renderSelectionDetails({ description, icon, label }) {
+        if (this.elements.selectionDescription) {
+            this.elements.selectionDescription.textContent = description || '';
+            this.elements.selectionDescription.classList.toggle('hide', !description);
+        }
+        if (this.elements.selectionIcon) {
+            if (icon) {
+                this.elements.selectionIcon.src = icon;
+                const labelText = label || this.elements.selectionLabel?.textContent || '';
+                const altText = description ? `${labelText} - ${description}` : labelText;
+                this.elements.selectionIcon.alt = altText;
+                this.elements.selectionIcon.classList.remove('hide');
+            } else {
+                this.elements.selectionIcon.src = '';
+                this.elements.selectionIcon.alt = '';
+                this.elements.selectionIcon.classList.add('hide');
+            }
+        }
     }
 
     renderQuizSelectionLabel(labelText) {

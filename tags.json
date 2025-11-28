@@ -3,13 +3,13 @@
          {
             "id": "Test",
             "title": "Test",
-            "icon": "images/website/tag-antike.png",
+            "icon": "images/website/tag-antike-2.png",
             "description": "Interner Test-Tag"
         },
         {
             "id": "Antike",
             "title": "Antike",
-            "icon": "images/website/tag-antike-2.png",
+            "icon": "images/website/tag-antike.png",
             "description": "Antike Bauwerke und Geschichte"
         },
         {
