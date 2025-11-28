@@ -66,10 +66,10 @@ export class QuizState {
                     });
                 });
             });
-        if (missingTags.size > 0) {
+        if (CONFIG.devMode && missingTags.size > 0) {
             console.warn(`Tags ohne Metadaten in tags.json: ${Array.from(missingTags).join(', ')}`);
         }
-        if (disabledTags.size > 0) {
+        if (CONFIG.devMode && disabledTags.size > 0) {
             console.info(`Deaktivierte Tags (tags.json enabled:false) wurden übersprungen: ${Array.from(disabledTags).join(', ')}`);
         }
     }

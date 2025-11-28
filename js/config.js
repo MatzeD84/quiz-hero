@@ -2,6 +2,7 @@ export const CONFIG = {
     questionsUrl: 'categories.json',
     tagsUrl: 'tags.json',
     feedbackUrl: 'feedback.json',
+    devMode: true,
     score: {
         secondTry: 1,
         difficulties: {

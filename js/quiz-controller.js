@@ -17,7 +17,9 @@ export class QuizController {
             this.registerEvents();
             this.view.showCategories();
         } catch (error) {
-            console.error(error);
+            if (CONFIG.devMode) {
+                console.error(error);
+            }
             this.view.showLoadingMessage(LABELS.status.loadError);
         }
     }
@@ -86,7 +88,9 @@ export class QuizController {
             this.renderCurrentQuestion();
             this.view.updateScore(this.state.score);
         } catch (error) {
-            console.error(error);
+            if (CONFIG.devMode) {
+                console.error(error);
+            }
             this.view.showLoadingMessage(LABELS.status.fetchError);
         }
     }
