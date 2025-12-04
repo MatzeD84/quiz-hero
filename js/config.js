@@ -20,6 +20,7 @@ export const ASSET_VERSION = '20250210';
 export const LABELS = {
     questions: {
         default: 'Frage:',
+        medium: 'Schwere Frage:',
         hero: 'Hero-Frage:'
     },
     status: {

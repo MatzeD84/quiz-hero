@@ -240,12 +240,15 @@ export class QuizView {
         const { type, imageUrl, answers } = question;
         const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
         const isHero = difficulty === 'hero';
+        const headerLabel = difficulty === 'hero'
+            ? LABELS.questions.hero
+            : difficulty === 'medium'
+                ? LABELS.questions.medium
+                : LABELS.questions.default;
 
         questionElement.textContent = question.question;
-        quizHeadertext.textContent = isHero ? LABELS.questions.hero : LABELS.questions.default;
+        quizHeadertext.textContent = headerLabel;
         quizContent.dataset.difficulty = difficulty;
-        quizContent.classList.toggle('quiz__difficult_question', isHero);
-        quizHeadertext.classList.toggle('quiz__headertext--difficult', isHero);
 
         const showImage = type === 'image' && Boolean(imageUrl);
         questionImage.classList.toggle('hide', !showImage);

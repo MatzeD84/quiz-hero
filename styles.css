@@ -3,6 +3,7 @@
     --dark-color: #1E1E1E;
     --dark-gray-color: #444;
     --light-gray-color: #666;
+    --lighter-gray-color: #EDEDED;
     --clouds-color: #ecf0f1;
     --mandarin-color: #e74c3c;      /* wrong */
     --greensea-color: #16A085;      /* right */
@@ -256,8 +257,8 @@ p {
 
 .quiz__container {
     position: relative;
-    border: 2px solid var(--primary-color);
     padding: 1rem;
+    background-color: var(--lighter-gray-color);
 }
 
 @media (max-width: 768px) {
@@ -295,21 +296,21 @@ p {
     font-weight: 700;
 }
 
-.quiz__headertext--difficult {
+[data-difficulty="hero"] .quiz__headertext {
     color: var(--amethyst-color);
 }
 
+[data-difficulty="medium"] .quiz__headertext {
+    color: var(--carrot-color);
+}
 
 .quiz__counter_questions {
     display: flex;
-  }
-
-.quiz.quiz__difficult_question .quiz__container {
-    border-color: var(--amethyst-color);
+    color: var(--dark-gray-color);
 }
 
 .quiz__question_image_container {
-    margin-bottom: var(--gap);
+    margin-bottom: 1rem;
     max-height: max(300px, 30vh)
 }
 
