@@ -4,7 +4,7 @@
             "id": "test",
             "title": "Test",
             "enabled": true,
-            "icon": "images/website/kategorie-hamburg-nacht.png",
+            "icon": "images/website/kategorie/kategorie-hamburg-nacht.png",
             "description": "Interner Schnelltest",
             "questionsFile": "data/questions-test.json"
         },
@@ -12,7 +12,7 @@
             "id": "rom",
             "title": "Rom",
             "enabled": true,
-            "icon": "images/website/kategorie-rom-2.png",
+            "icon": "images/website/kategorie/kategorie-rom-2.png",
             "description": "Kolosseum, Forum \u0026 Co.",
             "questionsFile": "data/questions-rom.json"
         },
@@ -20,7 +20,7 @@
             "id": "neapel",
             "title": "Neapel",
             "enabled": true,
-            "icon": "images/website/kategorie-neapel.png",
+            "icon": "images/website/kategorie/kategorie-neapel.png",
             "description": "Pizza, Vesuv \u0026 Meer",
             "questionsFile": "data/questions-neapel.json"
         },
@@ -28,7 +28,7 @@
             "id": "amalfi",
             "title": "Amalfi Küste",
             "enabled": true,
-            "icon": "images/website/kategorie-amalfikueste.png",
+            "icon": "images/website/kategorie/kategorie-amalfikueste.png",
             "description": "Landschaft, Dörfer \u0026 Meer",
             "questionsFile": "data/questions-amalfi.json"
         },
@@ -36,7 +36,7 @@
             "id": "florenz",
             "title": "Florenz",
             "enabled": true,
-            "icon": "images/website/kategorie-florenz.png",
+            "icon": "images/website/kategorie/kategorie-florenz.png",
             "description": "Kunst, Dom \u0026 Renaissance",
             "questionsFile": "data/questions-florenz.json"
         },
@@ -44,7 +44,7 @@
             "id": "siena",
             "title": "Siena",
             "enabled": true,
-            "icon": "images/website/kategorie-siena.png",
+            "icon": "images/website/kategorie/kategorie-siena.png",
             "description": "Piazza del Campo \u0026 Palio",
             "questionsFile": "data/questions-siena.json"
         }
