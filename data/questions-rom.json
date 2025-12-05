@@ -2,7 +2,11 @@
     "questions": [
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welches berühmte römische Bauwerk ist auf diesem Bild zu sehen?",
@@ -19,7 +23,9 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "image",
             "question": "Wie hieß der römische Kaiser, der den Bau des Kolosseums in Auftrag gab?",
@@ -32,11 +38,14 @@
             ],
             "backgroundKnowledge": "Der flavische Kaiser Titus Flavius Vespasian ließ ...",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Architektur"
             ],
             "type": "text",
             "question": "Wie viele Eingänge besaß das Kolosseum?",
@@ -48,11 +57,13 @@
             ],
             "backgroundKnowledge": "Das Kolosseum besaß etwa 80 Ein- (und Aus-)gänge. So konnten die Menschenmassen schnell hinein- und wieder hinauskommen.",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": " Woher stammt der Name Kolosseum ab?",
@@ -64,11 +75,14 @@
             ],
             "backgroundKnowledge": "Der Name stammt nicht von seiner Größe ab, sondern weil es nebenan eine riesige Statue des Kaisers Nero stand, der sogenannte Kolossal des Nero",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Architektur"
             ],
             "type": "text",
             "question": "Welche innovative architektonische Technik wurde beim Bau des Kolosseums verwendet, um die massive Struktur zu stützen und gleichzeitig ein beeindruckendes Design zu ermöglichen?",
@@ -84,7 +98,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welcher Kaiser erweiterte das Kolosseum durch den Bau des vierten Rangs?",
@@ -101,7 +118,9 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "image",
             "question": "Das Kolosseum war bekannt für seine aufwändigen Inszenierungen. Welcher Begriff beschreibt die nachgestellten Seeschlachten, die im gefluteten Kolosseum vermutlich stattfanden?",
@@ -118,7 +137,9 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": "Welcher römische Kaiser war Zeuge der Fertigstellung des Kolosseums und weihte es mit einer Feier ein, die 100 Tage dauerte?",
@@ -130,11 +151,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": "Welche Rolle spielte die sogenannte \u0027Hypogeum\u0027-Struktur im Kolosseum, die nach der ursprünglichen Konstruktion hinzugefügt wurde?",
@@ -146,11 +169,13 @@
             ],
             "backgroundKnowledge": "Es ermöglichte den schnellen und dramatischen Auftritt während der Spiele. Mit Hebevorrichtungen und Falltüren konnten Tiere und Kämpfer direkt in die Arena gebracht werden, was die Inszenierungen noch spektakulärer machte.",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "image",
             "question": "Welcher Architekt begann den Bau des Trevi-Brunnens im Jahr 1732, obwohl der Brunnen erst nach seinem Tod im Jahr 1762 fertiggestellt wurde?",
@@ -167,7 +192,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Architektur"
             ],
             "type": "text",
             "question": "Der Trevi-Brunnen steht am Endpunkt eines antiken römischen Aquädukts, der Rom seit der Antike mit Wasser versorgt. Wie heißt dieser Aquädukt?",
@@ -183,7 +211,11 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welche zentrale Figur des Trevi-Brunnens, die auf einem Muschelwagen steht, wird von zwei Tritonen flankiert?",
@@ -199,7 +231,9 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien"
+            ],
             "type": "image",
             "question": "Welche Symbolik steht hinter dem Werfen einer Münze über die linke Schulter in den Trevi-Brunnen?",
             "imageUrl": "/images/italien/trevi_brunnen.jpg",
@@ -214,7 +248,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "Welcher italienische Papst beauftragte die Fertigstellung des Trevi-Brunnens und ist auf einer Inschrift am Brunnen verewigt?",
             "answers": [
@@ -228,7 +267,11 @@
             "difficulty": "hero"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Welche der folgenden Statuen am Trevi-Brunnen symbolisiert die „Fruchtbarkeit“, die aus der Reinheit des Wassers hervorgeht?",
             "imageUrl": "/images/italien/Trevi_Statue.jpg",
@@ -243,7 +286,11 @@
             "difficulty": "hero"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Wie heißt der berühmte Brunnen auf diesem Bild?",
             "imageUrl": "/images/italien/trevi_brunnen.jpg",
@@ -259,7 +306,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "image",
             "question": "Welcher Tempel im Forum Romanum, der Julius Caesar gewidmet ist, markiert den Ort, an dem sein Leichnam verbrannt wurde?",
@@ -276,7 +326,9 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "image",
             "question": "Welche antike Straße, die durch das Forum Romanum verläuft, war der traditionelle Weg für Triumphzüge römischer Generäle?",
@@ -289,11 +341,15 @@
             ],
             "backgroundKnowledge": "Die Via Sacra (heilige Straße) war der Hauptweg des Forum Romanum. Sie führte vom Kolosseum zum Kapitol.",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welche der folgenden Strukturen auf dem Palatin war der Palast des ersten römischen Kaisers Augustus, der als Zentrum der Macht diente?",
@@ -310,7 +366,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "image",
             "question": "Welche der Säulen im Forum Romanum wurde zu Ehren eines Kaisers errichtet, der eine bedeutende Niederlage der Goten erzielte und ein Reformprogramm zur Stabilisierung des Reiches durchführte?",
@@ -323,11 +382,15 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welcher Triumphbogen im Forum Romanum, ist bekannt für seine detaillierten Reliefs?",
@@ -340,11 +403,15 @@
             ],
             "backgroundKnowledge": "Anlässlich der Vergöttlichung von Kaiser Titus ließ dessen jüngerer Bruder und Nachfolger Domitian den Titusbogen auf dem Forum errichten, der an dessen größten Triumph erinnert: die Niederschlagung eines Judäeraufstandes und die Eroberung Jerusalems.",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Religion"
             ],
             "type": "image",
             "question": "Welches Gebäude auf dem Forum Romanum - ursprünglich als Tempel erbaut - wurde im 7. Jahrhundert in eine christliche Kirche umgewandelt und ist bis heute erhalten?",
@@ -361,7 +428,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "image",
             "question": "Wie heißt der Platz, der Mittelpunkt des politischen, wirtschaftlichen, kulturellen und religiösen Lebens im antiken Rom war?",
@@ -378,7 +448,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "image",
             "question": "Einer der sieben Hügel Roms, welcher heute ein großer archäologischer Park ist und mit dem Forum Romanum verbunden, gilt als ältester bewohnter Teil der Stadt?",
@@ -395,7 +468,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "image",
             "question": "Welches natürliche Material, das auch in vielen anderen römischen Bauwerken verwendet wurde, trug maßgeblich zur Stabilität und Langlebigkeit des Kolosseums bei?",
@@ -408,11 +484,14 @@
             ],
             "backgroundKnowledge": "Halb Rom besteht aus Travertin. Kaiser, Päpste, Fürsten und Faschistenführer nutzten den eleganten und dabei ganz pflegeleichten Kalkstein.",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "text",
             "question": "Wie viele Menschen konnten schätzungsweise im Kolosseum Platz finden, als es in seiner Blütezeit vollständig in Betrieb war?",
@@ -428,7 +507,10 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
             ],
             "type": "text",
             "question": "Im Jahr 1349 wurden Teile der südlichen Seite des Kolosseum zerstört, was war die Ursache?",
@@ -440,10 +522,14 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "text",
             "question": "Welche der folgenden Strukturen ist nicht in Rom zu finden?",
             "answers": [
@@ -457,7 +543,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "image",
             "question": "Welcher Platz in Rom war ursprünglich ein Stadion für athletische Wettkämpfe?",
             "imageUrl": "/images/italien/piazza-navona.jpg",
@@ -472,7 +562,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur",
+                "Geschichte"
+            ],
             "type": "image",
             "question": "Welcher Platz in Rom ist bekannt für seine herausragende Barockarchitektur und seine Kirche Sant\u0027Agnese in Agone?",
             "imageUrl": "/images/italien/piazza-navona-sant-agnese-in-agone.jpg",
@@ -487,7 +582,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Welcher Platz in Rom wird von der berühmten Fontana dei Quattro Fiumi geschmückt?",
             "imageUrl": "/images/italien/vierstroemebrunnen.jpg",
@@ -503,7 +602,11 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
             ],
             "type": "image",
             "question": "Welcher Architekt entwarf den berühmten Vierströmebrunnen (Fontana dei Quattro Fiumi) auf der Piazza Navona?",
@@ -519,7 +622,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "text",
             "question": "Die Piazza Navona wurde auf den Überresten welches antiken römischen Stadions errichtet?",
             "answers": [
@@ -530,10 +637,14 @@
             ],
             "backgroundKnowledge": "Die charakteristische längliche Form der Piazza Navona folgt noch heute dem Grundriss des antiken Stadions.",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "text",
             "question": "Welche Flüsse sind durch die Statuen des Vierströmebrunnens auf der Piazza Navona symbolisiert?",
             "answers": [
@@ -544,10 +655,15 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "image",
             "question": "Welche Kirche auf der Piazza Navona beherbergt das Grab von Papst Innozenz X., der die Gestaltung des Platzes maßgeblich beeinflusste?",
             "imageUrl": "/images/italien/piazza-navona-sant-agnese-in-agone.jpg",
@@ -559,10 +675,15 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "In welchem Stil wurde die Kirche Sant\u0027Agnese in Agone auf der Piazza Navona erbaut?",
             "answers": [
@@ -576,7 +697,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Einer der dreizehn Obelisken in Rom, steht auf der Piazza Navona. Wie heißt dieser Obelisk?",
             "imageUrl": "/images/italien/rom-piazza-navona-obelisk.jpg",
@@ -591,7 +716,11 @@
             "difficulty": "hero"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Wie heißt der barocker Zierbrunnen auf der nördlichen Piazza Navona?",
             "imageUrl": "/images/italien/rom-piazza-navona-neptunbrunnen.jpg",
@@ -606,7 +735,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Wie heißt der barocker Zierbrunnen auf der südlichen Piazza Navona?",
             "imageUrl": "/images/italien/rom-piazza-navona-mohren-brunnen.jpg",
@@ -621,7 +754,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "image",
             "question": "Welcher Papst war verantwortlich für die Umgestaltung der Piazza Navona in den heutigen barocken Platz?",
             "imageUrl": "/images/italien/papst-innocent-x.jpg",
@@ -636,7 +774,13 @@
             "difficulty": "hero"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "Welches berühmte Kunstwerk auf der Piazza Navona stellt den Triumph des Papsttums über die vier bekannten Kontinente der damaligen Zeit dar?",
             "answers": [
@@ -650,7 +794,11 @@
             "difficulty": "hero"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Wie heißt einer der bekanntesten Plätze im Zentrum von Rom?",
             "imageUrl": "/images/italien/piazza-navona.jpg",
@@ -662,10 +810,14 @@
             ],
             "backgroundKnowledge": "Der Platz ist bekannt für seine drei beeindruckenden Brunnen, darunter der berühmte Vierströmebrunnen, der von Gian Lorenzo Bernini entworfen wurde.",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "image",
             "question": "Welche antike Straße führte von Rom bis nach Brindisi?",
             "imageUrl": "/images/italien/via-appia-antica.png",
@@ -677,10 +829,15 @@
             ],
             "backgroundKnowledge": "Die Via Appia Antica, ist die berühmteste und älteste der römischen Straßen, sie wird auch „Regina Viarum“ (Königin der Straßen) genannt.",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "image",
             "question": "Welche Säule in Rom ist im Bild zu sehen?",
             "imageUrl": "/images/italien/trajanssaeule.jpg",
@@ -692,10 +849,14 @@
             ],
             "backgroundKnowledge": "Sie wurde zu Ehren des Kaisers Trajan zum Gedenken an seine Siege in Dakien (dem heutigen Rumänien) errichtet.",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "text",
             "question": "Welche Straße in Rom ist bekannt für ihre prächtigen Gräber?",
             "answers": [
@@ -709,7 +870,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "text",
             "question": "Welche Villa wurde von Kaiser Hadrian als seine Residenz erbaut?",
             "answers": [
@@ -720,10 +886,14 @@
             ],
             "backgroundKnowledge": "Die Villa Adriana (Hadriansvilla) in Tivoli nahe Rom ist eine weitläufige antike Residenz, die Kaiser Hadrian im 2. Jahrhundert n. Chr. als luxuriösen Rückzugsort errichten ließ. Die Anlage umfasst Tempel, Bibliotheken, Theater und Bäder und spiegelt Hadrians Interesse an der Architektur und den Kulturen des gesamten Römischen Reiches wider.",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "text",
             "question": "Wer entwarf das heutige Pantheon?",
             "answers": [
@@ -734,10 +904,15 @@
             ],
             "backgroundKnowledge": "Das Pantheon in Rom wurde ursprünglich von Marcus Vipsanius Agrippa entworfen, wurde jedoch durch Brände beschädigt. Kaiser Hadrian war der Bauherr und Hauptverantwortliche für die erneute Gestaltung und den Bau des Pantheons, das um 118-125 n. Chr. fertiggestellt wurde.",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "text",
             "question": "Welches antike Gebäude in Rom ist für seine bemerkenswerte Kuppel berühmt?",
             "answers": [
@@ -751,7 +926,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "text",
             "question": "Welcher römische Tempel wurde speziell zu Ehren der Götter errichtet?",
             "answers": [
@@ -765,7 +944,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "text",
             "question": "Welches architektonische Element des Pantheons ermöglicht es, dass das Licht in den Innenraum eindringt?",
             "answers": [
@@ -779,7 +963,11 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "image",
             "question": "Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt?",
             "imageUrl": "/images/italien/rom-pantheon-grab-raffael.jpg",
@@ -791,10 +979,14 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit"
+            ],
             "type": "image",
             "question": "Welches antike Bauwerk ist auf dem Bild zu sehen?",
             "imageUrl": "/images/italien/rom-pantheon.jpg",
@@ -810,7 +1002,11 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Religion"
             ],
             "type": "image",
             "question": "Wie heißt das ursprünglich im 2. Jahrhundert als Mausoleum für Kaiser Hadrian erbaute Gebäude?",
@@ -826,7 +1022,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Architektur"
+            ],
             "type": "text",
             "question": "Welche Struktur diente Nero als Residenz?",
             "answers": [
@@ -837,10 +1038,15 @@
             ],
             "backgroundKnowledge": "Die Domus Aurea (Goldenes Haus) war eine riesige Palastanlage, die von Kaiser Nero nach dem großen Brand von 64 n. Chr. in Rom erbaut wurde. Die prächtige Residenz erstreckte sich über große Teile des Stadtgebiets und war für ihren Luxus und ihre Opulenz bekannt.",
             "correct": 3,
-            "difficulty": "hero"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "image",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
             "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
@@ -852,10 +1058,15 @@
             ],
             "backgroundKnowledge": "Der Biblioteca Apostolica Vaticana (Vatikanische Bibliothek) befindet sich im Vatikanischen Palast (Palazzo Vaticano). Die Bibliothek ist in einem speziellen Gebäudetrakt des Vatikanischen Palastes untergebracht.",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "Welcher Platz in Rom ist bekannt für seine berühmte Spanische Treppe?",
             "answers": [
@@ -869,7 +1080,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Sehenswürdigkeit",
+                "Religion",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "Welche Kirche in Rom ist die Hauptkirche des Papstes?",
             "answers": [
@@ -883,7 +1099,9 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien"
+            ],
             "type": "text",
             "question": "Welche berühmte Straße in Rom führt zur spanischen Treppe?",
             "answers": [
@@ -894,11 +1112,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": "Welches Paar eines römischen Gottes und eines griechischen Gottes stimmt?",
@@ -914,7 +1134,9 @@
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": "Welche römischen Münzen gehörten zu wichtigsten der Antike?",
@@ -926,11 +1148,13 @@
             ],
             "backgroundKnowledge": "Sesterz: Eine große Bronze- oder Kupfermünze, die in der Kaiserzeit populär war. Der Sesterz war ein häufig verwendetes Zahlungsmittel und diente oft auch als Recheneinheit in der Buchhaltung.",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte"
             ],
             "type": "text",
             "question": "Was erhielten in der Antike römische Kinder wenige Tage nach ihrer Geburt?",
@@ -942,11 +1166,15 @@
             ],
             "backgroundKnowledge": "Am 9. Tag nach der Geburt erhielten römische Babys ihre Namen und ein Amulett. Die Bulla galt als unheilabwehrend.",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Antike"
+                "Antike",
+                "Italien",
+                "Geschichte",
+                "Sehenswürdigkeit",
+                "Religion"
             ],
             "type": "image",
             "question": "Wie heißt das unter Touristen beliebte scheibenförmige Relief?",
@@ -962,7 +1190,12 @@
             "difficulty": "easy"
         },
         {
-            "tag": ["Italien"],
+            "tag": [
+                "Italien",
+                "Religion",
+                "Sehenswürdigkeit",
+                "Geschichte"
+            ],
             "type": "text",
             "question": "Am 29. Juni feiern die Bürger Roms das Fest ihrer Stadtpatrone. Wie heißen sie? ",
             "answers": [
@@ -973,11 +1206,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "text",
             "question": "Welcher Klassiker der römischen Küche hat seinen Ursprung in den alte Arbeitervierteln Roms?",
@@ -993,7 +1228,9 @@
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "text",
             "question": "Welches traditionelle römische Gericht, welches aus Artischocken zubereitet wird und in der jüdischen Küche der Stadt seinen Ursprung hat, ist unter dem Namen „Carciofi alla Giudia“ bekannt?",
@@ -1005,11 +1242,12 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien"
             ],
             "type": "image",
             "question": "Wie heißt der beliebte frittierter Reisball in Rom welcher umhüllt ist mit Eiern und Paniermehl und gefüllt ist mit Tomatenragout und Mozzarellakäse?",
@@ -1022,11 +1260,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "image",
             "question": "Wie heißen die kleinen, leckeren, süßen Hefebrötchen, die meist mit einer fast unanständigen Menge Sahne gefüllt sind?",
@@ -1039,11 +1279,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "image",
             "question": "Wie nennt man das traditionelle römische Gericht, welches aus einem ganzen Schwein besteht, das entbeint, mit Kräutern gefüllt und knusprig gebraten wird?",
@@ -1056,11 +1298,12 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien"
             ],
             "type": "image",
             "question": "Die gefüllten Pizza-Sandwiche sind der neueste Food-Trend aus Rom. Wie heißt diese Pizza-Variante?",
@@ -1073,11 +1316,13 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "medium"
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "image",
             "question": "Dieser Klassiker der italienischen Küche stammt ursprünglich aus Rom, wie heißt er?",
@@ -1094,7 +1339,9 @@
         },
         {
             "tag": [
-                "Essen"
+                "Essen",
+                "Italien",
+                "Tradition"
             ],
             "type": "image",
             "question": "Diese köstlichen viereckigen Pizzaschnitten werden auf großen Blechen gebacken. Wie heißt dieser Pizza-To-Go-Snack?",
@@ -1111,7 +1358,8 @@
         },
         {
             "tag": [
-                "Geographie"
+                "Geographie",
+                "Italien"
             ],
             "type": "text",
             "question": "In welcher Region Italiens liegt Rom?",
