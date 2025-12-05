@@ -1,6 +1,5 @@
 ToDos:
 
-- über data-difficulty="easy|medium|hero" CSS anpassen
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - Animation bei Punkte anpassen --> bei alscher antwort keine Animation

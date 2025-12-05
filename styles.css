@@ -232,6 +232,7 @@ p {
 
 .quiz__question {
     margin-bottom: 1rem;
+    margin-top: 0;
     font-weight: 400;
 }
 
