@@ -105,7 +105,7 @@
             ],
             "type": "image",
             "question": "Welcher Kaiser erweiterte das Kolosseum durch den Bau des vierten Rangs?",
-            "imageUrl": "/images/italien/domitianus.jpg",
+            "imageUrl": "/images/italien/domitianus.png",
             "answers": [
                 "Kaiser Domitian",
                 "Kaiser Vespasian",
