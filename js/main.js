@@ -3,8 +3,11 @@ import { QuizDataService } from './quiz-data-service.js';
 import { QuizState } from './quiz-state.js';
 import { QuizView } from './quiz-view.js';
 import { QuizController } from './quiz-controller.js';
+import { initFooter } from './footer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    initFooter();
+
     const controller = new QuizController({
         dataService: new QuizDataService({
             questionsUrl: CONFIG.questionsUrl,

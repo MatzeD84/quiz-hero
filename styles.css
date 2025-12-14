@@ -35,6 +35,7 @@ body {
     color: var(--dark-color);
     font-family: Arial, sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -576,4 +577,9 @@ p {
     height: auto;
     display: block;
     margin: 10px 0;
+}
+
+
+.footer {
+    margin-top: 2rem;
 }
