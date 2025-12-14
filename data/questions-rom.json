@@ -762,7 +762,7 @@
             ],
             "type": "image",
             "question": "Welcher Papst war verantwortlich für die Umgestaltung der Piazza Navona in den heutigen barocken Platz?",
-            "imageUrl": "/images/italien/papst-innocent-x.jpg",
+            "imageUrl": "/images/italien/papst-innocent-x.png",
             "answers": [
                 "Papst Alexander VII.",
                 "Papst Urban VIII.",
@@ -1049,7 +1049,7 @@
             ],
             "type": "image",
             "question": "Welches Gebäude in Rom beherbergt die Vatikanische Bibliothek?",
-            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.jpg",
+            "imageUrl": "/images/italien/vatikan-vatikanische bibliothek.png",
             "answers": [
                 "Päpstliche Bibliothek",
                 "Vatikanisches Archiv",
@@ -1307,7 +1307,7 @@
             ],
             "type": "image",
             "question": "Die gefüllten Pizza-Sandwiche sind der neueste Food-Trend aus Rom. Wie heißt diese Pizza-Variante?",
-            "imageUrl": "/images/italien/rom-trapizzino.jpg",
+            "imageUrl": "/images/italien/rom-trapizzino.png",
             "answers": [
                 "Panzerotto",
                 "Trapizzino",
