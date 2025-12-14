@@ -155,8 +155,37 @@ p {
 
 .category-card,
 .tag-card {
+    position: relative;
     display: flex;
     flex-direction: column;
+}
+
+.category-card__badge {
+    z-index: 9;
+    font-size: 16px;
+    color: #fff;
+}
+.category-card__badge {
+    --f: 8px; /* control the folded part*/
+    --r: 12px; /* control the ribbon shape */
+    
+    position: absolute;
+    top: var(--gap);
+    right: calc(-1*var(--f));
+    padding: 0.25rem var(--gap-small);
+    background: var(--carrot-color);
+    border-bottom: var(--f) solid #0005;
+    border-left: var(--r) solid #0000;
+    clip-path: 
+        polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
+        calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
+        var(--r) calc(50% - var(--f)/2));
+}
+
+@media (max-width: 768px) {
+    .category-card__badge {
+        --f: 4px; /* control the folded part*/
+    }
 }
 
 .category-card__icon,

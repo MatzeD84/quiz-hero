@@ -24,6 +24,19 @@ export function validateCategories(categories) {
             errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt keinen gültigen Titel.`);
         }
 
+        if (category.badge !== undefined) {
+            if (!category.badge || typeof category.badge !== 'object') {
+                errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt ein ungültiges badge-Objekt.`);
+            } else {
+                if ('active' in category.badge && typeof category.badge.active !== 'boolean') {
+                    errors.push(`badge.active in Kategorie ${category.id || `#${catIndex + 1}`} muss ein boolean sein.`);
+                }
+                if ('text' in category.badge && category.badge.text !== undefined && !isNonEmptyString(category.badge.text)) {
+                    errors.push(`badge.text in Kategorie ${category.id || `#${catIndex + 1}`} muss ein nicht-leerer Text sein.`);
+                }
+            }
+        }
+
         if (!Array.isArray(category.questions)) {
             errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt kein Fragen-Array.`);
             return;

@@ -57,6 +57,13 @@ export class QuizView {
                 }
             }
 
+            if (category.badge?.active) {
+                const badge = document.createElement('span');
+                badge.className = 'category-card__badge';
+                badge.textContent = category.badge.text || 'Neu';
+                button.appendChild(badge);
+            }
+
             if (category.icon) {
                 const icon = document.createElement('img');
                 icon.src = category.icon;
