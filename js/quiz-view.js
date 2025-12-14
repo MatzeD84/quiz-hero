@@ -378,6 +378,13 @@ export class QuizView {
         }
     }
 
+    disableAnswerButton(index) {
+        const button = this.elements.answerButtons[index];
+        if (button) {
+            button.disabled = true;
+        }
+    }
+
     showElement(element) {
         if (element) element.classList.remove('hide');
     }

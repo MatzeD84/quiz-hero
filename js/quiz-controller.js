@@ -123,6 +123,9 @@ export class QuizController {
         const message = this.pickRandomEntry(feedbackArray);
         this.view.renderFeedback(message, { isCorrect });
         this.state.registerAttempt(isCorrect, difficulty);
+        if (!isCorrect && this.state.attempts < CONFIG.maxAttempts) {
+            this.view.disableAnswerButton(index);
+        }
         this.view.updateScore(this.state.score);
 
         const backgroundKnowledgeText = (question.backgroundKnowledge || '').trim();
