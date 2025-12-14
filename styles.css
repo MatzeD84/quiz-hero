@@ -160,12 +160,14 @@ p {
     flex-direction: column;
 }
 
-.category-card__badge {
+.category-card__badge,
+.tag-card__badge {
     z-index: 9;
     font-size: 16px;
     color: #fff;
 }
-.category-card__badge {
+.category-card__badge,
+.tag-card__badge {
     --f: 8px; /* control the folded part*/
     --r: 12px; /* control the ribbon shape */
     

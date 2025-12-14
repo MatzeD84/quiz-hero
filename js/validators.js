@@ -142,6 +142,19 @@ export function validateTags(tags) {
         if (!isNonEmptyString(tag.title)) {
             errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt keinen gültigen Titel.`);
         }
+
+        if (tag.badge !== undefined) {
+            if (!tag.badge || typeof tag.badge !== 'object') {
+                errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt ein ungültiges badge-Objekt.`);
+            } else {
+                if ('active' in tag.badge && typeof tag.badge.active !== 'boolean') {
+                    errors.push(`badge.active in Tag ${tag.id || `#${index + 1}`} muss ein boolean sein.`);
+                }
+                if ('text' in tag.badge && tag.badge.text !== undefined && !isNonEmptyString(tag.badge.text)) {
+                    errors.push(`badge.text in Tag ${tag.id || `#${index + 1}`} muss ein nicht-leerer Text sein.`);
+                }
+            }
+        }
     });
 
     return errors;

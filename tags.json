@@ -5,42 +5,48 @@
             "title": "Italien",
             "icon": "images/website/tag/tag-italien.png",
             "description": "Italienische Bauwerke und Geschichte",
-            "enabled": true
+            "enabled": true,
+            "badge": { "active": false, "text": "Neu" }
         },
          {
             "id": "Test",
             "title": "Test",
             "icon": "images/website/tag/tag-antike-2.png",
             "description": "Interner Test-Tag",
-            "enabled": false
+            "enabled": false,
+            "badge": { "active": false, "text": "Neu" }
         },
         {
             "id": "Test",
             "title": "Test",
             "icon": "images/website/tag/tag-antike-2.png",
             "description": "Interner Test-Tag",
-            "enabled": false
+            "enabled": false,
+            "badge": { "active": false, "text": "Neu" }
         },
         {
             "id": "Antike",
             "title": "Antike",
             "icon": "images/website/tag/tag-antike.png",
             "description": "Antike Bauwerke und Geschichte",
-            "enabled": true
+            "enabled": true,
+            "badge": { "active": true, "text": "Neu" }
         },
         {
             "id": "Essen",
             "title": "Essen",
             "icon": "images/website/tag/tag-essen.png",
             "description": "Typischen Gerichte und Spezialit\u00e4ten",
-            "enabled": true
+            "enabled": true,
+            "badge": { "active": true, "text": "Neue Fragen" }
         },
         {
             "id": "Geographie",
             "title": "Geographie",
             "icon": "images/website/tag/tag-geographie.png",
             "description": "Geographie und Landschaft",
-            "enabled": false
+            "enabled": false,
+            "badge": { "active": false, "text": "Neu" }
         }
     ]
 }

@@ -105,6 +105,13 @@ export class QuizView {
             button.dataset.tag = tag.id;
             button.type = 'button';
 
+            if (tag.badge?.active) {
+                const badge = document.createElement('span');
+                badge.className = 'tag-card__badge';
+                badge.textContent = tag.badge.text || 'Neu';
+                button.appendChild(badge);
+            }
+
             if (tag.icon) {
                 const icon = document.createElement('img');
                 icon.src = tag.icon;
