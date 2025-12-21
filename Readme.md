@@ -1,5 +1,4 @@
 ToDos:
-- doppelter klick auf Antwort Möglich --> fehler
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - Animation bei Punkte anpassen --> bei alscher antwort keine Animation
