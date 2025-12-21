@@ -492,7 +492,7 @@ p {
     width: 80%;
     max-width: 500px;
     color: var(--clouds-color);
-    text-align: center;
+    text-align: left;
 }
 
 .modal__close {
