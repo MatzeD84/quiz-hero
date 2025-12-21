@@ -2,6 +2,9 @@ export const CONFIG = {
     questionsUrl: 'categories.json',
     tagsUrl: 'tags.json',
     feedbackUrl: 'feedback.json',
+    analytics: {
+        googleAnalyticsId: 'G-SYVZB974FC'
+    },
     devMode: true,
     score: {
         secondTry: 1,

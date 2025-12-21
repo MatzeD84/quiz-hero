@@ -4,8 +4,10 @@ import { QuizState } from './quiz-state.js';
 import { QuizView } from './quiz-view.js';
 import { QuizController } from './quiz-controller.js';
 import { initFooter } from './footer.js';
+import { initConsent } from './consent.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    initConsent();
     initFooter();
 
     const controller = new QuizController({

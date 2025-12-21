@@ -12,19 +12,8 @@
     <meta name="apple-mobile-web-app-title" content="Quiz-Hero" />
     <link rel="manifest" href="/images/website/favicon/site.webmanifest" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SYVZB974FC"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-SYVZB974FC');
-    </script>
-
     <!-- Fonts & Styles -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/fonts.css?v=20250210" />
     <link rel="stylesheet" href="styles.css?v=20250210" />
 </head>
 <body>
@@ -153,7 +142,8 @@
                 © <span class="js-footer-year"><!-- JS generiert --></span> Quiz-Hero. Alle Rechte vorbehalten.
                 <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/impressum.html">Impressum</a> |
                 <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutz</a> |
-                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/cookies.html">Cookies</a>
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/cookies.html">Cookies</a> |
+                <a href="#" class="js-consent-manage">Cookie-Einstellungen</a>
             </small>
         </p>
     </footer>
@@ -168,6 +158,16 @@
                 </button>
             </div>
             <div id="js-footer-modal-content"></div>
+        </div>
+    </section>
+
+    <section id="js-consent-banner" class="modal hide" role="dialog" aria-live="polite" aria-modal="true">
+        <div class="modal__content">
+            <p>Wir wuerden gerne anonyme Nutzungsdaten erheben, um die Website zu verbessern. Deine Zustimmung hilft uns dabei.</p>
+            <div class="consent-banner__actions">
+                <button type="button" class="btn btn--tag js-consent-accept">Zustimmen</button>
+                <button type="button" class="btn btn--tag js-consent-decline">Ablehnen</button>
+            </div>
         </div>
     </section>
 
