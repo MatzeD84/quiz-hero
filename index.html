@@ -148,8 +148,41 @@
         </section>
     </main>
     <footer class="footer">
-        <p class="footer__text"><small>© <span class="js-footer-year"><!-- JS generiert --></span> Quiz-Hero. Alle Rechte vorbehalten.</small></p>
+        <p class="footer__text">
+            <small>
+                © <span class="js-footer-year"><!-- JS generiert --></span> Quiz-Hero. Alle Rechte vorbehalten.
+                <a href="#" class="js-footer-modal-link" data-footer-modal="impressum">Impressum</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal="datenschutz">Datenschutz</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal="cookies">Cookies</a>
+            </small>
+        </p>
     </footer>
+
+    <template id="footer-modal-impressum">
+        <h2 class="modal__headline">Impressum</h2>
+        <p>Hier steht dein Impressumstext.</p>
+    </template>
+    <template id="footer-modal-datenschutz">
+        <h2 class="modal__headline">Datenschutz</h2>
+        <p>Hier steht dein Datenschutztext.</p>
+    </template>
+    <template id="footer-modal-cookies">
+        <h2 class="modal__headline">Cookies</h2>
+        <p>Hier steht dein Cookie-Text.</p>
+    </template>
+
+    <section id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+        <div class="modal__content">
+            <div class="modal__close">
+                <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
+                    <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="js-footer-modal-content"></div>
+        </div>
+    </section>
 
     <script type="module" src="js/main.js?v=20250210"></script>
 </body>
