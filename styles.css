@@ -75,6 +75,7 @@ p {
     width: 80%;
     max-width: 800px;
     text-align: center;
+    padding-bottom: 3rem;
 }
 
 @media (max-width: 768px) {
@@ -465,7 +466,7 @@ p {
 
 .modal {
     position: fixed;
-    z-index: 1;
+    z-index: 20;
     left: 0;
     top: 0;
     width: 100%;
@@ -540,30 +541,6 @@ p {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-.tag-button {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.tag-button:hover {
-    background-color: #0056b3;
-}
-
 .question-item {
     border: 1px solid #ddd;
     padding: 10px;
@@ -579,7 +556,12 @@ p {
     margin: 10px 0;
 }
 
-
 .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     margin-top: 2rem;
+    z-index: 10;
+    background-color: white;
+    text-align: center;
 }
