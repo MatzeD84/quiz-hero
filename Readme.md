@@ -1,4 +1,5 @@
 ToDos:
+- Endergebnis Maximal zu erreichende Anzahl von Punkten anzeigen
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - Animation bei Punkte anpassen --> bei alscher antwort keine Animation
@@ -11,10 +12,38 @@ ToDos ChatGPT:
 - SEO
 - Datenbank: Aufwand, sinvoll?
 
-
+Bilder:
+ROM: 
+- Trajanssäule
+- Piazza di Spagna
+- Artischocken
+- Villa Adriana (Hadriansvilla) in Tivoli nahe Rom
+- Vierströmebrunnens 
+- Welche Symbolik steht hinter dem Werfen einer Münze über die linke Schulter in den Trevi-Brunnen?
+    --> Bild von Brunnen, Münzen im Wasser 
+- Marcus Vipsanius Agrippa
+- Kaiser Hadrian
+- Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt? Raphael
+- Kirche Sant'Agnese in Agone auf der Piazza Navona
+- In welcher Region Italiens liegt Rom? Lazio --> Karte
+- Welche zentrale Figur des Trevi-Brunnens, die auf einem Muschelwagen steht, wird von zwei Tritonen flankiert? --> Neptun
+- Tempel im Forum Romanum, der Julius Caesar --> überreste
+- Sesterz: Eine große Bronze- oder Kupfermünze
+- Naumachia
+- Tevibrunen Statue der Abundantia
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 
+
+Bild generierung ChatGPT:
+
+- Konsequenter Low-Poly / Polygon-Stil
+- vereinfachte Geometrie (keine fotorealistischen Details)
+- Format 2:1
+- Keine Menschen
+- Reduzierte, polygonale Bäume / Umgebung / Himmel
+- Serientauglich & ruhig, damit alle Kategorien visuell zusammenpassen
+- Fokus immer klar auf dem Hauptmotiv, nichts „Zufälliges“ oder Dekoratives
 
 
 -------------------------------------------------------------

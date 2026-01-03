@@ -242,6 +242,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: var(--gap-small);
+    margin-top: 1rem;
 }
 
 .question_count__description {
