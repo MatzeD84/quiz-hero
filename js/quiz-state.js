@@ -187,7 +187,11 @@ export class QuizState {
         const total = this.currentSequence.length;
         const solved = this.currentSequence.filter(q => q.answeredCorrectly).length;
         const percentage = total === 0 ? 0 : Math.round((solved / total) * 100);
-        return { total, solved, percentage, score: this.score };
+        const maxScore = this.currentSequence.reduce((sum, question) => {
+            const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
+            return sum + getPointsForDifficulty(difficulty, 0);
+        }, 0);
+        return { total, solved, percentage, score: this.score, maxScore };
     }
 
     static shuffleArray(items) {

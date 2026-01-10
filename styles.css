@@ -298,13 +298,14 @@ a:hover {
 
 .quiz__container {
     position: relative;
-    padding: 1rem;
+    padding: 1.75rem 1rem;
+    padding-bottom: 1rem;
     background-color: var(--lighter-gray-color);
 }
 
 @media (max-width: 768px) {
     .quiz__container {
-        padding: 1rem var(--gap-small);
+        padding: 1.75rem var(--gap-small);
     }
 }
 
@@ -526,6 +527,25 @@ a:hover {
 .modal__close_btn:hover,
 .modal__close_btn:focus {
     background-color: var(--mandarin-color);
+}
+
+.modal__result_extra_headline {
+    margin-bottom: var(--gap-small);
+}
+
+.modal__result_extra_content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--gap-small);
+}
+
+.modal__result_extra_content_medium {
+    color: var(--carrot-color);
+}
+
+.modal__result_extra_content_hero {
+    color: var(--amethyst-color);
 }
 
 .consent-banner__actions {

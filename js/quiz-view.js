@@ -3,6 +3,8 @@ import { CONFIG, LABELS, SELECTORS } from './config.js';
 export class QuizView {
     constructor(selectors = SELECTORS) {
         this.elements = this.mapElements(selectors);
+        this.resultModalTemplate = null;
+        this.resultModalLoading = null;
     }
 
     mapElements(selectors) {
@@ -356,12 +358,71 @@ export class QuizView {
         }
     }
 
-    showResultModal({ score, percentage }) {
-        this.elements.modalContent.innerHTML = `
-            <h2 class="modal__headline">${LABELS.modalTitle}</h2>
-            <p>${LABELS.modalResult(score, percentage)}</p>
-        `;
-        this.elements.modal.classList.remove('hide');
+    showResultModal({ score, solved, total, maxScore }) {
+        const fillContent = html => {
+            if (html) {
+                this.elements.modalContent.innerHTML = html;
+                const titleEl = this.elements.modalContent.querySelector('[data-result-title]');
+                const scoreLabelEl = this.elements.modalContent.querySelector('[data-result-score-label]');
+                const scoreEl = this.elements.modalContent.querySelector('[data-result-score]');
+                const solvedEl = this.elements.modalContent.querySelector('[data-result-solved]');
+                const totalEl = this.elements.modalContent.querySelector('[data-result-total]');
+                const maxLabelEl = this.elements.modalContent.querySelector('[data-result-max-label]');
+                const maxEl = this.elements.modalContent.querySelector('[data-result-max]');
+
+                if (titleEl) titleEl.textContent = LABELS.modalTitle;
+                if (scoreLabelEl) scoreLabelEl.textContent = LABELS.modalScoreLabel;
+                if (scoreEl) scoreEl.textContent = score;
+                if (solvedEl) solvedEl.textContent = solved;
+                if (totalEl) totalEl.textContent = total;
+                if (maxLabelEl) maxLabelEl.textContent = LABELS.modalMaxLabel;
+                if (maxEl) maxEl.textContent = maxScore;
+            } else {
+                this.elements.modalContent.innerHTML = `
+                    <h2 class="modal__headline">${LABELS.modalTitle}</h2>
+                    <p>${LABELS.modalScoreLabel} <strong>${score}</strong> (${solved} von ${total} Fragen richtig)</p>
+                    <p>${LABELS.modalMaxLabel} <strong>${maxScore}</strong></p>
+                `;
+            }
+            this.elements.modal.classList.remove('hide');
+        };
+
+        this.loadResultModalTemplate().then(fillContent);
+    }
+
+    loadResultModalTemplate() {
+        if (this.resultModalTemplate !== null) {
+            return Promise.resolve(this.resultModalTemplate);
+        }
+        if (this.resultModalLoading) {
+            return this.resultModalLoading;
+        }
+        const url = CONFIG.resultModalUrl;
+        if (!url) {
+            this.resultModalTemplate = '';
+            return Promise.resolve('');
+        }
+        this.resultModalLoading = fetch(url, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Request failed: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                this.resultModalTemplate = html;
+                this.resultModalLoading = null;
+                return html;
+            })
+            .catch(error => {
+                this.resultModalTemplate = '';
+                this.resultModalLoading = null;
+                if (CONFIG.devMode) {
+                    console.error(error);
+                }
+                return '';
+            });
+        return this.resultModalLoading;
     }
 
     hideResultModal() {

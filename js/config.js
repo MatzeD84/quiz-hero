@@ -15,7 +15,8 @@ export const CONFIG = {
         },
         defaultDifficulty: 'easy'
     },
-    maxAttempts: 2
+    maxAttempts: 2,
+    resultModalUrl: 'content/quiz-result.html'
 };
 
 export const ASSET_VERSION = '20250210';
@@ -34,7 +35,8 @@ export const LABELS = {
     },
     scorePrefix: 'Punkte:',
     modalTitle: 'Quiz beendet!',
-    modalResult: (score, percentage) => `Deine Punktzahl ist: <strong>${score}</strong> (${percentage}%)`
+    modalScoreLabel: 'Deine Punktzahl ist:',
+    modalMaxLabel: 'Maximal erreichbar:'
 };
 
 export const SELECTORS = {
