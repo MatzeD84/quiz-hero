@@ -16,7 +16,7 @@
             "icon": "images/website/kategorie/kategorie-rom-2.png",
             "description": "Kolosseum, Forum \u0026 Co.",
             "questionsFile": "data/questions-rom.json",
-            "badge": { "active": true, "text": "Neu" }
+            "badge": { "active": true, "text": "Neue Fragen" }
         },
         {
             "id": "neapel",

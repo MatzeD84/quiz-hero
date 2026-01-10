@@ -4,7 +4,7 @@
             "tag": [],
             "type": "image",
             "question": "Welcher berühmte Vulkan ist auf diesem Bild zu sehen?",
-            "imageUrl": "/images/italien/neapel/mount-vesuvius.jpg",
+            "imageUrl": "/images/italien/neapel/neapel-vesuv.png",
             "answers": [
                 "Vesuv",
                 "Ätna",
@@ -47,7 +47,7 @@
             "tag": [],
             "type": "image",
             "question": "Welches historische Theater in Neapel ist bekannt für seine beeindruckende Architektur und seine kulturelle Bedeutung?",
-            "imageUrl": "/images/italien/neapel/Teatro-di-San-Carlo.jpg",
+            "imageUrl": "/images/italien/neapel/neapel-teatro-di-san-carlo.png",
             "answers": [
                 "Teatro di San Carlo",
                 "Teatro Nazionale",
@@ -90,7 +90,7 @@
             "tag": [],
             "type": "image",
             "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk \u0027Die sieben Werke der Barmherzigkeit\u0027?",
-            "imageUrl": "/images/italien/neapel/The_Seven_Works_of_Mercy-Caravaggio_1607.jpg",
+            "imageUrl": "/images/italien/caravaggio-die-sieben-werke-der-barmherzigkeit.png",
             "answers": [
                 "Caravaggio",
                 "Mattia Preti",
