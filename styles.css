@@ -536,8 +536,15 @@ a:hover {
 
 
 .quiz__score--animation {
-    color: var(--greensea-color);
     animation: scoreIncrease 0.8s ease-in-out;
+}
+
+.quiz__score--correct {
+    color: var(--greensea-color);
+}
+
+.quiz__score--incorrect {
+    color: var(--mandarin-color);
 }
 
 @keyframes scoreIncrease {

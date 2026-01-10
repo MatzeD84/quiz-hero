@@ -126,7 +126,7 @@ export class QuizController {
         if (!isCorrect && this.state.attempts < CONFIG.maxAttempts) {
             this.view.disableAnswerButton(index);
         }
-        this.view.updateScore(this.state.score);
+        this.view.updateScore(this.state.score, { isCorrect });
 
         const backgroundKnowledgeText = (question.backgroundKnowledge || '').trim();
         const shouldRevealBackgroundKnowledge = Boolean(backgroundKnowledgeText) && (isCorrect || this.state.attempts >= CONFIG.maxAttempts);

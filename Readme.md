@@ -13,24 +13,7 @@ ToDos ChatGPT:
 - Datenbank: Aufwand, sinvoll?
 
 Bilder:
-ROM: 
-- Trajanssäule
-- Piazza di Spagna
-- Artischocken
-- Villa Adriana (Hadriansvilla) in Tivoli nahe Rom
-- Vierströmebrunnens 
-- Welche Symbolik steht hinter dem Werfen einer Münze über die linke Schulter in den Trevi-Brunnen?
-    --> Bild von Brunnen, Münzen im Wasser 
-- Marcus Vipsanius Agrippa
-- Kaiser Hadrian
-- Welcher bedeutende Künstler der italienischen Renaissance wurde im Pantheon beigesetzt? Raphael
-- Kirche Sant'Agnese in Agone auf der Piazza Navona
-- In welcher Region Italiens liegt Rom? Lazio --> Karte
-- Welche zentrale Figur des Trevi-Brunnens, die auf einem Muschelwagen steht, wird von zwei Tritonen flankiert? --> Neptun
-- Tempel im Forum Romanum, der Julius Caesar --> überreste
-- Sesterz: Eine große Bronze- oder Kupfermünze
-- Naumachia
-- Tevibrunen Statue der Abundantia
+
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 

@@ -326,11 +326,15 @@ export class QuizView {
         this.elements.nextButton.classList.remove('hide');
     }
 
-    updateScore(score) {
+    updateScore(score, { isCorrect } = {}) {
         this.elements.score.textContent = `${LABELS.scorePrefix} ${score}`;
+        this.elements.score.classList.remove('quiz__score--correct', 'quiz__score--incorrect');
+        if (typeof isCorrect === 'boolean') {
+            this.elements.score.classList.add(isCorrect ? 'quiz__score--correct' : 'quiz__score--incorrect');
+        }
         this.elements.score.classList.add('quiz__score--animation');
         window.setTimeout(() => {
-            this.elements.score.classList.remove('quiz__score--animation');
+            this.elements.score.classList.remove('quiz__score--animation', 'quiz__score--correct', 'quiz__score--incorrect');
         }, 800);
     }
 
