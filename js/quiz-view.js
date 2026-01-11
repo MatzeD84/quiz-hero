@@ -70,6 +70,7 @@ export class QuizView {
                 const icon = document.createElement('img');
                 icon.src = category.icon;
                 icon.alt = `${category.title} Icon`;
+                icon.loading = 'lazy';
                 icon.classList.add('category-card__icon');
                 button.appendChild(icon);
             }
@@ -118,6 +119,7 @@ export class QuizView {
                 const icon = document.createElement('img');
                 icon.src = tag.icon;
                 icon.alt = `${tag.title} Icon`;
+                icon.loading = 'lazy';
                 icon.classList.add('tag-card__icon');
                 button.appendChild(icon);
             }
@@ -166,6 +168,7 @@ export class QuizView {
                 const labelText = label || this.elements.selectionLabel?.textContent || '';
                 const altText = description ? `${labelText} - ${description}` : labelText;
                 this.elements.selectionIcon.alt = altText;
+                this.elements.selectionIcon.loading = 'lazy';
                 this.elements.selectionIcon.classList.remove('hide');
             } else {
                 this.elements.selectionIcon.src = '';
@@ -270,6 +273,7 @@ export class QuizView {
         questionImage.classList.toggle('hide', !showImage);
         if (showImage) {
             questionImage.src = imageUrl;
+            questionImage.loading = 'lazy';
         }
 
         answerButtons.forEach((btn, idx) => {

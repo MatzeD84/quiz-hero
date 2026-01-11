@@ -4,18 +4,19 @@ ToDos:
 - nach ben scrollen
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
-
+- css: in mehreren css -files modulen aufteilen
+- 404  stylen (Bösewicht-icon)
+- ins main-repo pushen -aktuell noch fehlerhaft
 
 SEO:
-- Interne Verlinkung zwischen aehnlichen Kategorien/Tags (du hast schon „Auch interessant“).
+- Interne Verlinkung im flietext
 
 
 - Bilder in WebP + sinnvolle Groessen.
-- Lazy‑Load.
 
 
 
-Ideen ChatGPT:- 404 seite
+Ideen ChatGPT:
 - end-zu-ent-Tests, Test
 - SEO
 - Datenbank: Aufwand, sinvoll?

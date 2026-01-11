@@ -30,7 +30,7 @@
         <!-- Kategorie-Auswahl -->
         <section id="js-category-container" class="main-section">
             <header class="main__header">
-                <img class="main_image" src="images/website/logo.png" alt="Logo">
+                <img class="main_image" src="images/website/logo.png" alt="Logo" loading="eager">
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             <section>
@@ -50,7 +50,7 @@
         <!-- Auswahl Anzahl Fragen -->
         <section id="js-question-count-container" class="question_count hide" aria-live="polite">
             <header class="question_count__header">
-                <img class="main_image" src="images/website/logo.png" alt="Logo">
+                <img class="main_image" src="images/website/logo.png" alt="Logo" loading="eager">
                 <h2>Wähle die Anzahl der Fragen</h2>
             </header>
             <div class="question_count__meta">
@@ -58,7 +58,7 @@
                     <h3 id="js-selection-label" class="question_count__selection"></h3>
                     <p id="js-selection-description" class="question_count__description"></p>
                 </div>
-                <img id="js-selection-icon" class="question_count__icon hide" alt="">
+                    <img id="js-selection-icon" class="question_count__icon hide" alt="" loading="lazy">
             </div>
             <div class="quiz__question_count_select">
                 <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
@@ -77,7 +77,7 @@
         <section id="js-quiz-content" class="quiz hide" aria-live="polite">
             <header class="quiz__score_container">
                 <div class="quiz__headerlogo">
-                    <img class="quiz__headerlogo_image" src="images/website/logo.png" alt="Logo">
+                    <img class="quiz__headerlogo_image" src="images/website/logo.png" alt="Logo" loading="eager">
                     <h3 id="js-quiz-selection" class="quiz__selection"></h3>
                 </div>
                 <div class="quiz__headertext">
@@ -102,7 +102,7 @@
                 <p id="js-question" class="quiz__question headline"></p>
 
                 <div class="quiz__question_image_container">
-                    <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" />
+                    <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" loading="lazy" />
                 </div>
 
                 <div class="quiz__answer">

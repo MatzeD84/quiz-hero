@@ -274,7 +274,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
     const body = `
         <section id="js-category-container" class="main-section">
             <header class="main__header">
-                <img class="main_image" src="../images/website/logo.png" alt="Logo">
+                <img class="main_image" src="../images/website/logo.png" alt="Logo" loading="eager">
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
@@ -347,7 +347,7 @@ const buildIndexPage = categories => {
     const body = `
         <section id="js-category-container" class="main-section">
             <header class="main__header">
-                <img class="main_image" src="../images/website/logo.png" alt="Logo">
+                <img class="main_image" src="../images/website/logo.png" alt="Logo" loading="eager">
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
