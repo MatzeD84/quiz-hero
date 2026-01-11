@@ -138,8 +138,15 @@ a:hover {
     border: none;
     transition: var(--transition-fade);
     cursor: pointer;
+    text-decoration: none;
 }
 
+.btn:visited,
+.btn:focus,
+.btn:hover {
+    color: var(--clouds-color);
+    text-decoration: none;
+}
 
 .btn:hover {
     background-color: var(--carrot-color);
@@ -163,13 +170,22 @@ a:hover {
     position: relative;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    color: var(--clouds-color);
+}
+
+.category-card:hover,
+.category-card:visited,
+.category-card:focus {
+    color: var(--clouds-color);
+    text-decoration: none;
 }
 
 .category-card__badge,
 .tag-card__badge {
     z-index: 9;
     font-size: 16px;
-    color: #fff;
+    color: var(--clouds-color);
 }
 .category-card__badge,
 .tag-card__badge {
@@ -595,6 +611,75 @@ a:hover {
     height: auto;
     display: block;
     margin: 10px 0;
+}
+
+details {
+    border: 1px solid var(--lighter-gray-color);
+    border-radius: 10px;
+    padding: var(--gap-small) var(--gap);
+    background-color: var(--clouds-color);
+    margin-bottom: var(--gap-small);
+}
+
+details[open] {
+    background-color: var(--clouds-color);
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after {
+    content: '▸';
+    float: right;
+    transition: var(--transition-fade);
+}
+
+details[open] summary::after {
+    transform: rotate(90deg);
+}
+
+.seo-answer--correct {
+    background-color: var(--greensea-color);
+    color: var(--clouds-color);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--dark-gray-color);
+    margin-bottom: var(--gap);
+}
+
+.breadcrumb__link {
+    color: var(--dark-gray-color);
+    text-decoration: none;
+}
+
+.breadcrumb__link:hover,
+.breadcrumb__link:focus {
+    color: var(--dark-gray-color);
+    text-decoration: underline;
+}
+
+.breadcrumb__sep {
+    color: var(--light-gray-color);
+}
+
+.breadcrumb__current {
+    color: var(--dark-color);
+    font-weight: 600;
 }
 
 .footer {

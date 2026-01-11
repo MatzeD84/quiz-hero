@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://quiz-hero.de/sitemap.xml

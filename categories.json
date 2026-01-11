@@ -6,6 +6,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-hamburg-nacht.png",
             "description": "Interner Schnelltest",
+            "seoDescription": "Test Quiz - Interner Schnelltest mit kurzen Beispiel-Fragen zum Format. Ideal, um den Ablauf, die Punkte-Logik und die Bedienung kennenzulernen. Du bekommst ein Gefühl für die Fragearten, den zweiten Versuch und die Rückmeldungen. Perfekt zum schnellen Check, ob alles funktioniert und wie sich das Quiz anfühlt.",
             "questionsFile": "data/questions-test.json",
             "badge": { "active": true, "text": "Neu" }
         },
@@ -15,6 +16,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-rom-2.png",
             "description": "Kolosseum, Forum \u0026 Co.",
+            "seoDescription": "Rom Quiz - Kolosseum, Forum \u0026 Co. Entdecke Geschichte, Architektur und Sehenswürdigkeiten der Ewigen Stadt in diesem Quiz. Von der Antike bis zur Renaissance lernst du wichtige Bauwerke, Kaiser und Schauplätze kennen. Die Fragen decken Kultur, Alltag und Hintergründe ab und bringen dir Rom in kompakten Etappen näher.",
             "questionsFile": "data/questions-rom.json",
             "badge": { "active": true, "text": "Neue Fragen" }
         },
@@ -24,6 +26,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-neapel.png",
             "description": "Pizza, Vesuv \u0026 Meer",
+            "seoDescription": "Neapel Quiz - Pizza, Vesuv \u0026 Meer. Teste dein Wissen zu Kultur, Alltag und Highlights rund um Neapel. Themen wie Geschichte, Kulinarik, Landschaft und berühmte Orte sind genauso dabei wie regionale Besonderheiten. Das Quiz verbindet Stadtleben, Natur und Tradition und bietet abwechslungsreiche Fragen.",
             "questionsFile": "data/questions-neapel.json",
             "badge": { "active": false, "text": "Neu" }
         },
@@ -33,6 +36,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-amalfikueste.png",
             "description": "Landschaft, Dörfer \u0026 Meer",
+            "seoDescription": "Amalfi Küste Quiz - Landschaft, Dörfer \u0026 Meer. Erkunde die Amalfiküste mit Fragen zu Orten, Natur und Geschichte. Du lernst charakteristische Städte, Küstenorte und landschaftliche Highlights kennen und bekommst Einblicke in Kultur und regionale Eigenheiten. Ideal, um Wissen zu vertiefen und neue Details zu entdecken.",
             "questionsFile": "data/questions-amalfi.json",
             "badge": { "active": false, "text": "Neu" }
         },
@@ -42,6 +46,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-florenz.png",
             "description": "Kunst, Dom \u0026 Renaissance",
+            "seoDescription": "Florenz Quiz - Kunst, Dom \u0026 Renaissance. Vertiefe dein Wissen über Museen, Bauwerke und die Geschichte der Renaissance. Von berühmten Künstlern bis zu ikonischen Sehenswürdigkeiten umfasst das Quiz Architektur, Kultur und historische Entwicklungen. So lernst du Florenz Schritt für Schritt besser kennen.",
             "questionsFile": "data/questions-florenz.json",
             "badge": { "active": false, "text": "Neu" }
         },
@@ -51,6 +56,7 @@
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-siena.png",
             "description": "Piazza del Campo \u0026 Palio",
+            "seoDescription": "Siena Quiz - Piazza del Campo \u0026 Palio. Lerne mehr über Traditionen, Baukunst und die besondere Atmosphäre Sienas. Themen wie Geschichte, Stadtbild und regionale Bräuche werden in abwechslungsreichen Fragen behandelt. Das Quiz zeigt, warum Siena eine der faszinierendsten Städte der Toskana ist.",
             "questionsFile": "data/questions-siena.json",
             "badge": { "active": false, "text": "Neu" }
         }

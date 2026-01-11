@@ -19,7 +19,7 @@ export const CONFIG = {
     resultModalUrl: 'content/quiz-result.html'
 };
 
-export const ASSET_VERSION = '20250210';
+export const ASSET_VERSION = '20250211';
 
 export const LABELS = {
     questions: {

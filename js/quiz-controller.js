@@ -16,12 +16,47 @@ export class QuizController {
             this.view.renderTagButtons(this.state.getAvailableTags());
             this.registerEvents();
             this.view.showCategories();
+            this.applyInitialSelectionFromUrl();
         } catch (error) {
             if (CONFIG.devMode) {
                 console.error(error);
             }
             this.view.showLoadingMessage(LABELS.status.loadError);
         }
+    }
+
+    applyInitialSelectionFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const categoryId = params.get('category');
+        const tag = params.get('tag');
+
+        if (categoryId) {
+            this.handleCategorySelected(categoryId);
+            return;
+        }
+        if (tag) {
+            this.handleTagSelected(tag);
+        }
+    }
+
+    updateSelectionInUrl({ categoryId = '', tag = '' }) {
+        const params = new URLSearchParams(window.location.search);
+        params.delete('category');
+        params.delete('tag');
+        if (categoryId) {
+            params.set('category', categoryId);
+        }
+        if (tag) {
+            params.set('tag', tag);
+        }
+        const query = params.toString();
+        const nextUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
+        window.history.replaceState({}, '', nextUrl);
+    }
+
+    clearSelectionFromUrl() {
+        const nextUrl = `${window.location.pathname}${window.location.hash}`;
+        window.history.replaceState({}, '', nextUrl);
     }
 
     registerEvents() {
@@ -52,6 +87,7 @@ export class QuizController {
         });
         this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
         this.view.showQuestionCount();
+        this.updateSelectionInUrl({ categoryId });
     }
 
     handleTagSelected(tag) {
@@ -72,6 +108,7 @@ export class QuizController {
         });
         this.view.updateQuestionCountButtons(this.state.getAvailableCountForSelection());
         this.view.showQuestionCount();
+        this.updateSelectionInUrl({ tag });
     }
 
     handleQuestionCountSelected(count) {
@@ -174,6 +211,7 @@ export class QuizController {
             this.view.showResultModal(stats);
             this.state.resetRound();
             this.view.showCategories();
+            this.clearSelectionFromUrl();
         }
     }
 
@@ -187,5 +225,6 @@ export class QuizController {
         if (this.view.elements.quizSelectionLabel) {
             this.view.elements.quizSelectionLabel.textContent = '';
         }
+        this.clearSelectionFromUrl();
     }
 }
