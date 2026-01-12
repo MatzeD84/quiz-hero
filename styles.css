@@ -87,6 +87,12 @@ a:hover {
     text-align: center;
 }
 
+.container_small {
+    width: 100%;
+    max-width: 470px;
+    margin: 0 auto;
+}
+
 .hide {
     display: none !important;
 }
@@ -130,7 +136,7 @@ a:hover {
 
 .btn {
     display: block;
-    width: 100%;
+    max-width: 100%;
     padding: 10px;
     font-size: 16px;
     color: var(--clouds-color);
