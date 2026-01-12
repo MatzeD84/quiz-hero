@@ -1,4 +1,4 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -133,7 +133,7 @@ const buildGeneralDescriptionSection = () => {
     ];
 
     return `
-        <section>
+        <section class="lp__general_description">
             <h2>Über Quiz-Hero</h2>
             ${paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
         </section>
@@ -272,7 +272,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
     });
 
     const body = `
-        <section id="js-category-container" class="main-section">
+        <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../index.html" title="Zur Startseite">
                     <img class="main_image" src="../images/website/logo.png" alt="Zur Startseite" loading="eager">
@@ -280,22 +280,22 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
-            <section>
+            <section class="lp__category_grid container_small">
                 <h2>${escapeHtml(category.title)}</h2>
                 <div class="category" aria-live="polite">
                     ${cardHtml}
                 </div>
             </section>
-            <section>
-                <h2>Quiz starten</h2>
-                <a class="btn" href="../index.html?category=${encodeURIComponent(category.id)}">Jetzt spielen</a>
-            </section>
-            <section>
+            <section class="lp__category_description">
                 <h2>Über dieses Quiz</h2>
                 <p>${escapeHtml(seoDescription)}</p>
             </section>
+            <section class="lp__quiz_start container_small">
+                <h2>Quiz starten</h2>
+                <a class="btn" href="../index.html?category=${encodeURIComponent(category.id)}">Jetzt spielen</a>
+            </section>
             ${relatedCategories.length ? `
-            <section>
+            <section class="lp__related_categories">
                 <h2>Auch interessant</h2>
                 <div class="category" aria-live="polite">
                     ${relatedCategories.map(related => buildCategoryCard({
@@ -306,7 +306,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
             </section>
             ` : ''}
             ${buildGeneralDescriptionSection()}
-            <section>
+            <section class="lp__faq_section">
                 <h2>Alle Fragen und Antworten</h2>
                 ${buildFaqSection(category.questions || [])}
             </section>
@@ -347,7 +347,7 @@ const buildIndexPage = categories => {
         .join('');
 
     const body = `
-        <section id="js-category-container" class="main-section">
+        <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../index.html" title="Zur Startseite">
                     <img class="main_image" src="../images/website/logo.png" alt="Zur Startseite" loading="eager">
@@ -355,7 +355,7 @@ const buildIndexPage = categories => {
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
-            <section>
+            <section class="lp__category_grid">
                 <h2>Städte, Regionen und Landschaften</h2>
                 <div class="category" aria-live="polite">
                     ${items}
@@ -498,3 +498,11 @@ const run = () => {
 };
 
 run();
+
+
+
+
+
+
+
+
