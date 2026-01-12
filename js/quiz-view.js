@@ -270,10 +270,21 @@ export class QuizView {
         quizContent.dataset.difficulty = difficulty;
 
         const showImage = type === 'image' && Boolean(imageUrl);
-        questionImage.classList.toggle('hide', !showImage);
         if (showImage) {
-            questionImage.src = imageUrl;
-            questionImage.loading = 'lazy';
+            questionImage.classList.add('hide');
+            questionImage.src = '';
+            const loader = new Image();
+            loader.onload = () => {
+                questionImage.src = imageUrl;
+                questionImage.classList.remove('hide');
+            };
+            loader.onerror = () => {
+                questionImage.classList.add('hide');
+            };
+            loader.src = imageUrl;
+        } else {
+            questionImage.classList.add('hide');
+            questionImage.src = '';
         }
 
         answerButtons.forEach((btn, idx) => {
