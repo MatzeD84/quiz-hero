@@ -66,6 +66,7 @@ export class QuizController {
         this.view.onAnswerSelected(index => this.handleAnswerSelected(index));
         this.view.onNext(() => this.handleNextQuestion());
         this.view.onAbort(() => this.handleAbort());
+        this.view.onHome(() => this.handleAbort());
         this.view.onModalClose(() => this.view.hideResultModal());
     }
 

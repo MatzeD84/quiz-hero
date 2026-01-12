@@ -105,6 +105,19 @@ a:hover {
     margin: 1rem 0;
 }
 
+.main__logo-link {
+    display: inline-flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+.main__logo-link:visited,
+.main__logo-link:hover,
+.main__logo-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (max-width: 576px) {
     .main__header {
         margin: var(--gap-small) 0;

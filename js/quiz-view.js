@@ -37,7 +37,8 @@ export class QuizView {
             quizSelectionLabel: document.querySelector(selectors.quizSelectionLabel),
             modal: document.querySelector(selectors.modal),
             modalContent: document.querySelector(selectors.modalContent),
-            modalCloseButton: document.querySelector(selectors.modalCloseButton)
+            modalCloseButton: document.querySelector(selectors.modalCloseButton),
+            homeLinks: Array.from(document.querySelectorAll('.js-home-link'))
         };
     }
 
@@ -197,6 +198,15 @@ export class QuizView {
             const target = event.target.closest('.js-tag-btn');
             if (!target) return;
             callback(target.dataset.tag);
+        });
+    }
+
+    onHome(callback) {
+        this.elements.homeLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                callback();
+            });
         });
     }
 
