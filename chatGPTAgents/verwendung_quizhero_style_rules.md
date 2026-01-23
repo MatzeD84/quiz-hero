@@ -1,170 +1,149 @@
-# QuizHero Image Agent – Notizen / Anleitung (Update: soft / medium / strong)
+# QuizHero Image Agent – Notizen (FINAL PRO, robust)
 
 ## Ziel
-Der Agent erstellt konsistente **2:1 Bannerbilder** im **QuizHero Low-Poly Stil**.
+Erzeuge konsistente **2:1 Bannerbilder** im **QuizHero Low-Poly Stil**.
 
-**Fix immer aktiv:**
+Fix immer:
 - ✅ 2:1 Querformat
-- ✅ **keine Menschen**
-- ✅ **keine Tiere**
-- ✅ **kein Text/Logo/Wasserzeichen/Schilder**
-- ✅ polygonaler Low-Poly Look, klare Facetten
+- ✅ keine Menschen / Tiere
+- ✅ kein Text / Logo / Wasserzeichen / Schilder
+- ✅ nicht fotorealistisch
+- ✅ keine Mikrodetails / keine Texturen (besonders bei strong)
+
+WICHTIG: Modus-Regeln sind **hart** (kein „Verschönern“ durch mehr Details).
 
 ---
 
-## 1) Modi (wichtig!)
+## 1) Modi (soft / medium / strong)
 
-### soft
-**Nah am Original**, dezenter Stiltransfer (konservativ).
-- Uploads bleiben relativ originalgetreu
-- Low-Poly Effekt moderat
+### soft (konservativ)
+- sehr nah am Original
+- moderat polygonal
+- keine extra starke Polygonisierung
+- Himmel/Wasser/Vegetation klar feine low-poly
 
-### medium (Standard / Empfehlung)
-**Nah am Original**, aber **deutlich stärker polygonal**.
-- entspricht deinem gewünschten QuizHero-Standardlook
-- ideal für Bild-Uploads (Fotos sonst zu realistisch)
+### medium (Standard)
+- nah am Original
+- deutlich polygonal über das ganze Bild
+- Himmel/Wasser/Vegetation klar low-poly
+- keine Mikrodetails
 
-### strong (Kategorie/Tag / Hero-Quiz)
-**Maximaler Polygon-Look** wie deine Kategorie-/Tag-Hero-Bilder:
-- stark sichtbare Polygone überall
-- kaum bis keine feinen Details / keine Texturen
-- Komposition darf optimiert werden für „Key Visual“
-
----
-
-## 2) Variante A: Text → Bild
-
-### Minimal
-`Bild: <Motiv> (GENERATE)`
-
-**Beispiele:**
-- `Bild: Rom Kolosseum sunset (GENERATE)`
-- `Bild: Neapel Vesuv Blick über die Bucht (GENERATE)`
-- `Bild: Paris Eiffelturm night snow (GENERATE)`
-
-### Modus explizit setzen
-`Bild: <Motiv> – mode: soft|medium|strong (GENERATE)`
-
-**Beispiele:**
-- `Bild: Rom Forum Romanum – mode: medium (GENERATE)`
-- `Bild: Amalfi Küste – mode: strong (GENERATE)` *(perfekt für Kategorie/Tags)*
-
-⚠️ Wenn Modus nicht angegeben: Agent fragt 1× nach soft/medium/strong  
-(oder nutzt Default **medium**)
+### strong (Hero-Style)
+- maximal polygonal / stark facettiert überall
+- **detailarm**, keine Texturen, keine Mikrostrukturen
+- Komposition darf optimiert werden für 2:1 Key Visual
+- Farben sanft/warm, clean
 
 ---
 
-## 3) Variante B: Bild hochladen → Stiltransfer
-
-### Minimal (Standard: medium)
-Upload + Text:
-- `Amalfi Küste`
-- `Forum Romanum Rom`
-
-### Modus setzen
-Upload + Text:
-- `Amalfi Küste – mode: soft`
-- `Amalfi Küste – mode: medium`
-- `Amalfi Küste – mode: strong`
-
----
-
-## 4) Bild hochladen + Anpassungen (Edit-Anweisungen)
+## 2) Text → Bild
 Format:
-`<Motiv> – <Änderungen>`
+`Bild: <Motiv> – modus: medium (GENERATE)`
 
-**Beispiele:**
-- `Amalfi Küste – Berge nicht abgeschnitten zeigen`
-- `Amalfi Küste – mehr Himmel, weniger Vordergrund`
-- `Rom Kolosseum – stärkerer low-poly Himmel und Pflanzen`
-- `Forum Romanum – Hintergrund ruhiger, weniger Details`
-- `Vesuv – mehr Meer, klarer Horizont`
-
-✅ Erlaubt: Boot, Wolken, Nebel, Sonnenstrahlen  
-❌ Verboten: Menschen, Tiere, Text/Schilder
-
----
-
-## 5) 2 Bilder hochladen (Best Practice: Motiv + Style-Referenz)
-- **Bild A** = Motiv (Komposition beibehalten)
-- **Bild B** = Style-Referenz (QuizHero Look übernehmen)
-
-Text dazu:
-`Bild A = Motiv, Bild B = Style-Referenz → mode: medium, Stiltransfer nah am Original, 2:1`
-
-Für Kategorie/Tags:
-`Bild A = Motiv, Bild B = Style-Referenz → mode: strong (Hero Key Visual), 2:1`
-
----
-
-## 6) Parameter / Keywords (einfach in Text schreiben)
-
-### Tageszeit
-- `day`
-- `sunset / golden hour`
-- `night`
-- `dawn`
-
-### Wetter / Atmosphäre
-- `clear`
-- `snow`
-- `fog`
-- `rain`
-- `dramatic sky`
-
-### Mood / Farben
-- `warm`
-- `cool`
-- `dramatic`
-- `calm`
-
-### Komposition / Banner-Optimierung
-- `website header`
-- `kein Leerraum`
-- `mehr Himmel`
-- `mehr Meer`
-- `nicht abgeschnitten zeigen`
-
-### Stil-Boost (wenn nicht polygonal genug)
-- `extra strong low-poly`
-- `strong polygonization`
-- `simplified shapes`
-- `less detail`
-
----
-
-## 7) Spezialregeln (wichtiger Qualitätshebel)
-Gerade bei Upload-Fotos:
-
-- **Vegetation** (Bäume/Blumen/Pflanzen): niemals realistisch → große Facetten, keine Blatt-/Blüten-Details
-- **Himmel**: stark facettiert, viele kleine Polygone, keine glatten Verläufe
-- **Wasser**: klar polygonal, darf feiner facettiert sein, keine Spiegel-Fototextur
-
-Praktischer Zusatz:
-`– stronger low-poly plants/sky/water`
-
----
-
-## 8) Varianten (v1/v2/v3)
-Varianten sind **3 leicht unterschiedliche Kompositionen/Looks** fürs gleiche Motiv:
-
-- **v1:** Standard / balanced
-- **v2:** andere Kamera/Perspektive (oft besser als Banner)
-- **v3:** anderer Look/Licht/Stimmung oder stärkerer Polygon-Look
-
-### Varianten anfordern
-- `3 Varianten`
-- `Varianten v1/v2/v3`
+Optional:
+- `… – 3 varianten`
+- `… – tageszeit: abend`
+- `… – wetter: nebel`
+- `… – stimmung: warm`
 
 Beispiel:
-`Bild: Rom Forum Romanum sunset – mode: medium – 3 Varianten (GENERATE)`
+`Bild: Rom Forum Romanum – modus: medium – tageszeit: sonnenuntergang (GENERATE)`
 
 ---
 
-## 9) Kategorie/Tag / Hero-Quiz (Wichtig!)
-Für Key Visuals immer:
-- `mode: strong`
-- weniger Details, klarer Polygon-Look
+## 3) Bild-Upload → Stiltransfer
+Upload + Text (Standard: medium):
+`<Motiv> – modus: medium`
+
+Optional mit Änderungen:
+`<Motiv> – zuschnitt: nicht abgeschnitten zeigen – komposition: mehr himmel`
 
 Beispiel:
-`Bild: Amalfi Küste – Kategorie/Tags – mode: strong (GENERATE)`
+Upload + `Amalfi Küste – modus: medium – fokus: pflanzen/himmel/wasser stärker`
+
+---
+
+## 4) 2 Bilder Upload (Motiv + Style-Referenz)
+- Bild A = Motiv
+- Bild B = Style-Referenz
+
+Text:
+`Bild A = Motiv, Bild B = Style-Referenz → modus: medium, 2:1`
+
+---
+
+## 5) Kategorie/Tags Shortcut (LOCKED STRONG + Auto-Generate)
+Wenn du so startest:
+
+`Bild Kategorie: <Thema>`
+
+Dann gilt:
+- 🔒 immer strong (soft/medium verboten)
+- detailarm, stark facettiert, warm/sanft
+- kreative Kombination ikonischer Motive erlaubt
+- Agent generiert automatisch ein Bild (außer „nur Prompt“)
+
+Beispiele:
+- `Bild Kategorie: Rom abend Sehenswürdigkeiten`
+- `Bild Kategorie: Amalfi Küste sonnenuntergang`
+- `Bild Kategorie: Goslar winter schnee`
+
+---
+
+## 6) Spezialregel Upload-Fotos (Qualitätshebel)
+Bei Fotos muss besonders polygonal sein:
+- Vegetation: keine Blatt-/Blüten-Details
+- Himmel: voll facettiert, viele Polygone, keine Gradients
+- Wasser: polygonal, keine realistische Spiegelung
+
+Keyword:
+`– fokus: pflanzen/himmel/wasser stärker`
+
+---
+
+## 7) Varianten (v1/v2/v3)
+- v1 = Standard
+- v2 = andere Perspektive (oft besser für Banner)
+- v3 = anderer Look/Licht oder stärker polygonal
+
+Beispiel:
+`Bild: Rom – modus: medium – 3 varianten`
+
+---
+
+## 8) Parameter-Hilfe
+Einfach:
+`Parameter`
+
+→ Agent gibt komplette Parameterliste + 2–3 Beispiele aus.
+
+---
+
+## 9) Vergleich / Musterbild (Style-Match)
+Wenn Ergebnis stilistisch nicht passt:
+
+Du schreibst:
+- `Vergleich` oder `Bild Vorlage` oder `Bild Muster`
+
+…und lädst dann das Musterbild hoch.
+
+Dann passiert:
+- Motiv/Komposition bleibt wie zuletzt generiert
+- Stilangleichung an Musterbild:
+  - Farbstil
+  - Polygon-Dichte
+  - Detailgrad
+
+Optional:
+- `Vergleich – nur Farben übernehmen`
+- `Vergleich – nur Polygon-Dichte übernehmen`
+- `Vergleich – nur Detailgrad übernehmen`
+- `Vergleich – mehr wie Muster`
+
+---
+
+## 10) Profi-Workflow
+1) `Bild: <Motiv> – 3 varianten` (ohne GENERATE)
+2) beste auswählen
+3) `GENERATE v2`
+4) wenn Stil nicht passt → `Vergleich` + Musterbild
