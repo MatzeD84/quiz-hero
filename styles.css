@@ -1,3 +1,4 @@
+﻿/* === Variables === */
 :root {
     --primary-color: #666;
     --dark-color: #1E1E1E;
@@ -22,6 +23,7 @@
     --font-weight-light: 200;
 }
 
+/* === Base / Reset === */
 /* <weight>: Use a value from 200 to 900 */
 * {
     font-family: "Source Sans 3", sans-serif;
@@ -50,6 +52,7 @@ img {
     max-width: 100%;
 }
 
+/* === Typography === */
 h1, h2, h3, h4, h5, h6, .headline {
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
@@ -78,6 +81,7 @@ a:hover {
     color: var(--amethyst-color);
 }
 
+/* === Layout === */
 .container {
     flex: 1;
     width: 100%;
@@ -147,6 +151,7 @@ a:hover {
     }
 }
 
+/* === Buttons === */
 .btn {
     display: block;
     max-width: 100%;
@@ -178,6 +183,7 @@ a:hover {
     display: none;
 }
 
+/* === Cards / Grids === */
 .category {
     display: grid;
     gap: var(--gap);
@@ -265,6 +271,7 @@ a:hover {
     display: block;
 }
 
+/* === Question Count Screen === */
 .question_count {
     width: 100%;
     max-width: 470px;
@@ -331,6 +338,7 @@ a:hover {
     color: var(--amethyst-color);
 }
 
+/* === Quiz === */
 .quiz__container {
     position: relative;
     padding: 1.75rem 1rem;
@@ -508,6 +516,7 @@ a:hover {
     transition: var(--transition-fade);
 }
 
+/* === Modals === */
 .modal {
     position: fixed;
     z-index: 20;
@@ -589,7 +598,7 @@ a:hover {
     grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
 }
 
-
+/* === Score Feedback === */
 .quiz__score--animation {
     animation: scoreIncrease 0.8s ease-in-out;
 }
@@ -632,6 +641,7 @@ a:hover {
     margin: 10px 0;
 }
 
+/* === FAQ / Details (SEO Landingpages) === */
 details {
     border: 1px solid var(--lighter-gray-color);
     border-radius: 10px;
@@ -671,6 +681,7 @@ details[open] summary::after {
     border-radius: 6px;
 }
 
+/* === Breadcrumbs === */
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
@@ -701,8 +712,11 @@ details[open] summary::after {
     font-weight: 600;
 }
 
+/* === Footer === */
 .footer {
     width: 100%;
     background-color: var(--lighter-gray-color);
     text-align: center;
 }
+
+
