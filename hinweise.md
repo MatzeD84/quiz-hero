@@ -14,8 +14,48 @@ SEO:
 - Bilder in WebP + sinnvolle Groessen.
 
 
+ChatGPT
+"QuizHero Image Agent":
+
+Einfache Form:
+"Erstelle ein QuizHero Banner: Neapel, Vesuv, Sonnenuntergang, Meer vorne"
+
+yaml-Form:
+subject: "Neapel – Vesuv"
+scene: "Blick über die Bucht, Meer im Vordergrund"
+timeOfDay: "sunset"
+weather: "clear"
+mood: "warm"
+detail: "medium"
+extras: "low-poly Himmel mit klaren Facetten"
+
+MOTIV Template
+Ort/Objekt:
+Vordergrund:
+Hintergrund:
+Tageszeit/Wetter/Stimmung:
+
+Ort/Objekt: Neapel – Vesuv
+Vordergrund: Meer mit leichter Spiegelung
+Hintergrund: Neapel-Silhouette, Vesuv dominiert
+Tageszeit/Wetter/Stimmung: Sonnenuntergang, warm, klare Sicht
+
+
+„Bild: Neapel Vesuv Sonnenuntergang“
+„Bild: Paris bei Nacht, Eiffelturm, Schnee“
+„Bild: Taipei Skyline, Regen, Neon“
+„Bild: Amalfi Küste tagsüber“
+
+Mit Convertion Starter:
+Bild: Neapel – Vesuv bei Sonnenuntergang (GENERATE)
+
+„Bild hochladen + Text: <Motiv> – <Änderungen> (soft Stiltransfer, 2:1, no people)“
+
+
 
 Ideen ChatGPT:
+- Kontextualisierung durch Mini-Stories
+    Für hero-Fragen kurze Einbettung: „Im Jahr 64 n. Chr. brannte Rom nieder – welcher Kaiser…?“
 - end-zu-ent-Tests, Test
 - Datenbank: Aufwand, sinvoll?
 - Dramaturgie pro Frage: Kurzer “Intro‑Teaser” je Kategorie/Tag (1 Satz) und kleine  “Streak‑Hinweise” bei mehreren richtigen Antworten in Folge.
@@ -38,7 +78,6 @@ Ideen ChatGPT:
 
 
 Bilder:
-
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 

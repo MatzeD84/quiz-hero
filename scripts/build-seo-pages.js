@@ -172,7 +172,7 @@ const buildFaqSection = questions => {
             const correctIndex = Number.isInteger(question.correct) ? question.correct : null;
 
             const answersHtml = answers.length
-                ? `<ul>
+                ? `<ul class="lp__faq_section_answers">
                     ${answers.map((answer, idx) => {
                         const isCorrect = idx === correctIndex;
                         const className = isCorrect ? ' class="seo-answer--correct"' : '';
