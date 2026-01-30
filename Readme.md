@@ -69,6 +69,45 @@
 .\scripts\build-seo.bat
 ```
 
+## Fragen verifizieren (Wikipedia)
+Alle Fragen prüfen:
+```bat
+node scripts/verify-wikipedia.js
+```
+
+Nur eine Datei prüfen:
+```bat
+node scripts/verify-wikipedia.js data/questions-florenz.json
+```
+
+Felder in `meta` (Kurzbeschreibung):
+- `verifiedFinal`: finale manuelle Freigabe (default `false`).
+- `sourceUrl`: Platzhalter fuer spaetere KI-Quellen, bleibt beim Wiki-Check leer.
+- `generatedAt`: Platzhalter fuer spaetere KI-Generierung, bleibt beim Wiki-Check leer.
+- `verifiedGPT`: Platzhalter fuer spaetere GPT-Verifikation (string).
+- `knowledgeConfidence`: Platzhalter fuer spaetere KI-Bewertung (0–1), bleibt beim Wiki-Check unveraendert.
+- `verificationWiki.sourceUrlWiki`: Wikipedia-URL zum Treffer.
+- `verificationWiki.confidence`: Confidence-Score (0–1) basierend auf Treffer im Artikeltext.
+- `verificationWiki.matchedText`: kurzer Auszug aus dem Artikel (Match-Snippet).
+- `verificationWiki.verified`: Ergebnis des Wikipedia-Checks (`true`, wenn `verificationWiki.confidence >= 0.6`).
+
+Scoring (Wiki-Check):
+- Basis: Treffer der Antwort im Artikel (+0.6) + Keyword-Overlap aus der Frage (bis +0.4).
+- Bonus: Antwort im Intro (+0.08) und Antwort im Artikeltitel (+0.1).
+- Wenn die Antwort im Artikel gar nicht vorkommt, wird der Score auf max. 0.4 begrenzt.
+- Dynamischer Threshold: kurze Antworten brauchen hoehere Sicherheit (>= 0.75), sehr lange Fragen duerfen niedriger sein (>= 0.55).
+Konfiguration (scripts/verify-wikipedia.js):
+- verifiedThreshold: 0.6
+- shortAnswerThreshold: 0.75
+- longQuestionThreshold: 0.55
+- introBonus: 0.08
+- titleBonus: 0.1
+- maxScoreWithoutAnswerHit: 0.4
+- requestDelayMs: 1100
+- perQuestionDelayMs: 600
+- retryAfterSeconds: 2
+- maxRetries: 3
+
 ## Hinweise
 - Lazy-Loading fuer Quiz-Bilder aktiv; Logos laden eager.
 - Kompression: `.htaccess` aktiviert gzip (mod_deflate) und optional brotli.

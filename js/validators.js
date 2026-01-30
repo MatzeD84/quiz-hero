@@ -1,4 +1,4 @@
-import { ALLOWED_DIFFICULTIES } from './config.js';
+﻿import { ALLOWED_DIFFICULTIES } from './config.js';
 
 export const isNonEmptyString = value => typeof value === 'string' && value.trim().length > 0;
 
@@ -17,16 +17,16 @@ export function validateCategories(categories) {
         }
 
         if (!isNonEmptyString(category.id)) {
-            errors.push(`Kategorie #${catIndex + 1} besitzt keine gültige id.`);
+            errors.push(`Kategorie #${catIndex + 1} besitzt keine gÃ¼ltige id.`);
         }
 
         if (!isNonEmptyString(category.title)) {
-            errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt keinen gültigen Titel.`);
+            errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt keinen gÃ¼ltigen Titel.`);
         }
 
         if (category.badge !== undefined) {
             if (!category.badge || typeof category.badge !== 'object') {
-                errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt ein ungültiges badge-Objekt.`);
+                errors.push(`Kategorie ${category.id || `#${catIndex + 1}`} besitzt ein ungÃ¼ltiges badge-Objekt.`);
             } else {
                 if ('active' in category.badge && typeof category.badge.active !== 'boolean') {
                     errors.push(`badge.active in Kategorie ${category.id || `#${catIndex + 1}`} muss ein boolean sein.`);
@@ -53,31 +53,31 @@ export function validateCategories(categories) {
             }
 
             if (!Array.isArray(question.answers) || question.answers.length < 2) {
-                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} benötigt mindestens zwei Antworten.`);
+                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} benÃ¶tigt mindestens zwei Antworten.`);
             } else {
                 question.answers.forEach((answer, answerIndex) => {
                     if (!isNonEmptyString(answer)) {
-                        errors.push(`Antwort ${answerIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungültig.`);
+                        errors.push(`Antwort ${answerIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungÃ¼ltig.`);
                     }
                 });
             }
 
             if (typeof question.correct !== 'number' || Number.isNaN(question.correct)) {
-                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt keinen gültigen "correct"-Index.`);
+                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt keinen gÃ¼ltigen "correct"-Index.`);
             } else if (
                 !Array.isArray(question.answers) ||
                 question.correct < 0 ||
                 question.correct >= question.answers.length
             ) {
-                errors.push(`"correct" in Frage ${questionIndex + 1} von Kategorie ${category.id} liegt außerhalb des Antwortbereichs.`);
+                errors.push(`"correct" in Frage ${questionIndex + 1} von Kategorie ${category.id} liegt auÃŸerhalb des Antwortbereichs.`);
             }
 
             if (question.tag && !Array.isArray(question.tag)) {
-                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt ein ungültiges tag-Feld.`);
+                errors.push(`Frage ${questionIndex + 1} in Kategorie ${category.id} besitzt ein ungÃ¼ltiges tag-Feld.`);
             } else if (Array.isArray(question.tag)) {
                 question.tag.forEach((tagValue, tagIndex) => {
                     if (!isNonEmptyString(tagValue)) {
-                        errors.push(`Tag ${tagIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungültig.`);
+                        errors.push(`Tag ${tagIndex + 1} in Frage ${questionIndex + 1} von Kategorie ${category.id} ist ungÃ¼ltig.`);
                     }
                 });
             }
@@ -87,7 +87,53 @@ export function validateCategories(categories) {
             }
 
             if (question.type === 'image' && !isNonEmptyString(question.imageUrl)) {
-                errors.push(`Bildfrage ${questionIndex + 1} in Kategorie ${category.id} benötigt ein gültiges imageUrl.`);
+                errors.push(`Bildfrage ${questionIndex + 1} in Kategorie ${category.id} benÃ¶tigt ein gÃ¼ltiges imageUrl.`);
+            }
+            if (question.backgroundKnowledge !== undefined && typeof question.backgroundKnowledge !== 'string') {
+                errors.push(`backgroundKnowledge in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+            }
+
+            if (question.type && !isNonEmptyString(question.type)) {
+                errors.push(`type in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein nicht-leerer string sein.`);
+            }
+
+            if (question.meta !== undefined && (!question.meta || typeof question.meta !== 'object')) {
+                errors.push(`meta in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein Objekt sein.`);
+            } else if (question.meta && typeof question.meta === 'object') {
+                const meta = question.meta;
+                if ('sourceUrl' in meta && typeof meta.sourceUrl !== 'string') {
+                    errors.push(`meta.sourceUrl in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                }
+                if ('generatedAt' in meta && typeof meta.generatedAt !== 'string') {
+                    errors.push(`meta.generatedAt in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                }
+                if ('verifiedGPT' in meta && typeof meta.verifiedGPT !== 'string') {
+                    errors.push(`meta.verifiedGPT in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                }
+                if ('knowledgeConfidence' in meta && typeof meta.knowledgeConfidence !== 'number') {
+                    errors.push(`meta.knowledgeConfidence in Frage ${questionIndex + 1} von Kategorie ${category.id} muss eine number sein.`);
+                }
+                if ('verifiedFinal' in meta && typeof meta.verifiedFinal !== 'boolean') {
+                    errors.push(`meta.verifiedFinal in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein boolean sein.`);
+                }
+                if ('verificationWiki' in meta) {
+                    if (!meta.verificationWiki || typeof meta.verificationWiki !== 'object') {
+                        errors.push(`meta.verificationWiki in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein Objekt sein.`);
+                    } else {
+                        if ('sourceUrlWiki' in meta.verificationWiki && typeof meta.verificationWiki.sourceUrlWiki !== 'string') {
+                            errors.push(`meta.verificationWiki.sourceUrlWiki in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                        }
+                        if ('confidence' in meta.verificationWiki && typeof meta.verificationWiki.confidence !== 'number') {
+                            errors.push(`meta.verificationWiki.confidence in Frage ${questionIndex + 1} von Kategorie ${category.id} muss eine number sein.`);
+                        }
+                        if ('matchedText' in meta.verificationWiki && typeof meta.verificationWiki.matchedText !== 'string') {
+                            errors.push(`meta.verificationWiki.matchedText in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                        }
+                        if ('verified' in meta.verificationWiki && typeof meta.verificationWiki.verified !== 'boolean') {
+                            errors.push(`meta.verificationWiki.verified in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein boolean sein.`);
+                        }
+                    }
+                }
             }
         });
     });
@@ -111,12 +157,12 @@ export function validateFeedback(feedback) {
 
     requiredKeys.forEach(key => {
         if (!Array.isArray(feedback[key]) || feedback[key].length === 0) {
-            errors.push(`Feedback-Schlüssel "${key}" fehlt oder ist leer.`);
+            errors.push(`Feedback-SchlÃ¼ssel "${key}" fehlt oder ist leer.`);
             return;
         }
         feedback[key].forEach((entry, index) => {
             if (typeof entry !== 'string' || !entry.trim()) {
-                errors.push(`Eintrag ${index + 1} in "${key}" ist kein gültiger Text.`);
+                errors.push(`Eintrag ${index + 1} in "${key}" ist kein gÃ¼ltiger Text.`);
             }
         });
     });
@@ -137,15 +183,15 @@ export function validateTags(tags) {
             return;
         }
         if (!isNonEmptyString(tag.id)) {
-            errors.push(`Tag #${index + 1} besitzt keine gültige id.`);
+            errors.push(`Tag #${index + 1} besitzt keine gÃ¼ltige id.`);
         }
         if (!isNonEmptyString(tag.title)) {
-            errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt keinen gültigen Titel.`);
+            errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt keinen gÃ¼ltigen Titel.`);
         }
 
         if (tag.badge !== undefined) {
             if (!tag.badge || typeof tag.badge !== 'object') {
-                errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt ein ungültiges badge-Objekt.`);
+                errors.push(`Tag ${tag.id || `#${index + 1}`} besitzt ein ungÃ¼ltiges badge-Objekt.`);
             } else {
                 if ('active' in tag.badge && typeof tag.badge.active !== 'boolean') {
                     errors.push(`badge.active in Tag ${tag.id || `#${index + 1}`} muss ein boolean sein.`);
@@ -159,3 +205,4 @@ export function validateTags(tags) {
 
     return errors;
 }
+

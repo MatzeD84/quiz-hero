@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "tag": [
@@ -16,7 +16,20 @@
             ],
             "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [
@@ -34,7 +47,20 @@
             ],
             "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [
@@ -52,7 +78,20 @@
             ],
             "backgroundKnowledge": "Am Eingang der Kirche Santa Maria ...",
             "correct": 1,
-            "difficulty": "medium"
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         }
     ]
 }

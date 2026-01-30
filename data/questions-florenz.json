@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "tag": [],
@@ -13,7 +13,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Abtei_im_Eichwald",
+                    "confidence": 0.92,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -27,7 +40,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Fritz_Koenig",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -41,7 +67,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Euro-Umlaufm%C3%BCnzen-Motivliste",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -55,7 +94,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -69,7 +121,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_des_Br%C3%BCckenbaus",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -77,13 +142,26 @@
             "question": "Welches bedeutende Kunstmuseum in Florenz beherbergt Meisterwerke von Botticelli, Leonardo da Vinci und Michelangelo?",
             "answers": [
                 "Uffizien",
-                "Galleria dell\u0027Accademia",
+                "Galleria dell'Accademia",
                 "Palazzo Pitti",
                 "Museo San Salvatore"
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Vatikanische_Museen",
+                    "confidence": 0.356,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -97,7 +175,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pavia",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -111,7 +202,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo",
+                    "confidence": 0.956,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -125,7 +229,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_der_Kunst",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -139,7 +256,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -153,7 +283,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Uffizien",
+                    "confidence": 0.343,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -167,7 +310,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Cosimo_de%E2%80%99_Medici",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -181,7 +337,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -195,7 +364,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Schloss_(Architektur)",
+                    "confidence": 0.967,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -209,7 +391,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_der_Kunst",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -223,7 +418,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Euro-Umlaufm%C3%BCnzen-Motivliste",
+                    "confidence": 0.356,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -237,7 +445,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Mus%C3%A9e_Cond%C3%A9",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -251,7 +472,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Rom",
+                    "confidence": 0.364,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -265,7 +499,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Venedig",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -279,7 +526,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/2-Euro-Gedenkm%C3%BCnzen",
+                    "confidence": 0.133,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -293,7 +553,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -307,7 +580,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Park_Klein-Glienicke",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -321,7 +607,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Florenz",
+                    "confidence": 0.956,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -335,7 +634,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Leonardo_da_Vinci",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -349,7 +661,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Florenz",
+                    "confidence": 0.964,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -363,7 +688,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo_Merisi_da_Caravaggio",
+                    "confidence": 0.311,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -377,7 +715,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/M%C3%BCnchen",
+                    "confidence": 0.3,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -391,7 +742,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pavia",
+                    "confidence": 0.364,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -405,7 +769,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/2-Euro-Gedenkm%C3%BCnzen",
+                    "confidence": 0.073,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -419,7 +796,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -433,7 +823,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Manierismus",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -447,7 +850,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo_Merisi_da_Caravaggio",
+                    "confidence": 0.311,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -461,7 +877,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Uffizien",
+                    "confidence": 0.3,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -475,7 +904,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Park_Klein-Glienicke",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -489,7 +931,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Chich%C3%A9n_Itz%C3%A1",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -503,7 +958,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -517,7 +985,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/St%C3%A4delsches_Kunstinstitut",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -531,7 +1012,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Basilica_di_San_Lorenzo_(Florenz)",
+                    "confidence": 0.364,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -545,7 +1039,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo_Merisi_da_Caravaggio",
+                    "confidence": 0.3,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -559,7 +1066,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Schloss_(Architektur)",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -573,7 +1093,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Minoritenkirche_(Wien)",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -587,7 +1120,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Paris",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -601,12 +1147,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo_Merisi_da_Caravaggio",
+                    "confidence": 0.35,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galleria dell\u0027Accademia in Florenz?",
+            "question": "Welches berühmte Kunstwerk von Michelangelo befindet sich in der Galleria dell'Accademia in Florenz?",
             "answers": [
                 "David",
                 "Die Erschaffung Adams",
@@ -615,7 +1174,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo",
+                    "confidence": 0.956,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -629,7 +1201,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Florenz",
+                    "confidence": 0.36,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -638,12 +1223,25 @@
             "answers": [
                 "Uffizien",
                 "Palazzo Vecchio",
-                "Galleria dell\u0027Accademia",
+                "Galleria dell'Accademia",
                 "Museo di San Marco"
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Renaissance",
+                    "confidence": 0.356,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -657,21 +1255,47 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_des_Br%C3%BCckenbaus",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher bedeutende Florentiner Politiker und Philosoph schrieb das Werk \u0027Il Principe\u0027, das als bedeutendes Werk der politischen Philosophie gilt?",
+            "question": "Welcher bedeutende Florentiner Politiker und Philosoph schrieb das Werk 'Il Principe', das als bedeutendes Werk der politischen Philosophie gilt?",
             "answers": [
                 "Niccolò Machiavelli",
                 "Dante Alighieri",
                 "Francesco Petrarca",
-                "Lorenzo de\u0027 Medici"
+                "Lorenzo de' Medici"
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Niccol%C3%B2_Machiavelli",
+                    "confidence": 0.967,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -685,7 +1309,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -699,12 +1336,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Giacomo_Casanova",
+                    "confidence": 0.367,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher Florentiner Künstler malte das ikonische Gemälde \u0027Das letzte Abendmahl\u0027, das sich im Kloster Santa Maria delle Grazie befindet?",
+            "question": "Welcher Florentiner Künstler malte das ikonische Gemälde 'Das letzte Abendmahl', das sich im Kloster Santa Maria delle Grazie befindet?",
             "answers": [
                 "Leonardo da Vinci",
                 "Sandro Botticelli",
@@ -713,7 +1363,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -727,7 +1390,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Florenz",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -741,7 +1417,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -755,7 +1444,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -769,7 +1471,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/St%C3%A4delsches_Kunstinstitut",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -783,7 +1498,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Florenz",
+                    "confidence": 0.975,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         }
     ]
 }

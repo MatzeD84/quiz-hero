@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "tag": [],
@@ -13,7 +13,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Sorrent",
+                    "confidence": 0.92,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -27,7 +40,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Welterbe_in_Italien",
+                    "confidence": 0.044,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -41,7 +67,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -55,7 +94,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Mittelmeer",
+                    "confidence": 1,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -69,7 +121,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Welterbe_in_Italien",
+                    "confidence": 0.04,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -83,7 +148,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -97,7 +175,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -111,7 +202,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -121,11 +225,24 @@
                 "Kloster von San Francesco",
                 "Kloster von Montecassino",
                 "Kloster von San Domenico",
-                "Kloster von Sant\u0027Antonio"
+                "Kloster von Sant'Antonio"
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Welterbe_in_Italien",
+                    "confidence": 0.073,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -139,7 +256,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -153,7 +283,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Salerno",
+                    "confidence": 0.32,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -167,7 +310,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -181,7 +337,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -195,7 +364,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -209,7 +391,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -218,12 +413,25 @@
             "answers": [
                 "Kloster von San Domenico",
                 "Kloster von Santa Maria",
-                "Kloster von Sant\u0027Antonio",
+                "Kloster von Sant'Antonio",
                 "Kloster von San Francesco"
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Neapel",
+                    "confidence": 0.343,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -237,7 +445,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -251,7 +472,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -265,7 +499,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Neapel",
+                    "confidence": 0.4,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -274,12 +521,25 @@
             "answers": [
                 "Kirche von Santa Maria Assunta",
                 "Kirche von San Giovanni",
-                "Kirche von Sant\u0027Antonio",
+                "Kirche von Sant'Antonio",
                 "Kirche von San Francesco"
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -293,7 +553,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -307,7 +580,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -321,7 +607,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Welterbe_in_Italien",
+                    "confidence": 0.036,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -335,7 +634,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -349,7 +661,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Welterbe_in_Italien",
+                    "confidence": 0.036,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -363,7 +688,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -377,7 +715,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_Italiens",
+                    "confidence": 0.343,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         }
     ]
 }

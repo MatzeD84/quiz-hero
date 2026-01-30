@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "tag": [],
@@ -13,7 +13,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -27,7 +40,20 @@
             ],
             "backgroundKnowledge": "Die erste Pizzeria wurde 1830 in Neapel eröffnet.",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -41,7 +67,20 @@
             ],
             "backgroundKnowledge": "Der Palazzo liegt am Piazza del Plebiscito und ist ein Meisterwerk barocker und klassizistischer Architektur.",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -52,11 +91,24 @@
                 "Teatro di San Carlo",
                 "Teatro Nazionale",
                 "Teatro di Tordinona",
-                "Teatro dell\u0027Opera"
+                "Teatro dell'Opera"
             ],
             "backgroundKnowledge": "Das Teatro di San Carlo wurde 1737 eröffnet und ist das älteste noch aktive Opernhaus in Europa.",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -70,7 +122,20 @@
             ],
             "backgroundKnowledge": "Sie verbindet das Piazza Dante mit dem Piazza del Plebiscito und ist heute ein wichtiges Einkaufs- und Geschäftsviertel",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -84,12 +149,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "image",
-            "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk \u0027Die sieben Werke der Barmherzigkeit\u0027?",
+            "question": "Welcher neapolitanische Künstler, bekannt für seine einzigartigen barocken Werke, schuf das Meisterwerk 'Die sieben Werke der Barmherzigkeit'?",
             "imageUrl": "/images/italien/caravaggio-die-sieben-werke-der-barmherzigkeit.png",
             "answers": [
                 "Caravaggio",
@@ -99,7 +177,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         }
     ]
 }

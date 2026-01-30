@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "tag": [],
@@ -12,7 +12,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -26,7 +39,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -40,7 +66,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -54,7 +93,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -68,7 +120,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -82,7 +147,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -96,12 +174,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher berühmte Künstler malte die \u0027Madonna del Parto\u0027, die in der Umgebung von Siena zu finden ist?",
+            "question": "Welcher berühmte Künstler malte die 'Madonna del Parto', die in der Umgebung von Siena zu finden ist?",
             "answers": [
                 "Piero della Francesca",
                 "Leonardo da Vinci",
@@ -110,7 +201,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -124,7 +228,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -138,7 +255,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -152,7 +282,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -166,12 +309,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die \u0027Madonna\u0027 in der Kathedrale von Siena?",
+            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die 'Madonna' in der Kathedrale von Siena?",
             "answers": [
                 "Annunziata-Altarpiece",
                 "Das letzte Abendmahl",
@@ -180,7 +336,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -194,7 +363,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -208,7 +390,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -222,7 +417,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -236,7 +444,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -250,7 +471,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -264,7 +498,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -278,7 +525,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -292,7 +552,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -306,7 +579,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -320,7 +606,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -334,7 +633,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -348,7 +660,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -362,7 +687,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -376,7 +714,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -390,12 +741,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die \u0027Madonna\u0027 in der Kathedrale von Siena?",
+            "question": "Welches berühmte Kunstwerk von Simone Martini zeigt die 'Madonna' in der Kathedrale von Siena?",
             "answers": [
                 "Annunziata-Altarpiece",
                 "Das letzte Abendmahl",
@@ -404,7 +768,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -418,7 +795,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -432,7 +822,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -446,7 +849,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -460,7 +876,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -474,7 +903,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -488,7 +930,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -502,7 +957,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -516,7 +984,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -530,7 +1011,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -544,7 +1038,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -558,7 +1065,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -572,7 +1092,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -586,7 +1119,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -600,7 +1146,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -614,7 +1173,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -628,7 +1200,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -642,7 +1227,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -656,7 +1254,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -670,7 +1281,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -684,7 +1308,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -698,7 +1335,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -712,7 +1362,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -726,7 +1389,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -740,7 +1416,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "easy"
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -754,7 +1443,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -768,12 +1470,25 @@
             ],
             "backgroundKnowledge": "",
             "correct": 0,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
             "type": "text",
-            "question": "Welcher Künstler, bekannt für seine Werkstatt in Siena, schuf das Altarbild \u0027Maestà\u0027, das heute in der Kathedrale von Siena ausgestellt ist?",
+            "question": "Welcher Künstler, bekannt für seine Werkstatt in Siena, schuf das Altarbild 'Maestà', das heute in der Kathedrale von Siena ausgestellt ist?",
             "answers": [
                 "Duccio di Buoninsegna",
                 "Simone Martini",
@@ -782,7 +1497,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -796,7 +1524,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 1,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -810,7 +1551,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -824,7 +1578,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 2,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -838,7 +1605,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         },
         {
             "tag": [],
@@ -852,7 +1632,20 @@
             ],
             "backgroundKnowledge": "",
             "correct": 3,
-            "difficulty": "hero"
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "",
+                "generatedAt": "",
+                "verifiedGPT": "",
+                "knowledgeConfidence": 0,
+                "verificationWiki": {
+                    "sourceUrlWiki": "",
+                    "confidence": 0,
+                    "matchedText": "",
+                    "verified": false
+                }
+            }
         }
     ]
 }
