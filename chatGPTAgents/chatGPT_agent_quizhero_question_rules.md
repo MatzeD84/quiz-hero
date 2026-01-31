@@ -470,7 +470,29 @@ Sie gilt als endgültig verworfen und wird nicht ausgegeben.
 2. Danach nur ein JSON-Array:
 
 ```json
-[ { ... }, { ... } ]
+{
+  "tag": [string],
+  "type": "text" | "image",
+  "question": string,
+  "imageUrl": string,
+  "answers": [string, string, string, string],
+  "backgroundKnowledge": string,
+  "correct": number,
+  "difficulty": "easy" | "medium" | "hero",
+  "meta": {
+    "verifiedFinal": false,
+    "sourceUrl": string,
+    "generatedAt": string,
+    "verifiedGPT": boolean,
+    "knowledgeConfidence": number,
+    "verificationWiki": {
+      "sourceUrlWiki": "",
+      "confidence": 0,
+      "matchedText": "",
+      "verified": false
+    }
+  }
+}
 ```
 
 
