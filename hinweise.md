@@ -1,56 +1,23 @@
 ToDos:
 - categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
-- nach ben scrollen
+- nach oben scrollen
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
 - css: in mehreren css -files modulen aufteilen
-- 404  stylen (Bösewicht-icon)
-- ins main-repo pushen -aktuell noch fehlerhaft
 - generierte files /page brauchen eigentlich nicht commited werden
+
+Agent:
+- Kein aktives Nachschlagen auf Wikipedia, Google o. ä. --> ändern
+- "Richtige Antwort" --> Arry-Index soll random sein!
 
 SEO:
 - Interne Verlinkung im flietext
 - Bilder in WebP + sinnvolle Groessen.
-
-
-ChatGPT
-"QuizHero Image Agent":
-
-Einfache Form:
-"Erstelle ein QuizHero Banner: Neapel, Vesuv, Sonnenuntergang, Meer vorne"
-
-yaml-Form:
-subject: "Neapel – Vesuv"
-scene: "Blick über die Bucht, Meer im Vordergrund"
-timeOfDay: "sunset"
-weather: "clear"
-mood: "warm"
-detail: "medium"
-extras: "low-poly Himmel mit klaren Facetten"
-
-MOTIV Template
-Ort/Objekt:
-Vordergrund:
-Hintergrund:
-Tageszeit/Wetter/Stimmung:
-
-Ort/Objekt: Neapel – Vesuv
-Vordergrund: Meer mit leichter Spiegelung
-Hintergrund: Neapel-Silhouette, Vesuv dominiert
-Tageszeit/Wetter/Stimmung: Sonnenuntergang, warm, klare Sicht
-
-
-„Bild: Neapel Vesuv Sonnenuntergang“
-„Bild: Paris bei Nacht, Eiffelturm, Schnee“
-„Bild: Taipei Skyline, Regen, Neon“
-„Bild: Amalfi Küste tagsüber“
-
-Mit Convertion Starter:
-Bild: Neapel – Vesuv bei Sonnenuntergang (GENERATE)
-
-„Bild hochladen + Text: <Motiv> – <Änderungen> (soft Stiltransfer, 2:1, no people)“
-
+- Sitemap, auch für Bilder
+- lighthouse testing
+    - minify CSS/JS
+    - webP verwenden
 
 
 Ideen ChatGPT:

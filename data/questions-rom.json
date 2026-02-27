@@ -21,16 +21,16 @@
             "correct": 0,
             "difficulty": "easy",
             "meta": {
-                "verifiedFinal": false,
+                "verifiedFinal": true,
                 "sourceUrl": "",
                 "generatedAt": "",
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Kolosseum",
+                    "confidence": 0.96,
+                    "matchedText": "Das Kolosseum (antiker Name Amphitheatrum Novum oder Amphitheatrum Flavium, italienisch Colosseo, Anfiteatro Flavio) ist das größte der im antiken Rom erbauten Amphitheater, der größte geschlossene Bau der römisch",
+                    "verified": true
                 }
             }
         },
@@ -53,16 +53,16 @@
             "correct": 0,
             "difficulty": "medium",
             "meta": {
-                "verifiedFinal": false,
+                "verifiedFinal": true,
                 "sourceUrl": "",
                 "generatedAt": "",
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Vespasian",
+                    "confidence": 1,
+                    "matchedText": "Vespasian (* 17. November 9 in Falacrinae; † 23. Juni 79 in Aquae Cutiliae) war vom 1. Juli 69 bis zu seinem Tod römischer Kaiser. Sein Geburtsname war Titus Fl",
+                    "verified": true
                 }
             }
         },
@@ -91,9 +91,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Commodus",
+                    "confidence": 0.73,
+                    "matchedText": "1 in Lanuvium als Lucius Aurelius Commodus; † 31. Dezember 192 in Rom) war von 180 bis 192 römischer Kaiser. Als Fünfzehnjähriger seit dem Sommer des Jahres 177 bereits formal gleichberechtigter Kaiser (Augustus) neben seinem Vater Mark Aur",
                     "verified": false
                 }
             }
@@ -122,9 +122,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Rom",
+                    "confidence": 0.25,
+                    "matchedText": "Rom (lateinisch Rōma; italienisch [ˈro.ma], amtlich Roma Capitale) ist die Hauptstadt Italiens, Hauptort der Region Latium und historische Hauptstadt des Römischen Reichs und des Kirchenstaats. Die Stadt liegt etwa in der Mitte der Apenninh",
                     "verified": false
                 }
             }
@@ -154,9 +154,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Stahlbeton",
+                    "confidence": 0.171,
+                    "matchedText": "Stahlbeton, ehemals Eisenbeton, ein künstlicher Baustoff im Massivbau, ist ein Verbundwerkstoff aus den beiden Komponenten Beton und Bewehrungsstahl. Der Verbund beider Komponenten entsteht durch die Verklebung des Bindemittels Zement mit d",
                     "verified": false
                 }
             }
@@ -187,9 +187,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Domitian",
+                    "confidence": 0.4,
+                    "matchedText": "Donaukriege Domitians. Habelt, Bonn 1989, ISBN 3-7749-2368-X. Christiana Urner: Kaiser Domitian im Urteil antiker literarischer Quellen und moderner Forschung. Dissertation, Universität Augsburg 1994. Anne Wolsfeld: Die Bildnisrepräsentatio",
                     "verified": false
                 }
             }
@@ -219,10 +219,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Kolosseum",
+                    "confidence": 0.701,
+                    "matchedText": "an anderer Stelle stattfanden (vgl. Sinn 2006). Zu Beginn fanden Schiffskämpfe (Naumachiae) im Kolosseum statt, was aber nach der Unterkellerung der Arena nicht mehr möglich war. Einige Historiker schätzen, dass im Laufe der Jahrhunderte et",
+                    "verified": true
                 }
             }
         },
@@ -251,10 +251,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Titus",
+                    "confidence": 0.92,
+                    "matchedText": "Titus (* 30. Dezember 39 in Rom; † 13. September 81 in Aquae Cutiliae, Latium) war als Nachfolger seines Vaters Vespasian der zweite römische Kaiser der flavischen Dynastie. Er regierte vom 24. Juni 79 bis zu seinem Tod. Sein vollständiger ",
+                    "verified": true
                 }
             }
         },
@@ -282,9 +282,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Kolosseum",
+                    "confidence": 0.25,
+                    "matchedText": "Das Kolosseum (antiker Name Amphitheatrum Novum oder Amphitheatrum Flavium, italienisch Colosseo, Anfiteatro Flavio) ist das größte der im antiken Rom erbauten Amphitheater, der größte geschlossene Bau der römischen Antike und weiterhin das",
                     "verified": false
                 }
             }
@@ -314,10 +314,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Nicola_Salvi",
+                    "confidence": 1,
+                    "matchedText": "Nicola Salvi (auch Niccolò Salvi; * 6. August 1697 in Rom; † 8. Februar 1751 ebenda) war ein italienischer Architekt. Sein Hauptwerk ist der Trevi-Brunnen in Ro",
+                    "verified": true
                 }
             }
         },
@@ -347,10 +347,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Aqua_Virgo",
+                    "confidence": 1,
+                    "matchedText": "Aqua Virgo war einer der elf Aquädukte, die das antike Rom mit Frischwasser versorgten. Er wurde von Marcus Vipsanius Agrippa während der Herrschaft von Augustu",
+                    "verified": true
                 }
             }
         },
@@ -381,9 +381,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pore%C4%8D",
+                    "confidence": 0.4,
+                    "matchedText": ". Jahrhunderts einer der größten Tempel in Istrien. Die verbliebenen Ruinen des Neptun Tempel, unter anderem die Steinsäulen, stammen ebenfalls aus dem 1. Jahrhundert. Ein Bauwerk im romanischen Stil ist das Romanische Haus (Romanička kuća/",
                     "verified": false
                 }
             }
@@ -411,9 +411,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Rom_(Fernsehserie)",
+                    "confidence": 0.4,
+                    "matchedText": " macht Pompeius ein unannehmbares Waffenstillstandsgebot. Zur Feier von Caesars Rückkehr nach Rom hält seine Nichte Atia ein Festmahl ab. Vorenus feiert sein neues Leben als Geschäftsmann. Doch das Fest findet ein jähes Ende, als Evander im",
                     "verified": false
                 }
             }
@@ -444,10 +444,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Clemens_XII.",
+                    "confidence": 0.9,
+                    "matchedText": "sowie die Verbreiterung des Corso. Der prächtige Sarkophag des Lorenzo Corsini, Papst Clemens XII., befindet sich in der Lateranbasilika. Siehe auch Liste der Kardinalskreierungen Clemens’ XII. Literatur Alberto Caracciolo: Clemente XII. In",
+                    "verified": true
                 }
             }
         },
@@ -476,9 +476,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Abundantia",
+                    "confidence": 0.25,
+                    "matchedText": "Abundantia steht für: Abundantia (Linguistik), mehrformige Lemmata in einer sprache mit gleicher Bedeutung Abundantia (Mythologie), die römische Göttin des Überflusses Abundantia von Spoleto (789–804), italienische Heilige (151) Abundantia,",
                     "verified": false
                 }
             }
@@ -508,10 +508,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Rom",
+                    "confidence": 0.98,
+                    "matchedText": "isers Marcus Aurelius, die im 2. Jahrhundert n. Chr. fertiggestellt wurde), der Trevi-Brunnen (ein Barock-Brunnen aus dem 18. Jahrhundert, in den Touristen traditionell Münzen hineinwerfen und sich etwas wünschen) und die Piazza di Spagna m",
+                    "verified": true
                 }
             }
         },
@@ -541,10 +541,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Tempel_des_Divus_Iulius",
+                    "confidence": 1,
+                    "matchedText": "Der Tempel des Divus Iulius (lateinisch aedes Divi Iuli) war der für den vergöttlichten Gaius Iulius Caesar errichtete Tempel in Rom. Geschichte und Lage Der Tempel",
+                    "verified": true
                 }
             }
         },
@@ -573,10 +573,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Santi_Cosma_e_Damiano_(Rom)",
+                    "confidence": 0.88,
+                    "matchedText": "rche befindet sich in unmittelbarer Nähe des Forum Romanum zwischen der antiken Via Sacra und der heutigen Via dei Fori Imperiali auf dem Gelände des ehemaligen forum Pacis. Der Bau gehörte zur Anlage des Templum Pacis, das Kaiser Vespasian",
+                    "verified": true
                 }
             }
         },
@@ -607,10 +607,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Haus_des_Augustus",
+                    "confidence": 0.992,
+                    "matchedText": "Als Haus des Augustus (lateinisch Domus Augusti, italienisch casa di Augusto) bezeichnet die Forschung einen Gebäudekomplex auf dem Palatin in Rom, der dem ersten römischen Kaiser Augustus als p",
+                    "verified": true
                 }
             }
         },
@@ -640,10 +640,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Trajanss%C3%A4ule",
+                    "confidence": 1,
+                    "matchedText": "Die Trajanssäule (italienisch Colonna Traiana, lateinisch Columna Traiana) ist eine Ehrensäule, die 112/113 n. Chr. für den römischen Kaiser Trajan (98–117 n. Chr.)",
+                    "verified": true
                 }
             }
         },
@@ -674,10 +674,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Titusbogen",
+                    "confidence": 1,
+                    "matchedText": "Der Titusbogen (italienisch Arco di Tito) ist ein eintoriger Triumphbogen auf der Velia, einem Hügel in Rom. Er ist der älteste erhaltene Triumphbogen der antiken S",
+                    "verified": true
                 }
             }
         },
@@ -708,9 +708,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Forum_Romanum",
+                    "confidence": 0.25,
+                    "matchedText": "Das Forum Romanum (Römischer Marktplatz) in Rom ist das älteste römische Forum und war Mittelpunkt des politischen, wirtschaftlichen, kulturellen und religiösen Lebens. Es liegt in einer Senke zwischen den drei Stadthügeln Kapitol, Palatin ",
                     "verified": false
                 }
             }
@@ -741,10 +741,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Forum_Romanum",
+                    "confidence": 1,
+                    "matchedText": "Das Forum Romanum (Römischer Marktplatz) in Rom ist das älteste römische Forum und war Mittelpunkt des politischen, wirtschaftlichen, kulturellen und religiösen Leb",
+                    "verified": true
                 }
             }
         },
@@ -774,10 +774,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Palatin_(Rom)",
+                    "confidence": 1,
+                    "matchedText": "Der Palatin (lateinisch mons Palatinus, italienisch (colle) Palatino) ist einer der sieben Hügel Roms und gilt als ältester bewohnter Teil der Stadt. Bereits im 10.",
+                    "verified": true
                 }
             }
         },
@@ -807,10 +807,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Travertin",
+                    "confidence": 1,
+                    "matchedText": "Travertin (von italienisch travertino, lateinisch lapis tiburtinus, „Stein aus Tivoli“) ist ein mehr oder weniger poröser Kalkstein von heller, meist gelblicher",
+                    "verified": true
                 }
             }
         },
@@ -839,9 +839,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Besoldungsordnung_B",
+                    "confidence": 0.45,
+                    "matchedText": "rzahl bis zu 30.000 2 Weitere Beigeordnete in Gemeinden mit einer Einwohnerzahl bis zu 50.000 7 Besoldungsgruppe B 4 Direktor des Zweckverbands Bodenseewasserversorgung als der kaufmännische Geschäftsführer als der technische Geschäftsführe",
                     "verified": false
                 }
             }
@@ -871,10 +871,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Syrakus",
+                    "confidence": 0.855,
+                    "matchedText": " die Habsburger und die spanischen Bourbonen die Geschichte der Stadt. 1693 zog ein verheerendes Erdbeben im Val di Noto auch Syrakus in Mitleidenschaft. Viele der zerstörten Bauwerke wurden im Stil des Barocks wieder aufgebaut. Nach der Ve",
+                    "verified": true
                 }
             }
         },
@@ -902,10 +902,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Michelangelo_Merisi_da_Caravaggio",
+                    "confidence": 0.98,
+                    "matchedText": "vaggios Hand erhielt. Den Auftrag zum mythologischen Thema der Medusa (1597/98, Uffizien, Florenz) bewältigte er als „Virtuosenstück“ auf einem „schildförmigen, auf Leinwand überzogenem Stück Pappelholz“, einem Turnierschild, der jedoch nie",
+                    "verified": true
                 }
             }
         },
@@ -935,10 +935,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Piazza_Navona",
+                    "confidence": 1,
+                    "matchedText": "Die Piazza Navona ist einer der charakteristischen Plätze des barocken Rom im Stadtviertel Parione. Das antike Stadion Von Julius Cäsar wurde 46 v. Chr. hier auf de",
+                    "verified": true
                 }
             }
         },
@@ -967,10 +967,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Piazza_Navona",
+                    "confidence": 1,
+                    "matchedText": "Die Piazza Navona ist einer der charakteristischen Plätze des barocken Rom im Stadtviertel Parione. Das antike Stadion Von Julius Cäsar wurde 46 v. Chr. hier auf de",
+                    "verified": true
                 }
             }
         },
@@ -1001,10 +1001,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Gian_Lorenzo_Bernini",
+                    "confidence": 1,
+                    "matchedText": "Gian Lorenzo Bernini, auch Giovanni Lorenzo Bernini (* 7. Dezember 1598 in Neapel; † 28. November 1680 in Rom), war einer der bedeutendsten italienischen Bildha",
+                    "verified": true
                 }
             }
         },
@@ -1033,9 +1033,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Skopje",
+                    "confidence": 0.25,
+                    "matchedText": "Skopje (mazedonisch [ˈskɔpjɛ]; albanisch Shkupi, indefinit Shkup) ist die Hauptstadt Nordmazedoniens und mit über 520.000 Einwohnern zugleich die größte Stadt des Landes. Über 28 % der Bevölkerung Nordmazedoniens leben in dieser Großstadt. ",
                     "verified": false
                 }
             }
@@ -1065,9 +1065,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Illuminati_(Roman)",
+                    "confidence": 0.25,
+                    "matchedText": "Illuminati ist der deutsche Titel eines im März 2003 in Deutschland erschienenen Thrillers von Dan Brown (englischer Originaltitel: Angels & Demons, 2000) mit einer weltweiten Auflage von acht Millionen Exemplaren. Die Handlung dreht sich u",
                     "verified": false
                 }
             }
@@ -1098,10 +1098,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Sant%E2%80%99Agnese_in_Agone",
+                    "confidence": 1,
+                    "matchedText": "Sant’Agnese in Agone (dt.: hl. Agnes in Agone lat.: Ecclesia Sanctae Agnetis in Agone) ist eine katholische Kirche im Stadtteil Parione, dem Rione VI der Stadt Rom. Sie ist eine Rektoratskirche der Pfarrei San Lorenzo in Damaso und Titeldia",
+                    "verified": true
                 }
             }
         },
@@ -1131,10 +1131,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Barock",
+                    "confidence": 1,
+                    "matchedText": "Als Barock (wahrscheinlich von portugiesisch barroco [s. u.]) wird eine Epoche der Kunstgeschichte und der Kulturgeschichte bezeichnet, die im Anschluss an den Mani",
+                    "verified": true
                 }
             }
         },
@@ -1163,9 +1163,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Obelisco_Agonale",
+                    "confidence": 0.25,
+                    "matchedText": "Der Obelisco Agonale ist ein 16,55 m hoher römischer Obelisk und einer der dreizehn Obelisken in Rom. Er erhebt sich über Berninis Vierströmebrunnen in der Mitte der Piazza Navona. Beschreibung In einer der Inschriften auf der Basis des Obe",
                     "verified": false
                 }
             }
@@ -1195,10 +1195,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Neptunbrunnen_(Berlin)",
+                    "confidence": 1,
+                    "matchedText": "Der Neptunbrunnen (eigentlich Schlossbrunnen, auch Begasbrunnen) ist ein Baudenkmal im Berliner Ortsteil Mitte. In den Jahren 1888–1891 im Stil des Neobarocks von R",
+                    "verified": true
                 }
             }
         },
@@ -1227,10 +1227,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Mohrenbrunnen_(Rom)",
+                    "confidence": 1,
+                    "matchedText": "Der Mohrenbrunnen (italienisch Fontana del Moro) ist ein barocker Zierbrunnen auf der südlichen Piazza Navona in Rom. Das Becken mit den Nebenfiguren wurde 1575 von",
+                    "verified": true
                 }
             }
         },
@@ -1260,10 +1260,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Innozenz_X.",
+                    "confidence": 0.953,
+                    "matchedText": " fu Castro“ („Hier stand Castro“). In einem Breve vom 17. Dezember 1649 ordnete Papst Innozenz X. eine breitangelegte Umfrage unter allen Ordensleuten Italiens an, in der Angaben über die finanzielle und personelle Situation aller Konvente ",
+                    "verified": true
                 }
             }
         },
@@ -1293,10 +1293,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Vierstr%C3%B6mebrunnen",
+                    "confidence": 0.946,
+                    "matchedText": "Der Vierströmebrunnen (italienisch Fontana dei Quattro Fiumi) ist ein Monumentalbrunnen in der Mitte der Piazza Navona in Rom. Er wurde in den Jahren 1648–1651 vom Bildhauer Gian Lorenzo Bernini ",
+                    "verified": true
                 }
             }
         },
@@ -1325,10 +1325,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Piazza_Navona",
+                    "confidence": 1,
+                    "matchedText": "Die Piazza Navona ist einer der charakteristischen Plätze des barocken Rom im Stadtviertel Parione. Das antike Stadion Von Julius Cäsar wurde 46 v. Chr. hier auf de",
+                    "verified": true
                 }
             }
         },
@@ -1357,10 +1357,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Via_Appia",
+                    "confidence": 1,
+                    "matchedText": "Die Via Appia (Appische Straße) ist eine Römerstraße, deren Bau 312 v. Chr. unter dem Konsul Appius Claudius Caecus begonnen wurde. Heute ist die Via Appia als Staa",
+                    "verified": true
                 }
             }
         },
@@ -1390,10 +1390,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Trajanss%C3%A4ule",
+                    "confidence": 1,
+                    "matchedText": "Die Trajanssäule (italienisch Colonna Traiana, lateinisch Columna Traiana) ist eine Ehrensäule, die 112/113 n. Chr. für den römischen Kaiser Trajan (98–117 n. Chr.)",
+                    "verified": true
                 }
             }
         },
@@ -1421,10 +1421,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Via_Appia",
+                    "confidence": 1,
+                    "matchedText": "Die Via Appia (Appische Straße) ist eine Römerstraße, deren Bau 312 v. Chr. unter dem Konsul Appius Claudius Caecus begonnen wurde. Heute ist die Via Appia als Staa",
+                    "verified": true
                 }
             }
         },
@@ -1454,10 +1454,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Villa_Adriana",
+                    "confidence": 1,
+                    "matchedText": "Die Villa Adriana oder Hadriansvilla wurde von 118 bis 134 n. Chr. etwa 30 km nordöstlich von Rom, 6 Kilometer vor Tivoli (antiker Name: Tibur) als Sommerresidenz u",
+                    "verified": true
                 }
             }
         },
@@ -1486,10 +1486,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Hadrian_(Kaiser)",
+                    "confidence": 1,
+                    "matchedText": "Publius Aelius Hadrianus (Titulatur als Kaiser: Imperator Caesar Traianus Hadrianus Augustus; * 24. Januar 76 in Italica in der Nähe des heutigen Sevilla; † 10. Juli 138 in Ba",
+                    "verified": true
                 }
             }
         },
@@ -1518,10 +1518,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pantheon_(Rom)",
+                    "confidence": 1,
+                    "matchedText": "Das Pantheon (altgriechisch Πάνθειον (ἱερόν) oder auch Πάνθεον, von πᾶν pān „all“, „gesamt“, und θεός theós „Gott“) ist ein zur Kirche umgeweihtes antikes Bauwerk i",
+                    "verified": true
                 }
             }
         },
@@ -1549,10 +1549,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pantheon_(Rom)",
+                    "confidence": 1,
+                    "matchedText": "Das Pantheon (altgriechisch Πάνθειον (ἱερόν) oder auch Πάνθεον, von πᾶν pān „all“, „gesamt“, und θεός theós „Gott“) ist ein zur Kirche umgeweihtes antikes Bauwerk i",
+                    "verified": true
                 }
             }
         },
@@ -1582,9 +1582,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/New_York_City",
+                    "confidence": 0.45,
+                    "matchedText": "de ein neuer Bahnhof am World Trade Center teileröffnet. Im März 2016 wurde die Oculus genannte Haupthalle des Bahnhofs eröffnet. Seit den Anschlägen gilt für ganz New York permanent eine erhöhte Alarmbereitschaft; die Polizeipräsenz wurde ",
                     "verified": false
                 }
             }
@@ -1614,10 +1614,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Geschichte_Athens",
+                    "confidence": 0.913,
+                    "matchedText": "SBN 3-88680-128-4 (Neuausgabe: Pantheon, München 2012, ISBN 978-3-570-55193-6). Raphael Sealey: The Athenian Republic. Democracy or the rule of law? Pennsylvania State University Press, University Park 1987, ISBN 0-271-00421-5. Tuttu Tarkia",
+                    "verified": true
                 }
             }
         },
@@ -1646,10 +1646,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pantheon_(Rom)",
+                    "confidence": 1,
+                    "matchedText": "Das Pantheon (altgriechisch Πάνθειον (ἱερόν) oder auch Πάνθεον, von πᾶν pān „all“, „gesamt“, und θεός theós „Gott“) ist ein zur Kirche umgeweihtes antikes Bauwerk i",
+                    "verified": true
                 }
             }
         },
@@ -1680,10 +1680,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Engelsburg",
+                    "confidence": 1,
+                    "matchedText": "Die Engelsburg (italienisch Castel Sant’Angelo) ist ein Museum in Rom (Museo di Castel Sant’Angelo), das ursprünglich ein Mausoleum für römische Kaiser und später F",
+                    "verified": true
                 }
             }
         },
@@ -1712,10 +1712,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Domus_Aurea",
+                    "confidence": 1,
+                    "matchedText": "Die Domus Aurea (lateinisch für das Goldene Haus) war ein riesiger Palast in Rom, den der römische Kaiser Nero nach dem Brand der Stadt (64 n. Chr.) auf dem Gelände",
+                    "verified": true
                 }
             }
         },
@@ -1745,10 +1745,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Apostolischer_Palast",
+                    "confidence": 0.98,
+                    "matchedText": "Der Apostolische Palast (auch: Papstpalast, Vatikanpalast, veraltet nur Vatikan) (italienisch Palazzo Apostolico) ist die offizielle Residenz des Papstes in der Vatikanstadt. Zu ihm gehören neben den päps",
+                    "verified": true
                 }
             }
         },
@@ -1778,10 +1778,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Piazza_di_Spagna",
+                    "confidence": 1,
+                    "matchedText": "Die Piazza di Spagna (deutsch Spanischer Platz) ist ein Platz im Zentrum von Rom, im Stadtviertel Campo Marzio, östlich des Tibers. Der Platz hat seinen Namen von d",
+                    "verified": true
                 }
             }
         },
@@ -1811,9 +1811,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Vatikanische_Nekropole",
+                    "confidence": 0.4,
+                    "matchedText": "Die Vatikanische Nekropole ist eine Nekropole in der Vatikanstadt direkt unter den Vatikanischen Grotten des Petersdoms. Sie war eine römische Begräbnisstätte und ist erst seit den Ausgrabungen in den 1950er Jahren wieder zugänglich. In ihr",
                     "verified": false
                 }
             }
@@ -1841,9 +1841,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Souver%C3%A4ner_Malteserorden",
+                    "confidence": 0.4,
+                    "matchedText": "Sitz des Malteserordens befindet sich seit 1834 in Rom (Palazzo di Malta in der Via dei Condotti 68 und Villa del Priorato di Malta auf dem Aventin an der Piazza dei Cavalieri di Malta 4) und hat seit 1869 exterritorialen Status. Palazzo di",
                     "verified": false
                 }
             }
@@ -1872,9 +1872,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Eule_der_Minerva",
+                    "confidence": 0.4,
+                    "matchedText": "Die Eule der Minerva oder auch Eule der Athene ist einerseits ein affirmatives Symbol von Klugheit und Weisheit und andererseits als Nachteule eine negative Metapher der älteren, philosophischen Erkenntnistheorie. Herkunft Die Eule – genau ",
                     "verified": false
                 }
             }
@@ -1904,10 +1904,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Sesterz",
+                    "confidence": 1,
+                    "matchedText": "Der Sesterz [lateinisch sestertius, Plural sestertii (Abkürzung SS.)] war Münze und Hauptrecheneinheit (monetär) in der römischen Republik (3. Jahrhundert v. Chr.) ",
+                    "verified": true
                 }
             }
         },
@@ -1935,10 +1935,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/R%C3%B6mische_Familie",
+                    "confidence": 0.941,
+                    "matchedText": "en Tag nach der Geburt, bekam das Kind einen Namen und eine Halskette mit einem Amulett. Dieses Amulett nannte sich bulla und kennzeichnete das Kind als freigeboren. Die ersten sechs Jahre blieben die römischen Kinder einer familia Zuhause ",
+                    "verified": true
                 }
             }
         },
@@ -1969,9 +1969,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Liste_griechischer_Phrasen/Tau",
+                    "confidence": 0.25,
+                    "matchedText": "Τὰ δε πάντα οἰακίζει κεραυνός. Τὰ δε πάντα οἰακίζει κεραυνός. Ta de panta oiakizei keraunos. „Das Weltall aber steuert der Blitz.“ Zitat des Philosophen Heraklit. Er versteht unter Blitz das ewige Urfeuer, aus dem nach ewigem Gesetz „nach M",
                     "verified": false
                 }
             }
@@ -2001,10 +2001,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Petersdom",
+                    "confidence": 0.936,
+                    "matchedText": " mit 32 Stuckreliefs geschmückt, welche Szenen aus dem Leben der Apostelfürsten Petrus und Paulus zeigen. Sie gehen auf Entwürfe von Giovanni Battista Ricci zurück. An den Portikus schließen sich nördlich und südlich zwei durchgangartige Rä",
+                    "verified": true
                 }
             }
         },
@@ -2032,10 +2032,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Italienische_K%C3%BCche",
+                    "confidence": 0.874,
+                    "matchedText": " Penne all’arrabbiata Rigatoni con la pajata Spaghetti alla carbonara Spaghetti cacio e pepe Spaghetti alle vongole Spaghetti aglio e olio Spaghetti alla puttanesca Tagliatelle al ragù Verschiedene Arten von Pasta und Hülsenfrüchten: Pasta ",
+                    "verified": true
                 }
             }
         },
@@ -2064,9 +2064,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Artischocke",
+                    "confidence": 0.167,
+                    "matchedText": "Die Artischocke (Cynara cardunculus subsp. scolymus (L.) Hegi, Syn.: Cynara scolymus L.) ist eine distelartige, kräftige Kulturpflanze aus der Familie der Korbblütler (Asteraceae). Die Sortengruppe der Artischocken wird wegen ihrer essbaren",
                     "verified": false
                 }
             }
@@ -2095,9 +2095,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Italienische_K%C3%BCche",
+                    "confidence": 0.4,
+                    "matchedText": "Die italienische Küche (italienisch Cucina italiana) umfasst eine Vielzahl regionaler Küchen. Historisch unterscheidet man vor allem zwischen der Cucina alto-borghese, der exklusiven Kochtradition der höheren Stände seit der Renaissance, un",
                     "verified": false
                 }
             }
@@ -2159,10 +2159,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Italienische_K%C3%BCche",
+                    "confidence": 0.873,
+                    "matchedText": "cavallo – Geschmortes Pferdefleisch Piccione in forno – Im Ofen gebackene Taube Porchetta, junges Schwein als Rollbraten Saltimbocca alla Romana – Kalbsschnitzel mit Schinken und Salbei Zampone – Gefüllter Schweinsfuß Salumi Salumi ist der ",
+                    "verified": true
                 }
             }
         },
@@ -2222,10 +2222,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Penne_all%E2%80%99arrabbiata",
+                    "confidence": 1,
+                    "matchedText": "Penne all’arrabbiata oder all’arabbiata (im römischen Dialekt; zu deutsch „Nudeln auf scharfe Art“) ist ein traditionelles Pastagericht aus Latium und insbesondere aus Rom. Der Name stammt vom scharfen Geschmack im Vergleich zu anderen ital",
+                    "verified": true
                 }
             }
         },
@@ -2254,9 +2254,9 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Pizzeria",
+                    "confidence": 0.45,
+                    "matchedText": "g in den Bereich des Pizzaverkaufs. In Italien entstanden unter der Bezeichnung Pizza al taglio („Schnittpizza“) Verkaufsstände, an denen Pizza auf großen rechteckigen Blechen gebacken und in kleinen Stücken verkauft wird. Diese Pizzastücke",
                     "verified": false
                 }
             }
@@ -2285,10 +2285,10 @@
                 "verifiedGPT": "",
                 "knowledgeConfidence": 0,
                 "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
+                    "sourceUrlWiki": "https://de.wikipedia.org/wiki/Gallicano_nel_Lazio",
+                    "confidence": 1,
+                    "matchedText": "Gallicano nel Lazio ist eine italienische Gemeinde in der Metropolitanstadt Rom, in der Region Latium mit 6488 Einwohnern (Stand 31. Dezember 2024). Sie liegt 31 km östlich v",
+                    "verified": true
                 }
             }
         }

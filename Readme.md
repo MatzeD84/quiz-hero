@@ -96,6 +96,9 @@ Scoring (Wiki-Check):
 - Bonus: Antwort im Intro (+0.08) und Antwort im Artikeltitel (+0.1).
 - Wenn die Antwort im Artikel gar nicht vorkommt, wird der Score auf max. 0.4 begrenzt.
 - Dynamischer Threshold: kurze Antworten brauchen hoehere Sicherheit (>= 0.75), sehr lange Fragen duerfen niedriger sein (>= 0.55).
+Kontext & Suche (Wiki-Check):
+- Kategorie-Titel + Tags werden an die Suchanfrage angehaengt, um thematisch passende Artikel zu finden.
+- Pro Query werden bis zu 3 Wikipedia-Treffer geprueft; der beste Score gewinnt.
 Konfiguration (scripts/verify-wikipedia.js):
 - verifiedThreshold: 0.6
 - shortAnswerThreshold: 0.75
@@ -107,6 +110,7 @@ Konfiguration (scripts/verify-wikipedia.js):
 - perQuestionDelayMs: 600
 - retryAfterSeconds: 2
 - maxRetries: 3
+- searchLimit: 3
 
 ## Hinweise
 - Lazy-Loading fuer Quiz-Bilder aktiv; Logos laden eager.
