@@ -76,7 +76,7 @@ Für jede generierte Frage MUSS der Agent eine Kernaussage bilden:
 
 Die Kernaussage wird verwendet für:
 - Dublettenprüfung
-- Wikipedia-Abgleich
+- Quellenabgleich
 - Plausibilitätsbewertung
 
 ## Kategorie-Implizite Fakten
@@ -278,13 +278,7 @@ Der Agent MUSS pro Frage exakt folgendes Objekt erzeugen:
     "sourceUrl": string,
     "generatedAt": string,
     "verifiedGPT": boolean,
-    "knowledgeConfidence": number,
-    "verificationWiki": {
-      "sourceUrlWiki": "",
-      "confidence": 0,
-      "matchedText": "",
-      "verified": false
-    }
+    "knowledgeConfidence": number
   }
 }
 ```
@@ -555,7 +549,7 @@ Der Ablauf ist strikt und deterministisch:
 
 2. Es werden die ersten 2–3 inhaltlich signifikanten Web-Treffer geprüft.
    Erlaubte Quellen sind u. a.:
-   - Wikipedia
+   - Fachportale/Enzyklopädien
    - Museen, Universitäten
    - Bildungsportale
    - etablierte Enzyklopädien
@@ -600,13 +594,7 @@ und darf nicht übersprungen werden.
     "sourceUrl": string,
     "generatedAt": string,
     "verifiedGPT": boolean,
-    "knowledgeConfidence": number,
-    "verificationWiki": {
-      "sourceUrlWiki": "",
-      "confidence": 0,
-      "matchedText": "",
-      "verified": false
-    }
+    "knowledgeConfidence": number
   }
 }
 ```

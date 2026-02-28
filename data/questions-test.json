@@ -22,13 +22,7 @@
                 "sourceUrl": "",
                 "generatedAt": "",
                 "verifiedGPT": "",
-                "knowledgeConfidence": 0,
-                "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
-                }
+                "knowledgeConfidence": 0
             }
         },
         {
@@ -53,13 +47,7 @@
                 "sourceUrl": "",
                 "generatedAt": "",
                 "verifiedGPT": "",
-                "knowledgeConfidence": 0,
-                "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
-                }
+                "knowledgeConfidence": 0
             }
         },
         {
@@ -84,13 +72,7 @@
                 "sourceUrl": "",
                 "generatedAt": "",
                 "verifiedGPT": "",
-                "knowledgeConfidence": 0,
-                "verificationWiki": {
-                    "sourceUrlWiki": "",
-                    "confidence": 0,
-                    "matchedText": "",
-                    "verified": false
-                }
+                "knowledgeConfidence": 0
             }
         }
     ]

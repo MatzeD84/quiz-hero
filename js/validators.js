@@ -116,24 +116,6 @@ export function validateCategories(categories) {
                 if ('verifiedFinal' in meta && typeof meta.verifiedFinal !== 'boolean') {
                     errors.push(`meta.verifiedFinal in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein boolean sein.`);
                 }
-                if ('verificationWiki' in meta) {
-                    if (!meta.verificationWiki || typeof meta.verificationWiki !== 'object') {
-                        errors.push(`meta.verificationWiki in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein Objekt sein.`);
-                    } else {
-                        if ('sourceUrlWiki' in meta.verificationWiki && typeof meta.verificationWiki.sourceUrlWiki !== 'string') {
-                            errors.push(`meta.verificationWiki.sourceUrlWiki in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
-                        }
-                        if ('confidence' in meta.verificationWiki && typeof meta.verificationWiki.confidence !== 'number') {
-                            errors.push(`meta.verificationWiki.confidence in Frage ${questionIndex + 1} von Kategorie ${category.id} muss eine number sein.`);
-                        }
-                        if ('matchedText' in meta.verificationWiki && typeof meta.verificationWiki.matchedText !== 'string') {
-                            errors.push(`meta.verificationWiki.matchedText in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
-                        }
-                        if ('verified' in meta.verificationWiki && typeof meta.verificationWiki.verified !== 'boolean') {
-                            errors.push(`meta.verificationWiki.verified in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein boolean sein.`);
-                        }
-                    }
-                }
             }
         });
     });
