@@ -35,6 +35,12 @@ florenz.json
 Themen:
 - Dom
 - Baptisterium 
+- Palazzo Vecchio Florenz
+
+
+Frage-Ideen:
+- Piazza della Signoria
+- Loggia dei Lanzi
 -----------------------------------------------------
 
 

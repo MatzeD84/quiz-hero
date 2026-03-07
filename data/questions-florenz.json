@@ -1035,6 +1035,366 @@
         },
         {
             "tag": [
+                "Architektur",
+                "Palazzo Vecchio"
+            ],
+            "type": "text",
+            "question": "Wie heißt der berühmte Regierungspalast auf der Piazza della Signoria in Florenz?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Medici",
+                "Palazzo Strozzi"
+            ],
+            "backgroundKnowledge": "Der Palazzo Vecchio ist seit dem Mittelalter eines der wichtigsten politischen Gebäude der Stadt Florenz.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Auf welchem Platz steht der Palazzo Vecchio?",
+            "answers": [
+                "Piazza del Duomo",
+                "Piazza della Signoria",
+                "Piazza Santa Croce",
+                "Piazza della Repubblica"
+            ],
+            "backgroundKnowledge": "Die Piazza della Signoria ist seit Jahrhunderten das politische Zentrum von Florenz.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Turm"
+            ],
+            "type": "text",
+            "question": "Wie heißt der markante Turm des Palazzo Vecchio?",
+            "answers": [
+                "Torre Arnolfo",
+                "Torre Medici",
+                "Torre Signoria",
+                "Torre Firenze"
+            ],
+            "backgroundKnowledge": "Der Turm ist nach Arnolfo di Cambio benannt, dem Architekten des Gebäudes.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welcher Architekt entwarf den Palazzo Vecchio?",
+            "answers": [
+                "Arnolfo di Cambio",
+                "Brunelleschi",
+                "Giotto",
+                "Donatello"
+            ],
+            "backgroundKnowledge": "Arnolfo di Cambio entwarf mehrere bedeutende Bauwerke in Florenz, darunter auch den Dom.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Medici"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Familie nutzte den Palazzo Vecchio später als Residenz?",
+            "answers": [
+                "Sforza",
+                "Borgia",
+                "Este",
+                "Medici"
+            ],
+            "backgroundKnowledge": "Cosimo I. de’ Medici nutzte den Palazzo Vecchio als herzogliche Residenz.",
+            "correct": 3,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/palazzo_vecchio.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Turm"
+            ],
+            "type": "text",
+            "question": "Wie hoch ist ungefähr der Turm des Palazzo Vecchio?",
+            "answers": [
+                "120 Meter",
+                "70 Meter",
+                "94 Meter",
+                "55 Meter"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Statue steht vor dem Eingang des Palazzo Vecchio?",
+            "answers": [
+                "Venus von Florenz",
+                "Laokoon",
+                "David (Kopie)",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "Vor dem Palazzo steht eine Kopie von Michelangelos David; das Original befindet sich heute in der Accademia.",
+            "correct": 2,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/palazzo_vecchio.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Skulptur"
+            ],
+            "type": "text",
+            "question": "Welche Skulptur befindet sich ebenfalls vor dem Palazzo Vecchio auf der Piazza della Signoria?",
+            "answers": [
+                "Pietà",
+                "Herkules und Cacus",
+                "Apollo und Daphne",
+                "Perseus und Medusa"
+            ],
+            "backgroundKnowledge": "Die Statue Herkules und Cacus wurde von Baccio Bandinelli geschaffen.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/palazzo_vecchio.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler gestaltete Teile des Salone dei Cinquecento im Palazzo Vecchio?",
+            "answers": [
+                "Sandro Botticelli",
+                "Raphael",
+                "Caravaggio",
+                "Giorgio Vasari"
+            ],
+            "backgroundKnowledge": "Giorgio Vasari gestaltete die monumentalen Wandgemälde im Saal.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/palazzo-vecchio.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche charakteristischen Elemente krönen das Dach des Palazzo Vecchio?",
+            "answers": [
+                "Zinnen",
+                "Kuppeln",
+                "Säulen",
+                "Glockentürme"
+            ],
+            "backgroundKnowledge": "Die Zinnen verleihen dem Gebäude ein festungsartiges Aussehen.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Bronzestatue von Benvenuto Cellini steht in der Loggia dei Lanzi neben dem Palazzo Vecchio?",
+            "answers": [
+                "Neptun",
+                "David",
+                "Herkules und Cacus",
+                "Perseus mit dem Haupt der Medusa"
+            ],
+            "backgroundKnowledge": "Die Statue „Perseus mit dem Haupt der Medusa“ von Benvenuto Cellini gilt als Meisterwerk der Renaissance.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazza_della_Signoria",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Dominikanermönch hielt im Palazzo Vecchio politische Reden während seiner Herrschaft über Florenz?",
+            "answers": [
+                "Dominikus",
+                "Thomas von Aquin",
+                "Bernhard von Clairvaux",
+                "Girolamo Savonarola"
+            ],
+            "backgroundKnowledge": "Savonarola dominierte Ende des 15. Jahrhunderts kurzzeitig die Politik von Florenz.",
+            "correct": 3,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Girolamo_Savonarola",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Fluss fließt in der Nähe des Palazzo Vecchio durch Florenz?",
+            "answers": [
+                "Arno",
+                "Tiber",
+                "Po",
+                "Adige"
+            ],
+            "backgroundKnowledge": "Der Arno ist der wichtigste Fluss in Florenz und fließt durch die historische Altstadt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Arno",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Turm"
+            ],
+            "type": "text",
+            "question": "Welche Funktion hatte der Turm des Palazzo Vecchio ursprünglich?",
+            "answers": [
+                "Archiv der Stadt",
+                "Glockenturm der Kathedrale",
+                "Wohnraum für Beamte",
+                "Wachturm und Verteidigungsanlage"
+            ],
+            "backgroundKnowledge": "Der Turm diente als Symbol der Macht und zur Verteidigung des Regierungssitzes.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "http://www.florentinermuseen.com/musei/palazzo_vecchio_florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Palazzo Vecchio"
+            ],
+            "type": "text",
+            "question": "Welche Funktion erfüllt der Palazzo Vecchio heute?",
+            "answers": [
+                "Universtät",
+                "Rathaus und Museum",
+                "Kloster",
+                "Bibliothek"
+            ],
+            "backgroundKnowledge": "Der Palazzo Vecchio dient heute als Rathaus von Florenz und beherbergt gleichzeitig ein Museum.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/palazzo-vecchio.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Architektur",
                 "Sehenswürdigkeit",
