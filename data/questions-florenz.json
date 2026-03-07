@@ -1010,6 +1010,222 @@
         },
         {
             "tag": [
+                "Architektur",
+                "Ponte Vecchio"
+            ],
+            "type": "text",
+            "question": "Über welchen Fluss führt die Ponte Vecchio in Florenz?",
+            "answers": [
+                "Arno",
+                "Tiber",
+                "Po",
+                "Adige"
+            ],
+            "backgroundKnowledge": "Der Arno ist der wichtigste Fluss von Florenz und wird von mehreren historischen Brücken überspannt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Ponte_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Was bedeutet der Name „Ponte Vecchio“ auf Deutsch?",
+            "answers": [
+                "Alte Brücke",
+                "Große Brücke",
+                "Steinerne Brücke",
+                "Goldene Brücke"
+            ],
+            "backgroundKnowledge": "Der Name bedeutet wörtlich „alte Brücke“, da sie eine der ältesten Brücken von Florenz ist.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Ponte_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Brücken"
+            ],
+            "type": "text",
+            "question": "Welches besondere Merkmal zeichnet die Ponte Vecchio aus?",
+            "answers": [
+                "Sie ist vollständig aus Holz gebaut",
+                "Sie hat Geschäfte auf der Brücke",
+                "Sie besitzt eine Zugbrücke",
+                "Sie hat zwei Etagen für Autos"
+            ],
+            "backgroundKnowledge": "Die Ponte Vecchio ist weltweit bekannt für die kleinen Geschäfte, die entlang der Brücke gebaut wurden.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/ponte_vecchio.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Händler arbeiteten ursprünglich auf der Ponte Vecchio?",
+            "answers": [
+                "Goldschmiede",
+                "Metzger",
+                "Buchhändler",
+                "Tuchhändler"
+            ],
+            "backgroundKnowledge": "Im Mittelalter befanden sich auf der Brücke vor allem Metzgereien und Schlachtereien.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Ponte_Vecchio",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche bekannte Passage verläuft über der Ponte Vecchio?",
+            "answers": [
+                "Florentiner Gang",
+                "Medici-Galerie",
+                "Vasari-Korridor",
+                "Arno-Passage"
+            ],
+            "backgroundKnowledge": "Der Vasari-Korridor verbindet den Palazzo Vecchio mit dem Palazzo Pitti.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Vasari-Korridor",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Medici"
+            ],
+            "type": "text",
+            "question": "Welcher Herrscher ließ den Vasari-Korridor bauen?",
+            "answers": [
+                "Giuliano de’ Medici",
+                "Lorenzo de’ Medici",
+                "Cosimo I. de’ Medici",
+                "Piero de’ Medici"
+            ],
+            "backgroundKnowledge": "Der Korridor wurde 1565 für Cosimo I. de’ Medici gebaut.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Vasari-Korridor",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Architekt entwarf den Vasari-Korridor?",
+            "answers": [
+                "Donatello",
+                "Brunelleschi",
+                "Michelangelo",
+                "Giorgio Vasari"
+            ],
+            "backgroundKnowledge": "Der Architekt und Künstler Giorgio Vasari entwarf die Passage im Auftrag der Medici.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Vasari-Korridor",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welchen Zweck hatte der Vasari-Korridor ursprünglich?",
+            "answers": [
+                "Unterirdischer Fluchttunnel",
+                "Handelsroute für Händler",
+                "Militärische Verteidigungsanlage",
+                "Sicherer Weg für die Medici zwischen ihren Palästen"
+            ],
+            "backgroundKnowledge": "Der Korridor ermöglichte den Medici einen sicheren Weg durch die Stadt.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Vasari-Korridor",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Warum wurden die Metzger später von der Ponte Vecchio verdrängt?",
+            "answers": [
+                "Wegen des schlechten Geruchs",
+                "Wegen Steuerproblemen",
+                "Wegen Platzmangel",
+                "Wegen politischer Konflikte"
+            ],
+            "backgroundKnowledge": "Cosimo I. ließ die Metzger vertreiben, da die Gerüche den Medici im Korridor störten.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/5-fakten-ueber-den-ponte-vecchio/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Renaissance",
                 "Architektur"

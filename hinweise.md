@@ -38,9 +38,12 @@ Themen:
 - Palazzo Vecchio Florenz
 
 
+
 Frage-Ideen:
+- Vasari-Korridor (paar Fragen schon drin)
 - Piazza della Signoria
 - Loggia dei Lanzi
+- Via dei Calzaiuoli
 -----------------------------------------------------
 
 
