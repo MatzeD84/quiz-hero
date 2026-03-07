@@ -80,6 +80,1628 @@
         },
         {
             "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Wie lautet der offizielle Name des Doms von Florenz?",
+            "answers": [
+                "Santa Maria del Fiore",
+                "Santa Croce",
+                "San Lorenzo",
+                "Santa Maria Novella"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welcher Architekt entwarf die berühmte Kuppel des Doms von Florenz?",
+            "answers": [
+                "Michelangelo",
+                "Filippo Brunelleschi",
+                "Giotto",
+                "Donatello"
+            ],
+            "backgroundKnowledge": "Filippo Brunelleschi entwickelte eine innovative Bauweise, um die riesige Kuppel ohne traditionelles Holzgerüst zu errichten.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "In welchem Jahr begann der Bau des Doms von Florenz?",
+            "answers": [
+                "1296",
+                "1350",
+                "1401",
+                "1252"
+            ],
+            "backgroundKnowledge": "Der Bau begann 1296 nach einem Entwurf von Arnolfo di Cambio.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Campanile"
+            ],
+            "type": "text",
+            "question": "Wie heißt der Glockenturm neben dem Dom von Florenz?",
+            "answers": [
+                "Torre Vecchia",
+                "Campanile di Giotto",
+                "Campanile Medici",
+                "Torre Fiorentina"
+            ],
+            "backgroundKnowledge": "Der Bau des Campanile begann 1334 unter Giotto und wurde später von anderen Architekten weitergeführt.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Material",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welche Farben dominieren die Marmorfassade des Doms von Florenz?",
+            "answers": [
+                "Weiß, Grün und Rosa",
+                "Gelb, Rot und Grau",
+                "Schwarz, Weiß und Grau",
+                "Blau, Weiß und Gold"
+            ],
+            "backgroundKnowledge": "Die Fassade besteht aus weißem Carrara-Marmor, grünem Prato-Marmor und rosafarbenem Marmor aus der Toskana.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Religion"
+            ],
+            "type": "text",
+            "question": "Welcher Person ist der Dom von Florenz gewidmet?",
+            "answers": [
+                "Johannes der Täufer",
+                "Maria",
+                "Petrus",
+                "Franziskus"
+            ],
+            "backgroundKnowledge": "Der Name Santa Maria del Fiore verweist auf die Jungfrau Maria.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welche Form hat der Tambour unter der Kuppel des Doms von Florenz?",
+            "answers": [
+                "Quadrat",
+                "Kreis",
+                "Achteck",
+                "Sechseck"
+            ],
+            "backgroundKnowledge": "Der achteckige Tambour trägt die massive Kuppel und ist von acht großen Rippen strukturiert.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Fresken"
+            ],
+            "type": "text",
+            "question": "Welches Thema zeigt das große Fresko in der Kuppel des Doms von Florenz?",
+            "answers": [
+                "Das Jüngste Gericht",
+                "Die Geburt Christi",
+                "Die Verkündigung",
+                "Die Auferstehung"
+            ],
+            "backgroundKnowledge": "Das monumentale Fresko wurde von Giorgio Vasari begonnen und später von Federico Zuccari vollendet.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Konstruktion"
+            ],
+            "type": "text",
+            "question": "Welches spezielle Ziegelmuster nutzte Brunelleschi beim Bau der Domkuppel?",
+            "answers": [
+                "Schachbrettmuster",
+                "Fischgrätenmuster",
+                "Spiralmuster",
+                "Wellenmuster"
+            ],
+            "backgroundKnowledge": "Das sogenannte Fischgrätenmuster stabilisierte die Mauern während der Bauphase der riesigen Kuppel.",
+            "correct": 1,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie hoch ist die Kuppel des Florentiner Doms ungefähr bis zur Laterne?",
+            "answers": [
+                "116 Meter",
+                "90 Meter",
+                "150 Meter",
+                "75 Meter"
+            ],
+            "backgroundKnowledge": "Die Kuppel prägt mit etwa 116 Metern Höhe die Skyline von Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Baptisterium"
+            ],
+            "type": "text",
+            "question": "Wie heißt das Baptisterium gegenüber dem Dom von Florenz?",
+            "answers": [
+                "San Giovanni",
+                "San Marco",
+                "San Lorenzo",
+                "Santa Croce"
+            ],
+            "backgroundKnowledge": "Das Baptisterium San Giovanni gehört zu den ältesten Gebäuden von Florenz.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmten Türen des Baptisteriums werden Lorenzo Ghiberti zugeschrieben?",
+            "answers": [
+                "Paradiespforte",
+                "Florentiner Tor",
+                "Goldene Tür",
+                "Engelstor"
+            ],
+            "backgroundKnowledge": "Michelangelo soll die Bronzetüren so beeindruckend gefunden haben, dass er sie „Pforten des Paradieses“ nannte.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Paradiespforte",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Wie viele Hauptschiffe besitzt der Dom von Florenz?",
+            "answers": [
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "backgroundKnowledge": "Der Dom hat ein breites Mittelschiff und zwei Seitenschiffe.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Material"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte weiße Marmor wurde beim Bau des Doms verwendet?",
+            "answers": [
+                "Carrara-Marmor",
+                "Travertin",
+                "Basalt",
+                "Granit"
+            ],
+            "backgroundKnowledge": "Carrara-Marmor wird seit der Antike in der Toskana abgebaut und war ein wichtiges Material für Renaissancebauten.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Wie viele Hauptrippen strukturieren die Domkuppel von Florenz?",
+            "answers": [
+                "6",
+                "8",
+                "10",
+                "12"
+            ],
+            "backgroundKnowledge": "Die acht sichtbaren Rippen verleihen der Kuppel ihre charakteristische Form.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "In welchem Jahr wurde der Dom von Florenz geweiht?",
+            "answers": [
+                "1436",
+                "1500",
+                "1405",
+                "1380"
+            ],
+            "backgroundKnowledge": "Die Weihe erfolgte durch Papst Eugen IV.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welches Bauelement krönt die Spitze der Domkuppel?",
+            "answers": [
+                "Laterne",
+                "Turm",
+                "Baldachin",
+                "Spitze"
+            ],
+            "backgroundKnowledge": "Die Laterne stabilisiert zusätzlich die Kuppelstruktur.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Auf welchem zentralen Platz steht der Dom von Florenz?",
+            "answers": [
+                "Piazza della Repubblica",
+                "Piazza del Duomo",
+                "Piazza Santa Croce",
+                "Piazza della Signoria"
+            ],
+            "backgroundKnowledge": "Die Piazza del Duomo bildet das religiöse Zentrum von Florenz und umfasst Dom, Baptisterium und Campanile.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welche ältere Kirche stand ursprünglich an der Stelle des heutigen Doms?",
+            "answers": [
+                "Santa Reparata",
+                "San Miniato",
+                "Santa Croce",
+                "San Lorenzo"
+            ],
+            "backgroundKnowledge": "Archäologische Ausgrabungen unter dem Dom haben Überreste der frühchristlichen Kirche Santa Reparata freigelegt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Fresken"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler begann im 16. Jahrhundert das Fresko in der Domkuppel?",
+            "answers": [
+                "Sandro Botticelli",
+                "Giorgio Vasari",
+                "Leonardo da Vinci",
+                "Raphael"
+            ],
+            "backgroundKnowledge": "Das Fresko des Jüngsten Gerichts wurde 1572 von Giorgio Vasari begonnen.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Fresken"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler vollendete später das Fresko in der Domkuppel?",
+            "answers": [
+                "Caravaggio",
+                "Federico Zuccari",
+                "Titian",
+                "Andrea del Sarto"
+            ],
+            "backgroundKnowledge": "Nach Vasaris Tod übernahm Federico Zuccari die Fertigstellung des monumentalen Freskos.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Warum war der Bau der Domkuppel lange Zeit schwierig?",
+            "answers": [
+                "Es fehlte eine technische Lösung für eine so große Kuppel",
+                "Es gab zu wenig Steine",
+                "Die Kirche wurde zerstört",
+                "Der Papst verbot den Bau"
+            ],
+            "backgroundKnowledge": "Die riesige Spannweite der Kuppel stellte Architekten jahrzehntelang vor ein ungelöstes technisches Problem.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Wie viele Schalen besitzt die Kuppel des Florentiner Doms?",
+            "answers": [
+                "Eine",
+                "Zwei",
+                "Drei",
+                "Vier"
+            ],
+            "backgroundKnowledge": "Die Kuppel besitzt eine innere und eine äußere Schale, was ihr Stabilität und geringeres Gewicht verleiht.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Aus welchem Material besteht der größte Teil der Domkuppel?",
+            "answers": [
+                "Backstein",
+                "Granit",
+                "Basalt",
+                "Sandstein"
+            ],
+            "backgroundKnowledge": "Die Kuppel wurde hauptsächlich aus Ziegeln gebaut, die in einem besonderen Muster angeordnet wurden.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Wie lang ist der Dom von Florenz ungefähr?",
+            "answers": [
+                "153 Meter",
+                "120 Meter",
+                "95 Meter",
+                "210 Meter"
+            ],
+            "backgroundKnowledge": "Mit rund 153 Metern Länge gehört der Dom zu den größten Kirchen Europas.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie breit ist das Hauptschiff des Doms ungefähr?",
+            "answers": [
+                "38 Meter",
+                "25 Meter",
+                "60 Meter",
+                "45 Meter"
+            ],
+            "backgroundKnowledge": "Das breite Mittelschiff verleiht der Kathedrale ihr beeindruckendes Raumgefühl.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.75
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Campanile"
+            ],
+            "type": "text",
+            "question": "Wie hoch ist der Campanile von Giotto ungefähr?",
+            "answers": [
+                "84 Meter",
+                "65 Meter",
+                "120 Meter",
+                "45 Meter"
+            ],
+            "backgroundKnowledge": "Der Glockenturm ist etwa 84 Meter hoch und kann über eine Treppe bestiegen werden.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Wer entwarf ursprünglich den Bauplan des Doms im 13. Jahrhundert?",
+            "answers": [
+                "Arnolfo di Cambio",
+                "Giotto",
+                "Brunelleschi",
+                "Andrea Pisano"
+            ],
+            "backgroundKnowledge": "Arnolfo di Cambio war ein bedeutender Architekt des Mittelalters in Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://www.florence-museum.com/de/kathedrale-von-florenz-dom.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Institution organisierte den Bau und die Finanzierung des Doms?",
+            "answers": [
+                "Opera del Duomo",
+                "Vatikanrat",
+                "Florentiner Senat",
+                "Medici Bank"
+            ],
+            "backgroundKnowledge": "Die Opera del Duomo wurde gegründet, um Planung, Bau und Finanzierung der Kathedrale zu koordinieren.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Opera_del_Duomo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Skulptur"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Statue von Michelangelo war ursprünglich für den Dom vorgesehen?",
+            "answers": [
+                "David",
+                "Moses",
+                "Pietà",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "Michelangelos David wurde schließlich auf der Piazza della Signoria aufgestellt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/David_(Michelangelo)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Material"
+            ],
+            "type": "text",
+            "question": "Welcher grüne Marmor wurde für Teile der Domfassade verwendet?",
+            "answers": [
+                "Prato-Marmor",
+                "Carrara-Marmor",
+                "Verona-Marmor",
+                "Siena-Marmor"
+            ],
+            "backgroundKnowledge": "Der grüne Serpentin-Marmor stammt aus der Region Prato in der Toskana.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Baustil prägt den Dom von Florenz hauptsächlich?",
+            "answers": [
+                "Gotik",
+                "Romanik",
+                "Barock",
+                "Rokoko"
+            ],
+            "backgroundKnowledge": "Der Dom wurde im gotischen Stil begonnen, enthält aber später auch Renaissance-Elemente.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Wie viele Treppenstufen führen ungefähr zur Spitze der Domkuppel?",
+            "answers": [
+                "463",
+                "300",
+                "520",
+                "680"
+            ],
+            "backgroundKnowledge": "Besucher können über etwa 463 Stufen zur Spitze der Kuppel steigen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Struktur stabilisiert die Kuppel zusätzlich zu den Rippen?",
+            "answers": [
+                "Stein- und Eisenketten",
+                "Holzbalken",
+                "Kupferseile",
+                "Bronzeringe"
+            ],
+            "backgroundKnowledge": "Brunelleschi nutzte ringförmige Ketten im Inneren der Kuppel, um die Schubkräfte zu kontrollieren.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Wie viele Seiten hat der Grundriss der Domkuppel von Florenz?",
+            "answers": [
+                "Acht",
+                "Sechs",
+                "Vier",
+                "Zehn"
+            ],
+            "backgroundKnowledge": "Die Kuppel basiert auf einem achteckigen Grundriss, der durch acht massive Rippen strukturiert wird.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Funktion erfüllt die Laterne an der Spitze der Domkuppel?",
+            "answers": [
+                "Sie stabilisiert zusätzlich die Kuppel",
+                "Sie dient als Glockenturm",
+                "Sie enthält eine Uhr",
+                "Sie ist nur dekorativ"
+            ],
+            "backgroundKnowledge": "Die Laterne wirkt wie ein zusätzlicher Druckpunkt und stabilisiert die Kuppelstruktur.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Warum wurde für den Bau der Domkuppel ein Wettbewerb ausgeschrieben?",
+            "answers": [
+                "Es gab lange keine technische Lösung für die riesige Kuppel",
+                "Der ursprüngliche Architekt starb plötzlich",
+                "Der Papst verlangte neue Pläne",
+                "Die Stadt wollte einen neuen Baustil"
+            ],
+            "backgroundKnowledge": "1418 wurde ein Wettbewerb organisiert, um eine Lösung für die enorme Spannweite der Kuppel zu finden.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Material dominiert die äußere Struktur des Doms?",
+            "answers": [
+                "Ziegel",
+                "Granit",
+                "Basalt",
+                "Sandstein"
+            ],
+            "backgroundKnowledge": "Der Großteil der tragenden Struktur des Doms besteht aus Ziegeln.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie groß ist ungefähr der Durchmesser der Domkuppel von Florenz?",
+            "answers": [
+                "45 Meter",
+                "60 Meter",
+                "30 Meter",
+                "80 Meter"
+            ],
+            "backgroundKnowledge": "Mit rund 45 Metern Spannweite war sie lange Zeit die größte gemauerte Kuppel der Welt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Familie war während der Renaissance besonders einflussreich in Florenz und unterstützte viele Kunstprojekte?",
+            "answers": [
+                "Medici",
+                "Borgia",
+                "Este",
+                "Sforza"
+            ],
+            "backgroundKnowledge": "Die Medici-Familie förderte zahlreiche Künstler und Bauprojekte in Florenz.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Medici",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Art von Gerüst wurde beim Bau der Domkuppel weitgehend vermieden?",
+            "answers": [
+                "Großes Holzgerüst",
+                "Steingerüst",
+                "Metallgerüst",
+                "Seilgerüst"
+            ],
+            "backgroundKnowledge": "Brunelleschi entwickelte eine Bauweise, die ohne riesiges Holzgerüst auskam.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler begann ursprünglich den Bau des Campanile im Jahr 1334?",
+            "answers": [
+                "Giotto",
+                "Donatello",
+                "Brunelleschi",
+                "Michelangelo"
+            ],
+            "backgroundKnowledge": "Der Glockenturm trägt deshalb den Namen Campanile di Giotto.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Wie viele Seitenschiffe besitzt der Dom von Florenz neben dem Mittelschiff?",
+            "answers": [
+                "Zwei",
+                "Vier",
+                "Drei",
+                "Eines"
+            ],
+            "backgroundKnowledge": "Der Dom besitzt ein Mittelschiff und zwei Seitenschiffe.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Bauweise half, das Gewicht der Domkuppel zu reduzieren?",
+            "answers": [
+                "Doppelschalen-Konstruktion",
+                "Holzstruktur",
+                "Metallrahmen",
+                "Steinplatten"
+            ],
+            "backgroundKnowledge": "Die Kuppel besitzt eine innere und äußere Schale, die Stabilität und geringeres Gewicht ermöglichen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler gestaltete berühmte Skulpturen für die Fassade und den Domkomplex?",
+            "answers": [
+                "Donatello",
+                "Raphael",
+                "Caravaggio",
+                "Bernini"
+            ],
+            "backgroundKnowledge": "Donatello war einer der bedeutendsten Bildhauer der frühen Renaissance in Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Donatello",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Wie viele sichtbare Rippen verlaufen entlang der Außenseite der Domkuppel?",
+            "answers": [
+                "8",
+                "12",
+                "6",
+                "10"
+            ],
+            "backgroundKnowledge": "Die acht Rippen sind ein markantes Merkmal der äußeren Architektur der Kuppel.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Rolle spielte der Dom im mittelalterlichen Florenz?",
+            "answers": [
+                "Religiöses und politisches Symbol der Stadt",
+                "Militärische Festung",
+                "Handelszentrum",
+                "Universität"
+            ],
+            "backgroundKnowledge": "Die Kathedrale symbolisierte die Macht, den Reichtum und die religiöse Bedeutung der Stadt Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Gebäude bildet zusammen mit Dom und Campanile den berühmten Domkomplex?",
+            "answers": [
+                "Baptisterium",
+                "Palazzo Vecchio",
+                "Uffizien",
+                "Santa Croce"
+            ],
+            "backgroundKnowledge": "Der Domkomplex besteht aus Kathedrale, Baptisterium und Campanile.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Stil beeinflusste die Architektur des Doms besonders stark?",
+            "answers": [
+                "Gotik",
+                "Barock",
+                "Romanik",
+                "Jugendstil"
+            ],
+            "backgroundKnowledge": "Der Bau begann in der gotischen Tradition, entwickelte sich aber mit Renaissanceelementen weiter.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Bauwerk dominierte jahrhundertelang die Skyline von Florenz?",
+            "answers": [
+                "Die Kuppel des Doms",
+                "Palazzo Vecchio",
+                "Uffizien",
+                "Ponte Vecchio"
+            ],
+            "backgroundKnowledge": "Die riesige Domkuppel war über Jahrhunderte das höchste Bauwerk der Stadt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie viele Stufen führen ungefähr zur Spitze der Domkuppel?",
+            "answers": [
+                "463",
+                "350",
+                "520",
+                "610"
+            ],
+            "backgroundKnowledge": "Besucher können über etwa 463 Stufen zur Spitze der Kuppel steigen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Symbol der Stadt Florenz spiegelt sich im Namen 'Santa Maria del Fiore' wider?",
+            "answers": [
+                "Die Lilie",
+                "Der Löwe",
+                "Der Adler",
+                "Der Turm"
+            ],
+            "backgroundKnowledge": "Die Lilie ist das historische Wappenzeichen von Florenz und gab der Kathedrale ihren Namen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Florentiner_Lilie",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Material"
+            ],
+            "type": "text",
+            "question": "Aus welcher Region stammt der berühmte weiße Carrara-Marmor, der beim Dom verwendet wurde?",
+            "answers": [
+                "Toskana",
+                "Lombardei",
+                "Latium",
+                "Umbrien"
+            ],
+            "backgroundKnowledge": "Carrara-Marmor stammt aus Steinbrüchen in den Apuanischen Alpen in der Toskana.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Carrara-Marmor",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche konstruktive Technik verhinderte beim Bau der Kuppel das Abrutschen der Ziegel?",
+            "answers": [
+                "Fischgrätenmuster",
+                "Spiralbauweise",
+                "Schachbrettmuster",
+                "Blockstruktur"
+            ],
+            "backgroundKnowledge": "Das Fischgrätenmuster verankerte die Ziegel während der Bauphase stabil im Mauerwerk.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "In welchem Jahrhundert wurde der Bau des Doms begonnen?",
+            "answers": [
+                "13. Jahrhundert",
+                "12. Jahrhundert",
+                "14. Jahrhundert",
+                "15. Jahrhundert"
+            ],
+            "backgroundKnowledge": "Der Bau begann 1296 und damit am Ende des 13. Jahrhunderts.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Campanile"
+            ],
+            "type": "text",
+            "question": "Welches architektonische Element prägt besonders die Fassade des Campanile?",
+            "answers": [
+                "Mehrfarbiger Marmor",
+                "Goldverzierungen",
+                "Glasplatten",
+                "Bronzeplatten"
+            ],
+            "backgroundKnowledge": "Wie der Dom selbst ist auch der Glockenturm mit farbigem Marmor verkleidet.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Element verbindet die Kuppel architektonisch mit dem Hauptbau?",
+            "answers": [
+                "Tambour",
+                "Narthex",
+                "Krypta",
+                "Portikus"
+            ],
+            "backgroundKnowledge": "Der Tambour ist der achteckige Unterbau, auf dem die Kuppel ruht.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Tambour_(Architektur)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Struktur verläuft von der Basis bis zur Spitze der Domkuppel?",
+            "answers": [
+                "Rippen",
+                "Säulen",
+                "Bögen",
+                "Pfeiler"
+            ],
+            "backgroundKnowledge": "Die acht Rippen strukturieren die äußere Form der Kuppel.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Funktion hatte der Dom im mittelalterlichen Florenz neben seiner religiösen Bedeutung?",
+            "answers": [
+                "Symbol für Reichtum und Macht der Stadt",
+                "Militärische Festung",
+                "Handelsbörse",
+                "Universität"
+            ],
+            "backgroundKnowledge": "Der monumentale Bau sollte die Bedeutung und den Wohlstand von Florenz demonstrieren.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie viele Meter misst ungefähr die Länge des Doms von Florenz?",
+            "answers": [
+                "153 Meter",
+                "120 Meter",
+                "180 Meter",
+                "95 Meter"
+            ],
+            "backgroundKnowledge": "Mit etwa 153 Metern Länge zählt der Dom zu den größten Kirchen Europas.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Bauinnovation ermöglichte Brunelleschi den Bau der Kuppel ohne großes Gerüst?",
+            "answers": [
+                "Selbsttragende Bauweise",
+                "Metallrahmen",
+                "Holzstützen",
+                "Betonbauweise"
+            ],
+            "backgroundKnowledge": "Die Kuppel wurde schrittweise selbsttragend errichtet.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Institution war für den Bau und die Verwaltung des Domprojekts verantwortlich?",
+            "answers": [
+                "Opera del Duomo",
+                "Florentiner Senat",
+                "Medici-Stiftung",
+                "Vatikanrat"
+            ],
+            "backgroundKnowledge": "Die Opera del Duomo wurde gegründet, um Planung, Bau und Verwaltung der Kathedrale zu organisieren.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Opera_del_Duomo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Renaissance-Bildhauer arbeitete ebenfalls an Kunstwerken für den Domkomplex?",
+            "answers": [
+                "Donatello",
+                "Bernini",
+                "Caravaggio",
+                "Canova"
+            ],
+            "backgroundKnowledge": "Donatello war einer der bedeutendsten Bildhauer der frühen Renaissance in Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Donatello",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Baptisterium"
+            ],
+            "type": "text",
+            "question": "Welche Form besitzt das Baptisterium San Giovanni gegenüber dem Dom?",
+            "answers": [
+                "Achteckig",
+                "Quadratisch",
+                "Rund",
+                "Sechseckig"
+            ],
+            "backgroundKnowledge": "Das Baptisterium ist achteckig gebaut und eines der ältesten Gebäude der Stadt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Rolle spielte der Dom in der Skyline von Florenz über Jahrhunderte?",
+            "answers": [
+                "Er war das höchste Bauwerk der Stadt",
+                "Er war ein Verteidigungsturm",
+                "Er war ein Handelsposten",
+                "Er war ein Palast"
+            ],
+            "backgroundKnowledge": "Die gewaltige Kuppel dominierte über Jahrhunderte die Silhouette der Stadt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Kuppel"
+            ],
+            "type": "text",
+            "question": "Welche Bauform half, die enorme Spannweite der Kuppel zu realisieren?",
+            "answers": [
+                "Doppelschalenstruktur",
+                "Holzkuppel",
+                "Metallrahmen",
+                "Steinplatte"
+            ],
+            "backgroundKnowledge": "Die doppelte Kuppelschale verteilt die Last und erhöht die Stabilität.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Dom von Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Bauweise prägte den Dom hauptsächlich bei Baubeginn?",
+            "answers": [
+                "Gotik",
+                "Barock",
+                "Romanik",
+                "Renaissance"
+            ],
+            "backgroundKnowledge": "Der Bau begann in der gotischen Tradition Italiens.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Maße"
+            ],
+            "type": "text",
+            "question": "Wie viele Treppenstufen führen ungefähr zur Spitze der Domkuppel?",
+            "answers": [
+                "463",
+                "520",
+                "350",
+                "610"
+            ],
+            "backgroundKnowledge": "Besucher können über etwa 463 Stufen zur Spitze der Kuppel steigen und die Aussicht über Florenz genießen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Architektur",
                 "Sehenswürdigkeit",
@@ -306,6 +1928,5 @@
                 "knowledgeConfidence": 0
             }
         }
-
     ]
 }

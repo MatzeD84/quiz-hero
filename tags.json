@@ -1,20 +1,15 @@
 {
     "tags": [
-         {
+        {
             "id": "Italien",
             "title": "Italien",
             "icon": "images/website/tag/tag-italien.png",
             "description": "Italienische Bauwerke und Geschichte",
             "enabled": true,
-            "badge": { "active": false, "text": "Neu" }
-        },
-         {
-            "id": "Test",
-            "title": "Test",
-            "icon": "images/website/tag/tag-antike-2.png",
-            "description": "Interner Test-Tag",
-            "enabled": false,
-            "badge": { "active": false, "text": "Neu" }
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
         },
         {
             "id": "Test",
@@ -22,7 +17,10 @@
             "icon": "images/website/tag/tag-antike-2.png",
             "description": "Interner Test-Tag",
             "enabled": false,
-            "badge": { "active": false, "text": "Neu" }
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
         },
         {
             "id": "Antike",
@@ -30,15 +28,21 @@
             "icon": "images/website/tag/tag-antike.png",
             "description": "Antike Bauwerke und Geschichte",
             "enabled": true,
-            "badge": { "active": true, "text": "Neu" }
+            "badge": {
+                "active": true,
+                "text": "Neu"
+            }
         },
         {
             "id": "Essen",
             "title": "Essen",
             "icon": "images/website/tag/tag-essen.png",
-            "description": "Typischen Gerichte und Spezialit\u00e4ten",
+            "description": "Typischen Gerichte und Spezialitäten",
             "enabled": true,
-            "badge": { "active": true, "text": "Neue Fragen" }
+            "badge": {
+                "active": true,
+                "text": "Neue Fragen"
+            }
         },
         {
             "id": "Geographie",
@@ -46,7 +50,98 @@
             "icon": "images/website/tag/tag-geographie.png",
             "description": "Geographie und Landschaft",
             "enabled": false,
-            "badge": { "active": false, "text": "Neu" }
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Architektur",
+            "title": "Architektur",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Bauwerke, Stile und Stadtbild",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Geschichte",
+            "title": "Geschichte",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Historische Ereignisse, Epochen und Personen",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Kunst",
+            "title": "Kunst",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Kunstwerke, Künstler und Museen",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Politik",
+            "title": "Politik",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Politik, Staat und politische Denker",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Religion",
+            "title": "Religion",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Kirchen, Glaube und religiöse Geschichte",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Renaissance",
+            "title": "Renaissance",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Kultur und Ideen der Renaissance",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Sehenswürdigkeit",
+            "title": "Sehenswürdigkeit",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Bekannte Orte und Highlights einer Stadt",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
+        },
+        {
+            "id": "Tradition",
+            "title": "Tradition",
+            "icon": "images/website/tag/tag-antike-2.png",
+            "description": "Bräuche, Alltagskultur und lokale Traditionen",
+            "enabled": false,
+            "badge": {
+                "active": false,
+                "text": "Neu"
+            }
         }
     ]
 }

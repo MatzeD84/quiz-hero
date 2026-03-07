@@ -1,14 +1,13 @@
-ToDos:
-- categories.json / data/questions-*.json --> data-difficulty per chatGPT bewerten
+﻿ToDos:
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - nach oben scrollen
 - Service Worker / PWA: 
     Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
 - css: in mehreren css -files modulen aufteilen
 - generierte files /page brauchen eigentlich nicht commited werden
+- nur fragen mit  "verifiedFinal": true sollen angezeigt werden
 
 Agent:
-- Kein aktives Nachschlagen auf Wikipedia, Google o. ä. --> ändern
 - "Richtige Antwort" --> Arry-Index soll random sein!
 
 SEO:
@@ -18,6 +17,24 @@ SEO:
 - lighthouse testing
     - minify CSS/JS
     - webP verwenden
+
+
+Bilder für florenz:
+- David
+- Palazzo Vecchio - Medici
+- Basilika Santa Maria Novella
+- Palazzo Pitti
+- Die Geburt der Venus
+- Basilika Santa Croce
+- Niccolò Machiavelli
+- Piazza del Duomo
+
+florenz.json
+- tags anpassen
+
+
+
+
 
 
 Ideen ChatGPT:
