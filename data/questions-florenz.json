@@ -744,7 +744,7 @@
                 "knowledgeConfidence": 0.9
             }
         },
-         {
+        {
             "tag": [
                 "Baptisterium"
             ],
@@ -767,7 +767,7 @@
                 "knowledgeConfidence": 0.95
             }
         },
-         {
+        {
             "tag": [
                 "Kunst"
             ],
@@ -790,11 +790,198 @@
                 "knowledgeConfidence": 0.9
             }
         },
-        
-
-
-
-
+        {
+            "tag": [
+                "Religion",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welchem Heiligen ist das Baptisterium von Florenz gewidmet?",
+            "answers": [
+                "Johannes dem Täufer",
+                "Petrus",
+                "Franziskus",
+                "Paulus"
+            ],
+            "backgroundKnowledge": "Johannes der Täufer ist der Schutzpatron der Stadt Florenz.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler schuf die Bronzetüren an der Nordseite des Baptisteriums?",
+            "answers": [
+                "Donatello",
+                "Lorenzo Ghiberti",
+                "Giotto",
+                "Michelangelo"
+            ],
+            "backgroundKnowledge": "Ghiberti gewann 1401 einen Wettbewerb für die Gestaltung der Nordtüren des Baptisteriums.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Lorenzo_Ghiberti",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Material"
+            ],
+            "type": "text",
+            "question": "Aus welchem Material besteht die Außenverkleidung des Baptisteriums hauptsächlich?",
+            "answers": [
+                "Granit",
+                "Sandstein",
+                "Backstein",
+                "Marmor"
+            ],
+            "backgroundKnowledge": "Das Baptisterium ist mit weißem und grünem Marmor verkleidet, ähnlich wie der Dom von Florenz.",
+            "correct": 2,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/attraktionen/baptisterium-san-giovanni-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Mosaik"
+            ],
+            "type": "text",
+            "question": "Wofür ist die Decke im Inneren des Baptisteriums besonders bekannt?",
+            "answers": [
+                "Holzdecken",
+                "Fresken",
+                "Goldene Mosaiken",
+                "Glasmalerei"
+            ],
+            "backgroundKnowledge": "Die byzantinisch beeinflussten Goldmosaiken der Decke zählen zu den bedeutendsten mittelalterlichen Kunstwerken in Florenz.",
+            "correct": 2,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Mosaik"
+            ],
+            "type": "text",
+            "question": "Welches Thema dominiert eines der großen Deckenmosaike im Baptisterium?",
+            "answers": [
+                "Die Kreuzigung",
+                "Die Geburt Christi",
+                "Die Schöpfung",
+                "Das Jüngste Gericht"
+            ],
+            "backgroundKnowledge": "Das monumentale Mosaik des Jüngsten Gerichts zeigt Christus als Weltenrichter.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Religion",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Funktion erfüllte das Baptisterium traditionell in einer Stadt?",
+            "answers": [
+                "Kloster",
+                "Ort der Taufe",
+                "Bischofssitz",
+                "Pilgerherberge"
+            ],
+            "backgroundKnowledge": "In vielen mittelalterlichen Städten wurden Taufen in einem eigenen Baptisterium durchgeführt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Persönlichkeit wurde im Baptisterium von Florenz getauft?",
+            "answers": [
+                "Dante Alighieri",
+                "Galileo Galilei",
+                "Michelangelo",
+                "Leonardo da Vinci"
+            ],
+            "backgroundKnowledge": "Der Dichter Dante Alighieri wurde hier im Jahr 1266 getauft.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Dante_Alighieri",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Mosaik"
+            ],
+            "type": "text",
+            "question": "Welcher Kunststil beeinflusste die goldenen Deckenmosaike des Baptisteriums besonders?",
+            "answers": [
+                "Renaissance-Stil",
+                "Gotischer Stil",
+                "Barocker Stil",
+                "Byzantinischer Stil"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
         {
             "tag": [
                 "Italien",

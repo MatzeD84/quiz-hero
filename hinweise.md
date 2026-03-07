@@ -18,8 +18,8 @@ SEO:
     - minify CSS/JS
     - webP verwenden
 
-
-Bilder für florenz:
+---------------------- Florenz ----------------------
+Bildideen:
 - David
 - Palazzo Vecchio - Medici
 - Basilika Santa Maria Novella
@@ -32,6 +32,10 @@ Bilder für florenz:
 florenz.json
 - tags anpassen
 
+Themen:
+- Dom
+- Baptisterium 
+-----------------------------------------------------
 
 
 
