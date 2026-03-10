@@ -2257,9 +2257,126 @@
                 "knowledgeConfidence": 0.9
             }
         },
-
-
-
+        {
+            "tag": [
+                "Accademia",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Kunstmuseum in Florenz ist vor allem für Michelangelos Statue „David“ bekannt?",
+            "answers": [
+                "Galleria degli Uffizi",
+                "Museo Bargello",
+                "Galleria dell'Accademia",
+                "Palazzo Pitti"
+            ],
+            "backgroundKnowledge": "Die Galleria dell'Accademia ist eines der meistbesuchten Museen von Florenz und beherbergt Michelangelos berühmte Statue „David“.",
+            "correct": 2,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/galleria_dell_accademia.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Accademia"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Statue von Michelangelo befindet sich in der Galleria dell'Accademia?",
+            "answers": [
+                "David",
+                "Moses",
+                "Pietà",
+                "Apollo"
+            ],
+            "backgroundKnowledge": "Michelangelos „David“ ist eines der bekanntesten Meisterwerke der Renaissance und steht heute in der Accademia.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/galleria-dellaccademia-michelangelos-david-und-mehr/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Accademia"
+            ],
+            "type": "text",
+            "question": "Welche unvollendeten Skulpturen Michelangelos befinden sich ebenfalls in der Accademia?",
+            "answers": [
+                "Die Gefangenen",
+                "Die Titanen",
+                "Die Apostel",
+                "Die Helden"
+            ],
+            "backgroundKnowledge": "Die sogenannten „Prigioni“ oder „Gefangenen“ zeigen Figuren, die scheinbar aus dem Stein herausbrechen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/galleria-dellaccademia-michelangelos-david-und-mehr/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Accademia"
+            ],
+            "type": "text",
+            "question": "Welches Detail ist besonders auffällig an Michelangelos „David“?",
+            "answers": [
+                "Überproportional große Hände",
+                "Flügel auf dem Rücken",
+                "Krone auf dem Kopf",
+                "Rüstung am Körper"
+            ],
+            "backgroundKnowledge": "Michelangelo vergrößerte Hände und Kopf leicht, um die Perspektive von unten zu korrigieren.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "http://www.florentinermuseen.com/musei/david_von_michelangelo.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Accademia",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche Kunstgattung dominiert die Sammlung der Accademia besonders?",
+            "answers": [
+                "Skulptur",
+                "Fotografie",
+                "Architekturmodelle",
+                "Keramik"
+            ],
+            "backgroundKnowledge": "Die Accademia ist besonders für ihre Renaissance-Skulpturen bekannt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/attraktionen/die-galleria-dellaccademia-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
         {
             "tag": [
                 "Italien",

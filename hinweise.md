@@ -44,6 +44,8 @@ Bildideen:
 - Die Anbetung der Könige - Leonardo da Vinci
 - Girolamo Savonarola
 - Herkules und Cacus von Baccio Bandinelli
+- Galleria dell'Accademia
+- „Prigioni“ oder „Gefangenen“ - Michelangelo
 
 florenz.json
 - tags anpassen
@@ -53,6 +55,8 @@ Themen:
 - Baptisterium 
 - Palazzo Vecchio Florenz
 - Piazza della Signoria
+- Uffizien
+- Galleria dell'Accademia
 
 
 
