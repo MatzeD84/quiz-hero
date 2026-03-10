@@ -28,6 +28,12 @@ Bildideen:
 - Basilika Santa Croce
 - Niccolò Machiavelli
 - Piazza del Duomo
+- Perseus mit dem Haupt der Medusa
+- Loggia dei Lanzi
+- Bartolomeo Ammannat
+- Uffizien
+- Girolamo Savonarola
+- Herkules und Cacus von Baccio Bandinelli
 
 florenz.json
 - tags anpassen
@@ -36,12 +42,12 @@ Themen:
 - Dom
 - Baptisterium 
 - Palazzo Vecchio Florenz
+- Piazza della Signoria
 
 
 
 Frage-Ideen:
 - Vasari-Korridor (paar Fragen schon drin)
-- Piazza della Signoria
 - Loggia dei Lanzi
 - Via dei Calzaiuoli
 -----------------------------------------------------

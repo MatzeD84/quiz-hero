@@ -1420,30 +1420,6 @@
         {
             "tag": [
                 "Kunst",
-                "Skulptur"
-            ],
-            "type": "text",
-            "question": "Welche Skulptur befindet sich ebenfalls vor dem Palazzo Vecchio auf der Piazza della Signoria?",
-            "answers": [
-                "Pietà",
-                "Herkules und Cacus",
-                "Apollo und Daphne",
-                "Perseus und Medusa"
-            ],
-            "backgroundKnowledge": "Die Statue Herkules und Cacus wurde von Baccio Bandinelli geschaffen.",
-            "correct": 1,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://florenztipps.de/palazzo_vecchio.html",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.85
-            }
-        },
-        {
-            "tag": [
-                "Kunst",
                 "Florenz"
             ],
             "type": "text",
@@ -1607,6 +1583,294 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Piazza della Signoria"
+            ],
+            "type": "text",
+            "question": "Wie heißt der zentrale historische Platz vor dem Palazzo Vecchio in Florenz?",
+            "answers": [
+                "Piazza della Signoria",
+                "Piazza del Duomo",
+                "Piazza Santa Croce",
+                "Piazza della Repubblica"
+            ],
+            "backgroundKnowledge": "Die Piazza della Signoria ist seit Jahrhunderten das politische Zentrum von Florenz.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazza_della_Signoria",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Gebäude dominiert die Piazza della Signoria?",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Uffizien",
+                "Bargello"
+            ],
+            "backgroundKnowledge": "Der Palazzo Vecchio mit seinem hohen Turm ist das Wahrzeichen des Platzes.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazza_della_Signoria",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte offene Skulpturenhalle befindet sich an der Piazza della Signoria?",
+            "answers": [
+                "Loggia Medici",
+                "Loggia dei Lanzi",
+                "Loggia Vecchia",
+                "Loggia Firenze"
+            ],
+            "backgroundKnowledge": "Die Loggia dei Lanzi ist eine offene Galerie mit bedeutenden Renaissance-Skulpturen.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Loggia_dei_Lanzi",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Brunnen befindet sich auf der Piazza della Signoria?",
+            "answers": [
+                "Trevi-Brunnen",
+                "Neptunbrunnen",
+                "Fontana del Porcellino",
+                "Barcaccia-Brunnen"
+            ],
+            "backgroundKnowledge": "Der Neptunbrunnen wurde im 16. Jahrhundert errichtet und ist ein bekanntes Wahrzeichen des Platzes.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Neptunbrunnen_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Wer schuf die Statue des Neptunbrunnens auf der Piazza della Signoria?",
+            "answers": [
+                "Michelangelo",
+                "Donatello",
+                "Bartolomeo Ammannati",
+                "Giotto"
+            ],
+            "backgroundKnowledge": "Der Bildhauer Bartolomeo Ammannati entwarf den Neptunbrunnen im Auftrag der Medici.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Neptunbrunnen_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche politische Funktion hatte die Piazza della Signoria im Mittelalter?",
+            "answers": [
+                "Universitätsplatz",
+                "Handelsmarkt",
+                "Militärlager",
+                "Zentrum der Regierung von Florenz"
+            ],
+            "backgroundKnowledge": "Der Platz war das politische Herz der Republik Florenz.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazza_della_Signoria",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Skulptur von Giambologna steht in der Loggia dei Lanzi?",
+            "answers": [
+                "Pietà",
+                "Apollo",
+                "Moses",
+                "Raub der Sabinerinnen"
+            ],
+            "backgroundKnowledge": "Die Skulptur „Raub der Sabinerinnen“ ist ein bedeutendes Werk des Manierismus.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Raub_der_Sabinerinnen_(Giambologna)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Museum grenzt direkt an die Piazza della Signoria?",
+            "answers": [
+                "Uffizien",
+                "Accademia",
+                "Bargello",
+                "Museo Galileo"
+            ],
+            "backgroundKnowledge": "Die Uffizien befinden sich direkt neben dem Palazzo Vecchio.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Dominikanermönch hielt hier im 15. Jahrhundert politische Predigten?",
+            "answers": [
+                "Girolamo Savonarola",
+                "Thomas von Aquin",
+                "Dominikus",
+                "Bernhard von Clairvaux"
+            ],
+            "backgroundKnowledge": "Savonarola übte zeitweise großen politischen Einfluss auf Florenz aus.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Girolamo_Savonarola",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welches Ereignis ließ Savonarola auf der Piazza della Signoria veranstalten?",
+            "answers": [
+                "Triumphzug der Medici",
+                "Feuer der Eitelkeiten",
+                "Florentiner Markt",
+                "Kunstfestival"
+            ],
+            "backgroundKnowledge": "Der Dominikanermönch Savonarola hielt hier im 15. Jahrhundert politische Predigten. Beim „Feuer der Eitelkeiten“ wurden Luxusgegenstände öffentlich verbrannt.",
+            "correct": 1,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Feuer_der_Eitelkeiten",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Statue steht neben dem Eingang des Palazzo Vecchio als Symbol für Stärke?",
+            "answers": [
+                "Apollo und Daphne",
+                "Laokoon",
+                "Herkules und Cacus",
+                "Mars"
+            ],
+            "backgroundKnowledge": "Die Statue Herkules und Cacus wurde von Baccio Bandinelli geschaffen.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/piazza_della_signoria.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Institution regierte Florenz im Mittelalter vom Palazzo Vecchio aus?",
+            "answers": [
+                "Medici-Konzil",
+                "Florentiner Parlament",
+                "Römischer Senat",
+                "Signoria"
+            ],
+            "backgroundKnowledge": "Die Signoria war das oberste Regierungsgremium der Republik Florenz.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Signoria_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
             }
         },
         {
