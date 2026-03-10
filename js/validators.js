@@ -107,8 +107,8 @@ export function validateCategories(categories) {
                 if ('generatedAt' in meta && typeof meta.generatedAt !== 'string') {
                     errors.push(`meta.generatedAt in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
                 }
-                if ('verifiedGPT' in meta && typeof meta.verifiedGPT !== 'string') {
-                    errors.push(`meta.verifiedGPT in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein string sein.`);
+                if ('verifiedGPT' in meta && typeof meta.verifiedGPT !== 'boolean') {
+                    errors.push(`meta.verifiedGPT in Frage ${questionIndex + 1} von Kategorie ${category.id} muss ein boolean sein.`);
                 }
                 if ('knowledgeConfidence' in meta && typeof meta.knowledgeConfidence !== 'number') {
                     errors.push(`meta.knowledgeConfidence in Frage ${questionIndex + 1} von Kategorie ${category.id} muss eine number sein.`);
