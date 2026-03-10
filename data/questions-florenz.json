@@ -1755,30 +1755,6 @@
         },
         {
             "tag": [
-                "Architektur",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welches Museum grenzt direkt an die Piazza della Signoria?",
-            "answers": [
-                "Uffizien",
-                "Accademia",
-                "Bargello",
-                "Museo Galileo"
-            ],
-            "backgroundKnowledge": "Die Uffizien befinden sich direkt neben dem Palazzo Vecchio.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Geschichte",
                 "Florenz"
             ],
@@ -1873,6 +1849,417 @@
                 "knowledgeConfidence": 0.9
             }
         },
+        {
+            "tag": [
+                "Uffizien",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Wie heißt das berühmte Kunstmuseum in Florenz, das zu den bedeutendsten der Welt zählt?",
+            "answers": [
+                "Galleria dell’Accademia",
+                "Galleria degli Uffizi",
+                "Museo Galileo",
+                "Palazzo Pitti Museum"
+            ],
+            "backgroundKnowledge": "Die Uffizien gehören zu den bekanntesten Kunstmuseen der Welt und beherbergen zahlreiche Meisterwerke der Renaissance.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Herrscher ließ die Uffizien ursprünglich bauen?",
+            "answers": [
+                "Cosimo I. de’ Medici",
+                "Lorenzo de’ Medici",
+                "Francesco I. de’ Medici",
+                "Piero de’ Medici"
+            ],
+            "backgroundKnowledge": "Cosimo I. de’ Medici ließ den Bau der Uffizien im 16. Jahrhundert beginnen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Architektur",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher Architekt entwarf das Gebäude der Uffizien?",
+            "answers": [
+                "Donatello",
+                "Michelangelo",
+                "Giorgio Vasari",
+                "Brunelleschi"
+            ],
+            "backgroundKnowledge": "Der Künstler und Architekt Giorgio Vasari entwarf das Gebäude der Uffizien im Auftrag der Medici.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Geschichte",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Wofür wurde das Gebäude der Uffizien ursprünglich gebaut?",
+            "answers": [
+                "Als Universität",
+                "Als Regierungsbüros",
+                "Als königlicher Palast",
+                "Als Militärlager"
+            ],
+            "backgroundKnowledge": "Der Name „Uffizien“ bedeutet „Büros“, da das Gebäude ursprünglich Verwaltungsbüros beherbergte.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Gemälde von Sandro Botticelli befindet sich in den Uffizien?",
+            "answers": [
+                "Die Geburt der Venus",
+                "Die Mona Lisa",
+                "Die Schule von Athen",
+                "Die Nachtwache"
+            ],
+            "backgroundKnowledge": "Botticellis „Geburt der Venus“ gehört zu den berühmtesten Werken der Renaissance.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welches weitere berühmte Botticelli-Gemälde befindet sich ebenfalls in den Uffizien?",
+            "answers": [
+                "Primavera",
+                "Die Nacht",
+                "Guernica",
+                "Das Abendmahl"
+            ],
+            "backgroundKnowledge": "Das Gemälde „Primavera“ gehört zu den bekanntesten Werken Botticellis und wird in den Uffizien ausgestellt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Gemälde von Leonardo da Vinci befindet sich in den Uffizien?",
+            "answers": [
+                "Verkündigung",
+                "Mona Lisa",
+                "Das Abendmahl",
+                "Johannes der Täufer"
+            ],
+            "backgroundKnowledge": "Leonardos Gemälde „Verkündigung“ ist eines der bedeutenden Werke der Uffizien.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Maler der Renaissance schuf das Gemälde „Tondo Doni“, das ebenfalls in den Uffizien zu sehen ist?",
+            "answers": [
+                "Raphael",
+                "Michelangelo",
+                "Titian",
+                "Caravaggio"
+            ],
+            "backgroundKnowledge": "Das „Tondo Doni“ ist eines der wenigen erhaltenen Tafelbilder von Michelangelo.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Tondo_Doni",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Barockmaler ist mit mehreren Werken in den Uffizien vertreten?",
+            "answers": [
+                "Caravaggio",
+                "Claude Monet",
+                "Vincent van Gogh",
+                "Edvard Munch"
+            ],
+            "backgroundKnowledge": "Caravaggio gehört zu den bedeutendsten Barockmalern und ist in den Uffizien vertreten.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Maler der Renaissance schuf das berühmte Werk „Madonna del Cardellino“, das in den Uffizien ausgestellt ist?",
+            "answers": [
+                "Raphael",
+                "Donatello",
+                "Giotto",
+                "Botticelli"
+            ],
+            "backgroundKnowledge": "Raphaels „Madonna del Cardellino“ gehört zu den bedeutenden Werken der Renaissance in den Uffizien.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler malte das Werk „Bacchus“, das sich in den Uffizien befindet?",
+            "answers": [
+                "Caravaggio",
+                "Michelangelo",
+                "Raphael",
+                "Titian"
+            ],
+            "backgroundKnowledge": "Caravaggios „Bacchus“ gehört zu den bekannten Gemälden der Galerie.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welches berühmte Selbstporträt ist Teil der Sammlung der Uffizien?",
+            "answers": [
+                "Rembrandt",
+                "Leonardo da Vinci",
+                "Vincent van Gogh",
+                "Claude Monet"
+            ],
+            "backgroundKnowledge": "Die Uffizien besitzen eine berühmte Sammlung von Künstler-Selbstporträts, darunter auch Werke von Rembrandt.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Uffizien",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler malte das Werk „Medusa“, das in den Uffizien ausgestellt ist?",
+            "answers": [
+                "Caravaggio",
+                "Titian",
+                "Raphael",
+                "Michelangelo"
+            ],
+            "backgroundKnowledge": "Caravaggios Gemälde „Medusa“ ist eines der berühmten Werke der Uffizien.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler schuf das berühmte Werk „Venus von Urbino“, das in den Uffizien zu sehen ist?",
+            "answers": [
+                "Raphael",
+                "Titian",
+                "Caravaggio",
+                "Botticelli"
+            ],
+            "backgroundKnowledge": "Die „Venus von Urbino“ ist eines der bekanntesten Werke von Titian.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Venus_von_Urbino",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler malte das Werk „Die Anbetung der Könige“, das in den Uffizien ausgestellt ist?",
+            "answers": [
+                "Leonardo da Vinci",
+                "Raphael",
+                "Michelangelo",
+                "Giotto"
+            ],
+            "backgroundKnowledge": "Leonardos unvollendetes Gemälde „Anbetung der Könige“ befindet sich in den Uffizien.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Anbetung_der_K%C3%B6nige_(Leonardo_da_Vinci)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler schuf das Werk „Flora“, das in den Uffizien ausgestellt ist?",
+            "answers": [
+                "Titian",
+                "Raphael",
+                "Michelangelo",
+                "Caravaggio"
+            ],
+            "backgroundKnowledge": "Tizians Gemälde „Flora“ gehört zu den bedeutenden Renaissancewerken der Galerie.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.85
+            }
+        },
+        {
+            "tag": [
+                "Kunst",
+                "Uffizien"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler malte das Werk „Madonna mit dem Stieglitz“, das in den Uffizien ausgestellt ist?",
+            "answers": [
+                "Raphael",
+                "Botticelli",
+                "Titian",
+                "Caravaggio"
+            ],
+            "backgroundKnowledge": "Raphaels „Madonna mit dem Stieglitz“ gehört zu den bekanntesten Renaissancegemälden der Galerie.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/10-meisterwerke-in-der-galerie-der-uffizien-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+
+
+
         {
             "tag": [
                 "Italien",

@@ -32,6 +32,16 @@ Bildideen:
 - Loggia dei Lanzi
 - Bartolomeo Ammannat
 - Uffizien
+- Primavera von Botticelli
+- Verkündigung von Leonardo da Vinci
+- „Tondo Doni“ - Michelangelo
+- „Madonna del Cardellino“ - Raphael
+- „Bacchus“ - Caravaggio
+- „Medusa“ - Caravaggio
+- „Venus von Urbino“ - Titian
+- „Flora“ - Titian
+- Madonna mit dem Stieglitz - Raphael
+- Die Anbetung der Könige - Leonardo da Vinci
 - Girolamo Savonarola
 - Herkules und Cacus von Baccio Bandinelli
 
