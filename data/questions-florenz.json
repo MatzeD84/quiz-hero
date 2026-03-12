@@ -2379,6 +2379,306 @@
         },
         {
             "tag": [
+                "Santa Croce",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Wie heißt die berühmte Franziskanerkirche in Florenz, in der viele berühmte Italiener begraben sind?",
+            "imageUrl": "",
+            "answers": [
+                "Basilica di Santa Croce",
+                "Santa Maria Novella",
+                "San Lorenzo",
+                "Santa Trinita"
+            ],
+            "backgroundKnowledge": "Die Basilica di Santa Croce ist eine der wichtigsten Kirchen von Florenz und wird oft als „Pantheon von Florenz“ bezeichnet.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "Welcher Orden errichtete die Basilica di Santa Croce in Florenz?",
+            "imageUrl": "",
+            "answers": [
+                "Franziskaner",
+                "Dominikaner",
+                "Jesuiten",
+                "Benediktiner"
+            ],
+            "backgroundKnowledge": "Die Kirche wurde von Franziskanermönchen gegründet und ist bis heute mit diesem Orden verbunden.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Warum wird Santa Croce häufig als „Pantheon von Florenz“ bezeichnet?",
+            "imageUrl": "",
+            "answers": [
+                "Weil sie die größte Kirche der Stadt ist",
+                "Weil dort viele berühmte Persönlichkeiten begraben sind",
+                "Weil sie ein römischer Tempel war",
+                "Weil sie ein Museum enthält"
+            ],
+            "backgroundKnowledge": "In Santa Croce befinden sich Grabmäler vieler bedeutender Italiener wie Michelangelo, Galileo und Machiavelli.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/attraktionen/monumentaler-komplex-von-santa-croce-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Künstler ist in der Basilica di Santa Croce begraben?",
+            "imageUrl": "",
+            "answers": [
+                "Raphael",
+                "Michelangelo",
+                "Leonardo da Vinci",
+                "Donatello"
+            ],
+            "backgroundKnowledge": "Michelangelo Buonarroti wurde 1564 in Santa Croce beigesetzt.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Wissenschaft"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Wissenschaftler hat ein Grab in der Basilica di Santa Croce?",
+            "imageUrl": "",
+            "answers": [
+                "Isaac Newton",
+                "Nikolaus Kopernikus",
+                "Galileo Galilei",
+                "Albert Einstein"
+            ],
+            "backgroundKnowledge": "Galileo Galilei wurde 1737 in Santa Croce beigesetzt.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welcher Künstler schuf berühmte Fresken in der Basilica di Santa Croce?",
+            "imageUrl": "",
+            "answers": [
+                "Caravaggio",
+                "Raphael",
+                "Giotto",
+                "Michelangelo"
+            ],
+            "backgroundKnowledge": "Giotto und seine Schüler schufen bedeutende Freskenzyklen in den Kapellen der Kirche.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/die-basilika-santa-croce.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Dichter hat ein Grabdenkmal in Santa Croce, obwohl er dort nicht begraben ist?",
+            "imageUrl": "",
+            "answers": [
+                "Petrarca",
+                "Boccaccio",
+                "Torquato Tasso",
+                "Dante Alighieri"
+            ],
+            "backgroundKnowledge": "Dante starb im Exil in Ravenna; in Santa Croce befindet sich nur ein Ehrenmonument.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Familie finanzierte viele Kapellen in Santa Croce?",
+            "imageUrl": "",
+            "answers": [
+                "Bardi",
+                "Medici",
+                "Sforza",
+                "Borgia"
+            ],
+            "backgroundKnowledge": "Die Familie Bardi gehörte zu den wichtigsten Förderern der Kapellen in Santa Croce.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/die-basilika-santa-croce.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Renaissance-Künstler schuf das Grabmal für Michelangelo in Santa Croce?",
+            "imageUrl": "",
+            "answers": [
+                "Giorgio Vasari",
+                "Donatello",
+                "Brunelleschi",
+                "Giotto"
+            ],
+            "backgroundKnowledge": "Das Grabmal Michelangelos in Santa Croce wurde von Giorgio Vasari entworfen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmten Freskenzyklen von Giotto befinden sich in Kapellen von Santa Croce?",
+            "imageUrl": "",
+            "answers": [
+                "Szenen aus der Genesis",
+                "Szenen aus dem Leben des heiligen Franziskus",
+                "Szenen aus dem Leben Jesu",
+                "Szenen aus der Apokalypse"
+            ],
+            "backgroundKnowledge": "Giotto schuf bedeutende Fresken in der Bardi- und Peruzzi-Kapelle der Basilika.",
+            "correct": 1,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Santa_Croce_(Florenz)",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Wie wird der große Innenhof des Klosterkomplexes von Santa Croce genannt?",
+            "imageUrl": "",
+            "answers": [
+                "Atrium",
+                "Peristyl",
+                "Chiostro",
+                "Forum"
+            ],
+            "backgroundKnowledge": "Der Komplex von Santa Croce besitzt mehrere Kreuzgänge (Chiostri).",
+            "correct": 2,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "http://www.florentinermuseen.com/musei/santa_croce_museum.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Santa Croce",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmte florentinische Familie ist ebenfalls mit Grabmälern in Santa Croce vertreten?",
+            "imageUrl": "",
+            "answers": [
+                "Sforza",
+                "Este",
+                "Gonzaga",
+                "Medici"
+            ],
+            "backgroundKnowledge": "Mitglieder der Medici-Familie sind in verschiedenen Monumenten der Kirche geehrt.",
+            "correct": 3,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/attraktionen/monumentaler-komplex-von-santa-croce-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Architektur",
                 "Sehenswürdigkeit",

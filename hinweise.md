@@ -46,6 +46,7 @@ Bildideen:
 - Herkules und Cacus von Baccio Bandinelli
 - Galleria dell'Accademia
 - „Prigioni“ oder „Gefangenen“ - Michelangelo
+- Basilica di Santa Croce
 
 florenz.json
 - tags anpassen
@@ -57,6 +58,7 @@ Themen:
 - Piazza della Signoria
 - Uffizien
 - Galleria dell'Accademia
+- Basilica di Santa Croce
 
 
 
