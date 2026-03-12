@@ -2680,32 +2680,6 @@
         {
             "tag": [
                 "Italien",
-                "Architektur",
-                "Sehenswürdigkeit",
-                "Geschichte"
-            ],
-            "type": "text",
-            "question": "Welche bedeutende Kirche in Florenz ist bekannt für ihre beeindruckende Fassade und ihre historischen Fresken?",
-            "answers": [
-                "Basilika Santa Maria Novella",
-                "Basilika Santa Croce",
-                "Basilika San Lorenzo",
-                "Basilika San Miniato al Monte"
-            ],
-            "backgroundKnowledge": "Im Inneren befindet sich Masaccios Fresko „Die Heilige Dreifaltigkeit“, eines der ersten Werke mit perfekter Zentralperspektive.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "",
-                "generatedAt": "",
-                "verifiedGPT": false,
-                "knowledgeConfidence": 0
-            }
-        },
-        {
-            "tag": [
-                "Italien",
                 "Renaissance",
                 "Architektur"
             ],
@@ -2726,6 +2700,181 @@
                 "generatedAt": "",
                 "verifiedGPT": false,
                 "knowledgeConfidence": 0
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher große Renaissancepalast liegt südlich des Flusses Arno in Florenz?",
+            "imageUrl": "",
+            "answers": [
+                "Palazzo Vecchio",
+                "Palazzo Pitti",
+                "Palazzo Strozzi",
+                "Palazzo Medici"
+            ],
+            "backgroundKnowledge": "Der Palazzo Pitti ist einer der größten Paläste von Florenz und befindet sich südlich des Arno.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Pitti",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Familie kaufte später den Palazzo Pitti und machte ihn zu ihrer Hauptresidenz?",
+            "imageUrl": "",
+            "answers": [
+                "Medici",
+                "Borgia",
+                "Sforza",
+                "Este"
+            ],
+            "backgroundKnowledge": "Die Medici-Familie kaufte den Palast 1549 und nutzte ihn als Hauptresidenz.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Pitti",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welcher Architekt wird häufig mit dem ursprünglichen Entwurf des Palazzo Pitti in Verbindung gebracht?",
+            "imageUrl": "",
+            "answers": [
+                "Filippo Brunelleschi",
+                "Leon Battista Alberti",
+                "Giorgio Vasari",
+                "Arnolfo di Cambio"
+            ],
+            "backgroundKnowledge": "Der Entwurf wird häufig Filippo Brunelleschi zugeschrieben, obwohl dies historisch nicht völlig sicher ist.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Pitti",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welcher berühmte Garten befindet sich hinter dem Palazzo Pitti?",
+            "imageUrl": "",
+            "answers": [
+                "Villa Borghese",
+                "Giardino Bardini",
+                "Giardino dei Semplici",
+                "Boboli-Gärten"
+            ],
+            "backgroundKnowledge": "Die Boboli-Gärten sind ein großer historischer Park hinter dem Palazzo Pitti.",
+            "correct": 3,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Boboli-Garten",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Architektur"
+            ],
+            "type": "text",
+            "question": "Welches Baumaterial prägt die rustikale Fassade des Palazzo Pitti?",
+            "imageUrl": "",
+            "answers": [
+                "Marmor",
+                "Granit",
+                "Sandstein",
+                "Travertin"
+            ],
+            "backgroundKnowledge": "Die Fassade besteht aus rustikalem Sandstein, der dem Gebäude ein massives Aussehen verleiht.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/palazzo_pitti.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Museum"
+            ],
+            "type": "text",
+            "question": "Welche bedeutende Kunstsammlung befindet sich heute im Palazzo Pitti?",
+            "imageUrl": "",
+            "answers": [
+                "Galleria Borghese",
+                "Pinacoteca di Brera",
+                "Galleria Palatina",
+                "Museo Capitolino"
+            ],
+            "backgroundKnowledge": "Die Galleria Palatina im Palazzo Pitti zeigt zahlreiche Renaissancegemälde.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/palazzo-pitti.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Palazzo Pitti",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmten Künstler sind in der Galleria Palatina vertreten?",
+            "imageUrl": "",
+            "answers": [
+                "Monet und Renoir",
+                "Raphael und Titian",
+                "Picasso und Dalí",
+                "Van Gogh und Gauguin"
+            ],
+            "backgroundKnowledge": "Die Galleria Palatina enthält zahlreiche Werke von Raphael, Titian und anderen Renaissancekünstlern.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.florence-museum.com/de/palazzo-pitti.php",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
             }
         },
         {

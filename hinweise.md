@@ -59,6 +59,7 @@ Themen:
 - Uffizien
 - Galleria dell'Accademia
 - Basilica di Santa Croce
+- Palazzo Pitti
 
 
 
@@ -66,6 +67,7 @@ Frage-Ideen:
 - Vasari-Korridor (paar Fragen schon drin)
 - Loggia dei Lanzi
 - Via dei Calzaiuoli
+- Basilika Santa Maria Novella
 -----------------------------------------------------
 
 
