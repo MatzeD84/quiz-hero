@@ -2879,6 +2879,131 @@
         },
         {
             "tag": [
+                "Piazzale Michelangelo",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Wie heißt der berühmte Aussichtspunkt in Florenz, der einen Panoramablick über die Stadt bietet?",
+            "imageUrl": "",
+            "answers": [
+                "Piazzale Michelangelo",
+                "Piazza della Signoria",
+                "Piazza Santa Croce",
+                "Piazza del Duomo"
+            ],
+            "backgroundKnowledge": "Der Piazzale Michelangelo ist einer der bekanntesten Aussichtspunkte von Florenz mit Blick auf die Altstadt.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazzale_Michelangelo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Piazzale Michelangelo",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Auf welchem Hügel befindet sich der Piazzale Michelangelo?",
+            "imageUrl": "",
+            "answers": [
+                "Monte alle Croci",
+                "Monte Pincio",
+                "Monte Aventino",
+                "Monte Mario"
+            ],
+            "backgroundKnowledge": "Der Piazzale Michelangelo liegt auf dem Hügel Monte alle Croci südlich des Arno.",
+            "correct": 0,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazzale_Michelangelo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
+                "Piazzale Michelangelo",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welche berühmte Statue steht als Kopie auf dem Piazzale Michelangelo?",
+            "imageUrl": "",
+            "answers": [
+                "Moses",
+                "David",
+                "Pietà",
+                "Perseus"
+            ],
+            "backgroundKnowledge": "Auf dem Piazzale Michelangelo steht eine Bronze-Kopie der berühmten David-Statue von Michelangelo.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/piazzale_michelangelo.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Piazzale Michelangelo",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche Kirche liegt oberhalb des Piazzale Michelangelo auf dem Hügel?",
+            "imageUrl": "",
+            "answers": [
+                "Santa Croce",
+                "San Lorenzo",
+                "San Miniato al Monte",
+                "Santa Maria Novella"
+            ],
+            "backgroundKnowledge": "Die romanische Kirche San Miniato al Monte befindet sich oberhalb des Aussichtspunktes.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazzale_Michelangelo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Piazzale Michelangelo",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Neben der David-Kopie stehen auf dem Piazzale Michelangelo auch Kopien welcher weiteren Skulpturen Michelangelos?",
+            "imageUrl": "",
+            "answers": [
+                "Die Gefangenen",
+                "Die Pietà",
+                "Vier allegorische Figuren aus den Medici-Gräbern",
+                "Der Moses"
+            ],
+            "backgroundKnowledge": "Neben David stehen Kopien von vier allegorischen Figuren aus den Medici-Gräbern Michelangelos.",
+            "correct": 2,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/Piazzale_Michelangelo",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.8
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Kunst",
                 "Renaissance"

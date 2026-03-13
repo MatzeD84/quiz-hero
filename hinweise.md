@@ -60,6 +60,7 @@ Themen:
 - Galleria dell'Accademia
 - Basilica di Santa Croce
 - Palazzo Pitti
+- Piazzale Michelangelo
 
 
 
