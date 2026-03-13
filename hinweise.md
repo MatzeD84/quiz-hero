@@ -47,6 +47,7 @@ Bildideen:
 - Galleria dell'Accademia
 - „Prigioni“ oder „Gefangenen“ - Michelangelo
 - Basilica di Santa Croce
+- Basilica San Miniato al Monte
 
 florenz.json
 - tags anpassen

@@ -3004,6 +3004,106 @@
         },
         {
             "tag": [
+                "San Miniato",
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "Welchem Heiligen ist die Kirche San Miniato al Monte gewidmet?",
+            "imageUrl": "",
+            "answers": [
+                "Minias",
+                "Franziskus",
+                "Petrus",
+                "Dominikus"
+            ],
+            "backgroundKnowledge": "Die Kirche ist dem heiligen Minias gewidmet, einem frühen christlichen Märtyrer.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/San_Miniato_al_Monte",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "San Miniato",
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "In welchem Jahrhundert begann der Bau der Basilika San Miniato al Monte?",
+            "imageUrl": "",
+            "answers": [
+                "11. Jahrhundert",
+                "13. Jahrhundert",
+                "15. Jahrhundert",
+                "9. Jahrhundert"
+            ],
+            "backgroundKnowledge": "Der Bau der Kirche begann im Jahr 1018.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": false,
+                "sourceUrl": "https://de.wikipedia.org/wiki/San_Miniato_al_Monte",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "San Miniato",
+                "Kunst"
+            ],
+            "type": "text",
+            "question": "Welches Tier symbolisiert häufig den heiligen Minias in der Kunst der Basilika?",
+            "imageUrl": "",
+            "answers": [
+                "Hirsch",
+                "Löwe",
+                "Adler",
+                "Stier"
+            ],
+            "backgroundKnowledge": "Der heilige Minias wird häufig mit einem Löwen dargestellt.",
+            "correct": 1,
+            "difficulty": "hero",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "http://www.florentinermuseen.com/musei/san_miniato.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.75
+            }
+        },
+        {
+            "tag": [
+                "San Miniato",
+                "Geschichte"
+            ],
+            "type": "text",
+            "question": "Welche religiöse Gemeinschaft betreut heute die Basilika San Miniato al Monte?",
+            "imageUrl": "",
+            "answers": [
+                "Dominikaner",
+                "Franziskaner",
+                "Benediktiner",
+                "Jesuiten"
+            ],
+            "backgroundKnowledge": "Die Kirche wird heute von Benediktinermönchen betreut.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://de.wikipedia.org/wiki/San_Miniato_al_Monte",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
                 "Italien",
                 "Kunst",
                 "Renaissance"
