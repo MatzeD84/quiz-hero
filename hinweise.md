@@ -47,7 +47,7 @@ Bildideen:
 - Galleria dell'Accademia
 - „Prigioni“ oder „Gefangenen“ - Michelangelo
 - Basilica di Santa Croce
-- Basilica San Miniato al Monte
+
 
 florenz.json
 - tags anpassen
@@ -62,6 +62,8 @@ Themen:
 - Basilica di Santa Croce
 - Palazzo Pitti
 - Piazzale Michelangelo
+- Basilica San Miniato al Monte
+- Mercato Centrale: Markthalle Florenz
 
 
 

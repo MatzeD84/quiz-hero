@@ -3104,27 +3104,52 @@
         },
         {
             "tag": [
-                "Italien",
-                "Kunst",
-                "Renaissance"
+                "Mercato Centrale",
+                "Florenz"
             ],
             "type": "text",
-            "question": "Welches bedeutende Kunstwerk von Sandro Botticelli ist in den Uffizien in Florenz zu sehen?",
+            "question": "Wie heißt die berühmte Markthalle im Zentrum von Florenz nahe der Kirche San Lorenzo?",
+            "imageUrl": "",
             "answers": [
-                "Die Geburt der Venus",
-                "Primavera",
-                "Das letzte Abendmahl",
-                "Madonna mit Kind"
+                "Mercato Vecchio",
+                "Mercato Nuovo",
+                "Mercato San Marco",
+                "Mercato Centrale"
             ],
-            "backgroundKnowledge": "",
-            "correct": 0,
+            "backgroundKnowledge": "Der Mercato Centrale ist eine große Markthalle im historischen Zentrum von Florenz.",
+            "correct": 3,
             "difficulty": "easy",
             "meta": {
                 "verifiedFinal": true,
-                "sourceUrl": "",
-                "generatedAt": "",
-                "verifiedGPT": false,
-                "knowledgeConfidence": 0
+                "sourceUrl": "https://florenztipps.de/markt.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Mercato Centrale",
+                "Florenz"
+            ],
+            "type": "text",
+            "question": "Welche bekannte Leder- und Souvenirmarktstraße liegt in der Nähe des Mercato Centrale?",
+            "imageUrl": "",
+            "answers": [
+                "Via Roma",
+                "Mercato di San Lorenzo",
+                "Via Tornabuoni",
+                "Via dei Calzaiuoli"
+            ],
+            "backgroundKnowledge": "Der Markt von San Lorenzo befindet sich rund um die Markthalle.",
+            "correct": 1,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://florenztipps.de/markt.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
             }
         },
         {
