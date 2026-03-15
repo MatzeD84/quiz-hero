@@ -23,12 +23,12 @@ export class QuizDataService {
 
         const feedbackErrors = validateFeedback(feedback);
         if (feedbackErrors.length) {
-            throw new Error(`Ungültige feedback.json:\n${feedbackErrors.join('\n')}`);
+            throw new Error(`Ung\u00fcltige feedback.json:\n${feedbackErrors.join('\n')}`);
         }
 
         const tagErrors = validateTags(tagsData.tags ?? []);
         if (tagErrors.length) {
-            throw new Error(`Ungültige tags.json:\n${tagErrors.join('\n')}`);
+            throw new Error(`Ung\u00fcltige tags.json:\n${tagErrors.join('\n')}`);
         }
 
         const categories = categoriesManifest.categories ?? [];
@@ -46,7 +46,7 @@ export class QuizDataService {
 
         const validationErrors = validateCategories(categories);
         if (validationErrors.length > 0) {
-            throw new Error(`Ungültige categories/questions Daten:\n${validationErrors.join('\n')}`);
+            throw new Error(`Ung\u00fcltige categories/questions Daten:\n${validationErrors.join('\n')}`);
         }
 
         const tags = tagsData.tags ?? [];
