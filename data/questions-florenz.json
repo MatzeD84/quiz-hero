@@ -2384,7 +2384,7 @@
             ],
             "type": "text",
             "question": "Wie heißt die berühmte Franziskanerkirche in Florenz, in der viele berühmte Italiener begraben sind?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Basilica di Santa Croce",
                 "Santa Maria Novella",
@@ -2409,7 +2409,7 @@
             ],
             "type": "text",
             "question": "Welcher Orden errichtete die Basilica di Santa Croce in Florenz?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Franziskaner",
                 "Dominikaner",
@@ -2434,7 +2434,7 @@
             ],
             "type": "text",
             "question": "Warum wird Santa Croce häufig als „Pantheon von Florenz“ bezeichnet?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Weil sie die größte Kirche der Stadt ist",
                 "Weil dort viele berühmte Persönlichkeiten begraben sind",
@@ -2459,7 +2459,7 @@
             ],
             "type": "text",
             "question": "Welcher berühmte Künstler ist in der Basilica di Santa Croce begraben?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Raphael",
                 "Michelangelo",
@@ -2484,7 +2484,7 @@
             ],
             "type": "text",
             "question": "Welcher berühmte Wissenschaftler hat ein Grab in der Basilica di Santa Croce?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Isaac Newton",
                 "Nikolaus Kopernikus",
@@ -2509,7 +2509,7 @@
             ],
             "type": "text",
             "question": "Welcher Künstler schuf berühmte Fresken in der Basilica di Santa Croce?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Caravaggio",
                 "Raphael",
@@ -2534,7 +2534,7 @@
             ],
             "type": "text",
             "question": "Welcher berühmte Dichter hat ein Grabdenkmal in Santa Croce, obwohl er dort nicht begraben ist?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Petrarca",
                 "Boccaccio",
@@ -2559,7 +2559,7 @@
             ],
             "type": "text",
             "question": "Welche berühmte Familie finanzierte viele Kapellen in Santa Croce?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Bardi",
                 "Medici",
@@ -2584,7 +2584,7 @@
             ],
             "type": "text",
             "question": "Welcher berühmte Renaissance-Künstler schuf das Grabmal für Michelangelo in Santa Croce?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Giorgio Vasari",
                 "Donatello",
@@ -2609,7 +2609,7 @@
             ],
             "type": "text",
             "question": "Welche berühmten Freskenzyklen von Giotto befinden sich in Kapellen von Santa Croce?",
-            "imageUrl": "",
+            "imageUrl": "placeholder",
             "answers": [
                 "Szenen aus der Genesis",
                 "Szenen aus dem Leben des heiligen Franziskus",
@@ -2634,7 +2634,6 @@
             ],
             "type": "text",
             "question": "Wie wird der große Innenhof des Klosterkomplexes von Santa Croce genannt?",
-            "imageUrl": "",
             "answers": [
                 "Atrium",
                 "Peristyl",
@@ -2659,7 +2658,6 @@
             ],
             "type": "text",
             "question": "Welche berühmte florentinische Familie ist ebenfalls mit Grabmälern in Santa Croce vertreten?",
-            "imageUrl": "",
             "answers": [
                 "Sforza",
                 "Este",
@@ -2709,7 +2707,6 @@
             ],
             "type": "text",
             "question": "Welcher große Renaissancepalast liegt südlich des Flusses Arno in Florenz?",
-            "imageUrl": "",
             "answers": [
                 "Palazzo Vecchio",
                 "Palazzo Pitti",
@@ -2734,7 +2731,6 @@
             ],
             "type": "text",
             "question": "Welche berühmte Familie kaufte später den Palazzo Pitti und machte ihn zu ihrer Hauptresidenz?",
-            "imageUrl": "",
             "answers": [
                 "Medici",
                 "Borgia",
@@ -2759,7 +2755,6 @@
             ],
             "type": "text",
             "question": "Welcher Architekt wird häufig mit dem ursprünglichen Entwurf des Palazzo Pitti in Verbindung gebracht?",
-            "imageUrl": "",
             "answers": [
                 "Filippo Brunelleschi",
                 "Leon Battista Alberti",
@@ -2784,7 +2779,6 @@
             ],
             "type": "text",
             "question": "Welcher berühmte Garten befindet sich hinter dem Palazzo Pitti?",
-            "imageUrl": "",
             "answers": [
                 "Villa Borghese",
                 "Giardino Bardini",
@@ -2809,7 +2803,6 @@
             ],
             "type": "text",
             "question": "Welches Baumaterial prägt die rustikale Fassade des Palazzo Pitti?",
-            "imageUrl": "",
             "answers": [
                 "Marmor",
                 "Granit",
@@ -3147,6 +3140,356 @@
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://florenztipps.de/markt.html",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Wie heißt das majestätisches Gericht der florentinischen Küche?",
+            "imageUrl": "",
+            "answers": [
+                "Saltimbocca",
+                "Bistecca alla Fiorentina",
+                "Osso Buco",
+                "Vitello Tonnato"
+            ],
+            "backgroundKnowledge": "Die Bistecca alla Fiorentina ist ein großes T-Bone-Steak aus Chianina-Rind und eine der bekanntesten Spezialitäten aus Florenz.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.airdolomiti.de/reiseziele/florenz-de/was-essen/die-florentiner-kueche",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Street Food"
+            ],
+            "type": "text",
+            "question": "Wie heißt das berühmte florentinische Street-Food-Sandwich mit gekochtem Kuttelfleisch?",
+            "imageUrl": "",
+            "answers": [
+                "Panini Toscani",
+                "Porchetta",
+                "Lampredotto",
+                "Arancini"
+            ],
+            "backgroundKnowledge": "Lampredotto ist eine traditionelle Spezialität aus Florenz, bei der Rindermagen in Brühe gekocht und in Brot serviert wird.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.airdolomiti.de/reiseziele/florenz-de/was-essen/was-man-in-florenz-probieren-sollte-trippa-und-lampredotto",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Wie heißt ein traditioneller toskanischer Brotsalat aus Tomaten, altbackenem Brot und Olivenöl?",
+            "imageUrl": "",
+            "answers": [
+                "Panzanella",
+                "Caprese",
+                "Ribollita",
+                "Minestrone"
+            ],
+            "backgroundKnowledge": "Das Rezept geht auf die 'arme Küche' der toskanischen Küche zurück, denn er wird aus Brotresten zubereitet.",
+            "correct": 0,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/gastrofuehrer-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Was ist die Hauptzutat des traditionellen florentinischen Aperitivo-Gerichts „Crostini di Fegato“?",
+            "imageUrl": "",
+            "answers": [
+                "Tomatensauce",
+                "Mozzarella",
+                "Leberaufstrich",
+                "Trüffel"
+            ],
+            "backgroundKnowledge": "Crostini di Fegato sind geröstete Brotscheiben (Crostini), die mit einem Aufstrich aus Leber – oft Kalb, Huhn, Gans oder Ente – sowie Sardellen, Zwiebeln und Kapern serviert werden.",
+            "correct": 2,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Welche traditionelle toskanische Suppe wird aus Gemüse, Bohnen und Brot zubereitet?",
+            "imageUrl": "",
+            "answers": [
+                "Gazpacho",
+                "Borschtsch",
+                "Pho",
+                "Ribollita"
+            ],
+            "backgroundKnowledge": "Ribollita, was übersetzt so viel wie 'wiedergekocht' bedeutet, ist eine traditionelle toskanische Suppe mit einer langen Geschichte, die bis ins Mittelalter zurückreicht.",
+            "correct": 3,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Backwaren"
+            ],
+            "type": "text",
+            "question": "Wie heißt ein typisches toskanisches Mandelgebäck, das oft mit Vin Santo gegessen wird?",
+            "imageUrl": "",
+            "answers": [
+                "Cannoli",
+                "Cantucci",
+                "Biscotti",
+                "Panettone"
+            ],
+            "backgroundKnowledge": "Cantucci sind knusprige Mandelkekse aus der Toskana, die traditionell in Vin Santo getaucht werden.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.airdolomiti.de/reiseziele/florenz-de/was-essen/typische-feine-backwaren-aus-florenz-schiacciata-und-cantucci",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Backwaren"
+            ],
+            "type": "text",
+            "question": "Wie heißt das typische flache toskanische Brot oder Gebäck aus Florenz?",
+            "imageUrl": "",
+            "answers": [
+                "Focaccia",
+                "Ciabatta",
+                "Grissini",
+                "Schiacciata"
+            ],
+            "backgroundKnowledge": "Schiacciata ist ein traditionelles flaches Brot aus der Toskana. Focaccia ist eine ähnliche italienische Spezialität, aber Schiacciata ist spezifisch für die Toskana und Florenz.",
+            "correct": 3,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.airdolomiti.de/reiseziele/florenz-de/was-essen/typische-feine-backwaren-aus-florenz-schiacciata-und-cantucci",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Welches einfache Grundnahrungsmittel spielt in der toskanischen Küche traditionell eine große Rolle?",
+            "imageUrl": "",
+            "answers": [
+                "Brot ohne Salz",
+                "Reis",
+                "Kartoffeln",
+                "Mais"
+            ],
+            "backgroundKnowledge": "Toskanisches Brot wird traditionell ohne Salz gebacken.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Dessert"
+            ],
+            "type": "text",
+            "question": "Mit welchem Dessertwein werden Cantucci traditionell serviert?",
+            "imageUrl": "",
+            "answers": [
+                "Vin Santo",
+                "Chianti",
+                "Barolo",
+                "Prosecco"
+            ],
+            "backgroundKnowledge": "Cantucci werden traditionell in Vin Santo getaucht und gegessen.",
+            "correct": 0,
+            "difficulty": "medium",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.airdolomiti.de/reiseziele/florenz-de/was-essen/typische-feine-backwaren-aus-florenz-schiacciata-und-cantucci",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Dessert"
+            ],
+            "type": "image",
+            "question": "Wie heißt diese verführerische florentinische Nachspeise?",
+            "imageUrl": "placeholder",
+            "answers": [
+                "Cantucci",
+                "Schiacciata alla Fiorentina",
+                "Tiramisu",
+                "Panettone"
+            ],
+            "backgroundKnowledge": "Schiacciata alla Fiorentina ist ein florentinischer Biskuitkuchen mit Zitronen- und Vanillearoma. Er wird oft mit Puderzucker bestäubt, der häufig die florentinische Lilie (Giglio) zeigt.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Essen"
+            ],
+            "type": "text",
+            "question": "Welche berühmte toskanische Weinsorte wird häufig in Florenz getrunken?",
+            "imageUrl": "",
+            "answers": [
+                "Rioja",
+                "Chianti",
+                "Bordeaux",
+                "Merlot"
+            ],
+            "backgroundKnowledge": "Chianti ist einer der bekanntesten Weine der Toskana.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.visittuscany.com/de/ideen/gastrofuehrer-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.95
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Pasta"
+            ],
+            "type": "image",
+            "question": "Wie heißt dieses florentinische Pastagericht mit breiten Nudeln und Wildschweinragout?",
+            "imageUrl": "placeholder",
+            "answers": [
+                "Lasagne al Forno",
+                "Spaghetti Carbonara",
+                "Pappardelle al Cinghiale",
+                "Tagliatelle al Tartufo"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 2,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Pasta"
+            ],
+            "type": "image",
+            "question": "Wie heißen diese gefüllten Crêpes mit Ricotta und Spinat?",
+            "imageUrl": "placeholder",
+            "answers": [
+                "Cannelloni",
+                "Lasagne alla Bolognese",
+                "Gnocchi al Pesto",
+                "Crespelle alla Fiorentina"
+            ],
+            "backgroundKnowledge": "",
+            "correct": 3,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
+                "generatedAt": "2026-03-07",
+                "verifiedGPT": true,
+                "knowledgeConfidence": 0.9
+            }
+        },
+        {
+            "tag": [
+                "Florenz",
+                "Dessert"
+            ],
+            "type": "image",
+            "question": "Welches verführerische florentinische Dessert aus in Likör getränktem Biskuit, Sahne und Schokolade sehen Sie auf diesem Bild?",
+            "imageUrl": "placeholder",
+            "answers": [
+                "Tiramisu",
+                "Zuccotto",
+                "Panna Cotta",
+                "Cannoli"
+            ],
+            "backgroundKnowledge": "Zuccotto ist ein traditionelles Dessert aus Florenz, das bereits seit dem 16. Jahrhundert bekannt ist.",
+            "correct": 1,
+            "difficulty": "easy",
+            "meta": {
+                "verifiedFinal": true,
+                "sourceUrl": "https://www.museos.com/de/florenz/typisches-essen-in-florenz/",
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9

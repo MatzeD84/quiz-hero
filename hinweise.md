@@ -48,6 +48,18 @@ Bildideen:
 - „Prigioni“ oder „Gefangenen“ - Michelangelo
 - Basilica di Santa Croce
 
+Essen
+- Bistecca alla Fiorentina
+- Lampredotto
+- Panzanella
+- Crostini di Fegato
+- Ribollita
+- Schiacciata alla Fiorentina
+- Pappardelle Cinghiale
+- Crespelle alla Fiorentina
+- Zuccotto
+
+
 
 florenz.json
 - tags anpassen
@@ -64,6 +76,7 @@ Themen:
 - Piazzale Michelangelo
 - Basilica San Miniato al Monte
 - Mercato Centrale: Markthalle Florenz
+- kulinarisches Essen
 
 
 
