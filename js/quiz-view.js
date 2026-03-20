@@ -1,4 +1,5 @@
 import { CONFIG, LABELS, SELECTORS } from './config.js';
+import { applyImageWatermark, clearImageWatermark } from './image-watermark.js';
 
 export class QuizView {
     constructor(selectors = SELECTORS) {
@@ -267,6 +268,7 @@ export class QuizView {
     renderQuestion(question, meta) {
         const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, feedbackContainer, feedbackElement, nextButton } = this.elements;
         const { type, imageUrl, answers } = question;
+        const questionImageContainer = questionImage?.parentElement;
         const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
         const isHero = difficulty === 'hero';
         const headerLabel = difficulty === 'hero'
@@ -281,6 +283,9 @@ export class QuizView {
 
         const showImage = type === 'image' && Boolean(imageUrl);
         if (showImage) {
+            applyImageWatermark(questionImageContainer, {
+                label: 'KI generiert'
+            });
             questionImage.classList.add('hide');
             questionImage.src = '';
             const loader = new Image();
@@ -289,10 +294,12 @@ export class QuizView {
                 questionImage.classList.remove('hide');
             };
             loader.onerror = () => {
+                clearImageWatermark(questionImageContainer);
                 questionImage.classList.add('hide');
             };
             loader.src = imageUrl;
         } else {
+            clearImageWatermark(questionImageContainer);
             questionImage.classList.add('hide');
             questionImage.src = '';
         }
