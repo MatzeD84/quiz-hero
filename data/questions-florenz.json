@@ -8,7 +8,7 @@
             ],
             "type": "image",
             "question": "Welches berühmte Kunstwerk ist auf diesem Bild zu sehen?",
-            "imageUrl": "/images/italien/florenz/Michelangelo_David.jpg",
+            "imageUrl": "/images/italien/michelangelo-david.png",
             "answers": [
                 "David",
                 "Venus von Milo",
@@ -31,36 +31,11 @@
                 "Italien",
                 "Architektur",
                 "Sehenswürdigkeit",
-                "Geschichte"
-            ],
-            "type": "text",
-            "question": "Welches historische Gebäude in Florenz war einst die Residenz der Medici-Dynastie?",
-            "answers": [
-                "Palazzo Vecchio",
-                "Palazzo Pitti",
-                "Palazzo Medici-Riccardi",
-                "Palazzo Strozzi"
-            ],
-            "backgroundKnowledge": "Der markante Turm „Torre di Arnolfo“ prägt bis heute die Skyline von Florenz.",
-            "correct": 2,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "",
-                "generatedAt": "",
-                "verifiedGPT": false,
-                "knowledgeConfidence": 0
-            }
-        },
-        {
-            "tag": [
-                "Italien",
-                "Architektur",
-                "Sehenswürdigkeit",
                 "Religion"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welches bedeutende Bauwerk in Florenz ist für seine beeindruckende Kuppel bekannt, die von Brunelleschi entworfen wurde?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-kuppel.png",
             "answers": [
                 "Kathedrale von Florenz",
                 "Basilika Santa Croce",
@@ -83,8 +58,9 @@
                 "Architektur",
                 "Dom von Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie lautet der offizielle Name des Doms von Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-dom.png",
             "answers": [
                 "Santa Maria del Fiore",
                 "Santa Croce",
@@ -107,8 +83,9 @@
                 "Architektur",
                 "Kuppel"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Architekt entwarf die berühmte Kuppel des Doms von Florenz?",
+            "imageUrl": "/images/italien/filippo-brunelleschi.png",
             "answers": [
                 "Michelangelo",
                 "Filippo Brunelleschi",
@@ -128,35 +105,12 @@
         },
         {
             "tag": [
-                "Geschichte",
-                "Architektur"
-            ],
-            "type": "text",
-            "question": "In welchem Jahr begann der Bau des Doms von Florenz?",
-            "answers": [
-                "1296",
-                "1350",
-                "1401",
-                "1252"
-            ],
-            "backgroundKnowledge": "Der Bau begann 1296 nach einem Entwurf von Arnolfo di Cambio.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.95
-            }
-        },
-        {
-            "tag": [
                 "Architektur",
                 "Campanile"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie heißt der Glockenturm neben dem Dom von Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-2.png",
             "answers": [
                 "Torre Vecchia",
                 "Campanile di Giotto",
@@ -202,8 +156,9 @@
             "tag": [
                 "Religion"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Person ist der Dom von Florenz gewidmet?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-abend.png",
             "answers": [
                 "Johannes der Täufer",
                 "Maria",
@@ -249,8 +204,9 @@
                 "Kunst",
                 "Fresken"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welches Thema zeigt das große Fresko in der Kuppel des Doms von Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-deckenfresko.png",
             "answers": [
                 "Das Jüngste Gericht",
                 "Die Geburt Christi",
@@ -266,29 +222,6 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Konstruktion"
-            ],
-            "type": "text",
-            "question": "Welches spezielle Ziegelmuster nutzte Brunelleschi beim Bau der Domkuppel?",
-            "answers": [
-                "Schachbrettmuster",
-                "Fischgrätenmuster",
-                "Spiralmuster",
-                "Wellenmuster"
-            ],
-            "backgroundKnowledge": "Das sogenannte Fischgrätenmuster stabilisierte die Mauern während der Bauphase der riesigen Kuppel.",
-            "correct": 1,
-            "difficulty": "hero",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.85
             }
         },
         {
@@ -317,33 +250,11 @@
         },
         {
             "tag": [
-                "Architektur"
-            ],
-            "type": "text",
-            "question": "Wie viele Hauptschiffe besitzt der Dom von Florenz?",
-            "answers": [
-                "2",
-                "3",
-                "4",
-                "5"
-            ],
-            "backgroundKnowledge": "Der Dom hat ein breites Mittelschiff und zwei Seitenschiffe.",
-            "correct": 1,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Material"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher berühmte weiße Marmor wurde beim Bau des Doms verwendet?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-marmor.png",
             "answers": [
                 "Carrara-Marmor",
                 "Travertin",
@@ -356,29 +267,6 @@
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://florenztipps.de/kathedrale-von-florenz.html",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur"
-            ],
-            "type": "text",
-            "question": "Welches Bauelement krönt die Spitze der Domkuppel?",
-            "answers": [
-                "Laterne",
-                "Turm",
-                "Baldachin",
-                "Spitze"
-            ],
-            "backgroundKnowledge": "Die Laterne stabilisiert zusätzlich die Kuppelstruktur.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
@@ -459,54 +347,6 @@
         {
             "tag": [
                 "Architektur",
-                "Kuppel"
-            ],
-            "type": "text",
-            "question": "Warum war der Bau der Domkuppel lange Zeit schwierig?",
-            "answers": [
-                "Es fehlte eine technische Lösung für eine so große Kuppel",
-                "Es gab zu wenig Steine",
-                "Die Kirche wurde zerstört",
-                "Der Papst verbot den Bau"
-            ],
-            "backgroundKnowledge": "Die riesige Spannweite der Kuppel stellte Architekten jahrzehntelang vor ein ungelöstes technisches Problem.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
-                "Kuppel"
-            ],
-            "type": "text",
-            "question": "Aus welchem Material besteht der größte Teil der Domkuppel?",
-            "answers": [
-                "Backstein",
-                "Granit",
-                "Basalt",
-                "Sandstein"
-            ],
-            "backgroundKnowledge": "Die Kuppel wurde hauptsächlich aus Ziegeln gebaut, die in einem besonderen Muster angeordnet wurden.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://nationalgeographic.de/geschichte-und-kultur/2020/07/brunelleschis-wunder-der-dom-von-florenz/",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
                 "Campanile"
             ],
             "type": "text",
@@ -523,78 +363,6 @@
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Geschichte",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welche Institution organisierte den Bau und die Finanzierung des Doms?",
-            "answers": [
-                "Opera del Duomo",
-                "Vatikanrat",
-                "Florentiner Senat",
-                "Medici Bank"
-            ],
-            "backgroundKnowledge": "Die Opera del Duomo wurde gegründet, um Planung, Bau und Finanzierung der Kathedrale zu koordinieren.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Opera_del_Duomo",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Kunst",
-                "Skulptur"
-            ],
-            "type": "text",
-            "question": "Welche berühmte Statue von Michelangelo war ursprünglich für den Dom vorgesehen?",
-            "answers": [
-                "David",
-                "Moses",
-                "Pietà",
-                "Apollo"
-            ],
-            "backgroundKnowledge": "Michelangelos David wurde schließlich auf der Piazza della Signoria aufgestellt. Heute steht die Statue in der Galleria dell'Accademia in Florenz",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/David_(Michelangelo)",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
-                "Kuppel"
-            ],
-            "type": "text",
-            "question": "Welche Funktion erfüllt die Laterne an der Spitze der Domkuppel?",
-            "answers": [
-                "Sie stabilisiert zusätzlich die Kuppel",
-                "Sie dient als Glockenturm",
-                "Sie enthält eine Uhr",
-                "Sie ist nur dekorativ"
-            ],
-            "backgroundKnowledge": "Die Laterne wirkt wie ein zusätzlicher Druckpunkt und stabilisiert die Kuppelstruktur.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
@@ -622,30 +390,6 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Kunst",
-                "Architektur"
-            ],
-            "type": "text",
-            "question": "Welcher Künstler begann ursprünglich den Bau des Campanile (Glockenturm) im Jahr 1334?",
-            "answers": [
-                "Giotto",
-                "Donatello",
-                "Brunelleschi",
-                "Michelangelo"
-            ],
-            "backgroundKnowledge": "Der Glockenturm trägt deshalb den Namen Campanile di Giotto.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Giottos_Campanile",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.95
             }
         },
         {

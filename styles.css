@@ -396,14 +396,32 @@ a:hover {
 }
 
 .quiz__question_image_container {
+    position: relative;
+    margin: 0 auto;
     margin-bottom: 1rem;
-    max-height: max(300px, 30vh)
+    max-height: max(300px, 30vh);
+    width: max-content;
 }
 
 .quiz__question_image {
     max-inline-size: 100%;
     block-size: auto;
     max-height: max(300px, 30vh)
+}
+
+.quiz__question_image_container[data-image-watermark]::after {
+    content: attr(data-image-watermark);
+    position: absolute;
+    right: var(--gap-small);
+    bottom: 0.65rem;
+    z-index: 2;
+    padding: 0.18rem 0.45rem;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    line-height: 1;
+    color: var(--clouds-color);
+    background: var(--light-gray-color);
+    opacity: 0.6;
 }
 
 @media (max-width: 768px) {

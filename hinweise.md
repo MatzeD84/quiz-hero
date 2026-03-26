@@ -77,7 +77,7 @@ Themen:
 - Basilica San Miniato al Monte
 - Mercato Centrale: Markthalle Florenz
 - kulinarisches Essen
-
+- Piazza del Duomo
 
 
 Frage-Ideen:
@@ -85,6 +85,8 @@ Frage-Ideen:
 - Loggia dei Lanzi
 - Via dei Calzaiuoli
 - Basilika Santa Maria Novella
+- Palazzo Medici Riccardi
+- Piazza del Duomo
 -----------------------------------------------------
 
 
