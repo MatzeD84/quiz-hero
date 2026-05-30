@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz-Hero Admin</title>
+    <link rel="icon" type="image/png" href="/images/website/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="stylesheet" href="../fonts/fonts.css?v=20250211" />
+    <link rel="stylesheet" href="../styles.css?v=20250211" />
+</head>
+<body>
+    <main class="container admin-shell">
+        <header class="main__header">
+            <a class="main__logo-link" href="../index.html" title="Zur Quiz-Seite">
+                <img class="main_image" src="../images/website/logo.png" alt="Quiz-Hero" loading="eager">
+            </a>
+            <h1 class="main_headline">Quiz-Hero Admin</h1>
+        </header>
+
+        <section id="js-admin-login" class="admin-login">
+            <h2>Admin-Login</h2>
+            <label>Benutzername <input id="js-admin-user" type="text" autocomplete="username" value="admin"></label>
+            <label>Passwort <input id="js-admin-password" type="password" autocomplete="current-password"></label>
+            <button id="js-admin-login-btn" class="btn btn--modal" type="button">Einloggen</button>
+        </section>
+
+        <section id="js-admin-app" class="admin-hidden">
+            <div class="admin-toolbar">
+                <button id="js-admin-refresh" class="btn btn--modal" type="button">Daten neu laden</button>
+                <button id="js-admin-new-category" class="btn btn--modal" type="button">Neue Kategorie</button>
+                <button id="js-admin-new-question" class="btn btn--modal" type="button">Neue Frage</button>
+                <button id="js-admin-logout" class="btn btn--modal" type="button">Logout</button>
+            </div>
+            <div class="admin-layout">
+                <aside>
+                    <h2>Fragen</h2>
+                    <ul id="js-admin-question-list" class="admin-list"></ul>
+                </aside>
+                <section>
+                    <h2 id="js-admin-form-title">Frage bearbeiten</h2>
+                    <form id="js-admin-question-form" class="admin-form">
+                        <input id="js-admin-question-id" type="hidden">
+                        <label>Kategorie <select id="js-admin-category"></select></label>
+                        <label>Frage <textarea id="js-admin-question" required></textarea></label>
+                        <div class="admin-form__answers">
+                            <label>Antwort 1 <input class="js-admin-answer" type="text" required></label>
+                            <label>Antwort 2 <input class="js-admin-answer" type="text" required></label>
+                            <label>Antwort 3 <input class="js-admin-answer" type="text" required></label>
+                            <label>Antwort 4 <input class="js-admin-answer" type="text" required></label>
+                        </div>
+                        <label>Richtige Antwort <select id="js-admin-correct"><option value="0">Antwort 1</option><option value="1">Antwort 2</option><option value="2">Antwort 3</option><option value="3">Antwort 4</option></select></label>
+                        <label>Schwierigkeit <select id="js-admin-difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hero">Hero</option></select></label>
+                        <label>Typ <select id="js-admin-type"><option value="text">Text</option><option value="image">Bildfrage</option></select></label>
+                        <label>Bild-URL <input id="js-admin-image" type="text" placeholder="images/... oder https://..."></label>
+                        <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
+                        <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
+                        <label>Sortierung <input id="js-admin-sort" type="number" min="0" value="100"></label>
+                        <label><input id="js-admin-active" type="checkbox" checked> Aktiv</label>
+                        <div class="admin-actions">
+                            <button class="btn btn--modal" type="submit">Frage speichern</button>
+                            <button id="js-admin-delete" class="btn btn--modal" type="button">Frage löschen</button>
+                        </div>
+                    </form>
+
+                    <form id="js-admin-category-form" class="admin-form">
+                        <h2>Kategorie anlegen/bearbeiten</h2>
+                        <label>ID <input id="js-admin-category-id" type="text" placeholder="z-b-berlin"></label>
+                        <label>Titel <input id="js-admin-category-title" type="text"></label>
+                        <label>Beschreibung <input id="js-admin-category-description" type="text"></label>
+                        <label>SEO-Text <textarea id="js-admin-category-seo"></textarea></label>
+                        <label>Icon-URL <input id="js-admin-category-icon" type="text"></label>
+                        <label>Sortierung <input id="js-admin-category-sort" type="number" min="0" value="100"></label>
+                        <label><input id="js-admin-category-enabled" type="checkbox" checked> Aktiv</label>
+                        <label><input id="js-admin-category-badge-active" type="checkbox"> Badge anzeigen</label>
+                        <label>Badge-Text <input id="js-admin-category-badge-text" type="text" value="Neu"></label>
+                        <button class="btn btn--modal" type="submit">Kategorie speichern</button>
+                    </form>
+                </section>
+            </div>
+        </section>
+        <p id="js-admin-status" class="admin-status"></p>
+    </main>
+    <script type="module" src="../js/admin.js?v=20250211"></script>
+</body>
+</html>

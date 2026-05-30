@@ -39,7 +39,14 @@ export class QuizView {
             modal: document.querySelector(selectors.modal),
             modalContent: document.querySelector(selectors.modalContent),
             modalCloseButton: document.querySelector(selectors.modalCloseButton),
-            homeLinks: Array.from(document.querySelectorAll('.js-home-link'))
+            homeLinks: Array.from(document.querySelectorAll('.js-home-link')),
+            userPanel: document.querySelector(selectors.userPanel),
+            userForm: document.querySelector(selectors.userForm),
+            userNameInput: document.querySelector(selectors.userNameInput),
+            userImageInput: document.querySelector(selectors.userImageInput),
+            userStatus: document.querySelector(selectors.userStatus),
+            userPreview: document.querySelector(selectors.userPreview),
+            userLogoutButton: document.querySelector(selectors.userLogoutButton)
         };
     }
 
@@ -184,6 +191,50 @@ export class QuizView {
         if (!this.elements.quizSelectionLabel) return;
         this.elements.quizSelectionLabel.textContent = labelText || '';
         this.elements.quizSelectionLabel.classList.remove('hide');
+    }
+
+    renderUser(user) {
+        if (!this.elements.userPanel) return;
+        this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
+        if (this.elements.userNameInput) {
+            this.elements.userNameInput.value = user?.name || '';
+        }
+        if (this.elements.userImageInput) {
+            this.elements.userImageInput.value = user?.profileImageUrl || '';
+        }
+        if (this.elements.userPreview) {
+            this.elements.userPreview.innerHTML = '';
+            if (user?.profileImageUrl) {
+                const image = document.createElement('img');
+                image.src = user.profileImageUrl;
+                image.alt = `${user.name} Profilbild`;
+                image.loading = 'lazy';
+                this.elements.userPreview.appendChild(image);
+            }
+            const label = document.createElement('span');
+            label.textContent = user?.name ? `Angemeldet als ${user.name}` : 'Optional anmelden und Ergebnisse speichern';
+            this.elements.userPreview.appendChild(label);
+        }
+    }
+
+    renderUserStatus(message) {
+        if (this.elements.userStatus) {
+            this.elements.userStatus.textContent = message || '';
+        }
+    }
+
+    onUserLogin(callback) {
+        this.elements.userForm?.addEventListener('submit', event => {
+            event.preventDefault();
+            callback({
+                name: this.elements.userNameInput?.value || '',
+                profileImageUrl: this.elements.userImageInput?.value || ''
+            });
+        });
+    }
+
+    onUserLogout(callback) {
+        this.elements.userLogoutButton?.addEventListener('click', callback);
     }
 
     onCategorySelected(callback) {

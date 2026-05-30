@@ -738,3 +738,112 @@ details[open] summary::after {
 }
 
 
+
+.user-panel,
+.admin-shell {
+    background: rgba(255, 255, 255, 0.88);
+    border: 2px solid rgba(27, 92, 131, 0.16);
+    border-radius: 24px;
+    box-shadow: 0 18px 55px rgba(28, 56, 80, 0.12);
+    margin: 1.5rem auto;
+    max-width: 960px;
+    padding: 1rem;
+}
+
+.user-panel__preview {
+    align-items: center;
+    display: flex;
+    font-weight: 700;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.user-panel__preview img {
+    border-radius: 999px;
+    height: 52px;
+    object-fit: cover;
+    width: 52px;
+}
+
+.user-panel__form,
+.admin-form,
+.admin-login {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.user-panel__form {
+    grid-template-columns: minmax(160px, 1fr) minmax(180px, 1.5fr) auto auto;
+}
+
+.user-panel__form label,
+.admin-form label,
+.admin-login label {
+    display: grid;
+    font-weight: 700;
+    gap: 0.25rem;
+}
+
+.user-panel input,
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+    border: 2px solid rgba(27, 92, 131, 0.18);
+    border-radius: 14px;
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+}
+
+.user-panel__status,
+.admin-status {
+    min-height: 1.4rem;
+}
+
+.admin-actions,
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+.admin-layout {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
+}
+
+.admin-list {
+    display: grid;
+    gap: 0.65rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-list button {
+    text-align: left;
+    width: 100%;
+}
+
+.admin-form textarea {
+    min-height: 5rem;
+}
+
+.admin-form__answers {
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-hidden {
+    display: none !important;
+}
+
+@media (max-width: 760px) {
+    .user-panel__form,
+    .admin-layout,
+    .admin-form__answers {
+        grid-template-columns: 1fr;
+    }
+}

@@ -2,16 +2,23 @@ import { ASSET_VERSION, CONFIG } from './config.js';
 import { validateCategories, validateFeedback, validateTags } from './validators.js';
 
 export class QuizDataService {
-    constructor({ questionsUrl, tagsUrl, feedbackUrl, fetchFn = window.fetch.bind(window) }) {
+    constructor({ questionsUrl, tagsUrl, feedbackUrl, apiUrl = null, fetchFn = window.fetch.bind(window) }) {
         this.questionsUrl = questionsUrl;
         this.tagsUrl = tagsUrl;
         this.feedbackUrl = feedbackUrl;
+        this.apiUrl = apiUrl;
         this.fetchFn = fetchFn;
         this.cache = null;
     }
 
     async loadAll() {
         if (this.cache) {
+            return this.cache;
+        }
+
+        const apiData = await this.fetchFromApi();
+        if (apiData) {
+            this.cache = apiData;
             return this.cache;
         }
 
@@ -53,6 +60,41 @@ export class QuizDataService {
 
         this.cache = { categories, tags, feedback };
         return this.cache;
+    }
+
+
+    async fetchFromApi() {
+        if (!this.apiUrl) {
+            return null;
+        }
+        try {
+            const response = await this.fetchFn(`${this.apiUrl}?action=public-data`, { cache: 'no-store' });
+            if (!response.ok) {
+                return null;
+            }
+            const data = await response.json();
+            if (!data.ok) {
+                return null;
+            }
+            const categories = data.categories ?? [];
+            const tags = data.tags ?? [];
+            const feedback = data.feedback ?? {};
+            const validationErrors = [
+                ...validateFeedback(feedback),
+                ...validateTags(tags),
+                ...validateCategories(categories)
+            ];
+            if (validationErrors.length > 0) {
+                throw new Error(`Ungültige API-Daten:
+${validationErrors.join('\n')}`);
+            }
+            return { categories, tags, feedback };
+        } catch (error) {
+            if (CONFIG.devMode) {
+                console.warn('Datenbank-API nicht verfügbar, nutze JSON-Fallback.', error);
+            }
+            return null;
+        }
     }
 
     async fetchJson(url) {
