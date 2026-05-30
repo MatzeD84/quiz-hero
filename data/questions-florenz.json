@@ -158,7 +158,7 @@
             ],
             "type": "image",
             "question": "Welcher Person ist der Dom von Florenz gewidmet?",
-            "imageUrl": "/images/italien/florenz/florenz-dom-abend.png",
+            "imageUrl": "/images/italien/florenz/florenz-dom-fassade-2.png",
             "answers": [
                 "Johannes der Täufer",
                 "Maria",
@@ -180,8 +180,9 @@
             "tag": [
                 "Architektur"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche Form hat der Tambour (zylinderförmiger oder polygonaler Unterbau einer Kuppel) unter der Kuppel des Doms von Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-kuppel-2.png",
             "answers": [
                 "Quadrat",
                 "Kreis",
@@ -190,7 +191,7 @@
             ],
             "backgroundKnowledge": "Der achteckige Tambour trägt die massive Kuppel und ist von acht großen Rippen strukturiert.",
             "correct": 2,
-            "difficulty": "hero",
+            "difficulty": "medium",
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
@@ -229,8 +230,9 @@
                 "Architektur",
                 "Maße"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie hoch ist die Kuppel des Florentiner Doms ungefähr bis zur Laterne?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-4.png",
             "answers": [
                 "116 Meter",
                 "90 Meter",
@@ -274,35 +276,12 @@
         },
         {
             "tag": [
-                "Architektur",
-                "Dom von Florenz"
-            ],
-            "type": "text",
-            "question": "Auf welchem zentralen Platz steht der Dom von Florenz?",
-            "answers": [
-                "Piazza della Repubblica",
-                "Piazza del Duomo",
-                "Piazza Santa Croce",
-                "Piazza della Signoria"
-            ],
-            "backgroundKnowledge": "Die Piazza del Duomo bildet das religiöse Zentrum von Florenz und umfasst Dom, Baptisterium und Campanile.",
-            "correct": 1,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Dom_zu_Florenz",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Kunst",
                 "Fresken"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Künstler begann im 16. Jahrhundert das Fresko in der Domkuppel?",
+            "imageUrl": "/images/italien/giorgio-vasari.png",
             "answers": [
                 "Sandro Botticelli",
                 "Giorgio Vasari",
@@ -325,8 +304,9 @@
                 "Kunst",
                 "Fresken"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Künstler vollendete später das Fresko in der Domkuppel?",
+            "imageUrl": "/images/italien/federico-zuccari.png",
             "answers": [
                 "Caravaggio",
                 "Federico Zuccari",
@@ -349,8 +329,9 @@
                 "Architektur",
                 "Campanile"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie hoch ist der Campanile (der Glockenturm) ungefähr?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-glockenturm-2.png",
             "answers": [
                 "84 Meter",
                 "65 Meter",
@@ -373,8 +354,9 @@
                 "Geschichte",
                 "Architektur"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Warum wurde für den Bau der Domkuppel ein Wettbewerb ausgeschrieben?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-3.png",
             "answers": [
                 "Es gab lange keine technische Lösung für die riesige Kuppel",
                 "Der ursprüngliche Architekt starb plötzlich",
@@ -397,15 +379,16 @@
                 "Kunst",
                 "Dom von Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Künstler gestaltete berühmte Skulpturen für die Fassade und den Domkomplex?",
+            "imageUrl": "/images/italien/florenz/florenz-dom-prophetenfiguren.png",
             "answers": [
                 "Donatello",
                 "Raphael",
                 "Caravaggio",
                 "Bernini"
             ],
-            "backgroundKnowledge": "Donatello war einer der bedeutendsten Bildhauer der frühen Renaissance in Florenz.",
+            "backgroundKnowledge": "Donatellos Propheten rufen das Volk zur Umkehr und verkünden Gottes Strafgericht über die Sünde.",
             "correct": 0,
             "difficulty": "medium",
             "meta": {
@@ -421,8 +404,9 @@
                 "Architektur",
                 "Dom von Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welches Gebäude bildet zusammen mit Dom und Campanile den berühmten Domkomplex?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium.png",
             "answers": [
                 "Baptisterium",
                 "Palazzo Vecchio",
@@ -466,34 +450,11 @@
         },
         {
             "tag": [
-                "Architektur",
                 "Baptisterium"
             ],
-            "type": "text",
-            "question": "Welche Form besitzt das Baptisterium San Giovanni gegenüber dem Dom?",
-            "answers": [
-                "Achteckig",
-                "Quadratisch",
-                "Rund",
-                "Sechseckig"
-            ],
-            "backgroundKnowledge": "Das Baptisterium ist achteckig gebaut und eines der ältesten Gebäude der Stadt.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Baptisterium"
-            ],
-            "type": "text",
+            "type": "image",
             "question": "Wie heißt das Baptisterium gegenüber dem Dom von Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium-nacht.png",
             "answers": [
                 "San Giovanni",
                 "San Marco",
@@ -502,7 +463,7 @@
             ],
             "backgroundKnowledge": "Das Baptisterium San Giovanni gehört zu den ältesten Gebäuden von Florenz.",
             "correct": 0,
-            "difficulty": "easy",
+            "difficulty": "medium",
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
@@ -515,15 +476,16 @@
             "tag": [
                 "Kunst"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche berühmten Türen des Baptisteriums werden Lorenzo Ghiberti zugeschrieben?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium-Paradiespforte.png",
             "answers": [
                 "Paradiespforte",
                 "Florentiner Tor",
                 "Goldene Tür",
                 "Engelstor"
             ],
-            "backgroundKnowledge": "Michelangelo soll die Bronzetüren so beeindruckend gefunden haben, dass er sie „Pforten des Paradieses“ nannte.",
+            "backgroundKnowledge": "Michelangelo soll die Bronzetüren so beeindruckend gefunden haben, dass er sie „Pforten des Paradieses“ nannte. Das Ostportal ist mit einer Kopie der Paradiespforte Ghibertis ",
             "correct": 0,
             "difficulty": "medium",
             "meta": {
@@ -539,8 +501,9 @@
                 "Religion",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welchem Heiligen ist das Baptisterium von Florenz gewidmet?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium-innen-2.png",
             "answers": [
                 "Johannes dem Täufer",
                 "Petrus",
@@ -560,35 +523,12 @@
         },
         {
             "tag": [
-                "Kunst",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welcher Künstler schuf die Bronzetüren an der Nordseite des Baptisteriums?",
-            "answers": [
-                "Donatello",
-                "Lorenzo Ghiberti",
-                "Giotto",
-                "Michelangelo"
-            ],
-            "backgroundKnowledge": "Ghiberti gewann 1401 einen Wettbewerb für die Gestaltung der Nordtüren des Baptisteriums.",
-            "correct": 1,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Lorenzo_Ghiberti",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Architektur",
                 "Material"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Aus welchem Material besteht die Außenverkleidung des Baptisteriums hauptsächlich?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium-2.png",
             "answers": [
                 "Granit",
                 "Sandstein",
@@ -611,8 +551,9 @@
                 "Kunst",
                 "Mosaik"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wofür ist die Decke im Inneren des Baptisteriums besonders bekannt?",
+            "imageUrl": "/images/italien/florenz/florenz-baptisterium-decke.png",
             "answers": [
                 "Holzdecken",
                 "Fresken",
@@ -628,30 +569,6 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.95
-            }
-        },
-        {
-            "tag": [
-                "Kunst",
-                "Mosaik"
-            ],
-            "type": "text",
-            "question": "Welches Thema dominiert eines der großen Deckenmosaike im Baptisterium?",
-            "answers": [
-                "Die Kreuzigung",
-                "Die Geburt Christi",
-                "Die Schöpfung",
-                "Das Jüngste Gericht"
-            ],
-            "backgroundKnowledge": "Das monumentale Mosaik des Jüngsten Gerichts zeigt Christus als Weltenrichter.",
-            "correct": 3,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
             }
         },
         {
@@ -704,37 +621,14 @@
         },
         {
             "tag": [
-                "Kunst",
-                "Mosaik"
-            ],
-            "type": "text",
-            "question": "Welcher Kunststil beeinflusste die goldenen Deckenmosaike des Baptisteriums besonders?",
-            "answers": [
-                "Renaissance-Stil",
-                "Gotischer Stil",
-                "Barocker Stil",
-                "Byzantinischer Stil"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 3,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Baptisterium_San_Giovanni",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Italien",
                 "Architektur",
                 "Sehenswürdigkeit",
                 "Geschichte"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche berühmte Brücke in Florenz ist bekannt für ihre Geschäfte und ihre historische Bedeutung?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte vecchio-0.png",
             "answers": [
                 "Ponte della Carraia",
                 "Ponte Santa Trinita",
@@ -757,8 +651,9 @@
                 "Architektur",
                 "Ponte Vecchio"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Über welchen Fluss führt die Ponte Vecchio in Florenz?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte-vecchio-arno.png",
             "answers": [
                 "Arno",
                 "Tiber",
@@ -781,8 +676,9 @@
                 "Architektur",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Was bedeutet der Name „Ponte Vecchio“ auf Deutsch?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte-vecchio.png",
             "answers": [
                 "Alte Brücke",
                 "Große Brücke",
@@ -805,8 +701,9 @@
                 "Architektur",
                 "Brücken"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welches besondere Merkmal zeichnet die Ponte Vecchio aus?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte-vecchio-3.png",
             "answers": [
                 "Sie ist vollständig aus Holz gebaut",
                 "Sie hat Geschäfte auf der Brücke",
@@ -829,8 +726,9 @@
                 "Geschichte",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche Händler arbeiteten ursprünglich auf der Ponte Vecchio?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte-vecchio-sonnenuntergang.png",
             "answers": [
                 "Goldschmiede",
                 "Metzger",
@@ -853,8 +751,9 @@
                 "Architektur",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche bekannte Passage verläuft über der Ponte Vecchio?",
+            "imageUrl": "/images/italien/florenz/florenz-ponte-vecchio-2.png",
             "answers": [
                 "Florentiner Gang",
                 "Medici-Galerie",
@@ -877,8 +776,9 @@
                 "Geschichte",
                 "Medici"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Herrscher ließ den Vasari-Korridor bauen?",
+            "imageUrl": "/images/italien/florenz/florenz-vasari-korridor-regen.png",
             "answers": [
                 "Giuliano de’ Medici",
                 "Lorenzo de’ Medici",
@@ -901,8 +801,9 @@
                 "Geschichte",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Architekt entwarf den Vasari-Korridor?",
+            "imageUrl": "/images/italien/florenz/florenz-vasari-korridor-bruecke.png",
             "answers": [
                 "Donatello",
                 "Brunelleschi",
@@ -925,8 +826,9 @@
                 "Geschichte",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welchen Zweck hatte der Vasari-Korridor ursprünglich?",
+            "imageUrl": "/images/italien/florenz/florenz-vasari-korridor-gesamt.png",
             "answers": [
                 "Unterirdischer Fluchttunnel",
                 "Handelsroute für Händler",
@@ -946,36 +848,13 @@
         },
         {
             "tag": [
-                "Geschichte",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Warum wurden die Metzger später von der Ponte Vecchio verdrängt?",
-            "answers": [
-                "Wegen des schlechten Geruchs",
-                "Wegen Steuerproblemen",
-                "Wegen Platzmangel",
-                "Wegen politischer Konflikte"
-            ],
-            "backgroundKnowledge": "Cosimo I. ließ die Metzger vertreiben, da die Gerüche den Medici im Korridor störten.",
-            "correct": 0,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://www.visittuscany.com/de/ideen/5-fakten-ueber-den-ponte-vecchio/",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Italien",
                 "Renaissance",
                 "Architektur"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welches beeindruckende Gebäude in Florenz diente als Sitz der Florentiner Republik und ist heute ein Museum?",
+            "imageUrl": "/images/italien/florenz/florenz-palazzo-vecchio.png",
             "answers": [
                 "Palazzo Vecchio",
                 "Palazzo Pitti",
@@ -996,58 +875,11 @@
         {
             "tag": [
                 "Architektur",
-                "Palazzo Vecchio"
-            ],
-            "type": "text",
-            "question": "Wie heißt der berühmte Regierungspalast auf der Piazza della Signoria in Florenz?",
-            "answers": [
-                "Palazzo Vecchio",
-                "Palazzo Pitti",
-                "Palazzo Medici",
-                "Palazzo Strozzi"
-            ],
-            "backgroundKnowledge": "Der Palazzo Vecchio ist seit dem Mittelalter eines der wichtigsten politischen Gebäude der Stadt Florenz.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.95
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Auf welchem Platz steht der Palazzo Vecchio?",
-            "answers": [
-                "Piazza del Duomo",
-                "Piazza della Signoria",
-                "Piazza Santa Croce",
-                "Piazza della Repubblica"
-            ],
-            "backgroundKnowledge": "Die Piazza della Signoria ist seit Jahrhunderten das politische Zentrum von Florenz.",
-            "correct": 1,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.95
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
                 "Turm"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Wie heißt der markante Turm des Palazzo Vecchio?",
+            "imageUrl": "/images/italien/florenz/florenz-palazzo-vecchio-turm.png",
             "answers": [
                 "Torre Arnolfo",
                 "Torre Medici",
@@ -1094,8 +926,9 @@
                 "Geschichte",
                 "Medici"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welche berühmte Familie nutzte den Palazzo Vecchio später als Residenz?",
+            "imageUrl": "/images/italien/florenz/florenz-palazzo-vecchio-innenhof.png",
             "answers": [
                 "Sforza",
                 "Borgia",
@@ -1108,30 +941,6 @@
             "meta": {
                 "verifiedFinal": true,
                 "sourceUrl": "https://florenztipps.de/palazzo_vecchio.html",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
-                "Turm"
-            ],
-            "type": "text",
-            "question": "Wie hoch ist ungefähr der Turm des Palazzo Vecchio?",
-            "answers": [
-                "120 Meter",
-                "70 Meter",
-                "94 Meter",
-                "55 Meter"
-            ],
-            "backgroundKnowledge": "",
-            "correct": 2,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
@@ -1166,8 +975,9 @@
                 "Kunst",
                 "Florenz"
             ],
-            "type": "text",
+            "type": "image",
             "question": "Welcher Künstler gestaltete Teile des Salone dei Cinquecento im Palazzo Vecchio?",
+            "imageUrl": "/images/italien/florenz/florenz-palazzo-vecchio-salone-dei-vinquecento.png",
             "answers": [
                 "Sandro Botticelli",
                 "Raphael",
@@ -1187,40 +997,17 @@
         },
         {
             "tag": [
-                "Architektur",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welche charakteristischen Elemente krönen das Dach des Palazzo Vecchio?",
-            "answers": [
-                "Zinnen",
-                "Kuppeln",
-                "Säulen",
-                "Glockentürme"
-            ],
-            "backgroundKnowledge": "Die Zinnen verleihen dem Gebäude ein festungsartiges Aussehen.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Palazzo_Vecchio",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
                 "Kunst",
                 "Florenz"
             ],
-            "type": "text",
-            "question": "Welche berühmte Bronzestatue von Benvenuto Cellini steht in der Loggia dei Lanzi neben dem Palazzo Vecchio?",
+            "type": "image",
+            "question": "Wo befindet sich die berühmte Bronzestatue „Perseus mit dem Haupt der Medusa“ von Benvenuto Cellini?",
+            "imageUrl": "/images/italien/florenz/florenz-perseus-haelt-medusas-opf-hoch.png",
             "answers": [
-                "Neptun",
-                "David",
-                "Herkules und Cacus",
-                "Perseus mit dem Haupt der Medusa"
+                "Galleria degli Uffizi",
+                "Piazza del Duomo",
+                "Boboli-Gärten",
+                "Loggia dei Lanzi des Palazzo Vecchio? "
             ],
             "backgroundKnowledge": "Die Statue „Perseus mit dem Haupt der Medusa“ von Benvenuto Cellini gilt als Meisterwerk der Renaissance.",
             "correct": 3,
@@ -1255,30 +1042,6 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.9
-            }
-        },
-        {
-            "tag": [
-                "Architektur",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welcher Fluss fließt in der Nähe des Palazzo Vecchio durch Florenz?",
-            "answers": [
-                "Arno",
-                "Tiber",
-                "Po",
-                "Adige"
-            ],
-            "backgroundKnowledge": "Der Arno ist der wichtigste Fluss in Florenz und fließt durch die historische Altstadt.",
-            "correct": 0,
-            "difficulty": "easy",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Arno",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.95
             }
         },
         {
@@ -1567,30 +1330,6 @@
                 "generatedAt": "2026-03-07",
                 "verifiedGPT": true,
                 "knowledgeConfidence": 0.85
-            }
-        },
-        {
-            "tag": [
-                "Geschichte",
-                "Florenz"
-            ],
-            "type": "text",
-            "question": "Welche Institution regierte Florenz im Mittelalter vom Palazzo Vecchio aus?",
-            "answers": [
-                "Medici-Konzil",
-                "Florentiner Parlament",
-                "Römischer Senat",
-                "Signoria"
-            ],
-            "backgroundKnowledge": "Die Signoria war das oberste Regierungsgremium der Republik Florenz.",
-            "correct": 3,
-            "difficulty": "medium",
-            "meta": {
-                "verifiedFinal": true,
-                "sourceUrl": "https://de.wikipedia.org/wiki/Signoria_(Florenz)",
-                "generatedAt": "2026-03-07",
-                "verifiedGPT": true,
-                "knowledgeConfidence": 0.9
             }
         },
         {

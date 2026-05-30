@@ -65,10 +65,8 @@ florenz.json
 - tags anpassen
 
 Themen:
-- Dom
-- Baptisterium 
-- Palazzo Vecchio Florenz
 - Piazza della Signoria
+
 - Uffizien
 - Galleria dell'Accademia
 - Basilica di Santa Croce
