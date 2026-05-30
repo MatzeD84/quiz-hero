@@ -77,3 +77,36 @@
 ## Private Notizen
 - `hinweise.md` ist persoenlich und kann lokale ToDos enthalten.
 
+
+## MySQL-/PHP-Betrieb
+Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php` erreichbar ist und die Datenbanktabellen existieren, lädt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fällt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurück.
+
+### Datenbank einrichten
+1) MySQL-Datenbank und Benutzer anlegen.
+2) Schema importieren:
+```bash
+mysql -u <user> -p <database> < database/schema.sql
+```
+3) Bestehende JSON-Inhalte einmalig in MySQL übernehmen:
+```bash
+QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/seed-from-json.php
+```
+
+### PHP-Umgebungsvariablen
+- `QUIZ_HERO_DB_HOST` (Default `127.0.0.1`)
+- `QUIZ_HERO_DB_PORT` (Default `3306`)
+- `QUIZ_HERO_DB_NAME` (Default `quiz_hero`)
+- `QUIZ_HERO_DB_USER` (Default `quiz_hero`)
+- `QUIZ_HERO_DB_PASSWORD`
+- `QUIZ_HERO_ADMIN_USER` (Default `admin`)
+- `QUIZ_HERO_ADMIN_PASSWORD_HASH` (empfohlen, erzeugbar mit `php -r "echo password_hash('DEIN_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"`)
+- alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur für einfache Testumgebungen
+
+### Admin-Oberfläche
+- Aufruf: `/admin/`
+- Nach dem Admin-Login können Kategorien angelegt/bearbeitet und Quizfragen komfortabel per Formular erstellt, bearbeitet oder gelöscht werden.
+- Alle Datenbankzugriffe laufen serverseitig über PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
+
+### User-Login und Ergebnisse
+- Auf der Startseite können Spieler optional Name und Profilbild-URL eintragen.
+- Der User wird in `quiz_users` gespeichert; abgeschlossene Quizrunden werden in `quiz_results` persistiert.

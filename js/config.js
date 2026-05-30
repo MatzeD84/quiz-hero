@@ -2,6 +2,7 @@ export const CONFIG = {
     questionsUrl: 'categories.json',
     tagsUrl: 'tags.json',
     feedbackUrl: 'feedback.json',
+    apiUrl: 'api/index.php',
     analytics: {
         googleAnalyticsId: 'G-SYVZB974FC'
     },
@@ -68,7 +69,14 @@ export const SELECTORS = {
     quizSelectionLabel: '#js-quiz-selection',
     modal: '#js-result-modal',
     modalContent: '#js-result-content',
-    modalCloseButton: '#js-modal-close'
+    modalCloseButton: '#js-modal-close',
+    userPanel: '#js-user-panel',
+    userForm: '#js-user-form',
+    userNameInput: '#js-user-name',
+    userImageInput: '#js-user-image',
+    userStatus: '#js-user-status',
+    userPreview: '#js-user-preview',
+    userLogoutButton: '#js-user-logout'
 };
 
 export const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));

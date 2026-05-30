@@ -1,10 +1,12 @@
 import { CONFIG, LABELS } from './config.js';
 
 export class QuizController {
-    constructor({ dataService, state, view }) {
+    constructor({ dataService, state, view, userService = null }) {
         this.dataService = dataService;
         this.state = state;
         this.view = view;
+        this.userService = userService;
+        this.currentUser = userService?.getStoredUser() ?? null;
     }
 
     async init() {
@@ -15,6 +17,7 @@ export class QuizController {
             this.view.renderCategoryButtons(data.categories);
             this.view.renderTagButtons(this.state.getAvailableTags());
             this.registerEvents();
+            this.view.renderUser(this.currentUser);
             this.view.showCategories();
             this.applyInitialSelectionFromUrl();
         } catch (error) {
@@ -68,6 +71,30 @@ export class QuizController {
         this.view.onAbort(() => this.handleAbort());
         this.view.onHome(() => this.handleAbort());
         this.view.onModalClose(() => this.view.hideResultModal());
+        this.view.onUserLogin?.(data => this.handleUserLogin(data));
+        this.view.onUserLogout?.(() => this.handleUserLogout());
+    }
+
+    async handleUserLogin({ name, profileImageUrl }) {
+        if (!this.userService) return;
+        this.view.renderUserStatus('Speichere Profil ...');
+        try {
+            this.currentUser = await this.userService.login({ name, profileImageUrl });
+            this.view.renderUser(this.currentUser);
+            this.view.renderUserStatus('Willkommen bei Quiz-Hero!');
+        } catch (error) {
+            if (CONFIG.devMode) {
+                console.error(error);
+            }
+            this.view.renderUserStatus(error.message || 'Profil konnte nicht gespeichert werden.');
+        }
+    }
+
+    handleUserLogout() {
+        this.userService?.clearUser();
+        this.currentUser = null;
+        this.view.renderUser(null);
+        this.view.renderUserStatus('Du spielst jetzt ohne gespeichertes Profil.');
     }
 
     handleCategorySelected(categoryId) {
@@ -209,6 +236,15 @@ export class QuizController {
             this.renderCurrentQuestion();
         } else {
             const stats = this.state.getStats();
+            const context = {
+                categoryId: this.state.activeCategoryId,
+                tagId: this.state.activeTag
+            };
+            this.userService?.saveResult(this.currentUser, stats, context).catch(error => {
+                if (CONFIG.devMode) {
+                    console.warn('Quiz-Ergebnis konnte nicht gespeichert werden.', error);
+                }
+            });
             this.view.showResultModal(stats);
             this.state.resetRound();
             this.view.showCategories();

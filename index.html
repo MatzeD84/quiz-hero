@@ -35,6 +35,25 @@
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
+            <section id="js-user-panel" class="user-panel" aria-live="polite">
+                <div id="js-user-preview" class="user-panel__preview">
+                    <span>Optional anmelden und Ergebnisse speichern</span>
+                </div>
+                <form id="js-user-form" class="user-panel__form">
+                    <label>
+                        <span>Name</span>
+                        <input id="js-user-name" name="name" type="text" maxlength="80" autocomplete="nickname" placeholder="Dein Quiz-Name" required>
+                    </label>
+                    <label>
+                        <span>Profilbild-URL</span>
+                        <input id="js-user-image" name="profileImageUrl" type="url" maxlength="500" placeholder="https://.../bild.jpg">
+                    </label>
+                    <button class="btn btn--modal" type="submit">Einloggen</button>
+                    <button id="js-user-logout" class="btn btn--modal" type="button">Logout</button>
+                </form>
+                <p id="js-user-status" class="user-panel__status"></p>
+            </section>
+
             <section>
                 <h2>Städte, Regionen und Landschaften</h2>
                 <div class="category" aria-live="polite">
