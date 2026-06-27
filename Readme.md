@@ -237,6 +237,7 @@ Setze auf dem Server mindestens diese Umgebungsvariablen:
 - `QUIZ_HERO_ADMIN_USER`
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH`
 - `QUIZ_HERO_USER_TOKEN_SECRET` empfohlen fuer signierte User-Tokens
+- `QUIZ_HERO_SEO_EXPORT_TOKEN` empfohlen fuer den geschuetzten SEO-Export
 
 Fuer Produktion sollte kein Klartext-Admin-Passwort genutzt werden. Hash lokal erzeugen:
 ```bash
@@ -246,6 +247,8 @@ php -r "echo password_hash('DEIN_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
 Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_PASSWORD` ist nur fuer lokale Tests gedacht.
 
 `QUIZ_HERO_USER_TOKEN_SECRET` sollte ein langer zufaelliger Wert sein. Die App nutzt ihn, um User-Tokens zu signieren. Dadurch koennen Quiz-Ergebnisse nicht einfach mit beliebigen fremden User-IDs gespeichert werden. Wenn das Secret fehlt, nutzt die App einen vorhandenen Admin-/Datenbank-Secret als Fallback; ein eigenes Secret ist trotzdem sauberer.
+
+`QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export`. Die GitHub Action nutzt diesen Export, um Landingpages bevorzugt aus MySQL statt aus JSON-Dateien zu erzeugen.
 
 Bei STRATO Shared Hosting sind echte PHP-Umgebungsvariablen oft unpraktisch. Deshalb unterstuetzt die App zusaetzlich `api/config.local.php`. Diese Datei ist in `.gitignore` ausgeschlossen und wird in der GitHub-Actions-Pipeline aus Secrets erzeugt.
 
@@ -331,6 +334,7 @@ Benötigte Secrets:
 - `QUIZ_HERO_ADMIN_USER`: produktiver Admin-User
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH`: Passwort-Hash, nicht Klartext
 - `QUIZ_HERO_USER_TOKEN_SECRET`: langer zufaelliger Secret fuer signierte User-Tokens
+- `QUIZ_HERO_SEO_EXPORT_TOKEN`: langer zufaelliger Secret fuer den geschuetzten SEO-Export
 
 Admin-Passwort-Hash lokal erzeugen:
 
@@ -391,9 +395,9 @@ Die JSON-Dateien bleiben wichtig fuer:
 
 - initiales Befuellen per `database/seed-from-json.php`
 - statischen Fallback, falls die API nicht erreichbar ist
-- SEO-Seiten, solange der SEO-Build noch aus den JSON-Dateien generiert
+- SEO-Fallback, wenn der MySQL-Export beim Build nicht erreichbar ist
 
-Wenn du neue Inhalte produktiv ueber Admin pflegst, denke daran: Der aktuelle SEO-Generator liest weiterhin `categories.json` und `data/questions-*.json`. Fuer SEO-Landingpages muessen wichtige neue Kategorien/Fragen deshalb entweder auch in den JSON-Dateien gepflegt werden oder der Generator spaeter auf die Datenbank umgestellt werden.
+Wenn du neue Inhalte produktiv ueber Admin pflegst, landen sie in MySQL und werden vom SEO-Generator beim naechsten erfolgreichen GitHub-Actions-Deploy ueber den geschuetzten `seo-export` gelesen. Voraussetzung ist, dass `QUIZ_HERO_SEO_EXPORT_TOKEN` als GitHub Secret gesetzt ist und die produktive API den Export-Endpunkt bereits kennt.
 
 Klassischer JSON-Weg:
 
@@ -445,7 +449,7 @@ Klassischer JSON-Weg:
 - Breadcrumbs sichtbar + BreadcrumbList JSON-LD
 - OpenGraph/Twitter-Bilder pro Kategorie
 - "Auch interessant" (3 verwandte Kategorien via Tag-Ueberschneidung)
-- SEO-Fliesstext aus `categories.json` (`seoDescription`)
+- SEO-Fliesstext bevorzugt aus MySQL (`seo_description`), mit JSON-Fallback (`seoDescription`)
 - Allgemeiner Info-Block zu Punkte-System/KI-Bildern/Projekt
 - Start per `index.html?category=<id>`
 - `sitemap.xml`/`robots.txt` werden beim Build erzeugt (nur mit `SITE_URL`)
@@ -461,10 +465,10 @@ Die SEO-Seiten sind statische Landingpages im Ordner `pages/`. Sie sind nicht de
 | Florenz-Beispiel | `pages/florenz.html` | `https://quiz-hero.de/pages/florenz.html` | Landingpage fuer das Florenz-Quiz |
 | Neapel-Beispiel | `pages/neapel.html` | `https://quiz-hero.de/pages/neapel.html` | Landingpage fuer das Neapel-Quiz |
 
-Die Kategorie-ID kommt aktuell aus `categories.json`, Feld `id`. Der Generator baut daraus den Dateinamen:
+Die Kategorie-ID kommt aus der Datenquelle des SEO-Builds. Bevorzugt ist das MySQL-Feld `quiz_categories.id`; im JSON-Fallback ist es `categories.json`, Feld `id`. Der Generator baut daraus den Dateinamen:
 
 ```text
-categories.json: { "id": "rom", ... }
+MySQL/JSON: { "id": "rom", ... }
 SEO-Datei: pages/rom.html
 Produktive URL: https://quiz-hero.de/pages/rom.html
 Quiz-Start aus der Landingpage: https://quiz-hero.de/index.html?category=rom
@@ -473,34 +477,30 @@ Quiz-Start aus der Landingpage: https://quiz-hero.de/index.html?category=rom
 Wichtig: Der spielbare Quiz-Einstieg bleibt weiterhin die Haupt-App unter `https://quiz-hero.de/`. Die Landingpages dienen vor allem SEO, Orientierung und Einstieg in eine Kategorie.
 
 ### Aktueller SEO-Datenfluss
-Der SEO-Generator `scripts/build-seo-pages.js` liest aktuell aus Dateien:
+Der SEO-Generator `scripts/build-seo-pages.js` liest bevorzugt aus MySQL. Dafuer ruft die GitHub Action den geschuetzten API-Endpunkt auf:
 
-1) `categories.json` fuer Kategorien, Titel, Beschreibung, Icon und SEO-Text.
-2) `data/questions-*.json` fuer Fragen, Antworten, richtige Antwort und FAQPage JSON-LD.
-3) `tags.json` fuer thematische Verknuepfungen und "Auch interessant".
-4) `SITE_URL` fuer Canonical-URLs, Sitemap und Robots.
+```text
+https://quiz-hero.de/api/index.php?action=seo-export
+```
 
-Beim GitHub-Actions-Deploy wird der Generator automatisch mit `SITE_URL=https://quiz-hero.de` ausgefuehrt. Danach werden die erzeugten Dateien in `pages/`, `sitemap.xml` und `robots.txt` deployed.
+Der Endpunkt ist mit `QUIZ_HERO_SEO_EXPORT_TOKEN` geschuetzt. Die GitHub Action sendet diesen Wert als Header `X-Quiz-Hero-SEO-Token`.
 
-### Langfristiges Ziel: SEO-Generator auf MySQL umstellen
-Langfristig sollte der SEO-Generator nicht mehr aus JSON-Dateien lesen, sondern aus MySQL. Dann waere der Ablauf sauberer:
+Reihenfolge beim Build:
 
-1) Fragen und Kategorien werden im produktiven Admin gepflegt.
-2) Die Daten liegen in MySQL.
-3) Der SEO-Build liest dieselben produktiven Daten.
-4) Landingpages, Sitemap und Robots werden automatisch daraus erzeugt.
-5) JSON-Dateien bleiben optional nur noch als Backup/Fallback oder werden spaeter ganz reduziert.
+1) Wenn `SEO_EXPORT_URL` und `SEO_EXPORT_TOKEN` gesetzt sind, nutzt der Generator den MySQL-Export.
+2) Wenn der Export nicht erreichbar ist, noch nicht deployed wurde oder kein Token vorhanden ist, faellt der Generator auf JSON zurueck.
+3) Aus den Daten werden `pages/*.html`, `pages/index.html`, `sitemap.xml` und `robots.txt` erzeugt.
 
-Dafuer gibt es zwei sinnvolle technische Wege:
+Der JSON-Fallback liest weiterhin:
 
-| Ansatz | Beschreibung | Vorteil | Nachteil |
-| --- | --- | --- | --- |
-| Export-API fuer SEO | PHP-API liefert einen geschuetzten oder internen SEO-Export als JSON, der Generator liest diese Daten | Einfacher fuer STRATO/GitHub Actions, gleiche Datenform wie heute moeglich | API-Endpunkt muss abgesichert werden |
-| Node-Generator verbindet direkt zu MySQL | `scripts/build-seo-pages.js` liest per MySQL-Client direkt aus der Datenbank | Direkter Zugriff auf Tabellen | GitHub Actions braucht DB-Zugriff nach extern; bei Shared Hosting oft unpraktischer |
+- `categories.json` fuer Kategorien, Titel, Beschreibung, Icon und SEO-Text.
+- `data/questions-*.json` fuer Fragen, Antworten, richtige Antwort und FAQPage JSON-LD.
+- `tags.json` fuer thematische Verknuepfungen und "Auch interessant".
+- `SITE_URL` fuer Canonical-URLs, Sitemap und Robots.
 
-Fuer STRATO ist der Export-API-Ansatz wahrscheinlich pragmatischer. Die GitHub Action koennte dann vor dem Build z. B. einen SEO-Export von `https://quiz-hero.de/api/index.php?action=seo-export` abrufen und daraus die statischen Seiten bauen. Dieser Endpunkt sollte nicht oeffentlich ungeschuetzt sein, sondern z. B. mit einem Secret/Token arbeiten.
+Beim GitHub-Actions-Deploy wird der Generator automatisch mit `SITE_URL=https://quiz-hero.de`, `SEO_EXPORT_URL=https://quiz-hero.de/api/index.php?action=seo-export` und `SEO_EXPORT_TOKEN` aus GitHub Secrets ausgefuehrt. Danach werden die erzeugten Dateien in `pages/`, `sitemap.xml` und `robots.txt` deployed.
 
-Bis diese Umstellung gebaut ist, gilt: Neue produktive Admin-Fragen sind sofort im Quiz sichtbar, aber nicht automatisch in den SEO-Landingpages. Wenn eine neue Frage/Kategorie auch SEO-relevant sein soll, muss sie aktuell weiterhin in den JSON-Dateien nachgezogen oder die SEO-MySQL-Umstellung umgesetzt werden.
+Wichtig beim ersten Deploy dieser Funktion: Der produktive Server kennt den neuen `seo-export`-Endpunkt erst nach dem Deploy. Deshalb kann der erste Lauf noch den JSON-Fallback verwenden. Ab dem naechsten Deploy nutzt die Pipeline den MySQL-Export, sofern `QUIZ_HERO_SEO_EXPORT_TOKEN` als GitHub Secret angelegt ist.
 
 ## Lokal entwickeln und testen
 Du hast zwei sinnvolle lokale Arbeitsweisen. Ohne Docker testest du schnell Frontend, Styles und den JSON-Fallback. Mit Docker testest du die vollstaendige Anwendung inklusive PHP-API, MySQL, Admin-Bereich, User-Speicherung und Ergebnis-Speicherung.
@@ -649,6 +649,7 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 - `QUIZ_HERO_ADMIN_USER` (Default `admin`)
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH` (empfohlen, erzeugbar mit `php -r "echo password_hash('DEIN_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"`)
 - `QUIZ_HERO_USER_TOKEN_SECRET` (empfohlen fuer Produktion; signiert User-Tokens fuer Ergebnis-Speicherung)
+- `QUIZ_HERO_SEO_EXPORT_TOKEN` (empfohlen fuer Produktion; schuetzt den SEO-Export fuer GitHub Actions)
 - alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur für einfache Testumgebungen
 
 ### Admin-Oberfläche

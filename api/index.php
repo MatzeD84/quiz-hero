@@ -15,6 +15,7 @@ try {
         'admin-logout' => admin_logout(),
         'admin-me' => admin_me(),
         'admin-data' => admin_data(),
+        'seo-export' => seo_export(),
         'admin-question-save' => admin_question_save(),
         'admin-question-delete' => admin_question_delete(),
         'admin-category-save' => admin_category_save(),
@@ -43,17 +44,37 @@ function admin_data(): void
 
 function emit_quiz_data(bool $onlyActive): void
 {
+    json_response(['ok' => true] + load_quiz_data($onlyActive, false));
+}
+
+function seo_export(): void
+{
+    require_method('GET');
+    require_seo_export_token();
+    json_response(['ok' => true, 'generatedAt' => gmdate(DATE_ATOM)] + load_quiz_data(true, true));
+}
+
+function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
+{
     $pdo = db();
 
     $categoriesStmt = $pdo->query('SELECT * FROM quiz_categories ORDER BY sort_order ASC, title ASC');
-    $categories = [];
-    foreach ($categoriesStmt->fetchAll() as $category) {
-        $questionSql = 'SELECT * FROM quiz_questions WHERE category_id = :category_id' . ($onlyActive ? ' AND active = 1' : '') . ' ORDER BY sort_order ASC, id ASC';
-        $questionsStmt = $pdo->prepare($questionSql);
-        $questionsStmt->execute(['category_id' => $category['id']]);
-        $questions = array_map('format_question', $questionsStmt->fetchAll());
-        $categories[] = format_category($category, $questions);
+    $categoryRows = array_values(array_filter(
+        $categoriesStmt->fetchAll(),
+        static fn(array $category): bool => !$onlyEnabledCategories || (bool) $category['enabled']
+    ));
+
+    $questionSql = 'SELECT * FROM quiz_questions' . ($onlyActive ? ' WHERE active = 1' : '') . ' ORDER BY category_id ASC, sort_order ASC, id ASC';
+    $questionRows = $pdo->query($questionSql)->fetchAll();
+    $questionsByCategory = [];
+    foreach ($questionRows as $questionRow) {
+        $questionsByCategory[$questionRow['category_id']][] = format_question($questionRow);
     }
+
+    $categories = array_map(
+        static fn(array $category): array => format_category($category, $questionsByCategory[$category['id']] ?? []),
+        $categoryRows
+    );
 
     $tagsStmt = $pdo->query('SELECT * FROM quiz_tags ORDER BY sort_order ASC, title ASC');
     $tags = array_map(static fn(array $tag): array => [
@@ -70,7 +91,20 @@ function emit_quiz_data(bool $onlyActive): void
         $feedback[$entry['feedback_key']] = decode_json_field($entry['messages_json'] ?? null, []);
     }
 
-    json_response(['ok' => true, 'categories' => $categories, 'tags' => $tags, 'feedback' => $feedback]);
+    return ['categories' => $categories, 'tags' => $tags, 'feedback' => $feedback];
+}
+
+function require_seo_export_token(): void
+{
+    $expected = env_value('QUIZ_HERO_SEO_EXPORT_TOKEN');
+    if ($expected === null || $expected === '') {
+        json_response(['ok' => false, 'error' => 'SEO-Export ist nicht konfiguriert.'], 503);
+    }
+
+    $provided = (string) ($_SERVER['HTTP_X_QUIZ_HERO_SEO_TOKEN'] ?? ($_GET['token'] ?? ''));
+    if ($provided === '' || !hash_equals($expected, $provided)) {
+        json_response(['ok' => false, 'error' => 'SEO-Export nicht erlaubt.'], 403);
+    }
 }
 
 function user_login(): void

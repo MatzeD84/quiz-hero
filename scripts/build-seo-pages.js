@@ -6,11 +6,76 @@ const categoriesPath = path.join(rootDir, 'categories.json');
 const outputDir = path.join(rootDir, 'pages');
 const siteTitle = 'Quiz-Hero';
 const siteUrl = (process.env.SITE_URL || '').replace(/\/+$/, '');
+const seoExportUrl = (process.env.SEO_EXPORT_URL || '').trim();
+const seoExportToken = (process.env.SEO_EXPORT_TOKEN || '').trim();
 
 const readJson = filePath => {
     const raw = fs.readFileSync(filePath, 'utf8');
     const cleaned = raw.replace(/^\uFEFF/, '');
     return JSON.parse(cleaned);
+};
+
+const loadCategoriesFromJson = () => {
+    const { categories = [] } = readJson(categoriesPath);
+    const enabledCategories = categories.filter(category => category && category.enabled !== false);
+
+    return enabledCategories.map(category => {
+        let questions = [];
+        if (category.questionsFile) {
+            const questionsPath = path.join(rootDir, category.questionsFile);
+            if (fs.existsSync(questionsPath)) {
+                const data = readJson(questionsPath);
+                questions = Array.isArray(data.questions) ? data.questions : [];
+            }
+        }
+        return { ...category, questions };
+    });
+};
+
+const loadCategoriesFromSeoExport = async () => {
+    if (!seoExportUrl || !seoExportToken || typeof fetch !== 'function') {
+        return null;
+    }
+
+    const response = await fetch(seoExportUrl, {
+        headers: {
+            'Accept': 'application/json',
+            'X-Quiz-Hero-SEO-Token': seoExportToken
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`SEO export request failed (${response.status})`);
+    }
+
+    const data = await response.json();
+    if (!data.ok || !Array.isArray(data.categories)) {
+        throw new Error('SEO export response is invalid');
+    }
+
+    return data.categories
+        .filter(category => category && category.enabled !== false)
+        .map(category => ({
+            ...category,
+            questions: Array.isArray(category.questions)
+                ? category.questions.filter(question => question && question.active !== false)
+                : []
+        }));
+};
+
+const loadCategories = async () => {
+    try {
+        const exportedCategories = await loadCategoriesFromSeoExport();
+        if (exportedCategories) {
+            console.log(`SEO-Datenquelle: MySQL-Export (${seoExportUrl})`);
+            return exportedCategories;
+        }
+    } catch (error) {
+        console.warn(`SEO-Export nicht verfuegbar, nutze JSON-Fallback: ${error.message}`);
+    }
+
+    console.log('SEO-Datenquelle: JSON-Fallback');
+    return loadCategoriesFromJson();
 };
 
 const escapeHtml = value => {
@@ -23,6 +88,7 @@ const escapeHtml = value => {
 };
 
 const toText = value => (value == null ? '' : String(value));
+const normalizeGeneratedText = value => String(value).replace(/[ \t]+$/gm, '');
 
 const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '' }) => {
     const canonicalUrl = siteUrl ? `${siteUrl}${canonicalPath}` : canonicalPath;
@@ -442,25 +508,11 @@ const pickRelatedCategories = (categories, currentCategory, maxCount) => {
     return combined;
 };
 
-const run = () => {
-    const { categories = [] } = readJson(categoriesPath);
-    const enabledCategories = categories.filter(category => category && category.enabled !== false);
-
+const run = async () => {
     fs.mkdirSync(outputDir, { recursive: true });
 
     const sitemapUrls = [];
-
-    const categoriesWithQuestions = enabledCategories.map(category => {
-        let questions = [];
-        if (category.questionsFile) {
-            const questionsPath = path.join(rootDir, category.questionsFile);
-            if (fs.existsSync(questionsPath)) {
-                const data = readJson(questionsPath);
-                questions = Array.isArray(data.questions) ? data.questions : [];
-            }
-        }
-        return { ...category, questions };
-    });
+    const categoriesWithQuestions = await loadCategories();
 
     categoriesWithQuestions.forEach(category => {
         const questionCount = category.questions.length;
@@ -472,7 +524,7 @@ const run = () => {
         const relatedCategories = pickRelatedCategories(categoriesWithQuestions, category, 3);
         const html = buildCategoryPage({ category, questionCount, relatedCategories, seoDescription });
         const pagePath = path.join(outputDir, `${category.id}.html`);
-        fs.writeFileSync(pagePath, html, 'utf8');
+        fs.writeFileSync(pagePath, normalizeGeneratedText(html), 'utf8');
 
         if (siteUrl) {
             sitemapUrls.push(`${siteUrl}/pages/${category.id}.html`);
@@ -480,7 +532,7 @@ const run = () => {
     });
 
     const indexHtml = buildIndexPage(categoriesWithQuestions);
-    fs.writeFileSync(path.join(outputDir, 'index.html'), indexHtml, 'utf8');
+    fs.writeFileSync(path.join(outputDir, 'index.html'), normalizeGeneratedText(indexHtml), 'utf8');
 
     if (siteUrl) {
         sitemapUrls.unshift(`${siteUrl}/pages/index.html`);
@@ -488,16 +540,19 @@ const run = () => {
         sitemapUrls.unshift(`${siteUrl}/`);
 
         const sitemapXml = buildSitemap(sitemapUrls);
-        fs.writeFileSync(path.join(rootDir, 'sitemap.xml'), sitemapXml, 'utf8');
+        fs.writeFileSync(path.join(rootDir, 'sitemap.xml'), normalizeGeneratedText(sitemapXml), 'utf8');
 
         const robots = `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`;
-        fs.writeFileSync(path.join(rootDir, 'robots.txt'), robots, 'utf8');
+        fs.writeFileSync(path.join(rootDir, 'robots.txt'), normalizeGeneratedText(robots), 'utf8');
     } else {
         console.log('SITE_URL fehlt. sitemap.xml und robots.txt werden nicht erzeugt.');
     }
 };
 
-run();
+run().catch(error => {
+    console.error(error);
+    process.exit(1);
+});
 
 
 

@@ -36,6 +36,8 @@ jobs:
       - name: Build SEO pages
         env:
           SITE_URL: ${{ secrets.SITE_URL }}
+          SEO_EXPORT_URL: ${{ secrets.SITE_URL }}/api/index.php?action=seo-export
+          SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
         run: node scripts/build-seo-pages.js
 
       - name: Prepare deploy directory
@@ -59,6 +61,7 @@ jobs:
           QUIZ_HERO_ADMIN_USER: ${{ secrets.QUIZ_HERO_ADMIN_USER }}
           QUIZ_HERO_ADMIN_PASSWORD_HASH: ${{ secrets.QUIZ_HERO_ADMIN_PASSWORD_HASH }}
           QUIZ_HERO_USER_TOKEN_SECRET: ${{ secrets.QUIZ_HERO_USER_TOKEN_SECRET }}
+          QUIZ_HERO_SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
         run: |
           php -r '
           $keys = [
@@ -70,6 +73,7 @@ jobs:
               "QUIZ_HERO_ADMIN_USER",
               "QUIZ_HERO_ADMIN_PASSWORD_HASH",
               "QUIZ_HERO_USER_TOKEN_SECRET",
+              "QUIZ_HERO_SEO_EXPORT_TOKEN",
           ];
           $config = [];
           foreach ($keys as $key) {
