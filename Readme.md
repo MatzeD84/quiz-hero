@@ -434,6 +434,7 @@ Klassischer JSON-Weg:
 
 ## App-Logik (JS)
 - `js/config.js` Konfiguration (URLs, Labels, Punktelogik, Selektoren, `ASSET_VERSION`)
+- `CONFIG.devMode` wird automatisch aus dem Hostnamen abgeleitet: aktiv auf `localhost`, `127.0.0.1` und `::1`, in Produktion auf `quiz-hero.de` deaktiviert.
 - `js/quiz-data-service.js` Laedt Kategorien/Fragen, validiert JSON, Cache-Busting
 - `js/quiz-state.js` Zustand (Kategorie/Tag, Sequenz, Score, Attempts)
 - `js/quiz-view.js` DOM/Rendering/Events
@@ -665,3 +666,4 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 - Beim User-Login gibt die API ein signiertes User-Token aus. Dieses Token wird lokal im Browser zusammen mit dem User gespeichert und beim Speichern eines Ergebnisses mitgesendet.
 - Die API akzeptiert Ergebnisse nur, wenn `userId` und User-Token zusammenpassen. Dadurch kann der Browser nicht mehr beliebig Ergebnisse fuer fremde User-IDs speichern.
 - User-Login und Ergebnis-Speicherung sind rate-limitiert. Nach dem Deploy dieser Aenderung muessen bereits lokal gespeicherte User sich einmal neu einloggen, damit sie ein Token erhalten.
+- Der User-Service prueft API-Antworten robuster: Nicht-JSON-Antworten, HTTP-Fehler und API-Fehlertexte werden als lesbare Fehlermeldung behandelt.

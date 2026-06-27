@@ -1,3 +1,10 @@
+const isDevelopmentHost = () => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+    return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+};
+
 export const CONFIG = {
     questionsUrl: 'categories.json',
     tagsUrl: 'tags.json',
@@ -6,7 +13,7 @@ export const CONFIG = {
     analytics: {
         googleAnalyticsId: 'G-SYVZB974FC'
     },
-    devMode: true,
+    devMode: isDevelopmentHost(),
     score: {
         secondTry: 1,
         difficulties: {

@@ -26,17 +26,17 @@ export class UserService {
     }
 
     async login({ name, profileImageUrl }) {
-        const response = await this.post('user-login', { name, profileImageUrl });
-        if (!response.ok) {
-            throw new Error(response.error || 'Login fehlgeschlagen.');
+        const data = await this.post('user-login', { name, profileImageUrl });
+        if (!data.ok) {
+            throw new Error(data.error || 'Login fehlgeschlagen.');
         }
-        this.storeUser(response.user);
-        return response.user;
+        this.storeUser(data.user);
+        return data.user;
     }
 
     async saveResult(user, stats, context) {
         if (!user?.id || !user?.token) return;
-        await this.post('save-result', {
+        const data = await this.post('save-result', {
             userId: user.id,
             userToken: user.token,
             score: stats.score,
@@ -46,6 +46,9 @@ export class UserService {
             categoryId: context.categoryId || '',
             tagId: context.tagId || ''
         });
+        if (!data.ok) {
+            throw new Error(data.error || 'Ergebnis konnte nicht gespeichert werden.');
+        }
     }
 
     async post(action, payload) {
@@ -56,11 +59,16 @@ export class UserService {
             body: JSON.stringify(payload)
         });
         const text = await response.text();
+        let data;
         try {
-            return JSON.parse(text);
+            data = JSON.parse(text);
         } catch (error) {
             const preview = text.replace(/\s+/g, ' ').slice(0, 220);
             throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
         }
+        if (!response.ok && data.ok !== false) {
+            throw new Error(data.error || `API-Anfrage fehlgeschlagen (HTTP ${response.status}).`);
+        }
+        return data;
     }
 }
