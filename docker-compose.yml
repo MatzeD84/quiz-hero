@@ -11,6 +11,7 @@ services:
       QUIZ_HERO_DB_PASSWORD: ${QUIZ_HERO_DB_PASSWORD:-quiz_hero_local}
       QUIZ_HERO_ADMIN_USER: ${QUIZ_HERO_ADMIN_USER:-admin}
       QUIZ_HERO_ADMIN_PASSWORD: ${QUIZ_HERO_ADMIN_PASSWORD:-admin123}
+      QUIZ_HERO_USER_TOKEN_SECRET: ${QUIZ_HERO_USER_TOKEN_SECRET:-quiz_hero_local_user_token_secret}
     volumes:
       - ./:/var/www/html
     depends_on:
@@ -55,4 +56,3 @@ services:
 
 volumes:
   quiz_hero_mysql:
-

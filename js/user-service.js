@@ -35,9 +35,10 @@ export class UserService {
     }
 
     async saveResult(user, stats, context) {
-        if (!user?.id) return;
+        if (!user?.id || !user?.token) return;
         await this.post('save-result', {
             userId: user.id,
+            userToken: user.token,
             score: stats.score,
             maxScore: stats.maxScore,
             solved: stats.solved,
@@ -50,10 +51,16 @@ export class UserService {
     async post(action, payload) {
         const response = await this.fetchFn(`${this.apiUrl}?action=${encodeURIComponent(action)}`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             credentials: 'same-origin',
             body: JSON.stringify(payload)
         });
-        return response.json();
+        const text = await response.text();
+        try {
+            return JSON.parse(text);
+        } catch (error) {
+            const preview = text.replace(/\s+/g, ' ').slice(0, 220);
+            throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
+        }
     }
 }

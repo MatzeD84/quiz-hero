@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 const QUIZ_HERO_MAX_JSON_BYTES = 262144;
+const QUIZ_HERO_RATE_LIMIT_DIR = 'quiz-hero-rate-limits';
 
 function local_config(): array
 {
@@ -82,6 +83,136 @@ function json_response(array $payload, int $status = 200): void
     header('X-Content-Type-Options: nosniff');
     echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
+}
+
+function client_ip(): string
+{
+    return (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+}
+
+function rate_limit(string $scope, int $maxAttempts, int $windowSeconds): void
+{
+    $dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . QUIZ_HERO_RATE_LIMIT_DIR;
+    if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) {
+        return;
+    }
+
+    $key = hash('sha256', $scope . '|' . client_ip());
+    $path = $dir . DIRECTORY_SEPARATOR . $key . '.json';
+    $handle = fopen($path, 'c+');
+    if ($handle === false) {
+        return;
+    }
+
+    $locked = false;
+    try {
+        if (!flock($handle, LOCK_EX)) {
+            return;
+        }
+        $locked = true;
+        $raw = stream_get_contents($handle);
+        $entries = is_string($raw) && $raw !== '' ? json_decode($raw, true) : [];
+        if (!is_array($entries)) {
+            $entries = [];
+        }
+
+        $now = time();
+        $entries = array_values(array_filter($entries, static fn($timestamp): bool => is_int($timestamp) && $timestamp > ($now - $windowSeconds)));
+        if (count($entries) >= $maxAttempts) {
+            json_response(['ok' => false, 'error' => 'Zu viele Anfragen. Bitte warte kurz und versuche es erneut.'], 429);
+        }
+
+        $entries[] = $now;
+        ftruncate($handle, 0);
+        rewind($handle);
+        fwrite($handle, json_encode($entries));
+    } finally {
+        if ($locked) {
+            flock($handle, LOCK_UN);
+        }
+        fclose($handle);
+    }
+}
+
+function csrf_token(): string
+{
+    quiz_hero_start_session();
+    if (empty($_SESSION['quiz_hero_csrf'])) {
+        $_SESSION['quiz_hero_csrf'] = bin2hex(random_bytes(32));
+    }
+    return (string) $_SESSION['quiz_hero_csrf'];
+}
+
+function require_admin_csrf(): void
+{
+    require_admin();
+    $token = (string) ($_SERVER['HTTP_X_QUIZ_HERO_CSRF'] ?? '');
+    if ($token === '' || !hash_equals(csrf_token(), $token)) {
+        json_response(['ok' => false, 'error' => 'Ungueltiges Sicherheits-Token. Bitte neu einloggen.'], 403);
+    }
+}
+
+function token_secret(): string
+{
+    $secret = env_value('QUIZ_HERO_USER_TOKEN_SECRET')
+        ?? env_value('QUIZ_HERO_ADMIN_PASSWORD_HASH')
+        ?? env_value('QUIZ_HERO_ADMIN_PASSWORD')
+        ?? env_value('QUIZ_HERO_DB_PASSWORD')
+        ?? '';
+
+    if ($secret === '') {
+        $secret = 'quiz-hero-local-development-secret';
+    }
+
+    return $secret;
+}
+
+function base64url_encode(string $value): string
+{
+    return rtrim(strtr(base64_encode($value), '+/', '-_'), '=');
+}
+
+function base64url_decode(string $value): string|false
+{
+    $base64 = strtr($value, '-_', '+/');
+    $padding = strlen($base64) % 4;
+    if ($padding !== 0) {
+        $base64 .= str_repeat('=', 4 - $padding);
+    }
+    $padded = $base64;
+    return base64_decode($padded, true);
+}
+
+function create_user_token(int $userId): string
+{
+    $payload = base64url_encode(json_encode(['userId' => $userId, 'issuedAt' => time()], JSON_THROW_ON_ERROR));
+    $signature = hash_hmac('sha256', $payload, token_secret());
+    return $payload . '.' . $signature;
+}
+
+function require_user_token(int $userId, string $token): void
+{
+    $parts = explode('.', $token, 2);
+    if (count($parts) !== 2) {
+        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+    }
+
+    [$payload, $signature] = $parts;
+    $expected = hash_hmac('sha256', $payload, token_secret());
+    if (!hash_equals($expected, $signature)) {
+        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+    }
+
+    $decoded = base64url_decode($payload);
+    $data = is_string($decoded) ? json_decode($decoded, true) : null;
+    if (!is_array($data) || (int) ($data['userId'] ?? 0) !== $userId) {
+        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+    }
+
+    $issuedAt = (int) ($data['issuedAt'] ?? 0);
+    if ($issuedAt < time() - 15552000) {
+        json_response(['ok' => false, 'error' => 'User-Token ist abgelaufen. Bitte neu einloggen.'], 401);
+    }
 }
 
 function read_json_body(): array

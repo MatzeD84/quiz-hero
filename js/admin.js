@@ -2,21 +2,35 @@ import { CONFIG } from './config.js';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
+let csrfToken = '';
+
 const api = async (action, payload = null) => {
+    const headers = { 'Accept': 'application/json' };
+    if (payload) {
+        headers['Content-Type'] = 'application/json';
+    }
+    if (csrfToken && action !== 'admin-login') {
+        headers['X-Quiz-Hero-CSRF'] = csrfToken;
+    }
     const options = payload ? {
         method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        headers,
         credentials: 'same-origin',
         body: JSON.stringify(payload)
-    } : { headers: { 'Accept': 'application/json' }, credentials: 'same-origin', cache: 'no-store' };
+    } : { headers, credentials: 'same-origin', cache: 'no-store' };
     const response = await fetch(`../${CONFIG.apiUrl}?action=${encodeURIComponent(action)}`, options);
     const text = await response.text();
+    let data;
     try {
-        return JSON.parse(text);
+        data = JSON.parse(text);
     } catch (error) {
         const preview = text.replace(/\s+/g, ' ').slice(0, 220);
         throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
     }
+    if (data.csrfToken) {
+        csrfToken = data.csrfToken;
+    }
+    return data;
 };
 
 let categories = [];
@@ -104,6 +118,7 @@ async function init() {
     $('#js-admin-login-btn').addEventListener('click', async () => {
         const result = await api('admin-login', { username: $('#js-admin-user').value, password: $('#js-admin-password').value });
         if (!result.ok) { setStatus(result.error); return; }
+        csrfToken = result.csrfToken || csrfToken;
         setLoggedIn(true);
         setStatus('Eingeloggt.');
         await loadData();
@@ -111,6 +126,7 @@ async function init() {
 
     $('#js-admin-logout').addEventListener('click', async () => {
         await api('admin-logout', {});
+        csrfToken = '';
         setLoggedIn(false);
         setStatus('Ausgeloggt.');
     });

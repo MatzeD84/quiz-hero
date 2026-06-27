@@ -76,6 +76,7 @@ function emit_quiz_data(bool $onlyActive): void
 function user_login(): void
 {
     require_method('POST');
+    rate_limit('user-login', 20, 300);
     $data = read_json_body();
     $name = clean_string($data['name'] ?? '', 80);
     $profileImageUrl = clean_url($data['profileImageUrl'] ?? '', 500);
@@ -87,7 +88,8 @@ function user_login(): void
     $pdo = db();
     $stmt = $pdo->prepare('INSERT INTO quiz_users (display_name, profile_image_url, last_seen_at) VALUES (:display_name, :profile_image_url, NOW())');
     $stmt->execute(['display_name' => $name, 'profile_image_url' => $profileImageUrl ?: null]);
-    $user = ['id' => (int) $pdo->lastInsertId(), 'name' => $name, 'profileImageUrl' => $profileImageUrl];
+    $userId = (int) $pdo->lastInsertId();
+    $user = ['id' => $userId, 'name' => $name, 'profileImageUrl' => $profileImageUrl, 'token' => create_user_token($userId)];
 
     json_response(['ok' => true, 'user' => $user]);
 }
@@ -95,8 +97,10 @@ function user_login(): void
 function save_result(): void
 {
     require_method('POST');
+    rate_limit('save-result', 60, 300);
     $data = read_json_body();
     $userId = ensure_int($data['userId'] ?? 0, 1, PHP_INT_MAX);
+    require_user_token($userId, (string) ($data['userToken'] ?? ''));
     $score = ensure_int($data['score'] ?? 0, 0, 100000);
     $maxScore = ensure_int($data['maxScore'] ?? 0, 0, 100000);
     $solved = ensure_int($data['solved'] ?? 0, 0, 100000);
@@ -126,6 +130,7 @@ function admin_login(): void
     $data = read_json_body();
     $username = clean_string($data['username'] ?? '', 120);
     $password = (string) ($data['password'] ?? '');
+    rate_limit('admin-login:' . $username, 8, 900);
 
     $expectedUser = env_value('QUIZ_HERO_ADMIN_USER', 'admin');
     $hash = env_value('QUIZ_HERO_ADMIN_PASSWORD_HASH');
@@ -138,13 +143,13 @@ function admin_login(): void
 
     session_regenerate_id(true);
     $_SESSION['quiz_hero_admin'] = ['username' => $expectedUser, 'loggedInAt' => time()];
-    json_response(['ok' => true, 'admin' => ['username' => $expectedUser]]);
+    json_response(['ok' => true, 'admin' => ['username' => $expectedUser], 'csrfToken' => csrf_token()]);
 }
 
 function admin_logout(): void
 {
     require_method('POST');
-    quiz_hero_start_session();
+    require_admin_csrf();
     $_SESSION = [];
     session_destroy();
     json_response(['ok' => true]);
@@ -154,13 +159,14 @@ function admin_me(): void
 {
     require_method('GET');
     quiz_hero_start_session();
-    json_response(['ok' => true, 'admin' => $_SESSION['quiz_hero_admin'] ?? null]);
+    $admin = $_SESSION['quiz_hero_admin'] ?? null;
+    json_response(['ok' => true, 'admin' => $admin, 'csrfToken' => $admin ? csrf_token() : null]);
 }
 
 function admin_question_save(): void
 {
     require_method('POST');
-    require_admin();
+    require_admin_csrf();
     $data = read_json_body();
     $question = normalize_question_payload($data);
     $pdo = db();
@@ -179,7 +185,7 @@ function admin_question_save(): void
 function admin_question_delete(): void
 {
     require_method('POST');
-    require_admin();
+    require_admin_csrf();
     $data = read_json_body();
     $id = ensure_int($data['id'] ?? 0, 1, PHP_INT_MAX);
     $stmt = db()->prepare('DELETE FROM quiz_questions WHERE id = :id');
@@ -190,7 +196,7 @@ function admin_question_delete(): void
 function admin_category_save(): void
 {
     require_method('POST');
-    require_admin();
+    require_admin_csrf();
     $data = read_json_body();
     $title = clean_string($data['title'] ?? '', 120);
     $id = slugify((string) ($data['id'] ?? $title));
