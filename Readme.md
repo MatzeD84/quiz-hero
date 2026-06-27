@@ -41,15 +41,22 @@ node --check js/quiz-view.js
 ```
 
 ### 2) Cache-Buster und SEO-Seiten aktualisieren
+Bei manuellem Deploy ohne GitHub Actions:
 1) Cache-Buster/Version anpassen:
    - `index.html` bei CSS/JS/Fonts mit `?v=...`
    - `admin/index.html` bei `js/admin.js?v=...`
    - `js/config.js` (`ASSET_VERSION`)
    - `scripts/build-seo-pages.js` CSS-Version fuer Landingpages
-2) SEO-Build mit deiner echten Domain ausfuehren:
+2) Alternativ lokal automatisiert eine Version setzen:
+```bash
+node scripts/apply-asset-version.js <version>
+```
+3) SEO-Build mit deiner echten Domain ausfuehren:
 ```bat
 .\scripts\build-seo.bat "https://deine-domain.de"
 ```
+
+Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporären Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
 
 ### 3) Produktive Datenbank vorbereiten
 1) MySQL-Datenbank und eigenen MySQL-Benutzer anlegen.
@@ -226,6 +233,7 @@ Klassischer JSON-Weg:
 - `content/` Modal-Inhalte (Impressum/Datenschutz/Cookies)
 - `scripts/build-seo-pages.js` SEO-Generator
 - `scripts/build-seo.bat` Build-Wrapper
+- `scripts/apply-asset-version.js` setzt Cache-Busting-Versionen fuer Deployments
 - `scripts/build-seed-sql.js` erzeugt `database/seed.sql` aus den JSON-Dateien
 - `.htaccess` Redirects + Kompression + 404
 - `404.html` einfache Fehlerseite mit Footer-Modalen

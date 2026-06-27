@@ -46,6 +46,9 @@ jobs:
           rsync -a admin api content data fonts images js pages deploy/
           rm -f deploy/api/config.local.example.php
 
+      - name: Apply asset version
+        run: node scripts/apply-asset-version.js "${GITHUB_SHA::8}" deploy
+
       - name: Write production PHP config
         env:
           QUIZ_HERO_DB_HOST: ${{ secrets.QUIZ_HERO_DB_HOST }}
