@@ -64,6 +64,19 @@ QUIZ_HERO_DB_HOST=<host> QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> Q
 
 Wichtig: Das Seed-Script loescht und ersetzt Fragen pro Kategorie aus den JSON-Dateien. Wenn du produktiv bereits Fragen ueber die Admin-Oberflaeche gepflegt hast, fuehre den Seed nicht unbedacht erneut aus.
 
+Bei Hosting ohne Shell-Zugriff kann stattdessen eine SQL-Datei fuer phpMyAdmin erzeugt werden:
+
+```bash
+node scripts/build-seed-sql.js
+```
+
+Danach in phpMyAdmin importieren:
+
+1) `database/schema.sql`
+2) `database/seed.sql`
+
+`database/seed.sql` befuellt Kategorien, Fragen, Tags und Feedback. User und Ergebnisse werden nicht befuellt.
+
 ### 4) PHP-Umgebung produktiv konfigurieren
 Setze auf dem Server mindestens diese Umgebungsvariablen:
 
@@ -203,6 +216,7 @@ Klassischer JSON-Weg:
 - `api/` PHP-API fuer Quizdaten, User, Ergebnisse und Admin-Aktionen
 - `database/schema.sql` MySQL-Schema
 - `database/seed-from-json.php` Import bestehender JSON-Inhalte in MySQL
+- `database/seed.sql` generierter SQL-Import fuer phpMyAdmin
 - `styles.css` globale Styles
 - `js/` Logik (Controller/State/View, DataService, Config)
 - `data/` Fragen-Dateien pro Kategorie
@@ -212,6 +226,7 @@ Klassischer JSON-Weg:
 - `content/` Modal-Inhalte (Impressum/Datenschutz/Cookies)
 - `scripts/build-seo-pages.js` SEO-Generator
 - `scripts/build-seo.bat` Build-Wrapper
+- `scripts/build-seed-sql.js` erzeugt `database/seed.sql` aus den JSON-Dateien
 - `.htaccess` Redirects + Kompression + 404
 - `404.html` einfache Fehlerseite mit Footer-Modalen
 - `Dockerfile`, `docker-compose.yml`, `.env.example` lokale Docker-Umgebung mit PHP/Apache und MySQL
