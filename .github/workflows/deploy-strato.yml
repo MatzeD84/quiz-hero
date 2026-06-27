@@ -1,0 +1,87 @@
+name: Deploy to STRATO
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: strato-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y lftp php-cli rsync
+
+      - name: Validate PHP
+        run: |
+          php -l api/bootstrap.php
+          php -l api/index.php
+          php -l database/seed-from-json.php
+
+      - name: Validate JavaScript
+        run: |
+          node --check js/admin.js
+          node --check js/quiz-data-service.js
+          node --check js/user-service.js
+          node --check js/quiz-controller.js
+          node --check js/quiz-view.js
+
+      - name: Build SEO pages
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: node scripts/build-seo-pages.js
+
+      - name: Prepare deploy directory
+        run: |
+          rm -rf deploy
+          mkdir -p deploy
+          rsync -a index.html styles.css .htaccess 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
+          rsync -a admin api content data fonts images js pages deploy/
+          rm -f deploy/api/config.local.example.php
+
+      - name: Write production PHP config
+        env:
+          QUIZ_HERO_DB_HOST: ${{ secrets.QUIZ_HERO_DB_HOST }}
+          QUIZ_HERO_DB_PORT: ${{ secrets.QUIZ_HERO_DB_PORT }}
+          QUIZ_HERO_DB_NAME: ${{ secrets.QUIZ_HERO_DB_NAME }}
+          QUIZ_HERO_DB_USER: ${{ secrets.QUIZ_HERO_DB_USER }}
+          QUIZ_HERO_DB_PASSWORD: ${{ secrets.QUIZ_HERO_DB_PASSWORD }}
+          QUIZ_HERO_ADMIN_USER: ${{ secrets.QUIZ_HERO_ADMIN_USER }}
+          QUIZ_HERO_ADMIN_PASSWORD_HASH: ${{ secrets.QUIZ_HERO_ADMIN_PASSWORD_HASH }}
+        run: |
+          php -r '
+          $keys = [
+              "QUIZ_HERO_DB_HOST",
+              "QUIZ_HERO_DB_PORT",
+              "QUIZ_HERO_DB_NAME",
+              "QUIZ_HERO_DB_USER",
+              "QUIZ_HERO_DB_PASSWORD",
+              "QUIZ_HERO_ADMIN_USER",
+              "QUIZ_HERO_ADMIN_PASSWORD_HASH",
+          ];
+          $config = [];
+          foreach ($keys as $key) {
+              $config[$key] = getenv($key) ?: "";
+          }
+          file_put_contents("deploy/api/config.local.php", "<?php\n\ndeclare(strict_types=1);\n\nreturn " . var_export($config, true) . ";\n");
+          '
+
+      - name: Deploy via SFTP
+        env:
+          STRATO_SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          STRATO_SFTP_USER: ${{ secrets.STRATO_SFTP_USER }}
+          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
+          STRATO_TARGET_PATH: ${{ secrets.STRATO_TARGET_PATH }}
+        run: |
+          lftp -u "$STRATO_SFTP_USER","$STRATO_SFTP_PASSWORD" "sftp://$STRATO_SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          mirror --reverse --verbose deploy/ "$STRATO_TARGET_PATH"
+          bye
+          EOF

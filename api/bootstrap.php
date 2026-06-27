@@ -4,6 +4,24 @@ declare(strict_types=1);
 
 const QUIZ_HERO_MAX_JSON_BYTES = 262144;
 
+function local_config(): array
+{
+    static $config = null;
+    if (is_array($config)) {
+        return $config;
+    }
+
+    $path = __DIR__ . '/config.local.php';
+    if (!is_file($path)) {
+        $config = [];
+        return $config;
+    }
+
+    $loaded = require $path;
+    $config = is_array($loaded) ? $loaded : [];
+    return $config;
+}
+
 function quiz_hero_start_session(): void
 {
     if (session_status() === PHP_SESSION_ACTIVE) {
@@ -25,7 +43,10 @@ function env_value(string $key, ?string $default = null): ?string
 {
     $value = getenv($key);
     if ($value === false || $value === '') {
-        return $default;
+        $config = local_config();
+        return array_key_exists($key, $config) && $config[$key] !== ''
+            ? (string) $config[$key]
+            : $default;
     }
     return $value;
 }

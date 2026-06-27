@@ -82,6 +82,10 @@ php -r "echo password_hash('DEIN_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
 
 Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_PASSWORD` ist nur fuer lokale Tests gedacht.
 
+Bei STRATO Shared Hosting sind echte PHP-Umgebungsvariablen oft unpraktisch. Deshalb unterstuetzt die App zusaetzlich `api/config.local.php`. Diese Datei ist in `.gitignore` ausgeschlossen und wird in der GitHub-Actions-Pipeline aus Secrets erzeugt.
+
+Beispielstruktur siehe `api/config.local.example.php`.
+
 ### 5) Dateien hochladen
 Fuer die produktive Version muessen hochgeladen werden:
 
@@ -123,6 +127,53 @@ Vor jedem produktiven Update ein Backup der Datenbank erstellen. Fuer ein Rollba
 - den vorherigen Dateistand
 - einen Datenbank-Dump vor Schema-/Content-Aenderungen
 - die vorherigen produktiven Umgebungsvariablen
+
+## GitHub Actions Deployment zu STRATO
+Die Pipeline liegt in `.github/workflows/deploy-strato.yml` und wird bewusst manuell gestartet. Damit geht nicht jeder Commit automatisch live.
+
+### GitHub Secrets anlegen
+In GitHub:
+
+1) Repository oeffnen.
+2) `Settings` anklicken.
+3) `Secrets and variables` -> `Actions` oeffnen.
+4) `New repository secret` anklicken.
+5) Namen exakt wie unten eintragen und den jeweiligen Wert speichern.
+
+Benötigte Secrets:
+
+- `SITE_URL`: `https://quiz-hero.de`
+- `STRATO_SFTP_HOST`: `ssh.strato.de`
+- `STRATO_SFTP_USER`: dein STRATO-SFTP-Benutzer, z. B. `developerMatze@yuchingchao.com`
+- `STRATO_SFTP_PASSWORD`: dein STRATO-SFTP-Passwort
+- `STRATO_TARGET_PATH`: `/html/quiz-hero.de/`
+- `QUIZ_HERO_DB_HOST`: STRATO-MySQL-Host
+- `QUIZ_HERO_DB_PORT`: meistens `3306`
+- `QUIZ_HERO_DB_NAME`: STRATO-Datenbankname
+- `QUIZ_HERO_DB_USER`: STRATO-Datenbankbenutzer
+- `QUIZ_HERO_DB_PASSWORD`: STRATO-Datenbankpasswort
+- `QUIZ_HERO_ADMIN_USER`: produktiver Admin-User
+- `QUIZ_HERO_ADMIN_PASSWORD_HASH`: Passwort-Hash, nicht Klartext
+
+Admin-Passwort-Hash lokal erzeugen:
+
+```bash
+php -r "echo password_hash('DEIN_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
+```
+
+### Deployment starten
+In GitHub:
+
+1) Repository oeffnen.
+2) `Actions` anklicken.
+3) Workflow `Deploy to STRATO` auswaehlen.
+4) `Run workflow` anklicken.
+5) Nach Abschluss pruefen:
+   - `https://quiz-hero.de/`
+   - `https://quiz-hero.de/admin/`
+   - `https://quiz-hero.de/api/index.php?action=public-data`
+
+Die Pipeline laedt nur produktive Web-Dateien hoch: Frontend, Admin, API, Content, Bilder, Fonts, JSON-Fallbacks und SEO-Seiten. Nicht hochgeladen werden Docker-Dateien, GitHub-Workflow-Dateien, lokale `.env`, README und persoenliche Notizen.
 
 ## Neuer Content (Kategorien/Fragen)
 Der normale Pflegeweg ist jetzt die Admin-Oberflaeche unter `/admin/`. Dort kannst du Kategorien und Fragen anlegen, bearbeiten, aktivieren/deaktivieren und speichern. Diese Inhalte landen direkt in MySQL und werden vom Quiz bevorzugt aus der Datenbank geladen.
