@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 require __DIR__ . '/../api/bootstrap.php';
 
+function read_json_file(string $path): array
+{
+    $raw = (string) file_get_contents($path);
+    $raw = preg_replace('/^\xEF\xBB\xBF/', '', $raw) ?? $raw;
+    return json_decode($raw, true, flags: JSON_THROW_ON_ERROR);
+}
+
 $root = dirname(__DIR__);
 $pdo = db();
 $pdo->beginTransaction();
 
 try {
-    $categories = json_decode((string) file_get_contents($root . '/categories.json'), true, flags: JSON_THROW_ON_ERROR)['categories'] ?? [];
-    $feedback = json_decode((string) file_get_contents($root . '/feedback.json'), true, flags: JSON_THROW_ON_ERROR);
-    $tags = json_decode((string) file_get_contents($root . '/tags.json'), true, flags: JSON_THROW_ON_ERROR)['tags'] ?? [];
+    $categories = read_json_file($root . '/categories.json')['categories'] ?? [];
+    $feedback = read_json_file($root . '/feedback.json');
+    $tags = read_json_file($root . '/tags.json')['tags'] ?? [];
 
     $deleteQuestionsStmt = $pdo->prepare('DELETE FROM quiz_questions WHERE category_id = :category_id');
     $categoryStmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
@@ -35,7 +42,7 @@ try {
         if ($file === '' || !is_file($root . '/' . $file)) {
             continue;
         }
-        $questions = json_decode((string) file_get_contents($root . '/' . $file), true, flags: JSON_THROW_ON_ERROR)['questions'] ?? [];
+        $questions = read_json_file($root . '/' . $file)['questions'] ?? [];
         foreach ($questions as $questionSort => $question) {
             $questionStmt->execute([
                 'category_id' => $category['id'],
