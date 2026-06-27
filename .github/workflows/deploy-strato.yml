@@ -73,11 +73,37 @@ jobs:
           file_put_contents("deploy/api/config.local.php", "<?php\n\ndeclare(strict_types=1);\n\nreturn " . var_export($config, true) . ";\n");
           '
 
+      - name: Validate deployment secrets
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          STRATO_SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
+          STRATO_SFTP_USER: ${{ secrets.STRATO_SFTP_USER }}
+          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD || secrets.SECRET_STRATO_QUIZHERO }}
+          STRATO_TARGET_PATH: ${{ secrets.STRATO_TARGET_PATH }}
+          QUIZ_HERO_DB_HOST: ${{ secrets.QUIZ_HERO_DB_HOST }}
+          QUIZ_HERO_DB_PORT: ${{ secrets.QUIZ_HERO_DB_PORT }}
+          QUIZ_HERO_DB_NAME: ${{ secrets.QUIZ_HERO_DB_NAME }}
+          QUIZ_HERO_DB_USER: ${{ secrets.QUIZ_HERO_DB_USER }}
+          QUIZ_HERO_DB_PASSWORD: ${{ secrets.QUIZ_HERO_DB_PASSWORD }}
+          QUIZ_HERO_ADMIN_USER: ${{ secrets.QUIZ_HERO_ADMIN_USER }}
+          QUIZ_HERO_ADMIN_PASSWORD_HASH: ${{ secrets.QUIZ_HERO_ADMIN_PASSWORD_HASH }}
+        run: |
+          missing=0
+          for key in SITE_URL STRATO_SFTP_HOST STRATO_SFTP_USER STRATO_SFTP_PASSWORD STRATO_TARGET_PATH QUIZ_HERO_DB_HOST QUIZ_HERO_DB_PORT QUIZ_HERO_DB_NAME QUIZ_HERO_DB_USER QUIZ_HERO_DB_PASSWORD QUIZ_HERO_ADMIN_USER QUIZ_HERO_ADMIN_PASSWORD_HASH; do
+            if [ -z "${!key}" ]; then
+              echo "::error::$key is missing or empty"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
       - name: Deploy via SFTP
         env:
           STRATO_SFTP_HOST: ${{ secrets.STRATO_SFTP_HOST }}
           STRATO_SFTP_USER: ${{ secrets.STRATO_SFTP_USER }}
-          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
+          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD || secrets.SECRET_STRATO_QUIZHERO }}
           STRATO_TARGET_PATH: ${{ secrets.STRATO_TARGET_PATH }}
         run: |
           lftp -u "$STRATO_SFTP_USER","$STRATO_SFTP_PASSWORD" "sftp://$STRATO_SFTP_HOST" <<EOF
