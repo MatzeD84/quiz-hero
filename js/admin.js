@@ -5,12 +5,18 @@ const $$ = selector => Array.from(document.querySelectorAll(selector));
 const api = async (action, payload = null) => {
     const options = payload ? {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         credentials: 'same-origin',
         body: JSON.stringify(payload)
-    } : { credentials: 'same-origin', cache: 'no-store' };
+    } : { headers: { 'Accept': 'application/json' }, credentials: 'same-origin', cache: 'no-store' };
     const response = await fetch(`../${CONFIG.apiUrl}?action=${encodeURIComponent(action)}`, options);
-    return response.json();
+    const text = await response.text();
+    try {
+        return JSON.parse(text);
+    } catch (error) {
+        const preview = text.replace(/\s+/g, ' ').slice(0, 220);
+        throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
+    }
 };
 
 let categories = [];
