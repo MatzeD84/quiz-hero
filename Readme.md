@@ -357,6 +357,8 @@ Nicht produktiv hochladen oder nicht oeffentlich ausliefern:
 - lokale Backups/Dumps
 - persoenliche Notizen wie `hinweise.md`, falls sie nicht bewusst Teil des Deployments sein sollen
 
+Admin-Uploads werden auf Produktion unter `images/uploads/<kategorie-id>/` gespeichert. Die GitHub-Actions-Pipeline laedt die Schutzdatei `images/uploads/.htaccess` hoch, loescht aber keine remote vorhandenen Upload-Bilder. Dadurch bleiben produktiv hochgeladene Bilder bei normalen Code-Deployments erhalten.
+
 ### 6) Nach dem Deploy pruefen
 1) Seiten pruefen:
    - `https://quiz-hero.de/`
@@ -745,6 +747,39 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 - Alle Datenbankzugriffe laufen serverseitig über PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
 - Schreibende Admin-Aktionen verwenden ein CSRF-Token aus der Admin-Session. Wenn die Admin-Seite lange offen war oder ein alter Browser-Tab genutzt wird, kann ein erneuter Login noetig sein.
 - Admin-Login-Versuche werden serverseitig rate-limitiert, damit Passwort-Raten gebremst wird.
+
+### Bild-Uploads im Admin
+Im Fragenformular wird der Fragetyp nicht mehr manuell gewaehlt. Die API setzt ihn automatisch:
+
+- `imageUrl` leer: Textfrage
+- `imageUrl` gefuellt: Bildfrage
+
+Neue Bilder koennen direkt im Admin-Bereich hochgeladen werden. Sie werden nach Kategorie sortiert gespeichert:
+
+```text
+images/uploads/<kategorie-id>/<dateiname>-<zufall>.jpg
+images/uploads/<kategorie-id>/<dateiname>-<zufall>.png
+images/uploads/<kategorie-id>/<dateiname>-<zufall>.webp
+```
+
+Beispiel:
+
+```text
+images/uploads/rom/kolosseum-8f3a2c9b1d04.jpg
+```
+
+Erlaubt sind JPG, PNG und WebP bis 24 MB. SVG, HTML, PHP und andere ausfuehrbare oder unsichere Formate werden abgelehnt. Die Datei bekommt serverseitig einen neuen sicheren Dateinamen; der Original-Dateiname wird nicht direkt uebernommen.
+
+Der Button `Bild entfernen` entfernt das Bild nur aus der Frage und setzt die Frage nach dem Speichern wieder auf Textfrage. Die Datei wird dabei bewusst nicht vom Server geloescht, weil sie theoretisch von anderen Fragen verwendet werden kann. Eine echte Mediathek mit sicherer Loeschfunktion kann spaeter auf Basis einer `quiz_media`-Tabelle ergaenzt werden.
+
+Fuer Produktion muss PHP Uploads in dieser Groesse erlauben. Im Projekt liegt dafuer `.user.ini` mit:
+
+```ini
+upload_max_filesize = 24M
+post_max_size = 28M
+```
+
+Falls STRATO diese Werte nicht uebernimmt, muessen die entsprechenden PHP-Einstellungen im STRATO-Panel gesetzt werden.
 
 ### User-Login und Ergebnisse
 - Auf der Startseite können Spieler optional Name und Profilbild-URL eintragen.

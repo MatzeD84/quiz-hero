@@ -7,6 +7,8 @@ RUN apt-get update \
     && sed -ri 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
     && rm -rf /var/lib/apt/lists/*
 
+COPY docker/php/uploads.ini /usr/local/etc/php/conf.d/quiz-hero-uploads.ini
+
 WORKDIR /var/www/html
 
 COPY . /var/www/html

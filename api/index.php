@@ -5,6 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
 
 const QUIZ_HERO_API_VERSION = '1';
+const QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES = 25165824;
 
 $action = $_GET['action'] ?? 'public-data';
 $apiVersion = trim((string) ($_GET['v'] ?? QUIZ_HERO_API_VERSION));
@@ -30,6 +31,7 @@ try {
         'admin-question-save' => admin_question_save(),
         'admin-question-delete' => admin_question_delete(),
         'admin-category-save' => admin_category_save(),
+        'admin-image-upload' => admin_image_upload(),
         default => json_response(['ok' => false, 'error' => 'Unbekannte API-Aktion.'], 404),
     };
 } catch (PDOException $exception) {
@@ -263,6 +265,118 @@ function admin_category_save(): void
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $id]);
 }
 
+function admin_image_upload(): void
+{
+    require_method('POST');
+    require_admin_csrf();
+    rate_limit('admin-image-upload', 40, 300);
+
+    $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+    if ($contentLength > 0 && $contentLength > QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES + 1048576) {
+        json_response(['ok' => false, 'error' => 'Das Bild ist zu gross. Maximal erlaubt sind 24 MB.'], 413);
+    }
+
+    $rawCategoryId = clean_string($_POST['categoryId'] ?? '', 120);
+    if ($rawCategoryId === '') {
+        json_response(['ok' => false, 'error' => 'Kategorie fehlt.'], 422);
+    }
+    $categoryId = slugify($rawCategoryId);
+
+    $stmt = db()->prepare('SELECT id FROM quiz_categories WHERE id = :id');
+    $stmt->execute(['id' => $categoryId]);
+    if (!$stmt->fetch()) {
+        json_response(['ok' => false, 'error' => 'Kategorie wurde nicht gefunden.'], 422);
+    }
+
+    $file = $_FILES['image'] ?? null;
+    if (!is_array($file) || ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+        json_response(['ok' => false, 'error' => 'Bitte waehle eine Bilddatei aus.'], 422);
+    }
+
+    if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK) {
+        json_response(['ok' => false, 'error' => upload_error_message((int) $file['error'])], 400);
+    }
+
+    $size = (int) ($file['size'] ?? 0);
+    if ($size <= 0 || $size > QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES) {
+        json_response(['ok' => false, 'error' => 'Das Bild darf maximal 24 MB gross sein.'], 413);
+    }
+
+    $tmpName = (string) ($file['tmp_name'] ?? '');
+    if ($tmpName === '' || !is_uploaded_file($tmpName)) {
+        json_response(['ok' => false, 'error' => 'Upload konnte nicht verarbeitet werden.'], 400);
+    }
+
+    $imageInfo = @getimagesize($tmpName);
+    if ($imageInfo === false) {
+        json_response(['ok' => false, 'error' => 'Die Datei ist kein gueltiges Bild.'], 422);
+    }
+
+    $mime = detect_mime_type($tmpName);
+    $allowed = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+    ];
+    if (!isset($allowed[$mime])) {
+        json_response(['ok' => false, 'error' => 'Erlaubt sind JPG, PNG und WebP. SVG/HTML/PHP sind nicht erlaubt.'], 422);
+    }
+
+    $baseDir = dirname(__DIR__) . '/images/uploads';
+    $categoryDir = $baseDir . '/' . $categoryId;
+    if (!is_dir($categoryDir) && !mkdir($categoryDir, 0755, true) && !is_dir($categoryDir)) {
+        json_response(['ok' => false, 'error' => 'Upload-Ordner konnte nicht erstellt werden.'], 500);
+    }
+
+    $originalName = pathinfo((string) ($file['name'] ?? 'quiz-bild'), PATHINFO_FILENAME);
+    $safeName = slugify($originalName);
+    $extension = $allowed[$mime];
+    $filename = sprintf('%s-%s.%s', $safeName, bin2hex(random_bytes(6)), $extension);
+    $target = $categoryDir . '/' . $filename;
+
+    if (!move_uploaded_file($tmpName, $target)) {
+        json_response(['ok' => false, 'error' => 'Bild konnte nicht gespeichert werden.'], 500);
+    }
+
+    @chmod($target, 0644);
+
+    $relativePath = sprintf('images/uploads/%s/%s', $categoryId, $filename);
+    json_response([
+        'ok' => true,
+        'apiVersion' => QUIZ_HERO_API_VERSION,
+        'path' => $relativePath,
+        'mimeType' => $mime,
+        'size' => $size,
+        'width' => (int) ($imageInfo[0] ?? 0),
+        'height' => (int) ($imageInfo[1] ?? 0),
+    ]);
+}
+
+function detect_mime_type(string $path): string
+{
+    if (class_exists('finfo')) {
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($path);
+        if (is_string($mime) && $mime !== '') {
+            return $mime;
+        }
+    }
+
+    return (string) (mime_content_type($path) ?: '');
+}
+
+function upload_error_message(int $error): string
+{
+    return match ($error) {
+        UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Das Bild ist zu gross.',
+        UPLOAD_ERR_PARTIAL => 'Das Bild wurde nur teilweise hochgeladen.',
+        UPLOAD_ERR_NO_TMP_DIR => 'Server-Upload-Ordner fehlt.',
+        UPLOAD_ERR_CANT_WRITE => 'Bild konnte nicht auf dem Server gespeichert werden.',
+        UPLOAD_ERR_EXTENSION => 'Upload wurde von einer PHP-Erweiterung gestoppt.',
+        default => 'Upload fehlgeschlagen.',
+    };
+}
+
 function normalize_question_payload(array $data): array
 {
     $answers = array_values(array_filter(array_map(static fn($answer): string => clean_string((string) $answer, 255), $data['answers'] ?? []), static fn(string $answer): bool => $answer !== ''));
@@ -274,10 +388,8 @@ function normalize_question_payload(array $data): array
     if (!in_array($difficulty, ['easy', 'medium', 'hero'], true)) {
         $difficulty = 'easy';
     }
-    $type = clean_string($data['type'] ?? 'text', 20);
-    if (!in_array($type, ['text', 'image'], true)) {
-        $type = 'text';
-    }
+    $imageUrl = clean_url($data['imageUrl'] ?? '', 500);
+    $type = $imageUrl !== '' ? 'image' : 'text';
     $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', (string) ($data['tags'] ?? '')))));
 
     return [
@@ -287,7 +399,7 @@ function normalize_question_payload(array $data): array
         'correct_index' => $correct,
         'difficulty' => $difficulty,
         'question_type' => $type,
-        'image_url' => clean_url($data['imageUrl'] ?? '', 500) ?: null,
+        'image_url' => $imageUrl ?: null,
         'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
         'background_knowledge' => clean_string($data['backgroundKnowledge'] ?? '', 2000) ?: null,
         'active' => !empty($data['active']) ? 1 : 0,

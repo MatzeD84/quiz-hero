@@ -9,6 +9,12 @@ const apiUrl = action => {
     return `../${CONFIG.apiUrl}?${params.toString()}`;
 };
 
+const resolveAssetUrl = path => {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    return path.startsWith('../') ? path : `../${path.replace(/^\/+/, '')}`;
+};
+
 const api = async (action, payload = null) => {
     const headers = { 'Accept': 'application/json' };
     if (payload) {
@@ -35,6 +41,43 @@ const api = async (action, payload = null) => {
     if (data.csrfToken) {
         csrfToken = data.csrfToken;
     }
+    return data;
+};
+
+const uploadImage = async () => {
+    const fileInput = $('#js-admin-image-file');
+    const file = fileInput.files?.[0];
+    if (!file) {
+        throw new Error('Bitte waehle zuerst ein Bild aus.');
+    }
+
+    const formData = new FormData();
+    formData.append('categoryId', $('#js-admin-category').value);
+    formData.append('image', file);
+
+    const headers = { 'Accept': 'application/json' };
+    if (csrfToken) {
+        headers['X-Quiz-Hero-CSRF'] = csrfToken;
+    }
+
+    const response = await fetch(apiUrl('admin-image-upload'), {
+        method: 'POST',
+        headers,
+        credentials: 'same-origin',
+        body: formData
+    });
+    const text = await response.text();
+    let data;
+    try {
+        data = JSON.parse(text);
+    } catch (error) {
+        const preview = text.replace(/\s+/g, ' ').slice(0, 220);
+        throw new Error(`Upload antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
+    }
+    if (!response.ok || !data.ok) {
+        throw new Error(data.error || `Upload fehlgeschlagen (HTTP ${response.status}).`);
+    }
+
     return data;
 };
 
@@ -82,6 +125,19 @@ function renderQuestions() {
     });
 }
 
+function updateImageState() {
+    const imageUrl = $('#js-admin-image').value.trim();
+    $('#js-admin-type').value = imageUrl ? 'image' : 'text';
+    const previewWrap = $('#js-admin-image-preview-wrap');
+    const preview = $('#js-admin-image-preview');
+    previewWrap.classList.toggle('admin-hidden', !imageUrl);
+    if (imageUrl) {
+        preview.src = resolveAssetUrl(imageUrl);
+    } else {
+        preview.removeAttribute('src');
+    }
+}
+
 function fillQuestion(question = {}) {
     $('#js-admin-form-title').textContent = question.id ? 'Frage bearbeiten' : 'Neue Frage';
     $('#js-admin-question-id').value = question.id || '';
@@ -90,15 +146,18 @@ function fillQuestion(question = {}) {
     $$('.js-admin-answer').forEach((input, index) => { input.value = question.answers?.[index] || ''; });
     $('#js-admin-correct').value = String(question.correct ?? 0);
     $('#js-admin-difficulty').value = question.difficulty || 'easy';
-    $('#js-admin-type').value = question.type || 'text';
     $('#js-admin-image').value = question.imageUrl || '';
+    $('#js-admin-type').value = question.imageUrl ? 'image' : 'text';
+    $('#js-admin-image-file').value = '';
     $('#js-admin-tags').value = (question.tag || []).join(', ');
     $('#js-admin-background').value = question.backgroundKnowledge || '';
     $('#js-admin-sort').value = question.sortOrder || 100;
     $('#js-admin-active').checked = question.active !== false;
+    updateImageState();
 }
 
 function collectQuestion() {
+    const imageUrl = $('#js-admin-image').value.trim();
     return {
         id: $('#js-admin-question-id').value,
         categoryId: $('#js-admin-category').value,
@@ -106,8 +165,8 @@ function collectQuestion() {
         answers: $$('.js-admin-answer').map(input => input.value),
         correct: Number($('#js-admin-correct').value),
         difficulty: $('#js-admin-difficulty').value,
-        type: $('#js-admin-type').value,
-        imageUrl: $('#js-admin-image').value,
+        type: imageUrl ? 'image' : 'text',
+        imageUrl,
         tags: $('#js-admin-tags').value,
         backgroundKnowledge: $('#js-admin-background').value,
         sortOrder: Number($('#js-admin-sort').value || 100),
@@ -138,6 +197,25 @@ async function init() {
 
     $('#js-admin-refresh').addEventListener('click', loadData);
     $('#js-admin-new-question').addEventListener('click', () => fillQuestion());
+    $('#js-admin-image').addEventListener('input', updateImageState);
+    $('#js-admin-image-upload').addEventListener('click', async () => {
+        try {
+            setStatus('Bild wird hochgeladen...');
+            const result = await uploadImage();
+            $('#js-admin-image').value = result.path;
+            $('#js-admin-image-file').value = '';
+            updateImageState();
+            setStatus(`Bild hochgeladen: ${result.path}`);
+        } catch (error) {
+            setStatus(error.message || 'Bild konnte nicht hochgeladen werden.');
+        }
+    });
+    $('#js-admin-image-remove').addEventListener('click', () => {
+        $('#js-admin-image').value = '';
+        $('#js-admin-image-file').value = '';
+        updateImageState();
+        setStatus('Bild aus der Frage entfernt. Bitte Frage speichern.');
+    });
     $('#js-admin-question-form').addEventListener('submit', async event => {
         event.preventDefault();
         const result = await api('admin-question-save', collectQuestion());

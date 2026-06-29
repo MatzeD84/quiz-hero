@@ -46,7 +46,7 @@ jobs:
         run: |
           rm -rf deploy
           mkdir -p deploy
-          rsync -a index.html styles.css .htaccess 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
+          rsync -a index.html styles.css .htaccess .user.ini 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
           rsync -a admin api content data fonts images js pages deploy/
           rm -f deploy/api/config.local.example.php
 

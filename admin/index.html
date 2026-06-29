@@ -50,8 +50,20 @@
                         </div>
                         <label>Richtige Antwort <select id="js-admin-correct"><option value="0">Antwort 1</option><option value="1">Antwort 2</option><option value="2">Antwort 3</option><option value="3">Antwort 4</option></select></label>
                         <label>Schwierigkeit <select id="js-admin-difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hero">Hero</option></select></label>
-                        <label>Typ <select id="js-admin-type"><option value="text">Text</option><option value="image">Bildfrage</option></select></label>
-                        <label>Bild-URL <input id="js-admin-image" type="text" placeholder="images/... oder https://..."></label>
+                        <input id="js-admin-type" type="hidden" value="text">
+                        <section class="admin-image-field">
+                            <h3>Bild zur Frage</h3>
+                            <label>Bildpfad <input id="js-admin-image" type="text" placeholder="images/... oder https://..."></label>
+                            <div class="admin-image-field__preview admin-hidden" id="js-admin-image-preview-wrap">
+                                <img id="js-admin-image-preview" alt="Bildvorschau" loading="lazy">
+                            </div>
+                            <div class="admin-image-field__upload">
+                                <input id="js-admin-image-file" type="file" accept="image/jpeg,image/png,image/webp">
+                                <button id="js-admin-image-upload" class="btn btn--modal" type="button">Bild hochladen</button>
+                                <button id="js-admin-image-remove" class="btn btn--modal" type="button">Bild entfernen</button>
+                            </div>
+                            <p class="admin-form__hint">Neue Uploads landen unter <code>images/uploads/&lt;kategorie&gt;/</code>. Erlaubt sind JPG, PNG und WebP bis 24 MB.</p>
+                        </section>
                         <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
                         <label>Sortierung <input id="js-admin-sort" type="number" min="0" value="100"></label>

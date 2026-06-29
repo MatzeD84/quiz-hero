@@ -116,8 +116,6 @@ Ideen:
 -----
 Code-/Architektur-Schritte:
 
-Migration-System für Datenbankänderungen
-Statt nur schema.sql: database/migrations/001_...sql, 002_...sql. Damit weißt du sauber, welche DB-Änderungen produktiv eingespielt wurden.
 
 Admin-Audit-Log
 Tabelle quiz_admin_log: Wer hat wann welche Frage geändert/gelöscht? Sehr nützlich, wenn später viel Content entsteht.
@@ -125,8 +123,6 @@ Tabelle quiz_admin_log: Wer hat wann welche Frage geändert/gelöscht? Sehr nüt
 Soft Delete statt hart löschen
 Fragen/Kategorien nicht löschen, sondern deleted_at setzen. Dann kannst du Fehler rückgängig machen.
 
-API-Versionierung
-Z. B. /api/index.php?action=public-data&v=1. Hilft, wenn Frontend und Backend später größer werden.
 
 Automatisierte Health-Checks nach Deploy
 GitHub Action prüft nach STRATO-Deploy automatisch:
@@ -134,6 +130,18 @@ https://quiz-hero.de/, API, Admin-Login-Endpoint, Sitemap.
 
 -----
 Admin-Bereich: sehr hoher Nutzen:
+
+eigene jsion mit fragen importieren
+
+Mediathek
+- übersicht aller bilder
+- löschen, hinzufügen
+- namen ändern
+- Bild (wo wird das bild verwenden ID anzeigen)
+- Tabelle quiz_media
+- “ungenutzte Bilder löschen”
+- “Bild wird verwendet von X Fragen”
+- echte Löschung nur, wenn nicht verwendet
 
 Fragen-Vorschau direkt im Admin
 Beim Bearbeiten sieht der Admin rechts sofort, wie die Frage später im Quiz aussieht.

@@ -836,6 +836,48 @@ details[open] summary::after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.admin-image-field {
+    border: 2px solid rgba(27, 92, 131, 0.12);
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.admin-image-field h3 {
+    margin: 0;
+}
+
+.admin-image-field__upload {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.admin-image-field__upload input[type="file"] {
+    flex: 1 1 240px;
+}
+
+.admin-image-field__preview {
+    border: 2px solid rgba(27, 92, 131, 0.12);
+    display: grid;
+    min-height: 140px;
+    place-items: center;
+    padding: 0.75rem;
+}
+
+.admin-image-field__preview img {
+    max-height: 320px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.admin-form__hint {
+    color: #5e5e5e;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
 .admin-hidden {
     display: none !important;
 }
