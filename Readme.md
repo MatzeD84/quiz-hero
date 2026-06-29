@@ -9,7 +9,7 @@ Quiz-Hero besteht inzwischen aus drei Schichten:
 
 Der Datenfluss ist bewusst fallback-faehig:
 
-1) Das Frontend fragt zuerst `api/index.php?action=public-data` ab.
+1) Das Frontend fragt zuerst `api/index.php?action=public-data&v=1` ab.
 2) Wenn die API erreichbar ist, kommen Kategorien, Fragen, Tags und Feedback aus MySQL.
 3) Wenn die API nicht erreichbar ist, nutzt das Frontend die alten JSON-Dateien (`categories.json`, `tags.json`, `feedback.json`, `data/questions-*.json`) als Fallback.
 
@@ -169,6 +169,23 @@ Einige Felder werden bewusst als JSON gespeichert, weil sie strukturierte Listen
 
 Die API dekodiert diese Felder serverseitig und liefert sie dem Frontend als normale Arrays/Objekte.
 
+## API-Versionierung
+Die PHP-API wird per Query-Parameter versioniert. Die aktuelle Version ist `v=1`.
+
+Beispiele:
+
+```text
+/api/index.php?action=public-data&v=1
+/api/index.php?action=user-login&v=1
+/api/index.php?action=save-result&v=1
+/api/index.php?action=admin-data&v=1
+/api/index.php?action=seo-export&v=1
+```
+
+Das Frontend setzt die Version zentral ueber `CONFIG.apiVersion` in `js/config.js`. Die API akzeptiert fehlendes `v` aktuell aus Rueckwaertskompatibilitaet als Version 1. Unbekannte Versionen, z. B. `v=2`, werden mit JSON-Fehler und HTTP 400 abgelehnt.
+
+Wenn spaeter eine inkompatible API-Aenderung kommt, bleibt `v=1` stabil und neue Clients koennen gezielt auf `v=2` umgestellt werden. Dadurch muessen Frontend und Backend nicht immer exakt im selben Moment ersetzt werden.
+
 ### Migrationen
 Das Projekt nutzt ein einfaches SQL-Migration-System:
 
@@ -207,7 +224,7 @@ docker compose run --rm seed
 2) Lokal testen:
 - `http://localhost:8080/`
 - `http://localhost:8080/admin/`
-- `http://localhost:8080/api/index.php?action=public-data`
+- `http://localhost:8080/api/index.php?action=public-data&v=1`
 3) PHP/JS grob pruefen:
 ```bash
 docker compose exec app php -l api/bootstrap.php
@@ -301,7 +318,7 @@ Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_
 
 `QUIZ_HERO_USER_TOKEN_SECRET` sollte ein langer zufaelliger Wert sein. Die App nutzt ihn, um User-Tokens zu signieren. Dadurch koennen Quiz-Ergebnisse nicht einfach mit beliebigen fremden User-IDs gespeichert werden. Wenn das Secret fehlt, nutzt die App einen vorhandenen Admin-/Datenbank-Secret als Fallback; ein eigenes Secret ist trotzdem sauberer.
 
-`QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export`. Die GitHub Action nutzt diesen Export, um Landingpages bevorzugt aus MySQL statt aus JSON-Dateien zu erzeugen.
+`QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export&v=1`. Die GitHub Action nutzt diesen Export, um Landingpages bevorzugt aus MySQL statt aus JSON-Dateien zu erzeugen.
 
 Bei STRATO Shared Hosting sind echte PHP-Umgebungsvariablen oft unpraktisch. Deshalb unterstuetzt die App zusaetzlich `api/config.local.php`. Diese Datei ist in `.gitignore` ausgeschlossen und wird in der GitHub-Actions-Pipeline aus Secrets erzeugt.
 
@@ -345,7 +362,7 @@ Nicht produktiv hochladen oder nicht oeffentlich ausliefern:
    - `https://quiz-hero.de/`
    - `https://quiz-hero.de/index.html`
    - `https://quiz-hero.de/admin/`
-   - `https://quiz-hero.de/api/index.php?action=public-data`
+   - `https://quiz-hero.de/api/index.php?action=public-data&v=1`
    - `https://quiz-hero.de/pages/index.html`
    - `https://quiz-hero.de/pages/rom.html`
 2) Admin-Login pruefen und eine Testfrage anlegen/bearbeiten.
@@ -405,7 +422,7 @@ In GitHub:
 5) Nach Abschluss pruefen:
    - `https://quiz-hero.de/`
    - `https://quiz-hero.de/admin/`
-   - `https://quiz-hero.de/api/index.php?action=public-data`
+   - `https://quiz-hero.de/api/index.php?action=public-data&v=1`
 
 Die Pipeline laedt nur produktive Web-Dateien hoch: Frontend, Admin, API, Content, Bilder, Fonts, JSON-Fallbacks und SEO-Seiten. Nicht hochgeladen werden Docker-Dateien, GitHub-Workflow-Dateien, lokale `.env`, README, `database/`, `scripts/`, `chatGPTAgents/` und persoenliche Notizen.
 
@@ -536,7 +553,7 @@ Wichtig: Der spielbare Quiz-Einstieg bleibt weiterhin die Haupt-App unter `https
 Der SEO-Generator `scripts/build-seo-pages.js` liest bevorzugt aus MySQL. Dafuer ruft die GitHub Action den geschuetzten API-Endpunkt auf:
 
 ```text
-https://quiz-hero.de/api/index.php?action=seo-export
+https://quiz-hero.de/api/index.php?action=seo-export&v=1
 ```
 
 Der Endpunkt ist mit `QUIZ_HERO_SEO_EXPORT_TOKEN` geschuetzt. Die GitHub Action sendet diesen Wert als Header `X-Quiz-Hero-SEO-Token`.
@@ -554,7 +571,7 @@ Der JSON-Fallback liest weiterhin:
 - `tags.json` fuer thematische Verknuepfungen und "Auch interessant".
 - `SITE_URL` fuer Canonical-URLs, Sitemap und Robots.
 
-Beim GitHub-Actions-Deploy wird der Generator automatisch mit `SITE_URL=https://quiz-hero.de`, `SEO_EXPORT_URL=https://quiz-hero.de/api/index.php?action=seo-export` und `SEO_EXPORT_TOKEN` aus GitHub Secrets ausgefuehrt. Danach werden die erzeugten Dateien in `pages/`, `sitemap.xml` und `robots.txt` deployed.
+Beim GitHub-Actions-Deploy wird der Generator automatisch mit `SITE_URL=https://quiz-hero.de`, `SEO_EXPORT_URL=https://quiz-hero.de/api/index.php?action=seo-export&v=1` und `SEO_EXPORT_TOKEN` aus GitHub Secrets ausgefuehrt. Danach werden die erzeugten Dateien in `pages/`, `sitemap.xml` und `robots.txt` deployed.
 
 Wichtig beim ersten Deploy dieser Funktion: Der produktive Server kennt den neuen `seo-export`-Endpunkt erst nach dem Deploy. Deshalb kann der erste Lauf noch den JSON-Fallback verwenden. Ab dem naechsten Deploy nutzt die Pipeline den MySQL-Export, sofern `QUIZ_HERO_SEO_EXPORT_TOKEN` als GitHub Secret angelegt ist.
 
@@ -689,7 +706,7 @@ Diese Aenderung schreibt Versionen in HTML-Dateien und `js/config.js`. Nur verwe
 
 
 ## MySQL-/PHP-Betrieb
-Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php` erreichbar ist und die Datenbanktabellen existieren, lädt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fällt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurück.
+Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php?action=public-data&v=1` erreichbar ist und die Datenbanktabellen existieren, lädt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fällt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurück.
 
 ### Datenbank einrichten
 1) MySQL-Datenbank und Benutzer anlegen.

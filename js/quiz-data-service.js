@@ -68,7 +68,8 @@ export class QuizDataService {
             return null;
         }
         try {
-            const response = await this.fetchFn(`${this.apiUrl}?action=public-data`, { cache: 'no-store' });
+            const params = new URLSearchParams({ action: 'public-data', v: CONFIG.apiVersion });
+            const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, { cache: 'no-store' });
             if (!response.ok) {
                 return null;
             }

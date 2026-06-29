@@ -4,7 +4,18 @@ declare(strict_types=1);
 
 require __DIR__ . '/bootstrap.php';
 
+const QUIZ_HERO_API_VERSION = '1';
+
 $action = $_GET['action'] ?? 'public-data';
+$apiVersion = trim((string) ($_GET['v'] ?? QUIZ_HERO_API_VERSION));
+
+if ($apiVersion !== QUIZ_HERO_API_VERSION) {
+    json_response([
+        'ok' => false,
+        'error' => 'Nicht unterstuetzte API-Version.',
+        'supportedVersions' => [QUIZ_HERO_API_VERSION],
+    ], 400);
+}
 
 try {
     match ($action) {
@@ -44,14 +55,14 @@ function admin_data(): void
 
 function emit_quiz_data(bool $onlyActive): void
 {
-    json_response(['ok' => true] + load_quiz_data($onlyActive, false));
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION] + load_quiz_data($onlyActive, false));
 }
 
 function seo_export(): void
 {
     require_method('GET');
     require_seo_export_token();
-    json_response(['ok' => true, 'generatedAt' => gmdate(DATE_ATOM)] + load_quiz_data(true, true));
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'generatedAt' => gmdate(DATE_ATOM)] + load_quiz_data(true, true));
 }
 
 function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
@@ -125,7 +136,7 @@ function user_login(): void
     $userId = (int) $pdo->lastInsertId();
     $user = ['id' => $userId, 'name' => $name, 'profileImageUrl' => $profileImageUrl, 'token' => create_user_token($userId)];
 
-    json_response(['ok' => true, 'user' => $user]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $user]);
 }
 
 function save_result(): void
@@ -154,7 +165,7 @@ function save_result(): void
         'total_questions' => $total,
     ]);
 
-    json_response(['ok' => true]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function admin_login(): void
@@ -177,7 +188,7 @@ function admin_login(): void
 
     session_regenerate_id(true);
     $_SESSION['quiz_hero_admin'] = ['username' => $expectedUser, 'loggedInAt' => time()];
-    json_response(['ok' => true, 'admin' => ['username' => $expectedUser], 'csrfToken' => csrf_token()]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'admin' => ['username' => $expectedUser], 'csrfToken' => csrf_token()]);
 }
 
 function admin_logout(): void
@@ -186,7 +197,7 @@ function admin_logout(): void
     require_admin_csrf();
     $_SESSION = [];
     session_destroy();
-    json_response(['ok' => true]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function admin_me(): void
@@ -194,7 +205,7 @@ function admin_me(): void
     require_method('GET');
     quiz_hero_start_session();
     $admin = $_SESSION['quiz_hero_admin'] ?? null;
-    json_response(['ok' => true, 'admin' => $admin, 'csrfToken' => $admin ? csrf_token() : null]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'admin' => $admin, 'csrfToken' => $admin ? csrf_token() : null]);
 }
 
 function admin_question_save(): void
@@ -213,7 +224,7 @@ function admin_question_save(): void
     }
     $stmt->execute($question);
 
-    json_response(['ok' => true, 'id' => !empty($question['id']) ? $question['id'] : (int) $pdo->lastInsertId()]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => !empty($question['id']) ? $question['id'] : (int) $pdo->lastInsertId()]);
 }
 
 function admin_question_delete(): void
@@ -224,7 +235,7 @@ function admin_question_delete(): void
     $id = ensure_int($data['id'] ?? 0, 1, PHP_INT_MAX);
     $stmt = db()->prepare('DELETE FROM quiz_questions WHERE id = :id');
     $stmt->execute(['id' => $id]);
-    json_response(['ok' => true]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function admin_category_save(): void
@@ -249,7 +260,7 @@ function admin_category_save(): void
     ];
     $stmt = db()->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
     $stmt->execute($payload);
-    json_response(['ok' => true, 'id' => $id]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $id]);
 }
 
 function normalize_question_payload(array $data): array

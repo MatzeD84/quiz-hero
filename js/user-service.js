@@ -52,7 +52,8 @@ export class UserService {
     }
 
     async post(action, payload) {
-        const response = await this.fetchFn(`${this.apiUrl}?action=${encodeURIComponent(action)}`, {
+        const params = new URLSearchParams({ action, v: CONFIG.apiVersion });
+        const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             credentials: 'same-origin',

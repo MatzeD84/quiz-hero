@@ -10,6 +10,7 @@ export const CONFIG = {
     tagsUrl: 'tags.json',
     feedbackUrl: 'feedback.json',
     apiUrl: 'api/index.php',
+    apiVersion: '1',
     analytics: {
         googleAnalyticsId: 'G-SYVZB974FC'
     },

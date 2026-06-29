@@ -4,6 +4,11 @@ const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
 let csrfToken = '';
 
+const apiUrl = action => {
+    const params = new URLSearchParams({ action, v: CONFIG.apiVersion });
+    return `../${CONFIG.apiUrl}?${params.toString()}`;
+};
+
 const api = async (action, payload = null) => {
     const headers = { 'Accept': 'application/json' };
     if (payload) {
@@ -18,7 +23,7 @@ const api = async (action, payload = null) => {
         credentials: 'same-origin',
         body: JSON.stringify(payload)
     } : { headers, credentials: 'same-origin', cache: 'no-store' };
-    const response = await fetch(`../${CONFIG.apiUrl}?action=${encodeURIComponent(action)}`, options);
+    const response = await fetch(apiUrl(action), options);
     const text = await response.text();
     let data;
     try {

@@ -8,6 +8,7 @@ const siteTitle = 'Quiz-Hero';
 const siteUrl = (process.env.SITE_URL || '').replace(/\/+$/, '');
 const seoExportUrl = (process.env.SEO_EXPORT_URL || '').trim();
 const seoExportToken = (process.env.SEO_EXPORT_TOKEN || '').trim();
+const apiVersion = (process.env.QUIZ_HERO_API_VERSION || '1').trim();
 
 const readJson = filePath => {
     const raw = fs.readFileSync(filePath, 'utf8');
@@ -32,12 +33,24 @@ const loadCategoriesFromJson = () => {
     });
 };
 
+const withApiVersion = url => {
+    if (!apiVersion) {
+        return url;
+    }
+    const parsed = new URL(url);
+    if (!parsed.searchParams.has('v')) {
+        parsed.searchParams.set('v', apiVersion);
+    }
+    return parsed.toString();
+};
+
 const loadCategoriesFromSeoExport = async () => {
     if (!seoExportUrl || !seoExportToken || typeof fetch !== 'function') {
         return null;
     }
 
-    const response = await fetch(seoExportUrl, {
+    const versionedSeoExportUrl = withApiVersion(seoExportUrl);
+    const response = await fetch(versionedSeoExportUrl, {
         headers: {
             'Accept': 'application/json',
             'X-Quiz-Hero-SEO-Token': seoExportToken
@@ -67,7 +80,7 @@ const loadCategories = async () => {
     try {
         const exportedCategories = await loadCategoriesFromSeoExport();
         if (exportedCategories) {
-            console.log(`SEO-Datenquelle: MySQL-Export (${seoExportUrl})`);
+            console.log(`SEO-Datenquelle: MySQL-Export (${withApiVersion(seoExportUrl)})`);
             return exportedCategories;
         }
     } catch (error) {
