@@ -23,6 +23,7 @@ jobs:
         run: |
           php -l api/bootstrap.php
           php -l api/index.php
+          php -l database/migrate.php
           php -l database/seed-from-json.php
 
       - name: Validate JavaScript

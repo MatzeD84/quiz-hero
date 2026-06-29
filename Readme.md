@@ -5,7 +5,7 @@ Quiz-Hero besteht inzwischen aus drei Schichten:
 
 - Frontend: `index.html`, `styles.css` und die Module in `js/`. Das Frontend rendert Quiz, Kategorien, Tags, User-Login und Ergebnisanzeige im Browser.
 - Backend/API: `api/index.php` mit `api/bootstrap.php`. Die API liefert Quizdaten aus MySQL, speichert Spieler und Ergebnisse und stellt geschuetzte Admin-Endpunkte bereit.
-- Datenbank: MySQL mit Schema in `database/schema.sql`. Gespeichert werden Kategorien, Fragen, Tags, Feedback-Texte, Spieler und Quiz-Ergebnisse.
+- Datenbank: MySQL mit versionierten Migrationen in `database/migrations/`. `database/schema.sql` bleibt als Snapshot fuer schnelle Erstimporte erhalten. Gespeichert werden Kategorien, Fragen, Tags, Feedback-Texte, Spieler und Quiz-Ergebnisse.
 
 Der Datenfluss ist bewusst fallback-faehig:
 
@@ -16,13 +16,18 @@ Der Datenfluss ist bewusst fallback-faehig:
 Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler melden sich optional mit Name und Profilbild-URL an; diese Daten und abgeschlossene Ergebnisse werden in MySQL gespeichert.
 
 ## Datenbankmodell
-Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Das Schema liegt in `database/schema.sql`. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
+Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen liegen versioniert in `database/migrations/` und werden mit `database/migrate.php` angewendet. `database/schema.sql` ist ein aktueller Snapshot fuer schnelle Erstimporte per CLI oder phpMyAdmin. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
 
 ### Beziehungen
 ```mermaid
 erDiagram
     quiz_categories ||--o{ quiz_questions : "enthaelt"
     quiz_users ||--o{ quiz_results : "erzielt"
+
+    schema_migrations {
+        varchar version PK
+        timestamp applied_at
+    }
 
     quiz_categories {
         varchar id PK
@@ -76,6 +81,7 @@ erDiagram
 | `quiz_feedback` | Rueckmeldungen nach richtigen/falschen Antworten | Seed |
 | `quiz_users` | Spielerprofile aus dem optionalen User-Login | Frontend/API |
 | `quiz_results` | Gespeicherte Quiz-Ergebnisse pro Spieler | Frontend/API |
+| `schema_migrations` | Merkt, welche Migrationen bereits angewendet wurden | `database/migrate.php` |
 
 ### `quiz_categories`
 | Spalte | Typ | Bedeutung | Beispiel |
@@ -147,6 +153,12 @@ erDiagram
 | `total_questions` | `INT UNSIGNED` | Anzahl gestellter Fragen | `10` |
 | `created_at` | `TIMESTAMP` | Ergebniszeitpunkt | automatisch |
 
+### `schema_migrations`
+| Spalte | Typ | Bedeutung | Beispiel |
+| --- | --- | --- | --- |
+| `version` | `VARCHAR(190)` | Dateiname der angewendeten Migration | `001_initial_schema.sql` |
+| `applied_at` | `TIMESTAMP` | Zeitpunkt der Anwendung | automatisch |
+
 ### Hinweise zu JSON-Spalten
 Einige Felder werden bewusst als JSON gespeichert, weil sie strukturierte Listen oder kleine Konfigurationsobjekte enthalten:
 
@@ -157,6 +169,31 @@ Einige Felder werden bewusst als JSON gespeichert, weil sie strukturierte Listen
 
 Die API dekodiert diese Felder serverseitig und liefert sie dem Frontend als normale Arrays/Objekte.
 
+### Migrationen
+Das Projekt nutzt ein einfaches SQL-Migration-System:
+
+- Migrationen liegen in `database/migrations/` und werden alphabetisch nach Dateiname ausgefuehrt.
+- Jede Datei bekommt eine fortlaufende Nummer, z. B. `001_initial_schema.sql`, `002_add_question_feedback.sql`.
+- `database/migrate.php` legt die Tabelle `schema_migrations` an und speichert dort jede erfolgreich angewendete Migration.
+- Bereits angewendete Migrationen werden beim naechsten Lauf uebersprungen.
+- `database/schema.sql` bleibt ein Snapshot fuer Erstinstallationen, ist aber nicht der Ort fuer neue Schema-Aenderungen.
+
+Neue Datenbankstruktur-Aenderungen laufen so:
+
+1) Neue Datei in `database/migrations/` anlegen, z. B. `002_add_intro_teaser.sql`.
+2) SQL moeglichst rueckwaertskompatibel schreiben, z. B. `ALTER TABLE ... ADD COLUMN ... NULL`.
+3) Lokal testen:
+```bash
+docker compose run --rm migrate
+```
+4) Danach Code committen, pushen und deployen.
+5) Auf Produktion vor dem Einspielen ein Datenbank-Backup erstellen.
+6) Die neue Migration in phpMyAdmin oder per Shell auf die produktive Datenbank anwenden.
+7) Wenn phpMyAdmin statt `database/migrate.php` genutzt wurde, Migration in `schema_migrations` markieren:
+```sql
+INSERT IGNORE INTO schema_migrations (version) VALUES ('002_add_intro_teaser.sql');
+```
+
 ## Deployment: Produktivumgebung aktualisieren
 Der produktive Betrieb braucht einen Webserver mit PHP 8.x, aktivem `pdo_mysql`/`mbstring`, eine MySQL-Datenbank und Zugriff auf die Projektdateien. Docker ist lokal praktisch, aber fuer Produktion optional. Wenn dein Hosting Docker unterstuetzt, kannst du die Compose-Struktur adaptieren; bei klassischem Webhosting laedst du die Dateien hoch und konfigurierst PHP/MySQL dort.
 
@@ -164,6 +201,7 @@ Der produktive Betrieb braucht einen Webserver mit PHP 8.x, aktivem `pdo_mysql`/
 1) Docker-Stack starten und Datenbank pruefen:
 ```bash
 docker compose up -d --build
+docker compose run --rm migrate
 docker compose run --rm seed
 ```
 2) Lokal testen:
@@ -174,6 +212,7 @@ docker compose run --rm seed
 ```bash
 docker compose exec app php -l api/bootstrap.php
 docker compose exec app php -l api/index.php
+docker compose exec app php -l database/migrate.php
 docker compose exec app php -l database/seed-from-json.php
 node --check js/admin.js
 node --check js/quiz-data-service.js
@@ -202,11 +241,15 @@ Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporären Depl
 
 ### 3) Produktive Datenbank vorbereiten
 1) MySQL-Datenbank und eigenen MySQL-Benutzer anlegen.
-2) Schema importieren:
+2) Bei einer neuen/leeren Datenbank den aktuellen Schema-Snapshot importieren:
 ```bash
 mysql -u <user> -p <database> < database/schema.sql
 ```
-3) Nur bei Erstbefuellung oder bewusstem Reset die bestehenden JSON-Inhalte importieren:
+3) Alternativ, wenn du Shell-Zugriff mit PHP hast, Migrationen ausfuehren:
+```bash
+QUIZ_HERO_DB_HOST=<host> QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/migrate.php
+```
+4) Nur bei Erstbefuellung oder bewusstem Reset die bestehenden JSON-Inhalte importieren:
 ```bash
 QUIZ_HERO_DB_HOST=<host> QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/seed-from-json.php
 ```
@@ -225,6 +268,16 @@ Danach in phpMyAdmin importieren:
 2) `database/seed.sql`
 
 `database/seed.sql` befuellt Kategorien, Fragen, Tags und Feedback. User und Ergebnisse werden nicht befuellt.
+
+Fuer spaetere Schema-Aenderungen importierst du nicht erneut `schema.sql`, sondern nur die neue Datei aus `database/migrations/`, z. B. `002_add_intro_teaser.sql`. Vorher immer ein Datenbank-Backup erstellen.
+
+Wenn du eine Migration bei STRATO manuell ueber phpMyAdmin einspielst, fuehre danach zusaetzlich diesen SQL-Befehl aus, damit der Stand dokumentiert ist:
+
+```sql
+INSERT IGNORE INTO schema_migrations (version) VALUES ('002_add_intro_teaser.sql');
+```
+
+Den Dateinamen ersetzt du durch die tatsaechlich importierte Migration.
 
 ### 4) PHP-Umgebung produktiv konfigurieren
 Setze auf dem Server mindestens diese Umgebungsvariablen:
@@ -273,7 +326,7 @@ Diese Dateien werden von der GitHub-Actions-Pipeline automatisch nach STRATO in 
 
 Nicht von der Pipeline deployed und nicht fuer den normalen Webbetrieb notwendig:
 
-- `database/`: Schema, Seed-Script und `seed.sql` fuer lokales Setup oder phpMyAdmin-Import
+- `database/`: Migrationen, Schema-Snapshot, Seed-Script und `seed.sql` fuer lokales Setup oder phpMyAdmin-Import
 - `scripts/`: Build-/Hilfsscripte; sie laufen lokal oder in GitHub Actions, muessen aber nicht oeffentlich erreichbar sein
 - `.github/`: GitHub-Actions-Konfiguration
 - `Dockerfile`, `docker-compose.yml`, `.env.example`: lokale Docker-Entwicklung
@@ -383,10 +436,10 @@ Danach in GitHub:
 | JSON-Fallbacks `categories.json`, `tags.json`, `feedback.json`, `data/*.json` | Commit, Push, GitHub-Actions-Deploy | Relevant fuer Fallback, Seed und SEO-Build |
 | SEO-Seiten in `pages/`, `sitemap.xml`, `robots.txt` | Commit, Push, GitHub-Actions-Deploy | Die Pipeline baut SEO-Seiten vorher mit `SITE_URL=https://quiz-hero.de` neu |
 | Neue Fragen/Kategorien ueber Admin | Kein Code-Deploy noetig | Daten landen direkt in MySQL; fuer SEO/Fallback bei Bedarf zusaetzlich JSON aktualisieren |
-| Datenbankschema `database/schema.sql` | Nicht automatisch deployed/migriert | Schema-Aenderungen bewusst manuell in phpMyAdmin/MySQL einspielen und vorher Backup machen |
+| Datenbankschema `database/migrations/*.sql` | Nicht automatisch deployed/migriert | Neue Migration lokal testen, Backup erstellen und bewusst manuell in phpMyAdmin/MySQL einspielen |
 | GitHub Secrets, DB-Zugang, Admin-Passwort | Kein Code-Deploy noetig, aber Workflow neu starten | `api/config.local.php` wird beim Deploy neu aus Secrets erzeugt |
 
-Wichtig: Die Pipeline synchronisiert Dateien per SFTP, fuehrt aber keine Datenbankmigration aus. Alles, was in MySQL liegt, bleibt beim Code-Deploy erhalten. Deshalb vor Schema-Aenderungen oder Seed-Imports immer ein Datenbank-Backup erstellen.
+Wichtig: Die Pipeline synchronisiert Dateien per SFTP, fuehrt aber keine Datenbankmigration aus. Alles, was in MySQL liegt, bleibt beim Code-Deploy erhalten. Deshalb vor Schema-Aenderungen oder Seed-Imports immer ein Datenbank-Backup erstellen. Neue Schema-Aenderungen kommen als eigene Datei nach `database/migrations/`; `schema.sql` ist nur der Snapshot fuer frische Installationen.
 
 ## Neuer Content (Kategorien/Fragen)
 Der normale Pflegeweg ist jetzt die Admin-Oberflaeche unter `/admin/`. Dort kannst du Kategorien und Fragen anlegen, bearbeiten, aktivieren/deaktivieren und speichern. Diese Inhalte landen direkt in MySQL und werden vom Quiz bevorzugt aus der Datenbank geladen.
@@ -414,7 +467,9 @@ Klassischer JSON-Weg:
 - `index.html` App-Einstieg
 - `admin/` Admin-Oberflaeche fuer Kategorien und Fragen
 - `api/` PHP-API fuer Quizdaten, User, Ergebnisse und Admin-Aktionen
-- `database/schema.sql` MySQL-Schema
+- `database/migrations/` versionierte SQL-Migrationen
+- `database/migrate.php` CLI-Script zum Anwenden offener Migrationen
+- `database/schema.sql` MySQL-Schema-Snapshot fuer Erstimporte
 - `database/seed-from-json.php` Import bestehender JSON-Inhalte in MySQL
 - `database/seed.sql` generierter SQL-Import fuer phpMyAdmin
 - `styles.css` globale Styles
@@ -546,7 +601,7 @@ node scripts/build-seed-sql.js
 ```
 
 ### Option B: Mit Docker
-Diese Variante startet die komplette Anwendung lokal: Apache/PHP, MySQL und einen Seed-Container fuer die Erstbefuellung.
+Diese Variante startet die komplette Anwendung lokal: Apache/PHP, MySQL, Migrationen und einen Seed-Container fuer die Erstbefuellung.
 
 Voraussetzung: Docker Desktop muss laufen.
 
@@ -565,12 +620,17 @@ cp .env.example .env
 docker compose up -d --build
 ```
 
-3) Datenbank einmalig mit den bestehenden JSON-Fragen befuellen:
+3) Offene Datenbankmigrationen anwenden:
+```bash
+docker compose run --rm migrate
+```
+
+4) Datenbank einmalig mit den bestehenden JSON-Fragen befuellen:
 ```bash
 docker compose run --rm seed
 ```
 
-4) App im Browser oeffnen:
+5) App im Browser oeffnen:
 - Quiz: `http://localhost:8080/`
 - Admin: `http://localhost:8080/admin/`
 - Admin-Testlogin aus `.env.example`: `admin` / `admin123`
@@ -590,6 +650,7 @@ docker compose down -v
 Danach wieder starten und neu befuellen:
 ```bash
 docker compose up -d --build
+docker compose run --rm migrate
 docker compose run --rm seed
 ```
 
@@ -600,12 +661,14 @@ docker compose logs -f app
 docker compose logs -f mysql
 docker compose exec app php -l api/index.php
 docker compose exec app php -l api/bootstrap.php
+docker compose exec app php -l database/migrate.php
 ```
 
 Docker-Services:
 
 - `app`: PHP 8.3 mit Apache, bedient Frontend, Admin und API auf Port `8080`.
 - `mysql`: MySQL 8.4 mit persistentem Volume `quiz_hero_mysql`, lokal erreichbar auf Port `3307`.
+- `migrate`: Einmaliger Tool-Container, der offene SQL-Migrationen anwendet.
 - `seed`: Einmaliger Tool-Container, der JSON-Inhalte in MySQL importiert.
 
 ### Lokaler Cache und Asset-Versionen
@@ -630,16 +693,22 @@ Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.p
 
 ### Datenbank einrichten
 1) MySQL-Datenbank und Benutzer anlegen.
-2) Schema importieren:
+2) Schema initial importieren:
 ```bash
 mysql -u <user> -p <database> < database/schema.sql
 ```
-3) Bestehende JSON-Inhalte einmalig in MySQL übernehmen:
+3) Bei bestehenden Datenbanken kuenftige Migrationen anwenden:
+```bash
+QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/migrate.php
+```
+4) Bestehende JSON-Inhalte einmalig in MySQL übernehmen:
 ```bash
 QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/seed-from-json.php
 ```
 
 Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es ersetzt Fragen pro Kategorie anhand der JSON-Dateien und sollte auf Produktion nur nach Datenbank-Backup ausgefuehrt werden.
+
+`database/migrate.php` ist dagegen fuer Struktur-Aenderungen gedacht. Es veraendert keine Quizfragen, User oder Ergebnisse, sondern fuehrt nur SQL-Dateien aus `database/migrations/` aus und merkt den Stand in `schema_migrations`.
 
 ### PHP-Umgebungsvariablen
 - `QUIZ_HERO_DB_HOST` (Default `127.0.0.1`)

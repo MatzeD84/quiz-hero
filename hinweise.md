@@ -1,8 +1,7 @@
 ﻿ToDos:
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - nach oben scrollen
-- Service Worker / PWA: 
-    Service Worker / PWA: Etwas aufwendiger, aber du könntest einen Service Worker registrieren, der bei neuen Deployments den Cache leert und die neuesten Dateien cached.
+
 - css: in mehreren css -files modulen aufteilen
 - generierte files /page brauchen eigentlich nicht commited werden
 - nur fragen mit  "verifiedFinal": true sollen angezeigt werden
@@ -60,7 +59,6 @@ Essen
 - Zuccotto
 
 
-
 florenz.json
 - tags anpassen
 
@@ -87,10 +85,6 @@ Frage-Ideen:
 - Piazza del Duomo
 -----------------------------------------------------
 
-
-
-
-
 Ideen ChatGPT:
 - Kontextualisierung durch Mini-Stories
     Für hero-Fragen kurze Einbettung: „Im Jahr 64 n. Chr. brannte Rom nieder – welcher Kaiser…?“
@@ -114,104 +108,403 @@ Ideen ChatGPT:
 - Optische Variation: Je Kategorie eigenes Farbschema/Background.
 - Feedback-Funktion für User pro Frage: "Fehler bei der Frage/Antwort" an Admin
 
-
-Bilder:
-
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 
+----------------------------------------
+Ideen:
 
-Bild generierung ChatGPT:
+-----
+Code-/Architektur-Schritte:
 
-- Konsequenter Low-Poly / Polygon-Stil
-- vereinfachte Geometrie (keine fotorealistischen Details)
-- Format 2:1
-- Keine Menschen
-- Reduzierte, polygonale Bäume / Umgebung / Himmel
-- Serientauglich & ruhig, damit alle Kategorien visuell zusammenpassen
-- Fokus immer klar auf dem Hauptmotiv, nichts „Zufälliges“ oder Dekoratives
+Migration-System für Datenbankänderungen
+Statt nur schema.sql: database/migrations/001_...sql, 002_...sql. Damit weißt du sauber, welche DB-Änderungen produktiv eingespielt wurden.
 
+Admin-Audit-Log
+Tabelle quiz_admin_log: Wer hat wann welche Frage geändert/gelöscht? Sehr nützlich, wenn später viel Content entsteht.
 
--------------------------------------------------------------
+Soft Delete statt hart löschen
+Fragen/Kategorien nicht löschen, sondern deleted_at setzen. Dann kannst du Fehler rückgängig machen.
 
-Highlights JS
+API-Versionierung
+Z. B. /api/index.php?action=public-data&v=1. Hilft, wenn Frontend und Backend später größer werden.
 
-Wir haben das ursprüngliche monolithische script.js in einzelne ES‑Module aufgeteilt, damit Logik, Konfiguration und DOM-Anbindung sauber gekapselt und leichter wartbar sind:
+Automatisierte Health-Checks nach Deploy
+GitHub Action prüft nach STRATO-Deploy automatisch:
+https://quiz-hero.de/, API, Admin-Login-Endpoint, Sitemap.
 
-js/config.js: Enthält alle Konfigurationswerte (URLs, Punktelogik, Labels, Selektoren, Cache-Version) sowie Hilfsfunktionen wie getPointsForDifficulty. So musst du künftige Anpassungen nur an einer Stelle ändern.
-js/validators.js: Bündelt Schema-Prüfungen für categories.json + data/questions-*.json sowie feedback.json. Manipulierte oder fehlerhafte Daten werden erkannt, bevor das Quiz startet, und halten so den Rest des Codes sauber.
-js/quiz-data-service.js: Lädt Fragen/Feedback, führt die Validatoren aus und hängt einen Cache-Buster an die Fetch-Requests. Dadurch bleiben Datenkonsistenz und Cache-Verhalten zentral steuerbar.
-js/quiz-state.js: Verwaltet Zustand (Kategorie/Tag, Fragenfolge, Score, Versuche). Fragen werden tief kopiert und über einen Tag-Index organisiert, wodurch du Kategorien/Tags sauber trennen und testen kannst.
-js/quiz-view.js: Kümmert sich ausschließlich um DOM-Referenzen, Rendering und UI-Ereignisse (inkl. ESC-/Overlay-Schließen des Modals). Alle sichtbaren Texte nutzen LABELS, was Internationalisierung erleichtert.
-js/quiz-controller.js: Verbindet DataService, State und View; behandelt die Nutzerflüsse (Kategorie/Tag wählen, Antworten prüfen, Hintergrundwissen erst nach Abschluss zeigen, Ergebnis-Modal).
-js/main.js: Bootstrap-Datei, die beim DOMContentLoaded den Controller instanziiert und das Quiz startet.
-index.html lädt nun styles.css?v=20250211 und das neue js/main.js?v=20250211 als Modul. Damit hast du klare Verantwortlichkeiten, bessere Testbarkeit und keine riesige JS-Datei mehr, was sowohl Wartung als auch zukünftige Erweiterungen (z. B. SSR/PWA) deutlich vereinfacht.
+-----
+Admin-Bereich: sehr hoher Nutzen:
 
+Fragen-Vorschau direkt im Admin
+Beim Bearbeiten sieht der Admin rechts sofort, wie die Frage später im Quiz aussieht.
 
-------
-Neue Datenstruktur
+Bild-Auswahl aus vorhandenen Assets
+Statt Bildpfad manuell eintippen: kleine Galerie aus images/, Suchfeld, Vorschau, „Bild übernehmen“.
 
-categories.json plus einzelne Dateien data/questions-<id>.json ersetzen die bisherige questions.json. Jede Kategorie enthält nur noch Metadaten und einen Pfad zu ihrem Fragenpaket; alle Fragen liegen in den jeweiligen Dateien.
-Code-Updates
+Tag-Verwaltung im Admin
+Tags aktuell eher Seed/JSON-lastig. Später: Tags anlegen, Icons wählen, aktivieren/deaktivieren.
 
-js/config.js (lines 1-58) verweist jetzt auf categories.json. Alle übrigen Konstanten bleiben im selben Modul.
-js/quiz-data-service.js (lines 1-43) lädt zuerst das Manifest, holt anschließend für jede Kategorie ihre questionsFile und hängt die Fragen an, bevor die bestehenden Validatoren greifen.
-Readme.md verweist nun auf die neue Struktur (categories.json + data/questions-*.json), damit klar bleibt, wo Fragen gepflegt werden.
-HTML
+Bulk-Editor
+Mehrere Fragen markieren: Kategorie ändern, Tag hinzufügen, aktiv/deaktiv setzen.
 
-index.html (lines 18-20) lädt weiterhin Fonts/CSS und bindet jetzt das modulare Entry-Script js/main.js?v=20250211 ein.
-Damit ist die Fragenverwaltung deutlich übersichtlicher: Du kannst Kategorien getrennt bearbeiten oder austauschen, ohne eine riesige JSON-Datei anfassen zu müssen. Beim Start lädt der DataService automatisch alle Dateien und die App funktioniert wie gewohnt (Tags, Kategorien, Validierungen etc.). Teste einmal lokal (python -m http.server o. Ä.), um sicherzugehen, dass alle Dateien gefunden werden.s
+Qualitätsstatus pro Frage
+Felder wie draft, review, published, needs_source, verified.
 
-------
+Quellenfeld pro Frage
+source_url, source_title, verified_at. Gut für Qualität, SEO und Vertrauen.
 
-Eine Offline-PWA ist machbar, aber ein paar Bausteine sind nötig:
+KI-Assistent im Admin
+Button: „3 falsche Antworten vorschlagen“, „Erklärung vereinfachen“, „SEO-Text für Kategorie generieren“. Immer mit manueller Freigabe.
 
-HTTPS + Manifest: Deine Seite muss über HTTPS laufen, dazu kommt ein manifest.json mit Icons, Name, Start-URL etc. – schnell erledigt.
+-----
 
-Service Worker registrieren: Kleine JS-Datei, die du via navigator.serviceWorker.register('/sw.js') beim Laden startest. Das sw.js kümmert sich um Caching.
+User-Account & Motivation
 
-Caching-Strategie überlegen: Du definierst, welche Assets (HTML, CSS, JS, JSON, Bilder) beim Installieren gecacht werden und wie Requests bedient werden. Für eine Quiz-App brauchst du z. B.:
+Persistenter Spieler-Account light
+Erstmal ohne E-Mail: Name + Avatar + Token. Später optional E-Mail/Magic Link.
 
-install-Event: caches.open('quiz-v1').then(cache => cache.addAll([...])), damit die wichtigsten Dateien offline verfügbar sind.
-fetch-Event: Strategie wie „Cache-first mit Network-Fallback“ für Assets, und evtl. „Network-first“ für JSON, damit Fragen aktualisiert werden, wenn online.
-Offline-Fallbacks: Überleg dir, was passieren soll, wenn jemand offline startet und die JSON-Dateien nicht im Cache sind (z. B. Hinweis anzeigen oder eine kleine Offline-Version mit zuletzt geladenen Fragen anbieten).
+Fortschritt pro Kategorie
+„Rom: 18/60 Fragen gemeistert“, „Beste Punktzahl“, „zuletzt gespielt“.
 
-Vom Aufwand her: Ein Basis-Service-Worker ist in ein paar Stunden aufgesetzt. Komplex wird es, wenn du dynamische Inhalte synchron halten willst (z. B. Fragekatalog aktualisieren, während Nutzer offline waren) oder wenn du eigene Datenbanken nutzen willst (IndexedDB). Für eine erste „Offline nutzbar + installierbar“-Variante reicht es, die statischen Assets plus Fragen/Feedback zu cachen und beim Start zu prüfen, ob du online bist.
+Badges/Achievements
+Beispiele: „Antike-Experte“, „Rom-Kenner“, „10 richtige Antworten in Folge“, „Hero-Frage beim ersten Versuch“.
 
-Kurz: Nein, kein riesiger Aufwand – aber ein paar Schritte sind nötig. Fang mit Manifest + einfachem Service Worker an, teste offline im Browser (DevTools → Application → Service Workers), und erweitere später, wenn du mehr brauchst.
+Profilseite
+Öffentliche oder private Statistik: Punkte, Kategorien, Badges, letzte Quizrunden.
 
+-----
+Quiz-Ideen:
 
------------
+Quiz-Modi
+- Klassisch: aktuelle Variante
+- Zeitmodus: 10 Fragen gegen die Uhr
+- Survival: Spiel endet beim zweiten Fehler
+- Lernmodus: Antwort + Erklärung sofort
+- Bildquiz: nur Bildfragen
+- Hero-Modus: nur schwere Fragen
 
-Ja, kannst du – nur muss der Inhalt für Suchmaschinen aufbereitet werden, obwohl er clientseitig aus JSON kommt. Typische Wege:
+Duell-Modus light
+Ein User erstellt Link: „Schlag meine 42 Punkte im Rom-Quiz“.
 
-Prerender/SSR: Erzeuge beim Deploy eine statische Variante deiner Seite mit allen relevanten Inhalten (z. B. per Node-Skript, das categories.json + data/questions-*.json einliest und ein fertiges HTML rendert). Suchbots sehen dann sofort Text, Kategorien etc., statt auf JavaScript warten zu müssen.
-Dynamisches Rendering/Prerendering-Service: Tools wie Rendertron, Prerender.io oder dein eigener Puppeteer-Worker liefern Bots eine vorgerenderte HTML-Version, während echte Nutzer weiterhin die SPA bekommen.
-Structured Data (Schema.org): Du kannst JSON-LD in dein HTML einbetten (z. B. FAQPage oder Quiz-ähnliche Strukturen), damit Google versteht, dass es Fragen+Antworten sind, auch wenn der sichtbare Content erst per JS kommt.
-Fallback-Serverrender: Wenn du langfristig planst, kannst du auf ein Framework wechseln, das SSR/SSG von Haus aus bietet (Next.js, Astro etc.) – dann ist SEO inhärent einfacher.
-Kurz: Es reicht nicht, nur JSON per JS einzubinden. Entweder renderst du beim Build eine statische HTML-Ausgabe, nutzt einen Prerender-Service oder ergänzt strukturierte Daten, damit Bots deine Inhalte zuverlässig sehen.
+Erklärkarten nach jeder Runde
+Am Ende: „Das hast du gelernt“ mit kurzen Fakten.
 
------------
+Frage des Tages
+Startseite bekommt eine täglich wechselnde Frage. Gut für Engagement und SEO-Snippets.
 
-Was neu ist
+-----
+Website/UX:
 
-Manifest + geteilte Fragen: categories.json verweist auf einzelne Dateien data/questions-<id>.json. Der QuizDataService lädt zuerst das Manifest und pro Kategorie deren Fragen-Datei, validiert alles und fügt es zusammen.
-Tags-Manifest: Neue tags.json mit Tag-Metadaten (id, title, optional icon/description). Der DataService lädt und validiert auch diese Daten.
-State/Tag-Metadaten: QuizState speichert tagsMeta und baut den Tag-Index mit Metadaten. getAvailableTags() liefert angereicherte Tag-Objekte (Titel/Icon/Beschreibung).
-Tag-Karten: renderTagButtons baut nun „Tag-Cards“ (Icon, Titel, Beschreibung), analog zu den Kategorie-Cards. Tag-Buttons tragen data-tag mit der Tag-ID.
-Konfiguration: CONFIG.questionsUrl zeigt auf categories.json, CONFIG.tagsUrl ist neu.
-Dateien
+Startseite stärker als App-Dashboard
+Oben: „Weiterspielen“, „Tägliche Challenge“, „Beliebte Kategorien“, „Neue Fragen“.
 
-Neu: tags.json, data/questions-*.json (aus der alten questions.json generiert), categories.json als Manifest.
-Geändert: js/config.js, js/validators.js, js/quiz-data-service.js, js/quiz-state.js, js/quiz-view.js, index.html (lädt js/main.js als Modul).
-Was du noch tun solltest
+Bessere Mobile-UX
+Sticky Fortschritt/Punkte, größere Antwortflächen, reduzierte vertikale Sprünge.
 
-Styles für .tag-card, .tag-card__icon, .tag-card__text, .tag-card__title, .tag-card__description ergänzen, damit die neuen Tag-Karten zum Layout passen.
-Wenn du mehr Tags nutzt, tags.json um weitere Einträge ergänzen (IDs müssen zu den tag-Strings in den Fragen passen).
-Optional: README-Hinweise auf die neue Manifest-Struktur erweitern.
+Kategorie-Seiten schöner machen
+Jede Kategorie bekommt ein echtes Intro: Bild, Schwierigkeit, Anzahl Fragen, Themen, Startbutton.
 
-Ich habe eine Warnung für fehlende Tag-Metadaten ergänzt:
+Nach Quiz-Ende bessere Aktionen„Nochmal spielen“
+„Schwieriger machen“
+„Ähnliche Kategorie“
+„Teile dein Ergebnis“
 
-In js/quiz-state.js sammelt buildTagIndex() jetzt Tags, die in Fragen vorkommen, aber nicht in tags.json stehen, und gibt eine console.warn aus (Tags ohne Metadaten in tags.json: …). Die Tags werden trotzdem normal verarbeitet, du bekommst nur den Hinweis.
-Damit bleiben die Buttons flexibel, Inkonsistenzen fallen aber sofort auf.
+Avatar-System
+Statt nur Profilbild-URL: kleine vorgefertigte Quiz-Hero-Avatare.
 
+-----
+SEO:
+MyS
+QL-SEO vollständig ausbauen
+Hast du jetzt begonnen. Nächster Schritt: SEO-Export mit source, updated_at, questionCount, lastModified.
 
+Landingpage pro Tag
+Beispiele:/pages/tag-antike.html
+/pages/tag-architektur.html
+/pages/tag-essen.html
+
+Fragen-Landingpages
+Für starke Fragen eigene Seiten:
+/fragen/wie-viele-eingaenge-hatte-das-kolosseum.html
+
+Strukturierte Daten erweitern
+- FAQPage
+- BreadcrumbList
+- Quiz/LearningResource als Schema.org-nahe Auszeichnung
+
+Interne Verlinkung automatisieren
+Kategorie Rom verlinkt zu Antike, Architektur, Florenz, Neapel usw.
+
+Sitemap aufteilen
+Später: sitemap-pages.xml, sitemap-questions.xml, sitemap-tags.xml.
+
+-----
+GEO / KI-Suchmaschinen:
+
+Antwortblöcke mit Kurzantwort + Erklärung
+Jede SEO-Frage sollte enthalten:
+„Kurzantwort: …“
+„Erklärung: …“
+„Quelle/Einordnung: …“
+
+Thematische Übersichtsseiten
+„Römische Bauwerke im Überblick“, „Florenz Renaissance Quiz“, „Italienische Sehenswürdigkeiten Quiz“.
+
+Quellen und Aktualität sichtbar machen
+„Zuletzt geprüft am …“ erhöht Vertrauen.
+
+Saubere HTML-Struktur
+H1/H2/H3 logisch, Frage als H3, Antwort direkt darunter.
+
+llms.txt später prüfen
+Eine Datei für KI-Crawler mit wichtigen Seiten und Projektbeschreibung könnte sinnvoll werden.
+
+-----
+PWA / Service Worker:
+
+App installierbar machen: „Quiz-Hero zum Homescreen hinzufügen“.
+
+Offline-Fallback: Startseite, letzte geladene Kategorien, Logo, CSS/JS offline verfügbar.
+
+Cache-Strategie
+- App-Shell: index.html, CSS, JS, Fonts mit Cache-Version.
+- Bilder: Cache-first, aber begrenzt.
+- API: network-first, Fallback auf JSON/letzte Daten.
+
+Wichtig: Service Worker sauber mit dem bestehenden Asset-Versioning koppeln, sonst entstehen Cache-Probleme.
+
+-----
+Bilder in WebP:
+
+Aktuell sind viele PNG/JPG-Bilder vorhanden. WebP würde Ladezeit und Lighthouse verbessern.
+
+Gute Strategie:
+- Originale behalten.
+- WebP-Versionen generieren.
+- Im HTML/JS bevorzugt WebP laden, fallback auf PNG/JPG.
+
+Für Quizbilder besonders sinnvoll, weil viele große Bilder ausgeliefert werden.
+
+Später optional: AVIF für moderne Browser.
+
+Admin-Idee: Bild-Galerie zeigt Dateigröße und ob WebP vorhanden ist.
+
+-----
+
+Lighthouse Testing:
+- ...
+
+-----
+Sinnvolle Tests:
+
+PHP:
+- API gibt gültiges JSON aus.
+- Admin ohne Login bekommt 401.
+- Admin mit falschem CSRF bekommt 403.
+- seo-export ohne Token bekommt 403.
+- seo-export mit Token liefert Kategorien.
+
+JavaScript:
+- Validatoren für Kategorien/Fragen.
+- QuizState: Punkte, Streaks, Auswahl, Shuffle, Ergebnisse.
+- UserService: Nicht-JSON/HTTP-Fehler werden korrekt behandelt.
+
+E2E:
+- Startseite lädt.
+- Kategorie auswählen.
+- Quiz spielen.
+- User einloggen.
+- Ergebnis speichern.
+- Admin Login + Frage speichern.
+
+SEO:
+- pages/*.html enthalten Canonical, H1, FAQPage JSON-LD.
+- sitemap.xml enthält alle Landingpages.
+
+----- 
+Mini-Stories / Kontextualisierung:
+
+Das ist inhaltlich stark. Statt nackter Fragen:
+„Im Jahr 64 n. Chr. brannte Rom nieder. Viele Gerüchte rankten sich um die Rolle des Kaisers. Welcher Kaiser regierte damals?“
+Datenmodell-Idee:
+- intro_teaser
+- question
+- answers_json
+- background_knowledge
+
+-----
+UX:
+- Teaser klein oberhalb der Frage.
+- Frage bleibt klar darunter.
+- Bei Hero-Fragen etwas dramatischer, aber nicht zu lang.
+
+-----
+Dramaturgie pro Kategorie/Tag:
+
+Vor dem Start:
+„Du reist durch das antike Rom: Bauwerke, Kaiser, Mythen und Macht.“
+Für Tags:
+- Antike: „Von Kaisern, Tempeln und steinernen Spuren.“
+- Essen: „Kleine Spezialitätenreise durch Geschmack und Geschichte.“
+- Architektur: „Fassaden, Formen und Bauwerke mit Geschichten.“
+Das gibt dem Quiz mehr Atmosphäre und hilft auch SEO/GEO.
+
+-----
+Streak-Hinweise:
+
+Bei mehreren richtigen Antworten:
+- 2er-Streak: „Du kommst in Fahrt.“
+- 3er-Streak: „Starke Serie.“
+- 5er-Streak: „Quiz-Hero-Modus aktiviert.“
+- Hero-Frage richtig beim ersten Versuch: Spezialeffekt/Badge.
+
+Technisch:
+- streak im QuizState
+- Feedback abhängig von Streak und Schwierigkeit
+- kleine Animation neben Score
+
+-----
+Progress-Gefühl:
+
+Sehr sinnvoll. Aktuell sieht man Frage x/y, aber ein Balken wirkt stärker.
+
+Features:
+- Fortschrittsbalken
+- Mini-Milestones bei 25/50/75/100 %
+- kleine Zwischenmeldung:„Erster Abschnitt geschafft“
+- „Halbzeit“
+- „Finale Frage“
+
+Das macht Runs runder und erhöht Completion Rate.
+
+-----
+Sanfter Übergang zwischen Fragen:
+
+- Antwort wird bestätigt.
+- Erklärung erscheint.
+- Button „Weiter“.
+- Beim Weiterklicken: kurzer Fade/Slide.
+- Keine wilden Animationen, eher ruhig und hochwertig.
+
+Das fühlt sich direkt moderner an.
+
+-----
+Teilen / Export:
+
+Nach Ergebnis:
+- Text-Share: „Ich habe 42/50 Punkte im Rom-Quiz auf Quiz-Hero erreicht.“
+- Web Share API auf Mobile.
+- Fallback: Text kopieren.
+- Später Screenshot-Karte clientseitig:
+    - Logo
+    - Kategorie
+    - Punkte
+    - Badge
+    - URL
+- Das wäre sehr gut für organische Verbreitung.
+
+-----
+Mini-Storyline / Kapitel:
+
+Pro Kategorie eine kleine Reise:
+- Rom:
+    - Arena & Macht
+    - Forum & Politik
+    - Brunnen & Barock
+    - Alltag & Essen
+- Jede richtige Antwort füllt ein Kapitel.
+- Am Ende:
+    - „Du hast 3 von 4 Kapiteln freigeschaltet.“
+
+Das macht aus einem Quiz eine kleine Lernreise.
+
+-----
+Themen-Pfad:
+
+Statt nur Kategorien:
+- „Antike entdecken“
+- „Italienische Städte“
+- „Architektur-Reise“
+- „Essen & Alltag“
+
+Ein Pfad kombiniert Fragen aus mehreren Kategorien und Tags. Sehr gut für Wiederkehrer und SEO.
+
+-----
+Leben-System
+
+- 3 Herzen pro Run:
+- falsche Antwort verliert Herz
+- zweiter Versuch optional ohne Herzverlust oder mit halbem Malus
+- bei 0 Herzen: Run beendet oder „Rettungsfrage“
+
+Das eignet sich besonders für Survival-Modus. Für Standardmodus optional.
+
+-----
+Fakten-Karten:
+Nach richtiger Antwort oder am Ende:
+„- Wusstest du schon?“
+- kurzer Fakt
+- Bild
+- Quelle/Einordnung
+
+Sehr gut für Lernen, GEO und längere Verweildauer.
+
+-----
+Statistik-Profil:
+
+Profilseite:
+- Top-Themen
+- letzte Runs
+- beste Kategorie
+- Streak-Rekord
+- Hero-Fragen korrekt
+- „Du bist besonders stark in: Architektur“
+- „Übe nochmal: Renaissance“
+
+Das macht User-Accounts sinnvoller.
+
+-----
+Easter Eggs:
+
+Seltene Spezialfragen:
+- 1-3 % Chance
+- extra Badge
+- besondere Animation
+- Bonuspunkt oder Sammlerobjekt
+- z. B. „Geheime Rom-Frage“
+
+Wichtig: nicht zu verspielt, eher als kleine Überraschung.
+
+-----
+Chance-Frage / Bonusfrage:
+
+Am Ende:
+- Wenn Score knapp ist: „Bonusfrage: +3 Punkte möglich“
+- Oder bei perfektem Lauf: „Hero-Bonusfrage freigeschaltet“
+- Erhöht Spannung und Abschlussgefühl.
+
+-----
+Feedback-Funktion pro Frage:
+
+Sehr wichtig für Qualität.
+
+Button nach Antwort:
+„Fehler melden“
+
+Optionen:
+- antwort falsch
+- Frage unklar
+- Bild passt nicht
+- Rechtschreibung
+- Quelle fehlt
+- Sonstiges
+
+Admin sieht Feedback gesammelt:
+- Frage
+- Meldungstyp
+- Kommentar
+- Zeitpunkt
+- User optional
+- Status: offen/geprüft/erledigt
+
+Das ist eine der besten Erweiterungen für Content-Qualität.

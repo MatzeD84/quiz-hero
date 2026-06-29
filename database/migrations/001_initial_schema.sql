@@ -1,5 +1,3 @@
--- Snapshot for first-time imports. New schema changes belong in database/migrations/.
-
 CREATE TABLE IF NOT EXISTS schema_migrations (
     version VARCHAR(190) PRIMARY KEY,
     applied_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -17,8 +15,6 @@ CREATE TABLE IF NOT EXISTS quiz_categories (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT IGNORE INTO schema_migrations (version) VALUES ('001_initial_schema.sql');
 
 CREATE TABLE IF NOT EXISTS quiz_questions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

@@ -55,5 +55,22 @@ services:
         condition: service_healthy
     command: php database/seed-from-json.php
 
+  migrate:
+    build: .
+    profiles:
+      - tools
+    environment:
+      QUIZ_HERO_DB_HOST: mysql
+      QUIZ_HERO_DB_PORT: 3306
+      QUIZ_HERO_DB_NAME: ${QUIZ_HERO_DB_NAME:-quiz_hero}
+      QUIZ_HERO_DB_USER: ${QUIZ_HERO_DB_USER:-quiz_hero}
+      QUIZ_HERO_DB_PASSWORD: ${QUIZ_HERO_DB_PASSWORD:-quiz_hero_local}
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: php database/migrate.php
+
 volumes:
   quiz_hero_mysql:
