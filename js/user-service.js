@@ -1,6 +1,7 @@
 import { CONFIG } from './config.js';
 
 const STORAGE_KEY = 'quizHeroUser';
+const API_VERSION = CONFIG.apiVersion || '1';
 
 export class UserService {
     constructor({ apiUrl = CONFIG.apiUrl, fetchFn = window.fetch.bind(window) } = {}) {
@@ -52,7 +53,7 @@ export class UserService {
     }
 
     async post(action, payload) {
-        const params = new URLSearchParams({ action, v: CONFIG.apiVersion });
+        const params = new URLSearchParams({ action, v: API_VERSION });
         const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },

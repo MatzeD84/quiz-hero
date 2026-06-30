@@ -3,9 +3,10 @@ import { CONFIG } from './config.js';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
 let csrfToken = '';
+const API_VERSION = CONFIG.apiVersion || '1';
 
 const apiUrl = action => {
-    const params = new URLSearchParams({ action, v: CONFIG.apiVersion });
+    const params = new URLSearchParams({ action, v: API_VERSION });
     return `../${CONFIG.apiUrl}?${params.toString()}`;
 };
 

@@ -1,6 +1,8 @@
 import { ASSET_VERSION, CONFIG } from './config.js';
 import { validateCategories, validateFeedback, validateTags } from './validators.js';
 
+const API_VERSION = CONFIG.apiVersion || '1';
+
 export class QuizDataService {
     constructor({ questionsUrl, tagsUrl, feedbackUrl, apiUrl = null, fetchFn = window.fetch.bind(window) }) {
         this.questionsUrl = questionsUrl;
@@ -68,7 +70,7 @@ export class QuizDataService {
             return null;
         }
         try {
-            const params = new URLSearchParams({ action: 'public-data', v: CONFIG.apiVersion });
+            const params = new URLSearchParams({ action: 'public-data', v: API_VERSION });
             const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, { cache: 'no-store' });
             if (!response.ok) {
                 return null;
