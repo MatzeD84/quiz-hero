@@ -143,3 +143,22 @@ jobs:
           mirror --reverse --verbose deploy/ "$STRATO_TARGET_PATH"
           bye
           EOF
+
+      - name: Verify production version
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          expected="${GITHUB_SHA::8}"
+          url="${SITE_URL%/}/version.json?verify=$expected"
+          for attempt in 1 2 3 4 5 6; do
+            echo "Checking $url (attempt $attempt)"
+            body="$(curl -fsS -H 'Cache-Control: no-cache' "$url" || true)"
+            echo "$body"
+            if echo "$body" | grep -q "\"version\": \"$expected\""; then
+              echo "Production version verified: $expected"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::Production did not return version $expected from $url"
+          exit 1
