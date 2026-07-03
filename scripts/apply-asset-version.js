@@ -12,9 +12,23 @@ if (!version) {
 const targetDir = path.resolve(process.cwd(), targetArg);
 const files = [
     'index.html',
+    'login.html',
+    'account.html',
     'admin/index.html',
     'js/config.js',
 ];
+
+const jsDir = path.join(targetDir, 'js');
+if (fs.existsSync(jsDir)) {
+    for (const entry of fs.readdirSync(jsDir)) {
+        if (entry.endsWith('.js')) {
+            const relativePath = `js/${entry}`;
+            if (!files.includes(relativePath)) {
+                files.push(relativePath);
+            }
+        }
+    }
+}
 
 const pagesDir = path.join(targetDir, 'pages');
 if (fs.existsSync(pagesDir)) {
@@ -35,6 +49,11 @@ const replaceConfigVersion = content => content.replace(
     `export const ASSET_VERSION = '${version}';`
 );
 
+const replaceModuleImportVersions = content => content.replace(
+    /(\bfrom\s+['"]\.\/[^'"]+?\.js)(?:\?v=[^'"]+)?(['"])/g,
+    `$1?v=${version}$2`
+);
+
 let updated = 0;
 for (const relativePath of files) {
     const filePath = path.join(targetDir, relativePath);
@@ -46,6 +65,9 @@ for (const relativePath of files) {
     let next = replaceVersionParams(original);
     if (relativePath === 'js/config.js') {
         next = replaceConfigVersion(next);
+    }
+    if (relativePath.startsWith('js/') && relativePath.endsWith('.js')) {
+        next = replaceModuleImportVersions(next);
     }
 
     if (next !== original) {

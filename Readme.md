@@ -3,9 +3,9 @@
 ## Architektur
 Quiz-Hero besteht inzwischen aus drei Schichten:
 
-- Frontend: `index.html`, `styles.css` und die Module in `js/`. Das Frontend rendert Quiz, Kategorien, Tags, User-Login und Ergebnisanzeige im Browser.
-- Backend/API: `api/index.php` mit `api/bootstrap.php`. Die API liefert Quizdaten aus MySQL, speichert Spieler und Ergebnisse und stellt geschuetzte Admin-Endpunkte bereit.
-- Datenbank: MySQL mit versionierten Migrationen in `database/migrations/`. `database/schema.sql` bleibt als Snapshot fuer schnelle Erstimporte erhalten. Gespeichert werden Kategorien, Fragen, Tags, Feedback-Texte, Spieler und Quiz-Ergebnisse.
+- Frontend: `index.html`, `login.html`, `account.html`, `styles.css` und die Module in `js/`. Das Frontend rendert Quiz, Kategorien, Tags, Login/Registrierung, Profilverwaltung und Ergebnisanzeige im Browser.
+- Backend/API: `api/index.php` mit `api/bootstrap.php`. Die API liefert Quizdaten aus MySQL, verwaltet Accounts, speichert Ergebnisse und stellt geschuetzte Admin-Endpunkte bereit.
+- Datenbank: MySQL mit versionierten Migrationen in `database/migrations/`. `database/schema.sql` bleibt als Snapshot fuer schnelle Erstimporte erhalten. Gespeichert werden Kategorien, Fragen, Tags, Feedback-Texte, Accounts, Einwilligungen, Verifikations-/Reset-Tokens und Quiz-Ergebnisse.
 
 Der Datenfluss ist bewusst fallback-faehig:
 
@@ -13,7 +13,7 @@ Der Datenfluss ist bewusst fallback-faehig:
 2) Wenn die API erreichbar ist, kommen Kategorien, Fragen, Tags und Feedback aus MySQL.
 3) Wenn die API nicht erreichbar ist, nutzt das Frontend die alten JSON-Dateien (`categories.json`, `tags.json`, `feedback.json`, `data/questions-*.json`) als Fallback.
 
-Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler melden sich optional mit Name und Profilbild-URL an; diese Daten und abgeschlossene Ergebnisse werden in MySQL gespeichert.
+Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler koennen einen Account mit eindeutigem Benutzernamen, eindeutiger E-Mail-Adresse, Passwort und vordefiniertem Hero-Avatar anlegen. Registrierungen muessen per E-Mail bestaetigt werden; abgeschlossene Ergebnisse werden dem Account zugeordnet.
 
 ## Datenbankmodell
 Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen liegen versioniert in `database/migrations/` und werden mit `database/migrate.php` angewendet. `database/schema.sql` ist ein aktueller Snapshot fuer schnelle Erstimporte per CLI oder phpMyAdmin. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
@@ -23,6 +23,9 @@ Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen lie
 erDiagram
     quiz_categories ||--o{ quiz_questions : "enthaelt"
     quiz_users ||--o{ quiz_results : "erzielt"
+    quiz_users ||--o{ quiz_email_verifications : "bestaetigt"
+    quiz_users ||--o{ quiz_password_resets : "setzt_zurueck"
+    quiz_users ||--o{ quiz_account_consents : "erteilt"
 
     schema_migrations {
         varchar version PK
@@ -59,8 +62,36 @@ erDiagram
 
     quiz_users {
         int id PK
-        varchar display_name
+        varchar username
+        varchar email
+        varchar password_hash
         varchar profile_image_url
+        varchar avatar_key
+        datetime email_verified_at
+        datetime privacy_accepted_at
+        datetime deleted_at
+        datetime last_seen_at
+    }
+
+    quiz_email_verifications {
+        bigint id PK
+        int user_id FK
+        char token_hash
+        datetime expires_at
+    }
+
+    quiz_password_resets {
+        bigint id PK
+        int user_id FK
+        char token_hash
+        datetime expires_at
+    }
+
+    quiz_account_consents {
+        bigint id PK
+        int user_id FK
+        varchar consent_key
+        varchar consent_version
     }
 
     quiz_results {
@@ -79,8 +110,11 @@ erDiagram
 | `quiz_questions` | Fragen, Antworten, richtige Antwort, Bild und Wissenstext | Admin, Seed |
 | `quiz_tags` | Themenfilter wie Antike, Essen, Kunst | Seed, spaeter Admin-erweiterbar |
 | `quiz_feedback` | Rueckmeldungen nach richtigen/falschen Antworten | Seed |
-| `quiz_users` | Spielerprofile aus dem optionalen User-Login | Frontend/API |
+| `quiz_users` | Spieleraccounts mit Login, E-Mail-Verifikation und Hero-Avatar | Frontend/API |
 | `quiz_results` | Gespeicherte Quiz-Ergebnisse pro Spieler | Frontend/API |
+| `quiz_email_verifications` | Token fuer Registrierungsbestaetigungen | API |
+| `quiz_password_resets` | Token fuer Passwort-zuruecksetzen | API |
+| `quiz_account_consents` | Protokollierte Account-Einwilligungen, z. B. Datenschutz | API |
 | `schema_migrations` | Merkt, welche Migrationen bereits angewendet wurden | `database/migrate.php` |
 
 ### `quiz_categories`
@@ -135,9 +169,49 @@ erDiagram
 | Spalte | Typ | Bedeutung | Beispiel |
 | --- | --- | --- | --- |
 | `id` | `INT UNSIGNED` | technische User-ID, Auto-Increment | `1` |
-| `display_name` | `VARCHAR(80)` | vom Spieler eingegebener Name | `Matze` |
-| `profile_image_url` | `VARCHAR(500)` | optionale Profilbild-URL | `https://.../avatar.jpg` |
+| `username` | `VARCHAR(80)` | eindeutiger Login-Name | `matze84` |
+| `email` | `VARCHAR(190)` | eindeutige E-Mail-Adresse fuer Verifikation und Passwort-Reset | `helden@quiz-hero.de` |
+| `password_hash` | `VARCHAR(255)` | Passwort-Hash, nie Klartext | `$2y$...` |
+| `profile_image_url` | `VARCHAR(500)` | Pfad zum gewaehlten Hero-Avatar | `images/website/logo.png` |
+| `avatar_key` | `VARCHAR(80)` | technische Avatar-Auswahl | `hero` |
+| `email_verified_at` | `DATETIME` | Zeitpunkt der bestaetigten E-Mail | `2026-06-30 20:15:00` |
+| `privacy_accepted_at` | `DATETIME` | Zeitpunkt der Zustimmung bei Registrierung | `2026-06-30 20:10:00` |
+| `deleted_at` | `DATETIME` | gesetzt bei geloeschtem/anonymisiertem Account | `NULL` |
 | `last_seen_at` | `DATETIME` | letzter Login/Zeitpunkt | `2026-06-27 12:30:00` |
+| `created_at` | `TIMESTAMP` | Erstellzeitpunkt | automatisch |
+| `updated_at` | `TIMESTAMP` | letzte Aenderung | automatisch |
+
+### `quiz_email_verifications`
+| Spalte | Typ | Bedeutung | Beispiel |
+| --- | --- | --- | --- |
+| `id` | `BIGINT UNSIGNED` | technische Token-ID, Auto-Increment | `1` |
+| `user_id` | `INT UNSIGNED` | zugehoeriger Account | `1` |
+| `token_hash` | `CHAR(64)` | SHA-256-Hash des E-Mail-Tokens | `ab12...` |
+| `expires_at` | `DATETIME` | Ablaufzeit, aktuell 24 Stunden | `2026-07-01 20:10:00` |
+| `used_at` | `DATETIME` | Zeitpunkt der Nutzung | `NULL` |
+| `created_at` | `TIMESTAMP` | Erstellzeitpunkt | automatisch |
+
+### `quiz_password_resets`
+| Spalte | Typ | Bedeutung | Beispiel |
+| --- | --- | --- | --- |
+| `id` | `BIGINT UNSIGNED` | technische Token-ID, Auto-Increment | `1` |
+| `user_id` | `INT UNSIGNED` | zugehoeriger Account | `1` |
+| `token_hash` | `CHAR(64)` | SHA-256-Hash des Reset-Tokens | `cd34...` |
+| `expires_at` | `DATETIME` | Ablaufzeit, aktuell 1 Stunde | `2026-06-30 21:10:00` |
+| `used_at` | `DATETIME` | Zeitpunkt der Nutzung | `NULL` |
+| `created_at` | `TIMESTAMP` | Erstellzeitpunkt | automatisch |
+
+### `quiz_account_consents`
+| Spalte | Typ | Bedeutung | Beispiel |
+| --- | --- | --- | --- |
+| `id` | `BIGINT UNSIGNED` | technische Einwilligungs-ID | `1` |
+| `user_id` | `INT UNSIGNED` | zugehoeriger Account | `1` |
+| `consent_key` | `VARCHAR(80)` | Art der Zustimmung | `privacy` |
+| `consent_version` | `VARCHAR(40)` | akzeptierte Version | `2026-06-30` |
+| `accepted_at` | `DATETIME` | Zeitpunkt der Zustimmung | `2026-06-30 20:10:00` |
+| `revoked_at` | `DATETIME` | optionaler Widerrufszeitpunkt | `NULL` |
+| `ip_hash` | `CHAR(64)` | optionaler IP-Hash statt Klar-IP | `ef56...` |
+| `user_agent_hash` | `CHAR(64)` | optionaler Hash des Browser-Strings | `ab78...` |
 | `created_at` | `TIMESTAMP` | Erstellzeitpunkt | automatisch |
 
 ### `quiz_results`
@@ -176,7 +250,8 @@ Beispiele:
 
 ```text
 /api/index.php?action=public-data&v=1
-/api/index.php?action=user-login&v=1
+/api/index.php?action=account-register&v=1
+/api/index.php?action=account-login&v=1
 /api/index.php?action=save-result&v=1
 /api/index.php?action=admin-data&v=1
 /api/index.php?action=seo-export&v=1
@@ -308,6 +383,10 @@ Setze auf dem Server mindestens diese Umgebungsvariablen:
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH`
 - `QUIZ_HERO_USER_TOKEN_SECRET` empfohlen fuer signierte User-Tokens
 - `QUIZ_HERO_SEO_EXPORT_TOKEN` empfohlen fuer den geschuetzten SEO-Export
+- `SITE_URL` fuer Links in E-Mails, z. B. `https://quiz-hero.de`
+- `QUIZ_HERO_MAIL_FROM` Absenderadresse, aktuell `helden@quiz-hero.de`
+- `QUIZ_HERO_MAIL_TRANSPORT` auf Produktion normalerweise `mail`, lokal `log`
+- `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` auf Produktion immer `false`
 
 Fuer Produktion sollte kein Klartext-Admin-Passwort genutzt werden. Hash lokal erzeugen:
 ```bash
@@ -320,6 +399,10 @@ Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_
 
 `QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export&v=1`. Die GitHub Action nutzt diesen Export, um Landingpages bevorzugt aus MySQL statt aus JSON-Dateien zu erzeugen.
 
+`QUIZ_HERO_MAIL_TRANSPORT=mail` nutzt die PHP-Funktion `mail()` des Hostings. Lokal ist `log` praktischer: Registrierungs- und Passwort-Reset-Mails werden dann nicht verschickt, sondern in `var/mail.log` geschrieben. Falls STRATO `mail()` fuer die Domain nicht sauber zustellt, braucht die App spaeter SMTP-Unterstuetzung und die dazugehoerigen Mailbox-/SMTP-Daten.
+
+`QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN=true` aktiviert den lokalen Testbutton `Lokal testen`. Der Endpunkt legt einen verifizierten Testaccount an, ohne eine Mail zu versenden. Dieser Schalter gehoert nur in lokale Umgebungen und wird in der GitHub-Actions-Produktion explizit auf `false` gesetzt.
+
 Bei STRATO Shared Hosting sind echte PHP-Umgebungsvariablen oft unpraktisch. Deshalb unterstuetzt die App zusaetzlich `api/config.local.php`. Diese Datei ist in `.gitignore` ausgeschlossen und wird in der GitHub-Actions-Pipeline aus Secrets erzeugt.
 
 Beispielstruktur siehe `api/config.local.example.php`.
@@ -327,7 +410,7 @@ Beispielstruktur siehe `api/config.local.example.php`.
 ### 5) Dateien hochladen
 Fuer die produktiv laufende Webseite muessen diese Web-Dateien hochgeladen werden:
 
-- `index.html`, `styles.css`, `.htaccess`, `404.html`
+- `index.html`, `login.html`, `account.html`, `styles.css`, `.htaccess`, `404.html`
 - `admin/`
 - `api/`
 - `content/`
@@ -407,6 +490,8 @@ Benötigte Secrets:
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH`: Passwort-Hash, nicht Klartext
 - `QUIZ_HERO_USER_TOKEN_SECRET`: langer zufaelliger Secret fuer signierte User-Tokens
 - `QUIZ_HERO_SEO_EXPORT_TOKEN`: langer zufaelliger Secret fuer den geschuetzten SEO-Export
+- `QUIZ_HERO_MAIL_FROM`: `helden@quiz-hero.de`
+- `QUIZ_HERO_MAIL_TRANSPORT`: `mail`
 
 Admin-Passwort-Hash lokal erzeugen:
 
@@ -513,7 +598,7 @@ Klassischer JSON-Weg:
 - `js/quiz-state.js` Zustand (Kategorie/Tag, Sequenz, Score, Attempts)
 - `js/quiz-view.js` DOM/Rendering/Events
 - `js/quiz-controller.js` Nutzerfluss (Auswahl, Antworten, Ergebnis)
-- `js/user-service.js` User-Login und Ergebnis-Speicherung ueber die API
+- `js/user-service.js` Account-Login, Profilverwaltung und Ergebnis-Speicherung ueber die API
 - `js/admin.js` Admin-Frontend fuer die API
 - `js/main.js` Bootstrap
 
@@ -653,6 +738,8 @@ docker compose run --rm seed
 - Quiz: `http://localhost:8080/`
 - Admin: `http://localhost:8080/admin/`
 - Admin-Testlogin aus `.env.example`: `admin` / `admin123`
+- Lokaler Account-Test ohne Mail: `http://localhost:8080/login.html` oeffnen und dort `Lokal testen` verwenden
+- Lokale Registrierungs- und Reset-Mails: `var/mail.log`
 
 MySQL ist vom Host aus unter `127.0.0.1:3307` erreichbar. Innerhalb der Docker-Container lautet der Host `mysql` und der Port `3306`.
 
@@ -729,6 +816,8 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 
 `database/migrate.php` ist dagegen fuer Struktur-Aenderungen gedacht. Es veraendert keine Quizfragen, User oder Ergebnisse, sondern fuehrt nur SQL-Dateien aus `database/migrations/` aus und merkt den Stand in `schema_migrations`.
 
+Fuer die Account-Funktion muss auf bestehenden Datenbanken mindestens `database/migrations/002_accounts.sql` angewendet sein. Danach existieren die Account-Spalten, E-Mail-Verifikations-Tokens, Passwort-Reset-Tokens und die Einwilligungs-Tabelle.
+
 ### PHP-Umgebungsvariablen
 - `QUIZ_HERO_DB_HOST` (Default `127.0.0.1`)
 - `QUIZ_HERO_DB_PORT` (Default `3306`)
@@ -739,7 +828,52 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 - `QUIZ_HERO_ADMIN_PASSWORD_HASH` (empfohlen, erzeugbar mit `php -r "echo password_hash('DEIN_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"`)
 - `QUIZ_HERO_USER_TOKEN_SECRET` (empfohlen fuer Produktion; signiert User-Tokens fuer Ergebnis-Speicherung)
 - `QUIZ_HERO_SEO_EXPORT_TOKEN` (empfohlen fuer Produktion; schuetzt den SEO-Export fuer GitHub Actions)
+- `SITE_URL` (Basis-URL fuer Verifikations- und Reset-Links, lokal `http://localhost:8080`, produktiv `https://quiz-hero.de`)
+- `QUIZ_HERO_MAIL_FROM` (Absenderadresse, z. B. `helden@quiz-hero.de`)
+- `QUIZ_HERO_MAIL_TRANSPORT` (`log` lokal, `mail` auf Produktion)
+- `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` (`true` nur lokal, `false` auf Produktion)
+- `QUIZ_HERO_DEV_ACCOUNT_USER` (lokaler Testaccount, Default `localhero`)
+- `QUIZ_HERO_DEV_ACCOUNT_EMAIL` (lokale Test-E-Mail, Default `localhero@example.test`)
 - alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur für einfache Testumgebungen
+
+### User-Accounts
+Spieler koennen einen vollwertigen Account anlegen:
+
+- Registrierung mit eindeutigem Benutzernamen und eindeutiger E-Mail-Adresse.
+- Passwort wird ausschliesslich als Hash gespeichert.
+- Registrierung wird erst nach E-Mail-Bestaetigung aktiv.
+- Passwort-vergessen erzeugt einen zeitlich begrenzten Reset-Link.
+- Profil kann Benutzernamen, Passwort und Hero-Avatar aendern.
+- Profilbilder werden nicht mehr frei hochgeladen. Stattdessen waehlt der User aus einer festen Hero-Bilderliste.
+- Login, Registrierung, E-Mail-Bestaetigung und Passwort-Reset liegen auf `login.html`.
+- Auf der Startseite gibt es nur einen unauffaelligen Link oben links zu Login oder Profil.
+- Nach dem Login bleibt die Startseite kompakt: Profilbild, Username und Link zu `account.html`.
+- Das Hero-Logo kann auf `account.html` in einem Modal geaendert werden.
+- Account-Loeschung anonymisiert den Account und trennt gespeicherte Ergebnisse vom User.
+
+Die festen Avatar-Optionen liegen zentral in `js/config.js` und serverseitig gespiegelt in `api/index.php`. Neue Avatar-Bilder werden als normale Web-Assets in `images/website/` abgelegt und anschliessend in beiden Listen ergaenzt.
+
+Lokal gibt es fuer Tests ohne E-Mail-Versand den Button `Lokal testen`. Er nutzt:
+
+```text
+/api/index.php?action=account-dev-login&v=1
+```
+
+Der Dev-Login ist nur aktiv, wenn `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN=true` gesetzt ist. In `.env.example` ist das fuer Docker lokal vorbereitet. Auf Produktion muss der Wert `false` bleiben. Der lokale Testaccount `localhero` hat kein Passwort; er wird ausschliesslich ueber diesen Button angemeldet.
+
+E-Mail-Verhalten:
+
+- Lokal mit Docker: `QUIZ_HERO_MAIL_TRANSPORT=log`, Mails landen in `var/mail.log`.
+- Produktion bei STRATO: `QUIZ_HERO_MAIL_TRANSPORT=mail`, Absender `helden@quiz-hero.de`.
+
+Datenschutz-Minimum:
+
+- Bei Registrierung muss der User der aktuellen Datenschutz-/Einwilligungsversion zustimmen.
+- Die Zustimmung wird in `quiz_account_consents` protokolliert.
+- Es wird kein frei hochgeladenes User-Profilbild gespeichert.
+- Beim Loeschen werden E-Mail, Username, Passwort-Hash und Avatar entfernt; Quiz-Ergebnisse bleiben statistisch erhalten, aber ohne User-Zuordnung.
+
+Das ersetzt keine juristische Pruefung der Datenschutzerklaerung, legt aber die technische Grundlage fuer einen datensparsamen Account-Betrieb.
 
 ### Admin-Oberfläche
 - Aufruf: `/admin/`
@@ -781,10 +915,13 @@ post_max_size = 28M
 
 Falls STRATO diese Werte nicht uebernimmt, muessen die entsprechenden PHP-Einstellungen im STRATO-Panel gesetzt werden.
 
-### User-Login und Ergebnisse
-- Auf der Startseite können Spieler optional Name und Profilbild-URL eintragen.
-- Der User wird in `quiz_users` gespeichert; abgeschlossene Quizrunden werden in `quiz_results` persistiert.
-- Beim User-Login gibt die API ein signiertes User-Token aus. Dieses Token wird lokal im Browser zusammen mit dem User gespeichert und beim Speichern eines Ergebnisses mitgesendet.
+### Accounts und Ergebnisse
+- Auf `login.html` koennen Spieler sich registrieren, ihre E-Mail bestaetigen und sich einloggen. Nach dem Login wird auf der Startseite nur eine kompakte Profil-Kachel angezeigt.
+- Die vollstaendige Profilpflege liegt auf `account.html`: Username, Passwort, Logout und Account-Loeschung.
+- Der Hero-Avatar kann auf `account.html` per Modal geaendert werden.
+- Profilbilder werden nicht frei hochgeladen. Der Spieler waehlt einen vordefinierten Hero-Avatar.
+- Der Account wird in `quiz_users` gespeichert; abgeschlossene Quizrunden werden in `quiz_results` persistiert.
+- Beim Account-Login gibt die API ein signiertes User-Token aus. Dieses Token wird lokal im Browser zusammen mit dem User gespeichert und beim Speichern eines Ergebnisses mitgesendet.
 - Die API akzeptiert Ergebnisse nur, wenn `userId` und User-Token zusammenpassen. Dadurch kann der Browser nicht mehr beliebig Ergebnisse fuer fremde User-IDs speichern.
-- User-Login und Ergebnis-Speicherung sind rate-limitiert. Nach dem Deploy dieser Aenderung muessen bereits lokal gespeicherte User sich einmal neu einloggen, damit sie ein Token erhalten.
+- Account-Aktionen und Ergebnis-Speicherung sind rate-limitiert. Nach dem Deploy dieser Aenderung muessen alte lokal gespeicherte Gast-User sich einmal neu registrieren oder neu einloggen.
 - Der User-Service prueft API-Antworten robuster: Nicht-JSON-Antworten, HTTP-Fehler und API-Fehlertexte werden als lesbare Fehlermeldung behandelt.

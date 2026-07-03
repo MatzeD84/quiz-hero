@@ -29,6 +29,8 @@ jobs:
       - name: Validate JavaScript
         run: |
           node --check js/admin.js
+          node --check js/account-page.js
+          node --check js/login-page.js
           node --check js/quiz-data-service.js
           node --check js/user-service.js
           node --check js/quiz-controller.js
@@ -46,7 +48,7 @@ jobs:
         run: |
           rm -rf deploy
           mkdir -p deploy
-          rsync -a index.html styles.css .htaccess .user.ini 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
+          rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
           rsync -a admin api content data fonts images js pages deploy/
           rm -f deploy/api/config.local.example.php
 
@@ -64,6 +66,10 @@ jobs:
           QUIZ_HERO_ADMIN_PASSWORD_HASH: ${{ secrets.QUIZ_HERO_ADMIN_PASSWORD_HASH }}
           QUIZ_HERO_USER_TOKEN_SECRET: ${{ secrets.QUIZ_HERO_USER_TOKEN_SECRET }}
           QUIZ_HERO_SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          QUIZ_HERO_MAIL_FROM: ${{ secrets.QUIZ_HERO_MAIL_FROM || 'helden@quiz-hero.de' }}
+          QUIZ_HERO_MAIL_TRANSPORT: ${{ secrets.QUIZ_HERO_MAIL_TRANSPORT || 'mail' }}
+          QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN: "false"
         run: |
           php -r '
           $keys = [
@@ -76,6 +82,10 @@ jobs:
               "QUIZ_HERO_ADMIN_PASSWORD_HASH",
               "QUIZ_HERO_USER_TOKEN_SECRET",
               "QUIZ_HERO_SEO_EXPORT_TOKEN",
+              "SITE_URL",
+              "QUIZ_HERO_MAIL_FROM",
+              "QUIZ_HERO_MAIL_TRANSPORT",
+              "QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN",
           ];
           $config = [];
           foreach ($keys as $key) {

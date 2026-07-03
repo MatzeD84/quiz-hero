@@ -12,4 +12,8 @@ return [
     'QUIZ_HERO_ADMIN_PASSWORD_HASH' => 'PASSWORD_HASH',
     'QUIZ_HERO_USER_TOKEN_SECRET' => 'LONG_RANDOM_SECRET',
     'QUIZ_HERO_SEO_EXPORT_TOKEN' => 'LONG_RANDOM_SEO_EXPORT_TOKEN',
+    'SITE_URL' => 'https://quiz-hero.de',
+    'QUIZ_HERO_MAIL_FROM' => 'helden@quiz-hero.de',
+    'QUIZ_HERO_MAIL_TRANSPORT' => 'mail',
+    'QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN' => 'false',
 ];

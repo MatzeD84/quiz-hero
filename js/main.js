@@ -1,11 +1,11 @@
-import { CONFIG } from './config.js';
-import { QuizDataService } from './quiz-data-service.js';
-import { QuizState } from './quiz-state.js';
-import { QuizView } from './quiz-view.js';
-import { QuizController } from './quiz-controller.js';
-import { UserService } from './user-service.js';
-import { initFooter } from './footer.js';
-import { initConsent } from './consent.js';
+import { CONFIG } from './config.js?v=20260630';
+import { QuizDataService } from './quiz-data-service.js?v=20260630';
+import { QuizState } from './quiz-state.js?v=20260630';
+import { QuizView } from './quiz-view.js?v=20260630';
+import { QuizController } from './quiz-controller.js?v=20260630';
+import { UserService } from './user-service.js?v=20260630';
+import { initFooter } from './footer.js?v=20260630';
+import { initConsent } from './consent.js?v=20260630';
 
 document.addEventListener('DOMContentLoaded', () => {
     initConsent();

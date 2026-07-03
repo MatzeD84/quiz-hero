@@ -1,13 +1,8 @@
 ﻿ToDos:
 - categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - nach oben scrollen
-
-- css: in mehreren css -files modulen aufteilen
-- generierte files /page brauchen eigentlich nicht commited werden
 - nur fragen mit  "verifiedFinal": true sollen angezeigt werden
 
-Agent:
-- "Richtige Antwort" --> Arry-Index soll random sein!
 
 SEO:
 - Interne Verlinkung im flietext
@@ -104,9 +99,7 @@ Ideen ChatGPT:
 - Themen‑Pfad: User waehlen einen Lernpfad (z.B. “Rom – Geschichte”), Fragen in dramaturgischer Reihenfolge.
 - Statistik‑Profil: “Deine Top‑Themen”, “Schwaechste Themen”, Verlauf ueber Zeit.
 - “Letzte Chance”‑Frage: Bonusfrage am Ende, wertet Gesamtergebnis auf.
-- Easter Eggs: Seltene Spezialfragen mit extra Animation/Badge.
 - Optische Variation: Je Kategorie eigenes Farbschema/Background.
-- Feedback-Funktion für User pro Frage: "Fehler bei der Frage/Antwort" an Admin
 
 -Optional: Fortschrittsspeicherung: Score/Position per localStorage sichern, damit ein Reload nicht den Run zerstört (kann man mit einer kleinen Version-ID koppeln).
 
@@ -166,6 +159,11 @@ Button: „3 falsche Antworten vorschlagen“, „Erklärung vereinfachen“, �
 
 -----
 
+Adminbereich:
+- User löschen
+- Alle user als Liste darstellen
+- wann war ein user das letzte mal online
+
 User-Account & Motivation
 
 Persistenter Spieler-Account light
@@ -179,6 +177,21 @@ Beispiele: „Antike-Experte“, „Rom-Kenner“, „10 richtige Antworten in F
 
 Profilseite
 Öffentliche oder private Statistik: Punkte, Kategorien, Badges, letzte Quizrunden.
+
+spätere Features:
+    - quiz_user_settings - Für Einstellungen wie Sprache, Sound an/aus, Animationen reduziert, Newsletter nein/ja, Theme.
+
+    - quiz_user_stats - Aggregierte Werte: total_runs, total_questions_answered, total_correct, best_streak, favorite_category_id, last_played_at.
+
+    - quiz_user_category_stats - Statistik pro Kategorie: Kategorie, gespielte Fragen, richtige Antworten, beste Serie, letzter Versuch.
+
+    - quiz_user_badges - Freigeschaltete Badges/Easter Eggs:
+    Badge-Key, erhalten am, Quelle.
+
+    - quiz_user_progress - Für Story/Kapitel/Milestones:
+    progress_key, unlocked_at, value.
+
+
 
 -----
 Quiz-Ideen:

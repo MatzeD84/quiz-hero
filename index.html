@@ -22,10 +22,13 @@
     <link rel="manifest" href="/images/website/favicon/site.webmanifest" />
 
     <!-- Fonts & Styles -->
-    <link rel="stylesheet" href="fonts/fonts.css?v=20250211" />
-    <link rel="stylesheet" href="styles.css?v=20250211" />
+    <link rel="stylesheet" href="fonts/fonts.css?v=20260630" />
+    <link rel="stylesheet" href="styles.css?v=20260630" />
 </head>
 <body>
+    <nav class="site-account-nav" aria-label="Account">
+        <a id="js-account-entry-link" href="login.html">Login</a>
+    </nav>
     <main class="container">
         <!-- Kategorie-Auswahl -->
         <section id="js-category-container" class="main-section">
@@ -35,23 +38,11 @@
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
-            <section id="js-user-panel" class="user-panel" aria-live="polite">
+            <section id="js-user-panel" class="user-panel admin-hidden" aria-live="polite">
                 <div id="js-user-preview" class="user-panel__preview">
-                    <span>Optional anmelden und Ergebnisse speichern</span>
+                    <span></span>
                 </div>
-                <form id="js-user-form" class="user-panel__form">
-                    <label>
-                        <span>Name</span>
-                        <input id="js-user-name" name="name" type="text" maxlength="80" autocomplete="nickname" placeholder="Dein Quiz-Name" required>
-                    </label>
-                    <label>
-                        <span>Profilbild-URL</span>
-                        <input id="js-user-image" name="profileImageUrl" type="url" maxlength="500" placeholder="https://.../bild.jpg">
-                    </label>
-                    <button class="btn btn--modal" type="submit">Einloggen</button>
-                    <button id="js-user-logout" class="btn btn--modal" type="button">Logout</button>
-                </form>
-                <p id="js-user-status" class="user-panel__status"></p>
+                <p id="js-user-status" class="user-panel__status" role="status" aria-live="polite"></p>
             </section>
 
             <section>
@@ -196,15 +187,16 @@
 
     <section id="js-consent-banner" class="modal hide" role="dialog" aria-live="polite" aria-modal="true">
         <div class="modal__content">
-            <h2>Cookie-­Einstellungen</h2>
-            <p>Wir würden gerne anonyme Nutzungsdaten erheben, um die Website zu verbessern. Deine Zustimmung hilft uns dabei.</p>
+            <h2>Cookie-Einstellungen</h2>
+            <p>Wir nutzen technisch notwendige Speicherung fuer Login und Cookie-Auswahl. Google Analytics laden wir nur mit deiner Zustimmung.</p>
             <div class="consent-banner__actions">
                 <button type="button" class="btn btn--modal js-consent-accept">Zustimmen</button>
                 <button type="button" class="btn btn--modal js-consent-decline">Ablehnen</button>
+                <a href="#" class="btn btn--modal js-footer-modal-link" data-footer-modal-url="content/cookies.html">Details</a>
             </div>
         </div>
     </section>
 
-    <script type="module" src="js/main.js?v=20250211"></script>
+    <script type="module" src="js/main.js?v=20260630"></script>
 </body>
 </html>

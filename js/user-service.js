@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js';
+import { CONFIG } from './config.js?v=20260630';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';
@@ -26,13 +26,84 @@ export class UserService {
         window.localStorage.removeItem(STORAGE_KEY);
     }
 
-    async login({ name, profileImageUrl }) {
-        const data = await this.post('user-login', { name, profileImageUrl });
+    async register({ username, email, password, avatarKey, privacyAccepted }) {
+        const data = await this.post('account-register', { username, email, password, avatarKey, privacyAccepted });
+        if (!data.ok) {
+            throw new Error(data.error || 'Registrierung fehlgeschlagen.');
+        }
+        return data;
+    }
+
+    async verifyEmail(token) {
+        const data = await this.post('account-verify-email', { token });
+        if (!data.ok) {
+            throw new Error(data.error || 'E-Mail konnte nicht bestaetigt werden.');
+        }
+        this.storeUser(data.user);
+        return data.user;
+    }
+
+    async login({ identifier, password }) {
+        const data = await this.post('account-login', { identifier, password });
         if (!data.ok) {
             throw new Error(data.error || 'Login fehlgeschlagen.');
         }
         this.storeUser(data.user);
         return data.user;
+    }
+
+    async devLogin() {
+        const data = await this.post('account-dev-login', {});
+        if (!data.ok) {
+            throw new Error(data.error || 'Dev-Login ist nicht verfuegbar.');
+        }
+        this.storeUser(data.user);
+        return data.user;
+    }
+
+    async requestPasswordReset(email) {
+        const data = await this.post('account-request-password-reset', { email });
+        if (!data.ok) {
+            throw new Error(data.error || 'Reset-Link konnte nicht verschickt werden.');
+        }
+        return data;
+    }
+
+    async resetPassword({ token, password }) {
+        const data = await this.post('account-reset-password', { token, password });
+        if (!data.ok) {
+            throw new Error(data.error || 'Passwort konnte nicht gespeichert werden.');
+        }
+        this.storeUser(data.user);
+        return data.user;
+    }
+
+    async updateAccount(user, { username, avatarKey, password }) {
+        const data = await this.post('account-update', {
+            userId: user.id,
+            userToken: user.token,
+            username,
+            avatarKey,
+            password
+        });
+        if (!data.ok) {
+            throw new Error(data.error || 'Account konnte nicht gespeichert werden.');
+        }
+        this.storeUser(data.user);
+        return data.user;
+    }
+
+    async deleteAccount(user, confirm) {
+        const data = await this.post('account-delete', {
+            userId: user.id,
+            userToken: user.token,
+            confirm
+        });
+        if (!data.ok) {
+            throw new Error(data.error || 'Account konnte nicht geloescht werden.');
+        }
+        this.clearUser();
+        return data;
     }
 
     async saveResult(user, stats, context) {

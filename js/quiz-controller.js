@@ -1,4 +1,4 @@
-import { CONFIG, LABELS } from './config.js';
+import { CONFIG, LABELS } from './config.js?v=20260630';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {
@@ -16,6 +16,7 @@ export class QuizController {
             this.state.setData(data);
             this.view.renderCategoryButtons(data.categories);
             this.view.renderTagButtons(this.state.getAvailableTags());
+            this.view.initAccountUi?.();
             this.registerEvents();
             this.view.renderUser(this.currentUser);
             this.view.showCategories();
@@ -71,22 +72,36 @@ export class QuizController {
         this.view.onAbort(() => this.handleAbort());
         this.view.onHome(() => this.handleAbort());
         this.view.onModalClose(() => this.view.hideResultModal());
-        this.view.onUserLogin?.(data => this.handleUserLogin(data));
+        this.view.onUserAccountUpdate?.(data => this.handleUserAccountUpdate(data));
+        this.view.onUserDelete?.(() => this.handleUserDelete());
         this.view.onUserLogout?.(() => this.handleUserLogout());
     }
 
-    async handleUserLogin({ name, profileImageUrl }) {
-        if (!this.userService) return;
-        this.view.renderUserStatus('Speichere Profil ...');
+    async handleUserAccountUpdate(data) {
+        if (!this.userService || !this.currentUser) return;
         try {
-            this.currentUser = await this.userService.login({ name, profileImageUrl });
+            this.currentUser = await this.userService.updateAccount(this.currentUser, data);
             this.view.renderUser(this.currentUser);
-            this.view.renderUserStatus('Willkommen bei Quiz-Hero!');
+            this.view.renderUserStatus('Account gespeichert.', 'success');
         } catch (error) {
-            if (CONFIG.devMode) {
-                console.error(error);
-            }
-            this.view.renderUserStatus(error.message || 'Profil konnte nicht gespeichert werden.');
+            this.view.renderUserStatus(error.message || 'Account konnte nicht gespeichert werden.', 'error');
+        }
+    }
+
+    async handleUserDelete() {
+        if (!this.userService || !this.currentUser) return;
+        const confirmValue = window.prompt('Account wirklich loeschen? Tippe DELETE zur Bestaetigung.');
+        if (confirmValue !== 'DELETE') {
+            this.view.renderUserStatus('Loeschung abgebrochen.', 'info');
+            return;
+        }
+        try {
+            await this.userService.deleteAccount(this.currentUser, confirmValue);
+            this.currentUser = null;
+            this.view.renderUser(null);
+            this.view.renderUserStatus('Account geloescht. Ergebnisse wurden anonymisiert.', 'success');
+        } catch (error) {
+            this.view.renderUserStatus(error.message || 'Account konnte nicht geloescht werden.', 'error');
         }
     }
 
@@ -94,7 +109,7 @@ export class QuizController {
         this.userService?.clearUser();
         this.currentUser = null;
         this.view.renderUser(null);
-        this.view.renderUserStatus('Du spielst jetzt ohne gespeichertes Profil.');
+        this.view.renderUserStatus('Du spielst jetzt ohne gespeichertes Profil.', 'info');
     }
 
     handleCategorySelected(categoryId) {

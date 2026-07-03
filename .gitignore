@@ -3,3 +3,5 @@
 api/config.local.php
 images/uploads/*
 !images/uploads/.htaccess
+var/*
+!var/.htaccess

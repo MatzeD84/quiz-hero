@@ -28,7 +28,15 @@ export const CONFIG = {
     resultModalUrl: 'content/quiz-result.html'
 };
 
-export const ASSET_VERSION = '20250211';
+export const ASSET_VERSION = '20260630';
+
+export const HERO_AVATARS = [
+    { key: 'hero', label: 'Quiz-Hero', url: 'images/website/logo.png' },
+    { key: 'denkt', label: 'Denker-Hero', url: 'images/website/hero-denkt-nach.png' },
+    { key: 'gruebelt', label: 'Gruebel-Hero', url: 'images/website/hero-gruebelt.png' },
+    { key: 'arbeitet', label: 'Arbeits-Hero', url: 'images/website/hero-arbeitet.png' },
+    { key: 'pinwand', label: 'Planungs-Hero', url: 'images/website/hero-pinwand.png' }
+];
 
 export const LABELS = {
     questions: {
@@ -79,12 +87,31 @@ export const SELECTORS = {
     modalContent: '#js-result-content',
     modalCloseButton: '#js-modal-close',
     userPanel: '#js-user-panel',
-    userForm: '#js-user-form',
-    userNameInput: '#js-user-name',
-    userImageInput: '#js-user-image',
+    userLoginForm: '#js-account-login-form',
+    userRegisterForm: '#js-account-register-form',
+    userResetRequestForm: '#js-account-reset-request-form',
+    userResetForm: '#js-account-reset-form',
+    userAccountForm: '#js-account-form',
+    userLoginIdentifierInput: '#js-account-login-identifier',
+    userLoginPasswordInput: '#js-account-login-password',
+    userRegisterNameInput: '#js-account-register-username',
+    userRegisterEmailInput: '#js-account-register-email',
+    userRegisterPasswordInput: '#js-account-register-password',
+    userRegisterPrivacyInput: '#js-account-register-privacy',
+    userResetEmailInput: '#js-account-reset-email',
+    userResetTokenInput: '#js-account-reset-token',
+    userResetPasswordInput: '#js-account-reset-password',
+    userAccountNameInput: '#js-account-username',
+    userAccountPasswordInput: '#js-account-password',
+    userAvatarGroups: '.js-account-avatar-group',
+    userTabs: '.js-account-tab',
+    userPanels: '.js-account-panel',
+    userDevLoginButton: '#js-account-dev-login',
+    userDeleteButton: '#js-account-delete',
     userStatus: '#js-user-status',
     userPreview: '#js-user-preview',
-    userLogoutButton: '#js-user-logout'
+    userLogoutButton: '#js-user-logout',
+    accountEntryLink: '#js-account-entry-link'
 };
 
 export const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));

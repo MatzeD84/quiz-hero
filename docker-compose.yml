@@ -13,6 +13,12 @@ services:
       QUIZ_HERO_ADMIN_PASSWORD: ${QUIZ_HERO_ADMIN_PASSWORD:-admin123}
       QUIZ_HERO_USER_TOKEN_SECRET: ${QUIZ_HERO_USER_TOKEN_SECRET:-quiz_hero_local_user_token_secret}
       QUIZ_HERO_SEO_EXPORT_TOKEN: ${QUIZ_HERO_SEO_EXPORT_TOKEN:-quiz_hero_local_seo_export_token}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      QUIZ_HERO_MAIL_FROM: ${QUIZ_HERO_MAIL_FROM:-helden@quiz-hero.de}
+      QUIZ_HERO_MAIL_TRANSPORT: ${QUIZ_HERO_MAIL_TRANSPORT:-log}
+      QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN: ${QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN:-true}
+      QUIZ_HERO_DEV_ACCOUNT_USER: ${QUIZ_HERO_DEV_ACCOUNT_USER:-localhero}
+      QUIZ_HERO_DEV_ACCOUNT_EMAIL: ${QUIZ_HERO_DEV_ACCOUNT_EMAIL:-localhero@example.test}
     volumes:
       - ./:/var/www/html
     depends_on:
@@ -48,6 +54,9 @@ services:
       QUIZ_HERO_DB_NAME: ${QUIZ_HERO_DB_NAME:-quiz_hero}
       QUIZ_HERO_DB_USER: ${QUIZ_HERO_DB_USER:-quiz_hero}
       QUIZ_HERO_DB_PASSWORD: ${QUIZ_HERO_DB_PASSWORD:-quiz_hero_local}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      QUIZ_HERO_MAIL_FROM: ${QUIZ_HERO_MAIL_FROM:-helden@quiz-hero.de}
+      QUIZ_HERO_MAIL_TRANSPORT: ${QUIZ_HERO_MAIL_TRANSPORT:-log}
     volumes:
       - ./:/var/www/html
     depends_on:
@@ -65,6 +74,9 @@ services:
       QUIZ_HERO_DB_NAME: ${QUIZ_HERO_DB_NAME:-quiz_hero}
       QUIZ_HERO_DB_USER: ${QUIZ_HERO_DB_USER:-quiz_hero}
       QUIZ_HERO_DB_PASSWORD: ${QUIZ_HERO_DB_PASSWORD:-quiz_hero_local}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      QUIZ_HERO_MAIL_FROM: ${QUIZ_HERO_MAIL_FROM:-helden@quiz-hero.de}
+      QUIZ_HERO_MAIL_TRANSPORT: ${QUIZ_HERO_MAIL_TRANSPORT:-log}
     volumes:
       - ./:/var/www/html
     depends_on:

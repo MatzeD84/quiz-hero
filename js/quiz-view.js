@@ -1,5 +1,5 @@
-import { CONFIG, LABELS, SELECTORS } from './config.js';
-import { applyImageWatermark, clearImageWatermark } from './image-watermark.js';
+import { CONFIG, LABELS, SELECTORS } from './config.js?v=20260630';
+import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=20260630';
 
 export class QuizView {
     constructor(selectors = SELECTORS) {
@@ -41,13 +41,32 @@ export class QuizView {
             modalCloseButton: document.querySelector(selectors.modalCloseButton),
             homeLinks: Array.from(document.querySelectorAll('.js-home-link')),
             userPanel: document.querySelector(selectors.userPanel),
-            userForm: document.querySelector(selectors.userForm),
-            userNameInput: document.querySelector(selectors.userNameInput),
-            userImageInput: document.querySelector(selectors.userImageInput),
+            userAccountForm: document.querySelector(selectors.userAccountForm),
+            userAccountNameInput: document.querySelector(selectors.userAccountNameInput),
+            userAccountPasswordInput: document.querySelector(selectors.userAccountPasswordInput),
+            userTabs: Array.from(document.querySelectorAll(selectors.userTabs)),
+            userPanels: Array.from(document.querySelectorAll(selectors.userPanels)),
+            userDeleteButton: document.querySelector(selectors.userDeleteButton),
             userStatus: document.querySelector(selectors.userStatus),
             userPreview: document.querySelector(selectors.userPreview),
-            userLogoutButton: document.querySelector(selectors.userLogoutButton)
+            userLogoutButton: document.querySelector(selectors.userLogoutButton),
+            accountEntryLink: document.querySelector(selectors.accountEntryLink)
         };
+    }
+
+    initAccountUi() {
+        this.elements.userTabs.forEach(button => {
+            button.addEventListener('click', () => this.showAccountView(button.dataset.accountView));
+        });
+    }
+
+    showAccountView(view) {
+        this.elements.userPanels.forEach(panel => {
+            panel.classList.toggle('admin-hidden', panel.dataset.accountPanel !== view);
+        });
+        this.elements.userTabs.forEach(tab => {
+            tab.classList.toggle('btn--disabled', tab.dataset.accountView === view);
+        });
     }
 
     renderCategoryButtons(categories) {
@@ -195,42 +214,69 @@ export class QuizView {
 
     renderUser(user) {
         if (!this.elements.userPanel) return;
+        this.elements.userPanel.classList.toggle('admin-hidden', !user);
         this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
-        if (this.elements.userNameInput) {
-            this.elements.userNameInput.value = user?.name || '';
+        if (this.elements.accountEntryLink) {
+            this.elements.accountEntryLink.href = user ? 'account.html' : 'login.html';
+            this.elements.accountEntryLink.textContent = user ? 'Profil' : 'Login';
         }
-        if (this.elements.userImageInput) {
-            this.elements.userImageInput.value = user?.profileImageUrl || '';
+        this.elements.userTabs.forEach(tab => {
+            tab.classList.toggle('admin-hidden', Boolean(user));
+        });
+        if (this.elements.userAccountNameInput) {
+            this.elements.userAccountNameInput.value = user?.username || user?.name || '';
+        }
+        if (this.elements.userAccountPasswordInput) {
+            this.elements.userAccountPasswordInput.value = '';
         }
         if (this.elements.userPreview) {
             this.elements.userPreview.innerHTML = '';
             if (user?.profileImageUrl) {
+                const link = document.createElement('a');
+                link.className = 'user-panel__avatar-link';
+                link.href = 'account.html';
+                link.title = 'Profilseite';
+                link.setAttribute('aria-label', 'Profilseite oeffnen');
                 const image = document.createElement('img');
                 image.src = user.profileImageUrl;
                 image.alt = `${user.name} Profilbild`;
                 image.loading = 'lazy';
-                this.elements.userPreview.appendChild(image);
+                const hint = document.createElement('span');
+                hint.className = 'user-panel__avatar-hint';
+                hint.textContent = 'Profilseite';
+                link.append(image, hint);
+                this.elements.userPreview.appendChild(link);
             }
+            const textWrapper = document.createElement('div');
+            textWrapper.className = 'user-panel__preview-text';
             const label = document.createElement('span');
-            label.textContent = user?.name ? `Angemeldet als ${user.name}` : 'Optional anmelden und Ergebnisse speichern';
-            this.elements.userPreview.appendChild(label);
+            label.textContent = user?.name ? `Hallo ${user.name}` : 'Account erstellen und Ergebnisse speichern';
+            textWrapper.appendChild(label);
+            this.elements.userPreview.appendChild(textWrapper);
         }
+        this.showAccountView(user ? '' : 'login');
     }
 
-    renderUserStatus(message) {
+    renderUserStatus(message, type = 'info') {
         if (this.elements.userStatus) {
             this.elements.userStatus.textContent = message || '';
+            this.elements.userStatus.dataset.status = message ? type : '';
         }
     }
 
-    onUserLogin(callback) {
-        this.elements.userForm?.addEventListener('submit', event => {
+    onUserAccountUpdate(callback) {
+        this.elements.userAccountForm?.addEventListener('submit', event => {
             event.preventDefault();
             callback({
-                name: this.elements.userNameInput?.value || '',
-                profileImageUrl: this.elements.userImageInput?.value || ''
+                username: this.elements.userAccountNameInput?.value || '',
+                password: this.elements.userAccountPasswordInput?.value || '',
+                avatarKey: this.selectedAvatar('account')
             });
         });
+    }
+
+    onUserDelete(callback) {
+        this.elements.userDeleteButton?.addEventListener('click', callback);
     }
 
     onUserLogout(callback) {

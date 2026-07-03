@@ -1,4 +1,4 @@
-import { ALLOWED_DIFFICULTIES } from './config.js';
+import { ALLOWED_DIFFICULTIES } from './config.js?v=20260630';
 
 export const isNonEmptyString = value => typeof value === 'string' && value.trim().length > 0;
 

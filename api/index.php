@@ -6,6 +6,7 @@ require __DIR__ . '/bootstrap.php';
 
 const QUIZ_HERO_API_VERSION = '1';
 const QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES = 25165824;
+const QUIZ_HERO_CONSENT_VERSION = '2026-06-30';
 
 $action = $_GET['action'] ?? 'public-data';
 $apiVersion = trim((string) ($_GET['v'] ?? QUIZ_HERO_API_VERSION));
@@ -21,8 +22,16 @@ if ($apiVersion !== QUIZ_HERO_API_VERSION) {
 try {
     match ($action) {
         'public-data' => public_data(),
-        'user-login' => user_login(),
         'save-result' => save_result(),
+        'account-register' => account_register(),
+        'account-verify-email' => account_verify_email(),
+        'account-login' => account_login(),
+        'account-dev-login' => account_dev_login(),
+        'account-me' => account_me(),
+        'account-update' => account_update(),
+        'account-delete' => account_delete(),
+        'account-request-password-reset' => account_request_password_reset(),
+        'account-reset-password' => account_reset_password(),
         'admin-login' => admin_login(),
         'admin-logout' => admin_logout(),
         'admin-me' => admin_me(),
@@ -120,25 +129,407 @@ function require_seo_export_token(): void
     }
 }
 
-function user_login(): void
+function hero_avatars(): array
+{
+    return [
+        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/logo.png'],
+        'denkt' => ['key' => 'denkt', 'label' => 'Denker-Hero', 'url' => 'images/website/hero-denkt-nach.png'],
+        'gruebelt' => ['key' => 'gruebelt', 'label' => 'Gruebel-Hero', 'url' => 'images/website/hero-gruebelt.png'],
+        'arbeitet' => ['key' => 'arbeitet', 'label' => 'Arbeits-Hero', 'url' => 'images/website/hero-arbeitet.png'],
+        'pinwand' => ['key' => 'pinwand', 'label' => 'Planungs-Hero', 'url' => 'images/website/hero-pinwand.png'],
+    ];
+}
+
+function normalize_avatar_key(?string $key): string
+{
+    $key = clean_string($key ?? '', 80);
+    return array_key_exists($key, hero_avatars()) ? $key : 'hero';
+}
+
+function avatar_url(string $avatarKey): string
+{
+    $avatars = hero_avatars();
+    return $avatars[$avatarKey]['url'] ?? $avatars['hero']['url'];
+}
+
+function normalize_email(?string $email): string
+{
+    $email = mb_strtolower(trim((string) $email), 'UTF-8');
+    return filter_var($email, FILTER_VALIDATE_EMAIL) ? mb_substr($email, 0, 190, 'UTF-8') : '';
+}
+
+function normalize_username(?string $username): string
+{
+    $username = mb_strtolower(trim((string) $username), 'UTF-8');
+    $username = preg_replace('/[^a-z0-9_-]+/u', '-', $username) ?? '';
+    $username = trim($username, '-_');
+    return mb_substr($username, 0, 80, 'UTF-8');
+}
+
+function require_password_strength(string $password): void
+{
+    if (mb_strlen($password, 'UTF-8') < 10) {
+        json_response(['ok' => false, 'error' => 'Das Passwort muss mindestens 10 Zeichen lang sein.'], 422);
+    }
+}
+
+function public_base_url(): string
+{
+    $configured = rtrim((string) env_value('SITE_URL', ''), '/');
+    if ($configured !== '') {
+        return $configured;
+    }
+    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = (string) ($_SERVER['HTTP_HOST'] ?? 'localhost:8080');
+    return $https . '://' . $host;
+}
+
+function issue_account_token(PDO $pdo, int $userId): array
+{
+    $stmt = $pdo->prepare('UPDATE quiz_users SET last_seen_at = NOW() WHERE id = :id');
+    $stmt->execute(['id' => $userId]);
+    $stmt = $pdo->prepare('SELECT * FROM quiz_users WHERE id = :id');
+    $stmt->execute(['id' => $userId]);
+    $user = $stmt->fetch();
+    if (!$user) {
+        json_response(['ok' => false, 'error' => 'Account wurde nicht gefunden.'], 404);
+    }
+    return format_account_user($user);
+}
+
+function format_account_user(array $user): array
+{
+    $avatarKey = normalize_avatar_key($user['avatar_key'] ?? '');
+    return [
+        'id' => (int) $user['id'],
+        'username' => $user['username'] ?? '',
+        'name' => $user['username'] ?? '',
+        'email' => $user['email'] ?? '',
+        'avatarKey' => $avatarKey,
+        'profileImageUrl' => avatar_url($avatarKey),
+        'emailVerified' => !empty($user['email_verified_at']),
+        'token' => create_user_token((int) $user['id']),
+    ];
+}
+
+function require_account_from_payload(array $data): array
+{
+    $userId = ensure_int($data['userId'] ?? 0, 1, PHP_INT_MAX);
+    require_user_token($userId, (string) ($data['userToken'] ?? ''));
+    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id AND deleted_at IS NULL');
+    $stmt->execute(['id' => $userId]);
+    $user = $stmt->fetch();
+    if (!$user) {
+        json_response(['ok' => false, 'error' => 'Account wurde nicht gefunden.'], 404);
+    }
+    return $user;
+}
+
+function random_account_token(): string
+{
+    return bin2hex(random_bytes(32));
+}
+
+function send_account_mail(string $to, string $subject, string $message): void
+{
+    $from = env_value('QUIZ_HERO_MAIL_FROM', 'helden@quiz-hero.de');
+    $transport = env_value('QUIZ_HERO_MAIL_TRANSPORT', 'log');
+    $headers = [
+        'From: Quiz-Hero <' . $from . '>',
+        'Reply-To: ' . $from,
+        'Content-Type: text/plain; charset=UTF-8',
+        'X-Mailer: Quiz-Hero',
+    ];
+
+    if ($transport === 'mail') {
+        if (@mail($to, $subject, $message, implode("\r\n", $headers))) {
+            return;
+        }
+        error_log('Quiz-Hero mail() failed for ' . $to);
+    }
+
+    $dir = dirname(__DIR__) . '/var';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    @file_put_contents(
+        $dir . '/mail.log',
+        '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$message}\n\n",
+        FILE_APPEND
+    );
+}
+
+function store_email_verification(PDO $pdo, int $userId, string $email): void
+{
+    $token = random_account_token();
+    $stmt = $pdo->prepare('INSERT INTO quiz_email_verifications (user_id, token_hash, expires_at) VALUES (:user_id, :token_hash, DATE_ADD(NOW(), INTERVAL 24 HOUR))');
+    $stmt->execute(['user_id' => $userId, 'token_hash' => hash('sha256', $token)]);
+
+    $link = public_base_url() . '/login.html?verifyToken=' . urlencode($token);
+    send_account_mail(
+        $email,
+        'Quiz-Hero Registrierung bestaetigen',
+        "Hallo,\n\nbitte bestaetige deine Registrierung bei Quiz-Hero:\n{$link}\n\nWenn du dich nicht registriert hast, ignoriere diese E-Mail.\n\nViele Gruesse\nQuiz-Hero"
+    );
+}
+
+function account_register(): void
 {
     require_method('POST');
-    rate_limit('user-login', 20, 300);
+    rate_limit('account-register', 8, 900);
     $data = read_json_body();
-    $name = clean_string($data['name'] ?? '', 80);
-    $profileImageUrl = clean_url($data['profileImageUrl'] ?? '', 500);
+    $username = normalize_username($data['username'] ?? '');
+    $email = normalize_email($data['email'] ?? '');
+    $password = (string) ($data['password'] ?? '');
+    $avatarKey = normalize_avatar_key($data['avatarKey'] ?? '');
+    $privacyAccepted = !empty($data['privacyAccepted']);
 
-    if ($name === '') {
-        json_response(['ok' => false, 'error' => 'Bitte gib einen Namen ein.'], 422);
+    if (mb_strlen($username, 'UTF-8') < 3) {
+        json_response(['ok' => false, 'error' => 'Der Benutzername muss mindestens 3 Zeichen haben.'], 422);
+    }
+    if ($email === '') {
+        json_response(['ok' => false, 'error' => 'Bitte gib eine gueltige E-Mail-Adresse ein.'], 422);
+    }
+    require_password_strength($password);
+    if (!$privacyAccepted) {
+        json_response(['ok' => false, 'error' => 'Bitte bestaetige die Datenschutz-Hinweise.'], 422);
     }
 
     $pdo = db();
-    $stmt = $pdo->prepare('INSERT INTO quiz_users (display_name, profile_image_url, last_seen_at) VALUES (:display_name, :profile_image_url, NOW())');
-    $stmt->execute(['display_name' => $name, 'profile_image_url' => $profileImageUrl ?: null]);
-    $userId = (int) $pdo->lastInsertId();
-    $user = ['id' => $userId, 'name' => $name, 'profileImageUrl' => $profileImageUrl, 'token' => create_user_token($userId)];
+    try {
+        $pdo->beginTransaction();
+        $stmt = $pdo->prepare('INSERT INTO quiz_users (username, email, password_hash, profile_image_url, avatar_key, privacy_accepted_at, last_seen_at) VALUES (:username, :email, :password_hash, :profile_image_url, :avatar_key, NOW(), NOW())');
+        $stmt->execute([
+            'username' => $username,
+            'email' => $email,
+            'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+            'profile_image_url' => avatar_url($avatarKey),
+            'avatar_key' => $avatarKey,
+        ]);
+        $userId = (int) $pdo->lastInsertId();
+        $stmt = $pdo->prepare('INSERT INTO quiz_account_consents (user_id, consent_key, consent_version, accepted_at, ip_hash, user_agent_hash) VALUES (:user_id, :consent_key, :consent_version, NOW(), :ip_hash, :user_agent_hash)');
+        $stmt->execute([
+            'user_id' => $userId,
+            'consent_key' => 'privacy_notice',
+            'consent_version' => QUIZ_HERO_CONSENT_VERSION,
+            'ip_hash' => hash('sha256', client_ip()),
+            'user_agent_hash' => hash('sha256', (string) ($_SERVER['HTTP_USER_AGENT'] ?? '')),
+        ]);
+        store_email_verification($pdo, $userId, $email);
+        $pdo->commit();
+    } catch (PDOException $exception) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        if ($exception->getCode() === '23000') {
+            json_response(['ok' => false, 'error' => 'Benutzername oder E-Mail wird bereits verwendet.'], 409);
+        }
+        throw $exception;
+    }
 
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'message' => 'Registrierung gespeichert. Bitte bestaetige deine E-Mail.']);
+}
+
+function account_verify_email(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $token = (string) ($data['token'] ?? '');
+    if ($token === '') {
+        json_response(['ok' => false, 'error' => 'Bestaetigungs-Token fehlt.'], 422);
+    }
+
+    $pdo = db();
+    $stmt = $pdo->prepare('SELECT * FROM quiz_email_verifications WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW()');
+    $stmt->execute(['token_hash' => hash('sha256', $token)]);
+    $row = $stmt->fetch();
+    if (!$row) {
+        json_response(['ok' => false, 'error' => 'Der Bestaetigungslink ist ungueltig oder abgelaufen.'], 400);
+    }
+
+    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('UPDATE quiz_email_verifications SET used_at = NOW() WHERE id = :id');
+    $stmt->execute(['id' => $row['id']]);
+    $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = NOW() WHERE id = :id');
+    $stmt->execute(['id' => $row['user_id']]);
+    $pdo->commit();
+
+    $user = issue_account_token($pdo, (int) $row['user_id']);
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $user]);
+}
+
+function account_login(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $identifier = mb_strtolower(clean_string($data['identifier'] ?? '', 190), 'UTF-8');
+    $password = (string) ($data['password'] ?? '');
+    rate_limit('account-login:' . $identifier, 10, 900);
+
+    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE deleted_at IS NULL AND (email = :email OR username = :username)');
+    $stmt->execute(['email' => $identifier, 'username' => $identifier]);
+    $user = $stmt->fetch();
+    if (!$user || empty($user['password_hash']) || !password_verify($password, $user['password_hash'])) {
+        json_response(['ok' => false, 'error' => 'Login-Daten sind ungueltig.'], 401);
+    }
+    if (empty($user['email_verified_at'])) {
+        json_response(['ok' => false, 'error' => 'Bitte bestaetige zuerst deine E-Mail-Adresse.'], 403);
+    }
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token(db(), (int) $user['id'])]);
+}
+
+function account_dev_login(): void
+{
+    require_method('POST');
+    $enabled = env_value('QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN', 'false') === 'true';
+    if (!$enabled) {
+        json_response(['ok' => false, 'error' => 'Dev-Login ist nicht aktiviert.'], 403);
+    }
+
+    $pdo = db();
+    $username = normalize_username(env_value('QUIZ_HERO_DEV_ACCOUNT_USER', 'localhero'));
+    $email = normalize_email(env_value('QUIZ_HERO_DEV_ACCOUNT_EMAIL', 'localhero@example.test'));
+    $avatarKey = normalize_avatar_key('hero');
+
+    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE username = :username');
+    $stmt->execute(['username' => $username]);
+    $existing = $stmt->fetch();
+    if ($existing) {
+        $userId = (int) $existing['id'];
+        $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = COALESCE(email_verified_at, NOW()), deleted_at = NULL WHERE id = :id');
+        $stmt->execute(['id' => $userId]);
+    } else {
+        $stmt = $pdo->prepare('INSERT INTO quiz_users (username, email, password_hash, profile_image_url, avatar_key, email_verified_at, privacy_accepted_at, last_seen_at) VALUES (:username, :email, :password_hash, :profile_image_url, :avatar_key, NOW(), NOW(), NOW())');
+        $stmt->execute([
+            'username' => $username,
+            'email' => $email,
+            'password_hash' => password_hash(bin2hex(random_bytes(16)), PASSWORD_DEFAULT),
+            'profile_image_url' => avatar_url($avatarKey),
+            'avatar_key' => $avatarKey,
+        ]);
+        $userId = (int) $pdo->lastInsertId();
+    }
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token($pdo, $userId)]);
+}
+
+function account_me(): void
+{
+    require_method('POST');
+    $user = require_account_from_payload(read_json_body());
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => format_account_user($user)]);
+}
+
+function account_update(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $user = require_account_from_payload($data);
+    $username = normalize_username($data['username'] ?? $user['username']);
+    $avatarKey = normalize_avatar_key($data['avatarKey'] ?? $user['avatar_key']);
+    $password = (string) ($data['password'] ?? '');
+    if (mb_strlen($username, 'UTF-8') < 3) {
+        json_response(['ok' => false, 'error' => 'Der Benutzername muss mindestens 3 Zeichen haben.'], 422);
+    }
+
+    $params = [
+        'id' => (int) $user['id'],
+        'username' => $username,
+        'avatar_key' => $avatarKey,
+        'profile_image_url' => avatar_url($avatarKey),
+    ];
+    $passwordSql = '';
+    if ($password !== '') {
+        require_password_strength($password);
+        $passwordSql = ', password_hash = :password_hash';
+        $params['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    try {
+        $stmt = db()->prepare('UPDATE quiz_users SET username = :username, avatar_key = :avatar_key, profile_image_url = :profile_image_url' . $passwordSql . ' WHERE id = :id');
+        $stmt->execute($params);
+    } catch (PDOException $exception) {
+        if ($exception->getCode() === '23000') {
+            json_response(['ok' => false, 'error' => 'Der Benutzername ist bereits vergeben.'], 409);
+        }
+        throw $exception;
+    }
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token(db(), (int) $user['id'])]);
+}
+
+function account_delete(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $user = require_account_from_payload($data);
+    $confirm = (string) ($data['confirm'] ?? '');
+    if ($confirm !== 'DELETE') {
+        json_response(['ok' => false, 'error' => 'Bitte bestaetige die Loeschung mit DELETE.'], 422);
+    }
+
+    $pdo = db();
+    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');
+    $stmt->execute(['id' => (int) $user['id']]);
+    $stmt = $pdo->prepare('UPDATE quiz_users SET username = NULL, email = NULL, password_hash = NULL, profile_image_url = NULL, avatar_key = NULL, deleted_at = NOW() WHERE id = :id');
+    $stmt->execute(['id' => (int) $user['id']]);
+    $pdo->commit();
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
+}
+
+function account_request_password_reset(): void
+{
+    require_method('POST');
+    rate_limit('account-password-reset', 8, 900);
+    $data = read_json_body();
+    $email = normalize_email($data['email'] ?? '');
+    if ($email !== '') {
+        $pdo = db();
+        $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE email = :email AND deleted_at IS NULL');
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch();
+        if ($user) {
+            $token = random_account_token();
+            $stmt = $pdo->prepare('INSERT INTO quiz_password_resets (user_id, token_hash, expires_at) VALUES (:user_id, :token_hash, DATE_ADD(NOW(), INTERVAL 1 HOUR))');
+            $stmt->execute(['user_id' => (int) $user['id'], 'token_hash' => hash('sha256', $token)]);
+            $link = public_base_url() . '/login.html?resetToken=' . urlencode($token);
+            send_account_mail(
+                $email,
+                'Quiz-Hero Passwort zuruecksetzen',
+                "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zuruecksetzen:\n{$link}\n\nDer Link ist 1 Stunde gueltig.\n\nViele Gruesse\nQuiz-Hero"
+            );
+        }
+    }
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'message' => 'Falls die E-Mail bekannt ist, wurde ein Reset-Link verschickt.']);
+}
+
+function account_reset_password(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $token = (string) ($data['token'] ?? '');
+    $password = (string) ($data['password'] ?? '');
+    require_password_strength($password);
+
+    $pdo = db();
+    $stmt = $pdo->prepare('SELECT * FROM quiz_password_resets WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW()');
+    $stmt->execute(['token_hash' => hash('sha256', $token)]);
+    $row = $stmt->fetch();
+    if (!$row) {
+        json_response(['ok' => false, 'error' => 'Der Reset-Link ist ungueltig oder abgelaufen.'], 400);
+    }
+
+    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('UPDATE quiz_password_resets SET used_at = NOW() WHERE id = :id');
+    $stmt->execute(['id' => $row['id']]);
+    $stmt = $pdo->prepare('UPDATE quiz_users SET password_hash = :password_hash WHERE id = :id');
+    $stmt->execute(['id' => $row['user_id'], 'password_hash' => password_hash($password, PASSWORD_DEFAULT)]);
+    $pdo->commit();
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token($pdo, (int) $row['user_id'])]);
 }
 
 function save_result(): void

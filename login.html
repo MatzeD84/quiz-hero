@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Quiz-Hero Login</title>
+    <link rel="icon" type="image/png" href="/images/website/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="stylesheet" href="fonts/fonts.css?v=20260630" />
+    <link rel="stylesheet" href="styles.css?v=20260630" />
+</head>
+<body>
+    <main class="container login-page">
+        <header class="main__header">
+            <a class="main__logo-link" href="index.html" title="Zur Startseite">
+                <img class="main_image" src="images/website/logo.png" alt="Zur Startseite" loading="eager">
+            </a>
+            <h1 class="main_headline">Quiz-Hero</h1>
+        </header>
+
+        <section class="login-shell" aria-live="polite">
+            <div class="login-shell__header">
+                <h2>Account</h2>
+                <p>Einloggen, registrieren oder Passwort zuruecksetzen.</p>
+            </div>
+
+            <div class="account-tabs" role="tablist" aria-label="Account">
+                <button class="btn btn--modal js-login-tab" type="button" data-login-view="login">Login</button>
+                <button class="btn btn--modal js-login-tab" type="button" data-login-view="register">Registrieren</button>
+                <button class="btn btn--modal js-login-tab" type="button" data-login-view="reset-request">Passwort vergessen</button>
+            </div>
+
+            <form id="js-login-form" class="user-panel__form js-login-panel" data-login-panel="login">
+                <label>
+                    <span>E-Mail oder Username</span>
+                    <input id="js-login-identifier" type="text" maxlength="190" autocomplete="username" required>
+                </label>
+                <label>
+                    <span>Passwort</span>
+                    <input id="js-login-password" type="password" autocomplete="current-password" required>
+                </label>
+                <button class="btn btn--modal" type="submit">Einloggen</button>
+                <button id="js-login-dev" class="btn btn--modal admin-hidden" type="button">Lokal testen</button>
+            </form>
+
+            <form id="js-register-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="register">
+                <label>
+                    <span>Username</span>
+                    <input id="js-register-username" type="text" maxlength="80" autocomplete="username" required>
+                </label>
+                <label>
+                    <span>E-Mail</span>
+                    <input id="js-register-email" type="email" maxlength="190" autocomplete="email" required>
+                </label>
+                <label>
+                    <span>Passwort</span>
+                    <input id="js-register-password" type="password" minlength="10" autocomplete="new-password" required>
+                </label>
+                <fieldset class="account-avatar-field js-login-avatar-group" data-avatar-target="register">
+                    <legend>Hero-Bild</legend>
+                </fieldset>
+                <label class="account-checkbox">
+                    <input id="js-register-privacy" type="checkbox" required>
+                    <span>Ich habe die <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutzhinweise</a> gelesen und moechte einen Quiz-Hero Account erstellen.</span>
+                </label>
+                <button class="btn btn--modal" type="submit">Registrieren</button>
+            </form>
+
+            <form id="js-reset-request-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="reset-request">
+                <label>
+                    <span>E-Mail</span>
+                    <input id="js-reset-email" type="email" maxlength="190" autocomplete="email" required>
+                </label>
+                <button class="btn btn--modal" type="submit">Reset-Link senden</button>
+            </form>
+
+            <form id="js-reset-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="reset">
+                <input id="js-reset-token" type="hidden">
+                <label>
+                    <span>Neues Passwort</span>
+                    <input id="js-reset-password" type="password" minlength="10" autocomplete="new-password" required>
+                </label>
+                <button class="btn btn--modal" type="submit">Passwort speichern</button>
+            </form>
+
+            <p id="js-login-status" class="user-panel__status" role="status" aria-live="polite"></p>
+        </section>
+
+        <p class="account-page__back">
+            <a class="btn btn--modal" href="index.html">Zurueck zum Quiz</a>
+        </p>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__text">
+            <small>
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/impressum.html">Impressum</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutz</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/cookies.html">Cookies</a>
+            </small>
+        </p>
+    </footer>
+
+    <section id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+        <div class="modal__content">
+            <div class="modal__close">
+                <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schliessen">
+                    <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="js-footer-modal-content"></div>
+        </div>
+    </section>
+
+    <script type="module" src="js/login-page.js?v=20260630"></script>
+</body>
+</html>

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS quiz_categories (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO schema_migrations (version) VALUES ('001_initial_schema.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('002_accounts.sql');
 
 CREATE TABLE IF NOT EXISTS quiz_questions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -55,16 +56,64 @@ CREATE TABLE IF NOT EXISTS quiz_feedback (
 
 CREATE TABLE IF NOT EXISTS quiz_users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    display_name VARCHAR(80) NOT NULL,
+    username VARCHAR(80) NULL,
+    email VARCHAR(190) NULL,
+    password_hash VARCHAR(255) NULL,
     profile_image_url VARCHAR(500) NULL,
+    avatar_key VARCHAR(80) NULL,
+    email_verified_at DATETIME NULL,
+    privacy_accepted_at DATETIME NULL,
+    deleted_at DATETIME NULL,
     last_seen_at DATETIME NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_quiz_users_username (username),
+    UNIQUE KEY uq_quiz_users_email (email),
+    INDEX idx_quiz_users_deleted_at (deleted_at),
     INDEX idx_quiz_users_last_seen (last_seen_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_email_verifications (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    token_hash CHAR(64) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    used_at DATETIME NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_quiz_email_verifications_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    UNIQUE KEY uq_quiz_email_verifications_token_hash (token_hash),
+    INDEX idx_quiz_email_verifications_user (user_id, used_at, expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_password_resets (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    token_hash CHAR(64) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    used_at DATETIME NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_quiz_password_resets_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    UNIQUE KEY uq_quiz_password_resets_token_hash (token_hash),
+    INDEX idx_quiz_password_resets_user (user_id, used_at, expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_account_consents (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    consent_key VARCHAR(80) NOT NULL,
+    consent_version VARCHAR(40) NOT NULL,
+    accepted_at DATETIME NOT NULL,
+    revoked_at DATETIME NULL,
+    ip_hash CHAR(64) NULL,
+    user_agent_hash CHAR(64) NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_quiz_account_consents_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    INDEX idx_quiz_account_consents_user_key (user_id, consent_key, revoked_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS quiz_results (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NULL,
     category_id VARCHAR(120) NULL,
     tag_id VARCHAR(120) NULL,
     score INT UNSIGNED NOT NULL DEFAULT 0,
@@ -72,7 +121,7 @@ CREATE TABLE IF NOT EXISTS quiz_results (
     solved INT UNSIGNED NOT NULL DEFAULT 0,
     total_questions INT UNSIGNED NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_quiz_results_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_quiz_results_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE SET NULL,
     INDEX idx_quiz_results_user_created (user_id, created_at),
     INDEX idx_quiz_results_category (category_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

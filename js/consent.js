@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js';
+import { CONFIG } from './config.js?v=20260630';
 
 const CONSENT_KEY = 'analytics_consent';
 
@@ -34,6 +34,7 @@ export function initConsent() {
     declineBtn.addEventListener('click', () => {
         const previous = localStorage.getItem(CONSENT_KEY);
         localStorage.setItem(CONSENT_KEY, 'denied');
+        deleteAnalyticsCookies();
         banner.classList.add('hide');
         if (previous === 'granted') {
             location.reload();
@@ -68,4 +69,26 @@ function loadGoogleAnalytics() {
     }
     gtag('js', new Date());
     gtag('config', gaId);
+}
+
+function deleteAnalyticsCookies() {
+    const cookieNames = ['_ga', '_gid', '_gat'];
+    const gaId = CONFIG.analytics?.googleAnalyticsId || '';
+    const measurementId = gaId.replace(/^G-/, '');
+    if (measurementId) {
+        cookieNames.push(`_ga_${measurementId}`);
+    }
+
+    const hostParts = window.location.hostname.split('.');
+    const domains = [window.location.hostname];
+    if (hostParts.length > 1) {
+        domains.push(`.${hostParts.slice(-2).join('.')}`);
+    }
+
+    for (const name of cookieNames) {
+        document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+        for (const domain of domains) {
+            document.cookie = `${name}=; Max-Age=0; path=/; domain=${domain}; SameSite=Lax`;
+        }
+    }
 }

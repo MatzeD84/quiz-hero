@@ -1,5 +1,5 @@
-import { ASSET_VERSION, CONFIG } from './config.js';
-import { validateCategories, validateFeedback, validateTags } from './validators.js';
+import { ASSET_VERSION, CONFIG } from './config.js?v=20260630';
+import { validateCategories, validateFeedback, validateTags } from './validators.js?v=20260630';
 
 const API_VERSION = CONFIG.apiVersion || '1';
 
