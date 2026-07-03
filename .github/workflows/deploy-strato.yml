@@ -48,12 +48,23 @@ jobs:
         run: |
           rm -rf deploy
           mkdir -p deploy
-          rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
+          rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html version.json categories.json tags.json feedback.json robots.txt sitemap.xml deploy/
           rsync -a admin api content data fonts images js pages deploy/
           rm -f deploy/api/config.local.example.php
 
       - name: Apply asset version
         run: node scripts/apply-asset-version.js "${GITHUB_SHA::8}" deploy
+
+      - name: Write deploy version
+        run: |
+          cat > deploy/version.json <<EOF
+          {
+            "version": "${GITHUB_SHA::8}",
+            "commit": "${GITHUB_SHA}",
+            "branch": "${GITHUB_REF_NAME}",
+            "deployedAt": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+          EOF
 
       - name: Write production PHP config
         env:

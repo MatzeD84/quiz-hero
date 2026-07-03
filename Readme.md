@@ -331,6 +331,14 @@ node scripts/apply-asset-version.js <version>
 
 Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporären Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
 
+Zusaetzlich erzeugt die Pipeline `version.json` im Webroot. Nach einem Deploy kannst du damit pruefen, welcher Commit wirklich auf STRATO liegt:
+
+```text
+https://quiz-hero.de/version.json
+```
+
+Die `version` muss dem kurzen Commit-Hash aus dem GitHub-Actions-Lauf entsprechen.
+
 ### 3) Produktive Datenbank vorbereiten
 1) MySQL-Datenbank und eigenen MySQL-Benutzer anlegen.
 2) Bei einer neuen/leeren Datenbank den aktuellen Schema-Snapshot importieren:
@@ -411,6 +419,7 @@ Beispielstruktur siehe `api/config.local.example.php`.
 Fuer die produktiv laufende Webseite muessen diese Web-Dateien hochgeladen werden:
 
 - `index.html`, `login.html`, `account.html`, `styles.css`, `.htaccess`, `404.html`
+- `version.json`
 - `admin/`
 - `api/`
 - `content/`
@@ -446,6 +455,9 @@ Admin-Uploads werden auf Produktion unter `images/uploads/<kategorie-id>/` gespe
 1) Seiten pruefen:
    - `https://quiz-hero.de/`
    - `https://quiz-hero.de/index.html`
+   - `https://quiz-hero.de/login.html`
+   - `https://quiz-hero.de/account.html`
+   - `https://quiz-hero.de/version.json`
    - `https://quiz-hero.de/admin/`
    - `https://quiz-hero.de/api/index.php?action=public-data&v=1`
    - `https://quiz-hero.de/pages/index.html`
@@ -455,7 +467,24 @@ Admin-Uploads werden auf Produktion unter `images/uploads/<kategorie-id>/` gespe
 4) Server-Logs auf PHP-/Datenbankfehler pruefen.
 5) Optional: Sitemap in Google Search Console erneut einreichen.
 
-### 7) Rollback
+### 7) Browser-Cache und STRATO-Cache
+Die App trennt bewusst zwischen HTML/API und versionierten Assets:
+
+- HTML und PHP/API werden mit `Cache-Control: no-store, no-cache, must-revalidate` ausgeliefert.
+- JSON/XML/TXT werden revalidiert.
+- CSS, JavaScript und Fonts duerfen lange gecacht werden, bekommen aber beim GitHub-Actions-Deploy automatisch eine neue `?v=<commit>`-Version.
+- Bilder werden nur kurz gecacht. Wenn ein Bild unter gleichem Pfad ersetzt wird, kann es bis zu 24 Stunden dauern, bis alle Browser es automatisch neu holen.
+
+Wenn nach einem Deploy noch eine alte Startseite sichtbar ist:
+
+1) `https://quiz-hero.de/version.json` oeffnen und Commit mit dem GitHub-Actions-Lauf vergleichen.
+2) Im Browser `view-source:https://quiz-hero.de/` oeffnen und pruefen, ob dort die neue `?v=<commit>`-Version steht.
+3) In den DevTools unter Netzwerk bei `index.html` die Response-Header pruefen. Erwartet ist `Cache-Control: no-store, no-cache, must-revalidate, max-age=0`.
+4) Wenn `version.json` alt ist, hat das Deployment nicht den erwarteten Stand hochgeladen oder auf den falschen STRATO-Pfad deployed.
+5) Wenn `version.json` neu ist, aber `index.html` alt wirkt, ist sehr wahrscheinlich ein Browser-/Proxy-Cache oder eine Erweiterung beteiligt.
+6) Testweise `https://quiz-hero.de/?deploy=<commit>` oeffnen. Das umgeht viele hartnaeckige HTML-Caches, sollte aber nach den Headern nicht mehr noetig sein.
+
+### 8) Rollback
 Vor jedem produktiven Update ein Backup der Datenbank erstellen. Fuer ein Rollback brauchst du:
 
 - den vorherigen Dateistand
