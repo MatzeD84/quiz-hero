@@ -55,6 +55,7 @@ erDiagram
     quiz_tags {
         varchar id PK
         varchar title
+        tinyint enabled
         json badge_json
     }
 
@@ -159,8 +160,11 @@ erDiagram
 | `title` | `VARCHAR(120)` | sichtbarer Tag-Name | `Antike` |
 | `description` | `VARCHAR(255)` | Kurzbeschreibung | `Antike Bauwerke und Geschichte` |
 | `icon` | `VARCHAR(500)` | Bildpfad fuer Tag-Icon | `images/website/tag/tag-antike.png` |
+| `enabled` | `TINYINT(1)` | Tag als Themenkachel sichtbar und spielbar | `1` |
 | `badge_json` | `JSON` | Badge-Konfiguration | `{"active":false,"text":"Neu"}` |
 | `sort_order` | `INT` | Sortierung | `30` |
+
+Wenn ein Tag in `data/tags.json` mit `"enabled": false` markiert ist, wird er nicht als Themenkachel auf der Webseite angezeigt und kann im Frontend nicht als Tag-Quiz gestartet werden. Fragen duerfen den Tag trotzdem intern in `tags_json` behalten; sie erscheinen dann weiterhin in ihrer normalen Kategorie, aber nicht ueber diesen deaktivierten Themenfilter. Bei MySQL-Betrieb muss diese Information in `quiz_tags.enabled` gespeichert sein, sonst behandelt die API den Tag als aktiv.
 
 ### `quiz_feedback`
 | Spalte | Typ | Bedeutung | Beispiel |
@@ -372,12 +376,12 @@ Danach in phpMyAdmin importieren:
 
 `database/seed.sql` befuellt Kategorien, Fragen, Tags und Feedback. User und Ergebnisse werden nicht befuellt.
 
-Fuer spaetere Schema-Aenderungen importierst du nicht erneut `schema.sql`, sondern nur die neue Datei aus `database/migrations/`, z. B. `002_add_intro_teaser.sql`. Vorher immer ein Datenbank-Backup erstellen.
+Fuer spaetere Schema-Aenderungen importierst du nicht erneut `schema.sql`, sondern nur die neue Datei aus `database/migrations/`, z. B. `003_tag_enabled.sql`. Vorher immer ein Datenbank-Backup erstellen.
 
 Wenn du eine Migration bei STRATO manuell ueber phpMyAdmin einspielst, fuehre danach zusaetzlich diesen SQL-Befehl aus, damit der Stand dokumentiert ist:
 
 ```sql
-INSERT IGNORE INTO schema_migrations (version) VALUES ('002_add_intro_teaser.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('003_tag_enabled.sql');
 ```
 
 Den Dateinamen ersetzt du durch die tatsaechlich importierte Migration.
@@ -850,6 +854,8 @@ Das Seed-Script ist fuer Erstimport und bewusste Synchronisierung gedacht. Es er
 `database/migrate.php` ist dagegen fuer Struktur-Aenderungen gedacht. Es veraendert keine Quizfragen, User oder Ergebnisse, sondern fuehrt nur SQL-Dateien aus `database/migrations/` aus und merkt den Stand in `schema_migrations`.
 
 Fuer die Account-Funktion muss auf bestehenden Datenbanken mindestens `database/migrations/002_accounts.sql` angewendet sein. Danach existieren die Account-Spalten, E-Mail-Verifikations-Tokens, Passwort-Reset-Tokens und die Einwilligungs-Tabelle.
+
+Fuer deaktivierbare Themenfilter muss auf bestehenden Datenbanken `database/migrations/003_tag_enabled.sql` angewendet sein. Diese Migration ergaenzt `quiz_tags.enabled` und setzt die aktuell in `data/tags.json` deaktivierten Tags, z. B. `Geographie`, auf `0`.
 
 ### PHP-Umgebungsvariablen
 - `QUIZ_HERO_DB_HOST` (Default `127.0.0.1`)

@@ -82,13 +82,14 @@ for (const [index, category] of categories.entries()) {
 for (const [index, tag] of tags.entries()) {
     rows.push([
         'INSERT INTO quiz_tags',
-        '(id, title, description, icon, badge_json, sort_order)',
+        '(id, title, description, icon, enabled, badge_json, sort_order)',
         'VALUES',
         `(${[
             sqlString(tag.id),
             sqlString(tag.title),
             sqlString(tag.description ?? ''),
             sqlString(tag.icon ?? ''),
+            tag.enabled === false ? '0' : '1',
             sqlJson(tag.badge ?? { active: false, text: '' }),
             sqlNumber((index + 1) * 10),
         ].join(', ')});`,

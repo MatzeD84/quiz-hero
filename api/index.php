@@ -104,6 +104,7 @@ function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
         'title' => $tag['title'],
         'description' => $tag['description'] ?? '',
         'icon' => $tag['icon'] ?? '',
+        'enabled' => (bool) ($tag['enabled'] ?? true),
         'badge' => decode_json_field($tag['badge_json'] ?? null, ['active' => false, 'text' => '']),
     ], $tagsStmt->fetchAll());
 

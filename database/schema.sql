@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS quiz_categories (
 
 INSERT IGNORE INTO schema_migrations (version) VALUES ('001_initial_schema.sql');
 INSERT IGNORE INTO schema_migrations (version) VALUES ('002_accounts.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('003_tag_enabled.sql');
 
 CREATE TABLE IF NOT EXISTS quiz_questions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -45,6 +46,7 @@ CREATE TABLE IF NOT EXISTS quiz_tags (
     title VARCHAR(120) NOT NULL,
     description VARCHAR(255) DEFAULT '',
     icon VARCHAR(500) DEFAULT '',
+    enabled TINYINT(1) NOT NULL DEFAULT 1,
     badge_json JSON NULL,
     sort_order INT NOT NULL DEFAULT 100
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

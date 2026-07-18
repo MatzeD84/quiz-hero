@@ -59,13 +59,14 @@ try {
         }
     }
 
-    $tagStmt = $pdo->prepare('INSERT INTO quiz_tags (id, title, description, icon, badge_json, sort_order) VALUES (:id, :title, :description, :icon, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), icon = VALUES(icon), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
+    $tagStmt = $pdo->prepare('INSERT INTO quiz_tags (id, title, description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
     foreach ($tags as $sort => $tag) {
         $tagStmt->execute([
             'id' => $tag['id'],
             'title' => $tag['title'],
             'description' => $tag['description'] ?? '',
             'icon' => $tag['icon'] ?? '',
+            'enabled' => ($tag['enabled'] ?? true) === false ? 0 : 1,
             'badge_json' => json_encode($tag['badge'] ?? ['active' => false, 'text' => ''], JSON_UNESCAPED_UNICODE),
             'sort_order' => ($sort + 1) * 10,
         ]);

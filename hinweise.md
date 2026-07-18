@@ -1,4 +1,11 @@
-﻿ToDos:
+﻿Nächstes Deplyment
+- 003_tag_enabled.sql importieren
+
+
+------------------------------------------------
+
+
+ToDos:
 - data/categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - nach oben scrollen
 - nur fragen mit  "verifiedFinal": true sollen angezeigt werden
