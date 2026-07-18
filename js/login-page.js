@@ -1,6 +1,6 @@
-import { CONFIG, HERO_AVATARS } from './config.js?v=20260630';
-import { initFooter } from './footer.js?v=20260630';
-import { UserService } from './user-service.js?v=20260630';
+import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260705';
+import { initFooter } from './footer.js?v=20260705';
+import { UserService } from './user-service.js?v=20260705';
 
 const elements = {
     tabs: Array.from(document.querySelectorAll('.js-login-tab')),
@@ -174,7 +174,12 @@ const handleTokens = async () => {
     }
 };
 
+const initialize = async () => {
+    await loadHeroAvatars();
+    renderAvatarChoices();
+    showView('login');
+    handleTokens();
+};
+
 initFooter();
-renderAvatarChoices();
-showView('login');
-handleTokens();
+initialize();

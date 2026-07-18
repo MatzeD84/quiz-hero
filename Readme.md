@@ -11,9 +11,12 @@ Der Datenfluss ist bewusst fallback-faehig:
 
 1) Das Frontend fragt zuerst `api/index.php?action=public-data&v=1` ab.
 2) Wenn die API erreichbar ist, kommen Kategorien, Fragen, Tags und Feedback aus MySQL.
-3) Wenn die API nicht erreichbar ist, nutzt das Frontend die alten JSON-Dateien (`categories.json`, `tags.json`, `feedback.json`, `data/questions-*.json`) als Fallback.
+3) Wenn die API nicht erreichbar ist, nutzt das Frontend die JSON-Fallbackdateien in `data/` (`data/categories.json`, `data/tags.json`, `data/feedback.json`, `data/questions-*.json`).
 
 Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler koennen einen Account mit eindeutigem Benutzernamen, eindeutiger E-Mail-Adresse, Passwort und vordefiniertem Hero-Avatar anlegen. Registrierungen muessen per E-Mail bestaetigt werden; abgeschlossene Ergebnisse werden dem Account zugeordnet.
+
+### Avatar-Konfiguration
+Hero-Avatare werden zentral in `data/avatars.json` gepflegt. Frontend und PHP-API lesen dieselbe Liste ein, sodass neue Bilder nur an einer Stelle ergänzt werden müssen. Ein Eintrag enthält dabei `key`, `label` und `url`.
 
 ## Datenbankmodell
 Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen liegen versioniert in `database/migrations/` und werden mit `database/migrate.php` angewendet. `database/schema.sql` ist ein aktueller Snapshot fuer schnelle Erstimporte per CLI oder phpMyAdmin. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
@@ -428,7 +431,6 @@ Fuer die produktiv laufende Webseite muessen diese Web-Dateien hochgeladen werde
 - `images/`
 - `js/`
 - `pages/`
-- `categories.json`, `tags.json`, `feedback.json`
 - `sitemap.xml`, `robots.txt`
 
 Diese Dateien werden von der GitHub-Actions-Pipeline automatisch nach STRATO in `/html/quiz-hero.de/` deployed. Zusaetzlich erzeugt die Pipeline im Deploy-Verzeichnis `api/config.local.php` aus GitHub Secrets. Diese Datei enthaelt die produktiven Datenbank- und Admin-Zugangsdaten und liegt deshalb nicht im Repository.
@@ -535,10 +537,14 @@ In GitHub:
 2) `Actions` anklicken.
 3) Workflow `Deploy to STRATO` auswaehlen.
 4) `Run workflow` anklicken.
-5) Nach Abschluss pruefen:
+5) Branch `master` auswaehlen und den Workflow starten.
+6) Nach Abschluss pruefen:
    - `https://quiz-hero.de/`
+   - `https://quiz-hero.de/version.json`
    - `https://quiz-hero.de/admin/`
    - `https://quiz-hero.de/api/index.php?action=public-data&v=1`
+
+Wichtig: `Re-run jobs` oder `Re-run all jobs` startet denselben alten Workflow-Lauf mit demselben alten Commit erneut. Das ist nur sinnvoll, wenn derselbe Commit wegen eines temporaeren Fehlers erneut deployed werden soll. Fuer neue Code-Aenderungen immer einen neuen Workflow ueber `Run workflow` auf `master` starten.
 
 Die Pipeline laedt nur produktive Web-Dateien hoch: Frontend, Admin, API, Content, Bilder, Fonts, JSON-Fallbacks und SEO-Seiten. Nicht hochgeladen werden Docker-Dateien, GitHub-Workflow-Dateien, lokale `.env`, README, `database/`, `scripts/`, `chatGPTAgents/` und persoenliche Notizen.
 
@@ -558,15 +564,15 @@ Danach in GitHub:
 
 1) `Actions` oeffnen.
 2) `Deploy to STRATO` auswaehlen.
-3) `Run workflow` starten.
-4) Nach erfolgreichem Lauf `https://quiz-hero.de/`, `/admin/` und die API pruefen.
+3) `Run workflow` starten, nicht einen alten Lauf erneut ausfuehren.
+4) Nach erfolgreichem Lauf `https://quiz-hero.de/version.json`, `https://quiz-hero.de/`, `/admin/` und die API pruefen.
 
 | Aenderung | Deploy-Ablauf | Besonderheit |
 | --- | --- | --- |
 | HTML, PHP/API, Admin, CSS, JS | Commit, Push, GitHub-Actions-Deploy | Asset-Version wird automatisch gesetzt, damit Browser neue CSS-/JS-Dateien laden |
 | Bilder oder Fonts | Commit, Push, GitHub-Actions-Deploy | Pfade in JSON/DB/HTML muessen auf die neuen Dateien zeigen |
 | `content/` wie Impressum, Datenschutz, Cookie-Text | Commit, Push, GitHub-Actions-Deploy | Wird als Web-Datei deployed |
-| JSON-Fallbacks `categories.json`, `tags.json`, `feedback.json`, `data/*.json` | Commit, Push, GitHub-Actions-Deploy | Relevant fuer Fallback, Seed und SEO-Build |
+| JSON-Fallbacks `data/*.json` | Commit, Push, GitHub-Actions-Deploy | Relevant fuer Fallback, Seed und SEO-Build |
 | SEO-Seiten in `pages/`, `sitemap.xml`, `robots.txt` | Commit, Push, GitHub-Actions-Deploy | Die Pipeline baut SEO-Seiten vorher mit `SITE_URL=https://quiz-hero.de` neu |
 | Neue Fragen/Kategorien ueber Admin | Kein Code-Deploy noetig | Daten landen direkt in MySQL; fuer SEO/Fallback bei Bedarf zusaetzlich JSON aktualisieren |
 | Datenbankschema `database/migrations/*.sql` | Nicht automatisch deployed/migriert | Neue Migration lokal testen, Backup erstellen und bewusst manuell in phpMyAdmin/MySQL einspielen |
@@ -587,7 +593,7 @@ Wenn du neue Inhalte produktiv ueber Admin pflegst, landen sie in MySQL und werd
 
 Klassischer JSON-Weg:
 
-1) `categories.json` erweitern:
+1) `data/categories.json` erweitern:
    - `id`, `title`, `description`, `icon`, `questionsFile`
    - optional: `seoDescription`, `badge`
 2) Neue Fragen-Datei anlegen: `data/questions-<id>.json`
@@ -607,9 +613,7 @@ Klassischer JSON-Weg:
 - `database/seed.sql` generierter SQL-Import fuer phpMyAdmin
 - `styles.css` globale Styles
 - `js/` Logik (Controller/State/View, DataService, Config)
-- `data/` Fragen-Dateien pro Kategorie
-- `categories.json` Kategorien-Manifest
-- `tags.json` Tag-Metadaten
+- `data/` JSON-Fallbackdaten: Kategorien, Tags, Feedback, Avatare und Fragen-Dateien pro Kategorie
 - `pages/` generierte SEO-Landingpages
 - `content/` Modal-Inhalte (Impressum/Datenschutz/Cookies)
 - `scripts/build-seo-pages.js` SEO-Generator
@@ -654,7 +658,7 @@ Die SEO-Seiten sind statische Landingpages im Ordner `pages/`. Sie sind nicht de
 | Florenz-Beispiel | `pages/florenz.html` | `https://quiz-hero.de/pages/florenz.html` | Landingpage fuer das Florenz-Quiz |
 | Neapel-Beispiel | `pages/neapel.html` | `https://quiz-hero.de/pages/neapel.html` | Landingpage fuer das Neapel-Quiz |
 
-Die Kategorie-ID kommt aus der Datenquelle des SEO-Builds. Bevorzugt ist das MySQL-Feld `quiz_categories.id`; im JSON-Fallback ist es `categories.json`, Feld `id`. Der Generator baut daraus den Dateinamen:
+Die Kategorie-ID kommt aus der Datenquelle des SEO-Builds. Bevorzugt ist das MySQL-Feld `quiz_categories.id`; im JSON-Fallback ist es `data/categories.json`, Feld `id`. Der Generator baut daraus den Dateinamen:
 
 ```text
 MySQL/JSON: { "id": "rom", ... }
@@ -682,9 +686,9 @@ Reihenfolge beim Build:
 
 Der JSON-Fallback liest weiterhin:
 
-- `categories.json` fuer Kategorien, Titel, Beschreibung, Icon und SEO-Text.
+- `data/categories.json` fuer Kategorien, Titel, Beschreibung, Icon und SEO-Text.
 - `data/questions-*.json` fuer Fragen, Antworten, richtige Antwort und FAQPage JSON-LD.
-- `tags.json` fuer thematische Verknuepfungen und "Auch interessant".
+- `data/tags.json` fuer thematische Verknuepfungen und "Auch interessant".
 - `SITE_URL` fuer Canonical-URLs, Sitemap und Robots.
 
 Beim GitHub-Actions-Deploy wird der Generator automatisch mit `SITE_URL=https://quiz-hero.de`, `SEO_EXPORT_URL=https://quiz-hero.de/api/index.php?action=seo-export&v=1` und `SEO_EXPORT_TOKEN` aus GitHub Secrets ausgefuehrt. Danach werden die erzeugten Dateien in `pages/`, `sitemap.xml` und `robots.txt` deployed.

@@ -1,4 +1,4 @@
-import { ALLOWED_DIFFICULTIES } from './config.js?v=20260630';
+import { ALLOWED_DIFFICULTIES } from './config.js?v=20260705';
 
 export const isNonEmptyString = value => typeof value === 'string' && value.trim().length > 0;
 
@@ -157,7 +157,7 @@ export function validateFeedback(feedback) {
     const errors = [];
 
     if (!feedback || typeof feedback !== 'object') {
-        return ['feedback.json ist kein Objekt.'];
+        return ['data/feedback.json ist kein Objekt.'];
     }
 
     requiredKeys.forEach(key => {
@@ -179,7 +179,7 @@ export function validateTags(tags) {
     const errors = [];
 
     if (!Array.isArray(tags)) {
-        return ['tags.json ist kein Array.'];
+        return ['data/tags.json ist kein Array.'];
     }
 
     tags.forEach((tag, index) => {

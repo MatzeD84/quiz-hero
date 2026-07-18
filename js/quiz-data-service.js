@@ -1,5 +1,5 @@
-import { ASSET_VERSION, CONFIG } from './config.js?v=20260630';
-import { validateCategories, validateFeedback, validateTags } from './validators.js?v=20260630';
+import { ASSET_VERSION, CONFIG } from './config.js?v=20260705';
+import { validateCategories, validateFeedback, validateTags } from './validators.js?v=20260705';
 
 const API_VERSION = CONFIG.apiVersion || '1';
 
@@ -32,12 +32,12 @@ export class QuizDataService {
 
         const feedbackErrors = validateFeedback(feedback);
         if (feedbackErrors.length) {
-            throw new Error(`Ung\u00fcltige feedback.json:\n${feedbackErrors.join('\n')}`);
+            throw new Error(`Ung\u00fcltige data/feedback.json:\n${feedbackErrors.join('\n')}`);
         }
 
         const tagErrors = validateTags(tagsData.tags ?? []);
         if (tagErrors.length) {
-            throw new Error(`Ung\u00fcltige tags.json:\n${tagErrors.join('\n')}`);
+            throw new Error(`Ung\u00fcltige data/tags.json:\n${tagErrors.join('\n')}`);
         }
 
         const categories = categoriesManifest.categories ?? [];

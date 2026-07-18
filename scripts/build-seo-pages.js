@@ -2,7 +2,7 @@
 const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
-const categoriesPath = path.join(rootDir, 'categories.json');
+const categoriesPath = path.join(rootDir, 'data/categories.json');
 const outputDir = path.join(rootDir, 'pages');
 const siteTitle = 'Quiz-Hero';
 const siteUrl = (process.env.SITE_URL || '').replace(/\/+$/, '');

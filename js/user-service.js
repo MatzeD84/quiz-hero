@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js?v=20260630';
+import { CONFIG } from './config.js?v=20260705';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';

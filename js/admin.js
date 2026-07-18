@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js?v=20260630';
+import { CONFIG } from './config.js?v=20260705';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));

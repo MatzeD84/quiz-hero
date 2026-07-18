@@ -6,9 +6,9 @@ const isDevelopmentHost = () => {
 };
 
 export const CONFIG = {
-    questionsUrl: 'categories.json',
-    tagsUrl: 'tags.json',
-    feedbackUrl: 'feedback.json',
+    questionsUrl: 'data/categories.json',
+    tagsUrl: 'data/tags.json',
+    feedbackUrl: 'data/feedback.json',
     apiUrl: 'api/index.php',
     apiVersion: '1',
     analytics: {
@@ -28,15 +28,44 @@ export const CONFIG = {
     resultModalUrl: 'content/quiz-result.html'
 };
 
-export const ASSET_VERSION = '20260630';
+export const ASSET_VERSION = '20260705';
 
-export const HERO_AVATARS = [
+const DEFAULT_HERO_AVATARS = [
     { key: 'hero', label: 'Quiz-Hero', url: 'images/website/logo.png' },
     { key: 'denkt', label: 'Denker-Hero', url: 'images/website/hero-denkt-nach.png' },
     { key: 'gruebelt', label: 'Gruebel-Hero', url: 'images/website/hero-gruebelt.png' },
     { key: 'arbeitet', label: 'Arbeits-Hero', url: 'images/website/hero-arbeitet.png' },
     { key: 'pinwand', label: 'Planungs-Hero', url: 'images/website/hero-pinwand.png' }
 ];
+
+export const HERO_AVATARS = [...DEFAULT_HERO_AVATARS];
+
+export const loadHeroAvatars = async () => {
+    try {
+        const response = await fetch(new URL('../data/avatars.json', import.meta.url));
+        if (!response.ok) {
+            throw new Error(`Avatar-Config konnte nicht geladen werden (${response.status})`);
+        }
+        const avatars = await response.json();
+        if (!Array.isArray(avatars)) {
+            throw new Error('Avatar-Config hat kein gültiges Format.');
+        }
+        const normalized = avatars
+            .map(avatar => ({
+                key: String(avatar?.key || '').trim(),
+                label: String(avatar?.label || '').trim(),
+                url: String(avatar?.url || '').trim()
+            }))
+            .filter(avatar => avatar.key && avatar.label && avatar.url);
+        if (normalized.length > 0) {
+            HERO_AVATARS.splice(0, HERO_AVATARS.length, ...normalized);
+        }
+    } catch (error) {
+        console.warn('Avatar-Config konnte nicht geladen werden, verwende Fallback.', error);
+    }
+
+    return HERO_AVATARS;
+};
 
 export const LABELS = {
     questions: {

@@ -1,0 +1,27 @@
+[
+  {
+    "key": "hero",
+    "label": "Quiz-Hero",
+    "url": "images/website/logo.png"
+  },
+  {
+    "key": "denkt",
+    "label": "Denker-Hero",
+    "url": "images/website/hero-denkt-nach.png"
+  },
+  {
+    "key": "gruebelt",
+    "label": "Gruebel-Hero",
+    "url": "images/website/hero-gruebelt.png"
+  },
+  {
+    "key": "arbeitet",
+    "label": "Arbeits-Hero",
+    "url": "images/website/hero-arbeitet.png"
+  },
+  {
+    "key": "pinwand",
+    "label": "Planungs-Hero",
+    "url": "images/website/hero-pinwand.png"
+  }
+]

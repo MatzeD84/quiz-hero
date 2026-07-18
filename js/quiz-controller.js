@@ -1,4 +1,4 @@
-import { CONFIG, LABELS } from './config.js?v=20260630';
+import { CONFIG, LABELS } from './config.js?v=20260705';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {

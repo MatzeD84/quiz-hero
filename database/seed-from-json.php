@@ -16,9 +16,9 @@ $pdo = db();
 $pdo->beginTransaction();
 
 try {
-    $categories = read_json_file($root . '/categories.json')['categories'] ?? [];
-    $feedback = read_json_file($root . '/feedback.json');
-    $tags = read_json_file($root . '/tags.json')['tags'] ?? [];
+    $categories = read_json_file($root . '/data/categories.json')['categories'] ?? [];
+    $feedback = read_json_file($root . '/data/feedback.json');
+    $tags = read_json_file($root . '/data/tags.json')['tags'] ?? [];
 
     $deleteQuestionsStmt = $pdo->prepare('DELETE FROM quiz_questions WHERE category_id = :category_id');
     $categoryStmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');

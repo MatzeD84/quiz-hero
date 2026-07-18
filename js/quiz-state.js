@@ -1,4 +1,4 @@
-import { CONFIG, getPointsForDifficulty } from './config.js?v=20260630';
+import { CONFIG, getPointsForDifficulty } from './config.js?v=20260705';
 
 const cloneDeep = value => {
     if (typeof structuredClone === 'function') {
@@ -67,10 +67,10 @@ export class QuizState {
                 });
             });
         if (CONFIG.devMode && missingTags.size > 0) {
-            console.warn(`Tags ohne Metadaten in tags.json: ${Array.from(missingTags).join(', ')}`);
+            console.warn(`Tags ohne Metadaten in data/tags.json: ${Array.from(missingTags).join(', ')}`);
         }
         if (CONFIG.devMode && disabledTags.size > 0) {
-            console.info(`Deaktivierte Tags (tags.json enabled:false) wurden übersprungen: ${Array.from(disabledTags).join(', ')}`);
+            console.info(`Deaktivierte Tags (data/tags.json enabled:false) wurden übersprungen: ${Array.from(disabledTags).join(', ')}`);
         }
     }
 

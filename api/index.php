@@ -131,13 +131,44 @@ function require_seo_export_token(): void
 
 function hero_avatars(): array
 {
-    return [
+    $path = dirname(__DIR__) . '/data/avatars.json';
+    $defaults = [
         'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/logo.png'],
         'denkt' => ['key' => 'denkt', 'label' => 'Denker-Hero', 'url' => 'images/website/hero-denkt-nach.png'],
         'gruebelt' => ['key' => 'gruebelt', 'label' => 'Gruebel-Hero', 'url' => 'images/website/hero-gruebelt.png'],
         'arbeitet' => ['key' => 'arbeitet', 'label' => 'Arbeits-Hero', 'url' => 'images/website/hero-arbeitet.png'],
         'pinwand' => ['key' => 'pinwand', 'label' => 'Planungs-Hero', 'url' => 'images/website/hero-pinwand.png'],
     ];
+
+    if (!is_file($path)) {
+        return $defaults;
+    }
+
+    $contents = @file_get_contents($path);
+    if ($contents === false) {
+        return $defaults;
+    }
+
+    $data = json_decode($contents, true);
+    if (!is_array($data)) {
+        return $defaults;
+    }
+
+    $avatars = [];
+    foreach ($data as $entry) {
+        if (!is_array($entry)) {
+            continue;
+        }
+        $key = clean_string((string) ($entry['key'] ?? ''), 80);
+        $label = clean_string((string) ($entry['label'] ?? ''), 80);
+        $url = clean_url((string) ($entry['url'] ?? ''), 500) ?: 'images/website/logo.png';
+        if ($key === '' || $label === '') {
+            continue;
+        }
+        $avatars[$key] = ['key' => $key, 'label' => $label, 'url' => $url];
+    }
+
+    return $avatars !== [] ? $avatars : $defaults;
 }
 
 function normalize_avatar_key(?string $key): string
