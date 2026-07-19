@@ -1,4 +1,7 @@
 import { CONFIG } from './config.js?v=20260705';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
+
+applyAccountHeaderLogo();
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));

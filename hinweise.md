@@ -6,7 +6,6 @@
 
 
 ToDos:
-- data/categories.json / data/questions-*.json --> sinnvolle Tags per ChatGPT ergänzen
 - nach oben scrollen
 - nur fragen mit  "verifiedFinal": true sollen angezeigt werden
 

@@ -1153,12 +1153,55 @@ details[open] summary::after {
 .avatar-modal__grid {
     display: grid;
     gap: 0.75rem;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
 }
 
 .account-avatar-option--modal {
+    aspect-ratio: 1;
+    align-items: center;
     background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(236, 240, 241, 0.16);
+    cursor: pointer;
+    display: grid !important;
+    gap: 0 !important;
+    justify-items: center;
     color: var(--clouds-color);
+    padding: 0.85rem;
+    transition: var(--transition-fade);
+}
+
+.account-avatar-option--modal input {
+    height: 1px;
+    margin: -1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.account-avatar-option--modal img {
+    height: clamp(64px, 12vw, 92px);
+    transition: var(--transition-fade);
+    width: clamp(64px, 12vw, 92px);
+}
+
+.account-avatar-option--modal:hover,
+.account-avatar-option--modal:focus-within {
+    border-color: var(--carrot-color);
+}
+
+.account-avatar-option--modal:has(input:checked) {
+    background: rgba(230, 126, 34, 0.16);
+    border-color: var(--carrot-color);
+}
+
+.account-avatar-option--modal:has(input:checked) img {
+    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.32);
+}
+
+.account-avatar-option--modal input:checked + img {
+    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.32);
 }
 
 .admin-image-field {

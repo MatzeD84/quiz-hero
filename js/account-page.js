@@ -1,5 +1,6 @@
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260705';
 import { UserService } from './user-service.js?v=20260705';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -32,7 +33,10 @@ const render = () => {
     const isLoggedIn = Boolean(currentUser?.id && currentUser?.token);
     elements.loggedOut?.classList.toggle('admin-hidden', isLoggedIn);
     elements.content?.classList.toggle('admin-hidden', !isLoggedIn);
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+        applyAccountHeaderLogo(null);
+        return;
+    }
 
     const username = currentUser.username || currentUser.name || '';
     if (elements.username) elements.username.value = username;
@@ -43,6 +47,7 @@ const render = () => {
         elements.avatarImage.src = currentUser.profileImageUrl || 'images/website/logo.png';
         elements.avatarImage.alt = `${username} Profilbild`;
     }
+    applyAccountHeaderLogo(currentUser);
 };
 
 const closeAvatarModal = () => {
@@ -53,14 +58,13 @@ const openAvatarModal = () => {
     if (!elements.avatarModal || !elements.avatarModalContent || !currentUser) return;
     const currentKey = currentUser.avatarKey || 'hero';
     const options = HERO_AVATARS.map(avatar => `
-        <label class="account-avatar-option account-avatar-option--modal">
+        <label class="account-avatar-option account-avatar-option--modal" aria-label="${avatar.label}">
             <input type="radio" name="avatarKey" value="${avatar.key}" ${avatar.key === currentKey ? 'checked' : ''}>
             <img src="${avatar.url}" alt="${avatar.label}" loading="lazy">
-            <span>${avatar.label}</span>
         </label>
     `).join('');
     elements.avatarModalContent.innerHTML = `
-        <h2 class="modal__headline">Logo aendern</h2>
+        <h2 class="modal__headline">Logo ändern</h2>
         <form id="js-account-avatar-form" class="avatar-modal">
             <div class="avatar-modal__grid">${options}</div>
             <button class="btn btn--modal" type="submit">Logo speichern</button>

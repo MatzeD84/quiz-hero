@@ -1,4 +1,5 @@
 import { CONFIG, LABELS } from './config.js?v=20260705';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {
@@ -82,6 +83,7 @@ export class QuizController {
         try {
             this.currentUser = await this.userService.updateAccount(this.currentUser, data);
             this.view.renderUser(this.currentUser);
+            applyAccountHeaderLogo(this.currentUser);
             this.view.renderUserStatus('Account gespeichert.', 'success');
         } catch (error) {
             this.view.renderUserStatus(error.message || 'Account konnte nicht gespeichert werden.', 'error');
@@ -99,6 +101,7 @@ export class QuizController {
             await this.userService.deleteAccount(this.currentUser, confirmValue);
             this.currentUser = null;
             this.view.renderUser(null);
+            applyAccountHeaderLogo(null);
             this.view.renderUserStatus('Account geloescht. Ergebnisse wurden anonymisiert.', 'success');
         } catch (error) {
             this.view.renderUserStatus(error.message || 'Account konnte nicht geloescht werden.', 'error');
@@ -109,6 +112,7 @@ export class QuizController {
         this.userService?.clearUser();
         this.currentUser = null;
         this.view.renderUser(null);
+        applyAccountHeaderLogo(null);
         this.view.renderUserStatus('Du spielst jetzt ohne gespeichertes Profil.', 'info');
     }
 
