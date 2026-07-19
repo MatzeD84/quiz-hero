@@ -1,5 +1,5 @@
-import { CONFIG } from './config.js?v=20260719f';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719f';
+import { CONFIG } from './config.js?v=20260719g';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719g';
 
 applyAccountHeaderLogo();
 

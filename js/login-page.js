@@ -1,7 +1,7 @@
-import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260719f';
+import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260719g';
 import { initFooter } from './footer.js?v=20260705';
-import { UserService } from './user-service.js?v=20260719f';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719f';
+import { UserService } from './user-service.js?v=20260719g';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719g';
 
 const elements = {
     tabs: Array.from(document.querySelectorAll('.js-login-tab')),

@@ -134,7 +134,7 @@ function hero_avatars(): array
 {
     $path = dirname(__DIR__) . '/data/avatars.json';
     $defaults = [
-        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/avatar/logo.png'],
+        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/avatar/quizo.png'],
     ];
 
     if (!is_file($path)) {

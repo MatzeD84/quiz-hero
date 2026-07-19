@@ -33,7 +33,7 @@ export const ASSET_VERSION = '20260719f';
 const createDefaultHeroAvatar = () => ({
     key: 'hero',
     label: 'Quiz-Hero',
-    url: normalizeAvatarUrl('images/website/logo.png')
+    url: normalizeAvatarUrl('images/website/avatar/quizo.png')
 });
 
 export const normalizeAvatarUrl = url => {
@@ -47,6 +47,9 @@ export const normalizeAvatarUrl = url => {
     }
 
     const normalized = value.replace(/^\/+/, '');
+    if (/^images\/website\/(?:avatar\/)?(?:logo|hero-denkt-nach|hero-gruebelt|hero-arbeitet|hero-pinwand)\.png$/i.test(normalized)) {
+        return 'images/website/avatar/quizo.png';
+    }
     if (normalized.startsWith('images/website/')) {
         if (!normalized.startsWith('images/website/avatar/')) {
             return `images/website/avatar/${normalized.slice('images/website/'.length)}`;

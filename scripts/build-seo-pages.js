@@ -149,7 +149,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     </section>
     <script type="module">
         import { initFooter } from '../js/footer.js';
-        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719f';
+        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719g';
         initFooter();
         applyAccountHeaderLogo();
     </script>

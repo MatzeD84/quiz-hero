@@ -1,4 +1,4 @@
-import { normalizeAvatarUrl } from './config.js?v=20260719f';
+import { normalizeAvatarUrl } from './config.js?v=20260719g';
 
 const STORAGE_KEY = 'quizHeroUser';
 

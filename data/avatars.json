@@ -2,26 +2,131 @@
   {
     "key": "hero",
     "label": "Quiz-Hero",
-    "url": "images/website/avatar/logo.png"
+    "url": "images/website/avatar/quizo.png"
   },
   {
-    "key": "denkt",
-    "label": "Denker-Hero",
-    "url": "images/website/avatar/hero-denkt-nach.png"
+    "key": "akuma",
+    "label": "Akuma",
+    "url": "images/website/avatar/akuma.png"
   },
   {
-    "key": "gruebelt",
-    "label": "Gruebel-Hero",
-    "url": "images/website/avatar/hero-gruebelt.png"
+    "key": "amphos",
+    "label": "Amphos",
+    "url": "images/website/avatar/amphos.png"
   },
   {
-    "key": "arbeitet",
-    "label": "Arbeits-Hero",
-    "url": "images/website/avatar/hero-arbeitet.png"
+    "key": "anubia",
+    "label": "Anubia",
+    "url": "images/website/avatar/anubia.png"
   },
   {
-    "key": "pinwand",
-    "label": "Planungs-Hero",
-    "url": "images/website/avatar/hero-pinwand.png"
+    "key": "bobo",
+    "label": "Bobo",
+    "url": "images/website/avatar/bobo.png"
+  },
+  {
+    "key": "bronko",
+    "label": "Bronko",
+    "url": "images/website/avatar/bronko.png"
+  },
+  {
+    "key": "burgo",
+    "label": "Burgo",
+    "url": "images/website/avatar/burgo.png"
+  },
+  {
+    "key": "cassius",
+    "label": "Cassius",
+    "url": "images/website/avatar/cassius.png"
+  },
+  {
+    "key": "cedric",
+    "label": "Cedric",
+    "url": "images/website/avatar/cedric.png"
+  },
+  {
+    "key": "dash",
+    "label": "Dash",
+    "url": "images/website/avatar/dash.png"
+  },
+  {
+    "key": "goldzahn",
+    "label": "Goldzahn",
+    "url": "images/website/avatar/goldzahn.png"
+  },
+  {
+    "key": "horus",
+    "label": "Horus",
+    "url": "images/website/avatar/horus.png"
+  },
+  {
+    "key": "kitsu",
+    "label": "Kitsu",
+    "url": "images/website/avatar/kitsu.png"
+  },
+  {
+    "key": "krygon",
+    "label": "Krygon",
+    "url": "images/website/avatar/krygon.png"
+  },
+  {
+    "key": "magmore",
+    "label": "Magmore",
+    "url": "images/website/avatar/magmore.png"
+  },
+  {
+    "key": "milo",
+    "label": "Milo",
+    "url": "images/website/avatar/milo.png"
+  },
+  {
+    "key": "morbix",
+    "label": "Morbix",
+    "url": "images/website/avatar/morbix.png"
+  },
+  {
+    "key": "nagero",
+    "label": "Nagero",
+    "url": "images/website/avatar/nagero.png"
+  },
+  {
+    "key": "nefara",
+    "label": "Nefara",
+    "url": "images/website/avatar/nefara.png"
+  },
+  {
+    "key": "professor-blitzbirne",
+    "label": "Professor Blitzbirne",
+    "url": "images/website/avatar/professor-blitzbirne.png"
+  },
+  {
+    "key": "quizo",
+    "label": "Quizo",
+    "url": "images/website/avatar/quizo.png"
+  },
+  {
+    "key": "shinzo",
+    "label": "Shinzo",
+    "url": "images/website/avatar/shinzo.png"
+  },
+  {
+    "key": "sir-emmental",
+    "label": "Sir Emmental",
+    "url": "images/website/avatar/sir-emmental.png"
+  },
+  {
+    "key": "sporix",
+    "label": "Sporix",
+    "url": "images/website/avatar/sporix.png"
+  },
+  {
+    "key": "sternenfunke",
+    "label": "Sternenfunke",
+    "url": "images/website/avatar/sternenfunke.png"
+  },
+  {
+    "key": "winterseherin",
+    "label": "Winterseherin",
+    "url": "images/website/avatar/winterseherin.png"
   }
 ]
