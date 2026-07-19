@@ -214,11 +214,36 @@ export class QuizView {
 
     renderUser(user) {
         if (!this.elements.userPanel) return;
-        this.elements.userPanel.classList.toggle('admin-hidden', !user);
+        this.elements.userPanel.classList.add('admin-hidden');
         this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
         if (this.elements.accountEntryLink) {
             this.elements.accountEntryLink.href = user ? 'account.html' : 'login.html';
-            this.elements.accountEntryLink.textContent = user ? 'Profil' : 'Login';
+            this.elements.accountEntryLink.classList.toggle('site-account-nav__link--account', Boolean(user));
+            this.elements.accountEntryLink.classList.toggle('site-account-nav__link--login', !user);
+            this.elements.accountEntryLink.innerHTML = '';
+
+            if (user) {
+                if (user.profileImageUrl) {
+                    const image = document.createElement('img');
+                    image.src = user.profileImageUrl;
+                    image.alt = `${user.name || 'Account'} Profilbild`;
+                    image.loading = 'lazy';
+                    this.elements.accountEntryLink.appendChild(image);
+                }
+
+                const label = document.createElement('span');
+                label.textContent = 'Heldenseite';
+                this.elements.accountEntryLink.appendChild(label);
+            } else {
+                const image = document.createElement('img');
+                image.src = 'images/website/login-avtar.png';
+                image.alt = '';
+                image.loading = 'lazy';
+
+                const label = document.createElement('span');
+                label.textContent = 'Login';
+                this.elements.accountEntryLink.append(image, label);
+            }
         }
         this.elements.userTabs.forEach(tab => {
             tab.classList.toggle('admin-hidden', Boolean(user));
@@ -231,28 +256,6 @@ export class QuizView {
         }
         if (this.elements.userPreview) {
             this.elements.userPreview.innerHTML = '';
-            if (user?.profileImageUrl) {
-                const link = document.createElement('a');
-                link.className = 'user-panel__avatar-link';
-                link.href = 'account.html';
-                link.title = 'Profilseite';
-                link.setAttribute('aria-label', 'Profilseite oeffnen');
-                const image = document.createElement('img');
-                image.src = user.profileImageUrl;
-                image.alt = `${user.name} Profilbild`;
-                image.loading = 'lazy';
-                const hint = document.createElement('span');
-                hint.className = 'user-panel__avatar-hint';
-                hint.textContent = 'Profilseite';
-                link.append(image, hint);
-                this.elements.userPreview.appendChild(link);
-            }
-            const textWrapper = document.createElement('div');
-            textWrapper.className = 'user-panel__preview-text';
-            const label = document.createElement('span');
-            label.textContent = user?.name ? `Hallo ${user.name}` : 'Account erstellen und Ergebnisse speichern';
-            textWrapper.appendChild(label);
-            this.elements.userPreview.appendChild(textWrapper);
         }
         this.showAccountView(user ? '' : 'login');
     }

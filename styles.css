@@ -792,16 +792,19 @@ details[open] summary::after {
 
 /* === styles/layout/site-account-nav.css === */
 .site-account-nav {
-    left: 1rem;
     position: absolute;
+    right: 1rem;
     top: 1rem;
     z-index: 5;
 }
 
 .site-account-nav a {
+    align-items: center;
     color: var(--light-gray-color);
+    display: inline-flex;
     font-size: 0.95rem;
     font-weight: 700;
+    gap: 0.4rem;
     text-decoration: none;
 }
 
@@ -809,6 +812,31 @@ details[open] summary::after {
 .site-account-nav a:focus-visible {
     color: var(--belizehole-color);
     text-decoration: underline;
+}
+
+.site-account-nav__link--account img,
+.site-account-nav__link--login img {
+    border-radius: var(--radius-pill);
+    height: 32px;
+    object-fit: cover;
+    width: 32px;
+}
+
+@media (max-width: 576px) {
+    .site-account-nav {
+        right: 0.75rem;
+        top: 0.75rem;
+    }
+
+    .site-account-nav a {
+        font-size: 0.85rem;
+    }
+
+    .site-account-nav__link--account img,
+    .site-account-nav__link--login img {
+        height: 28px;
+        width: 28px;
+    }
 }
 
 /* === styles/components/shell.css === */
@@ -862,12 +890,7 @@ details[open] summary::after {
 }
 
 .user-panel--logged-in {
-    align-items: center;
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
-    max-width: 520px;
-    padding: 1rem 1.25rem;
+    display: none;
 }
 
 .user-panel--logged-in .account-tabs,
@@ -886,13 +909,6 @@ details[open] summary::after {
 .user-panel--logged-in .user-panel__preview-text span {
     font-size: 1.2rem;
     font-weight: 700;
-}
-
-.user-panel--logged-in .user-panel__preview-text::after {
-    color: var(--light-gray-color);
-    content: "Schön, dass du wieder da bist.";
-    font-size: 0.92rem;
-    font-weight: 500;
 }
 
 .user-panel--logged-in .account-tabs {
