@@ -1,4 +1,4 @@
-﻿/* === Variables === */
+/* === Variables === */
 :root {
     --primary-color: #666;
     --dark-color: #1E1E1E;
@@ -8,6 +8,7 @@
     --clouds-color: #ecf0f1;
     --mandarin-color: #e74c3c;      /* wrong */
     --greensea-color: #16A085;      /* right */
+    --belizehole-color: #1B5C83;
     --amethyst-color: #9B59B6;      /* heavy questions*/
     --carrot-color:#E67E22;
 
@@ -222,8 +223,8 @@ a:hover {
     right: calc(-1*var(--f));
     padding: 0.25rem var(--gap-small);
     background: var(--carrot-color);
-    border-bottom: var(--f) solid #0005;
-    border-left: var(--r) solid #0000;
+    border-bottom: var(--f) solid color-mix(in srgb, var(--dark-color) 35%, transparent);
+    border-left: var(--r) solid transparent;
     clip-path: 
         polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
         calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
@@ -543,7 +544,7 @@ a:hover {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: color-mix(in srgb, var(--dark-color) 70%, transparent);
 }
 
 .modal .quiz__abort_svg {
@@ -645,10 +646,10 @@ a:hover {
 
 
 .question-item {
-    border: 1px solid #ddd;
+    border: 1px solid var(--lighter-gray-color);
     padding: 10px;
     margin: 10px 0;
-    background-color: #f9f9f9;
+    background-color: var(--clouds-color);
     padding: 10px;
 }
 
@@ -683,7 +684,7 @@ summary::-webkit-details-marker {
 }
 
 summary::after {
-    content: '▸';
+    content: '?';
     float: right;
     transition: var(--transition-fade);
 }
@@ -745,7 +746,7 @@ details[open] summary::after {
 }
 
 .site-account-nav a {
-    color: var(--asbestos-color);
+    color: var(--light-gray-color);
     font-size: 0.95rem;
     font-weight: 700;
     text-decoration: none;
@@ -759,10 +760,10 @@ details[open] summary::after {
 
 .user-panel,
 .admin-shell {
-    background: rgba(255, 255, 255, 0.88);
-    border: 2px solid rgba(27, 92, 131, 0.16);
+    background: var(--clouds-color);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
     border-radius: 24px;
-    box-shadow: 0 18px 55px rgba(28, 56, 80, 0.12);
+    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     margin: 1.5rem auto;
     max-width: 960px;
     padding: 1rem;
@@ -804,7 +805,7 @@ details[open] summary::after {
 }
 
 .user-panel--logged-in .user-panel__preview-text::after {
-    color: var(--asbestos-color);
+    color: var(--light-gray-color);
     content: "Schoen, dass du wieder da bist.";
     font-size: 0.92rem;
     font-weight: 500;
@@ -841,8 +842,8 @@ details[open] summary::after {
 }
 
 .user-panel__avatar-link img {
-    border: 3px solid rgba(27, 92, 131, 0.16);
-    box-shadow: 0 8px 22px rgba(28, 56, 80, 0.16);
+    border: 3px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--belizehole-color) 16%, transparent);
     height: 70px;
     transition: border-color 160ms ease, transform 160ms ease;
     width: 70px;
@@ -855,7 +856,7 @@ details[open] summary::after {
 }
 
 .user-panel__avatar-hint {
-    color: var(--asbestos-color);
+    color: var(--light-gray-color);
     font-size: 0.78rem;
     opacity: 0;
     transition: opacity 160ms ease;
@@ -899,7 +900,7 @@ details[open] summary::after {
 .admin-shell input,
 .admin-shell select,
 .admin-shell textarea {
-    border: 2px solid rgba(27, 92, 131, 0.18);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
     border-radius: 14px;
     font: inherit;
     padding: 0.7rem 0.85rem;
@@ -918,26 +919,26 @@ details[open] summary::after {
 }
 
 .user-panel__status:not(:empty) {
-    border: 2px solid rgba(27, 92, 131, 0.18);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
     padding: 0.85rem 1rem;
 }
 
 .user-panel__status[data-status="info"]:not(:empty) {
-    background: #eef6fb;
-    border-color: #9fc8df;
-    color: #174b66;
+    background: var(--clouds-color);
+    border-color: var(--belizehole-color);
+    color: var(--belizehole-color);
 }
 
 .user-panel__status[data-status="success"]:not(:empty) {
-    background: #ecf8ef;
-    border-color: #8ccf9d;
-    color: #1d6430;
+    background: var(--clouds-color);
+    border-color: var(--greensea-color);
+    color: var(--greensea-color);
 }
 
 .user-panel__status[data-status="error"]:not(:empty) {
-    background: #fff0f0;
-    border-color: #e19a9a;
-    color: #8c1d1d;
+    background: var(--clouds-color);
+    border-color: var(--mandarin-color);
+    color: var(--mandarin-color);
 }
 
 .admin-actions,
@@ -996,7 +997,7 @@ details[open] summary::after {
 }
 
 .account-avatar-field {
-    border: 2px solid rgba(27, 92, 131, 0.12);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     display: grid;
     gap: 0.75rem;
     grid-column: 1 / -1;
@@ -1009,7 +1010,7 @@ details[open] summary::after {
 
 .account-avatar-option {
     align-items: center;
-    border: 2px solid rgba(27, 92, 131, 0.12);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     display: flex !important;
     gap: 0.75rem !important;
     padding: 0.65rem;
@@ -1035,19 +1036,19 @@ details[open] summary::after {
 }
 
 .account-shell {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(27, 92, 131, 0.16);
+    background: var(--clouds-color);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
     border-radius: 24px;
-    box-shadow: 0 18px 55px rgba(28, 56, 80, 0.12);
+    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     margin: 1.5rem auto;
     padding: 1.25rem;
 }
 
 .login-shell {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(27, 92, 131, 0.16);
+    background: var(--clouds-color);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
     border-radius: 24px;
-    box-shadow: 0 18px 55px rgba(28, 56, 80, 0.12);
+    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     margin: 1.5rem auto;
     max-width: 960px;
     padding: 1.25rem;
@@ -1064,7 +1065,7 @@ details[open] summary::after {
 
 .account-profile-card {
     align-items: center;
-    border-bottom: 2px solid rgba(27, 92, 131, 0.12);
+    border-bottom: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     display: flex;
     gap: 1rem;
     margin-bottom: 1.25rem;
@@ -1088,7 +1089,7 @@ details[open] summary::after {
 }
 
 .account-profile-card__avatar span {
-    color: var(--asbestos-color);
+    color: var(--light-gray-color);
     font-size: 0.85rem;
     font-weight: 700;
 }
@@ -1099,7 +1100,7 @@ details[open] summary::after {
 }
 
 .account-profile-card__eyebrow {
-    color: var(--asbestos-color);
+    color: var(--light-gray-color);
     font-weight: 700;
     margin: 0 0 0.2rem;
 }
@@ -1122,7 +1123,7 @@ details[open] summary::after {
 }
 
 .account-page-form input {
-    border: 2px solid rgba(27, 92, 131, 0.18);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
     border-radius: 14px;
     font: inherit;
     padding: 0.7rem 0.85rem;
@@ -1159,8 +1160,8 @@ details[open] summary::after {
 .account-avatar-option--modal {
     aspect-ratio: 1;
     align-items: center;
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(236, 240, 241, 0.16);
+    background: color-mix(in srgb, var(--clouds-color) 6%, transparent);
+    border-color: color-mix(in srgb, var(--clouds-color) 16%, transparent);
     cursor: pointer;
     display: grid !important;
     gap: 0 !important;
@@ -1192,20 +1193,20 @@ details[open] summary::after {
 }
 
 .account-avatar-option--modal:has(input:checked) {
-    background: rgba(230, 126, 34, 0.16);
+    background: color-mix(in srgb, var(--carrot-color) 16%, transparent);
     border-color: var(--carrot-color);
 }
 
 .account-avatar-option--modal:has(input:checked) img {
-    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.32);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
 }
 
 .account-avatar-option--modal input:checked + img {
-    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.32);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
 }
 
 .admin-image-field {
-    border: 2px solid rgba(27, 92, 131, 0.12);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     display: grid;
     gap: 0.75rem;
     padding: 1rem;
@@ -1227,7 +1228,7 @@ details[open] summary::after {
 }
 
 .admin-image-field__preview {
-    border: 2px solid rgba(27, 92, 131, 0.12);
+    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
     display: grid;
     min-height: 140px;
     place-items: center;
@@ -1241,7 +1242,7 @@ details[open] summary::after {
 }
 
 .admin-form__hint {
-    color: #5e5e5e;
+    color: var(--light-gray-color);
     font-size: 0.9rem;
     margin: 0;
 }
