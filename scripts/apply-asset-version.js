@@ -14,8 +14,10 @@ const files = [
     'index.html',
     'login.html',
     'account.html',
+    '404.html',
     'admin/index.html',
     'js/config.js',
+    'scripts/build-seo-pages.js',
 ];
 
 const jsDir = path.join(targetDir, 'js');
@@ -50,7 +52,7 @@ const replaceConfigVersion = content => content.replace(
 );
 
 const replaceModuleImportVersions = content => content.replace(
-    /(\bfrom\s+['"]\.\/[^'"]+?\.js)(?:\?v=[^'"]+)?(['"])/g,
+    /(\bfrom\s+['"](?:\.\.?\/)[^'"]+?\.js)(?:\?v=[^'"]+)?(['"])/g,
     `$1?v=${version}$2`
 );
 
@@ -66,9 +68,7 @@ for (const relativePath of files) {
     if (relativePath === 'js/config.js') {
         next = replaceConfigVersion(next);
     }
-    if (relativePath.startsWith('js/') && relativePath.endsWith('.js')) {
-        next = replaceModuleImportVersions(next);
-    }
+    next = replaceModuleImportVersions(next);
 
     if (next !== original) {
         fs.writeFileSync(filePath, next, 'utf8');

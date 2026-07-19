@@ -28,7 +28,7 @@ export const CONFIG = {
     resultModalUrl: 'content/quiz-result.html'
 };
 
-export const ASSET_VERSION = '20260719f';
+export const ASSET_VERSION = 'dev';
 
 const createDefaultHeroAvatar = () => ({
     key: 'hero',

@@ -1,12 +1,12 @@
-import { CONFIG } from './config.js?v=20260719g';
-import { QuizDataService } from './quiz-data-service.js?v=20260705';
-import { QuizState } from './quiz-state.js?v=20260705';
-import { QuizView } from './quiz-view.js?v=20260705';
-import { QuizController } from './quiz-controller.js?v=20260719e';
-import { UserService } from './user-service.js?v=20260719g';
-import { initFooter } from './footer.js?v=20260705';
-import { initConsent } from './consent.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719g';
+import { CONFIG } from './config.js?v=dev';
+import { QuizDataService } from './quiz-data-service.js?v=dev';
+import { QuizState } from './quiz-state.js?v=dev';
+import { QuizView } from './quiz-view.js?v=dev';
+import { QuizController } from './quiz-controller.js?v=dev';
+import { UserService } from './user-service.js?v=dev';
+import { initFooter } from './footer.js?v=dev';
+import { initConsent } from './consent.js?v=dev';
+import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 
 document.addEventListener('DOMContentLoaded', () => {
     initConsent();

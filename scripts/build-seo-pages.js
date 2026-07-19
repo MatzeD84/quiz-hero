@@ -117,8 +117,8 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     <meta property="og:title" content="${escapeHtml(title)}">
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href="../fonts/fonts.css?v=20250211">
-    <link rel="stylesheet" href="../styles.css?v=20260719g">
+    <link rel="stylesheet" href="../fonts/fonts.css?v=dev">
+    <link rel="stylesheet" href="../styles.css?v=dev">
     ${extraHead}
 </head>
 <body>
@@ -148,8 +148,8 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
         </div>
     </section>
     <script type="module">
-        import { initFooter } from '../js/footer.js';
-        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719g';
+        import { initFooter } from '../js/footer.js?v=dev';
+        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=dev';
         initFooter();
         applyAccountHeaderLogo();
     </script>
@@ -207,15 +207,15 @@ const buildBreadcrumbsJsonLd = items => {
 
 const buildGeneralDescriptionSection = () => {
     const paragraphs = [
-        'Quiz-Hero ist ein persˆnliches Herzensprojekt. Ich wollte ein Quiz, das Wissen, Neugier und Reisegef¸hl verbindet. Deshalb pflege ich die Inhalte kontinuierlich, erweitere Kategorien und passe Fragen an, damit sie fair und abwechslungsreich bleiben.',
-        'Das Punktesystem ist klar geregelt: Normale Fragen bringen 2 Punkte, schwere Fragen 3 Punkte und Hero-Fragen 5 Punkte. Beim zweiten Versuch gibt es unabh‰ngig von der Schwierigkeit immer 1 Punkt.',
-        'Die Bilder sind KI-generiert und im gleichen Stil gehalten, damit die Kategorien visuell zusammenpassen. Ziel ist ein ruhiger, konsistenter Look, der das Quiz atmosph‰risch macht, aber den Inhalt in den Vordergrund stellt.',
+        'Quiz-Hero ist ein pers√∂nliches Herzensprojekt. Ich wollte ein Quiz, das Wissen, Neugier und Reisegef√ºhl verbindet. Deshalb pflege ich die Inhalte kontinuierlich, erweitere Kategorien und passe Fragen an, damit sie fair und abwechslungsreich bleiben.',
+        'Das Punktesystem ist klar geregelt: Normale Fragen bringen 2 Punkte, schwere Fragen 3 Punkte und Hero-Fragen 5 Punkte. Beim zweiten Versuch gibt es unabh√§ngig von der Schwierigkeit immer 1 Punkt.',
+        'Die Bilder sind KI-generiert und im gleichen Stil gehalten, damit die Kategorien visuell zusammenpassen. Ziel ist ein ruhiger, konsistenter Look, der das Quiz atmosph√§risch macht, aber den Inhalt in den Vordergrund stellt.',
         'Wenn du Lust hast mitzumachen oder das Quiz mit Fragen und Kategorien zu erweitern und Teil des Projekts zu sein, schreib mir gern an helden@quiz-hero.de.'
     ];
 
     return `
         <section class="lp__general_description">
-            <h2>‹ber Quiz-Hero</h2>
+            <h2>√úber Quiz-Hero</h2>
             ${paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
         </section>
     `;
@@ -368,7 +368,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
                 </div>
             </section>
             <section class="lp__category_description">
-                <h2>‹ber dieses Quiz</h2>
+                <h2>√úber dieses Quiz</h2>
                 <p>${escapeHtml(seoDescription)}</p>
             </section>
             <section class="lp__quiz_start container_small">
@@ -437,7 +437,7 @@ const buildIndexPage = categories => {
             </header>
             ${breadcrumbHtml}
             <section class="lp__category_grid">
-                <h2>St‰dte, Regionen und Landschaften</h2>
+                <h2>St√§dte, Regionen und Landschaften</h2>
                 <div class="category" aria-live="polite">
                     ${items}
                 </div>
@@ -568,6 +568,8 @@ run().catch(error => {
     console.error(error);
     process.exit(1);
 });
+
+
 
 
 

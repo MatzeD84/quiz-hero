@@ -1,4 +1,4 @@
-import { CONFIG, normalizeAvatarUrl } from './config.js?v=20260719g';
+import { CONFIG, normalizeAvatarUrl } from './config.js?v=dev';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';
