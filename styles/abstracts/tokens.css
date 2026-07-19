@@ -15,6 +15,7 @@
     --gap: 0.75rem;
     --transition-fade: all 0.3s ease;
     --transition-soft: 160ms ease;
+    --filter-sepia: sepia(1) hue-rotate(0deg);
 
     --sm: 576px;
     --md: 768px;

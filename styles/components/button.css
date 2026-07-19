@@ -4,7 +4,7 @@
     max-width: 100%;
     padding: 10px;
     font-size: 16px;
-    color: var(--clouds-color);
+    color: var(--clouds-color); 
     background-color: var(--dark-gray-color);
     border: none;
     transition: var(--transition-fade);

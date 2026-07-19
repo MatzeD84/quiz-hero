@@ -27,7 +27,7 @@
 
 .category-card:hover .category-card__icon,
 .tag-card:hover .tag-card__icon {
-    filter: sepia(1) hue-rotate(0deg);
+    filter: var(--filter-sepia);
 }
 
 .btn--category,

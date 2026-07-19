@@ -42,6 +42,11 @@
 
 .main_image {
     max-height: 75px;
+    transition: var(--transition-fade);
+}
+
+.main_image:hover {
+    filter: var(--filter-sepia);
 }
 
 @media (max-width: 576px) {

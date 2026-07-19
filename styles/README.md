@@ -6,6 +6,12 @@
 node scripts/build-css.js
 ```
 
+Beim Arbeiten am CSS kann der Watcher laufen bleiben. Er baut `styles.css` automatisch neu, sobald sich eine Datei unter `styles/` aendert:
+
+```powershell
+node scripts/watch-css.js
+```
+
 ## Struktur
 
 - `abstracts/`: zentrale Tokens wie Farben, Abstaende, Radien, Borders und Shadows

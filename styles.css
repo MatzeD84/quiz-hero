@@ -21,6 +21,7 @@
     --gap: 0.75rem;
     --transition-fade: all 0.3s ease;
     --transition-soft: 160ms ease;
+    --filter-sepia: sepia(1) hue-rotate(0deg);
 
     --sm: 576px;
     --md: 768px;
@@ -166,6 +167,11 @@ a:hover {
 
 .main_image {
     max-height: 75px;
+    transition: var(--transition-fade);
+}
+
+.main_image:hover {
+    filter: var(--filter-sepia);
 }
 
 @media (max-width: 576px) {
@@ -181,7 +187,7 @@ a:hover {
     max-width: 100%;
     padding: 10px;
     font-size: 16px;
-    color: var(--clouds-color);
+    color: var(--clouds-color); 
     background-color: var(--dark-gray-color);
     border: none;
     transition: var(--transition-fade);
@@ -244,7 +250,7 @@ a:hover {
 
 .category-card:hover .category-card__icon,
 .tag-card:hover .tag-card__icon {
-    filter: sepia(1) hue-rotate(0deg);
+    filter: var(--filter-sepia);
 }
 
 .btn--category,
@@ -398,6 +404,11 @@ a:hover {
 
 .quiz__headerlogo_image {
   max-height: 40px;
+  transition: var(--transition-fade);
+}
+
+.quiz__headerlogo_image:hover {
+  filter: var(--filter-sepia);
 }
 
 .quiz__selection {

@@ -28,6 +28,11 @@
 
 .quiz__headerlogo_image {
   max-height: 40px;
+  transition: var(--transition-fade);
+}
+
+.quiz__headerlogo_image:hover {
+  filter: var(--filter-sepia);
 }
 
 .quiz__selection {
