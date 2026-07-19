@@ -2,26 +2,26 @@
   {
     "key": "hero",
     "label": "Quiz-Hero",
-    "url": "images/website/logo.png"
+    "url": "images/website/avatar/logo.png"
   },
   {
     "key": "denkt",
     "label": "Denker-Hero",
-    "url": "images/website/hero-denkt-nach.png"
+    "url": "images/website/avatar/hero-denkt-nach.png"
   },
   {
     "key": "gruebelt",
     "label": "Gruebel-Hero",
-    "url": "images/website/hero-gruebelt.png"
+    "url": "images/website/avatar/hero-gruebelt.png"
   },
   {
     "key": "arbeitet",
     "label": "Arbeits-Hero",
-    "url": "images/website/hero-arbeitet.png"
+    "url": "images/website/avatar/hero-arbeitet.png"
   },
   {
     "key": "pinwand",
     "label": "Planungs-Hero",
-    "url": "images/website/hero-pinwand.png"
+    "url": "images/website/avatar/hero-pinwand.png"
   }
 ]

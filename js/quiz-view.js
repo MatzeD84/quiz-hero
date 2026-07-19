@@ -1,4 +1,4 @@
-import { CONFIG, LABELS, SELECTORS } from './config.js?v=20260705';
+import { CONFIG, LABELS, SELECTORS } from './config.js?v=20260719f';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=20260705';
 
 export class QuizView {

@@ -1,6 +1,6 @@
-import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260705';
-import { UserService } from './user-service.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719c';
+import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260719f';
+import { UserService } from './user-service.js?v=20260719f';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719f';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -44,7 +44,7 @@ const render = () => {
     if (elements.profileName) elements.profileName.textContent = username;
     if (elements.profileEmail) elements.profileEmail.textContent = currentUser.email || '';
     if (elements.avatarImage) {
-        elements.avatarImage.src = currentUser.profileImageUrl || 'images/website/logo.png';
+        elements.avatarImage.src = currentUser.profileImageUrl || 'images/website/avatar/logo.png';
         elements.avatarImage.alt = `${username} Profilbild`;
     }
     applyAccountHeaderLogo(currentUser);

@@ -1,4 +1,4 @@
-import { CONFIG } from './config.js?v=20260705';
+import { CONFIG } from './config.js?v=20260719f';
 
 const CONSENT_KEY = 'analytics_consent';
 

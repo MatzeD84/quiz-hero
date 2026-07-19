@@ -149,7 +149,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     </section>
     <script type="module">
         import { initFooter } from '../js/footer.js';
-        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719c';
+        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719f';
         initFooter();
         applyAccountHeaderLogo();
     </script>
@@ -356,7 +356,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../index.html" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/logo.png" alt="Zur Startseite" loading="eager">
+                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
@@ -400,7 +400,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
         { label: 'Kategorien', href: siteUrl ? `${siteUrl}/pages/index.html` : './index.html' },
         { label: `${category.title} Quiz`, href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
     ]);
-    const ogImagePath = category.icon || 'images/website/logo.png';
+    const ogImagePath = category.icon || 'images/website/avatar/logo.png';
     const ogImageUrl = buildOgImageUrl(ogImagePath);
     const ogMeta = ogImageUrl
         ? `<meta property="og:image" content="${escapeHtml(ogImageUrl)}">
@@ -431,7 +431,7 @@ const buildIndexPage = categories => {
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../index.html" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/logo.png" alt="Zur Startseite" loading="eager">
+                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
             </header>
@@ -446,7 +446,7 @@ const buildIndexPage = categories => {
         </section>
     `;
 
-    const ogImageUrl = buildOgImageUrl('images/website/logo.png');
+    const ogImageUrl = buildOgImageUrl('images/website/avatar/logo.png');
     const ogMeta = ogImageUrl
         ? `<meta property="og:image" content="${escapeHtml(ogImageUrl)}">
     <meta name="twitter:card" content="summary_large_image">

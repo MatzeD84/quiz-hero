@@ -1,7 +1,15 @@
-import { CONFIG } from './config.js?v=20260705';
+import { CONFIG, normalizeAvatarUrl } from './config.js?v=20260719f';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';
+
+const normalizeUser = user => {
+    if (!user || typeof user !== 'object') return user;
+    return {
+        ...user,
+        profileImageUrl: normalizeAvatarUrl(user.profileImageUrl)
+    };
+};
 
 export class UserService {
     constructor({ apiUrl = CONFIG.apiUrl, fetchFn = window.fetch.bind(window) } = {}) {
@@ -12,14 +20,14 @@ export class UserService {
     getStoredUser() {
         try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : null;
+            return raw ? normalizeUser(JSON.parse(raw)) : null;
         } catch (error) {
             return null;
         }
     }
 
     storeUser(user) {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeUser(user)));
     }
 
     clearUser() {

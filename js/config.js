@@ -28,21 +28,42 @@ export const CONFIG = {
     resultModalUrl: 'content/quiz-result.html'
 };
 
-export const ASSET_VERSION = '20260705';
+export const ASSET_VERSION = '20260719f';
 
-const DEFAULT_HERO_AVATARS = [
-    { key: 'hero', label: 'Quiz-Hero', url: 'images/website/logo.png' },
-    { key: 'denkt', label: 'Denker-Hero', url: 'images/website/hero-denkt-nach.png' },
-    { key: 'gruebelt', label: 'Gruebel-Hero', url: 'images/website/hero-gruebelt.png' },
-    { key: 'arbeitet', label: 'Arbeits-Hero', url: 'images/website/hero-arbeitet.png' },
-    { key: 'pinwand', label: 'Planungs-Hero', url: 'images/website/hero-pinwand.png' }
-];
+const createDefaultHeroAvatar = () => ({
+    key: 'hero',
+    label: 'Quiz-Hero',
+    url: normalizeAvatarUrl('images/website/logo.png')
+});
 
-export const HERO_AVATARS = [...DEFAULT_HERO_AVATARS];
+export const normalizeAvatarUrl = url => {
+    const value = String(url || '').trim();
+    if (!value) {
+        return '';
+    }
+
+    if (/^(https?:)?\/\//i.test(value) || value.startsWith('data:') || value.startsWith('blob:')) {
+        return value;
+    }
+
+    const normalized = value.replace(/^\/+/, '');
+    if (normalized.startsWith('images/website/')) {
+        if (!normalized.startsWith('images/website/avatar/')) {
+            return `images/website/avatar/${normalized.slice('images/website/'.length)}`;
+        }
+        return normalized;
+    }
+
+    return normalized.startsWith('images/') ? normalized : `images/website/avatar/${normalized}`;
+};
+
+export const HERO_AVATARS = [createDefaultHeroAvatar()];
 
 export const loadHeroAvatars = async () => {
     try {
-        const response = await fetch(new URL('../data/avatars.json', import.meta.url));
+        const url = new URL('../data/avatars.json', import.meta.url);
+        url.searchParams.set('v', ASSET_VERSION);
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Avatar-Config konnte nicht geladen werden (${response.status})`);
         }
@@ -54,7 +75,7 @@ export const loadHeroAvatars = async () => {
             .map(avatar => ({
                 key: String(avatar?.key || '').trim(),
                 label: String(avatar?.label || '').trim(),
-                url: String(avatar?.url || '').trim()
+                url: normalizeAvatarUrl(String(avatar?.url || '').trim())
             }))
             .filter(avatar => avatar.key && avatar.label && avatar.url);
         if (normalized.length > 0) {

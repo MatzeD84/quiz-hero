@@ -1,4 +1,4 @@
-import { CONFIG, getPointsForDifficulty } from './config.js?v=20260705';
+import { CONFIG, getPointsForDifficulty } from './config.js?v=20260719f';
 
 const cloneDeep = value => {
     if (typeof structuredClone === 'function') {

@@ -1,5 +1,5 @@
-import { CONFIG, LABELS } from './config.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719c';
+import { CONFIG, LABELS } from './config.js?v=20260719f';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719f';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {

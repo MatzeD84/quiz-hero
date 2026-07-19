@@ -1,4 +1,4 @@
-ï»¿# Quiz-Hero
+# Quiz-Hero
 
 ## Architektur
 Quiz-Hero besteht inzwischen aus drei Schichten:
@@ -16,7 +16,7 @@ Der Datenfluss ist bewusst fallback-faehig:
 Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler koennen einen Account mit eindeutigem Benutzernamen, eindeutiger E-Mail-Adresse, Passwort und vordefiniertem Hero-Avatar anlegen. Registrierungen muessen per E-Mail bestaetigt werden; abgeschlossene Ergebnisse werden dem Account zugeordnet.
 
 ### Avatar-Konfiguration
-Hero-Avatare werden zentral in `data/avatars.json` gepflegt. Frontend und PHP-API lesen dieselbe Liste ein, sodass neue Bilder nur an einer Stelle ergÃ¤nzt werden mÃ¼ssen. Ein Eintrag enthÃ¤lt dabei `key`, `label` und `url`.
+Hero-Avatare werden zentral in `data/avatars.json` gepflegt. Frontend und PHP-API lesen dieselbe Liste ein, sodass neue Bilder nur an einer Stelle ergänzt werden müssen. Ein Eintrag enthält dabei `key`, `label` und `url`.
 
 ## Datenbankmodell
 Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen liegen versioniert in `database/migrations/` und werden mit `database/migrate.php` angewendet. `database/schema.sql` ist ein aktueller Snapshot fuer schnelle Erstimporte per CLI oder phpMyAdmin. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
@@ -179,7 +179,7 @@ Wenn ein Tag in `data/tags.json` mit `"enabled": false` markiert ist, wird er ni
 | `username` | `VARCHAR(80)` | eindeutiger Login-Name | `matze84` |
 | `email` | `VARCHAR(190)` | eindeutige E-Mail-Adresse fuer Verifikation und Passwort-Reset | `helden@quiz-hero.de` |
 | `password_hash` | `VARCHAR(255)` | Passwort-Hash, nie Klartext | `$2y$...` |
-| `profile_image_url` | `VARCHAR(500)` | Pfad zum gewaehlten Hero-Avatar | `images/website/logo.png` |
+| `profile_image_url` | `VARCHAR(500)` | Pfad zum gewaehlten Hero-Avatar | `images/website/avatar/logo.png` |
 | `avatar_key` | `VARCHAR(80)` | technische Avatar-Auswahl | `hero` |
 | `email_verified_at` | `DATETIME` | Zeitpunkt der bestaetigten E-Mail | `2026-06-30 20:15:00` |
 | `privacy_accepted_at` | `DATETIME` | Zeitpunkt der Zustimmung bei Registrierung | `2026-06-30 20:10:00` |
@@ -336,7 +336,7 @@ node scripts/apply-asset-version.js <version>
 .\scripts\build-seo.bat "https://quiz-hero.de"
 ```
 
-Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporÃ¤ren Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
+Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporären Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
 
 Zusaetzlich erzeugt die Pipeline `version.json` im Webroot. Nach einem Deploy kannst du damit pruefen, welcher Commit wirklich auf STRATO liegt:
 
@@ -509,7 +509,7 @@ In GitHub:
 4) `New repository secret` anklicken.
 5) Namen exakt wie unten eintragen und den jeweiligen Wert speichern.
 
-BenÃ¶tigte Secrets:
+Benötigte Secrets:
 
 - `SITE_URL`: `https://quiz-hero.de`
 - `STRATO_SFTP_HOST`: `ssh.strato.de`
@@ -832,7 +832,7 @@ Diese Aenderung schreibt Versionen in HTML-Dateien und `js/config.js`. Nur verwe
 
 
 ## MySQL-/PHP-Betrieb
-Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php?action=public-data&v=1` erreichbar ist und die Datenbanktabellen existieren, lÃ¤dt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fÃ¤llt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurÃ¼ck.
+Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php?action=public-data&v=1` erreichbar ist und die Datenbanktabellen existieren, lädt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fällt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurück.
 
 ### Datenbank einrichten
 1) MySQL-Datenbank und Benutzer anlegen.
@@ -844,7 +844,7 @@ mysql -u <user> -p <database> < database/schema.sql
 ```bash
 QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/migrate.php
 ```
-4) Bestehende JSON-Inhalte einmalig in MySQL Ã¼bernehmen:
+4) Bestehende JSON-Inhalte einmalig in MySQL übernehmen:
 ```bash
 QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/seed-from-json.php
 ```
@@ -873,7 +873,7 @@ Fuer deaktivierbare Themenfilter muss auf bestehenden Datenbanken `database/migr
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` (`true` nur lokal, `false` auf Produktion)
 - `QUIZ_HERO_DEV_ACCOUNT_USER` (lokaler Testaccount, Default `localhero`)
 - `QUIZ_HERO_DEV_ACCOUNT_EMAIL` (lokale Test-E-Mail, Default `localhero@example.test`)
-- alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur fÃ¼r einfache Testumgebungen
+- alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur für einfache Testumgebungen
 
 ### User-Accounts
 Spieler koennen einen vollwertigen Account anlegen:
@@ -914,10 +914,10 @@ Datenschutz-Minimum:
 
 Das ersetzt keine juristische Pruefung der Datenschutzerklaerung, legt aber die technische Grundlage fuer einen datensparsamen Account-Betrieb.
 
-### Admin-OberflÃ¤che
+### Admin-Oberfläche
 - Aufruf: `/admin/`
-- Nach dem Admin-Login kÃ¶nnen Kategorien angelegt/bearbeitet und Quizfragen komfortabel per Formular erstellt, bearbeitet oder gelÃ¶scht werden.
-- Alle Datenbankzugriffe laufen serverseitig Ã¼ber PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
+- Nach dem Admin-Login können Kategorien angelegt/bearbeitet und Quizfragen komfortabel per Formular erstellt, bearbeitet oder gelöscht werden.
+- Alle Datenbankzugriffe laufen serverseitig über PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
 - Schreibende Admin-Aktionen verwenden ein CSRF-Token aus der Admin-Session. Wenn die Admin-Seite lange offen war oder ein alter Browser-Tab genutzt wird, kann ein erneuter Login noetig sein.
 - Admin-Login-Versuche werden serverseitig rate-limitiert, damit Passwort-Raten gebremst wird.
 

@@ -134,11 +134,7 @@ function hero_avatars(): array
 {
     $path = dirname(__DIR__) . '/data/avatars.json';
     $defaults = [
-        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/logo.png'],
-        'denkt' => ['key' => 'denkt', 'label' => 'Denker-Hero', 'url' => 'images/website/hero-denkt-nach.png'],
-        'gruebelt' => ['key' => 'gruebelt', 'label' => 'Gruebel-Hero', 'url' => 'images/website/hero-gruebelt.png'],
-        'arbeitet' => ['key' => 'arbeitet', 'label' => 'Arbeits-Hero', 'url' => 'images/website/hero-arbeitet.png'],
-        'pinwand' => ['key' => 'pinwand', 'label' => 'Planungs-Hero', 'url' => 'images/website/hero-pinwand.png'],
+        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/avatar/logo.png'],
     ];
 
     if (!is_file($path)) {
@@ -162,7 +158,7 @@ function hero_avatars(): array
         }
         $key = clean_string((string) ($entry['key'] ?? ''), 80);
         $label = clean_string((string) ($entry['label'] ?? ''), 80);
-        $url = clean_url((string) ($entry['url'] ?? ''), 500) ?: 'images/website/logo.png';
+        $url = clean_url((string) ($entry['url'] ?? ''), 500) ?: 'images/website/avatar/logo.png';
         if ($key === '' || $label === '') {
             continue;
         }

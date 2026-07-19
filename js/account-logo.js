@@ -1,3 +1,5 @@
+import { normalizeAvatarUrl } from './config.js?v=20260719f';
+
 const STORAGE_KEY = 'quizHeroUser';
 
 const readStoredUser = () => {
@@ -10,11 +12,12 @@ const readStoredUser = () => {
 };
 
 const resolveSiteAssetUrl = url => {
-    if (!url) return '';
-    if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) {
-        return url;
+    const normalized = normalizeAvatarUrl(url);
+    if (!normalized) return '';
+    if (/^(https?:)?\/\//i.test(normalized) || normalized.startsWith('data:') || normalized.startsWith('blob:')) {
+        return normalized;
     }
-    return new URL(`../${url.replace(/^\/+/, '')}`, import.meta.url).href;
+    return new URL(`../${normalized.replace(/^\/+/, '')}`, import.meta.url).href;
 };
 
 export const applyAccountHeaderLogo = (user = readStoredUser()) => {
