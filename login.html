@@ -21,16 +21,15 @@
         <section class="login-shell" aria-live="polite">
             <div class="login-shell__header">
                 <h2>Account</h2>
-                <p>Einloggen, registrieren oder Passwort zurücksetzen.</p>
+                <p>Einloggen oder einen neuen Helden erstellen.</p>
             </div>
 
-            <div class="account-tabs" role="tablist" aria-label="Account">
-                <button class="btn btn--modal js-login-tab" type="button" data-login-view="login">Login</button>
-                <button class="btn btn--modal js-login-tab" type="button" data-login-view="register">Registrieren</button>
-                <button class="btn btn--modal js-login-tab" type="button" data-login-view="reset-request">Passwort vergessen</button>
+            <div class="tabs login-shell__tabs" role="tablist" aria-label="Account">
+                <button class="tab js-login-tab" type="button" data-login-view="login" role="tab">Einloggen</button>
+                <button class="tab js-login-tab" type="button" data-login-view="register" role="tab">Registrieren</button>
             </div>
 
-            <form id="js-login-form" class="user-panel__form js-login-panel" data-login-panel="login">
+            <form id="js-login-form" class="user-panel__form login-panel login-panel--login js-login-panel" data-login-panel="login">
                 <label>
                     <span>E-Mail oder Username</span>
                     <input id="js-login-identifier" type="text" maxlength="190" autocomplete="username" required>
@@ -39,11 +38,16 @@
                     <span>Passwort</span>
                     <input id="js-login-password" type="password" autocomplete="current-password" required>
                 </label>
-                <button class="btn btn--modal" type="submit">Einloggen</button>
-                <button id="js-login-dev" class="btn btn--modal admin-hidden" type="button">Lokal testen</button>
+                <div class="login-panel__actions">
+                    <button class="btn btn--modal login-panel__submit" type="submit">Einloggen</button>
+                    <div class="login-panel__secondary-actions">
+                        <button class="account-action-link login-shell__forgot js-login-tab" type="button" data-login-view="reset-request">Passwort vergessen?</button>
+                        <button id="js-login-dev" class="account-action-link login-panel__dev admin-hidden" type="button">Lokal testen</button>
+                    </div>
+                </div>
             </form>
 
-            <form id="js-register-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="register">
+            <form id="js-register-form" class="user-panel__form login-panel login-panel--register js-login-panel admin-hidden" data-login-panel="register">
                 <label>
                     <span>Username</span>
                     <input id="js-register-username" type="text" maxlength="80" autocomplete="username" required>
@@ -57,30 +61,35 @@
                     <input id="js-register-password" type="password" minlength="10" autocomplete="new-password" required>
                 </label>
                 <div class="account-avatar-field js-login-avatar-group" data-avatar-target="register">
-                    <p class="account-avatar-field__title">Hero-Bild</p>
+                    <p class="account-avatar-field__title">Wähle dein Heldenbild</p>
                 </div>
                 <label class="account-checkbox">
                     <input id="js-register-privacy" type="checkbox" required>
                     <span>Ich habe die <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutzhinweise</a> gelesen und möchte einen Quiz-Hero Account erstellen.</span>
                 </label>
-                <button class="btn btn--modal" type="submit">Registrieren</button>
+                <button class="btn btn--modal login-panel__submit" type="submit">Registrieren</button>
             </form>
 
-            <form id="js-reset-request-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="reset-request">
+            <form id="js-reset-request-form" class="user-panel__form login-panel login-panel--reset js-login-panel admin-hidden" data-login-panel="reset-request">
+                <div class="login-panel__intro">
+                    <h2>Passwort zurücksetzen</h2>
+                    <p>Du bekommst einen Link, wenn die E-Mail bekannt ist.</p>
+                </div>
                 <label>
                     <span>E-Mail</span>
                     <input id="js-reset-email" type="email" maxlength="190" autocomplete="email" required>
                 </label>
-                <button class="btn btn--modal" type="submit">Reset-Link senden</button>
+                <button class="btn btn--modal login-panel__submit" type="submit">Reset-Link senden</button>
+                <button class="account-action-link js-login-tab" type="button" data-login-view="login">Zurück zum Login</button>
             </form>
 
-            <form id="js-reset-form" class="user-panel__form js-login-panel admin-hidden" data-login-panel="reset">
+            <form id="js-reset-form" class="user-panel__form login-panel login-panel--reset js-login-panel admin-hidden" data-login-panel="reset">
                 <input id="js-reset-token" type="hidden">
                 <label>
                     <span>Neues Passwort</span>
                     <input id="js-reset-password" type="password" minlength="10" autocomplete="new-password" required>
                 </label>
-                <button class="btn btn--modal" type="submit">Passwort speichern</button>
+                <button class="btn btn--modal login-panel__submit" type="submit">Passwort speichern</button>
             </form>
 
             <p id="js-login-status" class="user-panel__status" role="status" aria-live="polite"></p>

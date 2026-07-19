@@ -19,11 +19,3 @@
     font-weight: 700;
     gap: 0.25rem;
 }
-
-.account-page-form input {
-    border: var(--line-focus);
-    border-radius: var(--radius-field);
-    font: inherit;
-    padding: 0.7rem 0.85rem;
-}
-﻿

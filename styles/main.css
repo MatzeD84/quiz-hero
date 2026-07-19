@@ -32,6 +32,7 @@
 @import './components/form.css';
 @import './components/status-box.css';
 @import './components/action-row.css';
+@import './components/tabs.css';
 @import './features/admin/admin-layout.css';
 @import './features/admin/admin-list.css';
 @import './features/admin/admin-form.css';

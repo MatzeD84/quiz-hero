@@ -1,20 +1,31 @@
 .user-panel__form,
+.login-panel,
 .admin-form,
 .admin-login {
     display: grid;
     gap: 0.85rem;
 }
 
-.user-panel__form {
+.user-panel__form,
+.login-panel {
     grid-template-columns: repeat(2, minmax(180px, 1fr));
 }
 
 .user-panel__form label,
+.login-panel label,
 .admin-form label,
 .admin-login label {
     display: grid;
     font-weight: 700;
     gap: 0.25rem;
+}
+
+.login-panel input,
+.account-page-form input {
+    border: var(--line-focus);
+    border-radius: var(--radius-field);
+    font: inherit;
+    padding: 0.7rem 0.85rem;
 }
 
 .account-checkbox input {

@@ -1,12 +1,5 @@
 /* === Footer === */
 
-.account-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-
 .admin-hidden {
     display: none !important;
 }
@@ -31,8 +24,23 @@
     }
 
     .account-page-form__actions,
-    .account-page-form__secondary-actions {
+    .account-page-form__secondary-actions,
+    .login-panel__actions,
+    .login-panel__secondary-actions {
         align-items: flex-start;
         justify-content: flex-start;
+    }
+
+    .login-panel--register > .login-panel__submit {
+        grid-column: 1;
+    }
+
+    .login-shell__tabs {
+        display: flex;
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1 1 0;
     }
 }

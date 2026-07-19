@@ -37,7 +37,11 @@ const showView = view => {
         panel.classList.toggle('admin-hidden', panel.dataset.loginPanel !== view);
     });
     elements.tabs.forEach(tab => {
-        tab.classList.toggle('btn--disabled', tab.dataset.loginView === view);
+        const isActive = tab.dataset.loginView === view;
+        if (tab.classList.contains('tab')) {
+            tab.classList.toggle('tab--active', isActive);
+            tab.setAttribute('aria-selected', String(isActive));
+        }
     });
 };
 
@@ -49,7 +53,7 @@ const selectedAvatar = target => {
 const renderAvatarChoices = () => {
     elements.avatarGroups.forEach(group => {
         const target = group.dataset.avatarTarget || 'register';
-        group.innerHTML = '<p class="account-avatar-field__title">Hero-Bild</p>';
+        group.innerHTML = '<p class="account-avatar-field__title">Wähle dein Heldenbild</p>';
         HERO_AVATARS.forEach((avatar, index) => {
             const label = document.createElement('label');
             label.className = 'account-avatar-option account-avatar-option--compact';
@@ -77,7 +81,7 @@ elements.tabs.forEach(tab => {
     tab.addEventListener('click', () => showView(tab.dataset.loginView));
 });
 
-    elements.devLogin?.classList.toggle('admin-hidden', !CONFIG.devMode);
+elements.devLogin?.classList.toggle('admin-hidden', !CONFIG.devMode);
 
 elements.loginForm?.addEventListener('submit', async event => {
     event.preventDefault();

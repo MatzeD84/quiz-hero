@@ -1,8 +1,9 @@
 .account-avatar-field {
     border: var(--line-frost);
     display: grid;
-    gap: 0.75rem;
+    gap: 0.9rem;
     grid-column: 1 / -1;
+    justify-items: center;
     padding: 1rem;
 }
 
@@ -28,13 +29,13 @@
 
 .account-avatar-field:has(.account-avatar-option--compact) {
     align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
 }
 
 .account-avatar-field:has(.account-avatar-option--compact) .account-avatar-field__title {
-    flex-basis: 100%;
+    grid-column: 1 / -1;
 }
 
 .account-avatar-option--compact {
