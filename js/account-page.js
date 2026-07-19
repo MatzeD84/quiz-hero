@@ -1,6 +1,7 @@
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260719g';
 import { UserService } from './user-service.js?v=20260719g';
 import { applyAccountHeaderLogo } from './account-logo.js?v=20260719g';
+import { initFooter } from './footer.js?v=20260705';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -22,6 +23,8 @@ const elements = {
 
 const userService = new UserService();
 let currentUser = userService.getStoredUser();
+
+initFooter();
 
 const setStatus = (message, type = 'info') => {
     if (!elements.status) return;
