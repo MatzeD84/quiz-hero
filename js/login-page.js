@@ -1,7 +1,7 @@
 import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260705';
 import { initFooter } from './footer.js?v=20260705';
 import { UserService } from './user-service.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719c';
 
 const elements = {
     tabs: Array.from(document.querySelectorAll('.js-login-tab')),
@@ -49,10 +49,11 @@ const selectedAvatar = target => {
 const renderAvatarChoices = () => {
     elements.avatarGroups.forEach(group => {
         const target = group.dataset.avatarTarget || 'register';
-        group.innerHTML = '<legend>Hero-Bild</legend>';
+        group.innerHTML = '<p class="account-avatar-field__title">Hero-Bild</p>';
         HERO_AVATARS.forEach((avatar, index) => {
             const label = document.createElement('label');
-            label.className = 'account-avatar-option';
+            label.className = 'account-avatar-option account-avatar-option--compact';
+            label.setAttribute('aria-label', avatar.label);
             const input = document.createElement('input');
             input.type = 'radio';
             input.name = `login-avatar-${target}`;
@@ -62,9 +63,7 @@ const renderAvatarChoices = () => {
             image.src = avatar.url;
             image.alt = avatar.label;
             image.loading = 'lazy';
-            const text = document.createElement('span');
-            text.textContent = avatar.label;
-            label.append(input, image, text);
+            label.append(input, image);
             group.appendChild(label);
         });
     });
@@ -82,7 +81,7 @@ elements.tabs.forEach(tab => {
 
 elements.loginForm?.addEventListener('submit', async event => {
     event.preventDefault();
-    setStatus('Login wird geprueft ...', 'info');
+    setStatus('Login wird geprüft ...', 'info');
     try {
         await userService.login({
             identifier: elements.loginIdentifier?.value || '',
@@ -101,7 +100,7 @@ elements.devLogin?.addEventListener('click', async () => {
         await userService.devLogin();
         redirectAfterLogin();
     } catch (error) {
-        setStatus(error.message || 'Dev-Login nicht verfuegbar.', 'error');
+        setStatus(error.message || 'Dev-Login nicht verfügbar.', 'error');
     }
 });
 
@@ -117,7 +116,7 @@ elements.registerForm?.addEventListener('submit', async event => {
             privacyAccepted: Boolean(elements.registerPrivacy?.checked)
         });
         showView('login');
-        setStatus('Registrierung erfolgreich. Bitte bestaetige deine E-Mail. Lokal findest du die Mail in var/mail.log.', 'success');
+        setStatus('Registrierung erfolgreich. Bitte bestätige deine E-Mail. Lokal findest du die Mail in var/mail.log.', 'success');
     } catch (error) {
         setStatus(error.message || 'Registrierung fehlgeschlagen.', 'error');
     }
@@ -154,15 +153,15 @@ const handleTokens = async () => {
     const verifyToken = params.get('verifyToken');
     const resetToken = params.get('resetToken');
     if (verifyToken) {
-        setStatus('E-Mail wird bestaetigt ...', 'info');
+        setStatus('E-Mail wird bestätigt ...', 'info');
         try {
             await userService.verifyEmail(verifyToken);
-            setStatus('E-Mail bestaetigt. Du bist eingeloggt.', 'success');
+            setStatus('E-Mail bestätigt. Du bist eingeloggt.', 'success');
             params.delete('verifyToken');
             window.history.replaceState({}, '', `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}${window.location.hash}`);
             redirectAfterLogin();
         } catch (error) {
-            setStatus(error.message || 'E-Mail konnte nicht bestaetigt werden.', 'error');
+            setStatus(error.message || 'E-Mail konnte nicht bestätigt werden.', 'error');
         }
         return;
     }

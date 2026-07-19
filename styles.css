@@ -806,7 +806,7 @@ details[open] summary::after {
 
 .user-panel--logged-in .user-panel__preview-text::after {
     color: var(--light-gray-color);
-    content: "Schoen, dass du wieder da bist.";
+    content: "Schön, dass du wieder da bist.";
     font-size: 0.92rem;
     font-weight: 500;
 }
@@ -1004,8 +1004,9 @@ details[open] summary::after {
     padding: 1rem;
 }
 
-.account-avatar-field legend {
+.account-avatar-field__title {
     font-weight: 700;
+    margin: 0;
 }
 
 .account-avatar-option {
@@ -1025,6 +1026,58 @@ details[open] summary::after {
     height: 48px;
     object-fit: cover;
     width: 48px;
+}
+
+.account-avatar-field:has(.account-avatar-option--compact) {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.account-avatar-field:has(.account-avatar-option--compact) .account-avatar-field__title {
+    flex-basis: 100%;
+}
+
+.account-avatar-option--compact {
+    border: 0;
+    cursor: pointer;
+    display: grid !important;
+    gap: 0 !important;
+    padding: 0.45rem;
+    place-items: center;
+}
+
+.account-avatar-option--compact input {
+    height: 1px;
+    margin: -1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.account-avatar-option--compact img {
+    height: clamp(48px, 8vw, 64px);
+    transition: var(--transition-fade);
+    width: clamp(48px, 8vw, 64px);
+}
+
+.account-avatar-option--compact:hover,
+.account-avatar-option--compact:focus-within {
+    border-color: transparent;
+}
+
+.account-avatar-option--compact:has(input:checked) {
+    background: transparent;
+    border-color: transparent;
+}
+
+.account-avatar-option--compact:hover img,
+.account-avatar-option--compact:focus-within img,
+.account-avatar-option--compact input:checked + img {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
 }
 
 .account-page {
@@ -1146,6 +1199,10 @@ details[open] summary::after {
     text-align: center;
 }
 
+.account-page__back a {
+    font-weight: 700;
+}
+
 .avatar-modal {
     display: grid;
     gap: 1rem;
@@ -1160,8 +1217,8 @@ details[open] summary::after {
 .account-avatar-option--modal {
     aspect-ratio: 1;
     align-items: center;
-    background: color-mix(in srgb, var(--clouds-color) 6%, transparent);
-    border-color: color-mix(in srgb, var(--clouds-color) 16%, transparent);
+    background: transparent;
+    border: 0;
     cursor: pointer;
     display: grid !important;
     gap: 0 !important;
@@ -1189,14 +1246,16 @@ details[open] summary::after {
 
 .account-avatar-option--modal:hover,
 .account-avatar-option--modal:focus-within {
-    border-color: var(--carrot-color);
+    border-color: transparent;
 }
 
 .account-avatar-option--modal:has(input:checked) {
-    background: color-mix(in srgb, var(--carrot-color) 16%, transparent);
-    border-color: var(--carrot-color);
+    background: transparent;
+    border-color: transparent;
 }
 
+.account-avatar-option--modal:hover img,
+.account-avatar-option--modal:focus-within img,
 .account-avatar-option--modal:has(input:checked) img {
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
 }

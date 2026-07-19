@@ -1,5 +1,5 @@
 import { CONFIG, LABELS } from './config.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719c';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {
@@ -20,6 +20,7 @@ export class QuizController {
             this.view.initAccountUi?.();
             this.registerEvents();
             this.view.renderUser(this.currentUser);
+            applyAccountHeaderLogo(this.currentUser);
             this.view.showCategories();
             this.applyInitialSelectionFromUrl();
         } catch (error) {
@@ -92,7 +93,7 @@ export class QuizController {
 
     async handleUserDelete() {
         if (!this.userService || !this.currentUser) return;
-        const confirmValue = window.prompt('Account wirklich loeschen? Tippe DELETE zur Bestaetigung.');
+        const confirmValue = window.prompt('Account wirklich löschen? Tippe DELETE zur Bestätigung.');
         if (confirmValue !== 'DELETE') {
             this.view.renderUserStatus('Loeschung abgebrochen.', 'info');
             return;
@@ -102,9 +103,9 @@ export class QuizController {
             this.currentUser = null;
             this.view.renderUser(null);
             applyAccountHeaderLogo(null);
-            this.view.renderUserStatus('Account geloescht. Ergebnisse wurden anonymisiert.', 'success');
+            this.view.renderUserStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
         } catch (error) {
-            this.view.renderUserStatus(error.message || 'Account konnte nicht geloescht werden.', 'error');
+            this.view.renderUserStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
         }
     }
 

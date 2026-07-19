@@ -1,6 +1,6 @@
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=20260705';
 import { UserService } from './user-service.js?v=20260705';
-import { applyAccountHeaderLogo } from './account-logo.js?v=20260719b';
+import { applyAccountHeaderLogo } from './account-logo.js?v=20260719c';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -133,19 +133,19 @@ elements.logout?.addEventListener('click', () => {
 
 elements.deleteAccount?.addEventListener('click', async () => {
     if (!currentUser) return;
-    const confirmValue = window.prompt('Account wirklich loeschen? Tippe DELETE zur Bestaetigung.');
+    const confirmValue = window.prompt('Account wirklich löschen? Tippe DELETE zur Bestätigung.');
     if (confirmValue !== 'DELETE') {
         setStatus('Loeschung abgebrochen.', 'info');
         return;
     }
-    setStatus('Account wird geloescht ...', 'info');
+    setStatus('Account wird gelöscht ...', 'info');
     try {
         await userService.deleteAccount(currentUser, confirmValue);
         currentUser = null;
         render();
-        setStatus('Account geloescht. Ergebnisse wurden anonymisiert.', 'success');
+        setStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
     } catch (error) {
-        setStatus(error.message || 'Account konnte nicht geloescht werden.', 'error');
+        setStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
     }
 });
 

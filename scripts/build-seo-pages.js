@@ -118,7 +118,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="../fonts/fonts.css?v=20250211">
-    <link rel="stylesheet" href="../styles.css?v=20260719c">
+    <link rel="stylesheet" href="../styles.css?v=20260719e">
     ${extraHead}
 </head>
 <body>
@@ -149,7 +149,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     </section>
     <script type="module">
         import { initFooter } from '../js/footer.js';
-        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719b';
+        import { applyAccountHeaderLogo } from '../js/account-logo.js?v=20260719c';
         initFooter();
         applyAccountHeaderLogo();
     </script>
