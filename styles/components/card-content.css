@@ -1,0 +1,20 @@
+.category-card__text,
+.tag-card__text {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.category-card__description,
+.tag-card__description {
+  font-size: 14px;
+  font-weight: var(--font-weight-light);
+}
+
+.category-card__title,
+.tag-card__title {
+    display: block;
+}
+

@@ -1,0 +1,15 @@
+.question-item {
+    border: 1px solid var(--lighter-gray-color);
+    padding: 10px;
+    margin: 10px 0;
+    background-color: var(--clouds-color);
+    padding: 10px;
+}
+
+.question-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
+

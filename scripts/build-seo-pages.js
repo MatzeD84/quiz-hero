@@ -118,7 +118,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="../fonts/fonts.css?v=20250211">
-    <link rel="stylesheet" href="../styles.css?v=20260719e">
+    <link rel="stylesheet" href="../styles.css?v=20260719g">
     ${extraHead}
 </head>
 <body>

@@ -1,0 +1,20 @@
+/* === Typography === */
+h1, h2, h3, h4, h5, h6, .headline {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 576px) {
+    h2 {
+        margin: var(--gap-small) 0;
+        font-size: 1.3rem;
+    }
+}
+
+p {
+    margin: var(--gap-small) 0;
+}
+

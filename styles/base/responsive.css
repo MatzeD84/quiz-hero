@@ -1,0 +1,33 @@
+/* === Footer === */
+
+.account-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.admin-hidden {
+    display: none !important;
+}
+
+@media (max-width: 760px) {
+    .user-panel__form,
+    .admin-layout,
+    .admin-form__answers,
+    .account-page-form,
+    .account-page-form__actions {
+        grid-template-columns: 1fr;
+    }
+
+    .user-panel--logged-in {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .account-profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+

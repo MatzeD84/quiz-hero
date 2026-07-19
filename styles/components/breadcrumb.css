@@ -1,0 +1,31 @@
+/* === Breadcrumbs === */
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--dark-gray-color);
+    margin-bottom: var(--gap);
+}
+
+.breadcrumb__link {
+    color: var(--dark-gray-color);
+    text-decoration: none;
+}
+
+.breadcrumb__link:hover,
+.breadcrumb__link:focus {
+    color: var(--dark-gray-color);
+    text-decoration: underline;
+}
+
+.breadcrumb__sep {
+    color: var(--light-gray-color);
+}
+
+.breadcrumb__current {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+

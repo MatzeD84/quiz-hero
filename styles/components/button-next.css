@@ -1,0 +1,8 @@
+.btn--next {
+    margin-top: var(--gap);
+    padding: 10px 20px;
+    max-width: max-content;
+    background-color: var(--light-gray-color);
+    transition: var(--transition-fade);
+}
+

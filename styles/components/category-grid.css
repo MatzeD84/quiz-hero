@@ -1,0 +1,6 @@
+.category {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+}
+﻿

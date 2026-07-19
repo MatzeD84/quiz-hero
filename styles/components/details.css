@@ -1,0 +1,32 @@
+/* === FAQ / Details (SEO Landingpages) === */
+details {
+    border: 1px solid var(--lighter-gray-color);
+    border-radius: var(--radius-soft);
+    padding: var(--gap-small) var(--gap);
+    background-color: var(--clouds-color);
+    margin-bottom: var(--gap-small);
+}
+
+details[open] {
+    background-color: var(--clouds-color);
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::after {
+    content: '?';
+    float: right;
+    transition: var(--transition-fade);
+}
+
+details[open] summary::after {
+    transform: rotate(90deg);
+}

@@ -1,0 +1,39 @@
+.user-panel,
+.admin-shell {
+    background: var(--clouds-color);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
+    margin: 1.5rem auto;
+    max-width: 960px;
+    padding: 1rem;
+}
+
+.user-panel input,
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+    border: var(--line-focus);
+    border-radius: var(--radius-field);
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+}
+
+.account-shell {
+    background: var(--clouds-color);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
+    margin: 1.5rem auto;
+    padding: 1.25rem;
+}
+
+.login-shell {
+    background: var(--clouds-color);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
+    margin: 1.5rem auto;
+    max-width: 960px;
+    padding: 1.25rem;
+}

@@ -1,0 +1,52 @@
+/* === Layout === */
+
+.main__header {
+    display: flex;
+    gap: var(--gap-small);
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.main__logo-link {
+    display: inline-flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+.main__logo-link:visited,
+.main__logo-link:hover,
+.main__logo-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (max-width: 576px) {
+    .main__header {
+        margin: var(--gap-small) 0;
+    }
+}
+
+.main_headline {
+    margin: var(--gap-small) 0;
+    font-size: 2.5rem;
+    font-weight: 350;
+}
+
+@media (max-width: 576px) {
+    .main_headline {
+        margin: var(--gap-small) 0;
+        font-size: 2rem;
+    }
+}
+
+.main_image {
+    max-height: 75px;
+}
+
+@media (max-width: 576px) {
+    .main_image {
+        max-height: 40px;
+    }
+}
+

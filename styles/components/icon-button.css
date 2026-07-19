@@ -1,0 +1,32 @@
+.quiz__abort {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.quiz__abort_btn {
+    appearance: none;
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    cursor: pointer;
+    transition: var(--transition-fade);
+    background-color: unset;
+    border: none;
+}
+
+.quiz__abort_btn:hover {
+    background-color: var(--mandarin-color);
+}
+
+.quiz__abort_svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--dark-gray-color);
+}
+
+.quiz__abort_btn:hover .quiz__abort_svg {
+    fill: var(--clouds-color);
+    transition: var(--transition-fade);
+}
+

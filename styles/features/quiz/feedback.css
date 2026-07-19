@@ -1,0 +1,19 @@
+.quiz__feedback_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--gap);
+    gap: 0.25rem;
+}
+
+.quiz__feedback_icon {
+    height: 24px;
+    width: 24px;
+}
+
+.quiz__feedback {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+

@@ -1,0 +1,27 @@
+/* === Score Feedback === */
+.quiz__score--animation {
+    animation: scoreIncrease 0.8s ease-in-out;
+}
+
+.quiz__score--correct {
+    color: var(--greensea-color);
+}
+
+.quiz__score--incorrect {
+    color: var(--mandarin-color);
+}
+
+@keyframes scoreIncrease {
+    0% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.4); 
+        font-weight: 500;
+    }
+    100% { 
+        transform: scale(1); 
+        font-weight: 200;
+    }
+}
+

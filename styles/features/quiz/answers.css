@@ -1,0 +1,23 @@
+.quiz__answer {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+}
+
+.btn--quiz_answer {
+    border: 2px solid transparent;
+}
+
+.btn--quiz_answer:disabled {
+    background-color: var(--dark-gray-color);
+    cursor: default;
+}
+
+.btn--quiz_answer.correct {
+    background-color: var(--greensea-color);
+}
+
+.btn--quiz_answer.incorrect {
+    background-color: var(--mandarin-color);
+}
+

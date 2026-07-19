@@ -1,0 +1,25 @@
+.category-card__badge,
+.tag-card__badge {
+    z-index: 9;
+    font-size: 16px;
+    color: var(--clouds-color);
+}
+
+.category-card__badge,
+.tag-card__badge {
+    --f: 8px; /* control the folded part*/
+    --r: 12px; /* control the ribbon shape */
+    
+    position: absolute;
+    top: var(--gap);
+    right: calc(-1*var(--f));
+    padding: 0.25rem var(--gap-small);
+    background: var(--carrot-color);
+    border-bottom: var(--f) solid color-mix(in srgb, var(--dark-color) 35%, transparent);
+    border-left: var(--r) solid transparent;
+    clip-path: 
+        polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
+        calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
+        var(--r) calc(50% - var(--f)/2));
+}
+

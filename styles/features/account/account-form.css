@@ -1,0 +1,19 @@
+.account-page-form {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+}
+
+.account-page-form label {
+    display: grid;
+    font-weight: 700;
+    gap: 0.25rem;
+}
+
+.account-page-form input {
+    border: var(--line-focus);
+    border-radius: var(--radius-field);
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+}
+﻿

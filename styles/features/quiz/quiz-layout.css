@@ -1,0 +1,70 @@
+/* === Quiz === */
+
+.quiz__container {
+    position: relative;
+    padding: 1.75rem 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--lighter-gray-color);
+}
+
+@media (max-width: 768px) {
+    .quiz__container {
+        padding: 1.75rem var(--gap-small);
+    }
+}
+
+.quiz__score_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--gap-small);
+    margin-bottom: var(--gap-small);
+}
+
+.quiz__headerlogo {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.quiz__headerlogo_image {
+  max-height: 40px;
+}
+
+.quiz__selection {
+    margin: 0;
+}
+
+.quiz__headertext {
+    display: flex;
+    gap: var(--gap-small);
+}
+
+.quiz__headertext p {
+    font-weight: 700;
+}
+
+[data-difficulty="hero"] .quiz__headertext {
+    color: var(--amethyst-color);
+}
+
+[data-difficulty="medium"] .quiz__headertext {
+    color: var(--carrot-color);
+}
+
+.quiz__counter_questions {
+    display: flex;
+    color: var(--dark-gray-color);
+}
+
+@media (max-width: 768px) {
+    .quiz__question_image {
+        max-height: max(225px, 30vh)
+    }
+}
+
+@media (max-width: 768px) {
+    .quiz__answer  {
+        gap: var(--gap-small);
+    }
+}
+

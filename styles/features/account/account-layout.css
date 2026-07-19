@@ -1,0 +1,21 @@
+.account-page {
+    max-width: 980px;
+}
+
+.login-page {
+    max-width: 1040px;
+}
+
+.account-empty {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+}
+
+.account-page__back {
+    text-align: center;
+}
+
+.account-page__back a {
+    font-weight: 400;
+}

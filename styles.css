@@ -1,4 +1,9 @@
-/* === Variables === */
+/*
+ * Generated from styles/main.css.
+ * Edit files in styles/, then run: node scripts/build-css.js
+ */
+
+/* === styles/abstracts/tokens.css === */
 :root {
     --primary-color: #666;
     --dark-color: #1E1E1E;
@@ -15,6 +20,7 @@
     --gap-small: 0.5rem;
     --gap: 0.75rem;
     --transition-fade: all 0.3s ease;
+    --transition-soft: 160ms ease;
 
     --sm: 576px;
     --md: 768px;
@@ -22,8 +28,23 @@
     --xl: 1200px;
 
     --font-weight-light: 200;
+
+    --radius-soft: 10px;
+    --radius-field: 14px;
+    --radius-shell: 24px;
+    --radius-pill: 999px;
+
+    --line-frost: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    --line-lagoon: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
+    --line-focus: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
+    --line-cloud: 2px solid var(--clouds-color);
+
+    --shadow-shell: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    --shadow-avatar: 0 8px 22px color-mix(in srgb, var(--belizehole-color) 16%, transparent);
+    --ring-avatar-selected: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
 }
 
+/* === styles/base/reset.css === */
 /* === Base / Reset === */
 /* <weight>: Use a value from 200 to 900 */
 * {
@@ -53,6 +74,7 @@ img {
     max-width: 100%;
 }
 
+/* === styles/base/typography.css === */
 /* === Typography === */
 h1, h2, h3, h4, h5, h6, .headline {
     font-family: "Oswald", sans-serif;
@@ -73,6 +95,7 @@ p {
     margin: var(--gap-small) 0;
 }
 
+/* === styles/base/links.css === */
 a {
     color: var(--carrot-color);
     transition: var(--transition-fade);
@@ -82,7 +105,7 @@ a:hover {
     color: var(--amethyst-color);
 }
 
-/* === Layout === */
+/* === styles/layout/container.css === */
 .container {
     flex: 1;
     width: 100%;
@@ -98,9 +121,8 @@ a:hover {
     margin: 0 auto;
 }
 
-.hide {
-    display: none !important;
-}
+/* === styles/layout/main-header.css === */
+/* === Layout === */
 
 .main__header {
     display: flex;
@@ -152,6 +174,7 @@ a:hover {
     }
 }
 
+/* === styles/components/button.css === */
 /* === Buttons === */
 .btn {
     display: block;
@@ -184,13 +207,14 @@ a:hover {
     display: none;
 }
 
-/* === Cards / Grids === */
+/* === styles/components/category-grid.css === */
 .category {
     display: grid;
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
 }
 
+/* === styles/components/card-base.css === */
 .category-card,
 .tag-card {
     position: relative;
@@ -205,30 +229,6 @@ a:hover {
 .category-card:focus {
     color: var(--clouds-color);
     text-decoration: none;
-}
-
-.category-card__badge,
-.tag-card__badge {
-    z-index: 9;
-    font-size: 16px;
-    color: var(--clouds-color);
-}
-.category-card__badge,
-.tag-card__badge {
-    --f: 8px; /* control the folded part*/
-    --r: 12px; /* control the ribbon shape */
-    
-    position: absolute;
-    top: var(--gap);
-    right: calc(-1*var(--f));
-    padding: 0.25rem var(--gap-small);
-    background: var(--carrot-color);
-    border-bottom: var(--f) solid color-mix(in srgb, var(--dark-color) 35%, transparent);
-    border-left: var(--r) solid transparent;
-    clip-path: 
-        polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
-        calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
-        var(--r) calc(50% - var(--f)/2));
 }
 
 @media (max-width: 768px) {
@@ -247,6 +247,38 @@ a:hover {
     filter: sepia(1) hue-rotate(0deg);
 }
 
+.btn--category,
+.btn--tag {
+    padding: 0;
+}
+
+/* === styles/components/badge.css === */
+.category-card__badge,
+.tag-card__badge {
+    z-index: 9;
+    font-size: 16px;
+    color: var(--clouds-color);
+}
+
+.category-card__badge,
+.tag-card__badge {
+    --f: 8px; /* control the folded part*/
+    --r: 12px; /* control the ribbon shape */
+    
+    position: absolute;
+    top: var(--gap);
+    right: calc(-1*var(--f));
+    padding: 0.25rem var(--gap-small);
+    background: var(--carrot-color);
+    border-bottom: var(--f) solid color-mix(in srgb, var(--dark-color) 35%, transparent);
+    border-left: var(--r) solid transparent;
+    clip-path: 
+        polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
+        calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
+        var(--r) calc(50% - var(--f)/2));
+}
+
+/* === styles/components/card-content.css === */
 .category-card__text,
 .tag-card__text {
     height: 100%;
@@ -262,16 +294,12 @@ a:hover {
   font-weight: var(--font-weight-light);
 }
 
-.btn--category,
-.btn--tag {
-    padding: 0;
-}
-
 .category-card__title,
 .tag-card__title {
     display: block;
 }
 
+/* === styles/features/quiz/question-count.css === */
 /* === Question Count Screen === */
 .question_count {
     width: 100%;
@@ -339,7 +367,9 @@ a:hover {
     color: var(--amethyst-color);
 }
 
+/* === styles/features/quiz/quiz-layout.css === */
 /* === Quiz === */
+
 .quiz__container {
     position: relative;
     padding: 1.75rem 1rem;
@@ -396,6 +426,19 @@ a:hover {
     color: var(--dark-gray-color);
 }
 
+@media (max-width: 768px) {
+    .quiz__question_image {
+        max-height: max(225px, 30vh)
+    }
+}
+
+@media (max-width: 768px) {
+    .quiz__answer  {
+        gap: var(--gap-small);
+    }
+}
+
+/* === styles/features/quiz/question-media.css === */
 .quiz__question_image_container {
     position: relative;
     margin: 0 auto;
@@ -425,22 +468,11 @@ a:hover {
     opacity: 0.6;
 }
 
-@media (max-width: 768px) {
-    .quiz__question_image {
-        max-height: max(225px, 30vh)
-    }
-}
-
+/* === styles/features/quiz/answers.css === */
 .quiz__answer {
     display: grid;
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-}
-
-@media (max-width: 768px) {
-    .quiz__answer  {
-        gap: var(--gap-small);
-    }
 }
 
 .btn--quiz_answer {
@@ -460,6 +492,7 @@ a:hover {
     background-color: var(--mandarin-color);
 }
 
+/* === styles/features/quiz/feedback.css === */
 .quiz__feedback_container {
     display: flex;
     align-items: center;
@@ -479,7 +512,7 @@ a:hover {
     margin: 0;
 }
 
-
+/* === styles/features/quiz/quiz-footer.css === */
 .quiz__footer {
     display: flex;
     justify-content: center;
@@ -495,6 +528,7 @@ a:hover {
     text-wrap: auto;
 }
 
+/* === styles/components/button-next.css === */
 .btn--next {
     margin-top: var(--gap);
     padding: 10px 20px;
@@ -503,6 +537,7 @@ a:hover {
     transition: var(--transition-fade);
 }
 
+/* === styles/components/icon-button.css === */
 .quiz__abort {
     position: absolute;
     right: 0;
@@ -535,6 +570,7 @@ a:hover {
     transition: var(--transition-fade);
 }
 
+/* === styles/components/modal.css === */
 /* === Modals === */
 .modal {
     position: fixed;
@@ -560,7 +596,7 @@ a:hover {
     background-color: var(--dark-color);
     margin: 15% auto;
     padding: 20px;
-    border: 2px solid var(--clouds-color);
+    border: var(--line-cloud);
     width: 80%;
     max-width: 500px;
     color: var(--clouds-color);
@@ -611,12 +647,14 @@ a:hover {
     color: var(--amethyst-color);
 }
 
+/* === styles/components/consent-banner.css === */
 .consent-banner__actions {
     display: grid;
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
 }
 
+/* === styles/features/quiz/score.css === */
 /* === Score Feedback === */
 .quiz__score--animation {
     animation: scoreIncrease 0.8s ease-in-out;
@@ -644,7 +682,7 @@ a:hover {
     }
 }
 
-
+/* === styles/features/quiz/question-item.css === */
 .question-item {
     border: 1px solid var(--lighter-gray-color);
     padding: 10px;
@@ -660,10 +698,11 @@ a:hover {
     margin: 10px 0;
 }
 
+/* === styles/components/details.css === */
 /* === FAQ / Details (SEO Landingpages) === */
 details {
     border: 1px solid var(--lighter-gray-color);
-    border-radius: 10px;
+    border-radius: var(--radius-soft);
     padding: var(--gap-small) var(--gap);
     background-color: var(--clouds-color);
     margin-bottom: var(--gap-small);
@@ -693,13 +732,15 @@ details[open] summary::after {
     transform: rotate(90deg);
 }
 
+/* === styles/features/seo/seo-answer.css === */
 .seo-answer--correct {
     background-color: var(--greensea-color);
     color: var(--clouds-color);
     padding: 2px 6px;
-    border-radius: 6px;
+    border-radius: var(--radius-soft);
 }
 
+/* === styles/components/breadcrumb.css === */
 /* === Breadcrumbs === */
 .breadcrumb {
     display: flex;
@@ -731,13 +772,14 @@ details[open] summary::after {
     font-weight: 600;
 }
 
-/* === Footer === */
+/* === styles/layout/footer.css === */
 .footer {
     width: 100%;
     background-color: var(--lighter-gray-color);
     text-align: center;
 }
 
+/* === styles/layout/site-account-nav.css === */
 .site-account-nav {
     left: 1rem;
     position: absolute;
@@ -758,17 +800,48 @@ details[open] summary::after {
     text-decoration: underline;
 }
 
+/* === styles/components/shell.css === */
 .user-panel,
 .admin-shell {
     background: var(--clouds-color);
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    border-radius: 24px;
-    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
     margin: 1.5rem auto;
     max-width: 960px;
     padding: 1rem;
 }
 
+.user-panel input,
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+    border: var(--line-focus);
+    border-radius: var(--radius-field);
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+}
+
+.account-shell {
+    background: var(--clouds-color);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
+    margin: 1.5rem auto;
+    padding: 1.25rem;
+}
+
+.login-shell {
+    background: var(--clouds-color);
+    border: var(--line-lagoon);
+    border-radius: var(--radius-shell);
+    box-shadow: var(--shadow-shell);
+    margin: 1.5rem auto;
+    max-width: 960px;
+    padding: 1.25rem;
+}
+
+/* === styles/features/account/user-panel.css === */
 .user-panel__preview {
     align-items: center;
     display: flex;
@@ -821,7 +894,7 @@ details[open] summary::after {
 
 .user-panel__preview img,
 .account-profile-card__avatar img {
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     height: 52px;
     object-fit: cover;
     width: 52px;
@@ -843,9 +916,9 @@ details[open] summary::after {
 
 .user-panel__avatar-link img {
     border: 3px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    box-shadow: 0 8px 22px color-mix(in srgb, var(--belizehole-color) 16%, transparent);
+    box-shadow: var(--shadow-avatar);
     height: 70px;
-    transition: border-color 160ms ease, transform 160ms ease;
+    transition: border-color var(--transition-soft), transform var(--transition-soft);
     width: 70px;
 }
 
@@ -859,7 +932,7 @@ details[open] summary::after {
     color: var(--light-gray-color);
     font-size: 0.78rem;
     opacity: 0;
-    transition: opacity 160ms ease;
+    transition: opacity var(--transition-soft);
 }
 
 .user-panel__avatar-link:hover .user-panel__avatar-hint,
@@ -877,6 +950,13 @@ details[open] summary::after {
     font-size: 0.9rem;
 }
 
+/* === styles/components/avatar-image.css === */
+.account-profile-card__avatar img {
+    height: 84px;
+    width: 84px;
+}
+
+/* === styles/components/form.css === */
 .user-panel__form,
 .admin-form,
 .admin-login {
@@ -896,30 +976,26 @@ details[open] summary::after {
     gap: 0.25rem;
 }
 
-.user-panel input,
-.admin-shell input,
-.admin-shell select,
-.admin-shell textarea {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
-    border-radius: 14px;
-    font: inherit;
-    padding: 0.7rem 0.85rem;
+.account-checkbox input {
+    margin-top: 0.3rem;
+    width: auto;
 }
 
+/* === styles/components/status-box.css === */
 .user-panel__status,
 .admin-status {
     min-height: 1.4rem;
 }
 
 .user-panel__status {
-    border-radius: 10px;
+    border-radius: var(--radius-soft);
     font-weight: 700;
     margin: 0.75rem 0 0;
     padding: 0;
 }
 
 .user-panel__status:not(:empty) {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
+    border: var(--line-focus);
     padding: 0.85rem 1rem;
 }
 
@@ -941,6 +1017,7 @@ details[open] summary::after {
     color: var(--mandarin-color);
 }
 
+/* === styles/components/action-row.css === */
 .admin-actions,
 .admin-toolbar {
     display: flex;
@@ -949,12 +1026,21 @@ details[open] summary::after {
     margin: 1rem 0;
 }
 
+.account-page-form__actions {
+    display: grid;
+    gap: 0.75rem;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(160px, 1fr));
+}
+
+/* === styles/features/admin/admin-layout.css === */
 .admin-layout {
     display: grid;
     gap: 1.25rem;
     grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
 }
 
+/* === styles/features/admin/admin-list.css === */
 .admin-list {
     display: grid;
     gap: 0.65rem;
@@ -968,36 +1054,33 @@ details[open] summary::after {
     width: 100%;
 }
 
-.admin-form textarea {
-    min-height: 5rem;
-}
-
+/* === styles/features/admin/admin-form.css === */
 .admin-form__answers {
     display: grid;
     gap: 0.65rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.account-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+.admin-form textarea {
+    min-height: 5rem;
 }
 
+.admin-form__hint {
+    color: var(--light-gray-color);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* === styles/components/checkbox.css === */
 .account-checkbox {
     align-items: start;
     display: flex !important;
     gap: 0.6rem !important;
 }
 
-.account-checkbox input {
-    margin-top: 0.3rem;
-    width: auto;
-}
-
+/* === styles/components/avatar-picker.css === */
 .account-avatar-field {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    border: var(--line-frost);
     display: grid;
     gap: 0.75rem;
     grid-column: 1 / -1;
@@ -1011,18 +1094,14 @@ details[open] summary::after {
 
 .account-avatar-option {
     align-items: center;
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    border: var(--line-frost);
     display: flex !important;
     gap: 0.75rem !important;
     padding: 0.65rem;
 }
 
-.account-avatar-option input {
-    width: auto;
-}
-
 .account-avatar-option img {
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     height: 48px;
     object-fit: cover;
     width: 48px;
@@ -1048,7 +1127,9 @@ details[open] summary::after {
     place-items: center;
 }
 
-.account-avatar-option--compact input {
+.account-avatar-option input,
+.account-avatar-option--compact input,
+.account-avatar-option--modal input {
     height: 1px;
     margin: -1px;
     opacity: 0;
@@ -1077,130 +1158,7 @@ details[open] summary::after {
 .account-avatar-option--compact:hover img,
 .account-avatar-option--compact:focus-within img,
 .account-avatar-option--compact input:checked + img {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
-}
-
-.account-page {
-    max-width: 980px;
-}
-
-.login-page {
-    max-width: 1040px;
-}
-
-.account-shell {
-    background: var(--clouds-color);
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    border-radius: 24px;
-    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
-    margin: 1.5rem auto;
-    padding: 1.25rem;
-}
-
-.login-shell {
-    background: var(--clouds-color);
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    border-radius: 24px;
-    box-shadow: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
-    margin: 1.5rem auto;
-    max-width: 960px;
-    padding: 1.25rem;
-}
-
-.login-shell__header {
-    margin-bottom: 1rem;
-}
-
-.login-shell__header h2,
-.login-shell__header p {
-    margin-top: 0;
-}
-
-.account-profile-card {
-    align-items: center;
-    border-bottom: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
-}
-
-.account-profile-card__avatar {
-    align-items: center;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    display: grid;
-    font: inherit;
-    gap: 0.25rem;
-    padding: 0;
-}
-
-.account-profile-card__avatar img {
-    height: 84px;
-    width: 84px;
-}
-
-.account-profile-card__avatar span {
-    color: var(--light-gray-color);
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.account-profile-card__avatar:hover span,
-.account-profile-card__avatar:focus-visible span {
-    color: var(--carrot-color);
-}
-
-.account-profile-card__eyebrow {
-    color: var(--light-gray-color);
-    font-weight: 700;
-    margin: 0 0 0.2rem;
-}
-
-.account-profile-card h2,
-.account-profile-card p {
-    margin-top: 0;
-}
-
-.account-page-form {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-}
-
-.account-page-form label {
-    display: grid;
-    font-weight: 700;
-    gap: 0.25rem;
-}
-
-.account-page-form input {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
-    border-radius: 14px;
-    font: inherit;
-    padding: 0.7rem 0.85rem;
-}
-
-.account-page-form__actions {
-    display: grid;
-    gap: 0.75rem;
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(3, minmax(160px, 1fr));
-}
-
-.account-empty {
-    display: grid;
-    gap: 0.75rem;
-    justify-items: start;
-}
-
-.account-page__back {
-    text-align: center;
-}
-
-.account-page__back a {
-    font-weight: 700;
+    box-shadow: var(--ring-avatar-selected);
 }
 
 .avatar-modal {
@@ -1228,16 +1186,6 @@ details[open] summary::after {
     transition: var(--transition-fade);
 }
 
-.account-avatar-option--modal input {
-    height: 1px;
-    margin: -1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-}
-
 .account-avatar-option--modal img {
     height: clamp(64px, 12vw, 92px);
     transition: var(--transition-fade);
@@ -1257,15 +1205,108 @@ details[open] summary::after {
 .account-avatar-option--modal:hover img,
 .account-avatar-option--modal:focus-within img,
 .account-avatar-option--modal:has(input:checked) img {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
+    box-shadow: var(--ring-avatar-selected);
 }
 
-.account-avatar-option--modal input:checked + img {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
+/* === styles/features/account/account-layout.css === */
+.account-page {
+    max-width: 980px;
 }
 
+.login-page {
+    max-width: 1040px;
+}
+
+.account-empty {
+    display: grid;
+    gap: 0.75rem;
+    justify-items: start;
+}
+
+.account-page__back {
+    text-align: center;
+}
+
+.account-page__back a {
+    font-weight: 400;
+}
+
+/* === styles/features/account/login-shell.css === */
+.login-shell__header {
+    margin-bottom: 1rem;
+}
+
+.login-shell__header h2,
+.login-shell__header p {
+    margin-top: 0;
+}
+
+/* === styles/features/account/profile-card.css === */
+.account-profile-card {
+    align-items: center;
+    border-bottom: var(--line-frost);
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.account-profile-card__avatar {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    gap: 0.25rem;
+    padding: 0;
+}
+
+.account-profile-card__avatar span {
+    color: var(--light-gray-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.account-profile-card__avatar:hover span,
+.account-profile-card__avatar:focus-visible span {
+    color: var(--carrot-color);
+}
+
+.account-profile-card__eyebrow {
+    color: var(--light-gray-color);
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+}
+
+.account-profile-card h2,
+.account-profile-card p {
+    margin-top: 0;
+}
+
+/* === styles/features/account/account-form.css === */
+.account-page-form {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+}
+
+.account-page-form label {
+    display: grid;
+    font-weight: 700;
+    gap: 0.25rem;
+}
+
+.account-page-form input {
+    border: var(--line-focus);
+    border-radius: var(--radius-field);
+    font: inherit;
+    padding: 0.7rem 0.85rem;
+}
+
+/* === styles/features/admin/upload.css === */
 .admin-image-field {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    border: var(--line-frost);
     display: grid;
     gap: 0.75rem;
     padding: 1rem;
@@ -1282,12 +1323,8 @@ details[open] summary::after {
     gap: 0.75rem;
 }
 
-.admin-image-field__upload input[type="file"] {
-    flex: 1 1 240px;
-}
-
 .admin-image-field__preview {
-    border: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
+    border: var(--line-frost);
     display: grid;
     min-height: 140px;
     place-items: center;
@@ -1300,10 +1337,23 @@ details[open] summary::after {
     object-fit: contain;
 }
 
-.admin-form__hint {
-    color: var(--light-gray-color);
-    font-size: 0.9rem;
-    margin: 0;
+.admin-image-field__upload input[type="file"] {
+    flex: 1 1 240px;
+}
+
+/* === styles/base/utilities.css === */
+.hide {
+    display: none !important;
+}
+
+/* === styles/base/responsive.css === */
+/* === Footer === */
+
+.account-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .admin-hidden {
@@ -1329,3 +1379,4 @@ details[open] summary::after {
         flex-direction: column;
     }
 }
+

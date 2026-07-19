@@ -1,0 +1,36 @@
+.category-card,
+.tag-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--clouds-color);
+}
+
+.category-card:hover,
+.category-card:visited,
+.category-card:focus {
+    color: var(--clouds-color);
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .category-card__badge {
+        --f: 4px; /* control the folded part*/
+    }
+}
+
+.category-card__icon,
+.tag-card__icon {
+    transition: var(--transition-fade);; 
+}
+
+.category-card:hover .category-card__icon,
+.tag-card:hover .tag-card__icon {
+    filter: sepia(1) hue-rotate(0deg);
+}
+
+.btn--category,
+.btn--tag {
+    padding: 0;
+}

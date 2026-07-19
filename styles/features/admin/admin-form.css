@@ -1,0 +1,15 @@
+.admin-form__answers {
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-form textarea {
+    min-height: 5rem;
+}
+
+.admin-form__hint {
+    color: var(--light-gray-color);
+    font-size: 0.9rem;
+    margin: 0;
+}

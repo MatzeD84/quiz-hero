@@ -1,0 +1,13 @@
+.admin-list {
+    display: grid;
+    gap: 0.65rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-list button {
+    text-align: left;
+    width: 100%;
+}
+

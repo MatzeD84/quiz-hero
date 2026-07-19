@@ -1,0 +1,41 @@
+.account-profile-card {
+    align-items: center;
+    border-bottom: var(--line-frost);
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.account-profile-card__avatar {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    gap: 0.25rem;
+    padding: 0;
+}
+
+.account-profile-card__avatar span {
+    color: var(--light-gray-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.account-profile-card__avatar:hover span,
+.account-profile-card__avatar:focus-visible span {
+    color: var(--carrot-color);
+}
+
+.account-profile-card__eyebrow {
+    color: var(--light-gray-color);
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+}
+
+.account-profile-card h2,
+.account-profile-card p {
+    margin-top: 0;
+}

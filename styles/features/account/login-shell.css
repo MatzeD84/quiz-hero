@@ -1,0 +1,9 @@
+.login-shell__header {
+    margin-bottom: 1rem;
+}
+
+.login-shell__header h2,
+.login-shell__header p {
+    margin-top: 0;
+}
+﻿

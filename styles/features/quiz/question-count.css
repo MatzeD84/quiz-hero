@@ -1,0 +1,67 @@
+/* === Question Count Screen === */
+.question_count {
+    width: 100%;
+    max-width: 470px;
+    margin: 0 auto;
+}
+
+.question_count__header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-small);
+    margin-top: 1rem;
+}
+
+.question_count__description {
+    display: none;
+}
+
+.question_count__selection_wrapper {
+ margin-bottom: var(--gap-small);
+}
+
+.question_count__selection {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    }
+
+.quiz__question_count_select {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+    margin-top: var(--gap-small);
+}
+
+.quiz__question {
+    margin-bottom: 1rem;
+    margin-top: 0;
+    font-weight: 400;
+}
+
+.question_count_back_btn {
+    background: none;
+    border: none;
+    margin-top: 1.5rem;
+    transition: var(--transition-fade);
+    cursor: pointer;
+}
+
+.question_count_back_btn:hover {
+    color: var(--carrot-color)
+}
+
+.question_count_back_btn__text {
+    font-size: 1.1rem;
+    color: var(--carrot-color);
+    text-decoration: underline;
+    transition: var(--transition-fade);
+}
+
+.question_count_back_btn__text:hover {
+    color: var(--amethyst-color);
+}
+

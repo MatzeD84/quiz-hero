@@ -1,0 +1,20 @@
+.site-account-nav {
+    left: 1rem;
+    position: absolute;
+    top: 1rem;
+    z-index: 5;
+}
+
+.site-account-nav a {
+    color: var(--light-gray-color);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.site-account-nav a:hover,
+.site-account-nav a:focus-visible {
+    color: var(--belizehole-color);
+    text-decoration: underline;
+}
+

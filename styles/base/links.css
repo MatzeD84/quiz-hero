@@ -1,0 +1,9 @@
+a {
+    color: var(--carrot-color);
+    transition: var(--transition-fade);
+}
+
+a:hover {
+    color: var(--amethyst-color);
+}
+
