@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Quiz-Hero Profil</title>
+    <title>Quiz-Hero Heldenseite</title>
     <link rel="icon" type="image/png" href="/images/website/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="stylesheet" href="fonts/fonts.css?v=dev" />
     <link rel="stylesheet" href="styles.css?v=dev" />
@@ -15,13 +15,13 @@
             <a class="main__logo-link" href="index.html" title="Zur Startseite">
                 <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
             </a>
-            <h1 class="main_headline">Mein Profil</h1>
+            <h1 class="main_headline">Heldenseite</h1>
         </header>
 
         <section class="account-shell" aria-live="polite">
             <div id="js-account-page-logged-out" class="account-empty admin-hidden">
                 <h2>Du bist nicht angemeldet.</h2>
-                <p>Melde dich auf der Startseite an, um dein Profil zu verwalten.</p>
+                <p>Melde dich an, um deine Heldenseite zu verwalten.</p>
                 <a class="btn btn--modal" href="index.html">Zur Anmeldung</a>
             </div>
 
@@ -29,28 +29,30 @@
                 <div class="account-profile-card">
                     <button id="js-account-avatar-open" class="account-profile-card__avatar" type="button">
                         <img id="js-account-avatar-image" src="images/website/avatar/quizo.png" alt="Profilbild" loading="eager">
-                        <span>Logo ändern</span>
+                        <span>Bild ändern</span>
                     </button>
-                    <div>
-                        <p class="account-profile-card__eyebrow">Quiz-Hero Account</p>
+                    <div class="account-profile-card__body">
                         <h2 id="js-account-profile-name">Profil</h2>
                         <p id="js-account-profile-email"></p>
                     </div>
                 </div>
 
                 <form id="js-account-page-form" class="account-page-form">
+                    <h2 class="account-page-form__headline">Zugangsdaten</h2>
                     <label>
                         <span>Username</span>
                         <input id="js-account-page-username" type="text" maxlength="80" autocomplete="username" required>
                     </label>
                     <label>
                         <span>Neues Passwort</span>
-                        <input id="js-account-page-password" type="password" minlength="10" autocomplete="new-password" placeholder="leer lassen, wenn unveraendert">
+                        <input id="js-account-page-password" type="password" minlength="10" autocomplete="new-password" placeholder="leer lassen, wenn unverändert">
                     </label>
                     <div class="account-page-form__actions">
-                        <button class="btn btn--modal" type="submit">Profil speichern</button>
-                        <button id="js-account-page-logout" class="btn btn--modal" type="button">Logout</button>
-                        <button id="js-account-page-delete" class="btn btn--modal" type="button">Account löschen</button>
+                        <button class="btn btn--modal account-page-form__save" type="submit">Profil speichern</button>
+                        <div class="account-page-form__secondary-actions">
+                            <button id="js-account-page-logout" class="account-action-link" type="button">Abmelden</button>
+                            <button id="js-account-page-delete" class="account-action-link account-action-link--danger" type="button">Account löschen</button>
+                        </div>
                     </div>
                 </form>
             </div>

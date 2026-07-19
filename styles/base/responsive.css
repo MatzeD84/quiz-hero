@@ -29,5 +29,10 @@
         align-items: flex-start;
         flex-direction: column;
     }
-}
 
+    .account-page-form__actions,
+    .account-page-form__secondary-actions {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}

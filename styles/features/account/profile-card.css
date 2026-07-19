@@ -2,9 +2,9 @@
     align-items: center;
     border-bottom: var(--line-frost);
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 .account-profile-card__avatar {
@@ -15,13 +15,15 @@
     display: grid;
     font: inherit;
     gap: 0.25rem;
+    justify-items: center;
     padding: 0;
 }
 
 .account-profile-card__avatar span {
-    color: var(--light-gray-color);
+    color: var(--carrot-color);
     font-size: 0.85rem;
     font-weight: 700;
+    text-decoration: underline;
 }
 
 .account-profile-card__avatar:hover span,
@@ -29,13 +31,21 @@
     color: var(--carrot-color);
 }
 
-.account-profile-card__eyebrow {
-    color: var(--light-gray-color);
-    font-weight: 700;
-    margin: 0 0 0.2rem;
+.account-profile-card__body {
+    display: grid;
+    gap: 0.15rem;
+    text-align: left;
 }
 
 .account-profile-card h2,
 .account-profile-card p {
-    margin-top: 0;
+    margin: 0;
+}
+
+.account-profile-card h2 {
+    font-size: clamp(2rem, 4vw, 2.7rem);
+}
+
+.account-profile-card p {
+    font-size: 1.05rem;
 }

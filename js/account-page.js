@@ -67,10 +67,10 @@ const openAvatarModal = () => {
         </label>
     `).join('');
     elements.avatarModalContent.innerHTML = `
-        <h2 class="modal__headline">Logo ändern</h2>
+        <h2 class="modal__headline">Bild ändern</h2>
         <form id="js-account-avatar-form" class="avatar-modal">
             <div class="avatar-modal__grid">${options}</div>
-            <button class="btn btn--modal" type="submit">Logo speichern</button>
+            <button class="btn btn--modal" type="submit">Bild speichern</button>
         </form>
     `;
     elements.avatarModal.classList.remove('hide');
@@ -112,7 +112,7 @@ elements.avatarModalContent?.addEventListener('submit', async event => {
     event.preventDefault();
     const formData = new FormData(form);
     const avatarKey = String(formData.get('avatarKey') || 'hero');
-    setStatus('Logo wird gespeichert ...', 'info');
+    setStatus('Bild wird gespeichert ...', 'info');
     try {
         currentUser = await userService.updateAccount(currentUser, {
             username: currentUser.username || currentUser.name,
@@ -121,9 +121,9 @@ elements.avatarModalContent?.addEventListener('submit', async event => {
         });
         render();
         closeAvatarModal();
-        setStatus('Logo gespeichert.', 'success');
+        setStatus('Bild gespeichert.', 'success');
     } catch (error) {
-        setStatus(error.message || 'Logo konnte nicht gespeichert werden.', 'error');
+        setStatus(error.message || 'Bild konnte nicht gespeichert werden.', 'error');
     }
 });
 
@@ -138,7 +138,7 @@ elements.deleteAccount?.addEventListener('click', async () => {
     if (!currentUser) return;
     const confirmValue = window.prompt('Account wirklich löschen? Tippe DELETE zur Bestätigung.');
     if (confirmValue !== 'DELETE') {
-        setStatus('Loeschung abgebrochen.', 'info');
+        setStatus('Löschung abgebrochen.', 'info');
         return;
     }
     setStatus('Account wird gelöscht ...', 'info');
