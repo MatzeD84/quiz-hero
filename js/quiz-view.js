@@ -490,25 +490,61 @@ export class QuizView {
         }
     }
 
-    showResultModal({ score, solved, total, maxScore }) {
+    resultMessage({ score, maxScore }, user) {
+        const name = user?.username || user?.name || '';
+        if (!name) {
+            if (score <= 0) {
+                return 'Runde geschafft. Beim naechsten Versuch holst du Punkte.';
+            }
+            if (score >= maxScore) {
+                return 'Perfekte Runde. Alles richtig beantwortet.';
+            }
+            return 'Deine Runde ist geschafft.';
+        }
+        if (score <= 0) {
+            return `Runde geschafft, ${name}. Beim naechsten Versuch holst du Punkte.`;
+        }
+        if (score >= maxScore) {
+            return `Perfekte Runde, ${name}.`;
+        }
+        return `Gut gespielt, ${name}.`;
+    }
+
+    showResultModal({ score, solved, total, maxScore }, user = null, actions = {}) {
         const fillContent = html => {
             if (html) {
                 this.elements.modalContent.innerHTML = html;
-                const titleEl = this.elements.modalContent.querySelector('[data-result-title]');
-                const scoreLabelEl = this.elements.modalContent.querySelector('[data-result-score-label]');
+                const avatarEl = this.elements.modalContent.querySelector('[data-result-avatar]');
+                const messageEl = this.elements.modalContent.querySelector('[data-result-message]');
                 const scoreEl = this.elements.modalContent.querySelector('[data-result-score]');
                 const solvedEl = this.elements.modalContent.querySelector('[data-result-solved]');
                 const totalEl = this.elements.modalContent.querySelector('[data-result-total]');
-                const maxLabelEl = this.elements.modalContent.querySelector('[data-result-max-label]');
                 const maxEl = this.elements.modalContent.querySelector('[data-result-max]');
+                const progressEl = this.elements.modalContent.querySelector('[data-result-progress]');
+                const actionButtons = this.elements.modalContent.querySelectorAll('[data-result-action]');
+                const progress = maxScore > 0 ? Math.max(0, Math.min(100, Math.round((score / maxScore) * 100))) : 0;
 
-                if (titleEl) titleEl.textContent = LABELS.modalTitle;
-                if (scoreLabelEl) scoreLabelEl.textContent = LABELS.modalScoreLabel;
+                if (avatarEl) {
+                    avatarEl.src = user?.profileImageUrl || 'images/website/avatar/quizo.png';
+                    avatarEl.alt = user?.username || user?.name ? `${user.username || user.name} Profilbild` : 'Quiz-Hero';
+                }
+                if (messageEl) messageEl.textContent = this.resultMessage({ score, maxScore }, user);
                 if (scoreEl) scoreEl.textContent = score;
                 if (solvedEl) solvedEl.textContent = solved;
                 if (totalEl) totalEl.textContent = total;
-                if (maxLabelEl) maxLabelEl.textContent = LABELS.modalMaxLabel;
                 if (maxEl) maxEl.textContent = maxScore;
+                if (progressEl) progressEl.style.width = `${progress}%`;
+                actionButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const action = button.dataset.resultAction;
+                        this.hideResultModal();
+                        if (action === 'retry') {
+                            actions.onRetry?.();
+                        } else {
+                            actions.onOverview?.();
+                        }
+                    });
+                });
             } else {
                 this.elements.modalContent.innerHTML = `
                     <h2 class="modal__headline">${LABELS.modalTitle}</h2>

@@ -1,30 +1,31 @@
-<h2 class="modal__headline" data-result-title></h2>
-<p class="modal__text">
-    <span data-result-score-label></span>
-    <strong data-result-score></strong>
-    (<span data-result-solved></span> von <span data-result-total></span> Fragen richtig)
-</p>
-<p class="modal__text">
-    <span data-result-max-label></span>
-    <strong data-result-max></strong>
-</p>
-<div class="modal__result_extra">
-    <h3 class="modal__result_extra_headline">Legende</h3>
-    <p><small>Fragen, die im zweiten Versuch richtig beantwortet wurden,
-        bringen nur noch 1 Punkte.
-    </small></p>
-    <div class="modal__result_extra_content">
-        <div class="modal__result_extra_row">
-            <div class="modal__result_extra_content_normal">Normale Fragen:</div>
-            <div>2 Punkte</div>
+<article class="result-summary">
+    <header class="result-summary__header">
+        <img class="result-summary__avatar" data-result-avatar src="images/website/avatar/quizo.png" alt="" loading="eager">
+        <div>
+            <p class="result-summary__kicker" data-result-kicker>Quiz beendet</p>
+            <h2 class="result-summary__headline" data-result-message></h2>
         </div>
-        <div class="modal__result_extra_row">
-            <div class="modal__result_extra_content_medium">Schwierige Fragen:</div>
-            <div>3 Punkte</div>
+    </header>
+
+    <section class="result-summary__score" aria-label="Quiz-Ergebnis">
+        <p class="result-summary__score-value">
+            <strong data-result-score></strong>
+            <span>/ <span data-result-max></span> Punkte</span>
+        </p>
+        <p class="result-summary__solved">
+            <span data-result-solved></span> von <span data-result-total></span> Fragen richtig
+        </p>
+        <div class="result-summary__progress" aria-hidden="true">
+            <span data-result-progress></span>
         </div>
-        <div class="modal__result_extra_row">
-            <div class="modal__result_extra_content_hero">Hero-Fragen:</div>
-            <div>5 Punkte</div>
-        </div>
+    </section>
+
+    <p class="result-summary__rules">
+        Punkte: Normal 2 &middot; Schwer 3 &middot; Hero 5 &middot; zweiter Versuch 1
+    </p>
+
+    <div class="result-summary__actions">
+        <button class="btn btn--modal result-summary__primary" type="button" data-result-action="retry">Nochmal spielen</button>
+        <button class="result-summary__secondary" type="button" data-result-action="overview">Zur &Uuml;bersicht</button>
     </div>
-</div>
+</article>

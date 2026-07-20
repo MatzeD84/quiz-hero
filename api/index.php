@@ -429,13 +429,19 @@ function account_dev_login(): void
     $email = normalize_email(env_value('QUIZ_HERO_DEV_ACCOUNT_EMAIL', 'localhero@example.test'));
     $avatarKey = normalize_avatar_key('hero');
 
-    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE username = :username');
-    $stmt->execute(['username' => $username]);
+    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE username = :username OR email = :email');
+    $stmt->execute(['username' => $username, 'email' => $email]);
     $existing = $stmt->fetch();
     if ($existing) {
         $userId = (int) $existing['id'];
-        $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = COALESCE(email_verified_at, NOW()), deleted_at = NULL WHERE id = :id');
-        $stmt->execute(['id' => $userId]);
+        $stmt = $pdo->prepare('UPDATE quiz_users SET username = :username, email = :email, avatar_key = :avatar_key, profile_image_url = :profile_image_url, email_verified_at = COALESCE(email_verified_at, NOW()), privacy_accepted_at = COALESCE(privacy_accepted_at, NOW()), deleted_at = NULL WHERE id = :id');
+        $stmt->execute([
+            'id' => $userId,
+            'username' => $username,
+            'email' => $email,
+            'avatar_key' => $avatarKey,
+            'profile_image_url' => avatar_url($avatarKey),
+        ]);
     } else {
         $stmt = $pdo->prepare('INSERT INTO quiz_users (username, email, password_hash, profile_image_url, avatar_key, email_verified_at, privacy_accepted_at, last_seen_at) VALUES (:username, :email, :password_hash, :profile_image_url, :avatar_key, NOW(), NOW(), NOW())');
         $stmt->execute([

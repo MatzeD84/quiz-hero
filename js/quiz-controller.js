@@ -258,18 +258,46 @@ export class QuizController {
             const stats = this.state.getStats();
             const context = {
                 categoryId: this.state.activeCategoryId,
-                tagId: this.state.activeTag
+                tagId: this.state.activeTag,
+                count: stats.total
             };
             this.userService?.saveResult(this.currentUser, stats, context).catch(error => {
                 if (CONFIG.devMode) {
                     console.warn('Quiz-Ergebnis konnte nicht gespeichert werden.', error);
                 }
             });
-            this.view.showResultModal(stats);
+            this.view.showResultModal(stats, this.currentUser, {
+                onRetry: () => this.handleRetryRound(context),
+                onOverview: () => this.handleResultOverview()
+            });
             this.state.resetRound();
             this.view.showCategories();
             this.clearSelectionFromUrl();
         }
+    }
+
+    handleRetryRound(context) {
+        if (context.categoryId) {
+            this.handleCategorySelected(context.categoryId);
+        } else if (context.tagId) {
+            this.handleTagSelected(context.tagId);
+        } else {
+            this.handleResultOverview();
+            return;
+        }
+        this.handleQuestionCountSelected(context.count);
+    }
+
+    handleResultOverview() {
+        this.state.resetRound();
+        this.view.showCategories();
+        this.view.updateScore(this.state.score);
+        this.view.renderSelectionLabel('');
+        this.view.renderSelectionDetails({ description: '', icon: '', label: '' });
+        if (this.view.elements.quizSelectionLabel) {
+            this.view.elements.quizSelectionLabel.textContent = '';
+        }
+        this.clearSelectionFromUrl();
     }
 
     handleAbort() {
