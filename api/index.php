@@ -7,6 +7,7 @@ require __DIR__ . '/bootstrap.php';
 const QUIZ_HERO_API_VERSION = '1';
 const QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES = 25165824;
 const QUIZ_HERO_CONSENT_VERSION = '2026-06-30';
+const QUIZ_HERO_USERNAME_MAX_LENGTH = 50;
 
 $action = $_GET['action'] ?? 'public-data';
 $apiVersion = trim((string) ($_GET['v'] ?? QUIZ_HERO_API_VERSION));
@@ -188,10 +189,20 @@ function normalize_email(?string $email): string
 
 function normalize_username(?string $username): string
 {
-    $username = mb_strtolower(trim((string) $username), 'UTF-8');
-    $username = preg_replace('/[^a-z0-9_-]+/u', '-', $username) ?? '';
-    $username = trim($username, '-_');
-    return mb_substr($username, 0, 80, 'UTF-8');
+    $username = trim((string) $username);
+    $username = preg_replace('/\p{C}+/u', '', $username) ?? '';
+    $username = preg_replace('/\s+/u', ' ', $username) ?? '';
+    return trim($username);
+}
+
+function require_username_length(string $username): void
+{
+    if (mb_strlen($username, 'UTF-8') < 3) {
+        json_response(['ok' => false, 'error' => 'Der Benutzername muss mindestens 3 Zeichen haben.'], 422);
+    }
+    if (mb_strlen($username, 'UTF-8') > QUIZ_HERO_USERNAME_MAX_LENGTH) {
+        json_response(['ok' => false, 'error' => 'Der Benutzername darf maximal ' . QUIZ_HERO_USERNAME_MAX_LENGTH . ' Zeichen lang sein.'], 422);
+    }
 }
 
 function require_password_strength(string $password): void
@@ -312,9 +323,7 @@ function account_register(): void
     $avatarKey = normalize_avatar_key($data['avatarKey'] ?? '');
     $privacyAccepted = !empty($data['privacyAccepted']);
 
-    if (mb_strlen($username, 'UTF-8') < 3) {
-        json_response(['ok' => false, 'error' => 'Der Benutzername muss mindestens 3 Zeichen haben.'], 422);
-    }
+    require_username_length($username);
     if ($email === '') {
         json_response(['ok' => false, 'error' => 'Bitte gib eine gueltige E-Mail-Adresse ein.'], 422);
     }
@@ -457,9 +466,7 @@ function account_update(): void
     $username = normalize_username($data['username'] ?? $user['username']);
     $avatarKey = normalize_avatar_key($data['avatarKey'] ?? $user['avatar_key']);
     $password = (string) ($data['password'] ?? '');
-    if (mb_strlen($username, 'UTF-8') < 3) {
-        json_response(['ok' => false, 'error' => 'Der Benutzername muss mindestens 3 Zeichen haben.'], 422);
-    }
+    require_username_length($username);
 
     $params = [
         'id' => (int) $user['id'],
