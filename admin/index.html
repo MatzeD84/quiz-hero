@@ -230,6 +230,7 @@
                         <h2>Fragen importieren</h2>
                         <span id="js-admin-import-count" class="admin-count"></span>
                     </div>
+                    <button id="js-admin-import-example-open" class="account-action-link admin-import-example-link" type="button">Beispieldatensatz anzeigen</button>
                     <div id="js-admin-import-dropzone" class="admin-dropzone" role="button" tabindex="0">
                         <strong>JSON-Datei hier ablegen oder auswählen</strong>
                         <span>Erlaubt ist eine .json-Datei bis 1 MB</span>
@@ -250,6 +251,53 @@
             </div>
         </section>
     </main>
+    <section id="js-admin-import-example-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-admin-import-example-title">
+        <div class="modal__content admin-import-example-modal">
+            <div class="modal__close">
+                <button id="js-admin-import-example-close" class="modal__close_btn" type="button" aria-label="Beispieldatensatz schließen">&times;</button>
+            </div>
+            <h2 id="js-admin-import-example-title" class="modal__headline">Beispieldatensatz</h2>
+            <p class="admin-import-example-note">Bilder werden beim JSON-Import nicht hochgeladen. Wenn eine Frage ein Bild bekommen soll, füge es nach dem Import im Admin-Bereich direkt an der Frage hinzu.</p>
+            <pre class="admin-import-example-code"><code>{
+  "questions": [
+    {
+      "categoryId": "rom",
+      "question": "Welcher römische Platz war in der Antike das politische und religiöse Zentrum der Stadt?",
+      "answers": [
+        "Forum Romanum",
+        "Piazza Navona",
+        "Campo de' Fiori",
+        "Piazza del Popolo"
+      ],
+      "correct": 0,
+      "difficulty": "easy",
+      "tags": ["rom", "antike", "geschichte"],
+      "imageUrl": "",
+      "backgroundKnowledge": "Das Forum Romanum war über Jahrhunderte der zentrale Ort für Politik, Religion, Rechtsprechung und Handel im antiken Rom.",
+      "active": true,
+      "sortOrder": 100
+    },
+    {
+      "categoryId": "neapel",
+      "question": "Welcher Vulkan liegt in der Nähe von Neapel und verschüttete im Jahr 79 n. Chr. Pompeji?",
+      "answers": [
+        "Ätna",
+        "Stromboli",
+        "Vesuv",
+        "Monte Amiata"
+      ],
+      "correct": 2,
+      "difficulty": "easy",
+      "tags": ["neapel", "vesuv", "antike"],
+      "imageUrl": "",
+      "backgroundKnowledge": "Der Vesuv ist einer der bekanntesten Vulkane Europas. Sein Ausbruch im Jahr 79 n. Chr. zerstörte unter anderem Pompeji und Herculaneum.",
+      "active": true,
+      "sortOrder": 110
+    }
+  ]
+}</code></pre>
+        </div>
+    </section>
     <script type="module" src="../js/admin.js?v=dev"></script>
 </body>
 </html>

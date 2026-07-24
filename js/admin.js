@@ -938,6 +938,14 @@ async function importPendingQuestions() {
     $('#js-admin-status').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+function openImportExample() {
+    $('#js-admin-import-example-modal').classList.remove('hide');
+}
+
+function closeImportExample() {
+    $('#js-admin-import-example-modal').classList.add('hide');
+}
+
 
 async function init() {
     const me = await api('admin-me');
@@ -1001,6 +1009,14 @@ async function init() {
     $('#js-admin-import-clear').addEventListener('click', () => {
         clearImportState();
         setStatus('Importauswahl entfernt.');
+    });
+    $('#js-admin-import-example-open').addEventListener('click', openImportExample);
+    $('#js-admin-import-example-close').addEventListener('click', closeImportExample);
+    $('#js-admin-import-example-modal').addEventListener('click', event => {
+        if (event.target === event.currentTarget) closeImportExample();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeImportExample();
     });
     ['#js-admin-media-search', '#js-admin-media-filter-category', '#js-admin-media-filter-tag', '#js-admin-media-unused', '#js-admin-media-sort'].forEach(selector => {
         $(selector).addEventListener('input', renderMedia);
