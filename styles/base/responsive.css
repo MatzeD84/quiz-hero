@@ -5,8 +5,17 @@
 }
 
 @media (max-width: 760px) {
+    .admin-shell {
+        border-radius: var(--radius-soft);
+        padding: 0.85rem;
+    }
+
     .user-panel__form,
+    .admin-panel,
+    .admin-media-panel,
     .admin-layout,
+    .admin-media-filters,
+    .admin-filters,
     .admin-form__answers,
     .account-page-form,
     .account-page-form__actions {
@@ -40,7 +49,38 @@
         width: 100%;
     }
 
+    .admin-tabs {
+        display: flex;
+        overflow: visible;
+        width: 100%;
+    }
+
+    .admin-list {
+        max-height: 42vh;
+    }
+
+    .admin-shell input,
+    .admin-shell select,
+    .admin-shell textarea {
+        box-sizing: border-box;
+        max-width: 100%;
+        width: 100%;
+    }
+
     .tab {
         flex: 1 1 0;
+        min-width: 0;
+        padding: 0.55rem 0.45rem;
+    }
+}
+
+@media (max-width: 430px) {
+    .admin-toolbar {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .admin-tabs {
+        font-size: 0.9rem;
     }
 }

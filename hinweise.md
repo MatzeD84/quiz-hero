@@ -1,5 +1,5 @@
 ﻿Nächstes Deplyment
-- 003_tag_enabled.sql importieren
+
 
 
 ------------------------------------------------
@@ -90,7 +90,6 @@ Ideen ChatGPT:
 - Kontextualisierung durch Mini-Stories
     Für hero-Fragen kurze Einbettung: „Im Jahr 64 n. Chr. brannte Rom nieder – welcher Kaiser…?“
 - end-zu-ent-Tests, Test
-- Datenbank: Aufwand, sinvoll?
 - Dramaturgie pro Frage: Kurzer “Intro‑Teaser” je Kategorie/Tag (1 Satz) und kleine  “Streak‑Hinweise” bei mehreren richtigen Antworten in Folge.
 - Progress‑Gefuehl: Visueller Fortschrittsbalken + mini‑Milestones (“Frage 5/15 – Halbzeit!”) und sanfte Uebergaenge zwischen Fragen.
 - Motivation: Badges/Meilensteine (z.B. “Fehlerfrei”, “Hero‑Master”, “Zweiter Versuch gerettet”).

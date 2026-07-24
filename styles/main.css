@@ -34,8 +34,10 @@
 @import './components/action-row.css';
 @import './components/tabs.css';
 @import './features/admin/admin-layout.css';
+@import './features/admin/status.css';
 @import './features/admin/admin-list.css';
 @import './features/admin/admin-form.css';
+@import './features/admin/media.css';
 @import './components/checkbox.css';
 @import './components/avatar-picker.css';
 @import './features/account/account-layout.css';

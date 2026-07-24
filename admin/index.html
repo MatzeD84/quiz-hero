@@ -27,42 +27,79 @@
         <section id="js-admin-app" class="admin-hidden">
             <div class="admin-toolbar">
                 <button id="js-admin-refresh" class="btn btn--modal" type="button">Daten neu laden</button>
-                <button id="js-admin-new-category" class="btn btn--modal" type="button">Neue Kategorie</button>
-                <button id="js-admin-new-question" class="btn btn--modal" type="button">Neue Frage</button>
-                <button id="js-admin-logout" class="btn btn--modal" type="button">Logout</button>
+                <button id="js-admin-logout" class="account-action-link" type="button">Logout</button>
             </div>
-            <div class="admin-layout">
-                <aside>
-                    <h2>Fragen</h2>
+
+            <nav class="tabs admin-tabs" aria-label="Admin-Bereiche">
+                <button class="tab tab--active" type="button" data-admin-tab="edit">Frage bearbeiten</button>
+                <button class="tab" type="button" data-admin-tab="new">Neue Frage</button>
+                <button class="tab" type="button" data-admin-tab="categories">Kategorien</button>
+                <button class="tab" type="button" data-admin-tab="media">Mediathek</button>
+            </nav>
+
+            <p id="js-admin-status" class="admin-status" role="status" aria-live="polite"></p>
+
+            <div id="js-admin-question-panel" class="admin-panel">
+                <aside id="js-admin-question-browser" class="admin-browser">
+                    <div class="admin-section-heading">
+                        <h2>Fragen</h2>
+                        <span id="js-admin-question-count" class="admin-count"></span>
+                    </div>
+                    <div class="admin-filters" aria-label="Fragen filtern">
+                        <label>
+                            <span>Suche</span>
+                            <input id="js-admin-question-search" type="search" placeholder="Frage suchen">
+                        </label>
+                        <label>
+                            <span>Kategorie</span>
+                            <select id="js-admin-filter-category"></select>
+                        </label>
+                        <label>
+                            <span>Tag</span>
+                            <select id="js-admin-filter-tag"></select>
+                        </label>
+                    </div>
                     <ul id="js-admin-question-list" class="admin-list"></ul>
                 </aside>
-                <section>
+
+                <section class="admin-editor">
                     <h2 id="js-admin-form-title">Frage bearbeiten</h2>
                     <form id="js-admin-question-form" class="admin-form">
                         <input id="js-admin-question-id" type="hidden">
                         <label>Kategorie <select id="js-admin-category"></select></label>
                         <label>Frage <textarea id="js-admin-question" required></textarea></label>
                         <div class="admin-form__answers">
-                            <label>Antwort 1 <input class="js-admin-answer" type="text" required></label>
-                            <label>Antwort 2 <input class="js-admin-answer" type="text" required></label>
-                            <label>Antwort 3 <input class="js-admin-answer" type="text" required></label>
-                            <label>Antwort 4 <input class="js-admin-answer" type="text" required></label>
+                            <label>Antwort 1 <input class="js-admin-answer" name="answer-1" type="text" required></label>
+                            <label>Antwort 2 <input class="js-admin-answer" name="answer-2" type="text" required></label>
+                            <label>Antwort 3 <input class="js-admin-answer" name="answer-3" type="text" required></label>
+                            <label>Antwort 4 <input class="js-admin-answer" name="answer-4" type="text" required></label>
                         </div>
                         <label>Richtige Antwort <select id="js-admin-correct"><option value="0">Antwort 1</option><option value="1">Antwort 2</option><option value="2">Antwort 3</option><option value="3">Antwort 4</option></select></label>
                         <label>Schwierigkeit <select id="js-admin-difficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hero">Hero</option></select></label>
                         <input id="js-admin-type" type="hidden" value="text">
                         <section class="admin-image-field">
                             <h3>Bild zur Frage</h3>
-                            <label>Bildpfad <input id="js-admin-image" type="text" placeholder="images/... oder https://..."></label>
+                            <input id="js-admin-image" type="hidden">
+                            <div id="js-admin-image-dropzone" class="admin-dropzone" role="button" tabindex="0">
+                                <strong>Bild hier ablegen oder auswählen</strong>
+                                <span>JPG, PNG oder WebP bis 6 MB</span>
+                                <input id="js-admin-image-file" type="file" accept="image/jpeg,image/png,image/webp">
+                            </div>
                             <div class="admin-image-field__preview admin-hidden" id="js-admin-image-preview-wrap">
                                 <img id="js-admin-image-preview" alt="Bildvorschau" loading="lazy">
+                                <button id="js-admin-image-remove" class="admin-image-field__remove" type="button" aria-label="Bild entfernen">×</button>
+                                <dl class="admin-image-field__meta">
+                                    <div>
+                                        <dt>Dateiname</dt>
+                                        <dd id="js-admin-image-filename"></dd>
+                                    </div>
+                                    <div>
+                                        <dt>Pfad</dt>
+                                        <dd id="js-admin-image-path"></dd>
+                                    </div>
+                                </dl>
                             </div>
-                            <div class="admin-image-field__upload">
-                                <input id="js-admin-image-file" type="file" accept="image/jpeg,image/png,image/webp">
-                                <button id="js-admin-image-upload" class="btn btn--modal" type="button">Bild hochladen</button>
-                                <button id="js-admin-image-remove" class="btn btn--modal" type="button">Bild entfernen</button>
-                            </div>
-                            <p class="admin-form__hint">Neue Uploads landen unter <code>images/uploads/&lt;kategorie&gt;/</code>. Erlaubt sind JPG, PNG und WebP bis 24 MB.</p>
+                            <p class="admin-form__hint">Das Bild wird automatisch unter <code>images/uploads/&lt;kategorie&gt;/</code> gespeichert.</p>
                         </section>
                         <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
@@ -73,15 +110,48 @@
                             <button id="js-admin-delete" class="btn btn--modal" type="button">Frage löschen</button>
                         </div>
                     </form>
+                </section>
+            </div>
 
-                    <form id="js-admin-category-form" class="admin-form">
+            <div id="js-admin-category-panel" class="admin-panel admin-hidden">
+                <section class="admin-category-editor">
+                    <div class="admin-section-heading">
                         <h2>Kategorie anlegen/bearbeiten</h2>
+                        <button id="js-admin-new-category" class="account-action-link" type="button">Neue Kategorie</button>
+                    </div>
+                    <label class="admin-category-select">
+                        <span>Bestehende Kategorie</span>
+                        <select id="js-admin-category-edit-select"></select>
+                    </label>
+                    <form id="js-admin-category-form" class="admin-form">
                         <label>ID <input id="js-admin-category-id" type="text" placeholder="z-b-berlin"></label>
                         <label>Titel <input id="js-admin-category-title" type="text"></label>
                         <label>Beschreibung <input id="js-admin-category-description" type="text"></label>
                         <label>SEO-Text <textarea id="js-admin-category-seo"></textarea></label>
-                        <label>Icon-URL <input id="js-admin-category-icon" type="text"></label>
-                        <label>Sortierung <input id="js-admin-category-sort" type="number" min="0" value="100"></label>
+                        <section class="admin-image-field">
+                            <h3>Kategorie-Bild</h3>
+                            <input id="js-admin-category-icon" type="hidden">
+                            <div id="js-admin-category-image-dropzone" class="admin-dropzone" role="button" tabindex="0">
+                                <strong>Bild hier ablegen oder auswählen</strong>
+                                <span>JPG, PNG oder WebP bis 6 MB</span>
+                                <input id="js-admin-category-image-file" type="file" accept="image/jpeg,image/png,image/webp">
+                            </div>
+                            <div class="admin-image-field__preview admin-image-field__preview--compact admin-hidden" id="js-admin-category-image-preview-wrap">
+                                <img id="js-admin-category-image-preview" alt="Kategorie-Bildvorschau" loading="lazy">
+                                <button id="js-admin-category-image-remove" class="admin-image-field__remove" type="button" aria-label="Kategorie-Bild entfernen">×</button>
+                                <dl class="admin-image-field__meta">
+                                    <div>
+                                        <dt>Dateiname</dt>
+                                        <dd id="js-admin-category-image-filename"></dd>
+                                    </div>
+                                    <div>
+                                        <dt>Pfad</dt>
+                                        <dd id="js-admin-category-image-path"></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </section>
+                        <label>Sortierung <input id="js-admin-category-sort" type="number" min="0" value="100"><small>Kleinere Zahlen erscheinen weiter oben.</small></label>
                         <label><input id="js-admin-category-enabled" type="checkbox" checked> Aktiv</label>
                         <label><input id="js-admin-category-badge-active" type="checkbox"> Badge anzeigen</label>
                         <label>Badge-Text <input id="js-admin-category-badge-text" type="text" value="Neu"></label>
@@ -89,8 +159,51 @@
                     </form>
                 </section>
             </div>
+
+            <div id="js-admin-media-panel" class="admin-media-panel admin-hidden">
+                <section class="admin-media-browser">
+                    <div class="admin-section-heading">
+                        <h2>Mediathek</h2>
+                        <span id="js-admin-media-count" class="admin-count"></span>
+                    </div>
+                    <div class="admin-filters admin-media-filters" aria-label="Bilder filtern">
+                        <label>
+                            <span>Suche</span>
+                            <input id="js-admin-media-search" type="search" placeholder="Bildname suchen">
+                        </label>
+                        <label>
+                            <span>Kategorie</span>
+                            <select id="js-admin-media-filter-category"></select>
+                        </label>
+                        <label>
+                            <span>Tag</span>
+                            <select id="js-admin-media-filter-tag"></select>
+                        </label>
+                        <label class="admin-checkbox-inline">
+                            <input id="js-admin-media-unused" type="checkbox">
+                            <span>Nur unbenutzte Bilder</span>
+                        </label>
+                    </div>
+                    <div class="admin-image-field">
+                        <h3>Neues Bild hinzufügen</h3>
+                        <div id="js-admin-media-dropzone" class="admin-dropzone" role="button" tabindex="0">
+                            <img id="js-admin-media-dropzone-thumb" class="admin-dropzone__thumb admin-hidden" alt="Ausgewähltes Bild" loading="lazy">
+                            <strong>Bild hier ablegen oder auswählen</strong>
+                            <span>JPG, PNG oder WebP bis 6 MB</span>
+                            <input id="js-admin-media-file" type="file" accept="image/jpeg,image/png,image/webp">
+                        </div>
+                        <div id="js-admin-media-upload-actions" class="admin-upload-actions admin-hidden">
+                            <button id="js-admin-media-upload-btn" class="btn btn--modal" type="button">Hochladen</button>
+                            <button id="js-admin-media-clear-btn" class="account-action-link" type="button">Auswahl entfernen</button>
+                        </div>
+                    </div>
+                    <div id="js-admin-media-grid" class="admin-media-grid"></div>
+                </section>
+                <aside id="js-admin-media-detail" class="admin-media-detail">
+                    <p class="admin-list__empty">Wähle ein Bild aus.</p>
+                </aside>
+            </div>
         </section>
-        <p id="js-admin-status" class="admin-status"></p>
     </main>
     <script type="module" src="../js/admin.js?v=dev"></script>
 </body>

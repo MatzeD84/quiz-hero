@@ -1,0 +1,128 @@
+.admin-media-panel {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.45fr);
+}
+
+.admin-media-browser,
+.admin-media-detail {
+    min-width: 0;
+}
+
+.admin-media-filters {
+    grid-template-columns: minmax(180px, 1fr) minmax(150px, 0.7fr) minmax(150px, 0.7fr) minmax(180px, 0.75fr);
+}
+
+.admin-checkbox-inline {
+    align-items: end;
+    display: flex !important;
+    gap: 0.5rem !important;
+}
+
+.admin-checkbox-inline input {
+    width: auto;
+}
+
+.admin-media-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    margin-top: 1rem;
+}
+
+.admin-media-card {
+    appearance: none;
+    background: #fff;
+    border: var(--line-frost);
+    color: var(--dark-color);
+    cursor: pointer;
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.55rem;
+    text-align: left;
+    transition: var(--transition-soft);
+}
+
+.admin-media-card:hover,
+.admin-media-card:focus-visible,
+.admin-media-card--active {
+    border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+.admin-media-card img {
+    aspect-ratio: 4 / 3;
+    background: color-mix(in srgb, var(--belizehole-color) 6%, #fff);
+    object-fit: contain;
+    width: 100%;
+}
+
+.admin-media-card__name {
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-media-card__meta {
+    color: var(--light-gray-color);
+    font-size: 0.85rem;
+}
+
+.admin-media-detail {
+    align-self: start;
+    border: var(--line-frost);
+    display: grid;
+    gap: 0.85rem;
+    padding: 1rem;
+}
+
+.admin-media-detail__image {
+    background: #fff;
+    max-height: 280px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.admin-media-detail__meta {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+}
+
+.admin-media-detail__meta div {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.admin-media-detail__meta dt,
+.admin-media-detail__usage h3 {
+    font-weight: 700;
+}
+
+.admin-media-detail__meta dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.admin-media-detail__usage ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+.admin-media-detail__usage li {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.admin-media-detail__actions {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.admin-media-detail__note {
+    color: var(--light-gray-color);
+    margin: 0;
+}

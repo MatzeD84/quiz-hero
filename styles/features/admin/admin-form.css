@@ -1,3 +1,11 @@
+.admin-editor > h2 {
+    margin-top: 0;
+}
+
+.admin-form {
+    align-items: start;
+}
+
 .admin-form__answers {
     display: grid;
     gap: 0.65rem;
@@ -12,4 +20,14 @@
     color: var(--light-gray-color);
     font-size: 0.9rem;
     margin: 0;
+}
+
+.admin-form label:has(input[type="checkbox"]) {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.admin-form input[type="checkbox"] {
+    width: auto;
 }

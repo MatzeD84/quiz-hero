@@ -1,13 +1,57 @@
 .admin-list {
     display: grid;
-    gap: 0.65rem;
+    gap: 0.45rem;
     list-style: none;
     margin: 0;
+    max-height: 68vh;
+    overflow: auto;
     padding: 0;
+    padding-right: 0.25rem;
 }
 
-.admin-list button {
+.admin-question-button {
+    appearance: none;
+    background: #fff;
+    border: var(--line-frost);
+    color: var(--dark-color);
+    cursor: pointer;
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.65rem 0.75rem;
     text-align: left;
+    transition: var(--transition-soft);
     width: 100%;
 }
 
+.admin-question-button:hover,
+.admin-question-button:focus-visible,
+.admin-question-button--active {
+    border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+.admin-question-button--active {
+    background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
+}
+
+.admin-question-button__title {
+    display: -webkit-box;
+    font-weight: 700;
+    line-clamp: 2;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.admin-question-button__meta {
+    color: var(--light-gray-color);
+    font-size: 0.82rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-list__empty {
+    color: var(--light-gray-color);
+    padding: 0.75rem 0;
+}

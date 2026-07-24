@@ -32,7 +32,10 @@ const setStatus = (message, type = 'info') => {
     elements.status.dataset.status = message ? type : '';
 };
 
-const showView = view => {
+const showView = (view, options = {}) => {
+    if (options.clearStatus) {
+        setStatus('');
+    }
     elements.panels.forEach(panel => {
         panel.classList.toggle('admin-hidden', panel.dataset.loginPanel !== view);
     });
@@ -78,7 +81,7 @@ const redirectAfterLogin = () => {
 };
 
 elements.tabs.forEach(tab => {
-    tab.addEventListener('click', () => showView(tab.dataset.loginView));
+    tab.addEventListener('click', () => showView(tab.dataset.loginView, { clearStatus: true }));
 });
 
 elements.devLogin?.classList.toggle('admin-hidden', !CONFIG.devMode);
