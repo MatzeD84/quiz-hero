@@ -31,11 +31,11 @@
 
             <form id="js-login-form" class="user-panel__form login-panel login-panel--login js-login-panel" data-login-panel="login">
                 <label>
-                    <span>E-Mail oder Username</span>
+                    <span>E-Mail oder Username*</span>
                     <input id="js-login-identifier" type="text" maxlength="190" autocomplete="username" required>
                 </label>
                 <label>
-                    <span>Passwort</span>
+                    <span>Passwort*</span>
                     <input id="js-login-password" type="password" autocomplete="current-password" required>
                 </label>
                 <div class="login-panel__actions">
@@ -49,15 +49,15 @@
 
             <form id="js-register-form" class="user-panel__form login-panel login-panel--register js-login-panel admin-hidden" data-login-panel="register">
                 <label>
-                    <span>Username</span>
+                    <span>Username*</span>
                     <input id="js-register-username" type="text" maxlength="25" autocomplete="username" required>
                 </label>
                 <label>
-                    <span>E-Mail</span>
+                    <span>E-Mail*</span>
                     <input id="js-register-email" type="email" maxlength="190" autocomplete="email" required>
                 </label>
                 <label>
-                    <span>Passwort</span>
+                    <span>Passwort*</span>
                     <input id="js-register-password" type="password" minlength="10" autocomplete="new-password" required>
                 </label>
                 <div class="account-avatar-field js-login-avatar-group" data-avatar-target="register">
@@ -65,7 +65,7 @@
                 </div>
                 <label class="account-checkbox">
                     <input id="js-register-privacy" type="checkbox" required>
-                    <span>Ich habe die <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutzhinweise</a> gelesen und möchte einen Quiz-Hero Account erstellen.</span>
+                    <span>Ich habe die <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutzhinweise</a> gelesen und möchte einen Quiz-Hero Account erstellen.*</span>
                 </label>
                 <button class="btn btn--modal login-panel__submit" type="submit">Registrieren</button>
             </form>
@@ -76,7 +76,7 @@
                     <p>Du bekommst einen Link, wenn die E-Mail bekannt ist.</p>
                 </div>
                 <label>
-                    <span>E-Mail</span>
+                    <span>E-Mail*</span>
                     <input id="js-reset-email" type="email" maxlength="190" autocomplete="email" required>
                 </label>
                 <button class="btn btn--modal login-panel__submit" type="submit">Reset-Link senden</button>
@@ -86,7 +86,7 @@
             <form id="js-reset-form" class="user-panel__form login-panel login-panel--reset js-login-panel admin-hidden" data-login-panel="reset">
                 <input id="js-reset-token" type="hidden">
                 <label>
-                    <span>Neues Passwort</span>
+                    <span>Neues Passwort*</span>
                     <input id="js-reset-password" type="password" minlength="10" autocomplete="new-password" required>
                 </label>
                 <button class="btn btn--modal login-panel__submit" type="submit">Passwort speichern</button>
