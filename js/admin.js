@@ -678,6 +678,7 @@ function fillQuestion(question = {}) {
     $('#js-admin-background').value = question.backgroundKnowledge || '';
     $('#js-admin-sort').value = question.sortOrder || 100;
     $('#js-admin-active').checked = question.active !== false;
+    $('#js-admin-delete').classList.toggle('admin-hidden', !question.id);
     updateImageState();
     renderQuestions();
 }
@@ -715,6 +716,7 @@ function collectQuestion() {
         active: $('#js-admin-active').checked
     };
 }
+
 
 async function init() {
     const me = await api('admin-me');
