@@ -35,6 +35,7 @@
                 <button class="tab" type="button" data-admin-tab="new">Neue Frage</button>
                 <button class="tab" type="button" data-admin-tab="categories">Kategorien</button>
                 <button class="tab" type="button" data-admin-tab="media">Mediathek</button>
+                <button class="tab" type="button" data-admin-tab="import">Import</button>
             </nav>
 
             <p id="js-admin-status" class="admin-status" role="status" aria-live="polite"></p>
@@ -57,6 +58,16 @@
                         <label>
                             <span>Tag</span>
                             <select id="js-admin-filter-tag"></select>
+                        </label>
+                        <label>
+                            <span>Sortieren</span>
+                            <select id="js-admin-question-sort">
+                                <option value="default">Standard</option>
+                                <option value="alpha-asc">Alphabetisch A-Z</option>
+                                <option value="alpha-desc">Alphabetisch Z-A</option>
+                                <option value="newest">Neuestes Datum</option>
+                                <option value="oldest">Ältestes Datum</option>
+                            </select>
                         </label>
                     </div>
                     <ul id="js-admin-question-list" class="admin-list"></ul>
@@ -183,6 +194,16 @@
                             <input id="js-admin-media-unused" type="checkbox">
                             <span>Nur unbenutzte Bilder</span>
                         </label>
+                        <label>
+                            <span>Sortieren</span>
+                            <select id="js-admin-media-sort">
+                                <option value="default">Standard</option>
+                                <option value="alpha-asc">Alphabetisch A-Z</option>
+                                <option value="alpha-desc">Alphabetisch Z-A</option>
+                                <option value="newest">Neuestes Datum</option>
+                                <option value="oldest">Ältestes Datum</option>
+                            </select>
+                        </label>
                     </div>
                     <div class="admin-image-field">
                         <h3>Neues Bild hinzufügen</h3>
@@ -202,6 +223,30 @@
                 <aside id="js-admin-media-detail" class="admin-media-detail">
                     <p class="admin-list__empty">Wähle ein Bild aus.</p>
                 </aside>
+            </div>
+            <div id="js-admin-import-panel" class="admin-import-panel admin-hidden">
+                <section class="admin-import">
+                    <div class="admin-section-heading">
+                        <h2>Fragen importieren</h2>
+                        <span id="js-admin-import-count" class="admin-count"></span>
+                    </div>
+                    <div id="js-admin-import-dropzone" class="admin-dropzone" role="button" tabindex="0">
+                        <strong>JSON-Datei hier ablegen oder auswählen</strong>
+                        <span>Erlaubt ist eine .json-Datei bis 1 MB</span>
+                        <input id="js-admin-import-file" type="file" accept="application/json,.json">
+                    </div>
+                    <div class="admin-import-paste">
+                        <label for="js-admin-import-json">JSON direkt einfügen</label>
+                        <textarea id="js-admin-import-json" rows="10" spellcheck="false" placeholder="{&quot;questions&quot;:[...]}"></textarea>
+                        <button id="js-admin-import-parse" class="account-action-link" type="button">JSON prüfen</button>
+                    </div>
+                    <div id="js-admin-import-actions" class="admin-upload-actions admin-hidden">
+                        <button id="js-admin-import-btn" class="btn btn--modal" type="button" disabled>Gültige Fragen importieren</button>
+                        <button id="js-admin-import-clear" class="account-action-link" type="button">Auswahl entfernen</button>
+                    </div>
+                    <div id="js-admin-import-summary" class="admin-import-summary admin-hidden"></div>
+                    <div id="js-admin-import-list" class="admin-import-list"></div>
+                </section>
             </div>
         </section>
     </main>

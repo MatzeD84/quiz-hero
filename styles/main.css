@@ -38,6 +38,7 @@
 @import './features/admin/admin-list.css';
 @import './features/admin/admin-form.css';
 @import './features/admin/media.css';
+@import './features/admin/import.css';
 @import './components/checkbox.css';
 @import './components/avatar-picker.css';
 @import './features/account/account-layout.css';

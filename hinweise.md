@@ -131,21 +131,6 @@ Admin-Bereich: sehr hoher Nutzen:
 
 eigene jsion mit fragen importieren
 
-Mediathek
-- übersicht aller bilder
-- löschen, hinzufügen
-- namen ändern
-- Bild (wo wird das bild verwenden ID anzeigen)
-- Tabelle quiz_media
-- “ungenutzte Bilder löschen”
-- “Bild wird verwendet von X Fragen”
-- echte Löschung nur, wenn nicht verwendet
-
-Fragen-Vorschau direkt im Admin
-Beim Bearbeiten sieht der Admin rechts sofort, wie die Frage später im Quiz aussieht.
-
-Bild-Auswahl aus vorhandenen Assets
-Statt Bildpfad manuell eintippen: kleine Galerie aus images/, Suchfeld, Vorschau, „Bild übernehmen“.
 
 Tag-Verwaltung im Admin
 Tags aktuell eher Seed/JSON-lastig. Später: Tags anlegen, Icons wählen, aktivieren/deaktivieren.

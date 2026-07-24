@@ -8,6 +8,7 @@ const $$ = selector => Array.from(document.querySelectorAll(selector));
 let csrfToken = '';
 const API_VERSION = CONFIG.apiVersion || '1';
 const MAX_IMAGE_UPLOAD_BYTES = 6 * 1024 * 1024;
+const MAX_JSON_IMPORT_BYTES = 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 const apiUrl = action => {
@@ -58,13 +59,13 @@ const api = async (action, payload = null) => {
 
 const validateImageFile = file => {
     if (!file) {
-        throw new Error('Bitte waehle zuerst ein Bild aus.');
+        throw new Error('Bitte wähle zuerst ein Bild aus.');
     }
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
         throw new Error('Erlaubt sind JPG, PNG und WebP.');
     }
     if (file.size > MAX_IMAGE_UPLOAD_BYTES) {
-        throw new Error('Das Bild darf maximal 6 MB gross sein.');
+        throw new Error('Das Bild darf maximal 6 MB groß sein.');
     }
 };
 
@@ -113,6 +114,7 @@ let mediaItems = [];
 let selectedMediaPath = '';
 let pendingMediaPreviewUrl = '';
 let pendingMediaUploadFile = null;
+let pendingImportQuestions = [];
 
 const inferStatusType = message => {
     if (!message) return '';
@@ -214,6 +216,7 @@ function getFilteredMedia() {
     const categoryId = $('#js-admin-media-filter-category').value;
     const tag = $('#js-admin-media-filter-tag').value;
     const unusedOnly = $('#js-admin-media-unused').checked;
+    const sort = $('#js-admin-media-sort').value;
 
     return mediaItems.filter(item => {
         const searchable = [item.filename, item.path, item.folder].join(' ').toLowerCase();
@@ -221,7 +224,10 @@ function getFilteredMedia() {
             && (!categoryId || (item.categories || []).includes(categoryId))
             && (!tag || (item.tags || []).includes(tag))
             && (!unusedOnly || !item.used);
-    });
+    }).sort((a, b) => compareAdminItems(a, b, sort, {
+        text: item => item.filename || item.path || '',
+        date: item => item.modifiedAt || ''
+    }));
 }
 
 function clearMediaFilters() {
@@ -407,6 +413,7 @@ function getFilteredQuestions() {
     const search = $('#js-admin-question-search').value.trim().toLowerCase();
     const categoryId = $('#js-admin-filter-category').value;
     const tag = $('#js-admin-filter-tag').value;
+    const sort = $('#js-admin-question-sort').value;
 
     return questions.filter(question => {
         const tags = question.tag || [];
@@ -421,6 +428,33 @@ function getFilteredQuestions() {
         return (!categoryId || question.categoryId === categoryId)
             && (!tag || tags.includes(tag))
             && (!search || searchable.includes(search));
+    }).sort((a, b) => compareAdminItems(a, b, sort, {
+        text: item => item.question || '',
+        date: item => item.createdAt || item.updatedAt || ''
+    }));
+}
+
+function compareAdminItems(a, b, sort, getters) {
+    if (sort === 'alpha-asc' || sort === 'alpha-desc') {
+        const result = getters.text(a).localeCompare(getters.text(b), 'de', { sensitivity: 'base' });
+        return sort === 'alpha-desc' ? -result : result;
+    }
+    if (sort === 'newest' || sort === 'oldest') {
+        const aTime = Date.parse(getters.date(a)) || 0;
+        const bTime = Date.parse(getters.date(b)) || 0;
+        return sort === 'newest' ? bTime - aTime : aTime - bTime;
+    }
+    return 0;
+}
+
+function formatAdminDate(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
     });
 }
 
@@ -448,9 +482,12 @@ function renderQuestions() {
         button.innerHTML = `
             <span class="admin-question-button__title"></span>
             <span class="admin-question-button__meta"></span>
+            <span class="admin-question-button__date"></span>
         `;
         button.querySelector('.admin-question-button__title').textContent = question.question;
+        const createdAt = formatAdminDate(question.createdAt);
         button.querySelector('.admin-question-button__meta').textContent = [question.categoryTitle, question.difficulty, tags].filter(Boolean).join(' · ');
+        button.querySelector('.admin-question-button__date').textContent = createdAt ? `hochgeladen am ${createdAt}` : '';
         button.addEventListener('click', () => {
             setAdminTab('edit');
             fillQuestion(question);
@@ -470,9 +507,10 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-selected', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media');
+    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import');
     $('#js-admin-category-panel').classList.toggle('admin-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('admin-hidden', tab !== 'media');
+    $('#js-admin-import-panel').classList.toggle('admin-hidden', tab !== 'import');
     $('#js-admin-question-browser').classList.toggle('admin-hidden', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
@@ -717,6 +755,189 @@ function collectQuestion() {
     };
 }
 
+const normalizeQuestionKey = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+const importQuestionsFromJson = data => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.questions)) return data.questions;
+    throw new Error('JSON muss ein Array oder ein Objekt mit "questions" enthalten.');
+};
+
+const normalizeImportTags = value => {
+    if (Array.isArray(value)) return value.map(tag => String(tag).trim()).filter(Boolean);
+    return String(value || '').split(',').map(tag => tag.trim()).filter(Boolean);
+};
+
+function validateImportQuestions(rawQuestions) {
+    const existingKeys = new Set(questions.map(question => normalizeQuestionKey(question.question)));
+    const knownCategories = new Set(categories.map(category => category.id));
+    const seen = new Set();
+
+    return rawQuestions.map((entry, index) => {
+        const errors = [];
+        const warnings = [];
+        if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+            return { index, valid: false, question: '', categoryId: '', errors: ['Eintrag ist kein Objekt.'], warnings: [], data: null };
+        }
+
+        const categoryId = String(entry.categoryId || entry.category || '').trim();
+        const questionText = String(entry.question || '').trim();
+        const answers = Array.isArray(entry.answers) ? entry.answers.map(answer => String(answer).trim()).filter(Boolean) : [];
+        const correct = Number(entry.correct ?? 0);
+        const difficulty = String(entry.difficulty || 'easy').trim();
+        const key = normalizeQuestionKey(questionText);
+
+        if (!categoryId) {
+            errors.push('Kategorie fehlt.');
+        } else if (!knownCategories.has(categoryId)) {
+            warnings.push(`Kategorie "${categoryId}" existiert noch nicht und wird automatisch angelegt.`);
+        }
+        if (!questionText) errors.push('Fragetext fehlt.');
+        if (answers.length !== 4) errors.push('Es muessen genau vier Antworten vorhanden sein.');
+        if (!Number.isInteger(correct) || correct < 0 || correct > 3) errors.push('correct muss zwischen 0 und 3 liegen.');
+        if (difficulty && !['easy', 'medium', 'hero'].includes(difficulty)) {
+            warnings.push(`Unbekannte Schwierigkeit "${difficulty}" wird auf easy gesetzt.`);
+        }
+        if (key && existingKeys.has(key)) {
+            errors.push('Diese Frage existiert bereits.');
+        } else if (key && seen.has(key)) {
+            errors.push('Diese Frage kommt mehrfach in der Importdatei vor.');
+        } else if (key) {
+            seen.add(key);
+        }
+
+        return {
+            index,
+            valid: errors.length === 0,
+            question: questionText,
+            categoryId,
+            errors,
+            warnings,
+            data: {
+                categoryId,
+                question: questionText,
+                answers,
+                correct,
+                difficulty,
+                tags: normalizeImportTags(entry.tags ?? entry.tag),
+                imageUrl: String(entry.imageUrl || entry.image || '').trim(),
+                backgroundKnowledge: String(entry.backgroundKnowledge || entry.background || '').trim(),
+                sortOrder: Number(entry.sortOrder || 100),
+                active: entry.active !== false
+            }
+        };
+    });
+}
+
+function renderImportResults(results = []) {
+    const list = $('#js-admin-import-list');
+    const summary = $('#js-admin-import-summary');
+    const count = $('#js-admin-import-count');
+    const importButton = $('#js-admin-import-btn');
+    const validCount = results.filter(item => item.valid).length;
+    const errorCount = results.filter(item => item.errors.length).length;
+    const warningCount = results.filter(item => item.warnings.length).length;
+
+    count.textContent = results.length ? `${validCount} / ${results.length} gültig` : '';
+    importButton.disabled = validCount === 0;
+    summary.classList.toggle('admin-hidden', results.length === 0);
+    summary.textContent = results.length
+        ? `${validCount} gültig, ${errorCount} fehlerhaft, ${warningCount} mit Warnung.`
+        : '';
+    list.replaceChildren();
+
+    results.forEach(item => {
+        const card = document.createElement('article');
+        card.className = `admin-import-item ${item.valid ? 'admin-import-item--valid' : 'admin-import-item--invalid'}`;
+
+        const title = document.createElement('h3');
+        title.textContent = item.question || `Eintrag ${item.index + 1}`;
+        const meta = document.createElement('p');
+        meta.className = 'admin-import-item__meta';
+        meta.textContent = [item.categoryId || 'Keine Kategorie', item.valid ? 'gültig' : 'fehlerhaft'].join(' - ');
+        card.append(title, meta);
+
+        [...item.errors, ...item.warnings].forEach(message => {
+            const note = document.createElement('p');
+            note.className = item.errors.includes(message) ? 'admin-import-item__error' : 'admin-import-item__warning';
+            note.textContent = message;
+            card.appendChild(note);
+        });
+        list.appendChild(card);
+    });
+}
+
+function clearImportState() {
+    pendingImportQuestions = [];
+    $('#js-admin-import-file').value = '';
+    $('#js-admin-import-json').value = '';
+    $('#js-admin-import-actions').classList.add('admin-hidden');
+    renderImportResults([]);
+}
+
+function stageImportText(text) {
+    let parsed;
+    try {
+        parsed = JSON.parse(text);
+    } catch (error) {
+        throw new Error('Das ist kein gültiges JSON. Bitte prüfe die Struktur: Die Datei muss mit { } oder [ ] beginnen und korrekt geschlossene Anführungszeichen, Kommas und Klammern enthalten.');
+    }
+    const rawQuestions = importQuestionsFromJson(parsed);
+    if (rawQuestions.length > 200) throw new Error('Maximal 200 Fragen pro Import.');
+    const results = validateImportQuestions(rawQuestions);
+    pendingImportQuestions = results.filter(item => item.valid).map(item => item.data);
+    $('#js-admin-import-actions').classList.remove('admin-hidden');
+    renderImportResults(results);
+    setStatus(`${pendingImportQuestions.length} gültige Fragen für den Import gefunden.`);
+}
+
+function stagePastedImportJson() {
+    try {
+        const text = $('#js-admin-import-json').value.trim();
+        if (!text) throw new Error('Bitte JSON-Code einfügen.');
+        if (new Blob([text]).size > MAX_JSON_IMPORT_BYTES) throw new Error('Der JSON-Code darf maximal 1 MB groß sein.');
+        $('#js-admin-import-file').value = '';
+        stageImportText(text);
+    } catch (error) {
+        pendingImportQuestions = [];
+        $('#js-admin-import-actions').classList.add('admin-hidden');
+        renderImportResults([]);
+        setStatus(error.message || 'JSON-Code konnte nicht gelesen werden.', 'error');
+    }
+}
+
+async function stageImportJson(file) {
+    try {
+        if (!file) throw new Error('Bitte eine JSON-Datei auswählen.');
+        if (!file.name.toLowerCase().endsWith('.json')) throw new Error('Bitte eine .json-Datei auswählen.');
+        if (file.size > MAX_JSON_IMPORT_BYTES) throw new Error('Die JSON-Datei darf maximal 1 MB groß sein.');
+        const text = await file.text();
+        $('#js-admin-import-json').value = '';
+        stageImportText(text);
+    } catch (error) {
+        clearImportState();
+        setStatus(error.message || 'JSON-Datei konnte nicht gelesen werden.', 'error');
+    }
+}
+
+async function importPendingQuestions() {
+    if (pendingImportQuestions.length === 0) {
+        setStatus('Keine gültigen Fragen für den Import vorhanden.');
+        return;
+    }
+    const result = await api('admin-question-import', { questions: pendingImportQuestions });
+    if (!result.ok) {
+        setStatus(result.error || 'Fragen konnten nicht importiert werden.');
+        if (result.results) renderImportResults(result.results);
+        return;
+    }
+    const message = `${result.importedCount} Fragen importiert. ${result.skippedCount} übersprungen.`;
+    clearImportState();
+    await loadData();
+    setStatus(message, 'success');
+    $('#js-admin-status').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 
 async function init() {
     const me = await api('admin-me');
@@ -743,7 +964,7 @@ async function init() {
     $$('[data-admin-tab]').forEach(button => {
         button.addEventListener('click', () => setAdminTab(button.dataset.adminTab, { clearStatus: true }));
     });
-    ['#js-admin-question-search', '#js-admin-filter-category', '#js-admin-filter-tag'].forEach(selector => {
+    ['#js-admin-question-search', '#js-admin-filter-category', '#js-admin-filter-tag', '#js-admin-question-sort'].forEach(selector => {
         $(selector).addEventListener('input', renderQuestions);
         $(selector).addEventListener('change', renderQuestions);
     });
@@ -762,12 +983,26 @@ async function init() {
         fileInputSelector: '#js-admin-media-file',
         onFile: stageMediaImage
     });
+    setupDropzone({
+        dropzoneSelector: '#js-admin-import-dropzone',
+        fileInputSelector: '#js-admin-import-file',
+        onFile: stageImportJson
+    });
     $('#js-admin-media-upload-btn').addEventListener('click', uploadPendingMediaImage);
     $('#js-admin-media-clear-btn').addEventListener('click', () => {
         clearPendingMediaPreview();
         setStatus('Bildauswahl entfernt.');
     });
-    ['#js-admin-media-search', '#js-admin-media-filter-category', '#js-admin-media-filter-tag', '#js-admin-media-unused'].forEach(selector => {
+    $('#js-admin-import-btn').addEventListener('click', importPendingQuestions);
+    $('#js-admin-import-parse').addEventListener('click', stagePastedImportJson);
+    $('#js-admin-import-json').addEventListener('input', () => {
+        $('#js-admin-import-file').value = '';
+    });
+    $('#js-admin-import-clear').addEventListener('click', () => {
+        clearImportState();
+        setStatus('Importauswahl entfernt.');
+    });
+    ['#js-admin-media-search', '#js-admin-media-filter-category', '#js-admin-media-filter-tag', '#js-admin-media-unused', '#js-admin-media-sort'].forEach(selector => {
         $(selector).addEventListener('input', renderMedia);
         $(selector).addEventListener('change', renderMedia);
     });

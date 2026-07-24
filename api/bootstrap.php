@@ -151,7 +151,7 @@ function require_admin_csrf(): void
     require_admin();
     $token = (string) ($_SERVER['HTTP_X_QUIZ_HERO_CSRF'] ?? '');
     if ($token === '' || !hash_equals(csrf_token(), $token)) {
-        json_response(['ok' => false, 'error' => 'Ungueltiges Sicherheits-Token. Bitte neu einloggen.'], 403);
+        json_response(['ok' => false, 'error' => 'Ungültiges Sicherheits-Token. Bitte neu einloggen.'], 403);
     }
 }
 
@@ -197,19 +197,19 @@ function require_user_token(int $userId, string $token): void
 {
     $parts = explode('.', $token, 2);
     if (count($parts) !== 2) {
-        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
     }
 
     [$payload, $signature] = $parts;
     $expected = hash_hmac('sha256', $payload, token_secret());
     if (!hash_equals($expected, $signature)) {
-        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
     }
 
     $decoded = base64url_decode($payload);
     $data = is_string($decoded) ? json_decode($decoded, true) : null;
     if (!is_array($data) || (int) ($data['userId'] ?? 0) !== $userId) {
-        json_response(['ok' => false, 'error' => 'Ungueltiges User-Token. Bitte neu einloggen.'], 401);
+        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
     }
 
     $issuedAt = (int) ($data['issuedAt'] ?? 0);

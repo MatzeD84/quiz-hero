@@ -1,0 +1,92 @@
+.admin-import-panel {
+    max-width: 920px;
+}
+
+.admin-import {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-import-paste {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.admin-import-paste label {
+    font-weight: 700;
+}
+
+.admin-import-paste textarea {
+    box-sizing: border-box;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    min-height: 220px;
+    resize: vertical;
+    width: 100%;
+}
+
+.admin-import-paste .account-action-link {
+    justify-self: start;
+}
+
+.admin-import-summary {
+    background: color-mix(in srgb, var(--belizehole-color) 7%, #fff);
+    border: var(--line-frost);
+    color: var(--dark-color);
+    font-weight: 700;
+    padding: 0.75rem 0.9rem;
+}
+
+.admin-import-list {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.admin-import-item {
+    background: #fff;
+    border: var(--line-frost);
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.75rem 0.9rem;
+}
+
+.admin-import-item--valid {
+    border-color: color-mix(in srgb, var(--greensea-color) 42%, transparent);
+}
+
+.admin-import-item--invalid {
+    border-color: color-mix(in srgb, var(--mandarin-color) 48%, transparent);
+}
+
+.admin-import-item h3,
+.admin-import-item p {
+    margin: 0;
+}
+
+.admin-import-item h3 {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.25;
+}
+
+.admin-import-item__meta,
+.admin-import-item__warning,
+.admin-import-item__error {
+    font-size: 0.9rem;
+}
+
+.admin-import-item__meta {
+    color: var(--light-gray-color);
+}
+
+.admin-import-item__warning {
+    color: var(--carrot-color);
+}
+
+.admin-import-item__error {
+    color: var(--mandarin-color);
+    font-weight: 700;
+}

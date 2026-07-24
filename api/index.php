@@ -39,6 +39,7 @@ try {
         'admin-data' => admin_data(),
         'seo-export' => seo_export(),
         'admin-question-save' => admin_question_save(),
+        'admin-question-import' => admin_question_import(),
         'admin-question-delete' => admin_question_delete(),
         'admin-category-save' => admin_category_save(),
         'admin-image-upload' => admin_image_upload(),
@@ -310,7 +311,7 @@ function store_email_verification(PDO $pdo, int $userId, string $email): void
     send_account_mail(
         $email,
         'Quiz-Hero Registrierung bestaetigen',
-        "Hallo,\n\nbitte bestaetige deine Registrierung bei Quiz-Hero:\n{$link}\n\nWenn du dich nicht registriert hast, ignoriere diese E-Mail.\n\nViele Gruesse\nQuiz-Hero"
+        "Hallo,\n\nbitte bestätige deine Registrierung bei Quiz-Hero:\n{$link}\n\nWenn du dich nicht registriert hast, ignoriere diese E-Mail.\n\nViele Grüße\nQuiz-Hero"
     );
 }
 
@@ -327,7 +328,7 @@ function account_register(): void
 
     require_username_length($username);
     if ($email === '') {
-        json_response(['ok' => false, 'error' => 'Bitte gib eine gueltige E-Mail-Adresse ein.'], 422);
+        json_response(['ok' => false, 'error' => 'Bitte gib eine gültige E-Mail-Adresse ein.'], 422);
     }
     require_password_strength($password);
     if (!$privacyAccepted) {
@@ -375,7 +376,7 @@ function account_verify_email(): void
     $data = read_json_body();
     $token = (string) ($data['token'] ?? '');
     if ($token === '') {
-        json_response(['ok' => false, 'error' => 'Bestaetigungs-Token fehlt.'], 422);
+        json_response(['ok' => false, 'error' => 'Bestätigungs-Token fehlt.'], 422);
     }
 
     $pdo = db();
@@ -383,7 +384,7 @@ function account_verify_email(): void
     $stmt->execute(['token_hash' => hash('sha256', $token)]);
     $row = $stmt->fetch();
     if (!$row) {
-        json_response(['ok' => false, 'error' => 'Der Bestaetigungslink ist ungueltig oder abgelaufen.'], 400);
+        json_response(['ok' => false, 'error' => 'Der Bestätigungslink ist ungültig oder abgelaufen.'], 400);
     }
 
     $pdo->beginTransaction();
@@ -409,7 +410,7 @@ function account_login(): void
     $stmt->execute(['email' => $identifier, 'username' => $identifier]);
     $user = $stmt->fetch();
     if (!$user || empty($user['password_hash']) || !password_verify($password, $user['password_hash'])) {
-        json_response(['ok' => false, 'error' => 'Login-Daten sind ungueltig.'], 401);
+        json_response(['ok' => false, 'error' => 'Login-Daten sind ungültig.'], 401);
     }
     if (empty($user['email_verified_at'])) {
         json_response(['ok' => false, 'error' => 'Bitte bestaetige zuerst deine E-Mail-Adresse.'], 403);
@@ -541,8 +542,8 @@ function account_request_password_reset(): void
             $link = public_base_url() . '/login.html?resetToken=' . urlencode($token);
             send_account_mail(
                 $email,
-                'Quiz-Hero Passwort zuruecksetzen',
-                "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zuruecksetzen:\n{$link}\n\nDer Link ist 1 Stunde gueltig.\n\nViele Gruesse\nQuiz-Hero"
+                'Quiz-Hero Passwort zurücksetzen',
+                "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zurücksetzen:\n{$link}\n\nDer Link ist 1 Stunde gültig.\n\nViele Grüße\nQuiz-Hero"
             );
         }
     }
@@ -562,7 +563,7 @@ function account_reset_password(): void
     $stmt->execute(['token_hash' => hash('sha256', $token)]);
     $row = $stmt->fetch();
     if (!$row) {
-        json_response(['ok' => false, 'error' => 'Der Reset-Link ist ungueltig oder abgelaufen.'], 400);
+        json_response(['ok' => false, 'error' => 'Der Reset-Link ist ungültig oder abgelaufen.'], 400);
     }
 
     $pdo->beginTransaction();
@@ -663,6 +664,80 @@ function admin_question_save(): void
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => !empty($question['id']) ? $question['id'] : (int) $pdo->lastInsertId()]);
 }
 
+function admin_question_import(): void
+{
+    require_method('POST');
+    require_admin_csrf();
+    $data = read_json_body();
+    $rawQuestions = $data['questions'] ?? null;
+    if (!is_array($rawQuestions)) {
+        json_response(['ok' => false, 'error' => 'Import erwartet ein Array "questions".'], 422);
+    }
+    if (count($rawQuestions) === 0) {
+        json_response(['ok' => false, 'error' => 'Die Importdatei enthält keine Fragen.'], 422);
+    }
+    if (count($rawQuestions) > 200) {
+        json_response(['ok' => false, 'error' => 'Maximal 200 Fragen pro Import.'], 422);
+    }
+
+    $pdo = db();
+    $categoryIds = array_fill_keys($pdo->query('SELECT id FROM quiz_categories')->fetchAll(PDO::FETCH_COLUMN), true);
+    $existingKeys = [];
+    foreach ($pdo->query('SELECT question FROM quiz_questions')->fetchAll(PDO::FETCH_COLUMN) as $questionText) {
+        $existingKeys[question_duplicate_key((string) $questionText)] = true;
+    }
+
+    $seenImportKeys = [];
+    $validQuestions = [];
+    $results = [];
+    foreach (array_values($rawQuestions) as $index => $entry) {
+        $result = validate_import_question($entry, $index, $categoryIds, $existingKeys, $seenImportKeys);
+        if ($result['valid']) {
+            $validQuestions[] = $result['payload'];
+        }
+        unset($result['payload']);
+        $results[] = $result;
+    }
+
+    if ($validQuestions === []) {
+        json_response([
+            'ok' => false,
+            'apiVersion' => QUIZ_HERO_API_VERSION,
+            'error' => 'Keine gültige Frage zum Importieren gefunden.',
+            'results' => $results,
+        ], 422);
+    }
+
+    $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :sort_order)');
+    $categoryStmt = $pdo->prepare('INSERT IGNORE INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, "", "", NULL, 1, :badge_json, 100)');
+    $pdo->beginTransaction();
+    try {
+        foreach ($validQuestions as $question) {
+            if (!isset($categoryIds[$question['category_id']])) {
+                $categoryStmt->execute([
+                    'id' => $question['category_id'],
+                    'title' => $question['category_id'],
+                    'badge_json' => json_encode(['active' => false, 'text' => ''], JSON_UNESCAPED_UNICODE),
+                ]);
+                $categoryIds[$question['category_id']] = true;
+            }
+            $stmt->execute($question);
+        }
+        $pdo->commit();
+    } catch (Throwable $exception) {
+        $pdo->rollBack();
+        throw $exception;
+    }
+
+    json_response([
+        'ok' => true,
+        'apiVersion' => QUIZ_HERO_API_VERSION,
+        'importedCount' => count($validQuestions),
+        'skippedCount' => count($rawQuestions) - count($validQuestions),
+        'results' => $results,
+    ]);
+}
+
 function admin_question_delete(): void
 {
     require_method('POST');
@@ -707,7 +782,7 @@ function admin_image_upload(): void
 
     $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
     if ($contentLength > 0 && $contentLength > QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES + 1048576) {
-        json_response(['ok' => false, 'error' => 'Das Bild ist zu gross. Maximal erlaubt sind 6 MB.'], 413);
+        json_response(['ok' => false, 'error' => 'Das Bild ist zu groß. Maximal erlaubt sind 6 MB.'], 413);
     }
 
     $context = clean_string($_POST['context'] ?? 'question', 40);
@@ -733,7 +808,7 @@ function admin_image_upload(): void
 
     $file = $_FILES['image'] ?? null;
     if (!is_array($file) || ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
-        json_response(['ok' => false, 'error' => 'Bitte waehle eine Bilddatei aus.'], 422);
+        json_response(['ok' => false, 'error' => 'Bitte wähle eine Bilddatei aus.'], 422);
     }
 
     if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK) {
@@ -742,7 +817,7 @@ function admin_image_upload(): void
 
     $size = (int) ($file['size'] ?? 0);
     if ($size <= 0 || $size > QUIZ_HERO_MAX_IMAGE_UPLOAD_BYTES) {
-        json_response(['ok' => false, 'error' => 'Das Bild darf maximal 6 MB gross sein.'], 413);
+        json_response(['ok' => false, 'error' => 'Das Bild darf maximal 6 MB groß sein.'], 413);
     }
 
     $tmpName = (string) ($file['tmp_name'] ?? '');
@@ -752,7 +827,7 @@ function admin_image_upload(): void
 
     $imageInfo = @getimagesize($tmpName);
     if ($imageInfo === false) {
-        json_response(['ok' => false, 'error' => 'Die Datei ist kein gueltiges Bild.'], 422);
+        json_response(['ok' => false, 'error' => 'Die Datei ist kein gültiges Bild.'], 422);
     }
 
     $mime = detect_mime_type($tmpName);
@@ -842,7 +917,7 @@ function admin_media_delete(): void
     $root = realpath(dirname(__DIR__) . '/images/uploads');
     $target = realpath(dirname(__DIR__) . '/' . $path);
     if ($root === false || $target === false || !str_starts_with($target, $root . DIRECTORY_SEPARATOR)) {
-        json_response(['ok' => false, 'error' => 'Ungueltiger Bildpfad.'], 400);
+        json_response(['ok' => false, 'error' => 'Ungültiger Bildpfad.'], 400);
     }
     if (!is_file($target) || !unlink($target)) {
         json_response(['ok' => false, 'error' => 'Bild konnte nicht geloescht werden.'], 500);
@@ -1036,13 +1111,120 @@ function detect_mime_type(string $path): string
 function upload_error_message(int $error): string
 {
     return match ($error) {
-        UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Das Bild ist zu gross.',
+        UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Das Bild ist zu groß.',
         UPLOAD_ERR_PARTIAL => 'Das Bild wurde nur teilweise hochgeladen.',
         UPLOAD_ERR_NO_TMP_DIR => 'Server-Upload-Ordner fehlt.',
         UPLOAD_ERR_CANT_WRITE => 'Bild konnte nicht auf dem Server gespeichert werden.',
         UPLOAD_ERR_EXTENSION => 'Upload wurde von einer PHP-Erweiterung gestoppt.',
         default => 'Upload fehlgeschlagen.',
     };
+}
+
+function question_duplicate_key(string $question): string
+{
+    $question = mb_strtolower(trim($question), 'UTF-8');
+    $question = preg_replace('/\s+/u', ' ', $question) ?? $question;
+    return $question;
+}
+
+function normalize_import_tags(mixed $tags): string
+{
+    if (is_array($tags)) {
+        return implode(',', array_map(static fn($tag): string => (string) $tag, $tags));
+    }
+    return (string) $tags;
+}
+
+function validate_import_question(mixed $entry, int $index, array $categoryIds, array $existingKeys, array &$seenImportKeys): array
+{
+    $number = $index + 1;
+    $errors = [];
+    $warnings = [];
+    if (!is_array($entry)) {
+        return [
+            'index' => $index,
+            'valid' => false,
+            'question' => '',
+            'categoryId' => '',
+            'errors' => ["Eintrag {$number} ist kein Objekt."],
+            'warnings' => [],
+            'payload' => null,
+        ];
+    }
+
+    $categoryId = slugify((string) ($entry['categoryId'] ?? $entry['category'] ?? ''));
+    $questionText = clean_string($entry['question'] ?? '', 1000);
+    $answers = is_array($entry['answers'] ?? null)
+        ? array_values(array_map(static fn($answer): string => clean_string((string) $answer, 255), $entry['answers']))
+        : [];
+    $answers = array_values(array_filter($answers, static fn(string $answer): bool => $answer !== ''));
+    $correctRaw = $entry['correct'] ?? 0;
+    $correct = filter_var($correctRaw, FILTER_VALIDATE_INT);
+    $difficulty = clean_string($entry['difficulty'] ?? 'easy', 20);
+    $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', normalize_import_tags($entry['tags'] ?? $entry['tag'] ?? '')))));
+    $imageUrl = clean_url($entry['imageUrl'] ?? $entry['image'] ?? '', 500);
+    $sortOrder = filter_var($entry['sortOrder'] ?? 100, FILTER_VALIDATE_INT);
+
+    if ($categoryId === '') {
+        $errors[] = 'Kategorie fehlt.';
+    } elseif (!isset($categoryIds[$categoryId])) {
+        $warnings[] = "Kategorie '{$categoryId}' existiert noch nicht und wird automatisch angelegt.";
+    }
+    if ($questionText === '') {
+        $errors[] = 'Fragetext fehlt.';
+    }
+    if (count($answers) !== 4) {
+        $errors[] = 'Es muessen genau vier nicht leere Antworten vorhanden sein.';
+    }
+    if ($correct === false || $correct < 0 || $correct > 3) {
+        $errors[] = 'correct muss eine Zahl zwischen 0 und 3 sein.';
+        $correct = 0;
+    }
+    if (!in_array($difficulty, ['easy', 'medium', 'hero'], true)) {
+        $warnings[] = "Unbekannte Schwierigkeit '{$difficulty}' wurde auf easy gesetzt.";
+        $difficulty = 'easy';
+    }
+    if ($sortOrder === false || $sortOrder < 0 || $sortOrder > 100000) {
+        $warnings[] = 'Ungültige Sortierung wurde auf 100 gesetzt.';
+        $sortOrder = 100;
+    }
+    if ($questionText !== '') {
+        $duplicateKey = question_duplicate_key($questionText);
+        if (isset($existingKeys[$duplicateKey])) {
+            $errors[] = 'Diese Frage existiert bereits.';
+        } elseif (isset($seenImportKeys[$duplicateKey])) {
+            $errors[] = 'Diese Frage kommt mehrfach in der Importdatei vor.';
+        } else {
+            $seenImportKeys[$duplicateKey] = true;
+        }
+    }
+
+    $payload = null;
+    if ($errors === []) {
+        $payload = [
+            'category_id' => $categoryId,
+            'question' => $questionText,
+            'answers_json' => json_encode($answers, JSON_UNESCAPED_UNICODE),
+            'correct_index' => $correct,
+            'difficulty' => $difficulty,
+            'question_type' => $imageUrl !== '' ? 'image' : 'text',
+            'image_url' => $imageUrl ?: null,
+            'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
+            'background_knowledge' => clean_string($entry['backgroundKnowledge'] ?? $entry['background'] ?? '', 2000) ?: null,
+            'active' => array_key_exists('active', $entry) ? (!empty($entry['active']) ? 1 : 0) : 1,
+            'sort_order' => $sortOrder,
+        ];
+    }
+
+    return [
+        'index' => $index,
+        'valid' => $errors === [],
+        'question' => $questionText,
+        'categoryId' => $categoryId,
+        'errors' => $errors,
+        'warnings' => $warnings,
+        'payload' => $payload,
+    ];
 }
 
 function normalize_question_payload(array $data): array
@@ -1058,7 +1240,7 @@ function normalize_question_payload(array $data): array
     }
     $imageUrl = clean_url($data['imageUrl'] ?? '', 500);
     $type = $imageUrl !== '' ? 'image' : 'text';
-    $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', (string) ($data['tags'] ?? '')))));
+    $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', normalize_import_tags($data['tags'] ?? '')))));
 
     return [
         'category_id' => slugify((string) ($data['categoryId'] ?? '')),
@@ -1106,5 +1288,7 @@ function format_question(array $question): array
         'backgroundKnowledge' => $question['background_knowledge'] ?? '',
         'active' => (bool) $question['active'],
         'sortOrder' => (int) $question['sort_order'],
+        'createdAt' => isset($question['created_at']) ? date(DATE_ATOM, strtotime((string) $question['created_at'])) : '',
+        'updatedAt' => isset($question['updated_at']) ? date(DATE_ATOM, strtotime((string) $question['updated_at'])) : '',
     ];
 }

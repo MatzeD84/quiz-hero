@@ -10,7 +10,7 @@
 }
 
 .admin-media-filters {
-    grid-template-columns: minmax(180px, 1fr) minmax(150px, 0.7fr) minmax(150px, 0.7fr) minmax(180px, 0.75fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .admin-checkbox-inline {
