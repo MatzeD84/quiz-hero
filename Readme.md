@@ -534,6 +534,14 @@ Admin-Passwort-Hash lokal erzeugen:
 php -r "echo password_hash('DEIN_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
 ```
 
+Falls lokal kein PHP direkt installiert ist, den Hash ueber den Docker-Container erzeugen:
+
+```bash
+docker compose exec app php -r "echo password_hash('DEIN_NEUES_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
+```
+
+Wenn das produktive Admin-Passwort vergessen wurde, ein neues starkes Passwort waehlen, mit einem der Befehle oben einen neuen Hash erzeugen, den GitHub Secret `QUIZ_HERO_ADMIN_PASSWORD_HASH` aktualisieren und den Deploy-Workflow neu starten. Der Admin-Login nutzt keinen Passwort-Reset per E-Mail.
+
 ### Deployment starten
 In GitHub:
 

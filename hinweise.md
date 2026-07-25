@@ -129,8 +129,6 @@ https://quiz-hero.de/, API, Admin-Login-Endpoint, Sitemap.
 -----
 Admin-Bereich: sehr hoher Nutzen:
 
-eigene jsion mit fragen importieren
-
 
 Tag-Verwaltung im Admin
 Tags aktuell eher Seed/JSON-lastig. Später: Tags anlegen, Icons wählen, aktivieren/deaktivieren.

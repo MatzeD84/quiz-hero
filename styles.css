@@ -615,7 +615,7 @@ a:hover {
     border-radius: 8px;
     box-shadow: 0 24px 70px color-mix(in srgb, var(--dark-color) 28%, transparent);
     color: var(--dark-color);
-    margin: 12vh auto;
+    margin: 5% auto;
     padding: 1.5rem;
     width: 80%;
     max-width: 500px;

@@ -272,19 +272,38 @@ function random_account_token(): string
     return bin2hex(random_bytes(32));
 }
 
-function send_account_mail(string $to, string $subject, string $message): void
+function send_account_mail(string $to, string $subject, string $message, ?string $htmlMessage = null): void
 {
     $from = env_value('QUIZ_HERO_MAIL_FROM', 'helden@quiz-hero.de');
     $transport = env_value('QUIZ_HERO_MAIL_TRANSPORT', 'log');
+    $encodedSubject = function_exists('mb_encode_mimeheader')
+        ? mb_encode_mimeheader($subject, 'UTF-8')
+        : $subject;
     $headers = [
         'From: Quiz-Hero <' . $from . '>',
         'Reply-To: ' . $from,
-        'Content-Type: text/plain; charset=UTF-8',
+        'MIME-Version: 1.0',
         'X-Mailer: Quiz-Hero',
     ];
+    $mailBody = $message;
+    if ($htmlMessage !== null) {
+        $boundary = 'quizhero-' . bin2hex(random_bytes(12));
+        $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+        $mailBody = "--{$boundary}\r\n"
+            . "Content-Type: text/plain; charset=UTF-8\r\n"
+            . "Content-Transfer-Encoding: 8bit\r\n\r\n"
+            . $message . "\r\n\r\n"
+            . "--{$boundary}\r\n"
+            . "Content-Type: text/html; charset=UTF-8\r\n"
+            . "Content-Transfer-Encoding: 8bit\r\n\r\n"
+            . $htmlMessage . "\r\n\r\n"
+            . "--{$boundary}--";
+    } else {
+        $headers[] = 'Content-Type: text/plain; charset=UTF-8';
+    }
 
     if ($transport === 'mail') {
-        if (@mail($to, $subject, $message, implode("\r\n", $headers))) {
+        if (@mail($to, $encodedSubject, $mailBody, implode("\r\n", $headers))) {
             return;
         }
         error_log('Quiz-Hero mail() failed for ' . $to);
@@ -296,8 +315,185 @@ function send_account_mail(string $to, string $subject, string $message): void
     }
     @file_put_contents(
         $dir . '/mail.log',
-        '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$message}\n\n",
+        '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$mailBody}\n\n",
         FILE_APPEND
+    );
+}
+
+function account_verification_mail_html(string $link): string
+{
+    $safeLink = htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoUrl = htmlspecialchars(public_base_url() . '/images/website/avatar/logo.png', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+    return <<<HTML
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz-Hero Registrierung bestätigen</title>
+</head>
+<body style="margin:0;padding:0;background:#eef4f6;color:#222;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#eef4f6;margin:0;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #c9dbe5;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:28px 28px 12px;">
+              <img src="{$logoUrl}" alt="Quiz-Hero" width="84" height="84" style="display:block;border:0;width:84px;height:84px;object-fit:contain;">
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 28px;text-align:center;">
+              <h1 style="margin:0 0 12px;font-size:28px;line-height:1.15;color:#222;font-weight:800;">Willkommen bei Quiz-Hero</h1>
+              <p style="margin:0 0 22px;font-size:16px;line-height:1.55;color:#5f666b;">Bestätige kurz deine E-Mail-Adresse, dann ist dein Account bereit.</p>
+              <a href="{$safeLink}" style="display:inline-block;background:#3f3f3f;color:#ffffff;text-decoration:none;font-size:17px;font-weight:700;padding:14px 22px;border-radius:4px;">E-Mail bestätigen</a>
+              <p style="margin:22px 0 0;font-size:13px;line-height:1.5;color:#747b80;">Der Link ist 24 Stunden gültig. Wenn du dich nicht registriert hast, kannst du diese E-Mail ignorieren.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 32px;background:#f6fafb;border-top:1px solid #dbe8ee;">
+              <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:#747b80;">Falls der Button nicht funktioniert, kopiere diesen Link in deinen Browser:</p>
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#226184;word-break:break-all;">{$safeLink}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
+function account_registration_notice_mail_html(string $username, string $email): string
+{
+    $safeUsername = htmlspecialchars($username, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeEmail = htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeCreatedAt = htmlspecialchars(date('d.m.Y H:i'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoUrl = htmlspecialchars(public_base_url() . '/images/website/avatar/logo.png', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+    return <<<HTML
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neue Quiz-Hero Registrierung</title>
+</head>
+<body style="margin:0;padding:0;background:#eef4f6;color:#222;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#eef4f6;margin:0;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #c9dbe5;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:28px 28px 12px;">
+              <img src="{$logoUrl}" alt="Quiz-Hero" width="84" height="84" style="display:block;border:0;width:84px;height:84px;object-fit:contain;">
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 30px;text-align:left;">
+              <h1 style="margin:0 0 14px;font-size:26px;line-height:1.15;color:#222;font-weight:800;text-align:center;">Neue Registrierung</h1>
+              <p style="margin:0 0 18px;font-size:16px;line-height:1.55;color:#5f666b;text-align:center;">Ein neuer Quiz-Hero Account wurde angelegt.</p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6fafb;border:1px solid #dbe8ee;border-radius:8px;">
+                <tr>
+                  <td style="padding:14px 16px;font-size:14px;line-height:1.5;color:#747b80;">Username</td>
+                  <td style="padding:14px 16px;font-size:14px;line-height:1.5;color:#222;font-weight:700;text-align:right;">{$safeUsername}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 16px;border-top:1px solid #dbe8ee;font-size:14px;line-height:1.5;color:#747b80;">E-Mail</td>
+                  <td style="padding:14px 16px;border-top:1px solid #dbe8ee;font-size:14px;line-height:1.5;color:#222;font-weight:700;text-align:right;">{$safeEmail}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 16px;border-top:1px solid #dbe8ee;font-size:14px;line-height:1.5;color:#747b80;">Zeitpunkt</td>
+                  <td style="padding:14px 16px;border-top:1px solid #dbe8ee;font-size:14px;line-height:1.5;color:#222;font-weight:700;text-align:right;">{$safeCreatedAt}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
+function notify_registration_created(string $username, string $email): void
+{
+    $recipient = normalize_email(env_value('QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL', env_value('QUIZ_HERO_MAIL_FROM', '')));
+    if ($recipient === '') {
+        return;
+    }
+
+    send_account_mail(
+        $recipient,
+        'Neue Quiz-Hero Registrierung',
+        "Hallo,\n\nes hat sich ein neuer User bei Quiz-Hero registriert.\n\nUsername: {$username}\nE-Mail: {$email}\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nViele Grüße\nQuiz-Hero",
+        account_registration_notice_mail_html($username, $email)
+    );
+}
+
+function account_deleted_mail_html(string $username): string
+{
+    $safeUsername = htmlspecialchars($username !== '' ? $username : 'Quiz-Hero', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeDeletedAt = htmlspecialchars(date('d.m.Y H:i'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoUrl = htmlspecialchars(public_base_url() . '/images/website/avatar/logo.png', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+    return <<<HTML
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz-Hero Account gelöscht</title>
+</head>
+<body style="margin:0;padding:0;background:#eef4f6;color:#222;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#eef4f6;margin:0;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #c9dbe5;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:28px 28px 12px;">
+              <img src="{$logoUrl}" alt="Quiz-Hero" width="84" height="84" style="display:block;border:0;width:84px;height:84px;object-fit:contain;">
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 30px;text-align:center;">
+              <h1 style="margin:0 0 12px;font-size:26px;line-height:1.15;color:#222;font-weight:800;">Account gelöscht</h1>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.55;color:#5f666b;">Hallo {$safeUsername}, dein Quiz-Hero Account wurde gelöscht.</p>
+              <p style="margin:0;font-size:14px;line-height:1.55;color:#747b80;">Deine persönlichen Accountdaten wurden entfernt. Deine bisherigen Quiz-Ergebnisse bleiben nur anonymisiert erhalten.</p>
+              <p style="margin:18px 0 0;font-size:13px;line-height:1.5;color:#747b80;">Zeitpunkt: {$safeDeletedAt}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 32px;background:#f6fafb;border-top:1px solid #dbe8ee;text-align:center;">
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#747b80;">Wenn du deinen Account nicht selbst gelöscht hast, antworte bitte auf diese E-Mail.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
+function send_account_deleted_mail(string $email, string $username): void
+{
+    $recipient = normalize_email($email);
+    if ($recipient === '') {
+        return;
+    }
+
+    $displayName = $username !== '' ? $username : 'Quiz-Hero';
+    send_account_mail(
+        $recipient,
+        'Quiz-Hero Account gelöscht',
+        "Hallo {$displayName},\n\ndein Quiz-Hero Account wurde gelöscht.\n\nDeine persönlichen Accountdaten wurden entfernt. Deine bisherigen Quiz-Ergebnisse bleiben nur anonymisiert erhalten.\n\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nWenn du deinen Account nicht selbst gelöscht hast, antworte bitte auf diese E-Mail.\n\nViele Grüße\nQuiz-Hero",
+        account_deleted_mail_html($username)
     );
 }
 
@@ -310,8 +506,9 @@ function store_email_verification(PDO $pdo, int $userId, string $email): void
     $link = public_base_url() . '/login.html?verifyToken=' . urlencode($token);
     send_account_mail(
         $email,
-        'Quiz-Hero Registrierung bestaetigen',
-        "Hallo,\n\nbitte bestätige deine Registrierung bei Quiz-Hero:\n{$link}\n\nWenn du dich nicht registriert hast, ignoriere diese E-Mail.\n\nViele Grüße\nQuiz-Hero"
+        'Quiz-Hero Registrierung bestätigen',
+        "Hallo,\n\nbitte bestätige deine Registrierung bei Quiz-Hero:\n{$link}\n\nDer Link ist 24 Stunden gültig.\n\nWenn du dich nicht registriert hast, ignoriere diese E-Mail.\n\nViele Grüße\nQuiz-Hero",
+        account_verification_mail_html($link)
     );
 }
 
@@ -357,6 +554,7 @@ function account_register(): void
         ]);
         store_email_verification($pdo, $userId, $email);
         $pdo->commit();
+        notify_registration_created($username, $email);
     } catch (PDOException $exception) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
@@ -510,8 +708,10 @@ function account_delete(): void
     $user = require_account_from_payload($data);
     $confirm = (string) ($data['confirm'] ?? '');
     if ($confirm !== 'DELETE') {
-        json_response(['ok' => false, 'error' => 'Bitte bestaetige die Loeschung mit DELETE.'], 422);
+        json_response(['ok' => false, 'error' => 'Bitte bestätige die Löschung mit DELETE.'], 422);
     }
+    $deletedEmail = (string) ($user['email'] ?? '');
+    $deletedUsername = (string) ($user['username'] ?? '');
 
     $pdo = db();
     $pdo->beginTransaction();
@@ -520,6 +720,7 @@ function account_delete(): void
     $stmt = $pdo->prepare('UPDATE quiz_users SET username = NULL, email = NULL, password_hash = NULL, profile_image_url = NULL, avatar_key = NULL, deleted_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => (int) $user['id']]);
     $pdo->commit();
+    send_account_deleted_mail($deletedEmail, $deletedUsername);
 
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }

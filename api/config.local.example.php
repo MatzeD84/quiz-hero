@@ -14,6 +14,7 @@ return [
     'QUIZ_HERO_SEO_EXPORT_TOKEN' => 'LONG_RANDOM_SEO_EXPORT_TOKEN',
     'SITE_URL' => 'https://quiz-hero.de',
     'QUIZ_HERO_MAIL_FROM' => 'helden@quiz-hero.de',
+    'QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL' => 'helden@quiz-hero.de',
     'QUIZ_HERO_MAIL_TRANSPORT' => 'mail',
     'QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN' => 'false',
 ];
