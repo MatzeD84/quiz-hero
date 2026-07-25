@@ -106,6 +106,9 @@ export class QuizController {
         this.view.onUserAccountUpdate?.(data => this.handleUserAccountUpdate(data));
         this.view.onUserDelete?.(() => this.handleUserDelete());
         this.view.onUserLogout?.(() => this.handleUserLogout());
+        this.view.initQuestionFeedbackModal?.();
+        this.view.onQuestionFeedbackOpen?.(() => this.view.openQuestionFeedbackModal());
+        this.view.onQuestionFeedbackSubmit?.(data => this.handleQuestionFeedbackSubmit(data));
     }
 
     async handleUserAccountUpdate(data) {
@@ -263,6 +266,36 @@ export class QuizController {
                 this.view.renderBackgroundKnowledge('');
             }
             this.view.lockAnswers();
+        }
+    }
+
+    async handleQuestionFeedbackSubmit({ types, comment }) {
+        if (!this.userService) return;
+        const question = this.state.getCurrentQuestion();
+        if (!question?.id) {
+            this.view.renderQuestionFeedbackStatus('Feedback ist für diese Frage gerade nicht möglich.', 'error');
+            return;
+        }
+        if ((!types || types.length === 0) && !String(comment || '').trim()) {
+            this.view.renderQuestionFeedbackStatus('Bitte wähle mindestens einen Punkt aus oder schreibe einen Kommentar.', 'error');
+            return;
+        }
+        this.view.renderQuestionFeedbackStatus('Feedback wird gesendet ...', 'info');
+        try {
+            await this.userService.submitQuestionFeedback(this.currentUser, {
+                questionId: question.id,
+                types,
+                comment
+            });
+            this.view.renderQuestionFeedbackStatus('Danke, dein Feedback wurde gesendet.', 'success');
+            window.setTimeout(() => this.view.closeQuestionFeedbackModal(), 900);
+        } catch (error) {
+            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                this.handleRemovedAccount();
+                this.view.closeQuestionFeedbackModal();
+                return;
+            }
+            this.view.renderQuestionFeedbackStatus(error.message || 'Feedback konnte nicht gesendet werden.', 'error');
         }
     }
 

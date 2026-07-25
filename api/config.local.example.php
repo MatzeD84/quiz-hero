@@ -15,6 +15,7 @@ return [
     'SITE_URL' => 'https://quiz-hero.de',
     'QUIZ_HERO_MAIL_FROM' => 'helden@quiz-hero.de',
     'QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL' => 'helden@quiz-hero.de',
+    'QUIZ_HERO_FEEDBACK_NOTIFY_EMAIL' => 'helden@quiz-hero.de',
     'QUIZ_HERO_MAIL_TRANSPORT' => 'smtp',
     'QUIZ_HERO_SMTP_HOST' => 'smtp.strato.de',
     'QUIZ_HERO_SMTP_PORT' => '587',

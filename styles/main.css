@@ -14,6 +14,7 @@
 @import './features/quiz/question-media.css';
 @import './features/quiz/answers.css';
 @import './features/quiz/feedback.css';
+@import './features/quiz/question-feedback.css';
 @import './features/quiz/quiz-footer.css';
 @import './components/button-next.css';
 @import './components/icon-button.css';
@@ -40,6 +41,7 @@
 @import './features/admin/media.css';
 @import './features/admin/import.css';
 @import './features/admin/users.css';
+@import './features/admin/question-feedback.css';
 @import './components/checkbox.css';
 @import './components/avatar-picker.css';
 @import './features/account/account-layout.css';

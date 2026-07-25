@@ -24,6 +24,7 @@ try {
     match ($action) {
         'public-data' => public_data(),
         'save-result' => save_result(),
+        'question-feedback-save' => question_feedback_save(),
         'account-register' => account_register(),
         'account-verify-email' => account_verify_email(),
         'account-login' => account_login(),
@@ -47,6 +48,8 @@ try {
         'admin-media-delete' => admin_media_delete(),
         'admin-users-list' => admin_users_list(),
         'admin-user-delete' => admin_user_delete(),
+        'admin-question-feedback-list' => admin_question_feedback_list(),
+        'admin-question-feedback-delete' => admin_question_feedback_delete(),
         default => json_response(['ok' => false, 'error' => 'Unbekannte API-Aktion.'], 404),
     };
 } catch (PDOException $exception) {
@@ -670,6 +673,65 @@ function send_account_deleted_mail(string $email, string $username): void
     );
 }
 
+function notify_question_feedback_created(string $question, array $types, string $comment, ?int $userId): void
+{
+    $recipient = normalize_email(env_value('QUIZ_HERO_FEEDBACK_NOTIFY_EMAIL', env_value('QUIZ_HERO_SMTP_USER', env_value('QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL', env_value('QUIZ_HERO_MAIL_FROM', '')))));
+    if ($recipient === '') {
+        return;
+    }
+
+    $typeText = implode(', ', array_map('question_feedback_type_label', $types));
+    $userText = $userId !== null ? 'User-ID: ' . $userId : 'Nicht angemeldet';
+    $subject = 'Neues Quiz-Hero Frage-Feedback';
+    $message = "Hallo,\n\nes wurde Feedback zu einer Quiz-Frage gesendet.\n\nFrage: {$question}\nTyp: {$typeText}\nKommentar: " . ($comment !== '' ? $comment : '-') . "\nUser: {$userText}\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nViele Grüße\nQuiz-Hero";
+    send_account_mail($recipient, $subject, $message, question_feedback_mail_html($question, $types, $comment, $userText));
+}
+
+function question_feedback_mail_html(string $question, array $types, string $comment, string $userText): string
+{
+    $safeQuestion = htmlspecialchars($question, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeTypes = htmlspecialchars(implode(', ', array_map('question_feedback_type_label', $types)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeComment = htmlspecialchars($comment !== '' ? $comment : '-', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeUserText = htmlspecialchars($userText, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $safeCreatedAt = htmlspecialchars(date('d.m.Y H:i'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoUrl = htmlspecialchars(public_base_url() . '/images/website/avatar/logo.png', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+    return <<<HTML
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neues Quiz-Hero Feedback</title>
+</head>
+<body style="margin:0;padding:0;background:#eef4f6;color:#222;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#eef4f6;margin:0;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #c9dbe5;border-radius:8px;overflow:hidden;">
+          <tr><td align="center" style="padding:28px 28px 12px;"><img src="{$logoUrl}" alt="Quiz-Hero" width="84" height="84" style="display:block;border:0;width:84px;height:84px;object-fit:contain;"></td></tr>
+          <tr>
+            <td style="padding:0 32px 30px;text-align:left;">
+              <h1 style="margin:0 0 14px;font-size:26px;line-height:1.15;color:#222;font-weight:800;text-align:center;">Neues Frage-Feedback</h1>
+              <p style="margin:0 0 16px;font-size:14px;line-height:1.55;color:#747b80;">Zeitpunkt: {$safeCreatedAt}</p>
+              <p style="margin:0 0 10px;font-size:14px;line-height:1.55;color:#747b80;">Frage</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.5;color:#222;font-weight:700;">{$safeQuestion}</p>
+              <p style="margin:0 0 8px;font-size:14px;line-height:1.55;color:#747b80;">Meldungstyp</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.5;color:#222;">{$safeTypes}</p>
+              <p style="margin:0 0 8px;font-size:14px;line-height:1.55;color:#747b80;">Kommentar</p>
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.5;color:#222;">{$safeComment}</p>
+              <p style="margin:0;font-size:13px;line-height:1.5;color:#747b80;">{$safeUserText}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
 function store_email_verification(PDO $pdo, int $userId, string $email): void
 {
     $token = random_account_token();
@@ -951,6 +1013,45 @@ function account_reset_password(): void
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token($pdo, (int) $row['user_id'])]);
 }
 
+function question_feedback_save(): void
+{
+    require_method('POST');
+    rate_limit('question-feedback', 20, 300);
+    $data = read_json_body();
+    $questionId = ensure_int($data['questionId'] ?? 0, 1, PHP_INT_MAX);
+    $types = normalize_question_feedback_types($data['types'] ?? []);
+    $comment = clean_string($data['comment'] ?? '', 2000);
+    if ($types === [] && $comment === '') {
+        json_response(['ok' => false, 'error' => 'Bitte wähle mindestens einen Feedback-Typ oder schreibe einen Kommentar.'], 422);
+    }
+
+    $pdo = db();
+    $stmt = $pdo->prepare('SELECT id, question FROM quiz_questions WHERE id = :id');
+    $stmt->execute(['id' => $questionId]);
+    $question = $stmt->fetch();
+    if (!$question) {
+        json_response(['ok' => false, 'error' => 'Frage wurde nicht gefunden.'], 404);
+    }
+
+    $userId = null;
+    if (!empty($data['userId']) && !empty($data['userToken'])) {
+        $user = require_account_from_payload($data);
+        $userId = (int) $user['id'];
+    }
+
+    $stmt = $pdo->prepare('INSERT INTO quiz_question_feedback (question_id, user_id, types_json, comment, user_agent_hash) VALUES (:question_id, :user_id, :types_json, :comment, :user_agent_hash)');
+    $stmt->execute([
+        'question_id' => $questionId,
+        'user_id' => $userId,
+        'types_json' => json_encode($types, JSON_UNESCAPED_UNICODE),
+        'comment' => $comment !== '' ? $comment : null,
+        'user_agent_hash' => hash('sha256', (string) ($_SERVER['HTTP_USER_AGENT'] ?? '')),
+    ]);
+
+    notify_question_feedback_created((string) $question['question'], $types, $comment, $userId);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
+}
+
 function save_result(): void
 {
     require_method('POST');
@@ -1027,6 +1128,43 @@ function admin_users_list(): void
     $stmt = db()->query('SELECT u.id, u.username, u.email, u.profile_image_url, u.avatar_key, u.email_verified_at, u.created_at, u.last_seen_at, (SELECT COUNT(*) FROM quiz_results r WHERE r.user_id = u.id) AS result_count FROM quiz_users u WHERE u.deleted_at IS NULL ORDER BY u.created_at DESC, u.id DESC');
     $users = array_map(static fn(array $user): array => format_admin_user($user), $stmt->fetchAll());
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'users' => $users]);
+}
+
+function admin_question_feedback_list(): void
+{
+    require_method('GET');
+    require_admin();
+    $stmt = db()->query('SELECT f.id, f.question_id, f.types_json, f.comment, f.created_at, q.question, q.category_id, u.username, u.email FROM quiz_question_feedback f INNER JOIN quiz_questions q ON q.id = f.question_id LEFT JOIN quiz_users u ON u.id = f.user_id ORDER BY f.created_at DESC, f.id DESC LIMIT 200');
+    $items = array_map(static function (array $row): array {
+        return [
+            'id' => (int) $row['id'],
+            'questionId' => (int) $row['question_id'],
+            'question' => $row['question'] ?? '',
+            'categoryId' => $row['category_id'] ?? '',
+            'types' => decode_json_field($row['types_json'] ?? null, []),
+            'comment' => $row['comment'] ?? '',
+            'createdAt' => isset($row['created_at']) ? date(DATE_ATOM, strtotime((string) $row['created_at'])) : '',
+            'user' => $row['username'] || $row['email'] ? [
+                'username' => $row['username'] ?? '',
+                'email' => $row['email'] ?? '',
+            ] : null,
+        ];
+    }, $stmt->fetchAll());
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'feedback' => $items]);
+}
+
+function admin_question_feedback_delete(): void
+{
+    require_method('POST');
+    require_admin_csrf();
+    $data = read_json_body();
+    $id = ensure_int($data['id'] ?? 0, 1, PHP_INT_MAX);
+    $stmt = db()->prepare('DELETE FROM quiz_question_feedback WHERE id = :id');
+    $stmt->execute(['id' => $id]);
+    if ($stmt->rowCount() === 0) {
+        json_response(['ok' => false, 'error' => 'Feedback wurde nicht gefunden.'], 404);
+    }
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function admin_user_delete(): void
@@ -1637,6 +1775,34 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
         'warnings' => $warnings,
         'payload' => $payload,
     ];
+}
+
+function question_feedback_type_label(string $type): string
+{
+    return match ($type) {
+        'wrong-answer' => 'Antwort falsch',
+        'unclear-question' => 'Frage unklar',
+        'image-mismatch' => 'Bild passt nicht',
+        'spelling' => 'Rechtschreibung',
+        'other' => 'Sonstiges',
+        default => $type,
+    };
+}
+
+function normalize_question_feedback_types(mixed $types): array
+{
+    if (!is_array($types)) {
+        return [];
+    }
+    $allowed = ['wrong-answer', 'unclear-question', 'image-mismatch', 'spelling', 'other'];
+    $normalized = [];
+    foreach ($types as $type) {
+        $type = clean_string((string) $type, 40);
+        if (in_array($type, $allowed, true) && !in_array($type, $normalized, true)) {
+            $normalized[] = $type;
+        }
+    }
+    return $normalized;
 }
 
 function normalize_question_payload(array $data): array

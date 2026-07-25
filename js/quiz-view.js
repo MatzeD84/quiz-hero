@@ -27,6 +27,12 @@ export class QuizView {
             feedbackElement: document.querySelector(selectors.feedbackElement),
             feedbackIconCorrect: document.querySelector(selectors.feedbackIconCorrect),
             feedbackIconIncorrect: document.querySelector(selectors.feedbackIconIncorrect),
+            questionFeedbackOpen: document.querySelector(selectors.questionFeedbackOpen),
+            questionFeedbackModal: document.querySelector(selectors.questionFeedbackModal),
+            questionFeedbackClose: document.querySelector(selectors.questionFeedbackClose),
+            questionFeedbackForm: document.querySelector(selectors.questionFeedbackForm),
+            questionFeedbackComment: document.querySelector(selectors.questionFeedbackComment),
+            questionFeedbackStatus: document.querySelector(selectors.questionFeedbackStatus),
             backgroundKnowledge: document.querySelector(selectors.backgroundKnowledge),
             currentQuestion: document.querySelector(selectors.currentQuestion),
             totalQuestions: document.querySelector(selectors.totalQuestions),
@@ -508,6 +514,49 @@ export class QuizView {
             return `Perfekte Runde, ${name}.`;
         }
         return `Gut gespielt, ${name}.`;
+    }
+
+    onQuestionFeedbackOpen(callback) {
+        this.elements.questionFeedbackOpen?.addEventListener('click', callback);
+    }
+
+    onQuestionFeedbackSubmit(callback) {
+        this.elements.questionFeedbackForm?.addEventListener('submit', event => {
+            event.preventDefault();
+            const formData = new FormData(this.elements.questionFeedbackForm);
+            callback({
+                types: formData.getAll('feedbackType'),
+                comment: this.elements.questionFeedbackComment?.value || ''
+            });
+        });
+    }
+
+    initQuestionFeedbackModal() {
+        const close = () => this.closeQuestionFeedbackModal();
+        this.elements.questionFeedbackClose?.addEventListener('click', close);
+        this.elements.questionFeedbackModal?.addEventListener('click', event => {
+            if (event.target === this.elements.questionFeedbackModal) close();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') close();
+        });
+    }
+
+    openQuestionFeedbackModal() {
+        if (!this.elements.questionFeedbackModal) return;
+        this.elements.questionFeedbackForm?.reset();
+        this.renderQuestionFeedbackStatus('');
+        this.elements.questionFeedbackModal.classList.remove('hide');
+    }
+
+    closeQuestionFeedbackModal() {
+        this.elements.questionFeedbackModal?.classList.add('hide');
+    }
+
+    renderQuestionFeedbackStatus(message, type = 'info') {
+        if (!this.elements.questionFeedbackStatus) return;
+        this.elements.questionFeedbackStatus.textContent = message || '';
+        this.elements.questionFeedbackStatus.dataset.status = message ? type : '';
     }
 
     showResultModal({ score, solved, total, maxScore }, user = null, actions = {}) {

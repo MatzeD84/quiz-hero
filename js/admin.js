@@ -57,13 +57,13 @@ const api = async (action, payload = null) => {
 
 const validateImageFile = file => {
     if (!file) {
-        throw new Error('Bitte wÃ¤hle zuerst ein Bild aus.');
+        throw new Error('Bitte wähle zuerst ein Bild aus.');
     }
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
         throw new Error('Erlaubt sind JPG, PNG und WebP.');
     }
     if (file.size > MAX_IMAGE_UPLOAD_BYTES) {
-        throw new Error('Das Bild darf maximal 6 MB groÃŸ sein.');
+        throw new Error('Das Bild darf maximal 6 MB groß sein.');
     }
 };
 
@@ -114,14 +114,15 @@ let pendingMediaPreviewUrl = '';
 let pendingMediaUploadFile = null;
 let pendingImportQuestions = [];
 let users = [];
+let questionFeedback = [];
 
 const inferStatusType = message => {
     if (!message) return '';
     const lower = message.toLowerCase();
-    if (lower.includes('fehler') || lower.includes('fehl') || lower.includes('nicht ') || lower.includes('zu viele') || lower.includes('ungueltig') || lower.includes('ungÃ¼ltig')) {
+    if (lower.includes('fehler') || lower.includes('fehl') || lower.includes('nicht ') || lower.includes('zu viele') || lower.includes('ungueltig') || lower.includes('ungültig')) {
         return 'error';
     }
-    if (lower.includes('gespeichert') || lower.includes('hochgeladen') || lower.includes('gelÃ¶scht') || lower.includes('eingeloggt')) {
+    if (lower.includes('gespeichert') || lower.includes('hochgeladen') || lower.includes('gelöscht') || lower.includes('eingeloggt')) {
         return 'success';
     }
     return 'info';
@@ -165,6 +166,13 @@ async function loadUsers() {
     if (!data.ok) throw new Error(data.error || 'Spieler konnten nicht geladen werden.');
     users = data.users || [];
     renderUsers();
+}
+
+async function loadQuestionFeedback() {
+    const data = await api('admin-question-feedback-list');
+    if (!data.ok) throw new Error(data.error || 'Feedback konnte nicht geladen werden.');
+    questionFeedback = data.feedback || [];
+    renderQuestionFeedback();
 }
 
 function renderCategories() {
@@ -293,17 +301,17 @@ function renderMedia() {
 function renderMediaDetail(item) {
     const detail = $('#js-admin-media-detail');
     if (!item) {
-        detail.innerHTML = '<p class="admin-list__empty">WÃ¤hle ein Bild aus.</p>';
+        detail.innerHTML = '<p class="admin-list__empty">Wähle ein Bild aus.</p>';
         return;
     }
     selectedMediaPath = item.path;
-    detail.innerHTML = '<img class="admin-media-detail__image" alt=""><dl class="admin-media-detail__meta"><div><dt>Dateiname</dt><dd></dd></div><div><dt>Pfad</dt><dd></dd></div><div><dt>GrÃ¶ÃŸe</dt><dd></dd></div><div><dt>Abmessungen</dt><dd></dd></div><div><dt>Verwendung</dt><dd></dd></div></dl><div class="admin-media-detail__usage"></div><div class="admin-media-detail__actions"></div>';
+    detail.innerHTML = '<img class="admin-media-detail__image" alt=""><dl class="admin-media-detail__meta"><div><dt>Dateiname</dt><dd></dd></div><div><dt>Pfad</dt><dd></dd></div><div><dt>Größe</dt><dd></dd></div><div><dt>Abmessungen</dt><dd></dd></div><div><dt>Verwendung</dt><dd></dd></div></dl><div class="admin-media-detail__usage"></div><div class="admin-media-detail__actions"></div>';
     detail.querySelector('.admin-media-detail__image').src = item.url;
     const values = [
         item.filename,
         item.path,
         formatBytes(Number(item.size || 0)),
-        item.width && item.height ? `${item.width} Ã— ${item.height}px` : 'Unbekannt',
+        item.width && item.height ? `${item.width} \u00d7 ${item.height}px` : 'Unbekannt',
         item.used ? `${item.usage.length} Verwendung(en)` : 'Unbenutzt'
     ];
     detail.querySelectorAll('.admin-media-detail__meta dd').forEach((node, index) => {
@@ -336,18 +344,18 @@ function renderMediaDetail(item) {
         deleteButton.id = 'js-admin-media-delete';
         deleteButton.className = 'btn btn--modal';
         deleteButton.type = 'button';
-        deleteButton.textContent = 'Bild lÃ¶schen';
+        deleteButton.textContent = 'Bild löschen';
         deleteButton.addEventListener('click', () => deleteMedia(item));
         actions.appendChild(deleteButton);
     } else if (item.used) {
         const note = document.createElement('p');
         note.className = 'admin-media-detail__note';
-        note.textContent = 'LÃ¶schen nicht mÃ¶glich, Bild wird noch verwendet.';
+        note.textContent = 'Löschen nicht möglich, Bild wird noch verwendet.';
         actions.appendChild(note);
     } else {
         const note = document.createElement('p');
         note.className = 'admin-media-detail__note';
-        note.textContent = 'Bestandsbild aus dem Projektbestand. LÃ¶schen ist hier nicht mÃ¶glich.';
+        note.textContent = 'Bestandsbild aus dem Projektbestand. Löschen ist hier nicht möglich.';
         actions.appendChild(note);
     }
 }
@@ -358,7 +366,7 @@ function openMediaReference(ref) {
         if (question) {
             setAdminTab('edit');
             fillQuestion(question);
-            setStatus('Frage zur Bildverwendung geÃ¶ffnet.');
+            setStatus('Frage zur Bildverwendung geöffnet.');
         }
         return;
     }
@@ -366,7 +374,7 @@ function openMediaReference(ref) {
     if (category) {
         setAdminTab('categories');
         fillCategory(category);
-        setStatus('Kategorie zur Bildverwendung geÃ¶ffnet.');
+        setStatus('Kategorie zur Bildverwendung geöffnet.');
     }
 }
 
@@ -391,7 +399,7 @@ function renderPendingMediaDetail(file) {
     thumb.classList.remove('admin-hidden');
     $('#js-admin-media-upload-actions').classList.remove('admin-hidden');
     const detail = $('#js-admin-media-detail');
-    detail.innerHTML = '<img class="admin-media-detail__image" alt=""><dl class="admin-media-detail__meta"><div><dt>Dateiname</dt><dd></dd></div><div><dt>Pfad</dt><dd>Noch nicht gespeichert</dd></div><div><dt>GrÃ¶ÃŸe</dt><dd></dd></div><div><dt>Verwendung</dt><dd>Upload lÃ¤uft</dd></div></dl>';
+    detail.innerHTML = '<img class="admin-media-detail__image" alt=""><dl class="admin-media-detail__meta"><div><dt>Dateiname</dt><dd></dd></div><div><dt>Pfad</dt><dd>Noch nicht gespeichert</dd></div><div><dt>Größe</dt><dd></dd></div><div><dt>Verwendung</dt><dd>Upload läuft</dd></div></dl>';
     detail.querySelector('.admin-media-detail__image').src = pendingMediaPreviewUrl;
     detail.querySelectorAll('.admin-media-detail__meta dd')[0].textContent = file.name;
     detail.querySelectorAll('.admin-media-detail__meta dd')[2].textContent = formatBytes(file.size);
@@ -510,7 +518,7 @@ function renderQuestions() {
         `;
         button.querySelector('.admin-question-button__title').textContent = question.question;
         const createdAt = formatAdminDate(question.createdAt);
-        button.querySelector('.admin-question-button__meta').textContent = [question.categoryTitle, question.difficulty, tags].filter(Boolean).join(' Â· ');
+        button.querySelector('.admin-question-button__meta').textContent = [question.categoryTitle, question.difficulty, tags].filter(Boolean).join(' \u00b7 ');
         button.querySelector('.admin-question-button__date').textContent = createdAt ? `hochgeladen am ${createdAt}` : '';
         button.addEventListener('click', () => {
             setAdminTab('edit');
@@ -580,7 +588,7 @@ function renderUsers() {
         const deleteButton = document.createElement('button');
         deleteButton.type = 'button';
         deleteButton.className = 'account-action-link account-action-link--danger';
-        deleteButton.textContent = 'EndgÃ¼ltig lÃ¶schen';
+        deleteButton.textContent = 'Endgültig löschen';
         deleteButton.addEventListener('click', () => deleteUser(user));
         actions.appendChild(deleteButton);
 
@@ -589,15 +597,101 @@ function renderUsers() {
     });
 }
 
+function renderQuestionFeedback() {
+    const list = $('#js-admin-feedback-list');
+    list.replaceChildren();
+    $('#js-admin-feedback-count').textContent = `${questionFeedback.length} Meldungen`;
+
+    if (questionFeedback.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'admin-list__empty';
+        empty.textContent = 'Noch kein Feedback vorhanden.';
+        list.appendChild(empty);
+        return;
+    }
+
+    questionFeedback.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'admin-feedback-card';
+
+        const title = document.createElement('h3');
+        title.textContent = item.question || `Frage ${item.questionId}`;
+
+        const meta = document.createElement('div');
+        meta.className = 'admin-feedback-card__meta';
+        [
+            `Typ: ${(item.types || []).map(formatQuestionFeedbackType).join(', ') || 'Kommentar'}`,
+            `Zeitpunkt: ${formatAdminDateTime(item.createdAt) || 'Unbekannt'}`,
+            item.user ? `User: ${item.user.username || item.user.email}` : 'User: nicht angemeldet'
+        ].forEach(value => {
+            const span = document.createElement('span');
+            span.textContent = value;
+            meta.appendChild(span);
+        });
+
+        const comment = document.createElement('p');
+        comment.className = 'admin-feedback-card__comment';
+        comment.textContent = item.comment || 'Kein Kommentar.';
+
+        const actions = document.createElement('div');
+        actions.className = 'admin-feedback-card__actions';
+
+        const openAction = document.createElement('button');
+        openAction.type = 'button';
+        openAction.className = 'account-action-link';
+        openAction.textContent = 'Zur Frage';
+        openAction.addEventListener('click', () => {
+            const question = questions.find(entry => Number(entry.id) === Number(item.questionId));
+            if (question) {
+                setAdminTab('edit');
+                fillQuestion(question);
+                setStatus('Frage zum Feedback geöffnet.');
+            }
+        });
+
+        const deleteAction = document.createElement('button');
+        deleteAction.type = 'button';
+        deleteAction.className = 'account-action-link account-action-link--danger';
+        deleteAction.textContent = 'Feedback löschen';
+        deleteAction.addEventListener('click', () => deleteQuestionFeedback(item));
+        actions.append(openAction, deleteAction);
+
+        card.append(title, meta, comment, actions);
+        list.appendChild(card);
+    });
+}
+
+function formatQuestionFeedbackType(type) {
+    return {
+        'wrong-answer': 'Antwort falsch',
+        'unclear-question': 'Frage unklar',
+        'image-mismatch': 'Bild passt nicht',
+        spelling: 'Rechtschreibung',
+        other: 'Sonstiges'
+    }[type] || type;
+}
+
 async function deleteUser(user) {
     const label = user.username || user.email || `ID ${user.id}`;
-    const confirmed = window.confirm(`Spieler "${label}" endgÃ¼ltig lÃ¶schen?\n\nDer Account wird entfernt. Bestehende Quiz-Ergebnisse bleiben anonymisiert erhalten.`);
+    const confirmed = window.confirm(`Spieler "${label}" endg\u00fcltig l\u00f6schen?\n\nDer Account wird entfernt. Bestehende Quiz-Ergebnisse bleiben anonymisiert erhalten.`);
     if (!confirmed) return;
 
     const result = await api('admin-user-delete', { id: user.id });
-    setStatus(result.ok ? 'Spieler wurde endgÃ¼ltig gelÃ¶scht.' : result.error);
+    setStatus(result.ok ? 'Spieler wurde endgültig gelöscht.' : result.error);
     if (result.ok) {
         await loadUsers();
+    }
+}
+
+
+async function deleteQuestionFeedback(item) {
+    const confirmed = window.confirm('Dieses Feedback wirklich löschen?');
+    if (!confirmed) return;
+
+    const result = await api('admin-question-feedback-delete', { id: item.id });
+    setStatus(result.ok ? 'Feedback wurde gelöscht.' : result.error);
+    if (result.ok) {
+        await loadQuestionFeedback();
     }
 }
 
@@ -611,11 +705,12 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-selected', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users');
+    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback');
     $('#js-admin-category-panel').classList.toggle('admin-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('admin-hidden', tab !== 'media');
     $('#js-admin-import-panel').classList.toggle('admin-hidden', tab !== 'import');
     $('#js-admin-users-panel').classList.toggle('admin-hidden', tab !== 'users');
+    $('#js-admin-feedback-panel').classList.toggle('admin-hidden', tab !== 'feedback');
     $('#js-admin-question-browser').classList.toggle('admin-hidden', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
@@ -627,6 +722,8 @@ function setAdminTab(tab, options = {}) {
         loadMedia().catch(error => setStatus(error.message || 'Mediathek konnte nicht geladen werden.'));
     } else if (tab === 'users') {
         loadUsers().catch(error => setStatus(error.message || 'Spieler konnten nicht geladen werden.'));
+    } else if (tab === 'feedback') {
+        loadQuestionFeedback().catch(error => setStatus(error.message || 'Feedback konnte nicht geladen werden.'));
     }
 }
 
@@ -734,16 +831,16 @@ function stageMediaImage(file) {
         validateImageFile(file);
         clearMediaFilters();
         renderPendingMediaDetail(file);
-        setStatus('Bild ist ausgewÃ¤hlt. Bitte mit "Hochladen" bestÃ¤tigen.');
+        setStatus('Bild ist ausgewählt. Bitte mit "Hochladen" bestätigen.');
     } catch (error) {
         clearPendingMediaPreview();
-        setStatus(error.message || 'Bild konnte nicht ausgewÃ¤hlt werden.');
+        setStatus(error.message || 'Bild konnte nicht ausgewählt werden.');
     }
 }
 
 async function uploadPendingMediaImage() {
     if (!pendingMediaUploadFile) {
-        setStatus('Bitte zuerst ein Bild auswÃ¤hlen.');
+        setStatus('Bitte zuerst ein Bild auswählen.');
         return;
     }
     try {
@@ -753,7 +850,7 @@ async function uploadPendingMediaImage() {
         selectedMediaPath = result.path || '';
         await loadMedia();
         clearPendingMediaPreview();
-        setStatus('Bild wurde hochgeladen und ausgewÃ¤hlt.');
+        setStatus('Bild wurde hochgeladen und ausgewählt.');
     } catch (error) {
         clearPendingMediaPreview();
         setStatus(error.message || 'Bild konnte nicht hochgeladen werden.');
@@ -762,9 +859,9 @@ async function uploadPendingMediaImage() {
 
 async function deleteMedia(item) {
     if (!item || !item.deletable) return;
-    if (!window.confirm(`Bild "${item.filename}" wirklich vom Server lÃ¶schen?`)) return;
+    if (!window.confirm(`Bild "${item.filename}" wirklich vom Server löschen?`)) return;
     const result = await api('admin-media-delete', { path: item.path });
-    setStatus(result.ok ? 'Bild wurde gelÃ¶scht.' : result.error);
+    setStatus(result.ok ? 'Bild wurde gelöscht.' : result.error);
     if (result.ok) {
         selectedMediaPath = '';
         await loadMedia();
@@ -945,11 +1042,11 @@ function renderImportResults(results = []) {
     const errorCount = results.filter(item => item.errors.length).length;
     const warningCount = results.filter(item => item.warnings.length).length;
 
-    count.textContent = results.length ? `${validCount} / ${results.length} gÃ¼ltig` : '';
+    count.textContent = results.length ? `${validCount} / ${results.length} gültig` : '';
     importButton.disabled = validCount === 0;
     summary.classList.toggle('admin-hidden', results.length === 0);
     summary.textContent = results.length
-        ? `${validCount} gÃ¼ltig, ${errorCount} fehlerhaft, ${warningCount} mit Warnung.`
+        ? `${validCount} gültig, ${errorCount} fehlerhaft, ${warningCount} mit Warnung.`
         : '';
     list.replaceChildren();
 
@@ -961,7 +1058,7 @@ function renderImportResults(results = []) {
         title.textContent = item.question || `Eintrag ${item.index + 1}`;
         const meta = document.createElement('p');
         meta.className = 'admin-import-item__meta';
-        meta.textContent = [item.categoryId || 'Keine Kategorie', item.valid ? 'gÃ¼ltig' : 'fehlerhaft'].join(' - ');
+        meta.textContent = [item.categoryId || 'Keine Kategorie', item.valid ? 'gültig' : 'fehlerhaft'].join(' - ');
         card.append(title, meta);
 
         [...item.errors, ...item.warnings].forEach(message => {
@@ -987,7 +1084,7 @@ function stageImportText(text) {
     try {
         parsed = JSON.parse(text);
     } catch (error) {
-        throw new Error('Das ist kein gÃ¼ltiges JSON. Bitte prÃ¼fe die Struktur: Die Datei muss mit { } oder [ ] beginnen und korrekt geschlossene AnfÃ¼hrungszeichen, Kommas und Klammern enthalten.');
+        throw new Error('Das ist kein gültiges JSON. Bitte prüfe die Struktur: Die Datei muss mit { } oder [ ] beginnen und korrekt geschlossene Anführungszeichen, Kommas und Klammern enthalten.');
     }
     const rawQuestions = importQuestionsFromJson(parsed);
     if (rawQuestions.length > 200) throw new Error('Maximal 200 Fragen pro Import.');
@@ -995,14 +1092,14 @@ function stageImportText(text) {
     pendingImportQuestions = results.filter(item => item.valid).map(item => item.data);
     $('#js-admin-import-actions').classList.remove('admin-hidden');
     renderImportResults(results);
-    setStatus(`${pendingImportQuestions.length} gÃ¼ltige Fragen fÃ¼r den Import gefunden.`);
+    setStatus(`${pendingImportQuestions.length} gültige Fragen für den Import gefunden.`);
 }
 
 function stagePastedImportJson() {
     try {
         const text = $('#js-admin-import-json').value.trim();
-        if (!text) throw new Error('Bitte JSON-Code einfÃ¼gen.');
-        if (new Blob([text]).size > MAX_JSON_IMPORT_BYTES) throw new Error('Der JSON-Code darf maximal 1 MB groÃŸ sein.');
+        if (!text) throw new Error('Bitte JSON-Code einfügen.');
+        if (new Blob([text]).size > MAX_JSON_IMPORT_BYTES) throw new Error('Der JSON-Code darf maximal 1 MB groß sein.');
         $('#js-admin-import-file').value = '';
         stageImportText(text);
     } catch (error) {
@@ -1015,9 +1112,9 @@ function stagePastedImportJson() {
 
 async function stageImportJson(file) {
     try {
-        if (!file) throw new Error('Bitte eine JSON-Datei auswÃ¤hlen.');
-        if (!file.name.toLowerCase().endsWith('.json')) throw new Error('Bitte eine .json-Datei auswÃ¤hlen.');
-        if (file.size > MAX_JSON_IMPORT_BYTES) throw new Error('Die JSON-Datei darf maximal 1 MB groÃŸ sein.');
+        if (!file) throw new Error('Bitte eine JSON-Datei auswählen.');
+        if (!file.name.toLowerCase().endsWith('.json')) throw new Error('Bitte eine .json-Datei auswählen.');
+        if (file.size > MAX_JSON_IMPORT_BYTES) throw new Error('Die JSON-Datei darf maximal 1 MB groß sein.');
         const text = await file.text();
         $('#js-admin-import-json').value = '';
         stageImportText(text);
@@ -1029,7 +1126,7 @@ async function stageImportJson(file) {
 
 async function importPendingQuestions() {
     if (pendingImportQuestions.length === 0) {
-        setStatus('Keine gÃ¼ltigen Fragen fÃ¼r den Import vorhanden.');
+        setStatus('Keine gültigen Fragen für den Import vorhanden.');
         return;
     }
     const result = await api('admin-question-import', { questions: pendingImportQuestions });
@@ -1038,7 +1135,7 @@ async function importPendingQuestions() {
         if (result.results) renderImportResults(result.results);
         return;
     }
-    const message = `${result.importedCount} Fragen importiert. ${result.skippedCount} Ã¼bersprungen.`;
+    const message = `${result.importedCount} Fragen importiert. ${result.skippedCount} übersprungen.`;
     clearImportState();
     await loadData();
     setStatus(message, 'success');
@@ -1161,9 +1258,9 @@ async function init() {
     });
     $('#js-admin-delete').addEventListener('click', async () => {
         const id = $('#js-admin-question-id').value;
-        if (!id || !window.confirm('Diese Frage wirklich lÃ¶schen?')) return;
+        if (!id || !window.confirm('Diese Frage wirklich löschen?')) return;
         const result = await api('admin-question-delete', { id });
-        setStatus(result.ok ? 'Frage gelÃ¶scht.' : result.error);
+        setStatus(result.ok ? 'Frage gelöscht.' : result.error);
         if (result.ok) { fillQuestion(); await loadData(); }
     });
     $('#js-admin-new-category').addEventListener('click', () => {

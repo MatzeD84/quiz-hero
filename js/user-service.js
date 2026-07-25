@@ -145,6 +145,23 @@ export class UserService {
         }
     }
 
+    async submitQuestionFeedback(user, { questionId, types, comment }) {
+        const payload = {
+            questionId,
+            types,
+            comment
+        };
+        if (user?.id && user?.token) {
+            payload.userId = user.id;
+            payload.userToken = user.token;
+        }
+        const data = await this.post('question-feedback-save', payload);
+        if (!data.ok) {
+            throw new Error(data.error || 'Feedback konnte nicht gesendet werden.');
+        }
+        return data;
+    }
+
     async post(action, payload) {
         const params = new URLSearchParams({ action, v: API_VERSION });
         const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, {

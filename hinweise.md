@@ -1,5 +1,5 @@
 ﻿Nächstes Deployment:
-- 
+- 005_question_feedback.sql
 
 ------------------------------------------------
 
@@ -179,7 +179,7 @@ Nach Quiz-Ende bessere Aktionen„Nochmal spielen“
 „Teile dein Ergebnis“
 
 Avatar-System
-Statt nur Profilbild-URL: kleine vorgefertigte Quiz-Hero-Avatare.
+- Avatare freischalten
 
 -----
 SEO:

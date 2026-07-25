@@ -144,6 +144,36 @@
                 <div id="js-background-knowledge" class="background-knowledge hide">
                     <div class="background-knowledge__content"></div>
                 </div>
+                <button id="js-question-feedback-open" class="account-action-link quiz-question-feedback-link" type="button"><small>Feedback</small></button>
+            </div>
+        </section>
+
+        <section id="js-question-feedback-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-question-feedback-title">
+            <div class="modal__content quiz-question-feedback-modal">
+                <div class="modal__close">
+                    <button id="js-question-feedback-close" class="modal__close_btn" type="button" aria-label="Feedback schließen">
+                        <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                        </svg>
+                    </button>
+                </div>
+                <h2 id="js-question-feedback-title" class="modal__headline">Feedback zur Frage</h2>
+                <form id="js-question-feedback-form" class="quiz-question-feedback-form">
+                    <fieldset>
+                        <legend>Was ist dir aufgefallen?</legend>
+                        <label><input type="checkbox" name="feedbackType" value="wrong-answer"> Antwort falsch</label>
+                        <label><input type="checkbox" name="feedbackType" value="unclear-question"> Frage unklar</label>
+                        <label><input type="checkbox" name="feedbackType" value="image-mismatch"> Bild passt nicht</label>
+                        <label><input type="checkbox" name="feedbackType" value="spelling"> Rechtschreibung</label>
+                        <label><input type="checkbox" name="feedbackType" value="other"> Sonstiges</label>
+                    </fieldset>
+                    <label>
+                        <span>Kommentar</span>
+                        <textarea id="js-question-feedback-comment" rows="4" maxlength="2000" placeholder="Optional: Was genau sollte geprüft werden?"></textarea>
+                    </label>
+                    <p id="js-question-feedback-status" class="user-panel__status" role="status" aria-live="polite"></p>
+                    <button class="btn btn--modal" type="submit">Feedback senden</button>
+                </form>
             </div>
         </section>
 

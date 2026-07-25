@@ -79,6 +79,7 @@ jobs:
           QUIZ_HERO_SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
           SITE_URL: ${{ secrets.SITE_URL }}
           QUIZ_HERO_MAIL_FROM: ${{ secrets.QUIZ_HERO_MAIL_FROM || 'helden@quiz-hero.de' }}
+          QUIZ_HERO_FEEDBACK_NOTIFY_EMAIL: ${{ secrets.QUIZ_HERO_FEEDBACK_NOTIFY_EMAIL || secrets.QUIZ_HERO_SMTP_USER || secrets.QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL || secrets.QUIZ_HERO_MAIL_FROM || 'helden@quiz-hero.de' }}
           QUIZ_HERO_MAIL_TRANSPORT: ${{ secrets.QUIZ_HERO_MAIL_TRANSPORT || 'smtp' }}
           QUIZ_HERO_SMTP_HOST: ${{ secrets.QUIZ_HERO_SMTP_HOST }}
           QUIZ_HERO_SMTP_PORT: ${{ secrets.QUIZ_HERO_SMTP_PORT || '587' }}
@@ -100,6 +101,7 @@ jobs:
               "QUIZ_HERO_SEO_EXPORT_TOKEN",
               "SITE_URL",
               "QUIZ_HERO_MAIL_FROM",
+              "QUIZ_HERO_FEEDBACK_NOTIFY_EMAIL",
               "QUIZ_HERO_MAIL_TRANSPORT",
               "QUIZ_HERO_SMTP_HOST",
               "QUIZ_HERO_SMTP_PORT",

@@ -1,0 +1,63 @@
+.quiz-question-feedback-link {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.3;
+    margin: 1.35rem 0 0 auto;
+    text-align: right;
+}
+
+.quiz-question-feedback-link small {
+    display: block;
+    font-size: inherit;
+}
+
+@media (max-width: 760px) {
+    .quiz-question-feedback-link {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+}
+
+.quiz-question-feedback-modal {
+    max-width: 560px;
+}
+
+.quiz-question-feedback-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.quiz-question-feedback-form fieldset {
+    border: var(--line-frost);
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0.9rem 1rem;
+}
+
+.quiz-question-feedback-form legend,
+.quiz-question-feedback-form label span {
+    font-weight: 700;
+}
+
+.quiz-question-feedback-form label {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.quiz-question-feedback-form > label {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.quiz-question-feedback-form input[type="checkbox"] {
+    width: auto;
+}
+
+.quiz-question-feedback-form textarea {
+    box-sizing: border-box;
+    min-height: 120px;
+    resize: vertical;
+    width: 100%;
+}
