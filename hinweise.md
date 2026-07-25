@@ -71,6 +71,10 @@ Ideen ChatGPT:
 ----------------------------------------
 Ideen:
 
+Aktuelle news auf Startseite
+- user kann news schließen --> soll gemerkt werden
+- "Neue Fragen zu Rom" oder "Noch kein Account. Hier gets lang"
+
 -----
 Code-/Architektur-Schritte:
 

@@ -1,5 +1,5 @@
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
-import { UserService } from './user-service.js?v=dev';
+import { ACCOUNT_REMOVED_MESSAGE, UserService } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 
@@ -53,6 +53,12 @@ const render = () => {
     applyAccountHeaderLogo(currentUser);
 };
 
+const handleRemovedAccount = () => {
+    currentUser = null;
+    render();
+    setStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
+};
+
 const closeAvatarModal = () => {
     elements.avatarModal?.classList.add('hide');
 };
@@ -89,6 +95,10 @@ elements.form?.addEventListener('submit', async event => {
         render();
         setStatus('Profil gespeichert.', 'success');
     } catch (error) {
+        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+            handleRemovedAccount();
+            return;
+        }
         setStatus(error.message || 'Profil konnte nicht gespeichert werden.', 'error');
     }
 });
@@ -123,6 +133,11 @@ elements.avatarModalContent?.addEventListener('submit', async event => {
         closeAvatarModal();
         setStatus('Bild gespeichert.', 'success');
     } catch (error) {
+        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+            closeAvatarModal();
+            handleRemovedAccount();
+            return;
+        }
         setStatus(error.message || 'Bild konnte nicht gespeichert werden.', 'error');
     }
 });
@@ -148,15 +163,35 @@ elements.deleteAccount?.addEventListener('click', async () => {
         render();
         setStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
     } catch (error) {
+        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+            handleRemovedAccount();
+            return;
+        }
         setStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
     }
 });
 
+async function init() {
+    await loadHeroAvatars();
+    if (currentUser) {
+        try {
+            currentUser = await userService.getCurrentUser(currentUser);
+        } catch (error) {
+            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                handleRemovedAccount();
+                return;
+            }
+            render();
+            setStatus('Deine Anmeldung konnte gerade nicht geprüft werden. Bitte versuche es gleich erneut.', 'error');
+            return;
+        }
+    }
+    render();
+}
+
 // Ensure avatar list is loaded before the first render so the modal shows
 // the avatars from `data/avatars.json` (register page already loads them).
-loadHeroAvatars().then(() => {
-    render();
-}).catch(err => {
-    console.warn('Fehler beim Laden der Avatar-Config:', err);
+init().catch(err => {
+    console.warn('Fehler beim Laden der Account-Seite:', err);
     render();
 });

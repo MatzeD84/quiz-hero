@@ -1,4 +1,5 @@
 import { CONFIG, LABELS } from './config.js?v=dev';
+import { ACCOUNT_REMOVED_MESSAGE } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 
 export class QuizController {
@@ -19,8 +20,12 @@ export class QuizController {
             this.view.renderTagButtons(this.state.getAvailableTags());
             this.view.initAccountUi?.();
             this.registerEvents();
+            const accountRemoved = await this.validateStoredUser();
             this.view.renderUser(this.currentUser);
             applyAccountHeaderLogo(this.currentUser);
+            if (accountRemoved) {
+                this.view.renderUserStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
+            }
             this.view.showCategories();
             this.applyInitialSelectionFromUrl();
         } catch (error) {
@@ -29,6 +34,30 @@ export class QuizController {
             }
             this.view.showLoadingMessage(LABELS.status.loadError);
         }
+    }
+
+    async validateStoredUser() {
+        if (!this.userService || !this.currentUser) return false;
+        try {
+            this.currentUser = await this.userService.getCurrentUser(this.currentUser);
+            return false;
+        } catch (error) {
+            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                this.currentUser = null;
+                return true;
+            }
+            if (CONFIG.devMode) {
+                console.warn('Account konnte nicht geprueft werden.', error);
+            }
+            return false;
+        }
+    }
+
+    handleRemovedAccount() {
+        this.currentUser = null;
+        this.view.renderUser(null);
+        applyAccountHeaderLogo(null);
+        this.view.renderUserStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
     }
 
     applyInitialSelectionFromUrl() {
@@ -87,6 +116,10 @@ export class QuizController {
             applyAccountHeaderLogo(this.currentUser);
             this.view.renderUserStatus('Account gespeichert.', 'success');
         } catch (error) {
+            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                this.handleRemovedAccount();
+                return;
+            }
             this.view.renderUserStatus(error.message || 'Account konnte nicht gespeichert werden.', 'error');
         }
     }
@@ -105,6 +138,10 @@ export class QuizController {
             applyAccountHeaderLogo(null);
             this.view.renderUserStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
         } catch (error) {
+            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                this.handleRemovedAccount();
+                return;
+            }
             this.view.renderUserStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
         }
     }
@@ -262,6 +299,10 @@ export class QuizController {
                 count: stats.total
             };
             this.userService?.saveResult(this.currentUser, stats, context).catch(error => {
+                if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+                    this.handleRemovedAccount();
+                    return;
+                }
                 if (CONFIG.devMode) {
                     console.warn('Quiz-Ergebnis konnte nicht gespeichert werden.', error);
                 }

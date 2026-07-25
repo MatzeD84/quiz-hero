@@ -2,6 +2,7 @@ import { CONFIG, normalizeAvatarUrl } from './config.js?v=dev';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';
+export const ACCOUNT_REMOVED_MESSAGE = 'Dein Account existiert nicht mehr. Du wurdest ausgeloggt.';
 
 const normalizeUser = user => {
     if (!user || typeof user !== 'object') return user;
@@ -32,6 +33,19 @@ export class UserService {
 
     clearUser() {
         window.localStorage.removeItem(STORAGE_KEY);
+    }
+
+    async getCurrentUser(user) {
+        if (!user?.id || !user?.token) return null;
+        const data = await this.post('account-me', {
+            userId: user.id,
+            userToken: user.token
+        });
+        if (!data.ok) {
+            throw new Error(data.error || 'Account konnte nicht geladen werden.');
+        }
+        this.storeUser(data.user);
+        return data.user;
     }
 
     async register({ username, email, password, avatarKey, privacyAccepted }) {
@@ -149,6 +163,10 @@ export class UserService {
         }
         if (!response.ok && data.ok !== false) {
             throw new Error(data.error || `API-Anfrage fehlgeschlagen (HTTP ${response.status}).`);
+        }
+        if (data.ok === false && data.error === 'Account wurde nicht gefunden.') {
+            this.clearUser();
+            throw new Error(ACCOUNT_REMOVED_MESSAGE);
         }
         return data;
     }
