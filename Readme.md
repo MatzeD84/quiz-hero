@@ -16,7 +16,7 @@ Der Datenfluss ist bewusst fallback-faehig:
 Admin-Funktionen laufen nur ueber die PHP-API und MySQL. Die Admin-Session wird serverseitig per PHP-Session verwaltet. Spieler koennen einen Account mit eindeutigem Benutzernamen, eindeutiger E-Mail-Adresse, Passwort und vordefiniertem Hero-Avatar anlegen. Registrierungen muessen per E-Mail bestaetigt werden; abgeschlossene Ergebnisse werden dem Account zugeordnet.
 
 ### Avatar-Konfiguration
-Hero-Avatare werden zentral in `data/avatars.json` gepflegt. Frontend und PHP-API lesen dieselbe Liste ein, sodass neue Bilder nur an einer Stelle ergänzt werden müssen. Ein Eintrag enthält dabei `key`, `label` und `url`.
+Hero-Avatare werden zentral in `data/avatars.json` gepflegt. Frontend und PHP-API lesen dieselbe Liste ein, sodass neue Bilder nur an einer Stelle ergï¿½nzt werden mï¿½ssen. Ein Eintrag enthï¿½lt dabei `key`, `label` und `url`.
 
 ## Datenbankmodell
 Die produktive STRATO-Datenbank ist eine MySQL-Datenbank. Schema-Aenderungen liegen versioniert in `database/migrations/` und werden mit `database/migrate.php` angewendet. `database/schema.sql` ist ein aktueller Snapshot fuer schnelle Erstimporte per CLI oder phpMyAdmin. Initiale Quizdaten koennen entweder mit `database/seed-from-json.php` oder fuer phpMyAdmin mit `database/seed.sql` importiert werden.
@@ -336,7 +336,7 @@ node scripts/apply-asset-version.js <version>
 .\scripts\build-seo.bat "https://quiz-hero.de"
 ```
 
-Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporären Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
+Bei GitHub-Actions-Deploy wird die Asset-Version automatisch im temporï¿½ren Deploy-Verzeichnis gesetzt. Verwendet wird der kurze Commit-Hash, z. B. `?v=320c1dd1`. Dadurch bekommen Browser nach jedem Deployment neue URLs fuer CSS, JS, Fonts und JSON-Fallbacks.
 
 Zusaetzlich erzeugt die Pipeline `version.json` im Webroot. Nach einem Deploy kannst du damit pruefen, welcher Commit wirklich auf STRATO liegt:
 
@@ -509,7 +509,7 @@ In GitHub:
 4) `New repository secret` anklicken.
 5) Namen exakt wie unten eintragen und den jeweiligen Wert speichern.
 
-Benötigte Secrets:
+Benï¿½tigte Secrets:
 
 - `SITE_URL`: `https://quiz-hero.de`
 - `STRATO_SFTP_HOST`: `ssh.strato.de`
@@ -568,7 +568,7 @@ Typischer Ablauf:
 ```bash
 git status
 git add <geaenderte-dateien>
-git commit -m "Kurze Beschreibung"
+git commit -m "Kurze Beschreibung"fpasswort
 git push
 ```
 
@@ -840,7 +840,7 @@ Diese Aenderung schreibt Versionen in HTML-Dateien und `js/config.js`. Nur verwe
 
 
 ## MySQL-/PHP-Betrieb
-Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php?action=public-data&v=1` erreichbar ist und die Datenbanktabellen existieren, lädt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fällt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurück.
+Die App kann weiterhin statisch mit den JSON-Dateien laufen. Sobald `api/index.php?action=public-data&v=1` erreichbar ist und die Datenbanktabellen existieren, lï¿½dt das Frontend Fragen, Kategorien, Tags und Feedback bevorzugt aus MySQL und fï¿½llt bei nicht erreichbarer API automatisch auf die JSON-Dateien zurï¿½ck.
 
 ### Datenbank einrichten
 1) MySQL-Datenbank und Benutzer anlegen.
@@ -852,7 +852,7 @@ mysql -u <user> -p <database> < database/schema.sql
 ```bash
 QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/migrate.php
 ```
-4) Bestehende JSON-Inhalte einmalig in MySQL übernehmen:
+4) Bestehende JSON-Inhalte einmalig in MySQL ï¿½bernehmen:
 ```bash
 QUIZ_HERO_DB_HOST=127.0.0.1 QUIZ_HERO_DB_NAME=<database> QUIZ_HERO_DB_USER=<user> QUIZ_HERO_DB_PASSWORD=<password> php database/seed-from-json.php
 ```
@@ -881,7 +881,7 @@ Fuer deaktivierbare Themenfilter muss auf bestehenden Datenbanken `database/migr
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` (`true` nur lokal, `false` auf Produktion)
 - `QUIZ_HERO_DEV_ACCOUNT_USER` (lokaler Testaccount, Default `localhero`)
 - `QUIZ_HERO_DEV_ACCOUNT_EMAIL` (lokale Test-E-Mail, Default `localhero@example.test`)
-- alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur für einfache Testumgebungen
+- alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur fï¿½r einfache Testumgebungen
 
 ### User-Accounts
 Spieler koennen einen vollwertigen Account anlegen:
@@ -922,10 +922,10 @@ Datenschutz-Minimum:
 
 Das ersetzt keine juristische Pruefung der Datenschutzerklaerung, legt aber die technische Grundlage fuer einen datensparsamen Account-Betrieb.
 
-### Admin-Oberfläche
+### Admin-Oberflï¿½che
 - Aufruf: `/admin/`
-- Nach dem Admin-Login können Kategorien angelegt/bearbeitet und Quizfragen komfortabel per Formular erstellt, bearbeitet oder gelöscht werden.
-- Alle Datenbankzugriffe laufen serverseitig über PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
+- Nach dem Admin-Login kï¿½nnen Kategorien angelegt/bearbeitet und Quizfragen komfortabel per Formular erstellt, bearbeitet oder gelï¿½scht werden.
+- Alle Datenbankzugriffe laufen serverseitig ï¿½ber PDO Prepared Statements; Admin-Sessions verwenden HttpOnly/SameSite-Cookies.
 - Schreibende Admin-Aktionen verwenden ein CSRF-Token aus der Admin-Session. Wenn die Admin-Seite lange offen war oder ein alter Browser-Tab genutzt wird, kann ein erneuter Login noetig sein.
 - Admin-Login-Versuche werden serverseitig rate-limitiert, damit Passwort-Raten gebremst wird.
 

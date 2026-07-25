@@ -36,6 +36,7 @@
                 <button class="tab" type="button" data-admin-tab="categories">Kategorien</button>
                 <button class="tab" type="button" data-admin-tab="media">Mediathek</button>
                 <button class="tab" type="button" data-admin-tab="import">Import</button>
+                <button class="tab" type="button" data-admin-tab="users">Spieler</button>
             </nav>
 
             <p id="js-admin-status" class="admin-status" role="status" aria-live="polite"></p>
@@ -247,6 +248,15 @@
                     </div>
                     <div id="js-admin-import-summary" class="admin-import-summary admin-hidden"></div>
                     <div id="js-admin-import-list" class="admin-import-list"></div>
+                </section>
+            </div>
+            <div id="js-admin-users-panel" class="admin-users-panel admin-hidden">
+                <section class="admin-users">
+                    <div class="admin-section-heading">
+                        <h2>Spieler</h2>
+                        <span id="js-admin-users-count" class="admin-count"></span>
+                    </div>
+                    <div id="js-admin-users-list" class="admin-users-list"></div>
                 </section>
             </div>
         </section>

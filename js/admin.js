@@ -10,6 +10,7 @@ const API_VERSION = CONFIG.apiVersion || '1';
 const MAX_IMAGE_UPLOAD_BYTES = 6 * 1024 * 1024;
 const MAX_JSON_IMPORT_BYTES = 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const DEFAULT_ACCOUNT_AVATAR = 'images/website/avatar/quizo.png';
 
 const apiUrl = action => {
     const params = new URLSearchParams({ action, v: API_VERSION });
@@ -115,6 +116,7 @@ let selectedMediaPath = '';
 let pendingMediaPreviewUrl = '';
 let pendingMediaUploadFile = null;
 let pendingImportQuestions = [];
+let users = [];
 
 const inferStatusType = message => {
     if (!message) return '';
@@ -159,6 +161,13 @@ async function loadMedia() {
     mediaItems = data.media || [];
     renderMediaFilters();
     renderMedia();
+}
+
+async function loadUsers() {
+    const data = await api('admin-users-list');
+    if (!data.ok) throw new Error(data.error || 'Spieler konnten nicht geladen werden.');
+    users = data.users || [];
+    renderUsers();
 }
 
 function renderCategories() {
@@ -458,6 +467,24 @@ function formatAdminDate(value) {
     });
 }
 
+function formatAdminDateTime(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function formatResultCount(count) {
+    const value = Number(count || 0);
+    return value === 1 ? '1 gespielte Runde' : `${value} gespielte Runden`;
+}
+
 function renderQuestions() {
     const list = $('#js-admin-question-list');
     const filteredQuestions = getFilteredQuestions();
@@ -497,6 +524,86 @@ function renderQuestions() {
     });
 }
 
+function renderUsers() {
+    const list = $('#js-admin-users-list');
+    list.replaceChildren();
+    $('#js-admin-users-count').textContent = `${users.length} Spieler`;
+
+    if (users.length === 0) {
+        const empty = document.createElement('p');
+        empty.className = 'admin-list__empty';
+        empty.textContent = 'Keine registrierten Spieler gefunden.';
+        list.appendChild(empty);
+        return;
+    }
+
+    users.forEach(user => {
+        const card = document.createElement('article');
+        card.className = 'admin-user-card';
+
+        const avatar = document.createElement('img');
+        avatar.className = 'admin-user-card__avatar';
+        avatar.src = resolveAssetUrl(user.profileImageUrl || DEFAULT_ACCOUNT_AVATAR);
+        avatar.alt = '';
+        avatar.loading = 'lazy';
+        avatar.addEventListener('error', () => {
+            if (!avatar.src.endsWith('/quizo.png')) {
+                avatar.src = resolveAssetUrl(DEFAULT_ACCOUNT_AVATAR);
+            }
+        });
+
+        const body = document.createElement('div');
+        body.className = 'admin-user-card__body';
+
+        const name = document.createElement('h3');
+        name.textContent = user.username || 'Ohne Benutzername';
+
+        const email = document.createElement('p');
+        email.className = 'admin-user-card__email';
+        email.textContent = user.email || 'Keine E-Mail-Adresse';
+
+        const meta = document.createElement('div');
+        meta.className = 'admin-user-card__meta';
+        const values = [
+            `Registriert: ${formatAdminDate(user.createdAt) || 'Unbekannt'}`,
+            user.emailVerified ? 'E-Mail verifiziert' : 'E-Mail offen',
+            user.lastSeenAt ? `Zuletzt aktiv: ${formatAdminDateTime(user.lastSeenAt)}` : 'Noch nicht aktiv',
+            formatResultCount(user.resultCount)
+        ];
+        values.forEach(value => {
+            const item = document.createElement('span');
+            item.textContent = value;
+            meta.appendChild(item);
+        });
+
+        body.append(name, email, meta);
+
+        const actions = document.createElement('div');
+        actions.className = 'admin-user-card__actions';
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'account-action-link account-action-link--danger';
+        deleteButton.textContent = 'Endgültig löschen';
+        deleteButton.addEventListener('click', () => deleteUser(user));
+        actions.appendChild(deleteButton);
+
+        card.append(avatar, body, actions);
+        list.appendChild(card);
+    });
+}
+
+async function deleteUser(user) {
+    const label = user.username || user.email || `ID ${user.id}`;
+    const confirmed = window.confirm(`Spieler "${label}" endgültig löschen?\n\nDer Account wird entfernt. Bestehende Quiz-Ergebnisse bleiben anonymisiert erhalten.`);
+    if (!confirmed) return;
+
+    const result = await api('admin-user-delete', { id: user.id });
+    setStatus(result.ok ? 'Spieler wurde endgültig gelöscht.' : result.error);
+    if (result.ok) {
+        await loadUsers();
+    }
+}
+
 function setAdminTab(tab, options = {}) {
     if (options.clearStatus) {
         setStatus('');
@@ -507,10 +614,11 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-selected', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import');
+    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users');
     $('#js-admin-category-panel').classList.toggle('admin-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('admin-hidden', tab !== 'media');
     $('#js-admin-import-panel').classList.toggle('admin-hidden', tab !== 'import');
+    $('#js-admin-users-panel').classList.toggle('admin-hidden', tab !== 'users');
     $('#js-admin-question-browser').classList.toggle('admin-hidden', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
@@ -520,6 +628,8 @@ function setAdminTab(tab, options = {}) {
         fillCategory(category || {});
     } else if (tab === 'media') {
         loadMedia().catch(error => setStatus(error.message || 'Mediathek konnte nicht geladen werden.'));
+    } else if (tab === 'users') {
+        loadUsers().catch(error => setStatus(error.message || 'Spieler konnten nicht geladen werden.'));
     }
 }
 

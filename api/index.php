@@ -45,6 +45,8 @@ try {
         'admin-image-upload' => admin_image_upload(),
         'admin-media-list' => admin_media_list(),
         'admin-media-delete' => admin_media_delete(),
+        'admin-users-list' => admin_users_list(),
+        'admin-user-delete' => admin_user_delete(),
         default => json_response(['ok' => false, 'error' => 'Unbekannte API-Aktion.'], 404),
     };
 } catch (PDOException $exception) {
@@ -251,6 +253,26 @@ function format_account_user(array $user): array
         'profileImageUrl' => avatar_url($avatarKey),
         'emailVerified' => !empty($user['email_verified_at']),
         'token' => create_user_token((int) $user['id']),
+    ];
+}
+
+function format_admin_user(array $user): array
+{
+    $avatarKey = normalize_avatar_key($user['avatar_key'] ?? '');
+    $profileImageUrl = trim((string) ($user['profile_image_url'] ?? ''));
+    if (trim((string) ($user['avatar_key'] ?? '')) === '' || $profileImageUrl === '') {
+        $profileImageUrl = avatar_url($avatarKey);
+    }
+    return [
+        'id' => (int) $user['id'],
+        'username' => $user['username'] ?? '',
+        'email' => $user['email'] ?? '',
+        'avatarKey' => $avatarKey,
+        'profileImageUrl' => $profileImageUrl,
+        'emailVerified' => !empty($user['email_verified_at']),
+        'createdAt' => isset($user['created_at']) ? date(DATE_ATOM, strtotime((string) $user['created_at'])) : '',
+        'lastSeenAt' => isset($user['last_seen_at']) && $user['last_seen_at'] !== null ? date(DATE_ATOM, strtotime((string) $user['last_seen_at'])) : '',
+        'resultCount' => (int) ($user['result_count'] ?? 0),
     ];
 }
 
@@ -844,6 +866,43 @@ function admin_me(): void
     quiz_hero_start_session();
     $admin = $_SESSION['quiz_hero_admin'] ?? null;
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'admin' => $admin, 'csrfToken' => $admin ? csrf_token() : null]);
+}
+
+function admin_users_list(): void
+{
+    require_method('GET');
+    require_admin();
+    $stmt = db()->query('SELECT u.id, u.username, u.email, u.profile_image_url, u.avatar_key, u.email_verified_at, u.created_at, u.last_seen_at, (SELECT COUNT(*) FROM quiz_results r WHERE r.user_id = u.id) AS result_count FROM quiz_users u WHERE u.deleted_at IS NULL ORDER BY u.created_at DESC, u.id DESC');
+    $users = array_map(static fn(array $user): array => format_admin_user($user), $stmt->fetchAll());
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'users' => $users]);
+}
+
+function admin_user_delete(): void
+{
+    require_method('POST');
+    require_admin_csrf();
+    $data = read_json_body();
+    $id = ensure_int($data['id'] ?? 0, 1, PHP_INT_MAX);
+    $pdo = db();
+    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE id = :id AND deleted_at IS NULL');
+    $stmt->execute(['id' => $id]);
+    if (!$stmt->fetch()) {
+        json_response(['ok' => false, 'error' => 'Spieler wurde nicht gefunden.'], 404);
+    }
+
+    $pdo->beginTransaction();
+    try {
+        $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');
+        $stmt->execute(['id' => $id]);
+        $stmt = $pdo->prepare('DELETE FROM quiz_users WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+        $pdo->commit();
+    } catch (Throwable $exception) {
+        $pdo->rollBack();
+        throw $exception;
+    }
+
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function admin_question_save(): void

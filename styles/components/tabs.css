@@ -9,8 +9,10 @@
     background: color-mix(in srgb, var(--belizehole-color) 8%, transparent);
     border: var(--line-frost);
     display: inline-flex;
+    flex-wrap: wrap;
     gap: 0;
-    overflow: hidden;
+    max-width: 100%;
+    overflow: visible;
     padding: 0.2rem;
 }
 
@@ -22,8 +24,10 @@
     cursor: pointer;
     font: inherit;
     font-weight: 700;
+    min-width: max-content;
     padding: 0.55rem 1rem;
     transition: var(--transition-fade);
+    white-space: nowrap;
 }
 
 .tab:hover,

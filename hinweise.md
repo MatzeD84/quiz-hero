@@ -1,13 +1,8 @@
-﻿Nächstes Deplyment
-
-
+﻿Nächstes Deployment:
+- 
 
 ------------------------------------------------
 
-
-ToDos:
-- nach oben scrollen
-- nur fragen mit  "verifiedFinal": true sollen angezeigt werden
 
 
 SEO:
@@ -19,34 +14,6 @@ SEO:
     - webP verwenden
 
 ---------------------- Florenz ----------------------
-Bildideen:
-- David
-- Palazzo Vecchio - Medici
-- Basilika Santa Maria Novella
-- Palazzo Pitti
-- Die Geburt der Venus
-- Basilika Santa Croce
-- Niccolò Machiavelli
-- Piazza del Duomo
-- Perseus mit dem Haupt der Medusa
-- Loggia dei Lanzi
-- Bartolomeo Ammannat
-- Uffizien
-- Primavera von Botticelli
-- Verkündigung von Leonardo da Vinci
-- „Tondo Doni“ - Michelangelo
-- „Madonna del Cardellino“ - Raphael
-- „Bacchus“ - Caravaggio
-- „Medusa“ - Caravaggio
-- „Venus von Urbino“ - Titian
-- „Flora“ - Titian
-- Madonna mit dem Stieglitz - Raphael
-- Die Anbetung der Könige - Leonardo da Vinci
-- Girolamo Savonarola
-- Herkules und Cacus von Baccio Bandinelli
-- Galleria dell'Accademia
-- „Prigioni“ oder „Gefangenen“ - Michelangelo
-- Basilica di Santa Croce
 
 Essen
 - Bistecca alla Fiorentina
@@ -58,10 +25,6 @@ Essen
 - Pappardelle Cinghiale
 - Crespelle alla Fiorentina
 - Zuccotto
-
-
-florenz.json
-- tags anpassen
 
 Themen:
 - Piazza della Signoria
@@ -78,7 +41,6 @@ Themen:
 
 
 Frage-Ideen:
-- Vasari-Korridor (paar Fragen schon drin)
 - Loggia dei Lanzi
 - Via dei Calzaiuoli
 - Basilika Santa Maria Novella
@@ -87,8 +49,6 @@ Frage-Ideen:
 -----------------------------------------------------
 
 Ideen ChatGPT:
-- Kontextualisierung durch Mini-Stories
-    Für hero-Fragen kurze Einbettung: „Im Jahr 64 n. Chr. brannte Rom nieder – welcher Kaiser…?“
 - end-zu-ent-Tests, Test
 - Dramaturgie pro Frage: Kurzer “Intro‑Teaser” je Kategorie/Tag (1 Satz) und kleine  “Streak‑Hinweise” bei mehreren richtigen Antworten in Folge.
 - Progress‑Gefuehl: Visueller Fortschrittsbalken + mini‑Milestones (“Frage 5/15 – Halbzeit!”) und sanfte Uebergaenge zwischen Fragen.
@@ -147,10 +107,6 @@ Button: „3 falsche Antworten vorschlagen“, „Erklärung vereinfachen“, �
 
 -----
 
-Adminbereich:
-- User löschen
-- Alle user als Liste darstellen
-- wann war ein user das letzte mal online
 
 User-Account & Motivation
 
