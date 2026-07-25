@@ -74,3 +74,10 @@
 .admin-category-select {
     margin-bottom: 1rem;
 }
+
+@media (max-width: 900px) {
+    .admin-panel,
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+}

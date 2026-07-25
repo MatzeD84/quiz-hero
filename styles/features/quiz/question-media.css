@@ -3,7 +3,8 @@
     margin: 0 auto;
     margin-bottom: 1rem;
     max-height: max(300px, 30vh);
-    width: max-content;
+    max-width: 100%;
+    width: fit-content;
 }
 
 .quiz__question_image {
@@ -26,4 +27,3 @@
     background: var(--light-gray-color);
     opacity: 0.6;
 }
-

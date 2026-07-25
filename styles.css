@@ -438,6 +438,10 @@ a:hover {
 }
 
 @media (max-width: 768px) {
+    .quiz__question_image_container {
+        width: 100%;
+    }
+
     .quiz__question_image {
         max-height: max(225px, 30vh)
     }
@@ -455,7 +459,8 @@ a:hover {
     margin: 0 auto;
     margin-bottom: 1rem;
     max-height: max(300px, 30vh);
-    width: max-content;
+    max-width: 100%;
+    width: fit-content;
 }
 
 .quiz__question_image {
@@ -1039,8 +1044,10 @@ details[open] summary::after {
 
 @media (max-width: 576px) {
     .site-account-nav {
-        right: 0.75rem;
-        top: 0.75rem;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.75rem 0.75rem 0;
+        position: static;
     }
 
     .site-account-nav a {
@@ -1448,6 +1455,13 @@ details[open] summary::after {
 
 .admin-category-select {
     margin-bottom: 1rem;
+}
+
+@media (max-width: 900px) {
+    .admin-panel,
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* === styles/features/admin/status.css === */

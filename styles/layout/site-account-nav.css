@@ -31,8 +31,10 @@
 
 @media (max-width: 576px) {
     .site-account-nav {
-        right: 0.75rem;
-        top: 0.75rem;
+        display: flex;
+        justify-content: flex-end;
+        padding: 0.75rem 0.75rem 0;
+        position: static;
     }
 
     .site-account-nav a {

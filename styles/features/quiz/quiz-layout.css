@@ -62,6 +62,10 @@
 }
 
 @media (max-width: 768px) {
+    .quiz__question_image_container {
+        width: 100%;
+    }
+
     .quiz__question_image {
         max-height: max(225px, 30vh)
     }
@@ -72,4 +76,3 @@
         gap: var(--gap-small);
     }
 }
-
