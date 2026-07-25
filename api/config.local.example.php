@@ -15,6 +15,11 @@ return [
     'SITE_URL' => 'https://quiz-hero.de',
     'QUIZ_HERO_MAIL_FROM' => 'helden@quiz-hero.de',
     'QUIZ_HERO_REGISTRATION_NOTIFY_EMAIL' => 'helden@quiz-hero.de',
-    'QUIZ_HERO_MAIL_TRANSPORT' => 'mail',
+    'QUIZ_HERO_MAIL_TRANSPORT' => 'smtp',
+    'QUIZ_HERO_SMTP_HOST' => 'smtp.strato.de',
+    'QUIZ_HERO_SMTP_PORT' => '587',
+    'QUIZ_HERO_SMTP_SECURE' => 'tls',
+    'QUIZ_HERO_SMTP_USER' => 'helden@quiz-hero.de',
+    'QUIZ_HERO_SMTP_PASSWORD' => 'SMTP_PASSWORD',
     'QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN' => 'false',
 ];

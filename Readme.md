@@ -400,7 +400,8 @@ Setze auf dem Server mindestens diese Umgebungsvariablen:
 - `QUIZ_HERO_SEO_EXPORT_TOKEN` empfohlen fuer den geschuetzten SEO-Export
 - `SITE_URL` fuer Links in E-Mails, z. B. `https://quiz-hero.de`
 - `QUIZ_HERO_MAIL_FROM` Absenderadresse, aktuell `helden@quiz-hero.de`
-- `QUIZ_HERO_MAIL_TRANSPORT` auf Produktion normalerweise `mail`, lokal `log`
+- `QUIZ_HERO_MAIL_TRANSPORT` auf Produktion `smtp`, lokal `log`
+- `QUIZ_HERO_SMTP_HOST`, `QUIZ_HERO_SMTP_PORT`, `QUIZ_HERO_SMTP_SECURE`, `QUIZ_HERO_SMTP_USER`, `QUIZ_HERO_SMTP_PASSWORD` fuer SMTP-Versand
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` auf Produktion immer `false`
 
 Fuer Produktion sollte kein Klartext-Admin-Passwort genutzt werden. Hash lokal erzeugen:
@@ -414,7 +415,7 @@ Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_
 
 `QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export&v=1`. Die GitHub Action nutzt diesen Export, um Landingpages bevorzugt aus MySQL statt aus JSON-Dateien zu erzeugen.
 
-`QUIZ_HERO_MAIL_TRANSPORT=mail` nutzt die PHP-Funktion `mail()` des Hostings. Lokal ist `log` praktischer: Registrierungs- und Passwort-Reset-Mails werden dann nicht verschickt, sondern in `var/mail.log` geschrieben. Falls STRATO `mail()` fuer die Domain nicht sauber zustellt, braucht die App spaeter SMTP-Unterstuetzung und die dazugehoerigen Mailbox-/SMTP-Daten.
+`QUIZ_HERO_MAIL_TRANSPORT=smtp` verschickt Registrierungs-, Verifizierungs- und Passwort-Reset-Mails ueber ein echtes SMTP-Postfach. Lokal ist `log` praktischer: Mails werden dann nicht verschickt, sondern in `var/mail.log` geschrieben. `mail` nutzt die PHP-Funktion `mail()` und ist im Docker-Container nicht zuverlaessig, weil dort kein lokaler Sendmail-Dienst installiert ist.
 
 `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN=true` aktiviert den lokalen Testbutton `Lokal testen`. Der Endpunkt legt einen verifizierten Testaccount an, ohne eine Mail zu versenden. Dieser Schalter gehoert nur in lokale Umgebungen und wird in der GitHub-Actions-Produktion explizit auf `false` gesetzt.
 
@@ -526,7 +527,12 @@ Ben�tigte Secrets:
 - `QUIZ_HERO_USER_TOKEN_SECRET`: langer zufaelliger Secret fuer signierte User-Tokens
 - `QUIZ_HERO_SEO_EXPORT_TOKEN`: langer zufaelliger Secret fuer den geschuetzten SEO-Export
 - `QUIZ_HERO_MAIL_FROM`: `helden@quiz-hero.de`
-- `QUIZ_HERO_MAIL_TRANSPORT`: `mail`
+- `QUIZ_HERO_MAIL_TRANSPORT`: `smtp`
+- `QUIZ_HERO_SMTP_HOST`: SMTP-Server, z. B. `smtp.strato.de`
+- `QUIZ_HERO_SMTP_PORT`: meistens `587`
+- `QUIZ_HERO_SMTP_SECURE`: meistens `tls`
+- `QUIZ_HERO_SMTP_USER`: Mailbox-Login, z. B. `helden@quiz-hero.de`
+- `QUIZ_HERO_SMTP_PASSWORD`: Mailbox-/SMTP-Passwort
 
 Admin-Passwort-Hash lokal erzeugen:
 
@@ -877,7 +883,8 @@ Fuer deaktivierbare Themenfilter muss auf bestehenden Datenbanken `database/migr
 - `QUIZ_HERO_SEO_EXPORT_TOKEN` (empfohlen fuer Produktion; schuetzt den SEO-Export fuer GitHub Actions)
 - `SITE_URL` (Basis-URL fuer Verifikations- und Reset-Links, lokal `http://localhost:8080`, produktiv `https://quiz-hero.de`)
 - `QUIZ_HERO_MAIL_FROM` (Absenderadresse, z. B. `helden@quiz-hero.de`)
-- `QUIZ_HERO_MAIL_TRANSPORT` (`log` lokal, `mail` auf Produktion)
+- `QUIZ_HERO_MAIL_TRANSPORT` (`log` lokal, `smtp` auf Produktion)
+- `QUIZ_HERO_SMTP_HOST`, `QUIZ_HERO_SMTP_PORT`, `QUIZ_HERO_SMTP_SECURE`, `QUIZ_HERO_SMTP_USER`, `QUIZ_HERO_SMTP_PASSWORD` (fuer Production-SMTP)
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` (`true` nur lokal, `false` auf Produktion)
 - `QUIZ_HERO_DEV_ACCOUNT_USER` (lokaler Testaccount, Default `localhero`)
 - `QUIZ_HERO_DEV_ACCOUNT_EMAIL` (lokale Test-E-Mail, Default `localhero@example.test`)
@@ -911,7 +918,7 @@ Der Dev-Login ist nur aktiv, wenn `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN=true` geset
 E-Mail-Verhalten:
 
 - Lokal mit Docker: `QUIZ_HERO_MAIL_TRANSPORT=log`, Mails landen in `var/mail.log`.
-- Produktion bei STRATO: `QUIZ_HERO_MAIL_TRANSPORT=mail`, Absender `helden@quiz-hero.de`.
+- Produktion bei STRATO: `QUIZ_HERO_MAIL_TRANSPORT=smtp`, Absender `helden@quiz-hero.de`, SMTP-Host z. B. `smtp.strato.de`.
 
 Datenschutz-Minimum:
 

@@ -324,7 +324,12 @@ function send_account_mail(string $to, string $subject, string $message, ?string
         $headers[] = 'Content-Type: text/plain; charset=UTF-8';
     }
 
-    if ($transport === 'mail') {
+    if ($transport === 'smtp') {
+        if (smtp_send_account_mail($to, $from, $encodedSubject, $headers, $mailBody)) {
+            return;
+        }
+        error_log('Quiz-Hero SMTP mail failed for ' . $to);
+    } elseif ($transport === 'mail') {
         if (@mail($to, $encodedSubject, $mailBody, implode("\r\n", $headers))) {
             return;
         }
@@ -340,6 +345,106 @@ function send_account_mail(string $to, string $subject, string $message, ?string
         '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$mailBody}\n\n",
         FILE_APPEND
     );
+}
+
+function smtp_send_account_mail(string $to, string $from, string $encodedSubject, array $headers, string $body): bool
+{
+    $host = trim((string) env_value('QUIZ_HERO_SMTP_HOST', ''));
+    if ($host === '') {
+        error_log('Quiz-Hero SMTP host is missing.');
+        return false;
+    }
+
+    $port = (int) env_value('QUIZ_HERO_SMTP_PORT', '587');
+    $secure = strtolower(trim((string) env_value('QUIZ_HERO_SMTP_SECURE', 'tls')));
+    $username = trim((string) env_value('QUIZ_HERO_SMTP_USER', ''));
+    $password = (string) env_value('QUIZ_HERO_SMTP_PASSWORD', '');
+    $timeout = max(5, (int) env_value('QUIZ_HERO_SMTP_TIMEOUT', '15'));
+    $server = $secure === 'ssl' ? 'ssl://' . $host : $host;
+    $socket = @fsockopen($server, $port, $errno, $errstr, $timeout);
+    if (!$socket) {
+        error_log("Quiz-Hero SMTP connection failed: {$errno} {$errstr}");
+        return false;
+    }
+
+    stream_set_timeout($socket, $timeout);
+
+    try {
+        smtp_expect($socket, [220]);
+        smtp_command($socket, 'EHLO quiz-hero.de', [250]);
+
+        if ($secure === 'tls' || $secure === 'starttls') {
+            smtp_command($socket, 'STARTTLS', [220]);
+            if (!stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+                throw new RuntimeException('SMTP STARTTLS konnte nicht aktiviert werden.');
+            }
+            smtp_command($socket, 'EHLO quiz-hero.de', [250]);
+        }
+
+        if ($username !== '') {
+            smtp_command($socket, 'AUTH LOGIN', [334]);
+            smtp_command($socket, base64_encode($username), [334], false);
+            smtp_command($socket, base64_encode($password), [235], false);
+        }
+
+        smtp_command($socket, 'MAIL FROM:<' . smtp_address($from) . '>', [250]);
+        smtp_command($socket, 'RCPT TO:<' . smtp_address($to) . '>', [250, 251]);
+        smtp_command($socket, 'DATA', [354]);
+
+        $messageHeaders = array_merge([
+            'To: ' . smtp_address($to),
+            'Subject: ' . $encodedSubject,
+            'Date: ' . date(DATE_RFC2822),
+            'Message-ID: <' . bin2hex(random_bytes(12)) . '@quiz-hero.de>',
+        ], $headers);
+        fwrite($socket, implode("\r\n", $messageHeaders) . "\r\n\r\n" . smtp_dot_stuff($body) . "\r\n.\r\n");
+        smtp_expect($socket, [250]);
+        smtp_command($socket, 'QUIT', [221]);
+        fclose($socket);
+        return true;
+    } catch (Throwable $exception) {
+        error_log('Quiz-Hero SMTP error: ' . $exception->getMessage());
+        @fwrite($socket, "QUIT\r\n");
+        fclose($socket);
+        return false;
+    }
+}
+
+function smtp_address(string $email): string
+{
+    $email = normalize_email($email);
+    if ($email === '') {
+        throw new RuntimeException('Ungültige SMTP-Adresse.');
+    }
+    return $email;
+}
+
+function smtp_command($socket, string $command, array $expectedCodes, bool $appendLineBreak = true): void
+{
+    fwrite($socket, $command . ($appendLineBreak ? "\r\n" : "\r\n"));
+    smtp_expect($socket, $expectedCodes);
+}
+
+function smtp_expect($socket, array $expectedCodes): void
+{
+    $response = '';
+    $code = 0;
+    while (($line = fgets($socket, 515)) !== false) {
+        $response .= $line;
+        if (preg_match('/^(\d{3})\s/', $line, $matches)) {
+            $code = (int) $matches[1];
+            break;
+        }
+    }
+    if (!in_array($code, $expectedCodes, true)) {
+        throw new RuntimeException('Unerwartete SMTP-Antwort: ' . trim($response));
+    }
+}
+
+function smtp_dot_stuff(string $body): string
+{
+    $body = preg_replace("/\r\n|\r|\n/", "\r\n", $body) ?? $body;
+    return preg_replace('/^\./m', '..', $body) ?? $body;
 }
 
 function account_verification_mail_html(string $link): string
@@ -371,6 +476,52 @@ function account_verification_mail_html(string $link): string
               <p style="margin:0 0 22px;font-size:16px;line-height:1.55;color:#5f666b;">Bestätige kurz deine E-Mail-Adresse, dann ist dein Account bereit.</p>
               <a href="{$safeLink}" style="display:inline-block;background:#3f3f3f;color:#ffffff;text-decoration:none;font-size:17px;font-weight:700;padding:14px 22px;border-radius:4px;">E-Mail bestätigen</a>
               <p style="margin:22px 0 0;font-size:13px;line-height:1.5;color:#747b80;">Der Link ist 24 Stunden gültig. Wenn du dich nicht registriert hast, kannst du diese E-Mail ignorieren.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 32px;background:#f6fafb;border-top:1px solid #dbe8ee;">
+              <p style="margin:0 0 8px;font-size:12px;line-height:1.5;color:#747b80;">Falls der Button nicht funktioniert, kopiere diesen Link in deinen Browser:</p>
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#226184;word-break:break-all;">{$safeLink}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+}
+
+function account_password_reset_mail_html(string $link): string
+{
+    $safeLink = htmlspecialchars($link, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $logoUrl = htmlspecialchars(public_base_url() . '/images/website/avatar/logo.png', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+    return <<<HTML
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz-Hero Passwort zurücksetzen</title>
+</head>
+<body style="margin:0;padding:0;background:#eef4f6;color:#222;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#eef4f6;margin:0;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #c9dbe5;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:28px 28px 12px;">
+              <img src="{$logoUrl}" alt="Quiz-Hero" width="84" height="84" style="display:block;border:0;width:84px;height:84px;object-fit:contain;">
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 28px;text-align:center;">
+              <h1 style="margin:0 0 12px;font-size:28px;line-height:1.15;color:#222;font-weight:800;">Passwort zurücksetzen</h1>
+              <p style="margin:0 0 22px;font-size:16px;line-height:1.55;color:#5f666b;">Du hast ein neues Passwort für deinen Quiz-Hero Account angefordert. Lege es über den Button neu fest.</p>
+              <a href="{$safeLink}" style="display:inline-block;background:#3f3f3f;color:#ffffff;text-decoration:none;font-size:17px;font-weight:700;padding:14px 22px;border-radius:4px;">Passwort neu festlegen</a>
+              <p style="margin:22px 0 0;font-size:13px;line-height:1.5;color:#747b80;">Der Link ist 1 Stunde gültig. Wenn du das nicht warst, kannst du diese E-Mail ignorieren.</p>
             </td>
           </tr>
           <tr>
@@ -766,7 +917,8 @@ function account_request_password_reset(): void
             send_account_mail(
                 $email,
                 'Quiz-Hero Passwort zurücksetzen',
-                "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zurücksetzen:\n{$link}\n\nDer Link ist 1 Stunde gültig.\n\nViele Grüße\nQuiz-Hero"
+                "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zurücksetzen:\n{$link}\n\nDer Link ist 1 Stunde gültig. Wenn du das nicht warst, kannst du diese E-Mail ignorieren.\n\nViele Grüße\nQuiz-Hero",
+                account_password_reset_mail_html($link)
             );
         }
     }

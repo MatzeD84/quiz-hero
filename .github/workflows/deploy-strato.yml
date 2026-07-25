@@ -79,7 +79,12 @@ jobs:
           QUIZ_HERO_SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
           SITE_URL: ${{ secrets.SITE_URL }}
           QUIZ_HERO_MAIL_FROM: ${{ secrets.QUIZ_HERO_MAIL_FROM || 'helden@quiz-hero.de' }}
-          QUIZ_HERO_MAIL_TRANSPORT: ${{ secrets.QUIZ_HERO_MAIL_TRANSPORT || 'mail' }}
+          QUIZ_HERO_MAIL_TRANSPORT: ${{ secrets.QUIZ_HERO_MAIL_TRANSPORT || 'smtp' }}
+          QUIZ_HERO_SMTP_HOST: ${{ secrets.QUIZ_HERO_SMTP_HOST }}
+          QUIZ_HERO_SMTP_PORT: ${{ secrets.QUIZ_HERO_SMTP_PORT || '587' }}
+          QUIZ_HERO_SMTP_SECURE: ${{ secrets.QUIZ_HERO_SMTP_SECURE || 'tls' }}
+          QUIZ_HERO_SMTP_USER: ${{ secrets.QUIZ_HERO_SMTP_USER }}
+          QUIZ_HERO_SMTP_PASSWORD: ${{ secrets.QUIZ_HERO_SMTP_PASSWORD }}
           QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN: "false"
         run: |
           php -r '
@@ -96,6 +101,11 @@ jobs:
               "SITE_URL",
               "QUIZ_HERO_MAIL_FROM",
               "QUIZ_HERO_MAIL_TRANSPORT",
+              "QUIZ_HERO_SMTP_HOST",
+              "QUIZ_HERO_SMTP_PORT",
+              "QUIZ_HERO_SMTP_SECURE",
+              "QUIZ_HERO_SMTP_USER",
+              "QUIZ_HERO_SMTP_PASSWORD",
               "QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN",
           ];
           $config = [];
@@ -119,6 +129,10 @@ jobs:
           QUIZ_HERO_DB_PASSWORD: ${{ secrets.QUIZ_HERO_DB_PASSWORD }}
           QUIZ_HERO_ADMIN_USER: ${{ secrets.QUIZ_HERO_ADMIN_USER }}
           QUIZ_HERO_ADMIN_PASSWORD_HASH: ${{ secrets.QUIZ_HERO_ADMIN_PASSWORD_HASH }}
+          QUIZ_HERO_MAIL_TRANSPORT: ${{ secrets.QUIZ_HERO_MAIL_TRANSPORT || 'smtp' }}
+          QUIZ_HERO_SMTP_HOST: ${{ secrets.QUIZ_HERO_SMTP_HOST }}
+          QUIZ_HERO_SMTP_USER: ${{ secrets.QUIZ_HERO_SMTP_USER }}
+          QUIZ_HERO_SMTP_PASSWORD: ${{ secrets.QUIZ_HERO_SMTP_PASSWORD }}
         run: |
           missing=0
           for key in SITE_URL STRATO_SFTP_HOST STRATO_SFTP_USER STRATO_SFTP_PASSWORD STRATO_TARGET_PATH QUIZ_HERO_DB_HOST QUIZ_HERO_DB_PORT QUIZ_HERO_DB_NAME QUIZ_HERO_DB_USER QUIZ_HERO_DB_PASSWORD QUIZ_HERO_ADMIN_USER QUIZ_HERO_ADMIN_PASSWORD_HASH; do
@@ -127,6 +141,14 @@ jobs:
               missing=1
             fi
           done
+          if [ "$QUIZ_HERO_MAIL_TRANSPORT" = "smtp" ]; then
+            for key in QUIZ_HERO_SMTP_HOST QUIZ_HERO_SMTP_USER QUIZ_HERO_SMTP_PASSWORD; do
+              if [ -z "${!key}" ]; then
+                echo "::error::$key is required when QUIZ_HERO_MAIL_TRANSPORT=smtp"
+                missing=1
+              fi
+            done
+          fi
           if [ "$missing" -ne 0 ]; then
             exit 1
           fi
