@@ -40,7 +40,7 @@ export class QuizState {
         const missingTags = new Set();
         const disabledTags = new Set();
         this.categories
-            .filter(category => category.enabled)
+            .filter(category => category.enabled !== false)
             .forEach(category => {
                 category.questions.forEach(question => {
                     (question.tag || []).forEach(tag => {

@@ -63,19 +63,19 @@ try {
 function public_data(): void
 {
     require_method('GET');
-    emit_quiz_data(true);
+    emit_quiz_data(true, true);
 }
 
 function admin_data(): void
 {
     require_method('GET');
     require_admin();
-    emit_quiz_data(false);
+    emit_quiz_data(false, false);
 }
 
-function emit_quiz_data(bool $onlyActive): void
+function emit_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): void
 {
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION] + load_quiz_data($onlyActive, false));
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION] + load_quiz_data($onlyActive, $onlyEnabledCategories));
 }
 
 function seo_export(): void

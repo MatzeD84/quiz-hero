@@ -159,7 +159,7 @@ export class QuizController {
 
     handleCategorySelected(categoryId) {
         const category = this.state.getCategory(categoryId);
-        if (!category || !category.enabled) {
+        if (!category || category.enabled === false) {
             return;
         }
         this.state.activeCategoryId = categoryId;

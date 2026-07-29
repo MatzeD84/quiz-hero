@@ -81,17 +81,13 @@ export class QuizView {
 
         wrapper.innerHTML = '';
         categories.forEach(category => {
+            if (category.enabled === false) {
+                return;
+            }
+
             const button = document.createElement('button');
             button.className = 'js-category-btn btn btn--category category-card';
             button.dataset.category = category.id;
-
-            if (!category.enabled) {
-                button.disabled = true;
-                button.classList.add('btn--disabled');
-                if (category.unlockHint) {
-                    button.title = category.unlockHint;
-                }
-            }
 
             if (category.badge?.active) {
                 const badge = document.createElement('span');
