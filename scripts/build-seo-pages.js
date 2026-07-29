@@ -341,13 +341,13 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
         : `${category.title} Quiz - Quiz mit ${questionCount} Fragen.`;
     const canonicalPath = `/pages/${category.id}.html`;
     const breadcrumbItems = [
-        { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/index.html` : '../index.html' },
+        { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/` : '../' },
         { label: `${category.title} Quiz`, href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
     ];
     const breadcrumbHtml = buildBreadcrumbs(breadcrumbItems);
     const cardHtml = buildCategoryCard({
         category: { ...category, questionCount },
-        href: `../index.html?category=${encodeURIComponent(category.id)}`,
+        href: `../?category=${encodeURIComponent(category.id)}`,
         showBadge: false,
         showMeta: true
     });
@@ -355,7 +355,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
     const body = `
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
-                <a class="main__logo-link" href="../index.html" title="Zur Startseite">
+                <a class="main__logo-link" href="../" title="Zur Startseite">
                     <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
@@ -373,7 +373,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
             </section>
             <section class="lp__quiz_start container_small">
                 <h2>Quiz starten</h2>
-                <a class="btn" href="../index.html?category=${encodeURIComponent(category.id)}">Jetzt spielen</a>
+                <a class="btn" href="../?category=${encodeURIComponent(category.id)}">Jetzt spielen</a>
             </section>
             ${relatedCategories.length ? `
             <section class="lp__related_categories">
@@ -397,7 +397,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
 
     const jsonLd = buildFaqJsonLd(category.questions || []);
     const breadcrumbsJsonLd = buildBreadcrumbsJsonLd([
-        { label: 'Kategorien', href: siteUrl ? `${siteUrl}/pages/index.html` : './index.html' },
+        { label: 'Kategorien', href: siteUrl ? `${siteUrl}/` : '../' },
         { label: `${category.title} Quiz`, href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
     ]);
     const ogImagePath = category.icon || 'images/website/avatar/logo.png';
@@ -414,9 +414,9 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
 const buildIndexPage = categories => {
     const title = `${siteTitle} Kategorien`;
     const description = 'Alle Quiz-Kategorien im Ueberblick.';
-    const canonicalPath = '/pages/index.html';
+    const canonicalPath = '/';
     const breadcrumbItems = [
-        { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/index.html` : '../index.html' },
+        { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/` : '../' },
         { label: 'Kategorien', href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
     ];
     const breadcrumbHtml = buildBreadcrumbs(breadcrumbItems);
@@ -430,7 +430,7 @@ const buildIndexPage = categories => {
     const body = `
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
-                <a class="main__logo-link" href="../index.html" title="Zur Startseite">
+                <a class="main__logo-link" href="../" title="Zur Startseite">
                     <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
                 <h1 class="main_headline">Quiz-Hero</h1>
@@ -455,7 +455,7 @@ const buildIndexPage = categories => {
     const breadcrumbsJsonLd = buildBreadcrumbsJsonLd([
         { label: 'Kategorien', href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
     ]);
-    const extraHead = `${breadcrumbsJsonLd ? `<script type="application/ld+json">${breadcrumbsJsonLd}</script>` : ''}${ogMeta}`;
+    const extraHead = `<meta name="robots" content="noindex,follow">${breadcrumbsJsonLd ? `<script type="application/ld+json">${breadcrumbsJsonLd}</script>` : ''}${ogMeta}`;
     return buildPageShell({ title, description, canonicalPath, body, extraHead });
 };
 
@@ -550,8 +550,6 @@ const run = async () => {
     fs.writeFileSync(path.join(outputDir, 'index.html'), normalizeGeneratedText(indexHtml), 'utf8');
 
     if (siteUrl) {
-        sitemapUrls.unshift(`${siteUrl}/pages/index.html`);
-        sitemapUrls.unshift(`${siteUrl}/index.html`);
         sitemapUrls.unshift(`${siteUrl}/`);
 
         const sitemapXml = buildSitemap(sitemapUrls);
@@ -568,7 +566,6 @@ run().catch(error => {
     console.error(error);
     process.exit(1);
 });
-
 
 
 

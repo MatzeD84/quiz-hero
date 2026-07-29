@@ -7,7 +7,7 @@ if "%~1"=="" (
 ) else (
   set "SITE_URL=%~1"
   set "HAS_SITE_URL=1"
-  echo [v] [OK] SITE_URL gesetzt auf %SITE_URL%
+  echo [v] [OK] SITE_URL gesetzt auf %~1
 )
 
 echo [INFO] Starte SEO-Build...
