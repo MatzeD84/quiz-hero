@@ -246,26 +246,35 @@ const buildFaqSection = questions => {
         return '<p>Aktuell sind keine Fragen verfuegbar.</p>';
     }
 
-    return `<div>
+    return `<div class="lp__faq_list">
         ${questions.map((question, index) => {
             const title = toText(question.question).trim();
             const answers = Array.isArray(question.answers) ? question.answers : [];
             const correctIndex = Number.isInteger(question.correct) ? question.correct : null;
+            const correctAnswer = correctIndex != null ? toText(answers[correctIndex]).trim() : '';
+            const backgroundKnowledge = toText(question.backgroundKnowledge).trim();
 
-            const answersHtml = answers.length
-                ? `<ul class="lp__faq_section_answers">
-                    ${answers.map((answer, idx) => {
-                        const isCorrect = idx === correctIndex;
-                        const className = isCorrect ? ' class="seo-answer--correct"' : '';
-                        return `<li${className}>${escapeHtml(answer)}</li>`;
-                    }).join('')}
-                </ul>`
-                : '<p>Keine Antworten hinterlegt.</p>';
+            const answerHtml = correctAnswer
+                ? `<p class="seo-answer">
+                    <span class="seo-answer__label">Antwort</span>
+                    <strong class="seo-answer__text">${escapeHtml(correctAnswer)}</strong>
+                </p>`
+                : '<p class="seo-answer seo-answer--missing">Keine richtige Antwort hinterlegt.</p>';
+
+            const hintHtml = backgroundKnowledge
+                ? `<p class="seo-answer__hint">
+                    <span class="seo-answer__hint-label">Hinweis</span>
+                    ${escapeHtml(backgroundKnowledge)}
+                </p>`
+                : '';
 
             return `
                 <details>
                     <summary>${escapeHtml(title || `Frage ${index + 1}`)}</summary>
-                    ${answersHtml}
+                    <div class="seo-answer__content">
+                        ${answerHtml}
+                        ${hintHtml}
+                    </div>
                 </details>
             `;
         }).join('')}
@@ -278,16 +287,20 @@ const buildFaqJsonLd = questions => {
             const qText = toText(question.question).trim();
             const answers = Array.isArray(question.answers) ? question.answers : [];
             const correctIndex = Number.isInteger(question.correct) ? question.correct : null;
-            const correct = correctIndex != null ? answers[correctIndex] : '';
+            const correct = correctIndex != null ? toText(answers[correctIndex]).trim() : '';
+            const backgroundKnowledge = toText(question.backgroundKnowledge).trim();
             if (!qText || !correct) {
                 return null;
             }
+            const answerText = backgroundKnowledge
+                ? `${correct}. ${backgroundKnowledge}`
+                : correct;
             return {
                 '@type': 'Question',
                 name: qText,
                 acceptedAnswer: {
                     '@type': 'Answer',
-                    text: correct
+                    text: answerText
                 }
             };
         })
@@ -566,7 +579,6 @@ run().catch(error => {
     console.error(error);
     process.exit(1);
 });
-
 
 
 

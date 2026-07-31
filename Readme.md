@@ -655,7 +655,7 @@ Klassischer JSON-Weg:
 
 ## SEO-Setup (Landingpages)
 - Statische Seiten unter `pages/` (Layout wie Startseite)
-- Alle Fragen + Antworten sichtbar (einklappbar)
+- Alle Fragen mit richtiger Antwort und optionalem Hinweistext sichtbar (einklappbar)
 - FAQPage JSON-LD fuer sichtbare Q/A
 - Breadcrumbs sichtbar + BreadcrumbList JSON-LD
 - OpenGraph/Twitter-Bilder pro Kategorie

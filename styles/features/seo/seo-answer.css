@@ -1,6 +1,61 @@
-.seo-answer--correct {
+.lp__faq_list {
+    display: grid;
+    gap: var(--gap-small);
+}
+
+.lp__faq_list details {
+    margin-bottom: 0;
+}
+
+.seo-answer__content {
+    display: grid;
+    gap: var(--gap-small);
+    padding-top: var(--gap-small);
+}
+
+.seo-answer {
+    display: flex;
+    align-items: baseline;
+    gap: var(--gap-small);
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.seo-answer__label,
+.seo-answer__hint-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.6rem;
+    border-radius: var(--radius-soft);
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.seo-answer__label {
     background-color: var(--greensea-color);
     color: var(--clouds-color);
-    padding: 2px 6px;
-    border-radius: var(--radius-soft);
+}
+
+.seo-answer__text {
+    font-weight: 700;
+}
+
+.seo-answer__hint {
+    margin: 0;
+    border-left: 3px solid var(--greensea-color);
+    padding: 2px 0 2px var(--gap-small);
+    color: var(--wet-asphalt-color);
+    text-align: left;
+}
+
+.seo-answer__hint-label {
+    margin-right: 6px;
+    background-color: var(--lighter-gray-color);
+    color: var(--asbestos-color);
+}
+
+.seo-answer--missing {
+    color: var(--asbestos-color);
 }

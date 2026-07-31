@@ -12,9 +12,11 @@ details[open] {
 }
 
 summary {
+    position: relative;
     cursor: pointer;
     font-weight: 600;
     list-style: none;
+    padding-right: 2rem;
 }
 
 summary::-webkit-details-marker {
@@ -22,11 +24,19 @@ summary::-webkit-details-marker {
 }
 
 summary::after {
-    content: '?';
-    float: right;
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-right: 3px solid currentColor;
+    border-bottom: 3px solid currentColor;
+    transform: translateY(-60%) rotate(45deg);
+    transform-origin: 50% 50%;
     transition: var(--transition-fade);
 }
 
 details[open] summary::after {
-    transform: rotate(90deg);
+    transform: translateY(-40%) rotate(225deg);
 }
