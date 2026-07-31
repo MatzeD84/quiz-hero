@@ -116,6 +116,10 @@ export function validateCategories(categories) {
                 errors.push(`backgroundKnowledge in ${questionRef} muss ein string sein.`);
             }
 
+            if (question.reviewed !== undefined && typeof question.reviewed !== 'boolean') {
+                errors.push(`reviewed in ${questionRef} muss ein boolean sein.`);
+            }
+
             if (question.type && !isNonEmptyString(question.type)) {
                 errors.push(`type in ${questionRef} muss ein nicht-leerer string sein.`);
             }

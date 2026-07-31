@@ -69,6 +69,10 @@
                                 <option value="alpha-desc">Alphabetisch Z-A</option>
                                 <option value="newest">Neuestes Datum</option>
                                 <option value="oldest">Ältestes Datum</option>
+                                <option value="active-first">Aktive zuerst</option>
+                                <option value="inactive-first">Inaktive zuerst</option>
+                                <option value="reviewed-first">Geprüfte zuerst</option>
+                                <option value="unreviewed-first">Ungeprüfte zuerst</option>
                             </select>
                         </label>
                     </div>
@@ -116,8 +120,9 @@
                         </section>
                         <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
-                        <label>Sortierung <input id="js-admin-sort" type="number" min="0" value="100"></label>
+                        <input id="js-admin-sort" type="hidden" value="100">
                         <label><input id="js-admin-active" type="checkbox" checked> Aktiv</label>
+                        <label><input id="js-admin-reviewed" type="checkbox"> Geprüft</label>
                         <div class="admin-actions">
                             <button class="btn btn--modal" type="submit">Frage speichern</button>
                             <button id="js-admin-delete" class="btn btn--modal" type="button">Frage löschen</button>

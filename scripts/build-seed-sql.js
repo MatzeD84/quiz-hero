@@ -60,7 +60,7 @@ for (const [index, category] of categories.entries()) {
     for (const [questionIndex, question] of questions.entries()) {
         rows.push([
             'INSERT INTO quiz_questions',
-            '(category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, sort_order)',
+            '(category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order)',
             'VALUES',
             `(${[
                 sqlString(category.id),
@@ -72,7 +72,8 @@ for (const [index, category] of categories.entries()) {
                 sqlString(question.imageUrl ?? null),
                 sqlJson(question.tag ?? []),
                 sqlString(question.backgroundKnowledge ?? null),
-                '1',
+                question.active === false ? '0' : '1',
+                question.reviewed ? '1' : '0',
                 sqlNumber((questionIndex + 1) * 10),
             ].join(', ')});`,
         ].join(' '));

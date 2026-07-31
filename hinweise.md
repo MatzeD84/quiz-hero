@@ -452,28 +452,4 @@ Am Ende:
 - Oder bei perfektem Lauf: „Hero-Bonusfrage freigeschaltet“
 - Erhöht Spannung und Abschlussgefühl.
 
------
-Feedback-Funktion pro Frage:
 
-Sehr wichtig für Qualität.
-
-Button nach Antwort:
-„Fehler melden“
-
-Optionen:
-- antwort falsch
-- Frage unklar
-- Bild passt nicht
-- Rechtschreibung
-- Quelle fehlt
-- Sonstiges
-
-Admin sieht Feedback gesammelt:
-- Frage
-- Meldungstyp
-- Kommentar
-- Zeitpunkt
-- User optional
-- Status: offen/geprüft/erledigt
-
-Das ist eine der besten Erweiterungen für Content-Qualität.

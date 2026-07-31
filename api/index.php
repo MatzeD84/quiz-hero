@@ -1204,10 +1204,10 @@ function admin_question_save(): void
     $pdo = db();
 
     if (!empty($data['id'])) {
-        $stmt = $pdo->prepare('UPDATE quiz_questions SET category_id = :category_id, question = :question, answers_json = :answers_json, correct_index = :correct_index, difficulty = :difficulty, question_type = :question_type, image_url = :image_url, tags_json = :tags_json, background_knowledge = :background_knowledge, active = :active, sort_order = :sort_order WHERE id = :id');
+        $stmt = $pdo->prepare('UPDATE quiz_questions SET category_id = :category_id, question = :question, answers_json = :answers_json, correct_index = :correct_index, difficulty = :difficulty, question_type = :question_type, image_url = :image_url, tags_json = :tags_json, background_knowledge = :background_knowledge, active = :active, reviewed = :reviewed, sort_order = :sort_order WHERE id = :id');
         $question['id'] = ensure_int($data['id'], 1, PHP_INT_MAX);
     } else {
-        $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :sort_order)');
+        $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :reviewed, :sort_order)');
     }
     $stmt->execute($question);
 
@@ -1258,7 +1258,7 @@ function admin_question_import(): void
         ], 422);
     }
 
-    $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :sort_order)');
+    $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :reviewed, :sort_order)');
     $categoryStmt = $pdo->prepare('INSERT IGNORE INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, "", "", NULL, 1, :badge_json, 100)');
     $pdo->beginTransaction();
     try {
@@ -1762,6 +1762,7 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
             'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
             'background_knowledge' => clean_string($entry['backgroundKnowledge'] ?? $entry['background'] ?? '', 2000) ?: null,
             'active' => array_key_exists('active', $entry) ? (!empty($entry['active']) ? 1 : 0) : 1,
+            'reviewed' => !empty($entry['reviewed']) ? 1 : 0,
             'sort_order' => $sortOrder,
         ];
     }
@@ -1831,6 +1832,7 @@ function normalize_question_payload(array $data): array
         'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
         'background_knowledge' => clean_string($data['backgroundKnowledge'] ?? '', 2000) ?: null,
         'active' => !empty($data['active']) ? 1 : 0,
+        'reviewed' => !empty($data['reviewed']) ? 1 : 0,
         'sort_order' => ensure_int($data['sortOrder'] ?? 100, 0, 100000),
     ];
 }
@@ -1865,6 +1867,7 @@ function format_question(array $question): array
         'tag' => decode_json_field($question['tags_json'] ?? null, []),
         'backgroundKnowledge' => $question['background_knowledge'] ?? '',
         'active' => (bool) $question['active'],
+        'reviewed' => (bool) ($question['reviewed'] ?? false),
         'sortOrder' => (int) $question['sort_order'],
         'createdAt' => isset($question['created_at']) ? date(DATE_ATOM, strtotime((string) $question['created_at'])) : '',
         'updatedAt' => isset($question['updated_at']) ? date(DATE_ATOM, strtotime((string) $question['updated_at'])) : '',

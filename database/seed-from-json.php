@@ -22,7 +22,7 @@ try {
 
     $deleteQuestionsStmt = $pdo->prepare('DELETE FROM quiz_questions WHERE category_id = :category_id');
     $categoryStmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
-    $questionStmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, 1, :sort_order)');
+    $questionStmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :reviewed, :sort_order)');
 
     foreach ($categories as $sort => $category) {
         $categoryStmt->execute([
@@ -54,6 +54,8 @@ try {
                 'image_url' => $question['imageUrl'] ?? null,
                 'tags_json' => json_encode($question['tag'] ?? [], JSON_UNESCAPED_UNICODE),
                 'background_knowledge' => $question['backgroundKnowledge'] ?? null,
+                'active' => ($question['active'] ?? true) === false ? 0 : 1,
+                'reviewed' => !empty($question['reviewed']) ? 1 : 0,
                 'sort_order' => ($questionSort + 1) * 10,
             ]);
         }

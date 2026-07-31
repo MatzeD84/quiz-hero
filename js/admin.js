@@ -444,11 +444,29 @@ function getFilteredQuestions() {
             && (!search || searchable.includes(search));
     }).sort((a, b) => compareAdminItems(a, b, sort, {
         text: item => item.question || '',
-        date: item => item.createdAt || item.updatedAt || ''
+        date: item => item.createdAt || item.updatedAt || '',
+        active: item => item.active !== false,
+        reviewed: item => item.reviewed === true
     }));
 }
 
 function compareAdminItems(a, b, sort, getters) {
+    if ((sort === 'active-first' || sort === 'inactive-first') && getters.active) {
+        const aActive = getters.active(a);
+        const bActive = getters.active(b);
+        if (aActive === bActive) return 0;
+        return sort === 'active-first'
+            ? Number(bActive) - Number(aActive)
+            : Number(aActive) - Number(bActive);
+    }
+    if ((sort === 'reviewed-first' || sort === 'unreviewed-first') && getters.reviewed) {
+        const aReviewed = getters.reviewed(a);
+        const bReviewed = getters.reviewed(b);
+        if (aReviewed === bReviewed) return 0;
+        return sort === 'reviewed-first'
+            ? Number(bReviewed) - Number(aReviewed)
+            : Number(aReviewed) - Number(bReviewed);
+    }
     if (sort === 'alpha-asc' || sort === 'alpha-desc') {
         const result = getters.text(a).localeCompare(getters.text(b), 'de', { sensitivity: 'base' });
         return sort === 'alpha-desc' ? -result : result;
@@ -511,11 +529,27 @@ function renderQuestions() {
             button.classList.add('admin-question-button--active');
         }
         const tags = (question.tag || []).slice(0, 3).join(', ');
+        const isActive = question.active !== false;
+        const isReviewed = question.reviewed === true;
         button.innerHTML = `
+            <span class="admin-question-button__statuses">
+                <span class="admin-question-button__status admin-question-button__status--publish" aria-label=""></span>
+                <span class="admin-question-button__status admin-question-button__status--review" aria-label=""></span>
+            </span>
             <span class="admin-question-button__title"></span>
             <span class="admin-question-button__meta"></span>
             <span class="admin-question-button__date"></span>
         `;
+        const publishStatus = button.querySelector('.admin-question-button__status--publish');
+        publishStatus.classList.add(isActive ? 'admin-question-button__status--active' : 'admin-question-button__status--inactive');
+        publishStatus.textContent = isActive ? '\uD83C\uDF10' : 'X';
+        publishStatus.setAttribute('aria-label', isActive ? 'Aktiv/veröffentlicht' : 'Inaktiv/nicht veröffentlicht');
+        publishStatus.title = isActive ? 'Aktiv/veröffentlicht' : 'Inaktiv/nicht veröffentlicht';
+        const reviewStatus = button.querySelector('.admin-question-button__status--review');
+        reviewStatus.classList.add(isReviewed ? 'admin-question-button__status--reviewed' : 'admin-question-button__status--unreviewed');
+        reviewStatus.textContent = isReviewed ? '\u2713' : 'X';
+        reviewStatus.setAttribute('aria-label', isReviewed ? 'Geprüft' : 'Nicht geprüft');
+        reviewStatus.title = isReviewed ? 'Geprüft' : 'Nicht geprüft';
         button.querySelector('.admin-question-button__title').textContent = question.question;
         const createdAt = formatAdminDate(question.createdAt);
         button.querySelector('.admin-question-button__meta').textContent = [question.categoryTitle, question.difficulty, tags].filter(Boolean).join(' \u00b7 ');
@@ -920,6 +954,7 @@ function fillQuestion(question = {}) {
     $('#js-admin-background').value = question.backgroundKnowledge || '';
     $('#js-admin-sort').value = question.sortOrder || 100;
     $('#js-admin-active').checked = question.active !== false;
+    $('#js-admin-reviewed').checked = question.reviewed === true;
     $('#js-admin-delete').classList.toggle('admin-hidden', !question.id);
     updateImageState();
     renderQuestions();
@@ -955,7 +990,8 @@ function collectQuestion() {
         tags: $('#js-admin-tags').value,
         backgroundKnowledge: $('#js-admin-background').value,
         sortOrder: Number($('#js-admin-sort').value || 100),
-        active: $('#js-admin-active').checked
+        active: $('#js-admin-active').checked,
+        reviewed: $('#js-admin-reviewed').checked
     };
 }
 
@@ -1027,7 +1063,8 @@ function validateImportQuestions(rawQuestions) {
                 imageUrl: String(entry.imageUrl || entry.image || '').trim(),
                 backgroundKnowledge: String(entry.backgroundKnowledge || entry.background || '').trim(),
                 sortOrder: Number(entry.sortOrder || 100),
-                active: entry.active !== false
+                active: entry.active !== false,
+                reviewed: entry.reviewed === true
             }
         };
     });
