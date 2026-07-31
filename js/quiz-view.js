@@ -404,6 +404,7 @@ export class QuizView {
         }
 
         answerButtons.forEach((btn, idx) => {
+            btn.blur();
             btn.textContent = answers[idx] ?? '';
             btn.disabled = false;
             btn.classList.remove('correct', 'incorrect');
