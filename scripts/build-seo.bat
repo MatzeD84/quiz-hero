@@ -18,10 +18,10 @@ if errorlevel 1 (
   exit /b 1
 )
 
-if exist "pages\index.html" (
-  echo [v] [OK] SEO-Landingpages in /pages erfolgreich generiert.
+if exist "kategorie\rom.html" (
+  echo [v] [OK] SEO-Landingpages in /kategorie erfolgreich generiert.
 ) else (
-  echo [!] [WARN] Build lief, aber pages\index.html wurde nicht gefunden.
+  echo [!] [WARN] Build lief, aber kategorie\rom.html wurde nicht gefunden.
 )
 
 if "%HAS_SITE_URL%"=="0" (

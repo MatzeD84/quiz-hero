@@ -32,11 +32,11 @@ if (fs.existsSync(jsDir)) {
     }
 }
 
-const pagesDir = path.join(targetDir, 'pages');
-if (fs.existsSync(pagesDir)) {
-    for (const entry of fs.readdirSync(pagesDir)) {
+const seoPagesDir = path.join(targetDir, 'kategorie');
+if (fs.existsSync(seoPagesDir)) {
+    for (const entry of fs.readdirSync(seoPagesDir)) {
         if (entry.endsWith('.html')) {
-            files.push(`pages/${entry}`);
+            files.push(`kategorie/${entry}`);
         }
     }
 }

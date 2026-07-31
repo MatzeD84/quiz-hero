@@ -3,7 +3,7 @@ const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
 const categoriesPath = path.join(rootDir, 'data/categories.json');
-const outputDir = path.join(rootDir, 'pages');
+const outputDir = path.join(rootDir, 'kategorie');
 const siteTitle = 'Quiz-Hero';
 const siteUrl = (process.env.SITE_URL || '').replace(/\/+$/, '');
 const seoExportUrl = (process.env.SEO_EXPORT_URL || '').trim();
@@ -352,7 +352,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
     const description = category.description
         ? `${category.title} Quiz - ${category.description} Quiz mit ${questionCount} Fragen.`
         : `${category.title} Quiz - Quiz mit ${questionCount} Fragen.`;
-    const canonicalPath = `/pages/${category.id}.html`;
+    const canonicalPath = `/kategorie/${category.id}.html`;
     const breadcrumbItems = [
         { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/` : '../' },
         { label: `${category.title} Quiz`, href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
@@ -427,7 +427,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
 const buildIndexPage = categories => {
     const title = `${siteTitle} Kategorien`;
     const description = 'Alle Quiz-Kategorien im Ueberblick.';
-    const canonicalPath = '/';
+    const canonicalPath = '/kategorie/';
     const breadcrumbItems = [
         { label: 'Quiz-Hero', href: siteUrl ? `${siteUrl}/` : '../' },
         { label: 'Kategorien', href: siteUrl ? `${siteUrl}${canonicalPath}` : '' }
@@ -555,12 +555,9 @@ const run = async () => {
         fs.writeFileSync(pagePath, normalizeGeneratedText(html), 'utf8');
 
         if (siteUrl) {
-            sitemapUrls.push(`${siteUrl}/pages/${category.id}.html`);
+            sitemapUrls.push(`${siteUrl}/kategorie/${category.id}.html`);
         }
     });
-
-    const indexHtml = buildIndexPage(categoriesWithQuestions);
-    fs.writeFileSync(path.join(outputDir, 'index.html'), normalizeGeneratedText(indexHtml), 'utf8');
 
     if (siteUrl) {
         sitemapUrls.unshift(`${siteUrl}/`);
@@ -579,9 +576,6 @@ run().catch(error => {
     console.error(error);
     process.exit(1);
 });
-
-
-
 
 
 

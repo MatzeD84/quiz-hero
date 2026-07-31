@@ -49,7 +49,7 @@ jobs:
           rm -rf deploy
           mkdir -p deploy
           rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html version.json robots.txt sitemap.xml deploy/
-          rsync -a admin api content data fonts images js pages deploy/
+          rsync -a admin api content data fonts images js kategorie deploy/
           rm -f deploy/api/config.local.example.php
 
       - name: Apply asset version
