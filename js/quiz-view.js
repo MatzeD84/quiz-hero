@@ -88,6 +88,7 @@ export class QuizView {
             const button = document.createElement('button');
             button.className = 'js-category-btn btn btn--category category-card';
             button.dataset.category = category.id;
+            button.type = 'button';
 
             if (category.badge?.active) {
                 const badge = document.createElement('span');
@@ -113,12 +114,10 @@ export class QuizView {
             titleEl.textContent = category.title;
             textWrapper.appendChild(titleEl);
 
-            if (category.description) {
-                const descriptionEl = document.createElement('span');
-                descriptionEl.className = 'category-card__description';
-                descriptionEl.textContent = category.description;
-                textWrapper.appendChild(descriptionEl);
-            }
+            const ctaEl = document.createElement('span');
+            ctaEl.className = 'category-card__cta';
+            ctaEl.textContent = 'Quiz starten';
+            textWrapper.appendChild(ctaEl);
 
             button.appendChild(textWrapper);
 
@@ -162,12 +161,10 @@ export class QuizView {
             titleEl.textContent = tag.title || tag.id;
             textWrapper.appendChild(titleEl);
 
-            if (tag.description) {
-                const descEl = document.createElement('span');
-                descEl.className = 'tag-card__description';
-                descEl.textContent = tag.description;
-                textWrapper.appendChild(descEl);
-            }
+            const ctaEl = document.createElement('span');
+            ctaEl.className = 'tag-card__cta';
+            ctaEl.textContent = 'Quiz starten';
+            textWrapper.appendChild(ctaEl);
 
             button.appendChild(textWrapper);
 

@@ -15,7 +15,8 @@
 }
 
 .question_count__description {
-    display: none;
+    margin-top: 0;
+    color: var(--light-gray-color);
 }
 
 .question_count__selection_wrapper {
@@ -64,4 +65,3 @@
 .question_count_back_btn__text:hover {
     color: var(--amethyst-color);
 }
-
