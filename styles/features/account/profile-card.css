@@ -26,9 +26,14 @@
     text-decoration: underline;
 }
 
-.account-profile-card__avatar:hover span,
 .account-profile-card__avatar:focus-visible span {
     color: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .account-profile-card__avatar:hover span {
+        color: var(--carrot-color);
+    }
 }
 
 .account-profile-card__body {

@@ -37,10 +37,16 @@
     content: none;
 }
 
-.category-card:hover .category-card__cta,
 .category-card:focus-visible .category-card__cta,
-.tag-card:hover .tag-card__cta,
 .tag-card:focus-visible .tag-card__cta {
     border-color: var(--carrot-color);
     background: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .category-card:hover .category-card__cta,
+    .tag-card:hover .tag-card__cta {
+        border-color: var(--carrot-color);
+        background: var(--carrot-color);
+    }
 }

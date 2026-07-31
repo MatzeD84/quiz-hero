@@ -51,10 +51,6 @@
     cursor: pointer;
 }
 
-.question_count_back_btn:hover {
-    color: var(--carrot-color)
-}
-
 .question_count_back_btn__text {
     font-size: 1.1rem;
     color: var(--carrot-color);
@@ -62,6 +58,12 @@
     transition: var(--transition-fade);
 }
 
-.question_count_back_btn__text:hover {
-    color: var(--amethyst-color);
+@media (hover: hover) and (pointer: fine) {
+    .question_count_back_btn:hover {
+        color: var(--carrot-color)
+    }
+
+    .question_count_back_btn__text:hover {
+        color: var(--amethyst-color);
+    }
 }

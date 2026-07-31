@@ -14,10 +14,16 @@
     text-decoration: none;
 }
 
-.breadcrumb__link:hover,
 .breadcrumb__link:focus {
     color: var(--dark-gray-color);
     text-decoration: underline;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .breadcrumb__link:hover {
+        color: var(--dark-gray-color);
+        text-decoration: underline;
+    }
 }
 
 .breadcrumb__sep {
@@ -28,4 +34,3 @@
     color: var(--dark-color);
     font-weight: 600;
 }
-

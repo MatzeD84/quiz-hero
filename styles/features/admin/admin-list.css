@@ -23,10 +23,15 @@
     width: 100%;
 }
 
-.admin-question-button:hover,
 .admin-question-button:focus-visible,
 .admin-question-button--active {
     border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-question-button:hover {
+        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    }
 }
 
 .admin-question-button--active {

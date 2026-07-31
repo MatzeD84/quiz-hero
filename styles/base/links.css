@@ -3,7 +3,8 @@ a {
     transition: var(--transition-fade);
 }
 
-a:hover {
-    color: var(--amethyst-color);
+@media (hover: hover) and (pointer: fine) {
+    a:hover {
+        color: var(--amethyst-color);
+    }
 }
-

@@ -25,9 +25,11 @@
     transition: var(--transition-fade);; 
 }
 
-.category-card:hover .category-card__icon,
-.tag-card:hover .tag-card__icon {
-    filter: var(--filter-sepia);
+@media (hover: hover) and (pointer: fine) {
+    .category-card:hover .category-card__icon,
+    .tag-card:hover .tag-card__icon {
+        filter: var(--filter-sepia);
+    }
 }
 
 .btn--category,

@@ -30,7 +30,6 @@
     white-space: nowrap;
 }
 
-.tab:hover,
 .tab:focus-visible {
     color: var(--carrot-color);
 }
@@ -40,7 +39,16 @@
     color: var(--clouds-color);
 }
 
-.tab--active:hover,
 .tab--active:focus-visible {
     color: var(--clouds-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .tab:hover {
+        color: var(--carrot-color);
+    }
+
+    .tab--active:hover {
+        color: var(--clouds-color);
+    }
 }

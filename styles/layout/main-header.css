@@ -45,8 +45,10 @@
     transition: var(--transition-fade);
 }
 
-.main_image:hover {
-    filter: var(--filter-sepia);
+@media (hover: hover) and (pointer: fine) {
+    .main_image:hover {
+        filter: var(--filter-sepia);
+    }
 }
 
 @media (max-width: 576px) {
@@ -54,4 +56,3 @@
         max-height: 40px;
     }
 }
-

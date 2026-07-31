@@ -44,10 +44,15 @@
     transition: var(--transition-soft);
 }
 
-.admin-media-card:hover,
 .admin-media-card:focus-visible,
 .admin-media-card--active {
     border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-media-card:hover {
+        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    }
 }
 
 .admin-media-card img {

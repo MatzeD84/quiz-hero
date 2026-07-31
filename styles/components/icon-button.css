@@ -15,18 +15,19 @@
     border: none;
 }
 
-.quiz__abort_btn:hover {
-    background-color: var(--mandarin-color);
-}
-
 .quiz__abort_svg {
     width: 24px;
     height: 24px;
     fill: var(--dark-gray-color);
 }
 
-.quiz__abort_btn:hover .quiz__abort_svg {
-    fill: var(--clouds-color);
-    transition: var(--transition-fade);
-}
+@media (hover: hover) and (pointer: fine) {
+    .quiz__abort_btn:hover {
+        background-color: var(--mandarin-color);
+    }
 
+    .quiz__abort_btn:hover .quiz__abort_svg {
+        fill: var(--clouds-color);
+        transition: var(--transition-fade);
+    }
+}

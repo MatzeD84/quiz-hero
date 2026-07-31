@@ -23,11 +23,17 @@
     transition: var(--transition-soft);
 }
 
-.admin-dropzone:hover,
 .admin-dropzone:focus-visible,
 .admin-dropzone--dragover {
     background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
     border-color: var(--belizehole-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-dropzone:hover {
+        background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
+        border-color: var(--belizehole-color);
+    }
 }
 
 .admin-dropzone span {
@@ -105,9 +111,14 @@
     width: 32px;
 }
 
-.admin-image-field__remove:hover,
 .admin-image-field__remove:focus-visible {
     background: var(--mandarin-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-image-field__remove:hover {
+        background: var(--mandarin-color);
+    }
 }
 
 .admin-image-field__meta {

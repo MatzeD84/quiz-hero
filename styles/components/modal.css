@@ -60,13 +60,11 @@
     transition: var(--transition-fade);
 }
 
-.modal__close_btn:hover,
 .modal__close_btn:focus-visible {
     background-color: var(--mandarin-color);
     color: var(--clouds-color);
 }
 
-.modal__close_btn:hover .quiz__abort_svg,
 .modal__close_btn:focus-visible .quiz__abort_svg {
     fill: var(--clouds-color);
 }
@@ -218,7 +216,21 @@
     text-decoration: underline;
 }
 
-.result-summary__secondary:hover,
 .result-summary__secondary:focus-visible {
     color: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .modal__close_btn:hover {
+        background-color: var(--mandarin-color);
+        color: var(--clouds-color);
+    }
+
+    .modal__close_btn:hover .quiz__abort_svg {
+        fill: var(--clouds-color);
+    }
+
+    .result-summary__secondary:hover {
+        color: var(--carrot-color);
+    }
 }

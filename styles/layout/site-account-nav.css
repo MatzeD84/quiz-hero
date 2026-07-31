@@ -15,10 +15,16 @@
     text-decoration: none;
 }
 
-.site-account-nav a:hover,
 .site-account-nav a:focus-visible {
     color: var(--belizehole-color);
     text-decoration: underline;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .site-account-nav a:hover {
+        color: var(--belizehole-color);
+        text-decoration: underline;
+    }
 }
 
 .site-account-nav__link--account img,

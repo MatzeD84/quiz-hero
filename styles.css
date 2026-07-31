@@ -102,8 +102,10 @@ a {
     transition: var(--transition-fade);
 }
 
-a:hover {
-    color: var(--amethyst-color);
+@media (hover: hover) and (pointer: fine) {
+    a:hover {
+        color: var(--amethyst-color);
+    }
 }
 
 /* === styles/layout/container.css === */
@@ -170,8 +172,10 @@ a:hover {
     transition: var(--transition-fade);
 }
 
-.main_image:hover {
-    filter: var(--filter-sepia);
+@media (hover: hover) and (pointer: fine) {
+    .main_image:hover {
+        filter: var(--filter-sepia);
+    }
 }
 
 @media (max-width: 576px) {
@@ -250,9 +254,11 @@ a:hover {
     transition: var(--transition-fade);; 
 }
 
-.category-card:hover .category-card__icon,
-.tag-card:hover .tag-card__icon {
-    filter: var(--filter-sepia);
+@media (hover: hover) and (pointer: fine) {
+    .category-card:hover .category-card__icon,
+    .tag-card:hover .tag-card__icon {
+        filter: var(--filter-sepia);
+    }
 }
 
 .btn--category,
@@ -326,12 +332,18 @@ a:hover {
     content: none;
 }
 
-.category-card:hover .category-card__cta,
 .category-card:focus-visible .category-card__cta,
-.tag-card:hover .tag-card__cta,
 .tag-card:focus-visible .tag-card__cta {
     border-color: var(--carrot-color);
     background: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .category-card:hover .category-card__cta,
+    .tag-card:hover .tag-card__cta {
+        border-color: var(--carrot-color);
+        background: var(--carrot-color);
+    }
 }
 
 /* === styles/features/quiz/question-count.css === */
@@ -388,10 +400,6 @@ a:hover {
     cursor: pointer;
 }
 
-.question_count_back_btn:hover {
-    color: var(--carrot-color)
-}
-
 .question_count_back_btn__text {
     font-size: 1.1rem;
     color: var(--carrot-color);
@@ -399,8 +407,14 @@ a:hover {
     transition: var(--transition-fade);
 }
 
-.question_count_back_btn__text:hover {
-    color: var(--amethyst-color);
+@media (hover: hover) and (pointer: fine) {
+    .question_count_back_btn:hover {
+        color: var(--carrot-color)
+    }
+
+    .question_count_back_btn__text:hover {
+        color: var(--amethyst-color);
+    }
 }
 
 /* === styles/features/quiz/quiz-layout.css === */
@@ -437,8 +451,10 @@ a:hover {
   transition: var(--transition-fade);
 }
 
-.quiz__headerlogo_image:hover {
-  filter: var(--filter-sepia);
+@media (hover: hover) and (pointer: fine) {
+    .quiz__headerlogo_image:hover {
+      filter: var(--filter-sepia);
+    }
 }
 
 .quiz__selection {
@@ -666,19 +682,21 @@ a:hover {
     border: none;
 }
 
-.quiz__abort_btn:hover {
-    background-color: var(--mandarin-color);
-}
-
 .quiz__abort_svg {
     width: 24px;
     height: 24px;
     fill: var(--dark-gray-color);
 }
 
-.quiz__abort_btn:hover .quiz__abort_svg {
-    fill: var(--clouds-color);
-    transition: var(--transition-fade);
+@media (hover: hover) and (pointer: fine) {
+    .quiz__abort_btn:hover {
+        background-color: var(--mandarin-color);
+    }
+
+    .quiz__abort_btn:hover .quiz__abort_svg {
+        fill: var(--clouds-color);
+        transition: var(--transition-fade);
+    }
 }
 
 /* === styles/components/modal.css === */
@@ -744,13 +762,11 @@ a:hover {
     transition: var(--transition-fade);
 }
 
-.modal__close_btn:hover,
 .modal__close_btn:focus-visible {
     background-color: var(--mandarin-color);
     color: var(--clouds-color);
 }
 
-.modal__close_btn:hover .quiz__abort_svg,
 .modal__close_btn:focus-visible .quiz__abort_svg {
     fill: var(--clouds-color);
 }
@@ -902,9 +918,23 @@ a:hover {
     text-decoration: underline;
 }
 
-.result-summary__secondary:hover,
 .result-summary__secondary:focus-visible {
     color: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .modal__close_btn:hover {
+        background-color: var(--mandarin-color);
+        color: var(--clouds-color);
+    }
+
+    .modal__close_btn:hover .quiz__abort_svg {
+        fill: var(--clouds-color);
+    }
+
+    .result-summary__secondary:hover {
+        color: var(--carrot-color);
+    }
 }
 
 /* === styles/components/consent-banner.css === */
@@ -1082,10 +1112,16 @@ details[open] summary::after {
     text-decoration: none;
 }
 
-.breadcrumb__link:hover,
 .breadcrumb__link:focus {
     color: var(--dark-gray-color);
     text-decoration: underline;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .breadcrumb__link:hover {
+        color: var(--dark-gray-color);
+        text-decoration: underline;
+    }
 }
 
 .breadcrumb__sep {
@@ -1122,10 +1158,16 @@ details[open] summary::after {
     text-decoration: none;
 }
 
-.site-account-nav a:hover,
 .site-account-nav a:focus-visible {
     color: var(--belizehole-color);
     text-decoration: underline;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .site-account-nav a:hover {
+        color: var(--belizehole-color);
+        text-decoration: underline;
+    }
 }
 
 .site-account-nav__link--account img,
@@ -1265,7 +1307,6 @@ details[open] summary::after {
     width: 70px;
 }
 
-.user-panel__avatar-link:hover img,
 .user-panel__avatar-link:focus-visible img {
     border-color: var(--carrot-color);
     transform: translateY(-1px);
@@ -1278,9 +1319,19 @@ details[open] summary::after {
     transition: opacity var(--transition-soft);
 }
 
-.user-panel__avatar-link:hover .user-panel__avatar-hint,
 .user-panel__avatar-link:focus-visible .user-panel__avatar-hint {
     opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .user-panel__avatar-link:hover img {
+        border-color: var(--carrot-color);
+        transform: translateY(-1px);
+    }
+
+    .user-panel__avatar-link:hover .user-panel__avatar-hint {
+        opacity: 1;
+    }
 }
 
 .user-panel__preview-text {
@@ -1415,14 +1466,22 @@ details[open] summary::after {
     transition: var(--transition-fade);
 }
 
-.account-action-link:hover,
 .account-action-link:focus-visible {
     color: var(--carrot-color);
 }
 
-.account-action-link--danger:hover,
 .account-action-link--danger:focus-visible {
     color: var(--mandarin-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .account-action-link:hover {
+        color: var(--carrot-color);
+    }
+
+    .account-action-link--danger:hover {
+        color: var(--mandarin-color);
+    }
 }
 
 /* === styles/components/tabs.css === */
@@ -1458,7 +1517,6 @@ details[open] summary::after {
     white-space: nowrap;
 }
 
-.tab:hover,
 .tab:focus-visible {
     color: var(--carrot-color);
 }
@@ -1468,9 +1526,18 @@ details[open] summary::after {
     color: var(--clouds-color);
 }
 
-.tab--active:hover,
 .tab--active:focus-visible {
     color: var(--clouds-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .tab:hover {
+        color: var(--carrot-color);
+    }
+
+    .tab--active:hover {
+        color: var(--clouds-color);
+    }
 }
 
 /* === styles/features/admin/admin-layout.css === */
@@ -1616,10 +1683,15 @@ details[open] summary::after {
     width: 100%;
 }
 
-.admin-question-button:hover,
 .admin-question-button:focus-visible,
 .admin-question-button--active {
     border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-question-button:hover {
+        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    }
 }
 
 .admin-question-button--active {
@@ -1736,10 +1808,15 @@ details[open] summary::after {
     transition: var(--transition-soft);
 }
 
-.admin-media-card:hover,
 .admin-media-card:focus-visible,
 .admin-media-card--active {
     border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-media-card:hover {
+        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    }
 }
 
 .admin-media-card img {
@@ -2157,7 +2234,6 @@ details[open] summary::after {
     width: clamp(48px, 8vw, 64px);
 }
 
-.account-avatar-option--compact:hover,
 .account-avatar-option--compact:focus-within {
     border-color: transparent;
 }
@@ -2167,7 +2243,6 @@ details[open] summary::after {
     border-color: transparent;
 }
 
-.account-avatar-option--compact:hover img,
 .account-avatar-option--compact:focus-within img,
 .account-avatar-option--compact input:checked + img {
     box-shadow: var(--ring-avatar-selected);
@@ -2204,7 +2279,6 @@ details[open] summary::after {
     width: clamp(64px, 12vw, 92px);
 }
 
-.account-avatar-option--modal:hover,
 .account-avatar-option--modal:focus-within {
     border-color: transparent;
 }
@@ -2214,10 +2288,24 @@ details[open] summary::after {
     border-color: transparent;
 }
 
-.account-avatar-option--modal:hover img,
 .account-avatar-option--modal:focus-within img,
 .account-avatar-option--modal:has(input:checked) img {
     box-shadow: var(--ring-avatar-selected);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .account-avatar-option--compact:hover {
+        border-color: transparent;
+    }
+
+    .account-avatar-option--compact:hover img,
+    .account-avatar-option--modal:hover img {
+        box-shadow: var(--ring-avatar-selected);
+    }
+
+    .account-avatar-option--modal:hover {
+        border-color: transparent;
+    }
 }
 
 /* === styles/features/account/account-layout.css === */
@@ -2336,9 +2424,14 @@ details[open] summary::after {
     text-decoration: underline;
 }
 
-.account-profile-card__avatar:hover span,
 .account-profile-card__avatar:focus-visible span {
     color: var(--carrot-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .account-profile-card__avatar:hover span {
+        color: var(--carrot-color);
+    }
 }
 
 .account-profile-card__body {
@@ -2409,11 +2502,17 @@ details[open] summary::after {
     transition: var(--transition-soft);
 }
 
-.admin-dropzone:hover,
 .admin-dropzone:focus-visible,
 .admin-dropzone--dragover {
     background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
     border-color: var(--belizehole-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-dropzone:hover {
+        background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
+        border-color: var(--belizehole-color);
+    }
 }
 
 .admin-dropzone span {
@@ -2491,9 +2590,14 @@ details[open] summary::after {
     width: 32px;
 }
 
-.admin-image-field__remove:hover,
 .admin-image-field__remove:focus-visible {
     background: var(--mandarin-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .admin-image-field__remove:hover {
+        background: var(--mandarin-color);
+    }
 }
 
 .admin-image-field__meta {

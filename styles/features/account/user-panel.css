@@ -66,7 +66,6 @@
     width: 70px;
 }
 
-.user-panel__avatar-link:hover img,
 .user-panel__avatar-link:focus-visible img {
     border-color: var(--carrot-color);
     transform: translateY(-1px);
@@ -79,9 +78,19 @@
     transition: opacity var(--transition-soft);
 }
 
-.user-panel__avatar-link:hover .user-panel__avatar-hint,
 .user-panel__avatar-link:focus-visible .user-panel__avatar-hint {
     opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .user-panel__avatar-link:hover img {
+        border-color: var(--carrot-color);
+        transform: translateY(-1px);
+    }
+
+    .user-panel__avatar-link:hover .user-panel__avatar-hint {
+        opacity: 1;
+    }
 }
 
 .user-panel__preview-text {

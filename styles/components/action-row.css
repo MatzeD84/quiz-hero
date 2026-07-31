@@ -42,12 +42,20 @@
     transition: var(--transition-fade);
 }
 
-.account-action-link:hover,
 .account-action-link:focus-visible {
     color: var(--carrot-color);
 }
 
-.account-action-link--danger:hover,
 .account-action-link--danger:focus-visible {
     color: var(--mandarin-color);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .account-action-link:hover {
+        color: var(--carrot-color);
+    }
+
+    .account-action-link--danger:hover {
+        color: var(--mandarin-color);
+    }
 }
