@@ -35,21 +35,36 @@
     width: 32px;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .site-account-nav {
-        display: flex;
-        justify-content: flex-end;
-        padding: 0.75rem 0.75rem 0;
+        background: var(--carrot-color);
+        box-shadow: 0 0 0 100vmax var(--carrot-color);
+        clip-path: inset(0 -100vmax);
         position: static;
+        text-align: center;
     }
 
     .site-account-nav a {
-        font-size: 0.85rem;
+        color: var(--clouds-color);
+        display: block;
+        font-size: 1rem;
+        line-height: 1.2;
+        padding: 0.35rem 0.75rem;
+    }
+
+    .site-account-nav a:focus-visible {
+        color: var(--clouds-color);
+        outline: 2px solid var(--clouds-color);
+        outline-offset: -4px;
+        text-decoration: none;
+    }
+
+    .site-account-nav__link--quiz-hidden {
+        display: none;
     }
 
     .site-account-nav__link--account img,
     .site-account-nav__link--login img {
-        height: 28px;
-        width: 28px;
+        display: none;
     }
 }

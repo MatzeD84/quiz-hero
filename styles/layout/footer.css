@@ -2,5 +2,7 @@
     width: 100%;
     background-color: var(--lighter-gray-color);
     text-align: center;
+    box-shadow: 0 0 0 100vmax var(--lighter-gray-color);
+    clip-path: inset(0 -100vmax);
 }
 

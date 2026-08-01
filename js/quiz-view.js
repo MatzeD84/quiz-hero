@@ -217,6 +217,7 @@ export class QuizView {
         this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
         if (this.elements.accountEntryLink) {
             this.elements.accountEntryLink.href = user ? 'account.html' : 'login.html';
+            this.elements.accountEntryLink.setAttribute('aria-label', user ? 'Heldenseite' : 'Login');
             this.elements.accountEntryLink.classList.toggle('site-account-nav__link--account', Boolean(user));
             this.elements.accountEntryLink.classList.toggle('site-account-nav__link--login', !user);
             this.elements.accountEntryLink.innerHTML = '';
@@ -348,6 +349,7 @@ export class QuizView {
     }
 
     showCategories() {
+        this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.showElement(this.elements.categoryContainer);
         this.hideElement(this.elements.questionCountContainer);
         this.hideElement(this.elements.quizContent);
@@ -355,11 +357,13 @@ export class QuizView {
     }
 
     showQuestionCount() {
+        this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.hideElement(this.elements.categoryContainer);
         this.showElement(this.elements.questionCountContainer);
     }
 
     showQuiz() {
+        this.elements.accountEntryLink?.classList.add('site-account-nav__link--quiz-hidden');
         this.hideElement(this.elements.questionCountContainer);
         this.showElement(this.elements.quizContent);
     }
