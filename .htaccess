@@ -1,3 +1,8 @@
+# Private runtime data must never be served, including legacy mail logs.
+<IfModule mod_alias.c>
+    RedirectMatch 404 ^/var(?:/|$)
+</IfModule>
+
 RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]

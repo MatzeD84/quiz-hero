@@ -33,11 +33,11 @@ const output = [
 for (const importPath of imports) {
     const sourcePath = path.resolve(path.dirname(manifestPath), importPath);
     const relativePath = path.relative(rootDir, sourcePath).replace(/\\/g, '/');
-    const css = fs.readFileSync(sourcePath, 'utf8').replace(/^\uFEFF/, '').trimEnd();
+    const css = fs.readFileSync(sourcePath, 'utf8').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/[ \t]+$/gm, '').trimEnd();
     output.push(`/* === ${relativePath} === */`);
     output.push(css);
     output.push('');
 }
 
-fs.writeFileSync(outputPath, `${output.join('\n')}\n`, 'utf8');
+fs.writeFileSync(outputPath, `${output.join('\n').trimEnd()}\n`, 'utf8');
 console.log(`Built ${path.relative(rootDir, outputPath)} from ${imports.length} source files.`);

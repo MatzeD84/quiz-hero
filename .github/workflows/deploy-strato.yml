@@ -11,17 +11,34 @@ jobs:
   deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-test-only
+          MYSQL_DATABASE: quiz_hero_audit_ci
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci-test-only"
+          --health-interval=5s --health-timeout=5s --health-retries=20
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y lftp php-cli rsync
+        run: sudo apt-get update && sudo apt-get install -y lftp php-cli php-mysql php-mbstring rsync
 
       - name: Validate PHP
         run: |
           php -l api/bootstrap.php
+          php -l api/user-sessions.php
           php -l api/index.php
           php -l database/migrate.php
           php -l database/seed-from-json.php
@@ -36,6 +53,28 @@ jobs:
           node --check js/quiz-controller.js
           node --check js/quiz-view.js
 
+      - name: Build CSS and test contracts
+        run: |
+          node scripts/build-css.js
+          node --test tests/contracts.test.mjs
+
+      - name: Test migrations and account lifecycle
+        env:
+          QUIZ_HERO_DB_HOST: 127.0.0.1
+          QUIZ_HERO_DB_PORT: 3306
+          QUIZ_HERO_DB_NAME: quiz_hero_audit_ci
+          QUIZ_HERO_DB_USER: root
+          QUIZ_HERO_DB_PASSWORD: ci-test-only
+        run: php tests/integration.php
+
+      - name: Validate SEO configuration
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          SEO_EXPORT_TOKEN: ${{ secrets.QUIZ_HERO_SEO_EXPORT_TOKEN }}
+        run: |
+          test -n "$SITE_URL" || { echo "::error::SITE_URL fehlt"; exit 1; }
+          test -n "$SEO_EXPORT_TOKEN" || { echo "::error::SEO_EXPORT_TOKEN fehlt"; exit 1; }
+
       - name: Build SEO pages
         env:
           SITE_URL: ${{ secrets.SITE_URL }}
@@ -48,8 +87,9 @@ jobs:
         run: |
           rm -rf deploy
           mkdir -p deploy
-          rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html version.json robots.txt sitemap.xml deploy/
-          rsync -a admin api content data fonts images js kategorie deploy/
+          rsync -a index.html login.html account.html styles.css .htaccess .user.ini 404.html version.json deploy/
+          rsync -a admin api content data fonts images js deploy/
+          rsync -a .build/seo/kategorie .build/seo/robots.txt .build/seo/sitemap.xml .build/seo/seo-manifest.json deploy/
           rm -f deploy/api/config.local.example.php
 
       - name: Apply asset version
@@ -164,7 +204,8 @@ jobs:
         run: |
           lftp -u "$STRATO_SFTP_USER","$STRATO_SFTP_PASSWORD" "sftp://$STRATO_SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
-          mirror --reverse --verbose deploy/ "$STRATO_TARGET_PATH"
+          mirror --reverse --verbose --exclude-glob kategorie/ deploy/ "$STRATO_TARGET_PATH"
+          mirror --reverse --delete --verbose deploy/kategorie/ "$STRATO_TARGET_PATH/kategorie"
           bye
           EOF
 
@@ -186,3 +227,8 @@ jobs:
           done
           echo "::error::Production did not return version $expected from $url"
           exit 1
+
+      - name: Verify published SEO pages
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: node scripts/verify-seo.js .build/seo/seo-manifest.json

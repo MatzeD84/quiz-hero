@@ -1,5 +1,5 @@
 import { CONFIG, LABELS } from './config.js?v=dev';
-import { ACCOUNT_REMOVED_MESSAGE } from './user-service.js?v=dev';
+import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 
 export class QuizController {
@@ -24,7 +24,7 @@ export class QuizController {
             this.view.renderUser(this.currentUser);
             applyAccountHeaderLogo(this.currentUser);
             if (accountRemoved) {
-                this.view.renderUserStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
+                this.view.renderUserStatus(this.accountStatusMessage || ACCOUNT_REMOVED_MESSAGE, 'info');
             }
             this.view.showCategories();
             this.applyInitialSelectionFromUrl();
@@ -42,8 +42,9 @@ export class QuizController {
             this.currentUser = await this.userService.getCurrentUser(this.currentUser);
             return false;
         } catch (error) {
-            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+            if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
                 this.currentUser = null;
+                this.accountStatusMessage = error.message;
                 return true;
             }
             if (CONFIG.devMode) {
@@ -53,7 +54,8 @@ export class QuizController {
         }
     }
 
-    handleRemovedAccount() {
+    handleRemovedAccount(message = ACCOUNT_REMOVED_MESSAGE) {
+        this.accountStatusMessage = message;
         this.currentUser = null;
         this.view.renderUser(null);
         applyAccountHeaderLogo(null);
@@ -119,8 +121,8 @@ export class QuizController {
             applyAccountHeaderLogo(this.currentUser);
             this.view.renderUserStatus('Account gespeichert.', 'success');
         } catch (error) {
-            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-                this.handleRemovedAccount();
+            if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+                this.handleRemovedAccount(error.message);
                 return;
             }
             this.view.renderUserStatus(error.message || 'Account konnte nicht gespeichert werden.', 'error');
@@ -129,28 +131,18 @@ export class QuizController {
 
     async handleUserDelete() {
         if (!this.userService || !this.currentUser) return;
-        const confirmValue = window.prompt('Account wirklich löschen? Tippe DELETE zur Bestätigung.');
-        if (confirmValue !== 'DELETE') {
-            this.view.renderUserStatus('Loeschung abgebrochen.', 'info');
-            return;
-        }
-        try {
-            await this.userService.deleteAccount(this.currentUser, confirmValue);
-            this.currentUser = null;
-            this.view.renderUser(null);
-            applyAccountHeaderLogo(null);
-            this.view.renderUserStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
-        } catch (error) {
-            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-                this.handleRemovedAccount();
-                return;
-            }
-            this.view.renderUserStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
-        }
+        window.location.href = "account.html";
     }
 
-    handleUserLogout() {
-        this.userService?.clearUser();
+    async handleUserLogout() {
+        try {
+            await this.userService?.logout(this.currentUser);
+        } catch (error) {
+            if (error.message !== SESSION_EXPIRED_MESSAGE) {
+                this.view.renderUserStatus(error.message, 'error');
+                return;
+            }
+        }
         this.currentUser = null;
         this.view.renderUser(null);
         applyAccountHeaderLogo(null);
@@ -290,8 +282,8 @@ export class QuizController {
             this.view.renderQuestionFeedbackStatus('Danke, dein Feedback wurde gesendet.', 'success');
             window.setTimeout(() => this.view.closeQuestionFeedbackModal(), 900);
         } catch (error) {
-            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-                this.handleRemovedAccount();
+            if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+                this.handleRemovedAccount(error.message);
                 this.view.closeQuestionFeedbackModal();
                 return;
             }
@@ -332,8 +324,8 @@ export class QuizController {
                 count: stats.total
             };
             this.userService?.saveResult(this.currentUser, stats, context).catch(error => {
-                if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-                    this.handleRemovedAccount();
+                if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+                    this.handleRemovedAccount(error.message);
                     return;
                 }
                 if (CONFIG.devMode) {

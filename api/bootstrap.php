@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-const QUIZ_HERO_MAX_JSON_BYTES = 262144;
+const QUIZ_HERO_MAX_JSON_BYTES = 1048576;
 const QUIZ_HERO_RATE_LIMIT_DIR = 'quiz-hero-rate-limits';
 
 function local_config(): array
@@ -155,72 +155,12 @@ function require_admin_csrf(): void
     }
 }
 
-function token_secret(): string
-{
-    $secret = env_value('QUIZ_HERO_USER_TOKEN_SECRET')
-        ?? env_value('QUIZ_HERO_ADMIN_PASSWORD_HASH')
-        ?? env_value('QUIZ_HERO_ADMIN_PASSWORD')
-        ?? env_value('QUIZ_HERO_DB_PASSWORD')
-        ?? '';
-
-    if ($secret === '') {
-        $secret = 'quiz-hero-local-development-secret';
-    }
-
-    return $secret;
-}
-
-function base64url_encode(string $value): string
-{
-    return rtrim(strtr(base64_encode($value), '+/', '-_'), '=');
-}
-
-function base64url_decode(string $value): string|false
-{
-    $base64 = strtr($value, '-_', '+/');
-    $padding = strlen($base64) % 4;
-    if ($padding !== 0) {
-        $base64 .= str_repeat('=', 4 - $padding);
-    }
-    $padded = $base64;
-    return base64_decode($padded, true);
-}
-
-function create_user_token(int $userId): string
-{
-    $payload = base64url_encode(json_encode(['userId' => $userId, 'issuedAt' => time()], JSON_THROW_ON_ERROR));
-    $signature = hash_hmac('sha256', $payload, token_secret());
-    return $payload . '.' . $signature;
-}
-
-function require_user_token(int $userId, string $token): void
-{
-    $parts = explode('.', $token, 2);
-    if (count($parts) !== 2) {
-        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
-    }
-
-    [$payload, $signature] = $parts;
-    $expected = hash_hmac('sha256', $payload, token_secret());
-    if (!hash_equals($expected, $signature)) {
-        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
-    }
-
-    $decoded = base64url_decode($payload);
-    $data = is_string($decoded) ? json_decode($decoded, true) : null;
-    if (!is_array($data) || (int) ($data['userId'] ?? 0) !== $userId) {
-        json_response(['ok' => false, 'error' => 'Ungültiges User-Token. Bitte neu einloggen.'], 401);
-    }
-
-    $issuedAt = (int) ($data['issuedAt'] ?? 0);
-    if ($issuedAt < time() - 15552000) {
-        json_response(['ok' => false, 'error' => 'User-Token ist abgelaufen. Bitte neu einloggen.'], 401);
-    }
-}
+require_once __DIR__ . '/user-sessions.php';
 
 function read_json_body(): array
 {
-    $raw = file_get_contents('php://input');
+    // Bound memory use as well as the accepted payload size.
+    $raw = file_get_contents('php://input', false, null, 0, QUIZ_HERO_MAX_JSON_BYTES + 1);
     if ($raw === false || trim($raw) === '') {
         return [];
     }
@@ -272,10 +212,22 @@ function clean_url(?string $value, int $maxLength = 500): string
     if ($url === '') {
         return '';
     }
-    if (!filter_var($url, FILTER_VALIDATE_URL) && !str_starts_with($url, 'images/')) {
+    if (mb_strlen($url, 'UTF-8') > $maxLength || preg_match('/[\x00-\x1f\x7f\\\\]/', $url)) {
         return '';
     }
-    return mb_substr($url, 0, $maxLength, 'UTF-8');
+    $decoded = rawurldecode($url);
+    if (preg_match('/[\x00-\x1f\x7f\\\\]/', $decoded)) return '';
+    if (preg_match('~^/?images/[^?#]+$~D', $decoded)) {
+        foreach (explode('/', $decoded) as $segment) {
+            if ($segment === '.' || $segment === '..' || str_contains($segment, '%')) return '';
+        }
+        return $url;
+    }
+    if (filter_var($url, FILTER_VALIDATE_URL) && in_array(strtolower((string) parse_url($url, PHP_URL_SCHEME)), ['http', 'https'], true)
+        && parse_url($url, PHP_URL_USER) === null && parse_url($url, PHP_URL_PASS) === null) {
+        return $url;
+    }
+    return '';
 }
 
 function ensure_int($value, int $min, int $max): int

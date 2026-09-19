@@ -125,7 +125,9 @@ function apply_migration(PDO $pdo, string $file): void
 
     $statements = split_sql_statements($sql);
     foreach ($statements as $statement) {
-        $pdo->exec($statement);
+        // Conditional migrations can EXECUTE a SELECT; consume its result before the next statement.
+        $result = $pdo->query($statement);
+        $result->closeCursor();
     }
 
     $stmt = $pdo->prepare('INSERT IGNORE INTO ' . MIGRATIONS_TABLE . ' (version) VALUES (:version)');
@@ -135,29 +137,37 @@ function apply_migration(PDO $pdo, string $file): void
 function main(): int
 {
     $pdo = db();
-    ensure_migrations_table($pdo);
-    $applied = applied_migrations($pdo);
-    $pending = 0;
+    $lock = $pdo->query("SELECT GET_LOCK(CONCAT(DATABASE(), ':migrations'), 30)")->fetchColumn();
+    if ((int) $lock !== 1) throw new RuntimeException('Migration lock unavailable.');
+    try {
+        ensure_migrations_table($pdo);
+        $applied = applied_migrations($pdo);
+        $pending = 0;
 
-    foreach (migration_files() as $file) {
-        $version = basename($file);
-        if (isset($applied[$version])) {
-            echo "Already applied: {$version}\n";
-            continue;
+        foreach (migration_files() as $file) {
+            $version = basename($file);
+            if (isset($applied[$version])) {
+                echo "Already applied: {$version}\n";
+                continue;
+            }
+
+            echo "Applying: {$version}\n";
+            apply_migration($pdo, $file);
+            echo "Applied: {$version}\n";
+            $pending++;
         }
 
-        echo "Applying: {$version}\n";
-        apply_migration($pdo, $file);
-        echo "Applied: {$version}\n";
-        $pending++;
-    }
+        if ($pending === 0) {
+            echo "No pending migrations.\n";
+        }
 
-    if ($pending === 0) {
-        echo "No pending migrations.\n";
+        return 0;
+    } finally {
+        $pdo->query("SELECT RELEASE_LOCK(CONCAT(DATABASE(), ':migrations'))");
     }
-
-    return 0;
 }
+
+if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) return;
 
 try {
     exit(main());

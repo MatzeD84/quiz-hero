@@ -2,6 +2,7 @@ import { CONFIG, normalizeAvatarUrl } from './config.js?v=dev';
 
 const STORAGE_KEY = 'quizHeroUser';
 const API_VERSION = CONFIG.apiVersion || '1';
+export const SESSION_EXPIRED_MESSAGE = 'Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an.';
 export const ACCOUNT_REMOVED_MESSAGE = 'Dein Account existiert nicht mehr. Du wurdest ausgeloggt.';
 
 const normalizeUser = user => {
@@ -33,6 +34,14 @@ export class UserService {
 
     clearUser() {
         window.localStorage.removeItem(STORAGE_KEY);
+    }
+
+    async logout(user) {
+        if (user?.id && user?.token) {
+            const data = await this.post('account-logout', { userId: user.id, userToken: user.token });
+            if (!data.ok) throw new Error(data.error || 'Abmelden fehlgeschlagen. Bitte erneut versuchen.');
+        }
+        this.clearUser();
     }
 
     async getCurrentUser(user) {
@@ -100,13 +109,14 @@ export class UserService {
         return data.user;
     }
 
-    async updateAccount(user, { username, avatarKey, password }) {
+    async updateAccount(user, { username, avatarKey, password, currentPassword }) {
         const data = await this.post('account-update', {
             userId: user.id,
             userToken: user.token,
             username,
             avatarKey,
-            password
+            password,
+            currentPassword
         });
         if (!data.ok) {
             throw new Error(data.error || 'Account konnte nicht gespeichert werden.');
@@ -115,11 +125,12 @@ export class UserService {
         return data.user;
     }
 
-    async deleteAccount(user, confirm) {
+    async deleteAccount(user, confirm, currentPassword) {
         const data = await this.post('account-delete', {
             userId: user.id,
             userToken: user.token,
-            confirm
+            confirm,
+            currentPassword
         });
         if (!data.ok) {
             throw new Error(data.error || 'Account konnte nicht geloescht werden.');
@@ -180,6 +191,10 @@ export class UserService {
         }
         if (!response.ok && data.ok !== false) {
             throw new Error(data.error || `API-Anfrage fehlgeschlagen (HTTP ${response.status}).`);
+        }
+        if (data.code === 'SESSION_EXPIRED') {
+            this.clearUser();
+            throw new Error(SESSION_EXPIRED_MESSAGE);
         }
         if (data.ok === false && data.error === 'Account wurde nicht gefunden.') {
             this.clearUser();

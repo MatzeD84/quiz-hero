@@ -18,9 +18,6 @@ CREATE TABLE IF NOT EXISTS quiz_categories (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT IGNORE INTO schema_migrations (version) VALUES ('001_initial_schema.sql');
-INSERT IGNORE INTO schema_migrations (version) VALUES ('002_accounts.sql');
-INSERT IGNORE INTO schema_migrations (version) VALUES ('003_tag_enabled.sql');
 
 CREATE TABLE IF NOT EXISTS quiz_questions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -143,3 +140,22 @@ CREATE TABLE IF NOT EXISTS quiz_question_feedback (
     INDEX idx_quiz_question_feedback_question (question_id, created_at),
     INDEX idx_quiz_question_feedback_user (user_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_user_sessions (
+    token_hash CHAR(64) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    expires_at DATETIME NOT NULL,
+    last_seen_at DATETIME NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_quiz_user_sessions_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    INDEX idx_quiz_user_sessions_user (user_id),
+    INDEX idx_quiz_user_sessions_expiry (expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('001_initial_schema.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('002_accounts.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('003_tag_enabled.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('004_repair_account_schema.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('005_question_feedback.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('006_question_reviewed.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('007_user_sessions.sql');

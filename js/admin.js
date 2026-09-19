@@ -952,7 +952,7 @@ function fillQuestion(question = {}) {
     $('#js-admin-image-file').value = '';
     $('#js-admin-tags').value = (question.tag || []).join(', ');
     $('#js-admin-background').value = question.backgroundKnowledge || '';
-    $('#js-admin-sort').value = question.sortOrder || 100;
+    $('#js-admin-sort').value = question.sortOrder ?? 100;
     $('#js-admin-active').checked = question.active !== false;
     $('#js-admin-reviewed').checked = question.reviewed === true;
     $('#js-admin-delete').classList.toggle('admin-hidden', !question.id);
@@ -969,7 +969,7 @@ function fillCategory(category = {}) {
     $('#js-admin-category-description').value = category.description || '';
     $('#js-admin-category-seo').value = category.seoDescription || '';
     $('#js-admin-category-icon').value = category.icon || '';
-    $('#js-admin-category-sort').value = category.sortOrder || 100;
+    $('#js-admin-category-sort').value = category.sortOrder ?? 100;
     $('#js-admin-category-enabled').checked = category.enabled !== false;
     $('#js-admin-category-badge-active').checked = Boolean(category.badge?.active);
     $('#js-admin-category-badge-text').value = category.badge?.text || 'Neu';
@@ -1062,7 +1062,7 @@ function validateImportQuestions(rawQuestions) {
                 tags: normalizeImportTags(entry.tags ?? entry.tag),
                 imageUrl: String(entry.imageUrl || entry.image || '').trim(),
                 backgroundKnowledge: String(entry.backgroundKnowledge || entry.background || '').trim(),
-                sortOrder: Number(entry.sortOrder || 100),
+                sortOrder: Number(entry.sortOrder ?? 100),
                 active: entry.active !== false,
                 reviewed: entry.reviewed === true
             }
@@ -1166,7 +1166,12 @@ async function importPendingQuestions() {
         setStatus('Keine gültigen Fragen für den Import vorhanden.');
         return;
     }
-    const result = await api('admin-question-import', { questions: pendingImportQuestions });
+    const payload = { questions: pendingImportQuestions };
+    if (new Blob([JSON.stringify(payload)]).size > MAX_JSON_IMPORT_BYTES) {
+        setStatus('Die aufbereiteten Importdaten überschreiten 1 MB. Bitte teile den Import auf.', 'error');
+        return;
+    }
+    const result = await api('admin-question-import', payload);
     if (!result.ok) {
         setStatus(result.error || 'Fragen konnten nicht importiert werden.');
         if (result.results) renderImportResults(result.results);

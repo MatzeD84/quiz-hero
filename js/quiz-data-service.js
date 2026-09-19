@@ -73,11 +73,11 @@ export class QuizDataService {
             const params = new URLSearchParams({ action: 'public-data', v: API_VERSION });
             const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, { cache: 'no-store' });
             if (!response.ok) {
-                return null;
+                throw new Error(`Quizdaten konnten nicht geladen werden (HTTP ${response.status}).`);
             }
             const data = await response.json();
             if (!data.ok) {
-                return null;
+                throw new Error('Die Datenquelle hat keine gültigen Quizdaten geliefert.');
             }
             const categories = data.categories ?? [];
             const tags = data.tags ?? [];
@@ -94,9 +94,9 @@ ${validationErrors.join('\n')}`);
             return { categories, tags, feedback };
         } catch (error) {
             if (CONFIG.devMode) {
-                console.warn('Datenbank-API nicht verfügbar, nutze JSON-Fallback.', error);
+                console.warn('Datenbank-API nicht verfügbar.', error);
             }
-            return null;
+            throw error;
         }
     }
 

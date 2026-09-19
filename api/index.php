@@ -30,6 +30,7 @@ try {
         'account-login' => account_login(),
         'account-dev-login' => account_dev_login(),
         'account-me' => account_me(),
+        'account-logout' => account_logout(),
         'account-update' => account_update(),
         'account-delete' => account_delete(),
         'account-request-password-reset' => account_request_password_reset(),
@@ -56,7 +57,8 @@ try {
     error_log($exception->getMessage());
     json_response(['ok' => false, 'error' => 'Datenbankfehler. Bitte Konfiguration prüfen.'], 500);
 } catch (Throwable $exception) {
-    error_log($exception->getMessage());
+    // Transaction cleanup is automatic on disconnect; never expose mail bodies or tokens.
+    error_log('Quiz-Hero request failed: ' . get_class($exception));
     json_response(['ok' => false, 'error' => 'Serverfehler.'], 500);
 }
 
@@ -244,7 +246,7 @@ function issue_account_token(PDO $pdo, int $userId): array
     return format_account_user($user);
 }
 
-function format_account_user(array $user): array
+function format_account_user(array $user, ?string $token = null): array
 {
     $avatarKey = normalize_avatar_key($user['avatar_key'] ?? '');
     return [
@@ -255,7 +257,7 @@ function format_account_user(array $user): array
         'avatarKey' => $avatarKey,
         'profileImageUrl' => avatar_url($avatarKey),
         'emailVerified' => !empty($user['email_verified_at']),
-        'token' => create_user_token((int) $user['id']),
+        'token' => $token ?? create_user_token((int) $user['id']),
     ];
 }
 
@@ -283,11 +285,14 @@ function require_account_from_payload(array $data): array
 {
     $userId = ensure_int($data['userId'] ?? 0, 1, PHP_INT_MAX);
     require_user_token($userId, (string) ($data['userToken'] ?? ''));
-    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id AND deleted_at IS NULL');
+    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id AND deleted_at IS NULL' . (db()->inTransaction() ? ' FOR UPDATE' : ''));
     $stmt->execute(['id' => $userId]);
     $user = $stmt->fetch();
     if (!$user) {
         json_response(['ok' => false, 'error' => 'Account wurde nicht gefunden.'], 404);
+    }
+    if (db()->inTransaction()) {
+        require_user_token($userId, (string) ($data['userToken'] ?? ''));
     }
     return $user;
 }
@@ -327,27 +332,42 @@ function send_account_mail(string $to, string $subject, string $message, ?string
         $headers[] = 'Content-Type: text/plain; charset=UTF-8';
     }
 
-    if ($transport === 'smtp') {
-        if (smtp_send_account_mail($to, $from, $encodedSubject, $headers, $mailBody)) {
-            return;
-        }
-        error_log('Quiz-Hero SMTP mail failed for ' . $to);
-    } elseif ($transport === 'mail') {
-        if (@mail($to, $encodedSubject, $mailBody, implode("\r\n", $headers))) {
-            return;
-        }
-        error_log('Quiz-Hero mail() failed for ' . $to);
+    if ($transport === 'smtp' && smtp_send_account_mail($to, $from, $encodedSubject, $headers, $mailBody)) {
+        return;
     }
+    if ($transport === 'mail' && @mail($to, $encodedSubject, $mailBody, implode("\r\n", $headers))) {
+        return;
+    }
+    // Explicit local development transport only. Never log delivery failures or auth links in the webroot.
+    if ($transport === 'log' && env_value('QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN', 'false') === 'true') {
+        $dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . '/quiz-hero-private-mail';
+        if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) {
+            throw new RuntimeException('Local mail directory unavailable.');
+        }
+        $file = $dir . '/mail.log';
+        $handle = fopen($file, 'ab');
+        if ($handle === false) {
+            throw new RuntimeException('Local mail log unavailable.');
+        }
+        chmod($file, 0600);
+        flock($handle, LOCK_EX);
+        fwrite($handle, '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$mailBody}\n\n");
+        flock($handle, LOCK_UN);
+        fclose($handle);
+        return;
+    }
+    error_log('Quiz-Hero: account mail delivery failed.');
+    throw new RuntimeException('E-Mail konnte nicht versendet werden.');
+}
 
-    $dir = dirname(__DIR__) . '/var';
-    if (!is_dir($dir)) {
-        @mkdir($dir, 0755, true);
+function send_notification_mail(string $to, string $subject, string $message, ?string $htmlMessage = null): void
+{
+    try {
+        send_account_mail($to, $subject, $message, $htmlMessage);
+    } catch (Throwable $exception) {
+        // The underlying action is already committed. A notification failure must not claim it failed.
+        error_log('Quiz-Hero notification delivery failed.');
     }
-    @file_put_contents(
-        $dir . '/mail.log',
-        '[' . gmdate(DATE_ATOM) . "] To: {$to}\nSubject: {$subject}\n{$mailBody}\n\n",
-        FILE_APPEND
-    );
 }
 
 function smtp_send_account_mail(string $to, string $from, string $encodedSubject, array $headers, string $body): bool
@@ -603,7 +623,7 @@ function notify_registration_created(string $username, string $email): void
         return;
     }
 
-    send_account_mail(
+    send_notification_mail(
         $recipient,
         'Neue Quiz-Hero Registrierung',
         "Hallo,\n\nes hat sich ein neuer User bei Quiz-Hero registriert.\n\nUsername: {$username}\nE-Mail: {$email}\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nViele Grüße\nQuiz-Hero",
@@ -665,7 +685,7 @@ function send_account_deleted_mail(string $email, string $username): void
     }
 
     $displayName = $username !== '' ? $username : 'Quiz-Hero';
-    send_account_mail(
+    send_notification_mail(
         $recipient,
         'Quiz-Hero Account gelöscht',
         "Hallo {$displayName},\n\ndein Quiz-Hero Account wurde gelöscht.\n\nDeine persönlichen Accountdaten wurden entfernt. Deine bisherigen Quiz-Ergebnisse bleiben nur anonymisiert erhalten.\n\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nWenn du deinen Account nicht selbst gelöscht hast, antworte bitte auf diese E-Mail.\n\nViele Grüße\nQuiz-Hero",
@@ -684,7 +704,7 @@ function notify_question_feedback_created(string $question, array $types, string
     $userText = $userId !== null ? 'User-ID: ' . $userId : 'Nicht angemeldet';
     $subject = 'Neues Quiz-Hero Frage-Feedback';
     $message = "Hallo,\n\nes wurde Feedback zu einer Quiz-Frage gesendet.\n\nFrage: {$question}\nTyp: {$typeText}\nKommentar: " . ($comment !== '' ? $comment : '-') . "\nUser: {$userText}\nZeitpunkt: " . date('d.m.Y H:i') . "\n\nViele Grüße\nQuiz-Hero";
-    send_account_mail($recipient, $subject, $message, question_feedback_mail_html($question, $types, $comment, $userText));
+    send_notification_mail($recipient, $subject, $message, question_feedback_mail_html($question, $types, $comment, $userText));
 }
 
 function question_feedback_mail_html(string $question, array $types, string $comment, string $userText): string
@@ -813,21 +833,25 @@ function account_verify_email(): void
     }
 
     $pdo = db();
-    $stmt = $pdo->prepare('SELECT * FROM quiz_email_verifications WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW()');
+    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('SELECT * FROM quiz_email_verifications WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW() FOR UPDATE');
     $stmt->execute(['token_hash' => hash('sha256', $token)]);
     $row = $stmt->fetch();
     if (!$row) {
         json_response(['ok' => false, 'error' => 'Der Bestätigungslink ist ungültig oder abgelaufen.'], 400);
     }
 
-    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE id = :id AND deleted_at IS NULL FOR UPDATE');
+    $stmt->execute(['id' => $row['user_id']]);
+    if (!$stmt->fetch()) {
+        json_response(['ok' => false, 'error' => 'Der Bestätigungslink ist ungültig oder abgelaufen.'], 400);
+    }
     $stmt = $pdo->prepare('UPDATE quiz_email_verifications SET used_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $row['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $row['user_id']]);
-    $pdo->commit();
-
     $user = issue_account_token($pdo, (int) $row['user_id']);
+    $pdo->commit();
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $user]);
 }
 
@@ -839,7 +863,8 @@ function account_login(): void
     $password = (string) ($data['password'] ?? '');
     rate_limit('account-login:' . $identifier, 10, 900);
 
-    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE deleted_at IS NULL AND (email = :email OR username = :username)');
+    db()->beginTransaction();
+    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE deleted_at IS NULL AND (email = :email OR username = :username) FOR UPDATE');
     $stmt->execute(['email' => $identifier, 'username' => $identifier]);
     $user = $stmt->fetch();
     if (!$user || empty($user['password_hash']) || !password_verify($password, $user['password_hash'])) {
@@ -849,7 +874,9 @@ function account_login(): void
         json_response(['ok' => false, 'error' => 'Bitte bestaetige zuerst deine E-Mail-Adresse.'], 403);
     }
 
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token(db(), (int) $user['id'])]);
+    $authenticated = issue_account_token(db(), (int) $user['id']);
+    db()->commit();
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $authenticated]);
 }
 
 function account_dev_login(): void
@@ -896,14 +923,26 @@ function account_dev_login(): void
 function account_me(): void
 {
     require_method('POST');
-    $user = require_account_from_payload(read_json_body());
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => format_account_user($user)]);
+    $data = read_json_body();
+    $user = require_account_from_payload($data);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => format_account_user($user, $data['userToken'])]);
+}
+
+function account_logout(): void
+{
+    require_method('POST');
+    $data = read_json_body();
+    $user = require_account_from_payload($data);
+    $stmt = db()->prepare('DELETE FROM quiz_user_sessions WHERE token_hash = :hash AND user_id = :id');
+    $stmt->execute(['hash' => hash('sha256', $data['userToken']), 'id' => $user['id']]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
 function account_update(): void
 {
     require_method('POST');
     $data = read_json_body();
+    db()->beginTransaction();
     $user = require_account_from_payload($data);
     $username = normalize_username($data['username'] ?? $user['username']);
     $avatarKey = normalize_avatar_key($data['avatarKey'] ?? $user['avatar_key']);
@@ -918,6 +957,7 @@ function account_update(): void
     ];
     $passwordSql = '';
     if ($password !== '') {
+        require_current_password($user, $data);
         require_password_strength($password);
         $passwordSql = ', password_hash = :password_hash';
         $params['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
@@ -933,14 +973,25 @@ function account_update(): void
         throw $exception;
     }
 
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token(db(), (int) $user['id'])]);
+    if ($password !== '') {
+        revoke_user_sessions((int) $user['id']);
+        $stmt = db()->prepare('UPDATE quiz_password_resets SET used_at = NOW() WHERE user_id = :id AND used_at IS NULL');
+        $stmt->execute(['id' => $user['id']]);
+    }
+    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id');
+    $stmt->execute(['id' => $user['id']]);
+    $updated = format_account_user($stmt->fetch(), $password === '' ? $data['userToken'] : null);
+    db()->commit();
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $updated]);
 }
 
 function account_delete(): void
 {
     require_method('POST');
     $data = read_json_body();
+    db()->beginTransaction();
     $user = require_account_from_payload($data);
+    require_current_password($user, $data);
     $confirm = (string) ($data['confirm'] ?? '');
     if ($confirm !== 'DELETE') {
         json_response(['ok' => false, 'error' => 'Bitte bestätige die Löschung mit DELETE.'], 422);
@@ -949,7 +1000,7 @@ function account_delete(): void
     $deletedUsername = (string) ($user['username'] ?? '');
 
     $pdo = db();
-    $pdo->beginTransaction();
+    revoke_user_sessions((int) $user['id']);
     $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');
     $stmt->execute(['id' => (int) $user['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET username = NULL, email = NULL, password_hash = NULL, profile_image_url = NULL, avatar_key = NULL, deleted_at = NOW() WHERE id = :id');
@@ -976,12 +1027,17 @@ function account_request_password_reset(): void
             $stmt = $pdo->prepare('INSERT INTO quiz_password_resets (user_id, token_hash, expires_at) VALUES (:user_id, :token_hash, DATE_ADD(NOW(), INTERVAL 1 HOUR))');
             $stmt->execute(['user_id' => (int) $user['id'], 'token_hash' => hash('sha256', $token)]);
             $link = public_base_url() . '/login.html?resetToken=' . urlencode($token);
-            send_account_mail(
+            try {
+                send_account_mail(
                 $email,
                 'Quiz-Hero Passwort zurücksetzen',
                 "Hallo,\n\nhier kannst du dein Quiz-Hero Passwort zurücksetzen:\n{$link}\n\nDer Link ist 1 Stunde gültig. Wenn du das nicht warst, kannst du diese E-Mail ignorieren.\n\nViele Grüße\nQuiz-Hero",
                 account_password_reset_mail_html($link)
             );
+            } catch (Throwable $exception) {
+                $pdo->prepare('DELETE FROM quiz_password_resets WHERE token_hash = ?')->execute([hash('sha256', $token)]);
+                error_log('Quiz-Hero password reset delivery failed.');
+            }
         }
     }
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'message' => 'Falls die E-Mail bekannt ist, wurde ein Reset-Link verschickt.']);
@@ -996,21 +1052,31 @@ function account_reset_password(): void
     require_password_strength($password);
 
     $pdo = db();
-    $stmt = $pdo->prepare('SELECT * FROM quiz_password_resets WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW()');
+    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('SELECT * FROM quiz_password_resets WHERE token_hash = :token_hash AND used_at IS NULL AND expires_at > NOW() FOR UPDATE');
     $stmt->execute(['token_hash' => hash('sha256', $token)]);
     $row = $stmt->fetch();
     if (!$row) {
         json_response(['ok' => false, 'error' => 'Der Reset-Link ist ungültig oder abgelaufen.'], 400);
     }
 
-    $pdo->beginTransaction();
+    $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE id = :id AND deleted_at IS NULL FOR UPDATE');
+    $stmt->execute(['id' => $row['user_id']]);
+    if (!$stmt->fetch()) {
+        $pdo->rollBack();
+        json_response(['ok' => false, 'error' => 'Der Reset-Link ist ungültig oder abgelaufen.'], 400);
+    }
     $stmt = $pdo->prepare('UPDATE quiz_password_resets SET used_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $row['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET password_hash = :password_hash WHERE id = :id');
     $stmt->execute(['id' => $row['user_id'], 'password_hash' => password_hash($password, PASSWORD_DEFAULT)]);
+    revoke_user_sessions((int) $row['user_id']);
+    $stmt = $pdo->prepare('UPDATE quiz_password_resets SET used_at = NOW() WHERE user_id = :id AND used_at IS NULL');
+    $stmt->execute(['id' => $row['user_id']]);
+    $newUser = issue_account_token($pdo, (int) $row['user_id']);
     $pdo->commit();
 
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token($pdo, (int) $row['user_id'])]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $newUser]);
 }
 
 function question_feedback_save(): void
@@ -1057,12 +1123,15 @@ function save_result(): void
     require_method('POST');
     rate_limit('save-result', 60, 300);
     $data = read_json_body();
-    $userId = ensure_int($data['userId'] ?? 0, 1, PHP_INT_MAX);
-    require_user_token($userId, (string) ($data['userToken'] ?? ''));
+    $user = require_account_from_payload($data);
+    $userId = (int) $user['id'];
     $score = ensure_int($data['score'] ?? 0, 0, 100000);
     $maxScore = ensure_int($data['maxScore'] ?? 0, 0, 100000);
     $solved = ensure_int($data['solved'] ?? 0, 0, 100000);
     $total = ensure_int($data['total'] ?? 0, 0, 100000);
+    if ($score > $maxScore || $solved > $total || $total < 1 || $maxScore < $total || $maxScore > 5 * $total || $score > 5 * $solved) {
+        json_response(['ok' => false, 'error' => 'Die Ergebniswerte sind widersprüchlich.'], 422);
+    }
     $categoryId = clean_string($data['categoryId'] ?? '', 120) ?: null;
     $tagId = clean_string($data['tagId'] ?? '', 120) ?: null;
 
@@ -1309,14 +1378,22 @@ function admin_category_save(): void
     if ($title === '') {
         json_response(['ok' => false, 'error' => 'Kategorie-Titel fehlt.'], 422);
     }
+    $icon = clean_url($data['icon'] ?? '', 500);
+    if (trim((string) ($data['icon'] ?? '')) !== '' && $icon === '') {
+        json_response(['ok' => false, 'error' => 'Ungültiger Kategorie-Bildpfad.'], 422);
+    }
+    $badgeText = clean_string($data['badgeText'] ?? '', 40);
+    if (!empty($data['badgeActive']) && $badgeText === '') {
+        json_response(['ok' => false, 'error' => 'Ein aktives Badge benötigt einen Text.'], 422);
+    }
     $payload = [
         'id' => $id,
         'title' => $title,
         'description' => clean_string($data['description'] ?? '', 255),
         'seo_description' => clean_string($data['seoDescription'] ?? '', 2000),
-        'icon' => clean_url($data['icon'] ?? '', 500) ?: null,
+        'icon' => $icon ?: null,
         'enabled' => !empty($data['enabled']) ? 1 : 0,
-        'badge_json' => json_encode(['active' => !empty($data['badgeActive']), 'text' => clean_string($data['badgeText'] ?? 'Neu', 40)], JSON_UNESCAPED_UNICODE),
+        'badge_json' => json_encode(['active' => !empty($data['badgeActive']), 'text' => $badgeText], JSON_UNESCAPED_UNICODE),
         'sort_order' => ensure_int($data['sortOrder'] ?? 100, 0, 100000),
     ];
     $stmt = db()->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
@@ -1677,6 +1754,27 @@ function question_duplicate_key(string $question): string
     return $question;
 }
 
+function canonical_question_tags(mixed $tags): array
+{
+    static $known = null;
+    if ($known === null) {
+        $known = [];
+        foreach (db()->query('SELECT id FROM quiz_tags')->fetchAll(PDO::FETCH_COLUMN) as $id) {
+            $known[slugify($id)] = $id;
+        }
+    }
+    $values = is_array($tags) ? $tags : explode(',', (string) $tags);
+    $result = [];
+    foreach ($values as $tag) {
+        if (!is_string($tag)) continue;
+        $tag = clean_string($tag, 120);
+        if ($tag === '') continue;
+        $key = slugify($tag);
+        $result[$key] = $known[$key] ?? $tag;
+    }
+    return array_values($result);
+}
+
 function normalize_import_tags(mixed $tags): string
 {
     if (is_array($tags)) {
@@ -1702,7 +1800,8 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
         ];
     }
 
-    $categoryId = slugify((string) ($entry['categoryId'] ?? $entry['category'] ?? ''));
+    $categoryRaw = trim((string) ($entry['categoryId'] ?? $entry['category'] ?? ''));
+    $categoryId = $categoryRaw === '' ? '' : slugify($categoryRaw);
     $questionText = clean_string($entry['question'] ?? '', 1000);
     $answers = is_array($entry['answers'] ?? null)
         ? array_values(array_map(static fn($answer): string => clean_string((string) $answer, 255), $entry['answers']))
@@ -1711,8 +1810,9 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
     $correctRaw = $entry['correct'] ?? 0;
     $correct = filter_var($correctRaw, FILTER_VALIDATE_INT);
     $difficulty = clean_string($entry['difficulty'] ?? 'easy', 20);
-    $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', normalize_import_tags($entry['tags'] ?? $entry['tag'] ?? '')))));
+    $tags = canonical_question_tags($entry['tags'] ?? $entry['tag'] ?? []);
     $imageUrl = clean_url($entry['imageUrl'] ?? $entry['image'] ?? '', 500);
+    if (trim((string) ($entry['imageUrl'] ?? $entry['image'] ?? '')) !== '' && $imageUrl === '') $errors[] = 'Ungültiger Bildpfad.';
     $sortOrder = filter_var($entry['sortOrder'] ?? 100, FILTER_VALIDATE_INT);
 
     if ($categoryId === '') {
@@ -1818,8 +1918,11 @@ function normalize_question_payload(array $data): array
         $difficulty = 'easy';
     }
     $imageUrl = clean_url($data['imageUrl'] ?? '', 500);
+    if (trim((string) ($data['imageUrl'] ?? '')) !== '' && $imageUrl === '') {
+        json_response(['ok' => false, 'error' => 'Ungültiger Bildpfad. Die Frage wurde nicht gespeichert.'], 422);
+    }
     $type = $imageUrl !== '' ? 'image' : 'text';
-    $tags = array_values(array_filter(array_map(static fn($tag): string => slugify((string) $tag), explode(',', normalize_import_tags($data['tags'] ?? '')))));
+    $tags = canonical_question_tags($data['tags'] ?? []);
 
     return [
         'category_id' => slugify((string) ($data['categoryId'] ?? '')),
@@ -1864,7 +1967,7 @@ function format_question(array $question): array
         'difficulty' => $question['difficulty'],
         'type' => $question['question_type'],
         'imageUrl' => $question['image_url'] ?? '',
-        'tag' => decode_json_field($question['tags_json'] ?? null, []),
+        'tag' => canonical_question_tags(decode_json_field($question['tags_json'] ?? null, [])),
         'backgroundKnowledge' => $question['background_knowledge'] ?? '',
         'active' => (bool) $question['active'],
         'reviewed' => (bool) ($question['reviewed'] ?? false),

@@ -1,5 +1,5 @@
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
-import { ACCOUNT_REMOVED_MESSAGE, UserService } from './user-service.js?v=dev';
+import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE, UserService } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 
@@ -9,6 +9,7 @@ const elements = {
     form: document.querySelector('#js-account-page-form'),
     username: document.querySelector('#js-account-page-username'),
     password: document.querySelector('#js-account-page-password'),
+    currentPassword: document.querySelector('#js-account-page-current-password'),
     profileName: document.querySelector('#js-account-profile-name'),
     profileEmail: document.querySelector('#js-account-profile-email'),
     avatarImage: document.querySelector('#js-account-avatar-image'),
@@ -44,6 +45,7 @@ const render = () => {
     const username = currentUser.username || currentUser.name || '';
     if (elements.username) elements.username.value = username;
     if (elements.password) elements.password.value = '';
+    if (elements.currentPassword) elements.currentPassword.value = '';
     if (elements.profileName) elements.profileName.textContent = username;
     if (elements.profileEmail) elements.profileEmail.textContent = currentUser.email || '';
     if (elements.avatarImage) {
@@ -53,10 +55,10 @@ const render = () => {
     applyAccountHeaderLogo(currentUser);
 };
 
-const handleRemovedAccount = () => {
+const handleRemovedAccount = (message = ACCOUNT_REMOVED_MESSAGE) => {
     currentUser = null;
     render();
-    setStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
+    setStatus(message, 'info');
 };
 
 const closeAvatarModal = () => {
@@ -90,13 +92,14 @@ elements.form?.addEventListener('submit', async event => {
         currentUser = await userService.updateAccount(currentUser, {
             username: elements.username?.value || '',
             password: elements.password?.value || '',
+            currentPassword: elements.currentPassword?.value || '',
             avatarKey: currentUser.avatarKey || 'hero'
         });
         render();
         setStatus('Profil gespeichert.', 'success');
     } catch (error) {
-        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-            handleRemovedAccount();
+        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+            handleRemovedAccount(error.message);
             return;
         }
         setStatus(error.message || 'Profil konnte nicht gespeichert werden.', 'error');
@@ -133,20 +136,25 @@ elements.avatarModalContent?.addEventListener('submit', async event => {
         closeAvatarModal();
         setStatus('Bild gespeichert.', 'success');
     } catch (error) {
-        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
+        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
             closeAvatarModal();
-            handleRemovedAccount();
+            handleRemovedAccount(error.message);
             return;
         }
         setStatus(error.message || 'Bild konnte nicht gespeichert werden.', 'error');
     }
 });
 
-elements.logout?.addEventListener('click', () => {
-    userService.clearUser();
-    currentUser = null;
-    render();
-    setStatus('Du bist ausgeloggt.', 'info');
+elements.logout?.addEventListener('click', async () => {
+    try {
+        await userService.logout(currentUser);
+        currentUser = null;
+        render();
+        setStatus('Du bist ausgeloggt.', 'info');
+    } catch (error) {
+        if (error.message === SESSION_EXPIRED_MESSAGE) handleRemovedAccount(error.message);
+        else setStatus(error.message, 'error');
+    }
 });
 
 elements.deleteAccount?.addEventListener('click', async () => {
@@ -158,13 +166,13 @@ elements.deleteAccount?.addEventListener('click', async () => {
     }
     setStatus('Account wird gelöscht ...', 'info');
     try {
-        await userService.deleteAccount(currentUser, confirmValue);
+        await userService.deleteAccount(currentUser, confirmValue, elements.currentPassword?.value || '');
         currentUser = null;
         render();
         setStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
     } catch (error) {
-        if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-            handleRemovedAccount();
+        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+            handleRemovedAccount(error.message);
             return;
         }
         setStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
@@ -177,8 +185,8 @@ async function init() {
         try {
             currentUser = await userService.getCurrentUser(currentUser);
         } catch (error) {
-            if (error.message === ACCOUNT_REMOVED_MESSAGE) {
-                handleRemovedAccount();
+            if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+                handleRemovedAccount(error.message);
                 return;
             }
             render();

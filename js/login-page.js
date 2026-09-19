@@ -123,7 +123,7 @@ elements.registerForm?.addEventListener('submit', async event => {
             privacyAccepted: Boolean(elements.registerPrivacy?.checked)
         });
         showView('login');
-        setStatus('Registrierung erfolgreich. Bitte bestätige deine E-Mail. Lokal findest du die Mail in var/mail.log.', 'success');
+        setStatus('Registrierung erfolgreich. Bitte bestätige deine E-Mail.', 'success');
     } catch (error) {
         setStatus(error.message || 'Registrierung fehlgeschlagen.', 'error');
     }

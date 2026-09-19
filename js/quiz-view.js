@@ -349,6 +349,7 @@ export class QuizView {
     }
 
     showCategories() {
+        document.querySelector('#js-quiz-load-status')?.remove();
         this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.showElement(this.elements.categoryContainer);
         this.hideElement(this.elements.questionCountContainer);
@@ -674,6 +675,14 @@ export class QuizView {
     }
 
     showLoadingMessage(message) {
+        let status = document.querySelector('#js-quiz-load-status');
+        if (!status) {
+            status = document.createElement('p');
+            status.id = 'js-quiz-load-status';
+            status.setAttribute('role', 'status');
+            document.querySelector('main')?.prepend(status);
+        }
+        status.textContent = message;
         if (this.elements.quizHeadertext) {
             this.elements.quizHeadertext.textContent = message;
         }

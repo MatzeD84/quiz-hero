@@ -52,7 +52,7 @@ export function validateCategories(categories) {
                 if ('active' in category.badge && typeof category.badge.active !== 'boolean') {
                     errors.push(`badge.active in ${categoryRef} muss ein boolean sein.`);
                 }
-                if ('text' in category.badge && category.badge.text !== undefined && !isNonEmptyString(category.badge.text)) {
+                if (category.badge.active === true && !isNonEmptyString(category.badge.text)) {
                     errors.push(`badge.text in ${categoryRef} muss ein nicht-leerer Text sein.`);
                 }
             }
@@ -75,8 +75,8 @@ export function validateCategories(categories) {
                 errors.push(`${questionRef} besitzt keinen Fragetext.`);
             }
 
-            if (!Array.isArray(question.answers) || question.answers.length < 2) {
-                errors.push(`${questionRef} ben\u00f6tigt mindestens zwei Antworten.`);
+            if (!Array.isArray(question.answers) || question.answers.length !== 4) {
+                errors.push(`${questionRef} ben\u00f6tigt genau vier Antworten.`);
             } else {
                 question.answers.forEach((answer, answerIndex) => {
                     if (!isNonEmptyString(answer)) {
@@ -85,7 +85,7 @@ export function validateCategories(categories) {
                 });
             }
 
-            if (typeof question.correct !== 'number' || Number.isNaN(question.correct)) {
+            if (!Number.isInteger(question.correct)) {
                 errors.push(`${questionRef} besitzt keinen g\u00fcltigen "correct"-Index.`);
             } else if (
                 !Array.isArray(question.answers) ||
@@ -206,7 +206,7 @@ export function validateTags(tags) {
                 if ('active' in tag.badge && typeof tag.badge.active !== 'boolean') {
                     errors.push(`badge.active in ${tagRef} muss ein boolean sein.`);
                 }
-                if ('text' in tag.badge && tag.badge.text !== undefined && !isNonEmptyString(tag.badge.text)) {
+                if (tag.badge.active === true && !isNonEmptyString(tag.badge.text)) {
                     errors.push(`badge.text in ${tagRef} muss ein nicht-leerer Text sein.`);
                 }
             }

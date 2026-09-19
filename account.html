@@ -47,6 +47,10 @@
                         <span>Neues Passwort</span>
                         <input id="js-account-page-password" type="password" minlength="10" autocomplete="new-password" placeholder="leer lassen, wenn unverändert">
                     </label>
+                    <label>Aktuelles Passwort
+                        <input id="js-account-page-current-password" type="password" autocomplete="current-password" aria-describedby="account-reauth-hint">
+                        <small id="account-reauth-hint">Erforderlich für Passwortänderung und Kontolöschung.</small>
+                    </label>
                     <div class="account-page-form__actions">
                         <button class="btn btn--modal account-page-form__save" type="submit">Profil speichern</button>
                         <div class="account-page-form__secondary-actions">
