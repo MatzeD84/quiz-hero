@@ -243,6 +243,7 @@ dialog.modal:not([open]) { display: none; }
 body:has(dialog[open]) { overflow: hidden; }
 .footer a { color: var(--belizehole-color); }
 .result-review img, .seo-question-image { max-width: 100%; max-height: 24rem; object-fit: contain; }
+.seo-question-image { display: block; width: min(100%, 36rem); height: auto; aspect-ratio: 3 / 2; }
 .result-review { overflow-wrap: anywhere; }
 .seo-answer__content { overflow-wrap: anywhere; }
 @media (max-width: 768px) {

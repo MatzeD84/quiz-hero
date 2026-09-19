@@ -23,6 +23,13 @@
  margin-bottom: var(--gap-small);
 }
 
+.question_count__icon {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
 .question_count__selection {
     width: 100%;
     margin-top: 0;

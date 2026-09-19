@@ -102,6 +102,8 @@ export class QuizView {
                 const icon = document.createElement('img');
                 icon.src = category.icon;
                 icon.alt = `${category.title} Icon`;
+                icon.width = 1536;
+                icon.height = 1024;
                 icon.loading = 'lazy';
                 icon.classList.add('category-card__icon');
                 button.appendChild(icon);
@@ -155,6 +157,8 @@ export class QuizView {
                 const icon = document.createElement('img');
                 icon.src = tag.icon;
                 icon.alt = `${tag.title} Icon`;
+                icon.width = 1536;
+                icon.height = 1024;
                 icon.loading = 'lazy';
                 icon.classList.add('tag-card__icon');
                 button.appendChild(icon);

@@ -233,7 +233,7 @@ const buildCategoryCard = ({ category, href, showBadge = true, showMeta = false 
     return `
         <a class="js-category-btn btn btn--category category-card" href="${escapeHtml(href)}" data-category="${escapeHtml(category.id)}">
             ${badge}
-            ${iconPath ? `<img class="category-card__icon" src="${escapeHtml(iconPath)}" alt="${escapeHtml(category.title)} Icon">` : ''}
+            ${iconPath ? `<img class="category-card__icon" src="${escapeHtml(iconPath)}" alt="${escapeHtml(category.title)} Icon" width="1536" height="1024">` : ''}
             <div class="category-card__text">
                 <span class="category-card__title">${escapeHtml(category.title)}</span>
                 ${description}
@@ -286,7 +286,7 @@ const buildFaqSection = questions => {
                 <details id="${questionAnchor(question)}">
                     <summary>${escapeHtml(title || `Frage ${index + 1}`)}</summary>
                     <div class="seo-answer__content">
-                        ${safeContentUrl(question.imageUrl) ? '<figure><img class="seo-question-image" src="' + escapeHtml(safeContentUrl(question.imageUrl)) + '" alt="' + escapeHtml(question.imageAlt || 'Abbildung zur Frage: ' + title) + '" loading="lazy"><figcaption>KI-generierte Abbildung zur Frage</figcaption></figure>' : ''}
+                        ${safeContentUrl(question.imageUrl) ? '<figure><img class="seo-question-image" src="' + escapeHtml(safeContentUrl(question.imageUrl)) + '" alt="' + escapeHtml(question.imageAlt || 'Abbildung zur Frage: ' + title) + '" width="1536" height="1024" loading="lazy"><figcaption>KI-generierte Abbildung zur Frage</figcaption></figure>' : ''}
                         ${answerHtml}
                         ${hintHtml}
                         ${safeContentUrl(question.sourceUrl || question.meta?.sourceUrl) ? '<p>Quelle: <a rel="noopener noreferrer" href="' + escapeHtml(safeContentUrl(question.sourceUrl || question.meta?.sourceUrl)) + '">' + escapeHtml(question.sourceUrl || question.meta?.sourceUrl) + '</a></p>' : ''}
@@ -387,7 +387,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
+                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
                 <h1 class="main_headline" tabindex="-1">${escapeHtml(category.title)}-Quiz: ${questionCount} Fragen und Antworten</h1>
             </header>
@@ -462,7 +462,7 @@ const buildIndexPage = categories => {
         <section id="js-category-container" class="lp main-section">
             <header class="main__header">
                 <a class="main__logo-link" href="../" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
+                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
                 <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
             </header>

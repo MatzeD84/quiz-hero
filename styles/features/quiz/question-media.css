@@ -8,9 +8,13 @@
 }
 
 .quiz__question_image {
+    display: block;
+    inline-size: min(100%, 450px);
     max-inline-size: 100%;
     block-size: auto;
-    max-height: max(300px, 30vh)
+    max-height: max(300px, 30vh);
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
 }
 
 .quiz__question_image_container[data-image-watermark]::after {

@@ -22,7 +22,11 @@
 
 .category-card__icon,
 .tag-card__icon {
-    transition: var(--transition-fade);; 
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: var(--transition-fade);
 }
 
 @media (hover: hover) and (pointer: fine) {

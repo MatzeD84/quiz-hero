@@ -36,6 +36,8 @@ Landingpages bekommen eine thematische H1 mit Fragenzahl, Bilder zu Bildfragen, 
 
 Migration **008** ergänzt `editorial_json`. Die Felder `sourceUrl`, `imageAlt`, `reviewedBy` und `reviewedAt` werden im Admin gepflegt, validiert, gespeichert, importiert und öffentlich exportiert. Der Import übernimmt auch vorhandenes `meta.sourceUrl`. Ausführbare URL-Schemata und ungültige Prüfdatumsangaben werden abgewiesen. HTML-Ausgabe wird maskiert.
 
+Die individuelle Bildbeschreibung ist im Frageneditor ausdrücklich als optional gekennzeichnet. Fehlt sie, behält das interaktive Quiz seine allgemeine Standardbeschreibung; die generierte SEO-Seite verwendet den jeweiligen Fragetext als Fallback. Für verzögert geladene Kategorie- und Fragebilder reservieren HTML-Abmessungen und ein Verhältnis von 3:2 nun vor dem Laden Platz. Logos erhalten ebenfalls feste Abmessungen. Das reduziert Layoutverschiebungen bei kaltem Cache und langsamen Verbindungen.
+
 Zusätzlich enthält `data/category-sources.json` tatsächlich geprüfte weiterführende Verweise: [Turismo Roma](https://www.turismoroma.it/en), [Uffizien](https://www.uffizi.it/en), UNESCO für [Amalfi](https://whc.unesco.org/en/list/830/), [Neapel](https://whc.unesco.org/en/list/726/) und [Siena](https://whc.unesco.org/en/list/717/). Diese Verweise werden als weiterführende Informationen ausgewiesen, nicht als pauschaler Beleg jeder Antwort. Für bestehende Fragen wurden keine Prüfer, Prüfzeitpunkte oder Einzelbelege erfunden.
 
 Die vollständige fachliche Prüfung des Fragenbestands bleibt redaktionelle Arbeit. Quellenfelder und strukturierte Seiten garantieren keine Aufnahme oder bevorzugte Zitierung durch Suchmaschinen oder KI-Systeme.
@@ -48,13 +50,15 @@ POST-Endpunkte weisen fremde Origins beziehungsweise `Sec-Fetch-Site: cross-site
 
 Apache liefert `nosniff`, Referrer-Policy, Permissions-Policy, Einbettungsschutz und eine durchgesetzte CSP für Basis-URLs, Objekte, Formulare und fremde Frames. Die weitergehende Script-/Ressourcen-CSP läuft zunächst im Report-Only-Modus; Meldungen erscheinen in den Entwicklerwerkzeugen, ein zentraler Reportempfänger ist nicht eingerichtet. HSTS gilt nur für HTTPS und enthält weder `includeSubDomains` noch Preload.
 
+Sicherheits- und Cache-Header werden bei Apache zentral durch `.htaccess` gesetzt und nicht mehr ein zweites Mal durch jede PHP-JSON-Antwort. Andere PHP-Server erhalten weiterhin sichere PHP-Standardheader. Nach der Asset-Versionierung berechnet der Deploymentworkflow SHA-256-Hashes für sämtliche unterschiedlichen Inline-Skripte der ausgelieferten HTML-Dateien und ergänzt damit die Report-Only-CSP. Dadurch sind insbesondere die strukturierten JSON-LD-Daten erlaubt, ohne `unsafe-inline` freizugeben.
+
 Die anschließend umgesetzte Umstellung auf HttpOnly-Cookies und CSRF-Schutz ist in [UMSETZUNG-HTTPONLY-COOKIES.md](UMSETZUNG-HTTPONLY-COOKIES.md) dokumentiert. Damit ist die hier noch beschriebene Bearer-Sitzung nicht mehr der aktuelle lokale Stand. Grundlage: [OWASP Sitzungen](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) und [OWASP CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 
 Dies sind gezielte Sicherheits- und Regressionstests, kein vollständiger externer Penetrationstest. Verteilte Angriffe, produktive TLS-Konfiguration und Hostingrechte sind nicht umfassend geprüft.
 
 ## Tests und Veröffentlichung
 
-- Neun JavaScript-/SEO-Tests erfolgreich: einschließlich Cookie-/CSRF-Vertrag sowie der bisherigen Formular-, Quiz-, Daten- und Buildverträge.
+- Zehn JavaScript-/SEO-Tests erfolgreich: einschließlich Cookie-/CSRF-Vertrag, redaktioneller Bildbeschreibungen, Bildabmessungen und CSP-Hashing sowie der bisherigen Formular-, Quiz-, Daten- und Buildverträge.
 - 40 PHP-/MySQL-Integrationsprüfungen erfolgreich, ausschließlich in einer isolierten Testdatenbank. Migrationen funktionieren aus leerer Datenbank sowie neuem und altem Snapshot.
 - Lokaler Datenbankexport erzeugt fünf Kategorieseiten unter `.build/seo-local`. Die produktiven Seiten wurden nicht ersetzt.
 - Chrome bestätigt verschachtelte Cookie-Dialoge mit Fokusrückgabe, Adminlogin und Erhalt ungespeicherter Eingaben beim abgebrochenen Wechsel sowie Quiz-Wiederaufnahme mit identischem Punktestand und gesperrten Antworten.
@@ -64,6 +68,7 @@ Dies sind gezielte Sicherheits- und Regressionstests, kein vollständiger extern
 - Mobile Lighthouse-Snapshots: Startseite und Rom-Vorschau jeweils Accessibility/Best Practices/SEO 100; angemeldeter Admin Accessibility/Best Practices 100, SEO 83 wegen fehlender Meta-Description. Diese privaten Adminseiten werden nicht für Suchmaschinen optimiert. Automatische Punktzahlen ersetzen keine vollständige Abnahme.
 - Helle Beschriftung `#ecf0f1` auf den vier korrigierten Akzentfarben erreicht rechnerisch 4,91:1 bis 5,77:1 Kontrast.
 - Sicherheitsheader wurden über HTTP auf `localhost:8080` geprüft.
+- Der lokale Apache liefert die Sicherheits- und Cache-Header bei dynamischen PHP-Antworten jeweils genau einmal. Ein nachgebildetes Deployment enthielt 20 Inline-Skript-Vorkommen mit 15 unterschiedlichen, vollständig in der CSP enthaltenen SHA-256-Hashes.
 
 Vor dem manuellen Deployment muss **Migration 008** auf dem Zielsystem angewendet werden; Migration 007 bleibt Voraussetzung. Lokal ist 008 bereits angewendet. Anschließend Anwendung und neu erzeugte SEO-Seiten gemeinsam veröffentlichen und produktives SMTP sowie HTTPS-Header prüfen. Die bestehenden Hinweise in `UMSETZUNG-1-6.md` gelten ergänzend.
 

@@ -56,6 +56,7 @@ jobs:
           node --check js/form-guard.js
           node --check js/round-storage.js
           node --check js/quiz-state.js
+          node --check scripts/apply-csp-hashes.js
 
       - name: Build CSS and test contracts
         run: |
@@ -98,6 +99,9 @@ jobs:
 
       - name: Apply asset version
         run: node scripts/apply-asset-version.js "${GITHUB_SHA::8}" deploy
+
+      - name: Allow generated structured data in CSP
+        run: node scripts/apply-csp-hashes.js deploy
 
       - name: Write deploy version
         run: |

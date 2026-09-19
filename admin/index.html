@@ -123,7 +123,8 @@
                         <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
                         <fieldset><legend>Bildbeschreibung und Quellen</legend>
-                        <label>Bildbeschreibung (ohne die Lösung vorwegzunehmen)<input id="js-admin-image-alt" maxlength="500"></label>
+                        <label>Bildbeschreibung (ohne die Lösung vorwegzunehmen)<input id="js-admin-image-alt" maxlength="500" aria-describedby="js-admin-image-alt-hint"></label>
+                        <p id="js-admin-image-alt-hint" class="admin-form__hint">Optional: Ohne eigenen Text verwendet das Quiz weiterhin die allgemeine Standardbeschreibung; die SEO-Seite verwendet den Fragetext als Fallback.</p>
                         <label>Quellen-URL<input id="js-admin-source" type="url" maxlength="1000" placeholder="https://…"></label>
                         <label>Fachlich geprüft von<input id="js-admin-reviewed-by" maxlength="120"></label>
                         <label>Prüfdatum<input id="js-admin-reviewed-at" type="date"></label>
