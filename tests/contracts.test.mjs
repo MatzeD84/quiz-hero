@@ -8,9 +8,69 @@ import { spawn } from 'node:child_process';
 import { validateCategories, validateTags } from '../js/validators.js';
 import { QuizDataService } from '../js/quiz-data-service.js';
 import { UserService, SESSION_EXPIRED_MESSAGE } from '../js/user-service.js';
+import { saveRound, readRound } from '../js/round-storage.js';
+import { createRequire } from 'node:module';
+import { createFormGuard } from '../js/form-guard.js';
+import { QuizState } from '../js/quiz-state.js';
+
+test('form guard retains edits on cancel, restores on discard and guards unload', () => {
+    const previous = globalThis.window;
+    let unload, accept = false;
+    globalThis.window = { addEventListener: (_, callback) => unload = callback, confirm: () => accept };
+    try {
+        const field = { id: 'question', value: 'original', checked: false };
+        const form = { elements: [field], addEventListener() {} };
+        const status = {};
+        const guard = createFormGuard([form], status);
+        field.value = 'changed';
+        assert.equal(guard.confirm(), false); assert.equal(field.value, 'changed');
+        let prevented = false; unload({ preventDefault() { prevented = true; } }); assert.equal(prevented, true);
+        accept = true; assert.equal(guard.confirm(), true); assert.equal(field.value, 'original');
+        field.value = 'saved'; guard.clean(form); assert.equal(guard.refresh(), false);
+    } finally { globalThis.window = previous; }
+});
+
+test('a solved question cannot award points twice', () => {
+    const state = new QuizState(); state.currentSequence = [{ correct: 0 }];
+    state.registerAttempt(true, 'easy'); state.registerAttempt(true, 'easy');
+    assert.equal(state.score, 2); assert.equal(state.attempts, 1);
+});
 
 const question = { question: 'Which?', answers: ['A', 'B', 'C', 'D'], correct: 0, active: true };
 const category = { id: 'sample', title: 'Sample', enabled: true, badge: { active: false, text: '' }, questions: [question] };
+
+test('saved rounds reject changed questions, duplicate guesses, expired data and invalid indices', () => {
+    let value;
+    const storage = { setItem: (_, data) => value = data, getItem: () => value };
+    const state = { activeCategoryId: 'sample', activeTag: null, currentIndex: 0, currentSequence: [{ ...question, selectedAnswers: [1] }], getCategory: () => category };
+    assert.equal(saveRound(state, storage), true);
+    assert.equal(readRound(state, storage).sequence[0].selectedAnswers[0], 1);
+    const restored = new QuizState();
+    restored.restoreRound({ index: 1, sequence: [{ ...question, difficulty: 'hero', selectedAnswers: [0] }, { ...question, selectedAnswers: [1] }] });
+    assert.equal(restored.score, 5);
+    assert.equal(restored.attempts, 1);
+    assert.equal(restored.currentSequence[0].answeredCorrectly, true);
+    const valid = value;
+    for (const mutate of [saved => saved.index = -1, saved => saved.savedAt = 0, saved => saved.sequence[0].selected = [1,1], saved => saved.sequence[0].signature = 'changed', saved => saved.sequence[0].selected = [0,1]]) {
+        const saved = JSON.parse(valid); mutate(saved); value = JSON.stringify(saved);
+        assert.equal(readRound(state, storage), null);
+    }
+    assert.equal(saveRound(state, { setItem() { throw new Error('disabled'); } }), false);
+    const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'sessionStorage');
+    Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, get() { throw new Error('denied'); } });
+    try { assert.equal(saveRound(state), false); assert.equal(readRound(state), null); }
+    finally { if (descriptor) Object.defineProperty(globalThis, 'sessionStorage', descriptor); else delete globalThis.sessionStorage; }
+});
+
+test('SEO content includes image context, stable citations and escaped editorial fields', () => {
+    const { buildCategoryPage } = createRequire(import.meta.url)('../scripts/build-seo-pages.js');
+    const html = buildCategoryPage({ category: { ...category, questions: [{ ...question, id: 42, imageUrl: '/images/sample.png', imageAlt: 'An illustration', sourceUrl: 'https://example.test/source', reviewedBy: '<script>alert(1)</script>', reviewedAt: '2026-01-01' }] }, questionCount: 1, relatedCategories: [], seoDescription: 'Test' });
+    assert.match(html, /Sample-Quiz: 1 Fragen und Antworten/);
+    assert.match(html, /id="frage-42"/);
+    assert.match(html, /src="\/images\/sample.png"/);
+    assert.match(html, /href="https:\/\/example.test\/source"/);
+    assert.ok(!html.includes('<script>alert(1)</script>'));
+});
 
 test('data contracts accept inactive empty badges, reject fractional indices and answer counts', () => {
     assert.deepEqual(validateCategories([category]), []);
@@ -66,7 +126,7 @@ test('SEO export fails closed, excludes inactive questions, removes stale genera
         assert.equal(result.code, 0, result.output);
         const file = path.join(temp, 'kategorie/sample.html');
         const good = fs.readFileSync(file, 'utf8');
-        assert.equal((good.match(/<details>/g) || []).length, 1);
+        assert.equal((good.match(/<details\b/g) || []).length, 1);
         assert.ok(!good.includes('Unpublished'));
         fs.writeFileSync(path.join(temp, 'kategorie/removed.html'), 'old generated page');
         const manifestPath = path.join(temp, 'seo-manifest.json');

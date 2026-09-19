@@ -136,7 +136,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
             </small>
         </p>
     </footer>
-    <section id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+    <dialog id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
         <div class="modal__content">
             <div class="modal__close">
                 <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schliessen">
@@ -147,7 +147,7 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
             </div>
             <div id="js-footer-modal-content"></div>
         </div>
-    </section>
+    </dialog>
     <script type="module">
         import { initFooter } from '../js/footer.js?v=dev';
         import { applyAccountHeaderLogo } from '../js/account-logo.js?v=dev';
@@ -242,6 +242,19 @@ const buildCategoryCard = ({ category, href, showBadge = true, showMeta = false 
     `;
 };
 
+const safeContentUrl = value => {
+    if (typeof value !== 'string' || /[\\\x00-\x20]/.test(value)) return '';
+    if (/^\/?images\//.test(value) && !value.includes('..') && !value.includes('%')) return '/' + value.replace(/^\/+/, '');
+    try { const url = new URL(value); return ['http:', 'https:'].includes(url.protocol) && !url.username && !url.password ? url.href : ''; } catch { return ''; }
+};
+const questionAnchor = question => 'frage-' + (Number.isInteger(question.id) ? question.id : require('crypto').createHash('sha256').update(question.question).digest('hex').slice(0, 16));
+const buildFurtherReading = category => {
+    const sources = readJson(path.join(rootDir, 'data/category-sources.json'))[category.id] || [];
+    if (!sources.length) return '';
+    return `<section><h2>Weiterlesen bei offiziellen Einrichtungen</h2>
+        <p>Hier findest du vertiefende Informationen zur Kategorie. Belege zu einzelnen Antworten stehen, soweit hinterlegt, direkt bei der jeweiligen Frage.</p>
+        <ul>${sources.map(source => `<li><a href="${escapeHtml(safeContentUrl(source.url))}" rel="noopener noreferrer">${escapeHtml(source.title)}</a></li>`).join('')}</ul></section>`;
+};
 const buildFaqSection = questions => {
     if (!questions.length) {
         return '<p>Aktuell sind keine Fragen verfuegbar.</p>';
@@ -270,11 +283,15 @@ const buildFaqSection = questions => {
                 : '';
 
             return `
-                <details>
+                <details id="${questionAnchor(question)}">
                     <summary>${escapeHtml(title || `Frage ${index + 1}`)}</summary>
                     <div class="seo-answer__content">
+                        ${safeContentUrl(question.imageUrl) ? '<figure><img class="seo-question-image" src="' + escapeHtml(safeContentUrl(question.imageUrl)) + '" alt="' + escapeHtml(question.imageAlt || 'Abbildung zur Frage: ' + title) + '" loading="lazy"><figcaption>KI-generierte Abbildung zur Frage</figcaption></figure>' : ''}
                         ${answerHtml}
                         ${hintHtml}
+                        ${safeContentUrl(question.sourceUrl || question.meta?.sourceUrl) ? '<p>Quelle: <a rel="noopener noreferrer" href="' + escapeHtml(safeContentUrl(question.sourceUrl || question.meta?.sourceUrl)) + '">' + escapeHtml(question.sourceUrl || question.meta?.sourceUrl) + '</a></p>' : ''}
+                        ${question.reviewedBy ? '<p>Fachlich geprüft von ' + escapeHtml(question.reviewedBy) + (question.reviewedAt ? ' am ' + escapeHtml(question.reviewedAt) : '') + '</p>' : ''}
+                        <a href="#${questionAnchor(question)}">Link zu dieser Frage</a>
                     </div>
                 </details>
             `;
@@ -372,7 +389,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
                 <a class="main__logo-link" href="../" title="Zur Startseite">
                     <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
-                <h1 class="main_headline">Quiz-Hero</h1>
+                <h1 class="main_headline" tabindex="-1">${escapeHtml(category.title)}-Quiz: ${questionCount} Fragen und Antworten</h1>
             </header>
             ${breadcrumbHtml}
             <section class="lp__category_grid container_small">
@@ -401,6 +418,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
             </section>
             ` : ''}
             ${buildGeneralDescriptionSection()}
+            ${buildFurtherReading(category)}
             <section class="lp__faq_section">
                 <h2>Alle Fragen und Antworten</h2>
                 ${buildFaqSection(category.questions || [])}
@@ -446,7 +464,7 @@ const buildIndexPage = categories => {
                 <a class="main__logo-link" href="../" title="Zur Startseite">
                     <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
-                <h1 class="main_headline">Quiz-Hero</h1>
+                <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
             <section class="lp__category_grid">

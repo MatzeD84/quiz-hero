@@ -1,3 +1,4 @@
+import { saveRound, readRound, clearRound } from './round-storage.js?v=dev';
 import { CONFIG, LABELS } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
@@ -28,12 +29,53 @@ export class QuizController {
             }
             this.view.showCategories();
             this.applyInitialSelectionFromUrl();
+            this.offerSavedRound();
         } catch (error) {
             if (CONFIG.devMode) {
                 console.error(error);
             }
             this.view.showLoadingMessage(LABELS.status.loadError);
         }
+    }
+
+    offerSavedRound() {
+        const saved = readRound(this.state);
+        if (!saved) { clearRound(); return; }
+        const box = document.createElement('section');
+        box.id = 'js-resume-round';
+        const text = document.createElement('p');
+        text.textContent = 'Deine unterbrochene Quizrunde kann in diesem Tab fortgesetzt werden.';
+        const resume = document.createElement('button');
+        resume.className = 'btn';
+        resume.textContent = 'Runde fortsetzen';
+        const discard = document.createElement('button');
+        discard.className = 'btn';
+        discard.textContent = 'Gespeicherte Runde verwerfen';
+        discard.addEventListener('click', () => { clearRound(); box.remove(); });
+        resume.addEventListener('click', () => {
+            if (saved.categoryId) this.handleCategorySelected(saved.categoryId); else this.handleTagSelected(saved.tag);
+            this.state.restoreRound(saved);
+            const current = this.state.getCurrentQuestion();
+            this.view.showQuiz();
+            this.renderCurrentQuestion();
+            this.view.updateScore(this.state.score);
+            current.selectedAnswers.forEach(index => {
+                this.view.markAnswerButton(index, index === current.correct);
+                this.view.disableAnswerButton(index);
+            });
+            if (current.answeredCorrectly || this.state.attempts >= CONFIG.maxAttempts) {
+                this.view.highlightCorrectAnswer(current.correct);
+                this.view.renderBackgroundKnowledge(current.backgroundKnowledge || '');
+                this.view.lockAnswers();
+            }
+            box.remove();
+        });
+        box.append(text, resume, discard);
+        document.querySelector('main').prepend(box);
+    }
+
+    persistRound() {
+        if (!saveRound(this.state)) this.view.renderUserStatus('Diese Runde kann im Browser nicht zwischengespeichert werden.', 'info');
     }
 
     async validateStoredUser() {
@@ -59,7 +101,7 @@ export class QuizController {
         this.currentUser = null;
         this.view.renderUser(null);
         applyAccountHeaderLogo(null);
-        this.view.renderUserStatus(ACCOUNT_REMOVED_MESSAGE, 'info');
+        this.view.renderUserStatus(message, 'info');
     }
 
     applyInitialSelectionFromUrl() {
@@ -192,6 +234,8 @@ export class QuizController {
     }
 
     handleQuestionCountSelected(count) {
+        document.querySelector('#js-resume-round')?.remove();
+        clearRound();
         try {
             if (this.state.activeTag) {
                 this.state.prepareRoundFromTag(this.state.activeTag, count);
@@ -204,6 +248,7 @@ export class QuizController {
             this.view.showQuiz();
             this.renderCurrentQuestion();
             this.view.updateScore(this.state.score);
+            this.persistRound();
         } catch (error) {
             if (CONFIG.devMode) {
                 console.error(error);
@@ -227,7 +272,7 @@ export class QuizController {
 
     handleAnswerSelected(index) {
         const question = this.state.getCurrentQuestion();
-        if (!question || this.state.attempts >= CONFIG.maxAttempts) {
+        if (!question || question.answeredCorrectly || !Number.isInteger(index) || index < 0 || index > 3 || question.selectedAnswers?.includes(index) || this.state.attempts >= CONFIG.maxAttempts) {
             return;
         }
 
@@ -240,6 +285,8 @@ export class QuizController {
         const message = this.pickRandomEntry(feedbackArray);
         this.view.renderFeedback(message, { isCorrect });
         this.state.registerAttempt(isCorrect, difficulty);
+        (question.selectedAnswers ||= []).push(index);
+        this.persistRound();
         if (!isCorrect && this.state.attempts < CONFIG.maxAttempts) {
             this.view.disableAnswerButton(index);
         }
@@ -316,23 +363,23 @@ export class QuizController {
         const hasMore = this.state.nextQuestion();
         if (hasMore) {
             this.renderCurrentQuestion();
+            this.persistRound();
         } else {
+            clearRound();
             const stats = this.state.getStats();
             const context = {
                 categoryId: this.state.activeCategoryId,
                 tagId: this.state.activeTag,
                 count: stats.total
             };
-            this.userService?.saveResult(this.currentUser, stats, context).catch(error => {
-                if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
-                    this.handleRemovedAccount(error.message);
-                    return;
-                }
-                if (CONFIG.devMode) {
-                    console.warn('Quiz-Ergebnis konnte nicht gespeichert werden.', error);
-                }
-            });
-            this.view.showResultModal(stats, this.currentUser, {
+            const saveStatus = this.currentUser
+                ? this.userService.saveResult(this.currentUser, stats, context).then(() => 'Ergebnis im Profil gespeichert.').catch(error => {
+                    if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) this.handleRemovedAccount(error.message);
+                    return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
+                })
+                : Promise.resolve('Als Gast bleibt diese Auswertung nur auf dieser Seite.');
+            this.view.showResultModal({ ...stats, review: this.state.currentSequence.map(q => ({ ...q })) }, this.currentUser, {
+                saveStatus,
                 onRetry: () => this.handleRetryRound(context),
                 onOverview: () => this.handleResultOverview()
             });
@@ -367,6 +414,8 @@ export class QuizController {
     }
 
     handleAbort() {
+        if (this.state.currentSequence.length && !window.confirm('Runde beenden und Fortschritt verwerfen? Zum späteren Fortsetzen kannst du die Seite einfach verlassen.')) return;
+        clearRound();
         this.state.resetRound();
         this.view.showCategories();
         this.view.hideResultModal();

@@ -1,3 +1,4 @@
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 export function initFooter() {
     const footerYear = document.querySelector('.js-footer-year');
     if (footerYear) {
@@ -8,7 +9,15 @@ export function initFooter() {
 }
 
 function initFooterModal() {
-    const modal = document.querySelector('#js-footer-modal');
+    let modal = document.querySelector('#js-footer-modal');
+    // Existing generated pages can remain live until the next SEO build.
+    if (modal && modal.tagName !== 'DIALOG') {
+        const dialog = document.createElement('dialog');
+        for (const attribute of modal.attributes) dialog.setAttribute(attribute.name, attribute.value);
+        dialog.append(...modal.childNodes);
+        modal.replaceWith(dialog);
+        modal = dialog;
+    }
     const modalContent = document.querySelector('#js-footer-modal-content');
     const closeButton = document.querySelector('#js-footer-modal-close');
     const links = Array.from(document.querySelectorAll('.js-footer-modal-link'));
@@ -19,7 +28,7 @@ function initFooterModal() {
     }
 
     const closeModal = () => {
-        modal.classList.add('hide');
+        closeDialog(modal);
         modalContent.innerHTML = '';
     };
 
@@ -29,7 +38,7 @@ function initFooterModal() {
         }
         if (contentCache.has(url)) {
             modalContent.innerHTML = contentCache.get(url);
-            modal.classList.remove('hide');
+            openDialog(modal);
             return;
         }
         try {
@@ -40,10 +49,10 @@ function initFooterModal() {
             const html = await response.text();
             contentCache.set(url, html);
             modalContent.innerHTML = html;
-            modal.classList.remove('hide');
+            openDialog(modal);
         } catch (error) {
             modalContent.innerHTML = '<p>Inhalt konnte nicht geladen werden.</p>';
-            modal.classList.remove('hide');
+            openDialog(modal);
             console.error(error);
         }
     };
@@ -57,11 +66,6 @@ function initFooterModal() {
     });
 
     closeButton.addEventListener('click', closeModal);
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-            closeModal();
-        }
-    });
     modal.addEventListener('click', event => {
         if (event.target === modal) {
             closeModal();

@@ -179,6 +179,13 @@ function require_method(string $method): void
     if ($_SERVER['REQUEST_METHOD'] !== $method) {
         json_response(['ok' => false, 'error' => 'Methode nicht erlaubt.'], 405);
     }
+    if ($method === 'POST') {
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        $expected = rtrim(public_base_url(), '/');
+        if (($_SERVER['HTTP_SEC_FETCH_SITE'] ?? '') === 'cross-site' || ($origin !== '' && $origin !== $expected)) {
+            json_response(['ok' => false, 'error' => 'Fremde Anfrage nicht erlaubt.'], 403);
+        }
+    }
 }
 
 function require_admin(): void

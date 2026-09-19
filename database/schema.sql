@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS quiz_questions (
     image_url VARCHAR(500) NULL,
     tags_json JSON NULL,
     background_knowledge TEXT NULL,
+    editorial_json JSON NULL,
     active TINYINT(1) NOT NULL DEFAULT 1,
     reviewed TINYINT(1) NOT NULL DEFAULT 0,
     sort_order INT NOT NULL DEFAULT 100,
@@ -159,3 +160,5 @@ INSERT IGNORE INTO schema_migrations (version) VALUES ('004_repair_account_schem
 INSERT IGNORE INTO schema_migrations (version) VALUES ('005_question_feedback.sql');
 INSERT IGNORE INTO schema_migrations (version) VALUES ('006_question_reviewed.sql');
 INSERT IGNORE INTO schema_migrations (version) VALUES ('007_user_sessions.sql');
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('008_question_editorial.sql');

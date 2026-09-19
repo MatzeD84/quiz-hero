@@ -1,0 +1,7 @@
+{
+  "rom": [{ "title": "Turismo Roma – offizielles Stadtportal", "url": "https://www.turismoroma.it/en" }],
+  "florenz": [{ "title": "Uffizien – Sammlungen und Kunstwerke", "url": "https://www.uffizi.it/en" }],
+  "amalfi": [{ "title": "UNESCO – Costiera Amalfitana", "url": "https://whc.unesco.org/en/list/830/" }],
+  "neapel": [{ "title": "UNESCO – historisches Zentrum von Neapel", "url": "https://whc.unesco.org/en/list/726/" }],
+  "siena": [{ "title": "UNESCO – historisches Zentrum von Siena", "url": "https://whc.unesco.org/en/list/717/" }]
+}

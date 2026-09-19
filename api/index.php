@@ -26,6 +26,7 @@ try {
         'save-result' => save_result(),
         'question-feedback-save' => question_feedback_save(),
         'account-register' => account_register(),
+        'account-resend-verification' => account_resend_verification(),
         'account-verify-email' => account_verify_email(),
         'account-login' => account_login(),
         'account-dev-login' => account_dev_login(),
@@ -767,6 +768,32 @@ function store_email_verification(PDO $pdo, int $userId, string $email): void
     );
 }
 
+function account_resend_verification(): void
+{
+    require_method('POST');
+    rate_limit('account-resend-verification', 5, 900);
+    $data = read_json_body();
+    $email = normalize_email($data['email'] ?? '');
+    if ($email === '') json_response(['ok' => false, 'error' => 'Bitte gültige E-Mail eingeben.'], 422);
+    $pdo = db();
+    $pdo->beginTransaction();
+    try {
+        $stmt = $pdo->prepare('SELECT id FROM quiz_users WHERE email = ? AND deleted_at IS NULL AND email_verified_at IS NULL FOR UPDATE');
+        $stmt->execute([$email]);
+        $id = $stmt->fetchColumn();
+        if ($id !== false) {
+            // Retain the previous usable link if delivery of the replacement fails.
+            $pdo->prepare('DELETE FROM quiz_email_verifications WHERE user_id = ?')->execute([$id]);
+            store_email_verification($pdo, (int) $id, $email);
+        }
+        $pdo->commit();
+    } catch (Throwable $error) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log('Verification resend failed.');
+    }
+    json_response(['ok' => true, 'message' => 'Falls ein unbestätigtes Konto existiert, wird eine Bestätigungsmail verschickt. Prüfe auch den Spamordner. Bei ausbleibender Mail versuche es später erneut.']);
+}
+
 function account_register(): void
 {
     require_method('POST');
@@ -858,6 +885,7 @@ function account_verify_email(): void
 function account_login(): void
 {
     require_method('POST');
+    rate_limit('account-login-global', 40, 900);
     $data = read_json_body();
     $identifier = mb_strtolower(clean_string($data['identifier'] ?? '', 190), 'UTF-8');
     $password = (string) ($data['password'] ?? '');
@@ -1153,6 +1181,7 @@ function save_result(): void
 function admin_login(): void
 {
     require_method('POST');
+    rate_limit('admin-login-global', 40, 900);
     quiz_hero_start_session();
     $data = read_json_body();
     $username = clean_string($data['username'] ?? '', 120);
@@ -1169,6 +1198,7 @@ function admin_login(): void
     }
 
     session_regenerate_id(true);
+    unset($_SESSION['quiz_hero_csrf']);
     $_SESSION['quiz_hero_admin'] = ['username' => $expectedUser, 'loggedInAt' => time()];
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'admin' => ['username' => $expectedUser], 'csrfToken' => csrf_token()]);
 }
@@ -1273,10 +1303,10 @@ function admin_question_save(): void
     $pdo = db();
 
     if (!empty($data['id'])) {
-        $stmt = $pdo->prepare('UPDATE quiz_questions SET category_id = :category_id, question = :question, answers_json = :answers_json, correct_index = :correct_index, difficulty = :difficulty, question_type = :question_type, image_url = :image_url, tags_json = :tags_json, background_knowledge = :background_knowledge, active = :active, reviewed = :reviewed, sort_order = :sort_order WHERE id = :id');
+        $stmt = $pdo->prepare('UPDATE quiz_questions SET category_id = :category_id, question = :question, answers_json = :answers_json, correct_index = :correct_index, difficulty = :difficulty, question_type = :question_type, image_url = :image_url, tags_json = :tags_json, background_knowledge = :background_knowledge, editorial_json = :editorial_json, active = :active, reviewed = :reviewed, sort_order = :sort_order WHERE id = :id');
         $question['id'] = ensure_int($data['id'], 1, PHP_INT_MAX);
     } else {
-        $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :reviewed, :sort_order)');
+        $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, editorial_json, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :editorial_json, :active, :reviewed, :sort_order)');
     }
     $stmt->execute($question);
 
@@ -1327,7 +1357,7 @@ function admin_question_import(): void
         ], 422);
     }
 
-    $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :active, :reviewed, :sort_order)');
+    $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, editorial_json, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :editorial_json, :active, :reviewed, :sort_order)');
     $categoryStmt = $pdo->prepare('INSERT IGNORE INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, "", "", NULL, 1, :badge_json, 100)');
     $pdo->beginTransaction();
     try {
@@ -1861,6 +1891,7 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
             'image_url' => $imageUrl ?: null,
             'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
             'background_knowledge' => clean_string($entry['backgroundKnowledge'] ?? $entry['background'] ?? '', 2000) ?: null,
+            'editorial_json' => json_encode(normalize_editorial($entry), JSON_UNESCAPED_UNICODE),
             'active' => array_key_exists('active', $entry) ? (!empty($entry['active']) ? 1 : 0) : 1,
             'reviewed' => !empty($entry['reviewed']) ? 1 : 0,
             'sort_order' => $sortOrder,
@@ -1906,8 +1937,36 @@ function normalize_question_feedback_types(mixed $types): array
     return $normalized;
 }
 
+function normalize_editorial(array $data): array
+{
+    foreach (['sourceUrl', 'reviewedBy', 'reviewedAt', 'imageAlt'] as $field) {
+        if (isset($data[$field]) && !is_string($data[$field])) json_response(['ok' => false, 'error' => 'Ungültiges Textfeld: ' . $field], 422);
+    }
+    $source = trim((string) ($data['sourceUrl'] ?? $data['meta']['sourceUrl'] ?? ''));
+    if ($source !== '' && (!filter_var($source, FILTER_VALIDATE_URL) || !in_array(strtolower((string) parse_url($source, PHP_URL_SCHEME)), ['http', 'https'], true) || parse_url($source, PHP_URL_USER) !== null || strlen($source) > 1000)) {
+        json_response(['ok' => false, 'error' => 'Quelle muss eine gültige HTTP(S)-URL ohne Zugangsdaten sein.'], 422);
+    }
+    $date = trim((string) ($data['reviewedAt'] ?? ''));
+    if ($date !== '' && (!preg_match('/^\d{4}-\d{2}-\d{2}$/D', $date) || !checkdate((int) substr($date,5,2), (int) substr($date,8,2), (int) substr($date,0,4)) || $date > gmdate('Y-m-d'))) {
+        json_response(['ok' => false, 'error' => 'Prüfdatum muss ein gültiges Datum sein und darf nicht in der Zukunft liegen.'], 422);
+    }
+    return ['sourceUrl' => $source, 'reviewedBy' => clean_string($data['reviewedBy'] ?? '', 120), 'reviewedAt' => $date, 'imageAlt' => clean_string($data['imageAlt'] ?? '', 500)];
+}
+
 function normalize_question_payload(array $data): array
 {
+    foreach (['categoryId', 'question', 'difficulty', 'imageUrl', 'backgroundKnowledge'] as $field) {
+        if (isset($data[$field]) && !is_string($data[$field])) json_response(['ok' => false, 'error' => 'Ungültiges Textfeld: ' . $field], 422);
+    }
+    if (trim($data['question'] ?? '') === '' || trim($data['categoryId'] ?? '') === '') {
+        json_response(['ok' => false, 'error' => 'Frage und Kategorie müssen ausgefüllt sein.'], 422);
+    }
+    if (!is_array($data['answers'] ?? null) || count($data['answers']) !== 4 || array_filter($data['answers'], static fn($answer): bool => !is_string($answer)) !== []) {
+        json_response(['ok' => false, 'error' => 'Vier Antworten als Text erforderlich.'], 422);
+    }
+    $categoryCheck = db()->prepare('SELECT id FROM quiz_categories WHERE id = ?');
+    $categoryCheck->execute([$data['categoryId']]);
+    if (!$categoryCheck->fetchColumn()) json_response(['ok' => false, 'error' => 'Kategorie existiert nicht.'], 422);
     $answers = array_values(array_filter(array_map(static fn($answer): string => clean_string((string) $answer, 255), $data['answers'] ?? []), static fn(string $answer): bool => $answer !== ''));
     if (count($answers) !== 4) {
         json_response(['ok' => false, 'error' => 'Bitte genau vier Antworten ausfüllen.'], 422);
@@ -1934,6 +1993,7 @@ function normalize_question_payload(array $data): array
         'image_url' => $imageUrl ?: null,
         'tags_json' => json_encode($tags, JSON_UNESCAPED_UNICODE),
         'background_knowledge' => clean_string($data['backgroundKnowledge'] ?? '', 2000) ?: null,
+        'editorial_json' => json_encode(normalize_editorial($data), JSON_UNESCAPED_UNICODE),
         'active' => !empty($data['active']) ? 1 : 0,
         'reviewed' => !empty($data['reviewed']) ? 1 : 0,
         'sort_order' => ensure_int($data['sortOrder'] ?? 100, 0, 100000),
@@ -1969,6 +2029,7 @@ function format_question(array $question): array
         'imageUrl' => $question['image_url'] ?? '',
         'tag' => canonical_question_tags(decode_json_field($question['tags_json'] ?? null, [])),
         'backgroundKnowledge' => $question['background_knowledge'] ?? '',
+        ...decode_json_field($question['editorial_json'] ?? null, []),
         'active' => (bool) $question['active'],
         'reviewed' => (bool) ($question['reviewed'] ?? false),
         'sortOrder' => (int) $question['sort_order'],

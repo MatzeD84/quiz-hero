@@ -1,7 +1,33 @@
+import { createFormGuard } from './form-guard.js?v=dev';
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG } from './config.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
+const dirtyStatus = document.createElement('p');
+dirtyStatus.setAttribute('role', 'status');
+document.querySelector('#js-admin-status').after(dirtyStatus);
+const guardedForms = ['#js-admin-question-form', '#js-admin-category-form'].map(selector => document.querySelector(selector));
+const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
+    clearPendingCategoryImage(); updateImageState(); updateCategoryImageState();
+});
+let savingForm = false;
+const submitForm = async (form, action) => {
+    if (savingForm) return;
+    savingForm = true; form.inert = true; form.setAttribute('aria-busy', 'true');
+    try { await action(); }
+    catch (error) { setStatus(error.message || 'Speichern fehlgeschlagen. Deine Eingaben bleiben erhalten.', 'error'); }
+    finally { savingForm = false; form.inert = false; form.removeAttribute('aria-busy'); }
+};
+// Confirm before navigation handlers can overwrite form values.
+document.addEventListener('click', event => {
+    const target = event.target.closest('a, button');
+    if (savingForm && target) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+    if (!target || target.closest('#js-admin-question-form, #js-admin-category-form')) return;
+    if (target.matches('[data-admin-tab], #js-admin-refresh, #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
+        if (!formGuard.confirm()) { event.preventDefault(); event.stopImmediatePropagation(); }
+    }
+}, true);
 let csrfToken = '';
 const API_VERSION = CONFIG.apiVersion || '1';
 const MAX_IMAGE_UPLOAD_BYTES = 6 * 1024 * 1024;
@@ -40,15 +66,17 @@ const api = async (action, payload = null) => {
         credentials: 'same-origin',
         body: JSON.stringify(payload)
     } : { headers, credentials: 'same-origin', cache: 'no-store' };
-    const response = await fetch(apiUrl(action), options);
-    const text = await response.text();
+    let response, text;
+    try { response = await fetch(apiUrl(action), options); text = await response.text(); }
+    catch { return { ok: false, error: 'Verbindung fehlgeschlagen. Deine Eingaben bleiben erhalten. Bitte erneut versuchen.' }; }
     let data;
     try {
         data = JSON.parse(text);
     } catch (error) {
-        const preview = text.replace(/\s+/g, ' ').slice(0, 220);
-        throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
+        return { ok: false, error: `Serverantwort ungültig (HTTP ${response.status}). Eingaben bleiben erhalten.` };
     }
+    if (!data || typeof data !== 'object' || Array.isArray(data)) return { ok: false, error: 'Ungültige Serverantwort. Eingaben bleiben erhalten.' };
+    if (!response.ok) return { ok: false, error: data.error || `Anfrage fehlgeschlagen (HTTP ${response.status}).` };
     if (data.csrfToken) {
         csrfToken = data.csrfToken;
     }
@@ -290,6 +318,11 @@ function renderMedia() {
             selectedMediaPath = item.path;
             renderMedia();
             renderMediaDetail(item);
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                $('#js-admin-media-detail').tabIndex = -1;
+                $('#js-admin-media-detail').focus();
+                $('#js-admin-media-detail').scrollIntoView({ block: 'start' });
+            }
         });
         grid.appendChild(button);
     });
@@ -737,7 +770,7 @@ function setAdminTab(tab, options = {}) {
     $$('[data-admin-tab]').forEach(button => {
         const active = button.dataset.adminTab === tab;
         button.classList.toggle('tab--active', active);
-        button.setAttribute('aria-selected', String(active));
+        button.setAttribute('aria-pressed', String(active));
     });
     $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback');
     $('#js-admin-category-panel').classList.toggle('admin-hidden', tab !== 'categories');
@@ -820,6 +853,7 @@ async function uploadQuestionImage(file) {
         $('#js-admin-image').value = result.path;
         $('#js-admin-image-file').value = '';
         updateImageState();
+        formGuard.refresh();
         setStatus('Bild wurde hochgeladen. Bitte Frage speichern.');
     } catch (error) {
         setStatus(error.message || 'Bild konnte nicht hochgeladen werden.');
@@ -852,6 +886,7 @@ async function uploadCategoryImage(file, options = {}) {
         $('#js-admin-category-image-file').value = '';
         clearPendingCategoryImage();
         updateCategoryImageState();
+        formGuard.refresh();
         setStatus('Kategorie-Bild wurde hochgeladen. Bitte Kategorie speichern.');
         return true;
     } catch (error) {
@@ -952,12 +987,22 @@ function fillQuestion(question = {}) {
     $('#js-admin-image-file').value = '';
     $('#js-admin-tags').value = (question.tag || []).join(', ');
     $('#js-admin-background').value = question.backgroundKnowledge || '';
+    $('#js-admin-image-alt').value = question.imageAlt || '';
+    $('#js-admin-source').value = question.sourceUrl || '';
+    $('#js-admin-reviewed-by').value = question.reviewedBy || '';
+    $('#js-admin-reviewed-at').value = question.reviewedAt || '';
     $('#js-admin-sort').value = question.sortOrder ?? 100;
     $('#js-admin-active').checked = question.active !== false;
     $('#js-admin-reviewed').checked = question.reviewed === true;
     $('#js-admin-delete').classList.toggle('admin-hidden', !question.id);
     updateImageState();
     renderQuestions();
+    formGuard.clean($('#js-admin-question-form'));
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        $('#js-admin-form-title').tabIndex = -1;
+        $('#js-admin-form-title').focus();
+        $('#js-admin-form-title').scrollIntoView({ block: 'start' });
+    }
 }
 
 function fillCategory(category = {}) {
@@ -974,6 +1019,7 @@ function fillCategory(category = {}) {
     $('#js-admin-category-badge-active').checked = Boolean(category.badge?.active);
     $('#js-admin-category-badge-text').value = category.badge?.text || 'Neu';
     updateCategoryImageState();
+    formGuard.clean($('#js-admin-category-form'));
 }
 
 function collectQuestion() {
@@ -989,6 +1035,10 @@ function collectQuestion() {
         imageUrl,
         tags: $('#js-admin-tags').value,
         backgroundKnowledge: $('#js-admin-background').value,
+        imageAlt: $('#js-admin-image-alt').value,
+        sourceUrl: $('#js-admin-source').value,
+        reviewedBy: $('#js-admin-reviewed-by').value,
+        reviewedAt: $('#js-admin-reviewed-at').value,
         sortOrder: Number($('#js-admin-sort').value || 100),
         active: $('#js-admin-active').checked,
         reviewed: $('#js-admin-reviewed').checked
@@ -1062,6 +1112,10 @@ function validateImportQuestions(rawQuestions) {
                 tags: normalizeImportTags(entry.tags ?? entry.tag),
                 imageUrl: String(entry.imageUrl || entry.image || '').trim(),
                 backgroundKnowledge: String(entry.backgroundKnowledge || entry.background || '').trim(),
+                sourceUrl: String(entry.sourceUrl || entry.meta?.sourceUrl || '').trim(),
+                imageAlt: String(entry.imageAlt || '').trim(),
+                reviewedBy: String(entry.reviewedBy || '').trim(),
+                reviewedAt: String(entry.reviewedAt || '').trim(),
                 sortOrder: Number(entry.sortOrder ?? 100),
                 active: entry.active !== false,
                 reviewed: entry.reviewed === true
@@ -1185,11 +1239,11 @@ async function importPendingQuestions() {
 }
 
 function openImportExample() {
-    $('#js-admin-import-example-modal').classList.remove('hide');
+    openDialog($('#js-admin-import-example-modal'));
 }
 
 function closeImportExample() {
-    $('#js-admin-import-example-modal').classList.add('hide');
+    closeDialog($('#js-admin-import-example-modal'));
 }
 
 
@@ -1209,20 +1263,21 @@ async function init() {
             csrfToken = result.csrfToken || csrfToken;
             setLoggedIn(true);
             setStatus('Eingeloggt.', 'success');
-            await loadData();
+            await loadData().catch(error => setStatus('Speichern/Login erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
         } catch (error) {
             setStatus(error.message || 'Login fehlgeschlagen.', 'error');
         }
     });
 
     $('#js-admin-logout').addEventListener('click', async () => {
-        await api('admin-logout', {});
+        const result = await api('admin-logout', {});
+        if (!result.ok) { setStatus(result.error, 'error'); return; }
         csrfToken = '';
         setLoggedIn(false);
         setStatus('Ausgeloggt.');
     });
 
-    $('#js-admin-refresh').addEventListener('click', loadData);
+    $('#js-admin-refresh').addEventListener('click', () => loadData().catch(error => setStatus(error.message, 'error')));
     $$('[data-admin-tab]').forEach(button => {
         button.addEventListener('click', () => setAdminTab(button.dataset.adminTab, { clearStatus: true }));
     });
@@ -1269,9 +1324,6 @@ async function init() {
     $('#js-admin-import-example-modal').addEventListener('click', event => {
         if (event.target === event.currentTarget) closeImportExample();
     });
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') closeImportExample();
-    });
     ['#js-admin-media-search', '#js-admin-media-filter-category', '#js-admin-media-filter-tag', '#js-admin-media-unused', '#js-admin-media-sort'].forEach(selector => {
         $(selector).addEventListener('input', renderMedia);
         $(selector).addEventListener('change', renderMedia);
@@ -1280,6 +1332,7 @@ async function init() {
         $('#js-admin-image').value = '';
         $('#js-admin-image-file').value = '';
         updateImageState();
+        formGuard.refresh();
         setStatus('Bild aus der Frage entfernt. Bitte Frage speichern.');
     });
     $('#js-admin-category-image-remove').addEventListener('click', () => {
@@ -1287,55 +1340,65 @@ async function init() {
         $('#js-admin-category-image-file').value = '';
         clearPendingCategoryImage();
         updateCategoryImageState();
+        formGuard.refresh();
         setStatus('Kategorie-Bild entfernt. Bitte Kategorie speichern.');
     });
     $('#js-admin-question-form').addEventListener('submit', async event => {
         event.preventDefault();
-        const result = await api('admin-question-save', collectQuestion());
-        setStatus(result.ok ? 'Frage gespeichert.' : result.error);
-        if (result.ok) {
-            await loadData();
-            if (activeAdminTab === 'new') setAdminTab('edit');
-        }
+        await submitForm(event.target, async () => {
+            const result = await api('admin-question-save', collectQuestion());
+            setStatus(result.ok ? 'Frage gespeichert.' : result.error);
+            if (result.ok) {
+                selectedQuestionId = result.id;
+                formGuard.clean(event.target);
+                await loadData().catch(error => setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
+                if (activeAdminTab === 'new') setAdminTab('edit');
+            }
+        });
     });
     $('#js-admin-delete').addEventListener('click', async () => {
         const id = $('#js-admin-question-id').value;
         if (!id || !window.confirm('Diese Frage wirklich löschen?')) return;
         const result = await api('admin-question-delete', { id });
         setStatus(result.ok ? 'Frage gelöscht.' : result.error);
-        if (result.ok) { fillQuestion(); await loadData(); }
+        if (result.ok) { fillQuestion(); await loadData().catch(error => setStatus(error.message, 'error')); }
     });
     $('#js-admin-new-category').addEventListener('click', () => {
         fillCategory();
         $('#js-admin-category-title').focus();
     });
     $('#js-admin-category-edit-select').addEventListener('change', event => {
+        if (!formGuard.confirm()) { event.target.value = $('#js-admin-category-id').value; return; }
         const category = categories.find(item => item.id === event.target.value);
         fillCategory(category || {});
     });
     $('#js-admin-category-form').addEventListener('submit', async event => {
         event.preventDefault();
-        if (pendingCategoryImageFile && !$('#js-admin-category-icon').value) {
-            const uploaded = await uploadCategoryImage(pendingCategoryImageFile, { deferIfMissing: false });
-            if (!uploaded) return;
-        }
-        const result = await api('admin-category-save', {
-            id: $('#js-admin-category-id').value,
-            title: $('#js-admin-category-title').value,
-            description: $('#js-admin-category-description').value,
-            seoDescription: $('#js-admin-category-seo').value,
-            icon: $('#js-admin-category-icon').value,
-            sortOrder: Number($('#js-admin-category-sort').value || 100),
-            enabled: $('#js-admin-category-enabled').checked,
-            badgeActive: $('#js-admin-category-badge-active').checked,
-            badgeText: $('#js-admin-category-badge-text').value
+        await submitForm(event.target, async () => {
+            if (pendingCategoryImageFile && !$('#js-admin-category-icon').value) {
+                const uploaded = await uploadCategoryImage(pendingCategoryImageFile, { deferIfMissing: false });
+                if (!uploaded) return;
+            }
+            const result = await api('admin-category-save', {
+                id: $('#js-admin-category-id').value,
+                title: $('#js-admin-category-title').value,
+                description: $('#js-admin-category-description').value,
+                seoDescription: $('#js-admin-category-seo').value,
+                icon: $('#js-admin-category-icon').value,
+                sortOrder: Number($('#js-admin-category-sort').value || 100),
+                enabled: $('#js-admin-category-enabled').checked,
+                badgeActive: $('#js-admin-category-badge-active').checked,
+                badgeText: $('#js-admin-category-badge-text').value
+            });
+            setStatus(result.ok ? 'Kategorie gespeichert.' : result.error);
+            if (result.ok) {
+                $('#js-admin-category-id').value = result.id;
+                formGuard.clean(event.target);
+                await loadData().catch(error => setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
+                const category = categories.find(item => item.id === $('#js-admin-category-id').value);
+                fillCategory(category || {});
+            }
         });
-        setStatus(result.ok ? 'Kategorie gespeichert.' : result.error);
-        if (result.ok) {
-            await loadData();
-            const category = categories.find(item => item.id === $('#js-admin-category-id').value);
-            fillCategory(category || {});
-        }
     });
 }
 

@@ -1,3 +1,4 @@
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE, UserService } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
@@ -62,26 +63,25 @@ const handleRemovedAccount = (message = ACCOUNT_REMOVED_MESSAGE) => {
 };
 
 const closeAvatarModal = () => {
-    elements.avatarModal?.classList.add('hide');
+    closeDialog(elements.avatarModal);
 };
 
 const openAvatarModal = () => {
     if (!elements.avatarModal || !elements.avatarModalContent || !currentUser) return;
     const currentKey = currentUser.avatarKey || 'hero';
-    const options = HERO_AVATARS.map(avatar => `
-        <label class="account-avatar-option account-avatar-option--modal" aria-label="${avatar.label}">
-            <input type="radio" name="avatarKey" value="${avatar.key}" ${avatar.key === currentKey ? 'checked' : ''}>
-            <img src="${avatar.url}" alt="${avatar.label}" loading="lazy">
-        </label>
-    `).join('');
-    elements.avatarModalContent.innerHTML = `
-        <h2 class="modal__headline">Bild ändern</h2>
-        <form id="js-account-avatar-form" class="avatar-modal">
-            <div class="avatar-modal__grid">${options}</div>
-            <button class="btn btn--modal" type="submit">Bild speichern</button>
-        </form>
-    `;
-    elements.avatarModal.classList.remove('hide');
+    elements.avatarModalContent.innerHTML = '<h2 class="modal__headline">Bild ändern</h2><form id="js-account-avatar-form" class="avatar-modal"><div class="avatar-modal__grid"></div><button class="btn btn--modal" type="submit">Bild speichern</button></form>';
+    const grid = elements.avatarModalContent.querySelector('.avatar-modal__grid');
+    for (const avatar of HERO_AVATARS) {
+        const label = document.createElement('label');
+        label.className = 'account-avatar-option account-avatar-option--modal';
+        const input = document.createElement('input');
+        input.type = 'radio'; input.name = 'avatarKey'; input.value = avatar.key;
+        input.checked = avatar.key === currentKey;
+        const image = document.createElement('img');
+        image.src = avatar.url; image.alt = avatar.label;
+        label.append(input, image); grid.append(label);
+    }
+    openDialog(elements.avatarModal);
 };
 
 elements.form?.addEventListener('submit', async event => {
@@ -110,11 +110,6 @@ elements.avatarOpen?.addEventListener('click', openAvatarModal);
 elements.avatarModalClose?.addEventListener('click', closeAvatarModal);
 elements.avatarModal?.addEventListener('click', event => {
     if (event.target === elements.avatarModal) {
-        closeAvatarModal();
-    }
-});
-document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
         closeAvatarModal();
     }
 });

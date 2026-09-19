@@ -11,11 +11,11 @@
     --light-gray-color: #666;
     --lighter-gray-color: #EDEDED;
     --clouds-color: #ecf0f1;
-    --mandarin-color: #e74c3c;      /* wrong */
-    --greensea-color: #16A085;      /* right */
+    --mandarin-color: #b52d20;      /* wrong */
+    --greensea-color: #08745f;      /* right */
     --belizehole-color: #1B5C83;
-    --amethyst-color: #9B59B6;      /* heavy questions*/
-    --carrot-color:#E67E22;
+    --amethyst-color: #804398;      /* heavy questions*/
+    --carrot-color:#a94c08;
 
     --gap-small: 0.5rem;
     --gap: 0.75rem;
@@ -225,6 +225,10 @@ a {
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
 }
+
+.category > div { min-width: 0; }
+.category > div > .category-card { width: 100%; }
+.category > div > a { display: inline-block; margin: .4rem 0; }
 
 /* === styles/components/card-base.css === */
 .category-card,
@@ -936,6 +940,27 @@ a {
         color: var(--carrot-color);
     }
 }
+
+/* Native dialogs occupy the top layer, including nested cookie details. */
+dialog.modal { margin: 0; padding: 0; border: 0; max-width: 100%; max-height: 100%; background: transparent; color: var(--dark-color); }
+dialog.modal::backdrop { background: rgb(0 0 0 / 65%); }
+dialog.modal:not([open]) { display: none; }
+:focus-visible { outline: 3px solid var(--belizehole-color); outline-offset: 3px; }
+body:has(dialog[open]) { overflow: hidden; }
+.footer a { color: var(--belizehole-color); }
+.result-review img, .seo-question-image { max-width: 100%; max-height: 24rem; object-fit: contain; }
+.result-review { overflow-wrap: anywhere; }
+.seo-answer__content { overflow-wrap: anywhere; }
+@media (max-width: 768px) {
+ .admin-list, .admin-media-grid { max-height: 38vh; overflow-y: auto; }
+ .admin-form .admin-actions { position: sticky; bottom: 0; background: var(--clouds-color); padding: .75rem 0; }
+ .admin-status { position: sticky; top: 0; z-index: 12; background: white; }
+ .modal__content { width: calc(100% - 2rem); margin: 1rem auto; box-sizing: border-box; }
+ button, .site-account-nav a { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+.admin-form fieldset { min-width: 0; display: grid; gap: .75rem; border: 1px solid #777; padding: .75rem; }
 
 /* === styles/components/consent-banner.css === */
 .consent-banner__actions {

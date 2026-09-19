@@ -14,7 +14,7 @@
             <a class="main__logo-link" href="../index.html" title="Zur Quiz-Seite">
                 <img class="main_image" src="../images/website/avatar/logo.png" alt="Quiz-Hero" loading="eager">
             </a>
-            <h1 class="main_headline">Quiz-Hero Admin</h1>
+            <h1 class="main_headline" tabindex="-1">Quiz-Hero Admin</h1>
         </header>
 
         <p id="js-admin-status" class="admin-status" role="status" aria-live="polite"></p>
@@ -33,13 +33,13 @@
             </div>
 
             <nav class="tabs admin-tabs" aria-label="Admin-Bereiche">
-                <button class="tab tab--active" type="button" data-admin-tab="edit">Frage bearbeiten</button>
-                <button class="tab" type="button" data-admin-tab="new">Neue Frage</button>
-                <button class="tab" type="button" data-admin-tab="categories">Kategorien</button>
-                <button class="tab" type="button" data-admin-tab="media">Mediathek</button>
-                <button class="tab" type="button" data-admin-tab="import">Import</button>
-                <button class="tab" type="button" data-admin-tab="feedback">Feedback</button>
-                <button class="tab" type="button" data-admin-tab="users">Spieler</button>
+                <button class="tab tab--active" type="button" data-admin-tab="edit" aria-pressed="true">Frage bearbeiten</button>
+                <button class="tab" type="button" data-admin-tab="new" aria-pressed="false">Neue Frage</button>
+                <button class="tab" type="button" data-admin-tab="categories" aria-pressed="false">Kategorien</button>
+                <button class="tab" type="button" data-admin-tab="media" aria-pressed="false">Mediathek</button>
+                <button class="tab" type="button" data-admin-tab="import" aria-pressed="false">Import</button>
+                <button class="tab" type="button" data-admin-tab="feedback" aria-pressed="false">Feedback</button>
+                <button class="tab" type="button" data-admin-tab="users" aria-pressed="false">Spieler</button>
             </nav>
 
             <div id="js-admin-question-panel" class="admin-panel">
@@ -82,6 +82,8 @@
                 <section class="admin-editor">
                     <h2 id="js-admin-form-title">Frage bearbeiten</h2>
                     <form id="js-admin-question-form" class="admin-form">
+
+
                         <input id="js-admin-question-id" type="hidden">
                         <label>Kategorie* <select id="js-admin-category" required></select></label>
                         <label>Frage* <textarea id="js-admin-question" required></textarea></label>
@@ -100,7 +102,7 @@
                             <div id="js-admin-image-dropzone" class="admin-dropzone" role="button" tabindex="0">
                                 <strong>Bild hier ablegen oder auswählen</strong>
                                 <span>JPG, PNG oder WebP bis 6 MB</span>
-                                <input id="js-admin-image-file" type="file" accept="image/jpeg,image/png,image/webp">
+                                <input id="js-admin-image-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                             </div>
                             <div class="admin-image-field__preview admin-hidden" id="js-admin-image-preview-wrap">
                                 <img id="js-admin-image-preview" alt="Bildvorschau" loading="lazy">
@@ -120,6 +122,12 @@
                         </section>
                         <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
+                        <fieldset><legend>Bildbeschreibung und Quellen</legend>
+                        <label>Bildbeschreibung (ohne die Lösung vorwegzunehmen)<input id="js-admin-image-alt" maxlength="500"></label>
+                        <label>Quellen-URL<input id="js-admin-source" type="url" maxlength="1000" placeholder="https://…"></label>
+                        <label>Fachlich geprüft von<input id="js-admin-reviewed-by" maxlength="120"></label>
+                        <label>Prüfdatum<input id="js-admin-reviewed-at" type="date"></label>
+                        <p>Nur tatsächlich geprüfte Angaben eintragen. Eine KI-Markierung ersetzt keine fachliche Prüfung.</p></fieldset>
                         <input id="js-admin-sort" type="hidden" value="100">
                         <label><input id="js-admin-active" type="checkbox" checked> Aktiv</label>
                         <label><input id="js-admin-reviewed" type="checkbox"> Geprüft</label>
@@ -152,7 +160,7 @@
                             <div id="js-admin-category-image-dropzone" class="admin-dropzone" role="button" tabindex="0">
                                 <strong>Bild hier ablegen oder auswählen</strong>
                                 <span>JPG, PNG oder WebP bis 6 MB</span>
-                                <input id="js-admin-category-image-file" type="file" accept="image/jpeg,image/png,image/webp">
+                                <input id="js-admin-category-image-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                             </div>
                             <div class="admin-image-field__preview admin-image-field__preview--compact admin-hidden" id="js-admin-category-image-preview-wrap">
                                 <img id="js-admin-category-image-preview" alt="Kategorie-Bildvorschau" loading="lazy">
@@ -218,7 +226,7 @@
                             <img id="js-admin-media-dropzone-thumb" class="admin-dropzone__thumb admin-hidden" alt="Ausgewähltes Bild" loading="lazy">
                             <strong>Bild hier ablegen oder auswählen</strong>
                             <span>JPG, PNG oder WebP bis 6 MB</span>
-                            <input id="js-admin-media-file" type="file" accept="image/jpeg,image/png,image/webp">
+                            <input id="js-admin-media-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                         </div>
                         <div id="js-admin-media-upload-actions" class="admin-upload-actions admin-hidden">
                             <button id="js-admin-media-upload-btn" class="btn btn--modal" type="button">Hochladen</button>
@@ -241,7 +249,7 @@
                     <div id="js-admin-import-dropzone" class="admin-dropzone" role="button" tabindex="0">
                         <strong>JSON-Datei hier ablegen oder auswählen</strong>
                         <span>Erlaubt ist eine .json-Datei bis 1 MB</span>
-                        <input id="js-admin-import-file" type="file" accept="application/json,.json">
+                        <input id="js-admin-import-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="application/json,.json">
                     </div>
                     <div class="admin-import-paste">
                         <label for="js-admin-import-json">JSON direkt einfügen</label>
@@ -276,7 +284,7 @@
             </div>
         </section>
     </main>
-    <section id="js-admin-import-example-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-admin-import-example-title">
+    <dialog id="js-admin-import-example-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-admin-import-example-title">
         <div class="modal__content admin-import-example-modal">
             <div class="modal__close">
                 <button id="js-admin-import-example-close" class="modal__close_btn" type="button" aria-label="Beispieldatensatz schließen">&times;</button>
@@ -322,7 +330,7 @@
   ]
 }</code></pre>
         </div>
-    </section>
+    </dialog>
     <script type="module" src="../js/admin.js?v=dev"></script>
 </body>
 </html>

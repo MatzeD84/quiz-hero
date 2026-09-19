@@ -43,7 +43,7 @@ const showView = (view, options = {}) => {
         const isActive = tab.dataset.loginView === view;
         if (tab.classList.contains('tab')) {
             tab.classList.toggle('tab--active', isActive);
-            tab.setAttribute('aria-selected', String(isActive));
+            tab.setAttribute('aria-pressed', String(isActive));
         }
     });
 };
@@ -159,6 +159,10 @@ const handleTokens = async () => {
     const params = new URLSearchParams(window.location.search);
     const verifyToken = params.get('verifyToken');
     const resetToken = params.get('resetToken');
+    if (verifyToken || resetToken) {
+        params.delete('verifyToken'); params.delete('resetToken');
+        window.history.replaceState({}, '', `${window.location.pathname}${params.toString() ? '?' + params : ''}${window.location.hash}`);
+    }
     if (verifyToken) {
         setStatus('E-Mail wird bestätigt ...', 'info');
         try {
@@ -191,3 +195,15 @@ const initialize = async () => {
 initFooter();
 applyAccountHeaderLogo();
 initialize();
+
+document.querySelector('#js-resend-form')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = event.target.querySelector('button');
+    button.disabled = true;
+    setStatus('Bestätigungsmail wird angefordert …');
+    try {
+        const result = await userService.resendVerification(document.querySelector('#js-resend-email').value);
+        setStatus(result.message, 'success');
+    } catch (error) { setStatus(error.message || 'Verbindungsfehler. Bitte erneut versuchen.', 'error'); }
+    finally { button.disabled = false; }
+});

@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="Teste dein Wissen über Städte, Geschichte und Kultur. Spiele kostenlose Quizrunden und entdecke Antworten mit Hintergrundwissen bei Quiz-Hero.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz-Hero</title>
     <script type="application/ld+json">
@@ -37,7 +38,7 @@
                 <a class="main__logo-link js-home-link" href="./" title="Zur Startseite">
                     <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
                 </a>
-                <h1 class="main_headline">Quiz-Hero</h1>
+                <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
             </header>
             <section id="js-user-panel" class="user-panel admin-hidden" aria-live="polite">
                 <div id="js-user-preview" class="user-panel__preview">
@@ -62,6 +63,7 @@
 
         <!-- Auswahl Anzahl Fragen -->
         <section id="js-question-count-container" class="question_count hide" aria-live="polite">
+<p>Pro Frage hast du zwei Versuche. Beim ersten richtigen Versuch gibt es 2, 3 oder 5 Punkte, beim zweiten 1 Punkt. Deine Runde bleibt in diesem Tab bis zu 24 Stunden wiederaufnehmbar.</p>
             <header class="question_count__header">
                 <a class="main__logo-link js-home-link" href="./" title="Zur Startseite">
                     <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
@@ -149,7 +151,7 @@
             </div>
         </section>
 
-        <section id="js-question-feedback-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-question-feedback-title">
+        <dialog id="js-question-feedback-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-question-feedback-title">
             <div class="modal__content quiz-question-feedback-modal">
                 <div class="modal__close">
                     <button id="js-question-feedback-close" class="modal__close_btn" type="button" aria-label="Feedback schließen">
@@ -176,10 +178,10 @@
                     <button class="btn btn--modal" type="submit">Feedback senden</button>
                 </form>
             </div>
-        </section>
+        </dialog>
 
         <!-- Ergebnis-Modal -->
-        <section id="js-result-modal" class="modal hide" role="dialog" aria-modal="true">
+        <dialog id="js-result-modal" class="modal hide" role="dialog" aria-modal="true">
             <div class="modal__content">
                 <div class="modal__close">
                     <button id="js-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
@@ -190,7 +192,7 @@
                 </div>
                 <div id="js-result-content"></div>
             </div>
-        </section>
+        </dialog>
     </main>
     <footer class="footer">
         <p class="footer__text">
@@ -203,7 +205,7 @@
         </p>
     </footer>
 
-    <section id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+    <dialog id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
         <div class="modal__content">
             <div class="modal__close">
                 <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
@@ -214,9 +216,9 @@
             </div>
             <div id="js-footer-modal-content"></div>
         </div>
-    </section>
+    </dialog>
 
-    <section id="js-consent-banner" class="modal hide" role="dialog" aria-live="polite" aria-modal="true">
+    <dialog id="js-consent-banner" class="modal hide" role="dialog" aria-live="polite" aria-modal="true">
         <div class="modal__content">
             <h2>Cookie-Einstellungen</h2>
             <p>Wir nutzen technisch notwendige Speicherung fuer Login und Cookie-Auswahl. Google Analytics laden wir nur mit deiner Zustimmung.</p>
@@ -226,7 +228,7 @@
                 <a href="#" class="btn btn--modal js-footer-modal-link" data-footer-modal-url="content/cookies.html">Details</a>
             </div>
         </div>
-    </section>
+    </dialog>
 
     <script type="module" src="js/main.js?v=dev"></script>
 </body>

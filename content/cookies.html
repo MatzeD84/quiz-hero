@@ -9,7 +9,7 @@
 
 <p><strong>1. Technisch notwendige Speicherung</strong></p>
 <p>
-    Fuer die Account-Nutzung speichert Quiz-Hero den angemeldeten User und ein signiertes User-Token im Browser.
+    Fuer die Account-Nutzung speichert Quiz-Hero den angemeldeten User und ein zufälliges, serverseitig widerrufbares Sitzungstoken im Browser.
     Dadurch kann der Account zwischen Seitenaufrufen wiedererkannt und ein Quiz-Ergebnis dem richtigen Account zugeordnet werden.
     Ausserdem wird die Cookie-/Analytics-Entscheidung gespeichert, damit die Abfrage nicht bei jedem Besuch erneut erscheint.
 </p>
@@ -33,6 +33,7 @@
 </p>
 
 <p><strong>4. Browser-Einstellungen</strong></p>
+<p>Eine laufende Quizrunde wird für die Wiederaufnahme bis zu 24 Stunden im Sitzungsspeicher dieses Browsertabs gespeichert. Beim Abschließen oder bewussten Verwerfen wird sie entfernt.</p>
 <p>
     Sie koennen Cookies und lokale Website-Daten auch in Ihrem Browser loeschen oder blockieren.
     Wenn Sie technisch notwendige Speicherung blockieren, koennen Login, Account-Funktionen und Ergebnis-Speicherung eingeschraenkt sein.

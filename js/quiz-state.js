@@ -158,11 +158,24 @@ export class QuizState {
     }
 
     registerAttempt(isCorrect, difficulty) {
+        if (!this.getCurrentQuestion() || this.getCurrentQuestion().answeredCorrectly || this.attempts >= CONFIG.maxAttempts) return;
         if (isCorrect) {
             this.getCurrentQuestion().answeredCorrectly = true;
             this.score += getPointsForDifficulty(difficulty, this.attempts);
         }
         this.attempts += 1;
+    }
+
+    restoreRound({ sequence, index }) {
+        this.currentSequence = cloneDeep(sequence);
+        this.currentIndex = index;
+        this.score = 0;
+        for (const question of this.currentSequence) {
+            const correctAt = question.selectedAnswers.indexOf(question.correct);
+            question.answeredCorrectly = correctAt >= 0;
+            if (correctAt >= 0) this.score += getPointsForDifficulty(question.difficulty, correctAt);
+        }
+        this.attempts = this.getCurrentQuestion().selectedAnswers.length;
     }
 
     nextQuestion() {

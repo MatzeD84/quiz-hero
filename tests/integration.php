@@ -32,6 +32,7 @@ function clear_test_tables(): void {
 }
 
 $server = null;
+$smtpServer = null;
 $log = tempnam(sys_get_temp_dir(), 'quiz-audit-http-');
 $runtime = $log . '-runtime';
 mkdir($runtime, 0700);
@@ -85,9 +86,9 @@ try {
     }
     $cookie = '';
     $csrf = '';
-    function request(string $action, ?array $payload = null, int $expected = 200): array {
+    function request(string $action, ?array $payload = null, int $expected = 200, string $extraHeaders = ''): array {
         global $address, $cookie, $csrf;
-        $headers = "Content-Type: application/json\r\n";
+        $headers = "Content-Type: application/json\r\n" . $extraHeaders;
         if ($cookie !== '') $headers .= "Cookie: {$cookie}\r\n";
         if ($csrf !== '') $headers .= "X-Quiz-Hero-CSRF: {$csrf}\r\n";
         $context = stream_context_create(['http'=>['method'=>$payload === null ? 'GET' : 'POST','header'=>$headers,'content'=>$payload === null ? '' : json_encode($payload),'ignore_errors'=>true,'timeout'=>10]]);
@@ -150,14 +151,35 @@ try {
     check(true, 'verification produces usable session and cannot be replayed');
 
     $admin = request('admin-login', ['username'=>$env['QUIZ_HERO_ADMIN_USER'],'password'=>$password]);
+    request('admin-question-delete', ['id'=>$questionId], 403);
+    $csrf = 'invalid';
+    request('admin-question-delete', ['id'=>$questionId], 403);
     $csrf = $admin['csrfToken'];
-    request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true]);
+    request('admin-question-delete', ['id'=>$questionId], 403, "Origin: https://evil.example\r\n");
+    check((int) $pdo->query('SELECT COUNT(*) FROM quiz_questions')->fetchColumn() === 1, 'admin writes reject missing/wrong CSRF and foreign Origin without mutation');
+    $savedCookie = $cookie; $cookie = '';
+    foreach (['admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
+    foreach (['admin-question-save','admin-category-save','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
+    $cookie = $savedCookie;
+    check(true, 'admin read and write endpoints reject unauthenticated access');
+    request('account-login', ['identifier'=>"' OR 1=1 --",'password'=>'invalid'], 401);
+    request('account-me', ['userId'=>$verified['id']+100,'userToken'=>$verified['token']], 401);
+    for ($i=0;$i<8;$i++) request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 401);
+    request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 429);
+    check(true, 'SQL injection login rejected, bearer bound to user, admin login rate limit enforced');
+    request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
     $saved = $pdo->query('SELECT image_url,tags_json FROM quiz_questions')->fetch();
     check($saved['image_url'] === '/images/audit.png' && json_decode($saved['tags_json'], true) === ['Antike'], 'question edit retains root-relative image and canonical tag IDs');
     request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Unsafe','answers'=>['A','B','C','D'],'correct'=>0,'imageUrl'=>'images/../api/index.php'], 422);
     check($pdo->query('SELECT image_url FROM quiz_questions')->fetchColumn() === '/images/audit.png', 'invalid image rejected without clearing saved image');
     request('admin-category-save', ['id'=>'audit','title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
     $public = request('public-data');
+    check($public['categories'][0]['questions'][0]['sourceUrl'] === 'https://example.test/source' && $public['categories'][0]['questions'][0]['imageAlt'] === 'Audit image', 'editorial fields round-trip through database and public export');
+    request('admin-question-save', ['categoryId'=>'audit','question'=>'bad source','answers'=>['A','B','C','D'],'correct'=>0,'sourceUrl'=>'javascript:alert(1)'], 422);
+    request('admin-question-save', ['categoryId'=>'audit','question'=>'bad date','answers'=>['A','B','C','D'],'correct'=>0,'reviewedAt'=>'2026-02-31'], 422);
+    request('admin-question-save', ['categoryId'=>'audit','question'=>[],'answers'=>['A','B','C','D']], 422);
+    request('admin-question-save', ['categoryId'=>'missing','question'=>'Missing category','answers'=>['A','B','C','D']], 422);
+    check(true, 'unsafe source URLs, impossible dates, malformed text and missing categories rejected');
     check($public['categories'][0]['badge']['active'] === false && $public['categories'][0]['badge']['text'] === '', 'inactive empty badge round-trip');
     request('admin-question-import', ['questions'=>[['categoryId'=>'','question'=>'Missing category','answers'=>['A','B','C','D'],'correct'=>0]]], 422);
     request('admin-question-import', ['questions'=>[], 'padding'=>str_repeat('x',1048576)], 413);
@@ -170,9 +192,55 @@ try {
     request('account-register', ['username'=>'mail' . $suffix,'email'=>'mail' . $suffix . '@example.test','password'=>$password,'privacyAccepted'=>true], 500);
     check((is_file($legacyLog) ? hash_file('sha256',$legacyLog) : null) === $before, 'mail delivery failure never creates or appends a webroot mail log');
     check((int) $pdo->query("SELECT COUNT(*) FROM quiz_users WHERE username = 'mail{$suffix}'")->fetchColumn() === 0, 'failed verification delivery rolls back registration');
+    $resendMail = 'resend' . $suffix . '@example.test';
+    $pdo->prepare('INSERT INTO quiz_users(username,email,password_hash,avatar_key) VALUES(?,?,?,?)')->execute(['resend'.$suffix,$resendMail,password_hash($password,PASSWORD_DEFAULT),'hero']);
+    $resendId = (int) $pdo->lastInsertId();
+    $pdo->prepare('INSERT INTO quiz_email_verifications(user_id,token_hash,expires_at) VALUES(?,?,DATE_ADD(NOW(),INTERVAL 1 DAY))')->execute([$resendId,hash('sha256','old-link')]);
+    $known = request('account-resend-verification', ['email'=>$resendMail]);
+    $unknown = request('account-resend-verification', ['email'=>'unknown@example.test']);
+    check($known === $unknown && (int) $pdo->query("SELECT COUNT(*) FROM quiz_email_verifications WHERE user_id=$resendId")->fetchColumn() === 1, 'failed resend preserves old link and does not reveal account existence');
+    for ($i=0; $i<3; $i++) request('account-resend-verification', ['email'=>'unknown@example.test']);
+    request('account-resend-verification', ['email'=>'unknown@example.test'], 429);
+    check(true, 'resend rate limit enforced');
+
+    // Restart only the isolated server with a loopback SMTP receiver.
+    proc_terminate($server); proc_close($server); $server = null;
+    $smtpServer = proc_open([PHP_BINARY, __DIR__.'/smtp-fixture.php', $runtime], [['pipe','r'],['file',$log,'a'],['file',$log,'a']], $smtpPipes);
+    for ($i=0; $i<50 && !is_file($runtime.'/smtp-address'); $i++) usleep(100000);
+    $smtpAddress = trim(file_get_contents($runtime.'/smtp-address'));
+    $env['QUIZ_HERO_MAIL_TRANSPORT'] = 'smtp';
+    $env['QUIZ_HERO_SMTP_HOST'] = '127.0.0.1';
+    $env['QUIZ_HERO_SMTP_PORT'] = explode(':', $smtpAddress)[1];
+    $env['QUIZ_HERO_SMTP_SECURE'] = 'none'; $env['QUIZ_HERO_SMTP_USER'] = ''; $env['QUIZ_HERO_SMTP_PASSWORD'] = '';
+    // New runtime scope resets only test rate limits.
+    foreach (glob($runtime . '/quiz-hero-rate-limits/*.json') ?: [] as $file) unlink($file);
+    $server = proc_open([PHP_BINARY, '-S', $address, '-t', dirname(__DIR__)], [['pipe','r'], ['file',$log,'a'], ['file',$log,'a']], $pipes, dirname(__DIR__), $env);
+    for ($i=0; $i<50; $i++) { $probe=@stream_socket_client('tcp://'.$address,$errno,$errstr,0.1); if ($probe) { fclose($probe); break; } usleep(100000); }
+    function mail_token(string $parameter): string {
+        global $runtime;
+        $lines = file($runtime.'/smtp-mails', FILE_IGNORE_NEW_LINES);
+        foreach (array_reverse($lines) as $line) if (preg_match('/'.preg_quote($parameter, '/').'=([a-f0-9]{64})/', json_decode($line, true), $match)) return $match[1];
+        throw new RuntimeException('Expected mail link missing');
+    }
+    $mailUser = 'smtp'.$suffix;
+    request('account-register', ['username'=>$mailUser,'email'=>$mailUser.'@example.test','password'=>$password,'privacyAccepted'=>true]);
+    $original = mail_token('verifyToken');
+    request('account-resend-verification', ['email'=>$mailUser.'@example.test']);
+    $replacement = mail_token('verifyToken');
+    request('account-verify-email', ['token'=>$original], 400);
+    $mailAccount = request('account-verify-email', ['token'=>$replacement])['user'];
+    request('account-login', ['identifier'=>$mailUser,'password'=>$password]);
+    request('account-request-password-reset', ['email'=>$mailUser.'@example.test']);
+    $resetLink = mail_token('resetToken');
+    request('account-reset-password', ['token'=>$resetLink,'password'=>$newPassword]);
+    request('account-me', auth($mailAccount), 401);
+    request('account-login', ['identifier'=>$mailUser,'password'=>$newPassword]);
+    check($original !== $replacement, 'local SMTP: registration, resend, verification, login, password reset and session revocation end-to-end');
     echo "{$checks} integration checks passed.\n";
 } finally {
     if (is_resource($server)) { proc_terminate($server); proc_close($server); }
+    if (is_resource($smtpServer)) { proc_terminate($smtpServer); proc_close($smtpServer); }
+    foreach (['smtp-address','smtp-mails'] as $file) @unlink($runtime.'/'.$file);
     @unlink($log);
     foreach (glob($runtime . '/quiz-hero-rate-limits/*.json') ?: [] as $file) unlink($file);
     if (is_dir($runtime . '/quiz-hero-rate-limits')) rmdir($runtime . '/quiz-hero-rate-limits');

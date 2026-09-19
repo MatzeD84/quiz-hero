@@ -100,6 +100,12 @@ export class UserService {
         return data;
     }
 
+    async resendVerification(email) {
+        const data = await this.post('account-resend-verification', { email });
+        if (!data.ok) throw new Error(data.error || 'Versand konnte nicht angefordert werden.');
+        return data;
+    }
+
     async resetPassword({ token, password }) {
         const data = await this.post('account-reset-password', { token, password });
         if (!data.ok) {

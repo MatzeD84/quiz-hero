@@ -1,5 +1,7 @@
 # Quiz-Hero
 
+Aktueller zweiter Arbeitsblock: [UX, SEO und Sicherheit](UMSETZUNG-UX-SEO-SICHERHEIT.md). Vor dem naechsten Deployment auch Migration 008 anwenden.
+
 Aktueller Stand der Sicherheits-, Daten- und Build-Aenderungen: [Umsetzung 1-6 und Deploymenthinweise](UMSETZUNG-1-6.md). Vor dem naechsten Produktionsdeploy Migration 007 anwenden.
 
 ## Architektur

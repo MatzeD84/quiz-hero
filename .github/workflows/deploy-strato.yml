@@ -52,6 +52,10 @@ jobs:
           node --check js/user-service.js
           node --check js/quiz-controller.js
           node --check js/quiz-view.js
+          node --check js/dialog.js
+          node --check js/form-guard.js
+          node --check js/round-storage.js
+          node --check js/quiz-state.js
 
       - name: Build CSS and test contracts
         run: |

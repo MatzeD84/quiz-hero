@@ -1,3 +1,4 @@
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG } from './config.js?v=dev';
 
 const CONSENT_KEY = 'analytics_consent';
@@ -11,31 +12,37 @@ export function initConsent() {
         return;
     }
 
-    const stored = localStorage.getItem(CONSENT_KEY);
+    let stored = null;
+    try { stored = localStorage.getItem(CONSENT_KEY); } catch { /* Consent remains per-page when storage is blocked. */ }
+    const remember = value => {
+        stored = value;
+        try { localStorage.setItem(CONSENT_KEY, value); } catch { /* Keep the current choice in memory. */ }
+    };
     if (stored === 'granted') {
         loadGoogleAnalytics();
     } else if (stored !== 'denied') {
-        banner.classList.remove('hide');
+        openDialog(banner);
     }
 
     const showBanner = () => {
-        banner.classList.remove('hide');
+        closeDialog(document.querySelector('#js-footer-modal'));
+        openDialog(banner);
     };
 
     acceptBtn.addEventListener('click', () => {
-        const previous = localStorage.getItem(CONSENT_KEY);
-        localStorage.setItem(CONSENT_KEY, 'granted');
-        banner.classList.add('hide');
+        const previous = stored;
+        remember('granted');
+        closeDialog(banner);
         if (previous !== 'granted') {
             loadGoogleAnalytics();
         }
     });
 
     declineBtn.addEventListener('click', () => {
-        const previous = localStorage.getItem(CONSENT_KEY);
-        localStorage.setItem(CONSENT_KEY, 'denied');
-        deleteAnalyticsCookies();
-        banner.classList.add('hide');
+        const previous = stored;
+        remember('denied');
+        try { deleteAnalyticsCookies(); } catch { /* The browser may already block cookies. */ }
+        closeDialog(banner);
         if (previous === 'granted') {
             location.reload();
         }

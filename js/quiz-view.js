@@ -1,3 +1,4 @@
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=dev';
 
@@ -121,7 +122,13 @@ export class QuizView {
 
             button.appendChild(textWrapper);
 
-            wrapper.appendChild(button);
+            const card = document.createElement('div');
+            card.append(button);
+            const reading = document.createElement('a');
+            reading.href = 'kategorie/' + encodeURIComponent(category.id) + '.html';
+            reading.textContent = category.title + ': Fragen und Antworten';
+            card.append(reading);
+            wrapper.appendChild(card);
         });
     }
 
@@ -262,6 +269,7 @@ export class QuizView {
 
     renderUserStatus(message, type = 'info') {
         if (this.elements.userStatus) {
+            if (message) document.querySelector('main')?.prepend(this.elements.userStatus);
             this.elements.userStatus.textContent = message || '';
             this.elements.userStatus.dataset.status = message ? type : '';
         }
@@ -336,11 +344,6 @@ export class QuizView {
 
     onModalClose(callback) {
         this.elements.modalCloseButton.addEventListener('click', callback);
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                callback();
-            }
-        });
         this.elements.modal?.addEventListener('click', event => {
             if (event.target === this.elements.modal) {
                 callback();
@@ -382,9 +385,13 @@ export class QuizView {
                 : LABELS.questions.default;
 
         questionElement.textContent = question.question;
+        questionElement.tabIndex = -1;
+        questionElement.focus();
+        if (questionImage) questionImage.alt = question.imageAlt || "Abbildung zur Quizfrage";
         quizHeadertext.textContent = headerLabel;
         quizContent.dataset.difficulty = difficulty;
 
+        const imageRequest = this.imageRequest = (this.imageRequest || 0) + 1;
         const showImage = type === 'image' && Boolean(imageUrl);
         if (showImage) {
             applyImageWatermark(questionImageContainer, {
@@ -394,12 +401,16 @@ export class QuizView {
             questionImage.src = '';
             const loader = new Image();
             loader.onload = () => {
+                if (imageRequest !== this.imageRequest) return;
                 questionImage.src = imageUrl;
                 questionImage.classList.remove('hide');
             };
             loader.onerror = () => {
+                if (imageRequest !== this.imageRequest) return;
                 clearImageWatermark(questionImageContainer);
                 questionImage.classList.add('hide');
+                this.renderBackgroundKnowledge('Das Bild konnte nicht geladen werden. Du kannst diese Frage mit Weiter überspringen.');
+                this.elements.nextButton.classList.remove('hide');
             };
             loader.src = imageUrl;
         } else {
@@ -536,20 +547,17 @@ export class QuizView {
         this.elements.questionFeedbackModal?.addEventListener('click', event => {
             if (event.target === this.elements.questionFeedbackModal) close();
         });
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') close();
-        });
     }
 
     openQuestionFeedbackModal() {
         if (!this.elements.questionFeedbackModal) return;
         this.elements.questionFeedbackForm?.reset();
         this.renderQuestionFeedbackStatus('');
-        this.elements.questionFeedbackModal.classList.remove('hide');
+        openDialog(this.elements.questionFeedbackModal);
     }
 
     closeQuestionFeedbackModal() {
-        this.elements.questionFeedbackModal?.classList.add('hide');
+        closeDialog(this.elements.questionFeedbackModal);
     }
 
     renderQuestionFeedbackStatus(message, type = 'info') {
@@ -558,7 +566,7 @@ export class QuizView {
         this.elements.questionFeedbackStatus.dataset.status = message ? type : '';
     }
 
-    showResultModal({ score, solved, total, maxScore }, user = null, actions = {}) {
+    showResultModal({ score, solved, total, maxScore, review = [] }, user = null, actions = {}) {
         const fillContent = html => {
             if (html) {
                 this.elements.modalContent.innerHTML = html;
@@ -600,7 +608,25 @@ export class QuizView {
                     <p>${LABELS.modalMaxLabel} <strong>${maxScore}</strong></p>
                 `;
             }
-            this.elements.modal.classList.remove('hide');
+            const saveStatus = document.createElement('p'); saveStatus.setAttribute('role', 'status');
+            saveStatus.textContent = user ? 'Ergebnis wird gespeichert …' : '';
+            this.elements.modalContent.append(saveStatus);
+            actions.saveStatus?.then(message => { saveStatus.textContent = message; });
+            const reviewSection = document.createElement('section');
+            reviewSection.className = 'result-review';
+            const title = document.createElement('h3'); title.textContent = 'Dein Lernrückblick'; reviewSection.append(title);
+            for (const question of review) {
+                const detail = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.textContent = (question.answeredCorrectly ? 'Richtig: ' : 'Zum Wiederholen: ') + question.question;
+                detail.append(summary);
+                if (question.imageUrl) { const image = document.createElement('img'); image.src = question.imageUrl; image.alt = question.imageAlt || 'Abbildung zur Frage'; image.loading = 'lazy'; detail.append(image); }
+                const answer = document.createElement('p'); answer.textContent = 'Richtige Antwort: ' + question.answers[question.correct];
+                const explanation = document.createElement('p'); explanation.textContent = question.backgroundKnowledge || '';
+                detail.append(answer, explanation); reviewSection.append(detail);
+            }
+            this.elements.modalContent.append(reviewSection);
+            openDialog(this.elements.modal);
         };
 
         this.loadResultModalTemplate().then(fillContent);
@@ -642,7 +668,7 @@ export class QuizView {
     }
 
     hideResultModal() {
-        this.elements.modal.classList.add('hide');
+        closeDialog(this.elements.modal);
     }
 
     highlightCorrectAnswer(index) {

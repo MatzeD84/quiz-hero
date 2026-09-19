@@ -3,4 +3,8 @@
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
 }
+
+.category > div { min-width: 0; }
+.category > div > .category-card { width: 100%; }
+.category > div > a { display: inline-block; margin: .4rem 0; }
 ﻿

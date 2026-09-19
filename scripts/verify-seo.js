@@ -9,7 +9,7 @@ async function verify() {
         const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(15000), headers: { 'Cache-Control': 'no-cache' } });
         if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
         const html = await response.text();
-        if (!html.includes(`<link rel="canonical" href="${url}">`) || (html.match(/<details>/g) || []).length !== count) {
+        if (!html.includes(`<link rel="canonical" href="${url}">`) || (html.match(/<details\b/g) || []).length !== count) {
             throw new Error(`${file}: Canonical oder Fragenanzahl stimmt nicht.`);
         }
     }
