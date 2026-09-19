@@ -48,6 +48,10 @@ try {
     $pdo->exec("DELETE FROM schema_migrations WHERE version >= '004'");
     main();
     check(count(applied_migrations($pdo)) === count(migration_files()), 'legacy snapshot with reviewed already present -> upgrade succeeds');
+    $originalSiteUrl = getenv('SITE_URL');
+    putenv('SITE_URL=https://quiz.example.test');
+    check(user_cookie_is_secure(), 'HTTPS site configuration enables Secure user cookies');
+    putenv($originalSiteUrl === false ? 'SITE_URL' : 'SITE_URL=' . $originalSiteUrl);
 
     $suffix = bin2hex(random_bytes(5));
     $password = 'Audit-first-' . $suffix;
@@ -84,61 +88,94 @@ try {
         if ($probe) { fclose($probe); break; }
         usleep(100000);
     }
-    $cookie = '';
+    $cookies = [];
     $csrf = '';
-    function request(string $action, ?array $payload = null, int $expected = 200, string $extraHeaders = ''): array {
-        global $address, $cookie, $csrf;
+    $userCsrf = '';
+    $lastResponseHeaders = [];
+    function request(string $action, ?array $payload = null, int $expected = 200, string $extraHeaders = '', string|false|null $csrfOverride = null): array {
+        global $address, $cookies, $csrf, $userCsrf, $lastResponseHeaders;
         $headers = "Content-Type: application/json\r\n" . $extraHeaders;
-        if ($cookie !== '') $headers .= "Cookie: {$cookie}\r\n";
-        if ($csrf !== '') $headers .= "X-Quiz-Hero-CSRF: {$csrf}\r\n";
+        if ($cookies !== []) {
+            $pairs = [];
+            foreach ($cookies as $name => $value) $pairs[] = $name . '=' . $value;
+            $headers .= 'Cookie: ' . implode('; ', $pairs) . "\r\n";
+        }
+        $userCsrfActions = ['account-logout','account-update','account-delete','save-result','question-feedback-save'];
+        $token = str_starts_with($action, 'admin-') && $action !== 'admin-login' ? $csrf : (in_array($action, $userCsrfActions, true) ? $userCsrf : '');
+        if ($csrfOverride === false) $token = '';
+        elseif (is_string($csrfOverride)) $token = $csrfOverride;
+        if ($token !== '') $headers .= "X-Quiz-Hero-CSRF: {$token}\r\n";
         $context = stream_context_create(['http'=>['method'=>$payload === null ? 'GET' : 'POST','header'=>$headers,'content'=>$payload === null ? '' : json_encode($payload),'ignore_errors'=>true,'timeout'=>10]]);
         $body = file_get_contents('http://' . $address . '/api/index.php?action=' . $action . '&v=1', false, $context);
+        $lastResponseHeaders = $http_response_header ?? [];
         preg_match('~HTTP/\S+ (\d+)~', $http_response_header[0] ?? '', $status);
-        foreach ($http_response_header as $header) if (preg_match('/^Set-Cookie: ([^;]+)/i', $header, $match)) $cookie = $match[1];
+        foreach ($http_response_header as $header) {
+            if (!preg_match('/^Set-Cookie: ([^=;]+)=([^;]*)/i', $header, $match)) continue;
+            if ($match[2] === '' || stripos($header, 'Max-Age=0') !== false) unset($cookies[$match[1]]);
+            else $cookies[$match[1]] = $match[2];
+        }
         $data = json_decode((string) $body, true);
         if ((int) ($status[1] ?? 0) !== $expected || !is_array($data)) throw new RuntimeException("{$action}: expected HTTP {$expected}, got " . ($status[1] ?? '?') . '; ' . ($data['error'] ?? 'invalid JSON'));
+        if (isset($data['csrfToken']) && !str_starts_with($action, 'admin-')) $userCsrf = (string) $data['csrfToken'];
         return $data;
     }
-    function auth(array $user): array { return ['userId'=>$user['id'],'userToken'=>$user['token']]; }
+    function user_cookie(): string {
+        global $cookies;
+        return (string) ($cookies['quiz_hero_session'] ?? '');
+    }
 
     request('admin-data', null, 401);
     $login = ['identifier'=>$username,'password'=>$password];
-    $one = request('account-login', $login)['user'];
-    $two = request('account-login', $login)['user'];
-    check($one['token'] !== $two['token'], 'independent opaque login sessions');
-    check(request('account-me', auth($one))['user']['token'] === $one['token'], 'account-me does not replace or extend absolute token lifetime');
-    check($pdo->query('SELECT token_hash FROM quiz_user_sessions LIMIT 1')->fetchColumn() !== $one['token'], 'session store contains hashes, not bearer tokens');
-    request('account-logout', auth($one));
-    request('account-me', auth($one), 401);
-    request('account-me', auth($two));
+    $oneResponse = request('account-login', $login);
+    $one = $oneResponse['user']; $oneCookies = $cookies; $oneCsrf = $userCsrf; $oneToken = user_cookie();
+    check(!isset($one['token']) && strlen($oneToken) === 64, 'login keeps the opaque session out of JSON');
+    check((bool) array_filter($lastResponseHeaders, static fn($header) => preg_match('/^Set-Cookie:\s*quiz_hero_session=[^;]+;.*path=\/.*HttpOnly.*SameSite=Lax/i', $header) === 1), 'session cookie has HttpOnly, SameSite and root path attributes');
+    $two = request('account-login', $login)['user']; $twoCookies = $cookies; $twoCsrf = $userCsrf; $twoToken = user_cookie();
+    check($oneToken !== $twoToken, 'independent opaque login sessions');
+    $cookies = $oneCookies; $userCsrf = $oneCsrf;
+    check(request('account-me', [])['csrfToken'] === $oneCsrf && user_cookie() === $oneToken, 'account-me does not replace the session or its CSRF token');
+    check($pdo->query('SELECT token_hash FROM quiz_user_sessions LIMIT 1')->fetchColumn() !== $oneToken, 'session store contains hashes, not cookie values');
+    request('account-logout', []);
+    request('account-me', [], 401);
+    $cookies = $twoCookies; $userCsrf = $twoCsrf;
+    request('account-me', []);
     check(true, 'logout revokes current session; other session remains usable');
-    request('account-update', auth($two)+['password'=>$newPassword], 403);
-    $three = request('account-update', auth($two)+['password'=>$newPassword,'currentPassword'=>$password])['user'];
-    request('account-me', auth($two), 401);
-    request('account-me', auth($three));
+    request('account-update', ['password'=>$newPassword], 403);
+    $three = request('account-update', ['password'=>$newPassword,'currentPassword'=>$password])['user'];
+    $threeCookies = $cookies; $threeCsrf = $userCsrf;
+    $cookies = $twoCookies; $userCsrf = $twoCsrf;
+    request('account-me', [], 401);
+    $cookies = $threeCookies; $userCsrf = $threeCsrf;
+    request('account-me', []);
     check(true, 'password change requires current password and revokes old sessions');
     $reset = bin2hex(random_bytes(32));
     $pdo->prepare('INSERT INTO quiz_password_resets(user_id,token_hash,expires_at) VALUES(?,?,DATE_ADD(NOW(),INTERVAL 1 HOUR))')->execute([$userId,hash('sha256',$reset)]);
-    $four = request('account-reset-password', ['token'=>$reset,'password'=>$password])['user'];
-    request('account-me', auth($three), 401);
+    $four = request('account-reset-password', ['token'=>$reset,'password'=>$password])['user']; $fourToken = user_cookie();
+    $cookies = $threeCookies; $userCsrf = $threeCsrf;
+    request('account-me', [], 401);
     request('account-reset-password', ['token'=>$reset,'password'=>$password], 400);
     check(true, 'reset revokes sessions and reset link cannot be reused');
-    $pdo->prepare('UPDATE quiz_user_sessions SET expires_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 1 SECOND) WHERE token_hash=?')->execute([hash('sha256',$four['token'])]);
-    request('account-me', auth($four), 401);
-    $five = request('account-login', $login)['user'];
-    $pdo->prepare('UPDATE quiz_user_sessions SET last_seen_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 2 DAY) WHERE token_hash=?')->execute([hash('sha256',$five['token'])]);
-    request('account-me', auth($five), 401);
+    $pdo->prepare('UPDATE quiz_user_sessions SET expires_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 1 SECOND) WHERE token_hash=?')->execute([hash('sha256',$fourToken)]);
+    request('account-me', [], 401);
+    $five = request('account-login', $login)['user']; $fiveToken = user_cookie();
+    $pdo->prepare('UPDATE quiz_user_sessions SET last_seen_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 2 DAY) WHERE token_hash=?')->execute([hash('sha256',$fiveToken)]);
+    request('account-me', [], 401);
     check(true, 'absolute and idle expiration enforced');
     $six = request('account-login', $login)['user'];
-    request('save-result', auth($six)+['score'=>10,'maxScore'=>2,'solved'=>1,'total'=>1], 422);
-    request('save-result', auth($six)+['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1]);
+    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 403, '', false);
+    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 403, '', 'invalid');
+    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 403, "Origin: https://evil.example\r\n");
+    request('save-result', ['score'=>10,'maxScore'=>2,'solved'=>1,'total'=>1], 422);
+    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1]);
+    check(true, 'user writes reject missing or invalid CSRF and foreign origins');
     $pdo->prepare('UPDATE quiz_users SET deleted_at=NOW() WHERE id=?')->execute([$userId]);
-    request('save-result', auth($six)+['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 401);
+    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 401);
     $pdo->prepare('UPDATE quiz_users SET deleted_at=NULL WHERE id=?')->execute([$userId]);
     check(true, 'result invariants and active-account requirement enforced');
-    request('account-delete', auth($six)+['confirm'=>'DELETE'], 403);
-    request('account-delete', auth($six)+['confirm'=>'DELETE','currentPassword'=>$password]);
-    request('account-me', auth($six), 401);
+    request('account-login', $login);
+    request('account-delete', ['confirm'=>'DELETE'], 403);
+    request('account-delete', ['confirm'=>'DELETE','currentPassword'=>$password]);
+    request('account-me', [], 401);
     check((int) $pdo->query('SELECT COUNT(*) FROM quiz_user_sessions')->fetchColumn() === 0, 'account deletion requires password, revokes all sessions, and notification failure does not undo success');
 
     $pdo->prepare('INSERT INTO quiz_users(username,email,password_hash,avatar_key) VALUES(?,?,?,?)')->execute(['verify'.$suffix,'verify'.$suffix.'@example.test',password_hash($password,PASSWORD_DEFAULT),'hero']);
@@ -146,7 +183,7 @@ try {
     $verification = bin2hex(random_bytes(32));
     $pdo->prepare('INSERT INTO quiz_email_verifications(user_id,token_hash,expires_at) VALUES(?,?,DATE_ADD(NOW(),INTERVAL 1 HOUR))')->execute([$verificationUser,hash('sha256',$verification)]);
     $verified = request('account-verify-email', ['token'=>$verification])['user'];
-    request('account-me', auth($verified));
+    request('account-me', []);
     request('account-verify-email', ['token'=>$verification], 400);
     check(true, 'verification produces usable session and cannot be replayed');
 
@@ -157,16 +194,18 @@ try {
     $csrf = $admin['csrfToken'];
     request('admin-question-delete', ['id'=>$questionId], 403, "Origin: https://evil.example\r\n");
     check((int) $pdo->query('SELECT COUNT(*) FROM quiz_questions')->fetchColumn() === 1, 'admin writes reject missing/wrong CSRF and foreign Origin without mutation');
-    $savedCookie = $cookie; $cookie = '';
+    $savedCookies = $cookies; $cookies = [];
     foreach (['admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
     foreach (['admin-question-save','admin-category-save','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
-    $cookie = $savedCookie;
+    $cookies = $savedCookies;
     check(true, 'admin read and write endpoints reject unauthenticated access');
     request('account-login', ['identifier'=>"' OR 1=1 --",'password'=>'invalid'], 401);
-    request('account-me', ['userId'=>$verified['id']+100,'userToken'=>$verified['token']], 401);
+    $savedUserCookie = $cookies['quiz_hero_session'] ?? null; unset($cookies['quiz_hero_session']);
+    request('account-me', ['userId'=>$verified['id'],'userToken'=>'legacy-bearer-is-ignored'], 401);
+    if ($savedUserCookie !== null) $cookies['quiz_hero_session'] = $savedUserCookie;
     for ($i=0;$i<8;$i++) request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 401);
     request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 429);
-    check(true, 'SQL injection login rejected, bearer bound to user, admin login rate limit enforced');
+    check(true, 'SQL injection login rejected, legacy bearer payload rejected, admin login rate limit enforced');
     request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
     $saved = $pdo->query('SELECT image_url,tags_json FROM quiz_questions')->fetch();
     check($saved['image_url'] === '/images/audit.png' && json_decode($saved['tags_json'], true) === ['Antike'], 'question edit retains root-relative image and canonical tag IDs');
@@ -229,11 +268,13 @@ try {
     $replacement = mail_token('verifyToken');
     request('account-verify-email', ['token'=>$original], 400);
     $mailAccount = request('account-verify-email', ['token'=>$replacement])['user'];
+    $mailAccountCookies = $cookies; $mailAccountCsrf = $userCsrf;
     request('account-login', ['identifier'=>$mailUser,'password'=>$password]);
     request('account-request-password-reset', ['email'=>$mailUser.'@example.test']);
     $resetLink = mail_token('resetToken');
     request('account-reset-password', ['token'=>$resetLink,'password'=>$newPassword]);
-    request('account-me', auth($mailAccount), 401);
+    $cookies = $mailAccountCookies; $userCsrf = $mailAccountCsrf;
+    request('account-me', [], 401);
     request('account-login', ['identifier'=>$mailUser,'password'=>$newPassword]);
     check($original !== $replacement, 'local SMTP: registration, resend, verification, login, password reset and session revocation end-to-end');
     echo "{$checks} integration checks passed.\n";

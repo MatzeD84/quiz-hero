@@ -90,14 +90,40 @@ test('configured API failures never silently read repository fallback data', asy
 
 test('revoked sessions clear browser login and logout failures retain the retryable session', async () => {
     let removed = 0;
-    globalThis.window = { localStorage: { removeItem: () => removed++ } };
+    globalThis.window = { localStorage: { removeItem: () => removed++ }, sessionStorage: { getItem: () => '', removeItem() {}, setItem() {} } };
     const service = new UserService({ fetchFn: async () => ({ ok: false, status: 401, text: async () => JSON.stringify({ ok: false, code: 'SESSION_EXPIRED' }) }) });
-    await assert.rejects(service.getCurrentUser({ id: 1, token: 'test' }), { message: SESSION_EXPIRED_MESSAGE });
+    await assert.rejects(service.getCurrentUser({ id: 1 }), { message: SESSION_EXPIRED_MESSAGE });
     assert.equal(removed, 1);
     const offline = new UserService({ fetchFn: async () => { throw new Error('offline'); } });
-    await assert.rejects(offline.logout({ id: 1, token: 'test' }), /offline/);
+    await assert.rejects(offline.logout({ id: 1 }), /offline/);
     assert.equal(removed, 1);
     delete globalThis.window;
+});
+
+test('user auth keeps credentials in cookies and sends CSRF only for protected writes', async () => {
+    const stored = new Map();
+    const calls = [];
+    globalThis.window = {
+        localStorage: { getItem: key => stored.get(key) || null, setItem: (key, value) => stored.set(key, value), removeItem: key => stored.delete(key) },
+        sessionStorage: { getItem: key => stored.get(key) || null, setItem: (key, value) => stored.set(key, value), removeItem: key => stored.delete(key) }
+    };
+    const fetchFn = async (url, options) => {
+        calls.push({ url, options });
+        return { ok: true, status: 200, text: async () => JSON.stringify(calls.length === 1
+            ? { ok: true, csrfToken: 'csrf-test', user: { id: 7, username: 'hero', token: 'must-not-persist' } }
+            : { ok: true }) };
+    };
+    try {
+        const service = new UserService({ fetchFn });
+        const user = await service.login({ identifier: 'hero', password: 'secret' });
+        await service.saveResult(user, { score: 2, maxScore: 2, solved: 1, total: 1 }, {});
+        assert.equal(user.token, undefined);
+        assert.ok(!stored.get('quizHeroUser').includes('must-not-persist'));
+        assert.equal(calls[0].options.credentials, 'same-origin');
+        assert.equal(calls[0].options.headers['X-Quiz-Hero-CSRF'], undefined);
+        assert.equal(calls[1].options.headers['X-Quiz-Hero-CSRF'], 'csrf-test');
+        assert.deepEqual(JSON.parse(calls[1].options.body), { score: 2, maxScore: 2, solved: 1, total: 1, categoryId: '', tagId: '' });
+    } finally { delete globalThis.window; }
 });
 
 function build(env) {

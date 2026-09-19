@@ -234,7 +234,7 @@ function public_base_url(): string
     return $https . '://' . $host;
 }
 
-function issue_account_token(PDO $pdo, int $userId): array
+function issue_account_session(PDO $pdo, int $userId): array
 {
     $stmt = $pdo->prepare('UPDATE quiz_users SET last_seen_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $userId]);
@@ -244,10 +244,13 @@ function issue_account_token(PDO $pdo, int $userId): array
     if (!$user) {
         json_response(['ok' => false, 'error' => 'Account wurde nicht gefunden.'], 404);
     }
-    return format_account_user($user);
+    return [
+        'user' => format_account_user($user),
+        'csrfToken' => issue_user_session($userId),
+    ];
 }
 
-function format_account_user(array $user, ?string $token = null): array
+function format_account_user(array $user): array
 {
     $avatarKey = normalize_avatar_key($user['avatar_key'] ?? '');
     return [
@@ -258,7 +261,6 @@ function format_account_user(array $user, ?string $token = null): array
         'avatarKey' => $avatarKey,
         'profileImageUrl' => avatar_url($avatarKey),
         'emailVerified' => !empty($user['email_verified_at']),
-        'token' => $token ?? create_user_token((int) $user['id']),
     ];
 }
 
@@ -282,20 +284,9 @@ function format_admin_user(array $user): array
     ];
 }
 
-function require_account_from_payload(array $data): array
+function require_account(bool $requireCsrf = true): array
 {
-    $userId = ensure_int($data['userId'] ?? 0, 1, PHP_INT_MAX);
-    require_user_token($userId, (string) ($data['userToken'] ?? ''));
-    $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id AND deleted_at IS NULL' . (db()->inTransaction() ? ' FOR UPDATE' : ''));
-    $stmt->execute(['id' => $userId]);
-    $user = $stmt->fetch();
-    if (!$user) {
-        json_response(['ok' => false, 'error' => 'Account wurde nicht gefunden.'], 404);
-    }
-    if (db()->inTransaction()) {
-        require_user_token($userId, (string) ($data['userToken'] ?? ''));
-    }
-    return $user;
+    return require_user_session($requireCsrf);
 }
 
 function random_account_token(): string
@@ -877,9 +868,9 @@ function account_verify_email(): void
     $stmt->execute(['id' => $row['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $row['user_id']]);
-    $user = issue_account_token($pdo, (int) $row['user_id']);
+    $session = issue_account_session($pdo, (int) $row['user_id']);
     $pdo->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $user]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $session['user'], 'csrfToken' => $session['csrfToken']]);
 }
 
 function account_login(): void
@@ -902,9 +893,9 @@ function account_login(): void
         json_response(['ok' => false, 'error' => 'Bitte bestaetige zuerst deine E-Mail-Adresse.'], 403);
     }
 
-    $authenticated = issue_account_token(db(), (int) $user['id']);
+    $session = issue_account_session(db(), (int) $user['id']);
     db()->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $authenticated]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $session['user'], 'csrfToken' => $session['csrfToken']]);
 }
 
 function account_dev_login(): void
@@ -945,24 +936,27 @@ function account_dev_login(): void
         $userId = (int) $pdo->lastInsertId();
     }
 
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => issue_account_token($pdo, $userId)]);
+    $session = issue_account_session($pdo, $userId);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $session['user'], 'csrfToken' => $session['csrfToken']]);
 }
 
 function account_me(): void
 {
     require_method('POST');
-    $data = read_json_body();
-    $user = require_account_from_payload($data);
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => format_account_user($user, $data['userToken'])]);
+    read_json_body();
+    $user = require_account(false);
+    $token = current_user_token();
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => format_account_user($user), 'csrfToken' => user_csrf_token($token)]);
 }
 
 function account_logout(): void
 {
     require_method('POST');
-    $data = read_json_body();
-    $user = require_account_from_payload($data);
-    $stmt = db()->prepare('DELETE FROM quiz_user_sessions WHERE token_hash = :hash AND user_id = :id');
-    $stmt->execute(['hash' => hash('sha256', $data['userToken']), 'id' => $user['id']]);
+    read_json_body();
+    $token = current_user_token();
+    require_user_csrf($token);
+    revoke_current_user_session($token);
+    clear_user_session_cookie();
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
 }
 
@@ -971,7 +965,7 @@ function account_update(): void
     require_method('POST');
     $data = read_json_body();
     db()->beginTransaction();
-    $user = require_account_from_payload($data);
+    $user = require_account();
     $username = normalize_username($data['username'] ?? $user['username']);
     $avatarKey = normalize_avatar_key($data['avatarKey'] ?? $user['avatar_key']);
     $password = (string) ($data['password'] ?? '');
@@ -1008,9 +1002,13 @@ function account_update(): void
     }
     $stmt = db()->prepare('SELECT * FROM quiz_users WHERE id = :id');
     $stmt->execute(['id' => $user['id']]);
-    $updated = format_account_user($stmt->fetch(), $password === '' ? $data['userToken'] : null);
+    $updated = format_account_user($stmt->fetch());
+    $csrfToken = user_csrf_token(current_user_token());
+    if ($password !== '') {
+        $csrfToken = issue_user_session((int) $user['id']);
+    }
     db()->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $updated]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $updated, 'csrfToken' => $csrfToken]);
 }
 
 function account_delete(): void
@@ -1018,7 +1016,7 @@ function account_delete(): void
     require_method('POST');
     $data = read_json_body();
     db()->beginTransaction();
-    $user = require_account_from_payload($data);
+    $user = require_account();
     require_current_password($user, $data);
     $confirm = (string) ($data['confirm'] ?? '');
     if ($confirm !== 'DELETE') {
@@ -1034,6 +1032,7 @@ function account_delete(): void
     $stmt = $pdo->prepare('UPDATE quiz_users SET username = NULL, email = NULL, password_hash = NULL, profile_image_url = NULL, avatar_key = NULL, deleted_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => (int) $user['id']]);
     $pdo->commit();
+    clear_user_session_cookie();
     send_account_deleted_mail($deletedEmail, $deletedUsername);
 
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION]);
@@ -1101,10 +1100,10 @@ function account_reset_password(): void
     revoke_user_sessions((int) $row['user_id']);
     $stmt = $pdo->prepare('UPDATE quiz_password_resets SET used_at = NOW() WHERE user_id = :id AND used_at IS NULL');
     $stmt->execute(['id' => $row['user_id']]);
-    $newUser = issue_account_token($pdo, (int) $row['user_id']);
+    $session = issue_account_session($pdo, (int) $row['user_id']);
     $pdo->commit();
 
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $newUser]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $session['user'], 'csrfToken' => $session['csrfToken']]);
 }
 
 function question_feedback_save(): void
@@ -1128,8 +1127,8 @@ function question_feedback_save(): void
     }
 
     $userId = null;
-    if (!empty($data['userId']) && !empty($data['userToken'])) {
-        $user = require_account_from_payload($data);
+    if (current_user_token(false) !== null) {
+        $user = require_account();
         $userId = (int) $user['id'];
     }
 
@@ -1151,7 +1150,7 @@ function save_result(): void
     require_method('POST');
     rate_limit('save-result', 60, 300);
     $data = read_json_body();
-    $user = require_account_from_payload($data);
+    $user = require_account();
     $userId = (int) $user['id'];
     $score = ensure_int($data['score'] ?? 0, 0, 100000);
     $maxScore = ensure_int($data['maxScore'] ?? 0, 0, 100000);

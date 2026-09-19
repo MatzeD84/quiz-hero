@@ -35,7 +35,7 @@ const setStatus = (message, type = 'info') => {
 };
 
 const render = () => {
-    const isLoggedIn = Boolean(currentUser?.id && currentUser?.token);
+    const isLoggedIn = Boolean(currentUser?.id);
     elements.loggedOut?.classList.toggle('admin-hidden', isLoggedIn);
     elements.content?.classList.toggle('admin-hidden', !isLoggedIn);
     if (!isLoggedIn) {

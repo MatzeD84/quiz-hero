@@ -48,14 +48,14 @@ POST-Endpunkte weisen fremde Origins beziehungsweise `Sec-Fetch-Site: cross-site
 
 Apache liefert `nosniff`, Referrer-Policy, Permissions-Policy, Einbettungsschutz und eine durchgesetzte CSP für Basis-URLs, Objekte, Formulare und fremde Frames. Die weitergehende Script-/Ressourcen-CSP läuft zunächst im Report-Only-Modus; Meldungen erscheinen in den Entwicklerwerkzeugen, ein zentraler Reportempfänger ist nicht eingerichtet. HSTS gilt nur für HTTPS und enthält weder `includeSubDomains` noch Preload.
 
-**Bewertung HttpOnly-Cookies:** Empfehlenswert als nächster eigenständiger Umbau der Accountauthentifizierung. Sie verhindern das direkte Auslesen des Sitzungstokens durch JavaScript, verhindern aber keine Aktionen eines bereits eingeschleusten Scripts. Nötig sind gleichzeitig CSRF-Schutz für sämtliche Kontoaktionen, ein passender SameSite-/Secure-Modus, angepasste Clients und eine bewusste Umstellung bestehender Sitzungen. In diesem Block bleibt die bereits widerrufbare Bearer-Sitzung erhalten. Grundlage: [OWASP Sitzungen](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) und [OWASP CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
+Die anschließend umgesetzte Umstellung auf HttpOnly-Cookies und CSRF-Schutz ist in [UMSETZUNG-HTTPONLY-COOKIES.md](UMSETZUNG-HTTPONLY-COOKIES.md) dokumentiert. Damit ist die hier noch beschriebene Bearer-Sitzung nicht mehr der aktuelle lokale Stand. Grundlage: [OWASP Sitzungen](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) und [OWASP CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 
 Dies sind gezielte Sicherheits- und Regressionstests, kein vollständiger externer Penetrationstest. Verteilte Angriffe, produktive TLS-Konfiguration und Hostingrechte sind nicht umfassend geprüft.
 
 ## Tests und Veröffentlichung
 
-- Acht JavaScript-/SEO-Tests erfolgreich: Formularschutz, doppelte Wertung, Wiederaufnahme, maskierte SEO-Inhalte und bisherige Daten-/Buildverträge.
-- 36 PHP-/MySQL-Integrationsprüfungen erfolgreich, ausschließlich in einer isolierten Testdatenbank. Migrationen funktionieren aus leerer Datenbank sowie neuem und altem Snapshot.
+- Neun JavaScript-/SEO-Tests erfolgreich: einschließlich Cookie-/CSRF-Vertrag sowie der bisherigen Formular-, Quiz-, Daten- und Buildverträge.
+- 40 PHP-/MySQL-Integrationsprüfungen erfolgreich, ausschließlich in einer isolierten Testdatenbank. Migrationen funktionieren aus leerer Datenbank sowie neuem und altem Snapshot.
 - Lokaler Datenbankexport erzeugt fünf Kategorieseiten unter `.build/seo-local`. Die produktiven Seiten wurden nicht ersetzt.
 - Chrome bestätigt verschachtelte Cookie-Dialoge mit Fokusrückgabe, Adminlogin und Erhalt ungespeicherter Eingaben beim abgebrochenen Wechsel sowie Quiz-Wiederaufnahme mit identischem Punktestand und gesperrten Antworten.
 - Ein im Browser simulierter Fetch-Ausfall beim Adminspeichern erhält die Eingaben, zeigt den Fehler an und gibt das Formular wieder frei. Die Teständerung wurde verworfen und nicht gespeichert.

@@ -1,6 +1,6 @@
 # Quiz-Hero
 
-Aktueller zweiter Arbeitsblock: [UX, SEO und Sicherheit](UMSETZUNG-UX-SEO-SICHERHEIT.md). Vor dem naechsten Deployment auch Migration 008 anwenden.
+Aktueller Sicherheitsblock: [HttpOnly-Cookies und CSRF-Schutz](UMSETZUNG-HTTPONLY-COOKIES.md). Der vorherige Arbeitsblock steht unter [UX, SEO und Sicherheit](UMSETZUNG-UX-SEO-SICHERHEIT.md). Vor dem naechsten Deployment auch Migration 008 anwenden.
 
 Aktueller Stand der Sicherheits-, Daten- und Build-Aenderungen: [Umsetzung 1-6 und Deploymenthinweise](UMSETZUNG-1-6.md). Vor dem naechsten Produktionsdeploy Migration 007 anwenden.
 
@@ -416,7 +416,7 @@ php -r "echo password_hash('DEIN_STARKES_PASSWORT', PASSWORD_DEFAULT), PHP_EOL;"
 
 Den erzeugten Wert als `QUIZ_HERO_ADMIN_PASSWORD_HASH` setzen. `QUIZ_HERO_ADMIN_PASSWORD` ist nur fuer lokale Tests gedacht.
 
-Benutzersitzungen sind zufaellige Bearertokens mit serverseitig gespeichertem Hash in `quiz_user_sessions`. Logout, Passwortwechsel und Reset widerrufen Sitzungen; Details und Laufzeiten stehen in `UMSETZUNG-1-6.md`.
+Benutzersitzungen verwenden zufaellige, serverseitig gehashte Werte im HttpOnly-/SameSite-Cookie `quiz_hero_session`. Auf HTTPS wird das Cookie mit `Secure` gesetzt. Geschuetzte Benutzeraktionen verlangen zusaetzlich ein CSRF-Token. Logout, Passwortwechsel und Reset widerrufen Sitzungen; Details und Laufzeiten stehen in `UMSETZUNG-HTTPONLY-COOKIES.md` und `UMSETZUNG-1-6.md`.
 
 `QUIZ_HERO_SEO_EXPORT_TOKEN` schuetzt den SEO-Export unter `/api/index.php?action=seo-export&v=1`. Der Wert ist ein frei gewaehlter langer Zufallswert und muss als GitHub Secret gepflegt werden. Die GitHub Action schreibt daraus beim Deploy automatisch `api/config.local.php` fuer Production und nutzt denselben Wert beim SEO-Build, um Landingpages verbindlich aus dem authentifizierten MySQL-Export zu erzeugen.
 
@@ -969,7 +969,7 @@ Falls STRATO diese Werte nicht uebernimmt, muessen die entsprechenden PHP-Einste
 - Der Hero-Avatar kann auf `account.html` per Modal geaendert werden.
 - Profilbilder werden nicht frei hochgeladen. Der Spieler waehlt einen vordefinierten Hero-Avatar.
 - Der Account wird in `quiz_users` gespeichert; abgeschlossene Quizrunden werden in `quiz_results` persistiert.
-- Beim Account-Login gibt die API ein signiertes User-Token aus. Dieses Token wird lokal im Browser zusammen mit dem User gespeichert und beim Speichern eines Ergebnisses mitgesendet.
-- Die API akzeptiert Ergebnisse nur, wenn `userId` und User-Token zusammenpassen. Dadurch kann der Browser nicht mehr beliebig Ergebnisse fuer fremde User-IDs speichern.
+- Beim Account-Login setzt die API ein zufaelliges Sitzungstoken als HttpOnly-/SameSite-Cookie. JavaScript und LocalStorage erhalten diesen Zugangsnachweis nicht.
+- Accountaenderungen, Logout, Kontoloeschung und Ergebnisspeicherung verlangen neben dem gueltigen Cookie ein getrenntes CSRF-Token. `userId` und Sitzungstoken werden nicht mehr in JSON-Payloads uebertragen.
 - Account-Aktionen und Ergebnis-Speicherung sind rate-limitiert. Nach dem Deploy dieser Aenderung muessen alte lokal gespeicherte Gast-User sich einmal neu registrieren oder neu einloggen.
 - Der User-Service prueft API-Antworten robuster: Nicht-JSON-Antworten, HTTP-Fehler und API-Fehlertexte werden als lesbare Fehlermeldung behandelt.
