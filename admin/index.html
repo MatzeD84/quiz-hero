@@ -182,7 +182,10 @@
                         <label><input id="js-admin-category-enabled" type="checkbox" checked> Aktiv</label>
                         <label><input id="js-admin-category-badge-active" type="checkbox"> Badge anzeigen</label>
                         <label>Badge-Text <input id="js-admin-category-badge-text" type="text" value="Neu"></label>
-                        <button class="btn btn--modal" type="submit">Kategorie speichern</button>
+                        <div class="admin-actions">
+                            <button class="btn btn--modal" type="submit">Kategorie speichern</button>
+                            <button id="js-admin-category-delete" class="account-action-link account-action-link--danger u-hidden" type="button">Kategorie löschen</button>
+                        </div>
                     </form>
                 </section>
             </div>
@@ -330,6 +333,21 @@
     }
   ]
 }</code></pre>
+        </div>
+    </dialog>
+    <dialog id="js-admin-category-delete-modal" class="modal u-hidden" role="dialog" aria-modal="true" aria-labelledby="js-admin-category-delete-title" aria-describedby="js-admin-category-delete-description">
+        <div class="modal__content">
+            <h2 id="js-admin-category-delete-title" class="modal__headline">Kategorie löschen</h2>
+            <p id="js-admin-category-delete-description"></p>
+            <label id="js-admin-category-delete-questions-label" class="account-checkbox u-hidden">
+                <input id="js-admin-category-delete-questions" type="checkbox">
+                <span id="js-admin-category-delete-questions-text"></span>
+            </label>
+            <p id="js-admin-category-delete-status" class="modal__status" role="status" aria-live="polite"></p>
+            <div class="admin-actions">
+                <button id="js-admin-category-delete-cancel" class="account-action-link" type="button">Abbrechen</button>
+                <button id="js-admin-category-delete-confirm" class="account-action-link account-action-link--danger" type="button">Kategorie löschen</button>
+            </div>
         </div>
     </dialog>
     <script type="module" src="../js/admin.js?v=dev"></script>

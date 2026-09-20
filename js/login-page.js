@@ -2,6 +2,7 @@ import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 import { UserService } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
+import { revealStatus } from './status-navigation.js?v=dev';
 
 const elements = {
     tabs: Array.from(document.querySelectorAll('.js-login-tab')),
@@ -30,6 +31,7 @@ const setStatus = (message, type = 'info') => {
     if (!elements.status) return;
     elements.status.textContent = message || '';
     elements.status.dataset.status = message ? type : '';
+    revealStatus(elements.status);
 };
 
 const showView = (view, options = {}) => {
@@ -94,6 +96,7 @@ elements.loginForm?.addEventListener('submit', async event => {
             identifier: elements.loginIdentifier?.value || '',
             password: elements.loginPassword?.value || ''
         });
+        elements.loginForm.reset();
         setStatus('Login erfolgreich.', 'success');
         redirectAfterLogin();
     } catch (error) {
@@ -122,6 +125,8 @@ elements.registerForm?.addEventListener('submit', async event => {
             avatarKey: selectedAvatar('register'),
             privacyAccepted: Boolean(elements.registerPrivacy?.checked)
         });
+        elements.registerForm.reset();
+        renderAvatarChoices();
         showView('login');
         setStatus('Registrierung erfolgreich. Bitte bestätige deine E-Mail.', 'success');
     } catch (error) {
@@ -134,6 +139,7 @@ elements.resetRequestForm?.addEventListener('submit', async event => {
     setStatus('Reset-Link wird vorbereitet ...', 'info');
     try {
         const result = await userService.requestPasswordReset(elements.resetEmail?.value || '');
+        elements.resetRequestForm.reset();
         setStatus(result.message || 'Falls die E-Mail bekannt ist, wurde ein Reset-Link verschickt.', 'success');
     } catch (error) {
         setStatus(error.message || 'Reset-Link konnte nicht verschickt werden.', 'error');
@@ -148,6 +154,7 @@ elements.resetForm?.addEventListener('submit', async event => {
             token: elements.resetToken?.value || '',
             password: elements.resetPassword?.value || ''
         });
+        elements.resetForm.reset();
         setStatus('Passwort gespeichert.', 'success');
         redirectAfterLogin();
     } catch (error) {
@@ -203,6 +210,7 @@ document.querySelector('#js-resend-form')?.addEventListener('submit', async even
     setStatus('Bestätigungsmail wird angefordert …');
     try {
         const result = await userService.resendVerification(document.querySelector('#js-resend-email').value);
+        event.target.reset();
         setStatus(result.message, 'success');
     } catch (error) { setStatus(error.message || 'Verbindungsfehler. Bitte erneut versuchen.', 'error'); }
     finally { button.disabled = false; }

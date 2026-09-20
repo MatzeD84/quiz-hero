@@ -196,7 +196,7 @@ try {
     check((int) $pdo->query('SELECT COUNT(*) FROM quiz_questions')->fetchColumn() === 1, 'admin writes reject missing/wrong CSRF and foreign Origin without mutation');
     $savedCookies = $cookies; $cookies = [];
     foreach (['admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
-    foreach (['admin-question-save','admin-category-save','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
+    foreach (['admin-question-save','admin-category-save','admin-category-delete','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
     $cookies = $savedCookies;
     check(true, 'admin read and write endpoints reject unauthenticated access');
     request('account-login', ['identifier'=>"' OR 1=1 --",'password'=>'invalid'], 401);
@@ -212,6 +212,17 @@ try {
     request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Unsafe','answers'=>['A','B','C','D'],'correct'=>0,'imageUrl'=>'images/../api/index.php'], 422);
     check($pdo->query('SELECT image_url FROM quiz_questions')->fetchColumn() === '/images/audit.png', 'invalid image rejected without clearing saved image');
     request('admin-category-save', ['id'=>'audit','title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
+    request('admin-category-save', ['id'=>'delete-me','title'=>'Delete me','enabled'=>false,'badgeActive'=>false,'badgeText'=>'']);
+    $deleteQuestion = request('admin-question-save', ['categoryId'=>'delete-me','question'=>'Delete with category','answers'=>['A','B','C','D'],'correct'=>0,'active'=>false]);
+    request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'wrong'], 422);
+    request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'delete-me','deleteQuestions'=>false], 409);
+    check((int) $pdo->query("SELECT COUNT(*) FROM quiz_categories WHERE id = 'delete-me'")->fetchColumn() === 1
+        && (int) $pdo->query('SELECT COUNT(*) FROM quiz_questions WHERE id = ' . (int) $deleteQuestion['id'])->fetchColumn() === 1,
+        'category deletion keeps category and questions without explicit cascade consent');
+    request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'delete-me','deleteQuestions'=>true]);
+    check((int) $pdo->query("SELECT COUNT(*) FROM quiz_categories WHERE id = 'delete-me'")->fetchColumn() === 0
+        && (int) $pdo->query('SELECT COUNT(*) FROM quiz_questions WHERE id = ' . (int) $deleteQuestion['id'])->fetchColumn() === 0,
+        'category deletion requires exact confirmation and cascades to questions');
     $public = request('public-data');
     check($public['categories'][0]['questions'][0]['sourceUrl'] === 'https://example.test/source' && $public['categories'][0]['questions'][0]['imageAlt'] === 'Audit image', 'editorial fields round-trip through database and public export');
     request('admin-question-save', ['categoryId'=>'audit','question'=>'bad source','answers'=>['A','B','C','D'],'correct'=>0,'sourceUrl'=>'javascript:alert(1)'], 422);

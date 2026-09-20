@@ -1,6 +1,7 @@
 import { createFormGuard } from './form-guard.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG } from './config.js?v=dev';
+import { revealStatus } from './status-navigation.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -8,6 +9,8 @@ const dirtyStatus = document.createElement('p');
 dirtyStatus.setAttribute('role', 'status');
 document.querySelector('#js-admin-status').after(dirtyStatus);
 const guardedForms = ['#js-admin-question-form', '#js-admin-category-form'].map(selector => document.querySelector(selector));
+const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden erst mit dem nächsten Production-Deployment aktualisiert.';
+const withSeoDeploymentNotice = message => `${message} ${SEO_DEPLOYMENT_NOTICE}`;
 const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
     clearPendingCategoryImage(); updateImageState(); updateCategoryImageState();
 });
@@ -160,6 +163,7 @@ const setStatus = (message, type = '') => {
     const status = $('#js-admin-status');
     status.textContent = message || '';
     status.dataset.status = message ? (type || inferStatusType(message)) : '';
+    revealStatus(status);
 };
 const setLoggedIn = loggedIn => {
     $('#js-admin-login').classList.toggle('u-hidden', loggedIn);
@@ -1018,6 +1022,7 @@ function fillCategory(category = {}) {
     $('#js-admin-category-enabled').checked = category.enabled !== false;
     $('#js-admin-category-badge-active').checked = Boolean(category.badge?.active);
     $('#js-admin-category-badge-text').value = category.badge?.text || 'Neu';
+    $('#js-admin-category-delete').classList.toggle('u-hidden', !category.id);
     updateCategoryImageState();
     formGuard.clean($('#js-admin-category-form'));
 }
@@ -1231,11 +1236,11 @@ async function importPendingQuestions() {
         if (result.results) renderImportResults(result.results);
         return;
     }
-    const message = `${result.importedCount} Fragen importiert. ${result.skippedCount} übersprungen.`;
+    const importMessage = `${result.importedCount} Fragen importiert. ${result.skippedCount} übersprungen.`;
+    const message = result.importedCount > 0 ? withSeoDeploymentNotice(importMessage) : importMessage;
     clearImportState();
     await loadData();
     setStatus(message, 'success');
-    $('#js-admin-status').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function openImportExample() {
@@ -1261,6 +1266,8 @@ async function init() {
                 return;
             }
             csrfToken = result.csrfToken || csrfToken;
+            $('#js-admin-user').value = '';
+            $('#js-admin-password').value = '';
             setLoggedIn(true);
             setStatus('Eingeloggt.', 'success');
             await loadData().catch(error => setStatus('Speichern/Login erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
@@ -1346,22 +1353,42 @@ async function init() {
     $('#js-admin-question-form').addEventListener('submit', async event => {
         event.preventDefault();
         await submitForm(event.target, async () => {
-            const result = await api('admin-question-save', collectQuestion());
-            setStatus(result.ok ? 'Frage gespeichert.' : result.error);
-            if (result.ok) {
-                selectedQuestionId = result.id;
-                formGuard.clean(event.target);
-                await loadData().catch(error => setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
-                if (activeAdminTab === 'new') setAdminTab('edit');
+            const payload = collectQuestion();
+            const isNewQuestion = !payload.id;
+            const categoryId = payload.categoryId;
+            const result = await api('admin-question-save', payload);
+            if (!result.ok) {
+                setStatus(result.error, 'error');
+                return;
             }
+            selectedQuestionId = result.id;
+            formGuard.clean(event.target);
+            try {
+                await loadData();
+            } catch (error) {
+                setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error');
+                return;
+            }
+            if (isNewQuestion) fillQuestion({ categoryId });
+            setStatus(withSeoDeploymentNotice('Frage gespeichert.'), 'success');
         });
     });
     $('#js-admin-delete').addEventListener('click', async () => {
         const id = $('#js-admin-question-id').value;
         if (!id || !window.confirm('Diese Frage wirklich löschen?')) return;
         const result = await api('admin-question-delete', { id });
-        setStatus(result.ok ? 'Frage gelöscht.' : result.error);
-        if (result.ok) { fillQuestion(); await loadData().catch(error => setStatus(error.message, 'error')); }
+        if (!result.ok) {
+            setStatus(result.error, 'error');
+            return;
+        }
+        fillQuestion();
+        try {
+            await loadData();
+        } catch (error) {
+            setStatus('Frage gelöscht, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error');
+            return;
+        }
+        setStatus(withSeoDeploymentNotice('Frage gelöscht.'), 'success');
     });
     $('#js-admin-new-category').addEventListener('click', () => {
         fillCategory();
@@ -1375,6 +1402,7 @@ async function init() {
     $('#js-admin-category-form').addEventListener('submit', async event => {
         event.preventDefault();
         await submitForm(event.target, async () => {
+            const isNewCategory = !$('#js-admin-category-id').value;
             if (pendingCategoryImageFile && !$('#js-admin-category-icon').value) {
                 const uploaded = await uploadCategoryImage(pendingCategoryImageFile, { deferIfMissing: false });
                 if (!uploaded) return;
@@ -1390,15 +1418,108 @@ async function init() {
                 badgeActive: $('#js-admin-category-badge-active').checked,
                 badgeText: $('#js-admin-category-badge-text').value
             });
-            setStatus(result.ok ? 'Kategorie gespeichert.' : result.error);
-            if (result.ok) {
-                $('#js-admin-category-id').value = result.id;
-                formGuard.clean(event.target);
-                await loadData().catch(error => setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error'));
+            if (!result.ok) {
+                setStatus(result.error, 'error');
+                return;
+            }
+            $('#js-admin-category-id').value = result.id;
+            formGuard.clean(event.target);
+            try {
+                await loadData();
+            } catch (error) {
+                setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error');
+                return;
+            }
+            if (isNewCategory) {
+                fillCategory();
+            } else {
                 const category = categories.find(item => item.id === $('#js-admin-category-id').value);
                 fillCategory(category || {});
             }
+            setStatus(withSeoDeploymentNotice('Kategorie gespeichert.'), 'success');
         });
+    });
+    $('#js-admin-category-delete').addEventListener('click', () => {
+        const id = $('#js-admin-category-id').value;
+        if (!id) return;
+        const category = categories.find(item => item.id === id);
+        const questionCount = category?.questions?.length || 0;
+        const modal = $('#js-admin-category-delete-modal');
+        modal.dataset.categoryId = id;
+        modal.dataset.questionCount = String(questionCount);
+        $('#js-admin-category-delete-description').textContent = questionCount > 0
+            ? `Die Kategorie „${category?.title || id}“ enthält ${questionCount} Frage${questionCount === 1 ? '' : 'n'}. Ohne Zustimmung werden weder die Kategorie noch ihre Fragen gelöscht.`
+            : `Die leere Kategorie „${category?.title || id}“ wird endgültig gelöscht. Bilder bleiben in der Mediathek.`;
+        const checkboxLabel = $('#js-admin-category-delete-questions-label');
+        const checkbox = $('#js-admin-category-delete-questions');
+        checkbox.checked = false;
+        checkboxLabel.classList.toggle('u-hidden', questionCount === 0);
+        $('#js-admin-category-delete-questions-text').textContent = questionCount === 1
+            ? 'Die zugehörige Frage und ihr Feedback ebenfalls löschen.'
+            : `Alle ${questionCount} zugehörigen Fragen und deren Feedback ebenfalls löschen.`;
+        $('#js-admin-category-delete-status').textContent = '';
+        $('#js-admin-category-delete-status').dataset.status = '';
+        openDialog(modal);
+    });
+    $('#js-admin-category-delete-cancel').addEventListener('click', () => {
+        closeDialog($('#js-admin-category-delete-modal'));
+    });
+    $('#js-admin-category-delete-modal').addEventListener('click', event => {
+        if (event.target === event.currentTarget) closeDialog(event.currentTarget);
+    });
+    $('#js-admin-category-delete-confirm').addEventListener('click', async event => {
+        const confirmButton = event.currentTarget;
+        const modal = $('#js-admin-category-delete-modal');
+        const id = modal.dataset.categoryId || '';
+        const questionCount = Number(modal.dataset.questionCount || 0);
+        const deleteQuestions = $('#js-admin-category-delete-questions').checked;
+        const dialogStatus = $('#js-admin-category-delete-status');
+        if (!id) return;
+        if (questionCount > 0 && !deleteQuestions) {
+            dialogStatus.textContent = 'Aktiviere die Checkbox, wenn die Kategorie und ihre Fragen gelöscht werden sollen.';
+            dialogStatus.dataset.status = 'error';
+            $('#js-admin-category-delete-questions').focus();
+            return;
+        }
+        const originalButtonText = confirmButton.textContent;
+        confirmButton.disabled = true;
+        confirmButton.textContent = 'Wird gelöscht …';
+        dialogStatus.textContent = 'Kategorie wird gelöscht …';
+        dialogStatus.dataset.status = 'info';
+        try {
+            const result = await api('admin-category-delete', { id, confirmation: id, deleteQuestions });
+            if (!result.ok) {
+                if (result.questionCount > 0) {
+                    modal.dataset.questionCount = String(result.questionCount);
+                    $('#js-admin-category-delete-questions-label').classList.remove('u-hidden');
+                    $('#js-admin-category-delete-questions-text').textContent = result.questionCount === 1
+                        ? 'Die zugehörige Frage und ihr Feedback ebenfalls löschen.'
+                        : `Alle ${result.questionCount} zugehörigen Fragen und deren Feedback ebenfalls löschen.`;
+                }
+                dialogStatus.textContent = result.error;
+                dialogStatus.dataset.status = 'error';
+                return;
+            }
+            closeDialog(modal);
+            selectedQuestionId = '';
+            fillCategory();
+            try {
+                await loadData();
+            } catch (error) {
+                setStatus('Kategorie gelöscht, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error');
+                return;
+            }
+            setStatus(
+                withSeoDeploymentNotice(`Kategorie gelöscht. ${result.deletedQuestionCount || 0} zugehörige Fragen wurden entfernt.`),
+                'success'
+            );
+        } catch (error) {
+            dialogStatus.textContent = error.message || 'Kategorie konnte nicht gelöscht werden.';
+            dialogStatus.dataset.status = 'error';
+        } finally {
+            confirmButton.disabled = false;
+            confirmButton.textContent = originalButtonText;
+        }
     });
 }
 

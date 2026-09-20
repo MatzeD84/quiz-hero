@@ -3,6 +3,7 @@ import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE, UserService } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
+import { revealStatus } from './status-navigation.js?v=dev';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -32,6 +33,7 @@ const setStatus = (message, type = 'info') => {
     if (!elements.status) return;
     elements.status.textContent = message || '';
     elements.status.dataset.status = message ? type : '';
+    revealStatus(elements.status);
 };
 
 const render = () => {

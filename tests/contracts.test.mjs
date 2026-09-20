@@ -12,6 +12,26 @@ import { saveRound, readRound } from '../js/round-storage.js';
 import { createRequire } from 'node:module';
 import { createFormGuard } from '../js/form-guard.js';
 import { QuizState } from '../js/quiz-state.js';
+import { revealStatus } from '../js/status-navigation.js';
+
+test('status feedback scrolls into view and respects reduced motion', () => {
+    const previousWindow = globalThis.window;
+    let scrollOptions;
+    globalThis.window = {
+        matchMedia: () => ({ matches: true }),
+        requestAnimationFrame: callback => callback()
+    };
+    try {
+        revealStatus({ textContent: 'Gespeichert', scrollIntoView: options => { scrollOptions = options; } });
+        assert.deepEqual(scrollOptions, { behavior: 'auto', block: 'start' });
+        scrollOptions = undefined;
+        revealStatus({ textContent: '   ', scrollIntoView: options => { scrollOptions = options; } });
+        assert.equal(scrollOptions, undefined);
+    } finally {
+        if (previousWindow === undefined) delete globalThis.window;
+        else globalThis.window = previousWindow;
+    }
+});
 
 test('CSS class selectors follow the project BEM convention', () => {
     const { findBemViolations } = createRequire(import.meta.url)('../scripts/check-bem.js');

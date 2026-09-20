@@ -326,6 +326,7 @@ export class QuizController {
                 types,
                 comment
             });
+            this.view.elements.questionFeedbackForm?.reset();
             this.view.renderQuestionFeedbackStatus('Danke, dein Feedback wurde gesendet.', 'success');
             window.setTimeout(() => this.view.closeQuestionFeedbackModal(), 900);
         } catch (error) {

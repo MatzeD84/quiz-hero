@@ -1,6 +1,7 @@
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=dev';
+import { revealStatus } from './status-navigation.js?v=dev';
 
 export class QuizView {
     constructor(selectors = SELECTORS) {
@@ -280,6 +281,7 @@ export class QuizView {
             if (message) document.querySelector('main')?.prepend(this.elements.userStatus);
             this.elements.userStatus.textContent = message || '';
             this.elements.userStatus.dataset.status = message ? type : '';
+            revealStatus(this.elements.userStatus);
         }
     }
 
@@ -572,6 +574,7 @@ export class QuizView {
         if (!this.elements.questionFeedbackStatus) return;
         this.elements.questionFeedbackStatus.textContent = message || '';
         this.elements.questionFeedbackStatus.dataset.status = message ? type : '';
+        revealStatus(this.elements.questionFeedbackStatus);
     }
 
     showResultModal({ score, solved, total, maxScore, review = [] }, user = null, actions = {}) {

@@ -45,6 +45,7 @@ try {
         'admin-question-import' => admin_question_import(),
         'admin-question-delete' => admin_question_delete(),
         'admin-category-save' => admin_category_save(),
+        'admin-category-delete' => admin_category_delete(),
         'admin-image-upload' => admin_image_upload(),
         'admin-media-list' => admin_media_list(),
         'admin-media-delete' => admin_media_delete(),
@@ -1428,6 +1429,57 @@ function admin_category_save(): void
     $stmt = db()->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
     $stmt->execute($payload);
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $id]);
+}
+
+function admin_category_delete(): void
+{
+    require_method('POST');
+    require_admin_csrf();
+    $data = read_json_body();
+    $id = slugify((string) ($data['id'] ?? ''));
+    $confirmation = clean_string($data['confirmation'] ?? '', 120);
+    $deleteQuestions = ($data['deleteQuestions'] ?? false) === true;
+    if ($id === '' || $confirmation !== $id) {
+        json_response(['ok' => false, 'error' => 'Die Kategorie-ID wurde nicht korrekt bestätigt.'], 422);
+    }
+
+    $pdo = db();
+    $pdo->beginTransaction();
+    try {
+        $categoryStmt = $pdo->prepare('SELECT title FROM quiz_categories WHERE id = :id FOR UPDATE');
+        $categoryStmt->execute(['id' => $id]);
+        $category = $categoryStmt->fetch();
+        if (!$category) {
+            $pdo->rollBack();
+            json_response(['ok' => false, 'error' => 'Kategorie wurde nicht gefunden.'], 404);
+        }
+
+        $countStmt = $pdo->prepare('SELECT COUNT(*) FROM quiz_questions WHERE category_id = :id');
+        $countStmt->execute(['id' => $id]);
+        $questionCount = (int) $countStmt->fetchColumn();
+        if ($questionCount > 0 && !$deleteQuestions) {
+            $pdo->rollBack();
+            json_response([
+                'ok' => false,
+                'error' => 'Die Kategorie enthält Fragen. Aktiviere die Checkbox, um diese Fragen mitzulöschen.',
+                'questionCount' => $questionCount,
+            ], 409);
+        }
+
+        $deleteStmt = $pdo->prepare('DELETE FROM quiz_categories WHERE id = :id');
+        $deleteStmt->execute(['id' => $id]);
+        $pdo->commit();
+    } catch (Throwable $error) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        throw $error;
+    }
+    json_response([
+        'ok' => true,
+        'apiVersion' => QUIZ_HERO_API_VERSION,
+        'deletedQuestionCount' => $questionCount,
+    ]);
 }
 
 function admin_image_upload(): void
