@@ -135,6 +135,7 @@ jobs:
           QUIZ_HERO_SMTP_USER: ${{ secrets.QUIZ_HERO_SMTP_USER }}
           QUIZ_HERO_SMTP_PASSWORD: ${{ secrets.QUIZ_HERO_SMTP_PASSWORD }}
           QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN: "false"
+          QUIZ_HERO_SERVER_MANAGED_HEADERS: "true"
         run: |
           php -r '
           $keys = [
@@ -157,6 +158,7 @@ jobs:
               "QUIZ_HERO_SMTP_USER",
               "QUIZ_HERO_SMTP_PASSWORD",
               "QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN",
+              "QUIZ_HERO_SERVER_MANAGED_HEADERS",
           ];
           $config = [];
           foreach ($keys as $key) {

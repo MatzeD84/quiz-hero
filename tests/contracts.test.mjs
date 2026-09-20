@@ -75,17 +75,21 @@ test('SEO content includes image context, stable citations and escaped editorial
     assert.match(fallback, /alt="Abbildung zur Frage: Which\?" width="1536" height="1024"/);
 });
 
-test('deployment CSP hashes allow generated inline scripts without unsafe-inline', () => {
+test('deployment enforces hashed scripts and rejects inline styles', () => {
     const { applyCspHashes } = createRequire(import.meta.url)('../scripts/apply-csp-hashes.js');
     const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'quiz-hero-csp-test-'));
     try {
-        fs.writeFileSync(path.join(temp, '.htaccess'), `Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' https://www.googletagmanager.com; object-src 'none'"\n# Inline script hashes are added to the deploy copy by scripts/apply-csp-hashes.js.\n`);
+        fs.writeFileSync(path.join(temp, '.htaccess'), `Header always set Content-Security-Policy "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'"\nHeader always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; object-src 'none'"\n# Inline script hashes are added to the deploy copy by scripts/apply-csp-hashes.js.\n`);
+        fs.writeFileSync(path.join(temp, 'index.html'), '<p style="color: red">Blocked</p><script>{"ok":true}</script>');
+        assert.throws(() => applyCspHashes(temp), /Inline-Styles/);
         fs.writeFileSync(path.join(temp, 'index.html'), '<script type="application/ld+json">{"@type":"FAQPage"}</script><script src="/external.js"></script>');
         const hashes = applyCspHashes(temp);
         const config = fs.readFileSync(path.join(temp, '.htaccess'), 'utf8');
         assert.equal(hashes.length, 1);
         assert.ok(config.includes(hashes[0]));
         assert.ok(!config.includes("'unsafe-inline'"));
+        assert.ok(!config.includes('Content-Security-Policy-Report-Only'));
+        assert.equal((config.match(/Header always set Content-Security-Policy /g) || []).length, 1);
         assert.throws(() => applyCspHashes(temp), /bereits Inline-Hashes/);
     } finally {
         fs.rmSync(temp, { recursive: true, force: true });

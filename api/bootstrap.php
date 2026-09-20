@@ -81,10 +81,10 @@ function json_response(array $payload, int $status = 200): void
     http_response_code($status);
     header('Content-Type: application/json; charset=utf-8');
 
-    // Apache applies these headers centrally through .htaccess. Other SAPIs,
-    // such as PHP's built-in development server, still need safe defaults.
-    $serverSoftware = (string) ($_SERVER['SERVER_SOFTWARE'] ?? '');
-    if (stripos($serverSoftware, 'Apache') === false) {
+    // Production and the Docker web app apply these headers centrally through
+    // .htaccess. Standalone PHP servers retain safe response defaults.
+    $serverManagesHeaders = env_value('QUIZ_HERO_SERVER_MANAGED_HEADERS', 'false') === 'true';
+    if (!$serverManagesHeaders) {
         header('X-Content-Type-Options: nosniff');
         header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
         header('Pragma: no-cache');

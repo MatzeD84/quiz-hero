@@ -900,19 +900,26 @@ a {
 }
 
 .result-summary__progress {
+    appearance: none;
     background: color-mix(in srgb, var(--dark-color) 10%, transparent);
+    border: 0;
     border-radius: 999px;
+    display: block;
     height: 0.5rem;
     margin-top: 0.25rem;
     overflow: hidden;
+    width: 100%;
 }
 
-.result-summary__progress span {
+.result-summary__progress::-webkit-progress-bar {
+    background: color-mix(in srgb, var(--dark-color) 10%, transparent);
+    border-radius: inherit;
+}
+
+.result-summary__progress::-webkit-progress-value,
+.result-summary__progress::-moz-progress-bar {
     background: var(--greensea-color);
     border-radius: inherit;
-    display: block;
-    height: 100%;
-    min-width: 0;
 }
 
 .result-summary__rules {

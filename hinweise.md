@@ -1,5 +1,5 @@
 ﻿Nächstes Deployment:
-- 005_question_feedback.sql
+
 
 ------------------------------------------------
 
@@ -47,6 +47,9 @@ Frage-Ideen:
 - Palazzo Medici Riccardi
 - Piazza del Duomo
 -----------------------------------------------------
+
+Pen-Test durchführen
+
 
 Ideen ChatGPT:
 - end-zu-ent-Tests, Test

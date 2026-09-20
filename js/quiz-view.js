@@ -593,7 +593,10 @@ export class QuizView {
                 if (solvedEl) solvedEl.textContent = solved;
                 if (totalEl) totalEl.textContent = total;
                 if (maxEl) maxEl.textContent = maxScore;
-                if (progressEl) progressEl.style.width = `${progress}%`;
+                if (progressEl) {
+                    progressEl.value = progress;
+                    progressEl.textContent = `${progress} %`;
+                }
                 actionButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         const action = button.dataset.resultAction;

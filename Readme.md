@@ -408,6 +408,7 @@ Setze auf dem Server mindestens diese Umgebungsvariablen:
 - `QUIZ_HERO_MAIL_TRANSPORT` auf Produktion `smtp`, lokal `log`
 - `QUIZ_HERO_SMTP_HOST`, `QUIZ_HERO_SMTP_PORT`, `QUIZ_HERO_SMTP_SECURE`, `QUIZ_HERO_SMTP_USER`, `QUIZ_HERO_SMTP_PASSWORD` fuer SMTP-Versand
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` auf Produktion immer `false`
+- `QUIZ_HERO_SERVER_MANAGED_HEADERS=true`, wenn Apache beziehungsweise der Hosting-Webserver die Sicherheits- und Cache-Header aus `.htaccess` setzt. Die GitHub Action und Docker setzen diesen nicht geheimen Schalter automatisch.
 
 Fuer Produktion sollte kein Klartext-Admin-Passwort genutzt werden. Hash lokal erzeugen:
 ```bash
@@ -703,7 +704,8 @@ Die GitHub Action nutzt ausschliesslich den geschuetzten Export unter `/api/inde
 2) Nur aktive Fragen aktivierter Kategorien werden validiert und gerendert.
 3) Ausgabe: `.build/seo/kategorie/*.html`, Sitemap, robots.txt und Seitenmanifest.
 4) Nur diese generierten Dateien werden veroeffentlicht. Altseiten werden ausschliesslich im dafuer vorgesehenen Kategorieverzeichnis entfernt.
-5) Der Nachtest prueft Status, Canonical und Fragenanzahl auf Produktion.
+5) Nach der Asset-Versionierung lehnt der Build Inline-Styles ab, hasht alle Inline-Skripte und aktiviert die vollständige CSP ohne `unsafe-inline`.
+6) Der Nachtest prueft Status, Canonical und Fragenanzahl auf Produktion.
 
 Adminaenderungen aktualisieren die Datenbank sofort, die statischen Seiten erst beim naechsten manuell gestarteten Workflow. JSON-Vorschauen erfordern explizit `SEO_SOURCE=json` und sind in CI gesperrt. Die Tags fuer verwandte Seiten kommen aus den Fragen, nicht aus `data/tags.json`. Details zu Tests und erstem Deployment: [Umsetzung 1-6](UMSETZUNG-1-6.md).
 
@@ -880,6 +882,7 @@ Fuer deaktivierbare Themenfilter muss auf bestehenden Datenbanken `database/migr
 - `QUIZ_HERO_MAIL_TRANSPORT` (`log` lokal, `smtp` auf Produktion)
 - `QUIZ_HERO_SMTP_HOST`, `QUIZ_HERO_SMTP_PORT`, `QUIZ_HERO_SMTP_SECURE`, `QUIZ_HERO_SMTP_USER`, `QUIZ_HERO_SMTP_PASSWORD` (fuer Production-SMTP)
 - `QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN` (`true` nur lokal, `false` auf Produktion)
+- `QUIZ_HERO_SERVER_MANAGED_HEADERS` (`true` bei Apache/`.htaccess`, sonst `false` für sichere PHP-Fallback-Header)
 - `QUIZ_HERO_DEV_ACCOUNT_USER` (lokaler Testaccount, Default `localhero`)
 - `QUIZ_HERO_DEV_ACCOUNT_EMAIL` (lokale Test-E-Mail, Default `localhero@example.test`)
 - alternativ `QUIZ_HERO_ADMIN_PASSWORD` nur f�r einfache Testumgebungen

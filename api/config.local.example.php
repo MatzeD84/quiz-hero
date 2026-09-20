@@ -23,4 +23,5 @@ return [
     'QUIZ_HERO_SMTP_USER' => 'helden@quiz-hero.de',
     'QUIZ_HERO_SMTP_PASSWORD' => 'SMTP_PASSWORD',
     'QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN' => 'false',
+    'QUIZ_HERO_SERVER_MANAGED_HEADERS' => 'true',
 ];
