@@ -1,0 +1,9 @@
+.result-review {
+    overflow-wrap: anywhere;
+}
+
+.result-review__image {
+    max-height: 24rem;
+    max-width: 100%;
+    object-fit: contain;
+}

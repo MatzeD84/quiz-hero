@@ -162,8 +162,8 @@ const setStatus = (message, type = '') => {
     status.dataset.status = message ? (type || inferStatusType(message)) : '';
 };
 const setLoggedIn = loggedIn => {
-    $('#js-admin-login').classList.toggle('admin-hidden', loggedIn);
-    $('#js-admin-app').classList.toggle('admin-hidden', !loggedIn);
+    $('#js-admin-login').classList.toggle('u-hidden', loggedIn);
+    $('#js-admin-app').classList.toggle('u-hidden', !loggedIn);
 };
 
 async function loadData() {
@@ -417,9 +417,9 @@ function clearPendingMediaPreview() {
         URL.revokeObjectURL(pendingMediaPreviewUrl);
         pendingMediaPreviewUrl = '';
     }
-    $('#js-admin-media-dropzone-thumb').classList.add('admin-hidden');
+    $('#js-admin-media-dropzone-thumb').classList.add('u-hidden');
     $('#js-admin-media-dropzone-thumb').removeAttribute('src');
-    $('#js-admin-media-upload-actions').classList.add('admin-hidden');
+    $('#js-admin-media-upload-actions').classList.add('u-hidden');
     $('#js-admin-media-file').value = '';
 }
 
@@ -429,8 +429,8 @@ function renderPendingMediaDetail(file) {
     pendingMediaPreviewUrl = URL.createObjectURL(file);
     const thumb = $('#js-admin-media-dropzone-thumb');
     thumb.src = pendingMediaPreviewUrl;
-    thumb.classList.remove('admin-hidden');
-    $('#js-admin-media-upload-actions').classList.remove('admin-hidden');
+    thumb.classList.remove('u-hidden');
+    $('#js-admin-media-upload-actions').classList.remove('u-hidden');
     const detail = $('#js-admin-media-detail');
     detail.innerHTML = '<img class="admin-media-detail__image" alt=""><dl class="admin-media-detail__meta"><div><dt>Dateiname</dt><dd></dd></div><div><dt>Pfad</dt><dd>Noch nicht gespeichert</dd></div><div><dt>Größe</dt><dd></dd></div><div><dt>Verwendung</dt><dd>Upload läuft</dd></div></dl>';
     detail.querySelector('.admin-media-detail__image').src = pendingMediaPreviewUrl;
@@ -772,13 +772,13 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-pressed', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('admin-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback');
-    $('#js-admin-category-panel').classList.toggle('admin-hidden', tab !== 'categories');
-    $('#js-admin-media-panel').classList.toggle('admin-hidden', tab !== 'media');
-    $('#js-admin-import-panel').classList.toggle('admin-hidden', tab !== 'import');
-    $('#js-admin-users-panel').classList.toggle('admin-hidden', tab !== 'users');
-    $('#js-admin-feedback-panel').classList.toggle('admin-hidden', tab !== 'feedback');
-    $('#js-admin-question-browser').classList.toggle('admin-hidden', tab === 'new');
+    $('#js-admin-question-panel').classList.toggle('u-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback');
+    $('#js-admin-category-panel').classList.toggle('u-hidden', tab !== 'categories');
+    $('#js-admin-media-panel').classList.toggle('u-hidden', tab !== 'media');
+    $('#js-admin-import-panel').classList.toggle('u-hidden', tab !== 'import');
+    $('#js-admin-users-panel').classList.toggle('u-hidden', tab !== 'users');
+    $('#js-admin-feedback-panel').classList.toggle('u-hidden', tab !== 'feedback');
+    $('#js-admin-question-browser').classList.toggle('u-hidden', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
     } else if (tab === 'categories' && !$('#js-admin-category-id').value) {
@@ -801,7 +801,7 @@ function updateImageState() {
     const preview = $('#js-admin-image-preview');
     $('#js-admin-image-filename').textContent = fileNameFromPath(imageUrl);
     $('#js-admin-image-path').textContent = imageUrl;
-    previewWrap.classList.toggle('admin-hidden', !imageUrl);
+    previewWrap.classList.toggle('u-hidden', !imageUrl);
     if (imageUrl) {
         preview.src = resolveAssetUrl(imageUrl);
     } else {
@@ -818,8 +818,8 @@ function updateCategoryImageState() {
     const previewUrl = imageUrl ? resolveAssetUrl(imageUrl) : pendingCategoryPreviewUrl;
     $('#js-admin-category-image-filename').textContent = imageUrl ? fileNameFromPath(imageUrl) : (pendingCategoryImageFile?.name || '');
     $('#js-admin-category-image-path').textContent = imageUrl || (pendingCategoryImageFile ? 'Noch nicht gespeichert' : '');
-    dropzone.classList.toggle('admin-hidden', Boolean(previewUrl));
-    previewWrap.classList.toggle('admin-hidden', !previewUrl);
+    dropzone.classList.toggle('u-hidden', Boolean(previewUrl));
+    previewWrap.classList.toggle('u-hidden', !previewUrl);
     if (previewUrl) {
         preview.src = previewUrl;
     } else {
@@ -994,7 +994,7 @@ function fillQuestion(question = {}) {
     $('#js-admin-sort').value = question.sortOrder ?? 100;
     $('#js-admin-active').checked = question.active !== false;
     $('#js-admin-reviewed').checked = question.reviewed === true;
-    $('#js-admin-delete').classList.toggle('admin-hidden', !question.id);
+    $('#js-admin-delete').classList.toggle('u-hidden', !question.id);
     updateImageState();
     renderQuestions();
     formGuard.clean($('#js-admin-question-form'));
@@ -1135,7 +1135,7 @@ function renderImportResults(results = []) {
 
     count.textContent = results.length ? `${validCount} / ${results.length} gültig` : '';
     importButton.disabled = validCount === 0;
-    summary.classList.toggle('admin-hidden', results.length === 0);
+    summary.classList.toggle('u-hidden', results.length === 0);
     summary.textContent = results.length
         ? `${validCount} gültig, ${errorCount} fehlerhaft, ${warningCount} mit Warnung.`
         : '';
@@ -1166,7 +1166,7 @@ function clearImportState() {
     pendingImportQuestions = [];
     $('#js-admin-import-file').value = '';
     $('#js-admin-import-json').value = '';
-    $('#js-admin-import-actions').classList.add('admin-hidden');
+    $('#js-admin-import-actions').classList.add('u-hidden');
     renderImportResults([]);
 }
 
@@ -1181,7 +1181,7 @@ function stageImportText(text) {
     if (rawQuestions.length > 200) throw new Error('Maximal 200 Fragen pro Import.');
     const results = validateImportQuestions(rawQuestions);
     pendingImportQuestions = results.filter(item => item.valid).map(item => item.data);
-    $('#js-admin-import-actions').classList.remove('admin-hidden');
+    $('#js-admin-import-actions').classList.remove('u-hidden');
     renderImportResults(results);
     setStatus(`${pendingImportQuestions.length} gültige Fragen für den Import gefunden.`);
 }
@@ -1195,7 +1195,7 @@ function stagePastedImportJson() {
         stageImportText(text);
     } catch (error) {
         pendingImportQuestions = [];
-        $('#js-admin-import-actions').classList.add('admin-hidden');
+        $('#js-admin-import-actions').classList.add('u-hidden');
         renderImportResults([]);
         setStatus(error.message || 'JSON-Code konnte nicht gelesen werden.', 'error');
     }

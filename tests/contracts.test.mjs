@@ -13,6 +13,11 @@ import { createRequire } from 'node:module';
 import { createFormGuard } from '../js/form-guard.js';
 import { QuizState } from '../js/quiz-state.js';
 
+test('CSS class selectors follow the project BEM convention', () => {
+    const { findBemViolations } = createRequire(import.meta.url)('../scripts/check-bem.js');
+    assert.deepEqual(findBemViolations(), []);
+});
+
 test('form guard retains edits on cancel, restores on discard and guards unload', () => {
     const previous = globalThis.window;
     let unload, accept = false;

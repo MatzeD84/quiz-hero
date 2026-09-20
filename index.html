@@ -29,18 +29,18 @@
 </head>
 <body>
     <nav class="site-account-nav" aria-label="Account">
-        <a id="js-account-entry-link" href="login.html">Login</a>
+        <a id="js-account-entry-link" class="site-account-nav__link" href="login.html">Login</a>
     </nav>
     <main class="container">
         <!-- Kategorie-Auswahl -->
         <section id="js-category-container" class="main-section">
-            <header class="main__header">
-                <a class="main__logo-link js-home-link" href="./" title="Zur Startseite">
-                    <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
+            <header class="main-header">
+                <a class="main-header__logo-link js-home-link" href="./" title="Zur Startseite">
+                    <img class="main-header__image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
-                <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
+                <h1 class="main-header__headline" tabindex="-1">Quiz-Hero</h1>
             </header>
-            <section id="js-user-panel" class="user-panel admin-hidden" aria-live="polite">
+            <section id="js-user-panel" class="user-panel u-hidden" aria-live="polite">
                 <div id="js-user-preview" class="user-panel__preview">
                     <span></span>
                 </div>
@@ -62,46 +62,46 @@
         </section>
 
         <!-- Auswahl Anzahl Fragen -->
-        <section id="js-question-count-container" class="question_count hide" aria-live="polite">
+        <section id="js-question-count-container" class="question-count u-hidden" aria-live="polite">
 <p>Pro Frage hast du zwei Versuche. Beim ersten richtigen Versuch gibt es 2, 3 oder 5 Punkte, beim zweiten 1 Punkt. Deine Runde bleibt in diesem Tab bis zu 24 Stunden wiederaufnehmbar.</p>
-            <header class="question_count__header">
-                <a class="main__logo-link js-home-link" href="./" title="Zur Startseite">
-                    <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
+            <header class="question-count__header">
+                <a class="main-header__logo-link js-home-link" href="./" title="Zur Startseite">
+                    <img class="main-header__image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
                 <h2>Wie viele Fragen?</h2>
             </header>
-            <div class="question_count__meta">
-                <div class="question_count__selection_wrapper">
-                    <h3 id="js-selection-label" class="question_count__selection"></h3>
-                    <p id="js-selection-description" class="question_count__description category-card__description"></p>
+            <div class="question-count__meta">
+                <div class="question-count__selection-wrapper">
+                    <h3 id="js-selection-label" class="question-count__selection"></h3>
+                    <p id="js-selection-description" class="question-count__description category-card__description"></p>
                 </div>
-                    <img id="js-selection-icon" class="question_count__icon hide" alt="" width="1536" height="1024" loading="lazy">
+                    <img id="js-selection-icon" class="question-count__icon u-hidden" alt="" width="1536" height="1024" loading="lazy">
             </div>
-            <div class="quiz__question_count_select">
-                <button class="js-question-count-btn btn btn--question_count" data-count="5">5 Fragen</button>
-                <button class="js-question-count-btn btn btn--question_count" data-count="10">10 Fragen</button>
-                <button class="js-question-count-btn btn btn--question_count" data-count="25">25 Fragen</button>
-                <button class="js-question-count-btn btn btn--question_count" data-count="all">Alle Fragen</button>
+            <div class="question-count__options">
+                <button class="js-question-count-btn btn btn--question-count" data-count="5">5 Fragen</button>
+                <button class="js-question-count-btn btn btn--question-count" data-count="10">10 Fragen</button>
+                <button class="js-question-count-btn btn btn--question-count" data-count="25">25 Fragen</button>
+                <button class="js-question-count-btn btn btn--question-count" data-count="all">Alle Fragen</button>
             </div>
             <div>
-                <button id="js-back-to-category-page" class="question_count_back_btn" type="button">
-                    <small class="question_count_back_btn__text">zurück</small>
+                <button id="js-back-to-category-page" class="question-count__back" type="button">
+                    <small class="question-count__back-text">zurück</small>
                 </button>
             </div>
         </section>
 
         <!-- Quiz -->
-        <section id="js-quiz-content" class="quiz hide" aria-live="polite">
-            <header class="quiz__score_container">
-                <div class="quiz__headerlogo">
-                    <a class="main__logo-link js-home-link" href="./" title="Zur Startseite">
-                        <img class="quiz__headerlogo_image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
+        <section id="js-quiz-content" class="quiz u-hidden" aria-live="polite">
+            <header class="quiz__score-container">
+                <div class="quiz__header-logo">
+                    <a class="main-header__logo-link js-home-link" href="./" title="Zur Startseite">
+                        <img class="quiz__header-logo-image" src="images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                     </a>
                     <h3 id="js-quiz-selection" class="quiz__selection"></h3>
                 </div>
                 <div class="quiz__headertext">
                     <p id="js-quiz-headertext"></p>
-                    <div class="quiz__counter_questions">
+                    <div class="quiz__question-counter">
                         <p id="js-current-question">0</p>
                         <p id="js-total-questions">/0</p>
                     </div>
@@ -111,8 +111,8 @@
 
             <div class="quiz__container">
                 <div class="quiz__abort">
-                    <button id="js-abort-btn" class="quiz__abort_btn" title="Quiz abbrechen" type="button">
-                        <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <button id="js-abort-btn" class="quiz__abort-button icon-button" title="Quiz abbrechen" type="button">
+                        <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                         </svg>
                     </button>
@@ -120,42 +120,42 @@
 
                 <p id="js-question" class="quiz__question headline"></p>
 
-                <div class="quiz__question_image_container">
-                    <img id="js-question-image" class="quiz__question_image hide" alt="Quiz Bild" width="1536" height="1024" />
+                <div class="quiz__question-image-container">
+                    <img id="js-question-image" class="quiz__question-image u-hidden" alt="Quiz Bild" width="1536" height="1024" />
                 </div>
 
                 <div class="quiz__answer">
-                    <button class="js-answer-btn btn btn--quiz_answer" type="button"></button>
-                    <button class="js-answer-btn btn btn--quiz_answer" type="button"></button>
-                    <button class="js-answer-btn btn btn--quiz_answer" type="button"></button>
-                    <button class="js-answer-btn btn btn--quiz_answer" type="button"></button>
+                    <button class="js-answer-btn btn btn--quiz-answer" type="button"></button>
+                    <button class="js-answer-btn btn btn--quiz-answer" type="button"></button>
+                    <button class="js-answer-btn btn btn--quiz-answer" type="button"></button>
+                    <button class="js-answer-btn btn btn--quiz-answer" type="button"></button>
                 </div>
 
-                <div class="js-quiz-feedback-container quiz__feedback_container hide">
-                    <svg id="js-feedback-icon-incorrect" class="quiz__feedback_icon hide" viewBox="0 0 24 24" fill="var(--mandarin-color)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <div class="js-quiz-feedback-container quiz__feedback-container u-hidden">
+                    <svg id="js-feedback-icon-incorrect" class="quiz__feedback-icon u-hidden" viewBox="0 0 24 24" fill="var(--mandarin-color)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 7.425 2.717-2.718c.146-.146.339-.219.531-.219.404 0 .75.325.75.75 0 .193-.073.384-.219.531l-2.717 2.717 2.727 2.728c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.384-.073-.53-.219l-2.729-2.728-2.728 2.728c-.146.146-.338.219-.53.219-.401 0-.751-.323-.751-.75 0-.192.073-.384.22-.531l2.728-2.728-2.722-2.722c-.146-.147-.219-.338-.219-.531 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                     </svg>
-                    <svg id="js-feedback-icon-correct" class="quiz__feedback_icon hide" viewBox="0 0 24 24" fill="var(--greensea-color)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg id="js-feedback-icon-correct" class="quiz__feedback-icon u-hidden" viewBox="0 0 24 24" fill="var(--greensea-color)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm0 1.5c-4.69 0-8.498 3.807-8.498 8.497s3.808 8.498 8.498 8.498 8.497-3.808 8.497-8.498-3.807-8.497-8.497-8.497zm-5.049 8.886 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"/>
                     </svg>
-                    <p id="js-feedback" class="quiz__feedback hide"></p>
+                    <p id="js-feedback" class="quiz__feedback u-hidden"></p>
                 </div>
 
                 <footer class="quiz__footer">
-                    <button id="js-next-btn" class="btn btn--next hide" type="button">Weiter</button>
+                    <button id="js-next-btn" class="btn btn--next u-hidden" type="button">Weiter</button>
                 </footer>
-                <div id="js-background-knowledge" class="background-knowledge hide">
+                <div id="js-background-knowledge" class="background-knowledge u-hidden">
                     <div class="background-knowledge__content"></div>
                 </div>
                 <button id="js-question-feedback-open" class="account-action-link quiz-question-feedback-link" type="button"><small>Feedback</small></button>
             </div>
         </section>
 
-        <dialog id="js-question-feedback-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-question-feedback-title">
+        <dialog id="js-question-feedback-modal" class="modal u-hidden" role="dialog" aria-modal="true" aria-labelledby="js-question-feedback-title">
             <div class="modal__content quiz-question-feedback-modal">
                 <div class="modal__close">
-                    <button id="js-question-feedback-close" class="modal__close_btn" type="button" aria-label="Feedback schließen">
-                        <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <button id="js-question-feedback-close" class="modal__close-button icon-button" type="button" aria-label="Feedback schließen">
+                        <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                         </svg>
                     </button>
@@ -181,11 +181,11 @@
         </dialog>
 
         <!-- Ergebnis-Modal -->
-        <dialog id="js-result-modal" class="modal hide" role="dialog" aria-modal="true">
-            <div class="modal__content">
+        <dialog id="js-result-modal" class="modal u-hidden" role="dialog" aria-modal="true">
+            <div class="modal__content modal__content--result">
                 <div class="modal__close">
-                    <button id="js-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
-                        <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <button id="js-modal-close" class="modal__close-button icon-button" type="button" aria-label="Modal schließen">
+                        <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                         </svg>
                     </button>
@@ -205,11 +205,11 @@
         </p>
     </footer>
 
-    <dialog id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+    <dialog id="js-footer-modal" class="modal u-hidden" role="dialog" aria-modal="true">
         <div class="modal__content">
             <div class="modal__close">
-                <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
-                    <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <button id="js-footer-modal-close" class="modal__close-button icon-button" type="button" aria-label="Modal schließen">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                     </svg>
                 </button>
@@ -218,7 +218,7 @@
         </div>
     </dialog>
 
-    <dialog id="js-consent-banner" class="modal hide" role="dialog" aria-live="polite" aria-modal="true">
+    <dialog id="js-consent-banner" class="modal u-hidden" role="dialog" aria-live="polite" aria-modal="true">
         <div class="modal__content">
             <h2>Cookie-Einstellungen</h2>
             <p>Wir nutzen technisch notwendige Speicherung fuer Login und Cookie-Auswahl. Google Analytics laden wir nur mit deiner Zustimmung.</p>

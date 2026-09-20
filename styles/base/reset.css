@@ -27,3 +27,7 @@ img {
     max-width: 100%;
 }
 
+:focus-visible {
+    outline: 3px solid var(--belizehole-color);
+    outline-offset: 3px;
+}

@@ -1,16 +1,27 @@
-.lp__faq_list {
+.landing-page__faq-list {
     display: grid;
     gap: var(--gap-small);
 }
 
-.lp__faq_list details {
+.landing-page__faq-list details {
     margin-bottom: 0;
 }
 
 .seo-answer__content {
     display: grid;
     gap: var(--gap-small);
+    overflow-wrap: anywhere;
     padding-top: var(--gap-small);
+}
+
+.seo-answer__image {
+    aspect-ratio: 3 / 2;
+    display: block;
+    height: auto;
+    max-height: 24rem;
+    max-width: 100%;
+    object-fit: contain;
+    width: min(100%, 36rem);
 }
 
 .seo-answer {

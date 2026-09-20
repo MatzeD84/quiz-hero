@@ -1,9 +1,3 @@
-/* === Footer === */
-
-.admin-hidden {
-    display: none !important;
-}
-
 @media (max-width: 760px) {
     .admin-shell {
         border-radius: var(--radius-soft);
@@ -79,6 +73,33 @@
     }
 }
 
+@media (max-width: 768px) {
+    button,
+    .site-account-nav__link {
+        min-height: 44px;
+    }
+
+    .admin-list,
+    .admin-media-grid {
+        max-height: 38vh;
+        overflow-y: auto;
+    }
+
+    .admin-form .admin-actions {
+        background: var(--clouds-color);
+        bottom: 0;
+        padding: 0.75rem 0;
+        position: sticky;
+    }
+
+    .admin-status {
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 12;
+    }
+}
+
 @media (max-width: 430px) {
     .admin-toolbar {
         align-items: flex-start;
@@ -88,5 +109,15 @@
     .admin-tabs {
         font-size: 0.9rem;
         grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
     }
 }

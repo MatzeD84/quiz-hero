@@ -4,7 +4,7 @@
     top: 0;
 }
 
-.quiz__abort_btn {
+.quiz__abort-button {
     appearance: none;
     display: grid;
     place-items: center;
@@ -15,18 +15,18 @@
     border: none;
 }
 
-.quiz__abort_svg {
+.icon-button__icon {
     width: 24px;
     height: 24px;
     fill: var(--dark-gray-color);
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .quiz__abort_btn:hover {
+    .quiz__abort-button:hover {
         background-color: var(--mandarin-color);
     }
 
-    .quiz__abort_btn:hover .quiz__abort_svg {
+    .quiz__abort-button:hover .icon-button__icon {
         fill: var(--clouds-color);
         transition: var(--transition-fade);
     }

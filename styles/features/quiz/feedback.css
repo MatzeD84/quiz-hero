@@ -1,4 +1,4 @@
-.quiz__feedback_container {
+.quiz__feedback-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,7 +6,7 @@
     gap: 0.25rem;
 }
 
-.quiz__feedback_icon {
+.quiz__feedback-icon {
     height: 24px;
     width: 24px;
 }

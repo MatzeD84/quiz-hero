@@ -11,11 +11,11 @@
 </head>
 <body>
     <main class="container login-page">
-        <header class="main__header">
-            <a class="main__logo-link" href="index.html" title="Zur Startseite">
-                <img class="main_image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
+        <header class="main-header">
+            <a class="main-header__logo-link" href="index.html" title="Zur Startseite">
+                <img class="main-header__image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
             </a>
-            <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
+            <h1 class="main-header__headline" tabindex="-1">Quiz-Hero</h1>
         </header>
 
         <section class="login-shell" aria-live="polite">
@@ -42,12 +42,12 @@
                     <button class="btn btn--modal login-panel__submit" type="submit">Einloggen</button>
                     <div class="login-panel__secondary-actions">
                         <button class="account-action-link login-shell__forgot js-login-tab" type="button" data-login-view="reset-request">Passwort vergessen?</button>
-                        <button id="js-login-dev" class="account-action-link login-panel__dev admin-hidden" type="button">Lokal testen</button>
+                        <button id="js-login-dev" class="account-action-link login-panel__dev u-hidden" type="button">Lokal testen</button>
                     </div>
                 </div>
             </form>
 
-            <form id="js-register-form" class="user-panel__form login-panel login-panel--register js-login-panel admin-hidden" data-login-panel="register">
+            <form id="js-register-form" class="user-panel__form login-panel login-panel--register js-login-panel u-hidden" data-login-panel="register">
                 <label>
                     <span>Username*</span>
                     <input id="js-register-username" type="text" maxlength="25" autocomplete="username" required>
@@ -70,7 +70,7 @@
                 <button class="btn btn--modal login-panel__submit" type="submit">Registrieren</button>
             </form>
 
-            <form id="js-reset-request-form" class="user-panel__form login-panel login-panel--reset js-login-panel admin-hidden" data-login-panel="reset-request">
+            <form id="js-reset-request-form" class="user-panel__form login-panel login-panel--reset js-login-panel u-hidden" data-login-panel="reset-request">
                 <div class="login-panel__intro">
                     <h2>Passwort zurücksetzen</h2>
                     <p>Du bekommst einen Link, wenn die E-Mail bekannt ist.</p>
@@ -83,7 +83,7 @@
                 <button class="account-action-link js-login-tab" type="button" data-login-view="login">Zurück zum Login</button>
             </form>
 
-            <form id="js-reset-form" class="user-panel__form login-panel login-panel--reset js-login-panel admin-hidden" data-login-panel="reset">
+            <form id="js-reset-form" class="user-panel__form login-panel login-panel--reset js-login-panel u-hidden" data-login-panel="reset">
                 <input id="js-reset-token" type="hidden">
                 <label>
                     <span>Neues Passwort*</span>
@@ -117,11 +117,11 @@
         </p>
     </footer>
 
-    <dialog id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+    <dialog id="js-footer-modal" class="modal u-hidden" role="dialog" aria-modal="true">
         <div class="modal__content">
             <div class="modal__close">
-                <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schließen">
-                    <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <button id="js-footer-modal-close" class="modal__close-button icon-button" type="button" aria-label="Modal schließen">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                     </svg>
                 </button>

@@ -22,7 +22,7 @@ const resolveSiteAssetUrl = url => {
 
 export const applyAccountHeaderLogo = (user = readStoredUser()) => {
     const profileImageUrl = user?.profileImageUrl || '';
-    document.querySelectorAll('.main__logo-link .main_image, .main__logo-link .quiz__headerlogo_image').forEach(image => {
+    document.querySelectorAll('.main-header__logo-link .main-header__image, .main-header__logo-link .quiz__header-logo-image').forEach(image => {
         if (!image.dataset.defaultLogoSrc) {
             image.dataset.defaultLogoSrc = image.getAttribute('src') || '';
             image.dataset.defaultLogoAlt = image.getAttribute('alt') || 'Zur Startseite';

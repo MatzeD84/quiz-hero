@@ -10,7 +10,7 @@
     background-color: color-mix(in srgb, var(--dark-color) 70%, transparent);
 }
 
-.modal .quiz__abort_svg {
+.modal__close-button .icon-button__icon {
     fill: currentColor;
 }
 
@@ -44,7 +44,7 @@
     top: 0.75rem;
 }
 
-.modal__close_btn {
+.modal__close-button {
     appearance: none;
     align-items: center;
     background-color: transparent;
@@ -60,35 +60,35 @@
     transition: var(--transition-fade);
 }
 
-.modal__close_btn:focus-visible {
+.modal__close-button:focus-visible {
     background-color: var(--mandarin-color);
     color: var(--clouds-color);
 }
 
-.modal__close_btn:focus-visible .quiz__abort_svg {
+.modal__close-button:focus-visible .icon-button__icon {
     fill: var(--clouds-color);
 }
 
-.modal__result_extra_headline {
+.modal__result-extra-headline {
     margin-bottom: var(--gap-small);
 }
 
-.modal__result_extra_content {
+.modal__result-extra-content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--gap-small);
 }
 
-.modal__result_extra_content_medium {
+.modal__result-extra-content--medium {
     color: var(--carrot-color);
 }
 
-.modal__result_extra_content_hero {
+.modal__result-extra-content--hero {
     color: var(--amethyst-color);
 }
 
-#js-result-modal .modal__content {
+.modal__content--result {
     max-width: 520px;
 }
 
@@ -228,12 +228,12 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .modal__close_btn:hover {
+    .modal__close-button:hover {
         background-color: var(--mandarin-color);
         color: var(--clouds-color);
     }
 
-    .modal__close_btn:hover .quiz__abort_svg {
+    .modal__close-button:hover .icon-button__icon {
         fill: var(--clouds-color);
     }
 
@@ -246,20 +246,7 @@
 dialog.modal { margin: 0; padding: 0; border: 0; max-width: 100%; max-height: 100%; background: transparent; color: var(--dark-color); }
 dialog.modal::backdrop { background: rgb(0 0 0 / 65%); }
 dialog.modal:not([open]) { display: none; }
-:focus-visible { outline: 3px solid var(--belizehole-color); outline-offset: 3px; }
 body:has(dialog[open]) { overflow: hidden; }
-.footer a { color: var(--belizehole-color); }
-.result-review img, .seo-question-image { max-width: 100%; max-height: 24rem; object-fit: contain; }
-.seo-question-image { display: block; width: min(100%, 36rem); height: auto; aspect-ratio: 3 / 2; }
-.result-review { overflow-wrap: anywhere; }
-.seo-answer__content { overflow-wrap: anywhere; }
 @media (max-width: 768px) {
- .admin-list, .admin-media-grid { max-height: 38vh; overflow-y: auto; }
- .admin-form .admin-actions { position: sticky; bottom: 0; background: var(--clouds-color); padding: .75rem 0; }
- .admin-status { position: sticky; top: 0; z-index: 12; background: white; }
  .modal__content { width: calc(100% - 2rem); margin: 1rem auto; box-sizing: border-box; }
- button, .site-account-nav a { min-height: 44px; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
-
-.admin-form fieldset { min-width: 0; display: grid; gap: .75rem; border: 1px solid #777; padding: .75rem; }

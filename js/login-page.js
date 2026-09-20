@@ -37,7 +37,7 @@ const showView = (view, options = {}) => {
         setStatus('');
     }
     elements.panels.forEach(panel => {
-        panel.classList.toggle('admin-hidden', panel.dataset.loginPanel !== view);
+        panel.classList.toggle('u-hidden', panel.dataset.loginPanel !== view);
     });
     elements.tabs.forEach(tab => {
         const isActive = tab.dataset.loginView === view;
@@ -84,7 +84,7 @@ elements.tabs.forEach(tab => {
     tab.addEventListener('click', () => showView(tab.dataset.loginView, { clearStatus: true }));
 });
 
-elements.devLogin?.classList.toggle('admin-hidden', !CONFIG.devMode);
+elements.devLogin?.classList.toggle('u-hidden', !CONFIG.devMode);
 
 elements.loginForm?.addEventListener('submit', async event => {
     event.preventDefault();

@@ -136,11 +136,11 @@ const buildPageShell = ({ title, description, canonicalPath, body, extraHead = '
             </small>
         </p>
     </footer>
-    <dialog id="js-footer-modal" class="modal hide" role="dialog" aria-modal="true">
+    <dialog id="js-footer-modal" class="modal u-hidden" role="dialog" aria-modal="true">
         <div class="modal__content">
             <div class="modal__close">
-                <button id="js-footer-modal-close" class="modal__close_btn" type="button" aria-label="Modal schliessen">
-                    <svg class="quiz__abort_svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <button id="js-footer-modal-close" class="modal__close-button icon-button" type="button" aria-label="Modal schliessen">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                     </svg>
                 </button>
@@ -215,7 +215,7 @@ const buildGeneralDescriptionSection = () => {
     ];
 
     return `
-        <section class="lp__general_description">
+        <section class="landing-page__general-description">
             <h2>Über Quiz-Hero</h2>
             ${paragraphs.map(text => `<p>${escapeHtml(text)}</p>`).join('')}
         </section>
@@ -260,7 +260,7 @@ const buildFaqSection = questions => {
         return '<p>Aktuell sind keine Fragen verfuegbar.</p>';
     }
 
-    return `<div class="lp__faq_list">
+    return `<div class="landing-page__faq-list">
         ${questions.map((question, index) => {
             const title = toText(question.question).trim();
             const answers = Array.isArray(question.answers) ? question.answers : [];
@@ -286,7 +286,7 @@ const buildFaqSection = questions => {
                 <details id="${questionAnchor(question)}">
                     <summary>${escapeHtml(title || `Frage ${index + 1}`)}</summary>
                     <div class="seo-answer__content">
-                        ${safeContentUrl(question.imageUrl) ? '<figure><img class="seo-question-image" src="' + escapeHtml(safeContentUrl(question.imageUrl)) + '" alt="' + escapeHtml(question.imageAlt || 'Abbildung zur Frage: ' + title) + '" width="1536" height="1024" loading="lazy"><figcaption>KI-generierte Abbildung zur Frage</figcaption></figure>' : ''}
+                        ${safeContentUrl(question.imageUrl) ? '<figure><img class="seo-answer__image" src="' + escapeHtml(safeContentUrl(question.imageUrl)) + '" alt="' + escapeHtml(question.imageAlt || 'Abbildung zur Frage: ' + title) + '" width="1536" height="1024" loading="lazy"><figcaption>KI-generierte Abbildung zur Frage</figcaption></figure>' : ''}
                         ${answerHtml}
                         ${hintHtml}
                         ${safeContentUrl(question.sourceUrl || question.meta?.sourceUrl) ? '<p>Quelle: <a rel="noopener noreferrer" href="' + escapeHtml(safeContentUrl(question.sourceUrl || question.meta?.sourceUrl)) + '">' + escapeHtml(question.sourceUrl || question.meta?.sourceUrl) + '</a></p>' : ''}
@@ -384,30 +384,30 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
     });
 
     const body = `
-        <section id="js-category-container" class="lp main-section">
-            <header class="main__header">
-                <a class="main__logo-link" href="../" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
+        <section id="js-category-container" class="landing-page main-section">
+            <header class="main-header">
+                <a class="main-header__logo-link" href="../" title="Zur Startseite">
+                    <img class="main-header__image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
-                <h1 class="main_headline" tabindex="-1">${escapeHtml(category.title)}-Quiz: ${questionCount} Fragen und Antworten</h1>
+                <h1 class="main-header__headline" tabindex="-1">${escapeHtml(category.title)}-Quiz: ${questionCount} Fragen und Antworten</h1>
             </header>
             ${breadcrumbHtml}
-            <section class="lp__category_grid container_small">
+            <section class="landing-page__category-grid container--small">
                 <h2>${escapeHtml(category.title)}</h2>
                 <div class="category" aria-live="polite">
                     ${cardHtml}
                 </div>
             </section>
-            <section class="lp__category_description">
+            <section class="landing-page__category-description">
                 <h2>Über dieses Quiz</h2>
                 <p>${escapeHtml(seoDescription)}</p>
             </section>
-            <section class="lp__quiz_start container_small">
+            <section class="landing-page__quiz-start container--small">
                 <h2>Quiz starten</h2>
                 <a class="btn" href="../?category=${encodeURIComponent(category.id)}">Jetzt spielen</a>
             </section>
             ${relatedCategories.length ? `
-            <section class="lp__related_categories">
+            <section class="landing-page__related-categories">
                 <h2>Auch interessant</h2>
                 <div class="category" aria-live="polite">
                     ${relatedCategories.map(related => buildCategoryCard({
@@ -419,7 +419,7 @@ const buildCategoryPage = ({ category, questionCount, relatedCategories, seoDesc
             ` : ''}
             ${buildGeneralDescriptionSection()}
             ${buildFurtherReading(category)}
-            <section class="lp__faq_section">
+            <section class="landing-page__faq-section">
                 <h2>Alle Fragen und Antworten</h2>
                 ${buildFaqSection(category.questions || [])}
             </section>
@@ -459,15 +459,15 @@ const buildIndexPage = categories => {
         .join('');
 
     const body = `
-        <section id="js-category-container" class="lp main-section">
-            <header class="main__header">
-                <a class="main__logo-link" href="../" title="Zur Startseite">
-                    <img class="main_image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
+        <section id="js-category-container" class="landing-page main-section">
+            <header class="main-header">
+                <a class="main-header__logo-link" href="../" title="Zur Startseite">
+                    <img class="main-header__image" src="../images/website/avatar/logo.png" alt="Zur Startseite" width="1024" height="1024" loading="eager">
                 </a>
-                <h1 class="main_headline" tabindex="-1">Quiz-Hero</h1>
+                <h1 class="main-header__headline" tabindex="-1">Quiz-Hero</h1>
             </header>
             ${breadcrumbHtml}
-            <section class="lp__category_grid">
+            <section class="landing-page__category-grid">
                 <h2>Städte, Regionen und Landschaften</h2>
                 <div class="category" aria-live="polite">
                     ${items}

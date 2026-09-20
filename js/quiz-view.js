@@ -69,7 +69,7 @@ export class QuizView {
 
     showAccountView(view) {
         this.elements.userPanels.forEach(panel => {
-            panel.classList.toggle('admin-hidden', panel.dataset.accountPanel !== view);
+            panel.classList.toggle('u-hidden', panel.dataset.accountPanel !== view);
         });
         this.elements.userTabs.forEach(tab => {
             tab.classList.toggle('btn--disabled', tab.dataset.accountView === view);
@@ -183,22 +183,22 @@ export class QuizView {
         });
 
         if (tags.length === 0 && this.elements.tagContainer) {
-            this.elements.tagContainer.classList.add('hide');
+            this.elements.tagContainer.classList.add('u-hidden');
         } else {
-            this.elements.tagContainer?.classList.remove('hide');
+            this.elements.tagContainer?.classList.remove('u-hidden');
         }
     }
 
     renderSelectionLabel(labelText) {
         if (!this.elements.selectionLabel) return;
         this.elements.selectionLabel.textContent = labelText || '';
-        this.elements.selectionLabel.classList.toggle('hide', !labelText);
+        this.elements.selectionLabel.classList.toggle('u-hidden', !labelText);
     }
 
     renderSelectionDetails({ description, icon, label }) {
         if (this.elements.selectionDescription) {
             this.elements.selectionDescription.textContent = description || '';
-            this.elements.selectionDescription.classList.toggle('hide', !description);
+            this.elements.selectionDescription.classList.toggle('u-hidden', !description);
         }
         if (this.elements.selectionIcon) {
             if (icon) {
@@ -207,11 +207,11 @@ export class QuizView {
                 const altText = description ? `${labelText} - ${description}` : labelText;
                 this.elements.selectionIcon.alt = altText;
                 this.elements.selectionIcon.loading = 'lazy';
-                this.elements.selectionIcon.classList.remove('hide');
+                this.elements.selectionIcon.classList.remove('u-hidden');
             } else {
                 this.elements.selectionIcon.src = '';
                 this.elements.selectionIcon.alt = '';
-                this.elements.selectionIcon.classList.add('hide');
+                this.elements.selectionIcon.classList.add('u-hidden');
             }
         }
     }
@@ -219,12 +219,12 @@ export class QuizView {
     renderQuizSelectionLabel(labelText) {
         if (!this.elements.quizSelectionLabel) return;
         this.elements.quizSelectionLabel.textContent = labelText || '';
-        this.elements.quizSelectionLabel.classList.remove('hide');
+        this.elements.quizSelectionLabel.classList.remove('u-hidden');
     }
 
     renderUser(user) {
         if (!this.elements.userPanel) return;
-        this.elements.userPanel.classList.add('admin-hidden');
+        this.elements.userPanel.classList.add('u-hidden');
         this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
         if (this.elements.accountEntryLink) {
             this.elements.accountEntryLink.href = user ? 'account.html' : 'login.html';
@@ -236,6 +236,7 @@ export class QuizView {
             if (user) {
                 if (user.profileImageUrl) {
                     const image = document.createElement('img');
+                    image.className = 'site-account-nav__image';
                     image.src = user.profileImageUrl;
                     image.alt = `${user.name || 'Account'} Profilbild`;
                     image.loading = 'lazy';
@@ -243,21 +244,24 @@ export class QuizView {
                 }
 
                 const label = document.createElement('span');
+                label.className = 'site-account-nav__label';
                 label.textContent = 'Heldenseite';
                 this.elements.accountEntryLink.appendChild(label);
             } else {
                 const image = document.createElement('img');
+                image.className = 'site-account-nav__image';
                 image.src = 'images/website/login-avtar.png';
                 image.alt = '';
                 image.loading = 'lazy';
 
                 const label = document.createElement('span');
+                label.className = 'site-account-nav__label';
                 label.textContent = 'Login';
                 this.elements.accountEntryLink.append(image, label);
             }
         }
         this.elements.userTabs.forEach(tab => {
-            tab.classList.toggle('admin-hidden', Boolean(user));
+            tab.classList.toggle('u-hidden', Boolean(user));
         });
         if (this.elements.userAccountNameInput) {
             this.elements.userAccountNameInput.value = user?.username || user?.name || '';
@@ -401,25 +405,25 @@ export class QuizView {
             applyImageWatermark(questionImageContainer, {
                 label: 'KI generiert'
             });
-            questionImage.classList.add('hide');
+            questionImage.classList.add('u-hidden');
             questionImage.src = '';
             const loader = new Image();
             loader.onload = () => {
                 if (imageRequest !== this.imageRequest) return;
                 questionImage.src = imageUrl;
-                questionImage.classList.remove('hide');
+                questionImage.classList.remove('u-hidden');
             };
             loader.onerror = () => {
                 if (imageRequest !== this.imageRequest) return;
                 clearImageWatermark(questionImageContainer);
-                questionImage.classList.add('hide');
+                questionImage.classList.add('u-hidden');
                 this.renderBackgroundKnowledge('Das Bild konnte nicht geladen werden. Du kannst diese Frage mit Weiter überspringen.');
-                this.elements.nextButton.classList.remove('hide');
+                this.elements.nextButton.classList.remove('u-hidden');
             };
             loader.src = imageUrl;
         } else {
             clearImageWatermark(questionImageContainer);
-            questionImage.classList.add('hide');
+            questionImage.classList.add('u-hidden');
             questionImage.src = '';
         }
 
@@ -427,16 +431,16 @@ export class QuizView {
             btn.blur();
             btn.textContent = answers[idx] ?? '';
             btn.disabled = false;
-            btn.classList.remove('correct', 'incorrect');
+            btn.classList.remove('btn--answer-correct', 'btn--answer-incorrect');
         });
 
         this.renderBackgroundKnowledge('');
         this.hideElement(feedbackContainer);
         feedbackElement.textContent = '';
-        feedbackElement.classList.add('hide');
-        nextButton.classList.add('hide');
-        this.elements.feedbackIconCorrect.classList.add('hide');
-        this.elements.feedbackIconIncorrect.classList.add('hide');
+        feedbackElement.classList.add('u-hidden');
+        nextButton.classList.add('u-hidden');
+        this.elements.feedbackIconCorrect.classList.add('u-hidden');
+        this.elements.feedbackIconIncorrect.classList.add('u-hidden');
 
         this.elements.currentQuestion.textContent = `${meta.index}`;
         this.elements.totalQuestions.textContent = `/${meta.total}`;
@@ -452,24 +456,24 @@ export class QuizView {
 
         if (text) {
             contentElement.textContent = text;
-            this.elements.backgroundKnowledge.classList.remove('hide');
+            this.elements.backgroundKnowledge.classList.remove('u-hidden');
         } else {
             contentElement.textContent = '';
-            this.elements.backgroundKnowledge.classList.add('hide');
+            this.elements.backgroundKnowledge.classList.add('u-hidden');
         }
     }
 
     renderFeedback(message, { isCorrect }) {
         this.showElement(this.elements.feedbackContainer);
         this.elements.feedbackElement.textContent = message;
-        this.elements.feedbackElement.classList.remove('hide');
+        this.elements.feedbackElement.classList.remove('u-hidden');
 
         if (isCorrect) {
-            this.elements.feedbackIconCorrect.classList.remove('hide');
-            this.elements.feedbackIconIncorrect.classList.add('hide');
+            this.elements.feedbackIconCorrect.classList.remove('u-hidden');
+            this.elements.feedbackIconIncorrect.classList.add('u-hidden');
         } else {
-            this.elements.feedbackIconIncorrect.classList.remove('hide');
-            this.elements.feedbackIconCorrect.classList.add('hide');
+            this.elements.feedbackIconIncorrect.classList.remove('u-hidden');
+            this.elements.feedbackIconCorrect.classList.add('u-hidden');
         }
     }
 
@@ -477,7 +481,7 @@ export class QuizView {
         this.elements.answerButtons.forEach(btn => {
             btn.disabled = true;
         });
-        this.elements.nextButton.classList.remove('hide');
+        this.elements.nextButton.classList.remove('u-hidden');
     }
 
     updateScore(score, { isCorrect } = {}) {
@@ -627,7 +631,7 @@ export class QuizView {
                 const summary = document.createElement('summary');
                 summary.textContent = (question.answeredCorrectly ? 'Richtig: ' : 'Zum Wiederholen: ') + question.question;
                 detail.append(summary);
-                if (question.imageUrl) { const image = document.createElement('img'); image.src = question.imageUrl; image.alt = question.imageAlt || 'Abbildung zur Frage'; image.loading = 'lazy'; detail.append(image); }
+                if (question.imageUrl) { const image = document.createElement('img'); image.className = 'result-review__image'; image.src = question.imageUrl; image.alt = question.imageAlt || 'Abbildung zur Frage'; image.loading = 'lazy'; detail.append(image); }
                 const answer = document.createElement('p'); answer.textContent = 'Richtige Antwort: ' + question.answers[question.correct];
                 const explanation = document.createElement('p'); explanation.textContent = question.backgroundKnowledge || '';
                 detail.append(answer, explanation); reviewSection.append(detail);
@@ -681,14 +685,14 @@ export class QuizView {
     highlightCorrectAnswer(index) {
         const button = this.elements.answerButtons[index];
         if (button) {
-            button.classList.add('correct');
+            button.classList.add('btn--answer-correct');
         }
     }
 
     markAnswerButton(index, isCorrect) {
         const button = this.elements.answerButtons[index];
         if (button) {
-            button.classList.add(isCorrect ? 'correct' : 'incorrect');
+            button.classList.add(isCorrect ? 'btn--answer-correct' : 'btn--answer-incorrect');
         }
     }
 
@@ -700,11 +704,11 @@ export class QuizView {
     }
 
     showElement(element) {
-        if (element) element.classList.remove('hide');
+        if (element) element.classList.remove('u-hidden');
     }
 
     hideElement(element) {
-        if (element) element.classList.add('hide');
+        if (element) element.classList.add('u-hidden');
     }
 
     showLoadingMessage(message) {

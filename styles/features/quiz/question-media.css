@@ -1,4 +1,4 @@
-.quiz__question_image_container {
+.quiz__question-image-container {
     position: relative;
     margin: 0 auto;
     margin-bottom: 1rem;
@@ -7,7 +7,7 @@
     width: fit-content;
 }
 
-.quiz__question_image {
+.quiz__question-image {
     display: block;
     inline-size: min(100%, 450px);
     max-inline-size: 100%;
@@ -17,7 +17,7 @@
     object-fit: contain;
 }
 
-.quiz__question_image_container[data-image-watermark]::after {
+.quiz__question-image-container[data-image-watermark]::after {
     content: attr(data-image-watermark);
     position: absolute;
     right: var(--gap-small);

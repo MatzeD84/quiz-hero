@@ -1,6 +1,6 @@
 /* === Layout === */
 
-.main__header {
+.main-header {
     display: flex;
     gap: var(--gap-small);
     justify-content: center;
@@ -8,39 +8,39 @@
     margin: 1rem 0;
 }
 
-.main__logo-link {
+.main-header__logo-link {
     display: inline-flex;
     text-decoration: none;
     color: inherit;
 }
 
-.main__logo-link:visited,
-.main__logo-link:hover,
-.main__logo-link:focus {
+.main-header__logo-link:visited,
+.main-header__logo-link:hover,
+.main-header__logo-link:focus {
     text-decoration: none;
     color: inherit;
 }
 
 @media (max-width: 576px) {
-    .main__header {
+    .main-header {
         margin: var(--gap-small) 0;
     }
 }
 
-.main_headline {
+.main-header__headline {
     margin: var(--gap-small) 0;
     font-size: 2.5rem;
     font-weight: 350;
 }
 
 @media (max-width: 576px) {
-    .main_headline {
+    .main-header__headline {
         margin: var(--gap-small) 0;
         font-size: 2rem;
     }
 }
 
-.main_image {
+.main-header__image {
     width: 75px;
     height: 75px;
     object-fit: contain;
@@ -48,13 +48,13 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .main_image:hover {
+    .main-header__image:hover {
         filter: var(--filter-sepia);
     }
 }
 
 @media (max-width: 576px) {
-    .main_image {
+    .main-header__image {
         width: 40px;
         height: 40px;
     }

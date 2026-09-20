@@ -707,7 +707,21 @@ Die GitHub Action nutzt ausschliesslich den geschuetzten Export unter `/api/inde
 5) Nach der Asset-Versionierung lehnt der Build Inline-Styles ab, hasht alle Inline-Skripte und aktiviert die vollständige CSP ohne `unsafe-inline`.
 6) Der Nachtest prueft Status, Canonical und Fragenanzahl auf Produktion.
 
-Adminaenderungen aktualisieren die Datenbank sofort, die statischen Seiten erst beim naechsten manuell gestarteten Workflow. JSON-Vorschauen erfordern explizit `SEO_SOURCE=json` und sind in CI gesperrt. Die Tags fuer verwandte Seiten kommen aus den Fragen, nicht aus `data/tags.json`. Details zu Tests und erstem Deployment: [Umsetzung 1-6](UMSETZUNG-1-6.md).
+Adminaenderungen aktualisieren die Datenbank sofort, die statischen Seiten erst beim naechsten manuell gestarteten Workflow. JSON-Vorschauen erfordern explizit `SEO_SOURCE=json` und sind in CI gesperrt. Die Tags fuer verwandte Seiten kommen aus den Fragen, nicht aus `data/tags.json`.
+
+## CSS-Konvention: BEM
+
+Das Styling verwendet verbindlich BEM: `.block`, `.block__element` und `.block--modifier`. Namen bestehen aus Kleinbuchstaben und Bindestrichen; einzelne Unterstriche sind nicht erlaubt. JavaScript-Hooks (`.js-*`) enthalten kein Styling. Globale Hilfsklassen erhalten das Präfix `.u-*` und sind nur für echte, blockübergreifende Ausnahmen vorgesehen. ID-Selektoren werden im CSS nicht verwendet. Abweichungen sind nur zulässig, wenn eine BEM-Abbildung technisch unverhältnismäßig wäre, und müssen direkt an der betreffenden Regel begründet werden.
+
+Vor einem Deploy werden die Quelldateien gebündelt und die Konvention geprüft:
+
+```bash
+node scripts/build-css.js
+node scripts/check-bem.js
+node --test tests/contracts.test.mjs
+```
+
+`styles.css` ist generiert. Änderungen erfolgen ausschließlich in `styles/`.
 
 ## Lokal entwickeln und testen
 Du hast zwei sinnvolle lokale Arbeitsweisen. Ohne Docker testest du schnell Frontend, Styles und den JSON-Fallback. Mit Docker testest du die vollstaendige Anwendung inklusive PHP-API, MySQL, Admin-Bereich, User-Speicherung und Ergebnis-Speicherung.

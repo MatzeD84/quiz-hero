@@ -10,11 +10,11 @@
 </head>
 <body>
     <main class="container admin-shell">
-        <header class="main__header">
-            <a class="main__logo-link" href="../index.html" title="Zur Quiz-Seite">
-                <img class="main_image" src="../images/website/avatar/logo.png" alt="Quiz-Hero" loading="eager">
+        <header class="main-header">
+            <a class="main-header__logo-link" href="../index.html" title="Zur Quiz-Seite">
+                <img class="main-header__image" src="../images/website/avatar/logo.png" alt="Quiz-Hero" loading="eager">
             </a>
-            <h1 class="main_headline" tabindex="-1">Quiz-Hero Admin</h1>
+            <h1 class="main-header__headline" tabindex="-1">Quiz-Hero Admin</h1>
         </header>
 
         <p id="js-admin-status" class="admin-status" role="status" aria-live="polite"></p>
@@ -26,7 +26,7 @@
             <button id="js-admin-login-btn" class="btn btn--modal" type="button">Einloggen</button>
         </section>
 
-        <section id="js-admin-app" class="admin-hidden">
+        <section id="js-admin-app" class="u-hidden">
             <div class="admin-toolbar">
                 <button id="js-admin-refresh" class="btn btn--modal" type="button">Daten neu laden</button>
                 <button id="js-admin-logout" class="account-action-link" type="button">Logout</button>
@@ -104,7 +104,7 @@
                                 <span>JPG, PNG oder WebP bis 6 MB</span>
                                 <input id="js-admin-image-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                             </div>
-                            <div class="admin-image-field__preview admin-hidden" id="js-admin-image-preview-wrap">
+                            <div class="admin-image-field__preview u-hidden" id="js-admin-image-preview-wrap">
                                 <img id="js-admin-image-preview" alt="Bildvorschau" loading="lazy">
                                 <button id="js-admin-image-remove" class="admin-image-field__remove" type="button" aria-label="Bild entfernen">×</button>
                                 <dl class="admin-image-field__meta">
@@ -140,7 +140,7 @@
                 </section>
             </div>
 
-            <div id="js-admin-category-panel" class="admin-panel admin-hidden">
+            <div id="js-admin-category-panel" class="admin-panel u-hidden">
                 <section class="admin-category-editor">
                     <div class="admin-section-heading">
                         <h2>Kategorie anlegen/bearbeiten</h2>
@@ -163,7 +163,7 @@
                                 <span>JPG, PNG oder WebP bis 6 MB</span>
                                 <input id="js-admin-category-image-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                             </div>
-                            <div class="admin-image-field__preview admin-image-field__preview--compact admin-hidden" id="js-admin-category-image-preview-wrap">
+                            <div class="admin-image-field__preview admin-image-field__preview--compact u-hidden" id="js-admin-category-image-preview-wrap">
                                 <img id="js-admin-category-image-preview" alt="Kategorie-Bildvorschau" loading="lazy">
                                 <button id="js-admin-category-image-remove" class="admin-image-field__remove" type="button" aria-label="Kategorie-Bild entfernen">×</button>
                                 <dl class="admin-image-field__meta">
@@ -187,7 +187,7 @@
                 </section>
             </div>
 
-            <div id="js-admin-media-panel" class="admin-media-panel admin-hidden">
+            <div id="js-admin-media-panel" class="admin-media-panel u-hidden">
                 <section class="admin-media-browser">
                     <div class="admin-section-heading">
                         <h2>Mediathek</h2>
@@ -224,12 +224,12 @@
                     <div class="admin-image-field">
                         <h3>Neues Bild hinzufügen</h3>
                         <div id="js-admin-media-dropzone" class="admin-dropzone" role="button" tabindex="0">
-                            <img id="js-admin-media-dropzone-thumb" class="admin-dropzone__thumb admin-hidden" alt="Ausgewähltes Bild" loading="lazy">
+                            <img id="js-admin-media-dropzone-thumb" class="admin-dropzone__thumb u-hidden" alt="Ausgewähltes Bild" loading="lazy">
                             <strong>Bild hier ablegen oder auswählen</strong>
                             <span>JPG, PNG oder WebP bis 6 MB</span>
                             <input id="js-admin-media-file" type="file" aria-label="Datei für diesen Bereich auswählen" accept="image/jpeg,image/png,image/webp">
                         </div>
-                        <div id="js-admin-media-upload-actions" class="admin-upload-actions admin-hidden">
+                        <div id="js-admin-media-upload-actions" class="admin-upload-actions u-hidden">
                             <button id="js-admin-media-upload-btn" class="btn btn--modal" type="button">Hochladen</button>
                             <button id="js-admin-media-clear-btn" class="account-action-link" type="button">Auswahl entfernen</button>
                         </div>
@@ -240,7 +240,7 @@
                     <p class="admin-list__empty">Wähle ein Bild aus.</p>
                 </aside>
             </div>
-            <div id="js-admin-import-panel" class="admin-import-panel admin-hidden">
+            <div id="js-admin-import-panel" class="admin-import-panel u-hidden">
                 <section class="admin-import">
                     <div class="admin-section-heading">
                         <h2>Fragen importieren</h2>
@@ -257,15 +257,15 @@
                         <textarea id="js-admin-import-json" rows="10" spellcheck="false" placeholder="{&quot;questions&quot;:[...]}"></textarea>
                         <button id="js-admin-import-parse" class="account-action-link" type="button">JSON prüfen</button>
                     </div>
-                    <div id="js-admin-import-actions" class="admin-upload-actions admin-hidden">
+                    <div id="js-admin-import-actions" class="admin-upload-actions u-hidden">
                         <button id="js-admin-import-btn" class="btn btn--modal" type="button" disabled>Gültige Fragen importieren</button>
                         <button id="js-admin-import-clear" class="account-action-link" type="button">Auswahl entfernen</button>
                     </div>
-                    <div id="js-admin-import-summary" class="admin-import-summary admin-hidden"></div>
+                    <div id="js-admin-import-summary" class="admin-import-summary u-hidden"></div>
                     <div id="js-admin-import-list" class="admin-import-list"></div>
                 </section>
             </div>
-            <div id="js-admin-users-panel" class="admin-users-panel admin-hidden">
+            <div id="js-admin-users-panel" class="admin-users-panel u-hidden">
                 <section class="admin-users">
                     <div class="admin-section-heading">
                         <h2>Spieler</h2>
@@ -274,7 +274,7 @@
                     <div id="js-admin-users-list" class="admin-users-list"></div>
                 </section>
             </div>
-            <div id="js-admin-feedback-panel" class="admin-feedback-panel admin-hidden">
+            <div id="js-admin-feedback-panel" class="admin-feedback-panel u-hidden">
                 <section class="admin-feedback">
                     <div class="admin-section-heading">
                         <h2>Feedback</h2>
@@ -285,10 +285,10 @@
             </div>
         </section>
     </main>
-    <dialog id="js-admin-import-example-modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="js-admin-import-example-title">
+    <dialog id="js-admin-import-example-modal" class="modal u-hidden" role="dialog" aria-modal="true" aria-labelledby="js-admin-import-example-title">
         <div class="modal__content admin-import-example-modal">
             <div class="modal__close">
-                <button id="js-admin-import-example-close" class="modal__close_btn" type="button" aria-label="Beispieldatensatz schließen">&times;</button>
+                <button id="js-admin-import-example-close" class="modal__close-button icon-button" type="button" aria-label="Beispieldatensatz schließen">&times;</button>
             </div>
             <h2 id="js-admin-import-example-title" class="modal__headline">Beispieldatensatz</h2>
             <p class="admin-import-example-note">Bilder werden beim JSON-Import nicht hochgeladen. Wenn eine Frage ein Bild bekommen soll, füge es nach dem Import im Admin-Bereich direkt an der Frage hinzu.</p>

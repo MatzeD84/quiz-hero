@@ -36,8 +36,8 @@ const setStatus = (message, type = 'info') => {
 
 const render = () => {
     const isLoggedIn = Boolean(currentUser?.id);
-    elements.loggedOut?.classList.toggle('admin-hidden', isLoggedIn);
-    elements.content?.classList.toggle('admin-hidden', !isLoggedIn);
+    elements.loggedOut?.classList.toggle('u-hidden', isLoggedIn);
+    elements.content?.classList.toggle('u-hidden', !isLoggedIn);
     if (!isLoggedIn) {
         applyAccountHeaderLogo(null);
         return;

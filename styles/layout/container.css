@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-.container_small {
+.container--small {
     width: 100%;
     max-width: 470px;
     margin: 0 auto;
