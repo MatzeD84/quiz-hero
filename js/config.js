@@ -137,6 +137,7 @@ export const SELECTORS = {
     currentQuestion: '#js-current-question',
     totalQuestions: '#js-total-questions',
     score: '#js-score',
+    scoreChange: '#js-score-change',
     quizHeadertext: '#js-quiz-headertext',
     selectionLabel: '#js-selection-label',
     selectionDescription: '#js-selection-description',

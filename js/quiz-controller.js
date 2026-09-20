@@ -248,12 +248,12 @@ export class QuizController {
         const feedbackArray = this.pickFeedbackArray(question, isCorrect);
         const message = this.pickRandomEntry(feedbackArray);
         this.view.renderFeedback(message, { isCorrect });
-        this.state.registerAttempt(isCorrect, difficulty);
+        const pointsGained = this.state.registerAttempt(isCorrect, difficulty);
         (question.selectedAnswers ||= []).push(index);
         if (!isCorrect && this.state.attempts < CONFIG.maxAttempts) {
             this.view.disableAnswerButton(index);
         }
-        this.view.updateScore(this.state.score, { isCorrect });
+        this.view.updateScore(this.state.score, { pointsGained });
 
         const backgroundKnowledgeText = (question.backgroundKnowledge || '').trim();
         const shouldRevealBackgroundKnowledge = Boolean(backgroundKnowledgeText) && (isCorrect || this.state.attempts >= CONFIG.maxAttempts);
@@ -340,7 +340,7 @@ export class QuizController {
                     return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
                 })
                 : Promise.resolve('Als Gast bleibt diese Auswertung nur auf dieser Seite.');
-            this.view.showResultModal({ ...stats, review: this.state.currentSequence.map(q => ({ ...q })) }, this.currentUser, {
+            this.view.showResultModal(stats, this.currentUser, {
                 saveStatus,
                 onRetry: () => this.handleRetryRound(context),
                 onOverview: () => this.handleResultOverview()

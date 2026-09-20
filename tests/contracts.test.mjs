@@ -56,8 +56,16 @@ test('form guard retains edits on cancel, restores on discard and guards unload'
 
 test('a solved question cannot award points twice', () => {
     const state = new QuizState(); state.currentSequence = [{ correct: 0 }];
-    state.registerAttempt(true, 'easy'); state.registerAttempt(true, 'easy');
+    assert.equal(state.registerAttempt(true, 'easy'), 2);
+    assert.equal(state.registerAttempt(true, 'easy'), 0);
     assert.equal(state.score, 2); assert.equal(state.attempts, 1);
+});
+
+test('score feedback reports zero for a wrong answer and one point for a correct second try', () => {
+    const state = new QuizState(); state.currentSequence = [{ correct: 0 }];
+    assert.equal(state.registerAttempt(false, 'hero'), 0);
+    assert.equal(state.registerAttempt(true, 'hero'), 1);
+    assert.equal(state.score, 1);
 });
 
 const question = { question: 'Which?', answers: ['A', 'B', 'C', 'D'], correct: 0, active: true };

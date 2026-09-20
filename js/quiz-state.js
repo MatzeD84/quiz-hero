@@ -158,12 +158,15 @@ export class QuizState {
     }
 
     registerAttempt(isCorrect, difficulty) {
-        if (!this.getCurrentQuestion() || this.getCurrentQuestion().answeredCorrectly || this.attempts >= CONFIG.maxAttempts) return;
+        if (!this.getCurrentQuestion() || this.getCurrentQuestion().answeredCorrectly || this.attempts >= CONFIG.maxAttempts) return 0;
+        let pointsGained = 0;
         if (isCorrect) {
             this.getCurrentQuestion().answeredCorrectly = true;
-            this.score += getPointsForDifficulty(difficulty, this.attempts);
+            pointsGained = getPointsForDifficulty(difficulty, this.attempts);
+            this.score += pointsGained;
         }
         this.attempts += 1;
+        return pointsGained;
     }
 
     nextQuestion() {

@@ -39,6 +39,7 @@ export class QuizView {
             currentQuestion: document.querySelector(selectors.currentQuestion),
             totalQuestions: document.querySelector(selectors.totalQuestions),
             score: document.querySelector(selectors.score),
+            scoreChange: document.querySelector(selectors.scoreChange),
             quizHeadertext: document.querySelector(selectors.quizHeadertext),
             selectionLabel: document.querySelector(selectors.selectionLabel),
             selectionDescription: document.querySelector(selectors.selectionDescription),
@@ -482,16 +483,35 @@ export class QuizView {
         this.elements.nextButton.classList.remove('u-hidden');
     }
 
-    updateScore(score, { isCorrect } = {}) {
+    updateScore(score, { pointsGained } = {}) {
         this.elements.score.textContent = `${LABELS.scorePrefix} ${score}`;
-        this.elements.score.classList.remove('quiz__score--correct', 'quiz__score--incorrect');
-        if (typeof isCorrect === 'boolean') {
-            this.elements.score.classList.add(isCorrect ? 'quiz__score--correct' : 'quiz__score--incorrect');
+        const change = this.elements.scoreChange;
+        if (!change) return;
+        const feedback = change.parentElement;
+        if (!Number.isFinite(pointsGained)) {
+            window.clearTimeout(this.scoreChangeTimer);
+            feedback.classList.remove('quiz__score-feedback--show-change');
+            change.classList.remove('quiz__score-change--visible', 'quiz__score-change--gained', 'quiz__score-change--none');
+            change.textContent = '';
+            change.removeAttribute('aria-label');
+            return;
         }
-        this.elements.score.classList.add('quiz__score--animation');
-        window.setTimeout(() => {
-            this.elements.score.classList.remove('quiz__score--animation', 'quiz__score--correct', 'quiz__score--incorrect');
-        }, 800);
+
+        window.clearTimeout(this.scoreChangeTimer);
+        change.classList.remove('quiz__score-change--visible', 'quiz__score-change--gained', 'quiz__score-change--none');
+        change.textContent = pointsGained > 0 ? `+${pointsGained}` : '0';
+        change.setAttribute('aria-label', pointsGained > 0
+            ? `${pointsGained} ${pointsGained === 1 ? 'Punkt' : 'Punkte'} erhalten`
+            : 'Keine Punkte erhalten');
+        change.classList.add(pointsGained > 0 ? 'quiz__score-change--gained' : 'quiz__score-change--none');
+        feedback.classList.remove('quiz__score-feedback--show-change');
+        void change.offsetWidth;
+        feedback.classList.add('quiz__score-feedback--show-change');
+        change.classList.add('quiz__score-change--visible');
+        this.scoreChangeTimer = window.setTimeout(() => {
+            feedback.classList.remove('quiz__score-feedback--show-change');
+            change.classList.remove('quiz__score-change--visible');
+        }, 1000);
     }
 
     updateQuestionCountButtons(maxAvailable) {
@@ -573,7 +593,7 @@ export class QuizView {
         revealStatus(this.elements.questionFeedbackStatus);
     }
 
-    showResultModal({ score, solved, total, maxScore, review = [] }, user = null, actions = {}) {
+    showResultModal({ score, solved, total, maxScore }, user = null, actions = {}) {
         const fillContent = html => {
             if (html) {
                 this.elements.modalContent.innerHTML = html;
@@ -622,20 +642,6 @@ export class QuizView {
             saveStatus.textContent = user ? 'Ergebnis wird gespeichert …' : '';
             this.elements.modalContent.append(saveStatus);
             actions.saveStatus?.then(message => { saveStatus.textContent = message; });
-            const reviewSection = document.createElement('section');
-            reviewSection.className = 'result-review';
-            const title = document.createElement('h3'); title.textContent = 'Dein Lernrückblick'; reviewSection.append(title);
-            for (const question of review) {
-                const detail = document.createElement('details');
-                const summary = document.createElement('summary');
-                summary.textContent = (question.answeredCorrectly ? 'Richtig: ' : 'Zum Wiederholen: ') + question.question;
-                detail.append(summary);
-                if (question.imageUrl) { const image = document.createElement('img'); image.className = 'result-review__image'; image.src = question.imageUrl; image.alt = question.imageAlt || 'Abbildung zur Frage'; image.loading = 'lazy'; detail.append(image); }
-                const answer = document.createElement('p'); answer.textContent = 'Richtige Antwort: ' + question.answers[question.correct];
-                const explanation = document.createElement('p'); explanation.textContent = question.backgroundKnowledge || '';
-                detail.append(answer, explanation); reviewSection.append(detail);
-            }
-            this.elements.modalContent.append(reviewSection);
             openDialog(this.elements.modal);
         };
 
