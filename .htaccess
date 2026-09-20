@@ -35,6 +35,18 @@ RewriteRule ^kategorie/?$ / [L,R=301]
 </IfModule>
 
 <IfModule mod_headers.c>
+    # Some CGI/FastCGI hosts process the root .htaccess again during the PHP
+    # handler pass. Clear inherited copies before setting the canonical values.
+    Header always unset X-Content-Type-Options
+    Header always unset Referrer-Policy
+    Header always unset X-Frame-Options
+    Header always unset Permissions-Policy
+    Header always unset Content-Security-Policy
+    Header always unset Content-Security-Policy-Report-Only
+    Header always unset Cache-Control
+    Header always unset Pragma
+    Header always unset Expires
+
     Header always set X-Content-Type-Options "nosniff"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set X-Frame-Options "DENY"
