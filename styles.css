@@ -236,7 +236,6 @@ a {
 
 .category > div { min-width: 0; }
 .category > div > .category-card { width: 100%; }
-.category > div > a { display: inline-block; margin: .4rem 0; }
 
 /* === styles/components/card-base.css === */
 .category-card,

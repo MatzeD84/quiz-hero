@@ -166,18 +166,6 @@ export class QuizState {
         this.attempts += 1;
     }
 
-    restoreRound({ sequence, index }) {
-        this.currentSequence = cloneDeep(sequence);
-        this.currentIndex = index;
-        this.score = 0;
-        for (const question of this.currentSequence) {
-            const correctAt = question.selectedAnswers.indexOf(question.correct);
-            question.answeredCorrectly = correctAt >= 0;
-            if (correctAt >= 0) this.score += getPointsForDifficulty(question.difficulty, correctAt);
-        }
-        this.attempts = this.getCurrentQuestion().selectedAnswers.length;
-    }
-
     nextQuestion() {
         this.currentIndex += 1;
         this.attempts = 0;

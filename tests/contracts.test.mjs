@@ -8,7 +8,6 @@ import { spawn } from 'node:child_process';
 import { validateCategories, validateTags } from '../js/validators.js';
 import { QuizDataService } from '../js/quiz-data-service.js';
 import { UserService, SESSION_EXPIRED_MESSAGE } from '../js/user-service.js';
-import { saveRound, readRound } from '../js/round-storage.js';
 import { createRequire } from 'node:module';
 import { createFormGuard } from '../js/form-guard.js';
 import { QuizState } from '../js/quiz-state.js';
@@ -63,29 +62,6 @@ test('a solved question cannot award points twice', () => {
 
 const question = { question: 'Which?', answers: ['A', 'B', 'C', 'D'], correct: 0, active: true };
 const category = { id: 'sample', title: 'Sample', enabled: true, badge: { active: false, text: '' }, questions: [question] };
-
-test('saved rounds reject changed questions, duplicate guesses, expired data and invalid indices', () => {
-    let value;
-    const storage = { setItem: (_, data) => value = data, getItem: () => value };
-    const state = { activeCategoryId: 'sample', activeTag: null, currentIndex: 0, currentSequence: [{ ...question, selectedAnswers: [1] }], getCategory: () => category };
-    assert.equal(saveRound(state, storage), true);
-    assert.equal(readRound(state, storage).sequence[0].selectedAnswers[0], 1);
-    const restored = new QuizState();
-    restored.restoreRound({ index: 1, sequence: [{ ...question, difficulty: 'hero', selectedAnswers: [0] }, { ...question, selectedAnswers: [1] }] });
-    assert.equal(restored.score, 5);
-    assert.equal(restored.attempts, 1);
-    assert.equal(restored.currentSequence[0].answeredCorrectly, true);
-    const valid = value;
-    for (const mutate of [saved => saved.index = -1, saved => saved.savedAt = 0, saved => saved.sequence[0].selected = [1,1], saved => saved.sequence[0].signature = 'changed', saved => saved.sequence[0].selected = [0,1]]) {
-        const saved = JSON.parse(valid); mutate(saved); value = JSON.stringify(saved);
-        assert.equal(readRound(state, storage), null);
-    }
-    assert.equal(saveRound(state, { setItem() { throw new Error('disabled'); } }), false);
-    const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'sessionStorage');
-    Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, get() { throw new Error('denied'); } });
-    try { assert.equal(saveRound(state), false); assert.equal(readRound(state), null); }
-    finally { if (descriptor) Object.defineProperty(globalThis, 'sessionStorage', descriptor); else delete globalThis.sessionStorage; }
-});
 
 test('SEO content includes image context, stable citations and escaped editorial fields', () => {
     const { buildCategoryPage } = createRequire(import.meta.url)('../scripts/build-seo-pages.js');

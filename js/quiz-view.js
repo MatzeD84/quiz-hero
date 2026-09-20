@@ -127,10 +127,6 @@ export class QuizView {
 
             const card = document.createElement('div');
             card.append(button);
-            const reading = document.createElement('a');
-            reading.href = 'kategorie/' + encodeURIComponent(category.id) + '.html';
-            reading.textContent = category.title + ': Fragen und Antworten';
-            card.append(reading);
             wrapper.appendChild(card);
         });
     }
