@@ -44,19 +44,7 @@ jobs:
           php -l database/seed-from-json.php
 
       - name: Validate JavaScript
-        run: |
-          node --check js/admin.js
-          node --check js/account-page.js
-          node --check js/login-page.js
-          node --check js/quiz-data-service.js
-          node --check js/user-service.js
-          node --check js/quiz-controller.js
-          node --check js/quiz-view.js
-          node --check js/dialog.js
-          node --check js/form-guard.js
-          node --check js/round-storage.js
-          node --check js/quiz-state.js
-          node --check scripts/apply-csp-hashes.js
+        run: find js scripts -type f -name '*.js' -exec node --check {} \;
 
       - name: Build CSS and test contracts
         run: |
