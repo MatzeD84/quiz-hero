@@ -1,12 +1,12 @@
 # CSS-Design-System
 
-`styles.css` ist ein generiertes Build-Artefakt. Bitte Styles in den Dateien unter `styles/` bearbeiten und danach das Bundle neu bauen:
+`public/styles.css` ist ein generiertes Build-Artefakt. Bitte Styles in den Dateien unter `styles/` bearbeiten und danach das Bundle neu bauen:
 
 ```powershell
 node scripts/build-css.js
 ```
 
-Beim Arbeiten am CSS kann der Watcher laufen bleiben. Er baut `styles.css` automatisch neu, sobald sich eine Datei unter `styles/` aendert:
+Beim Arbeiten am CSS kann der Watcher laufen bleiben. Er baut `public/styles.css` automatisch neu, sobald sich eine Datei unter `styles/` aendert:
 
 ```powershell
 node scripts/watch-css.js
@@ -29,3 +29,7 @@ node scripts/watch-css.js
 - Gemeinsame Werte zuerst in `abstracts/tokens.css` pruefen, bevor neue Farben, Border-Radien oder Schatten direkt in Komponenten entstehen.
 - BEM-Bloecke bleiben moeglichst zusammen: Block, Elemente und Modifier liegen in derselben Datei.
 - `styles/main.css` bestimmt die finale Reihenfolge der CSS-Ausgabe.
+
+## Beta-Entwurf
+
+Auf Branch `design/beta` liegt die experimentelle Gestaltung in `themes/beta.css`. Sie wird zuletzt importiert und kann unabhaengig vom Basisdesign verglichen werden. Vorschau und Rueckwechsel: [docs/BETA-DESIGN.md](../docs/BETA-DESIGN.md).

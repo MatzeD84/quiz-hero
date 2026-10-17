@@ -51,3 +51,6 @@
 @import './features/admin/upload.css';
 @import './base/utilities.css';
 @import './base/responsive.css';
+
+/* Isolated Beta design experiment: design/beta branch. */
+@import './themes/beta.css';
