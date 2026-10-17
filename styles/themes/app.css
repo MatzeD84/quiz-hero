@@ -1,4 +1,4 @@
-﻿/* Beta design: one explicit theme layer; shared markup and quiz behavior remain intact. */
+﻿/* Application theme; shared markup and quiz behavior remain intact. */
 * { box-sizing: border-box; text-wrap: pretty; }
 body { margin: 0; height: auto; min-height: 100dvh; background: var(--color-page); color: var(--color-text); line-height: var(--line-height-body); font-size: var(--text-16); font-family: var(--font-body); }
 button, input, select, textarea { font: inherit; }

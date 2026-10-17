@@ -2,7 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const rootDir = path.resolve(__dirname, '..');
 const stylesDir = path.join(rootDir, 'styles');
-const tokenFiles = new Set(['abstracts/tokens.css', 'themes/beta-tokens.css']);
+const tokenFiles = new Set(['abstracts/tokens.css', 'themes/app-tokens.css']);
 const listCssFiles = directory => fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry =>
     entry.isDirectory() ? listCssFiles(path.join(directory, entry.name))
         : entry.name.endsWith('.css') ? [path.join(directory, entry.name)] : []);

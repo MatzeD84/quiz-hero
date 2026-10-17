@@ -5,13 +5,13 @@
 ## Struktur
 
 - `abstracts/tokens.css`: gemeinsame Designwerte und semantische Rollen.
-- `themes/beta-tokens.css`: Palette und Token-Ueberschreibungen des Beta-Designs.
-- `themes/beta.css`: Beta-Layout und Komponentenregeln mit diesen Tokens.
+- `themes/app-tokens.css`: Palette und Token-Ueberschreibungen des aktuellen Designs.
+- `themes/app.css`: App-Layout und Komponentenregeln mit diesen Tokens.
 - `base/`: Reset, Typografie, Links und responsive Querschnittsregeln.
 - `layout/`: Container, Header, Footer und Accountnavigation.
 - `components/`: wiederverwendbare UI-Bloecke wie Buttons, Formulare und Dialoge.
 - `features/`: Quiz-, Account-, Admin- und SEO-spezifische BEM-Bloecke.
-- `main.css`: verbindliche Importreihenfolge; Beta-Tokens und Beta-Regeln stehen zuletzt.
+- `main.css`: verbindliche Importreihenfolge; Theme-Tokens und Theme-Regeln stehen zuletzt.
 
 ## Custom Properties verwenden
 
@@ -53,4 +53,4 @@ node --test tests/contracts.test.mjs
 
 Der CSS-Build fuehrt die Token-Pruefung automatisch aus. Sie erkennt verstreute Farbwerte, zu grosse Token-Skalen, feste Schriftgroessen, Schriftfamilien, Bewegungszeiten, gemeinsame Border-Breiten und Schatten sowie nicht definierte Variablen und zyklische Referenzen. Die Pruefung ersetzt nicht die inhaltliche Entscheidung, welche Rolle ein neuer Token besitzt.
 
-Der Entwurf bleibt auf Branch `design/beta`. Vorschau und Rueckwechsel: [Beta-Design](../docs/BETA-DESIGN.md).
+Das uebernommene Design ist der Standard auf `master`. Dokumentation: [Design](../docs/DESIGN.md). Production wird weiterhin ausschliesslich vom Branch `hostinger` veroeffentlicht.

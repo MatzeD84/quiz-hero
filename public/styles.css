@@ -3008,8 +3008,8 @@ details[open] summary::after {
     }
 }
 
-/* === styles/themes/beta-tokens.css === */
-/* Beta token overrides and component state colors. No layout selectors in this file. */
+/* === styles/themes/app-tokens.css === */
+/* Application token overrides and component state colors. No layout selectors in this file. */
 :root {
 
     /* Colors */
@@ -3062,8 +3062,8 @@ details[open] summary::after {
     --shadow-tab: 0 2px 5px #1736570a;
 }
 
-/* === styles/themes/beta.css === */
-/* Beta design: one explicit theme layer; shared markup and quiz behavior remain intact. */
+/* === styles/themes/app.css === */
+/* Application theme; shared markup and quiz behavior remain intact. */
 * { box-sizing: border-box; text-wrap: pretty; }
 body { margin: 0; height: auto; min-height: 100dvh; background: var(--color-page); color: var(--color-text); line-height: var(--line-height-body); font-size: var(--text-16); font-family: var(--font-body); }
 button, input, select, textarea { font: inherit; }

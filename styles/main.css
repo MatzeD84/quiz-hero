@@ -53,5 +53,5 @@
 @import './base/responsive.css';
 
 /* Isolated Beta design experiment: design/beta branch. */
-@import './themes/beta-tokens.css';
-@import './themes/beta.css';
+@import './themes/app-tokens.css';
+@import './themes/app.css';

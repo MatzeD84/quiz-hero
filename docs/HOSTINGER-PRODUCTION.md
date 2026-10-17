@@ -1,6 +1,6 @@
 # Hostinger production
 
-Production URL: https://quiz-hero.de. Hostinger Git deployment remains on branch `hostinger`. The working Beta design is separate.
+Production URL: https://quiz-hero.de. Hostinger Git deployment remains on branch `hostinger`. The adopted application design is developed on `master`; publishing it requires a reviewed merge into `hostinger`.
 
 The existing website root `/home/u199598707/domains/quiz-hero-stage.matzeverse.de` is retained intentionally: `quiz-hero.de` is its Hostinger alias. Both names share the same release, uploads and database. This is not an isolated staging environment. The former staging hostname redirects to production; create a separate database and website before using it for development again.
 
