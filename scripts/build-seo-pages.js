@@ -217,7 +217,7 @@ const buildGeneralDescriptionSection = () => {
         'Quiz-Hero ist ein persönliches Herzensprojekt. Ich wollte ein Quiz, das Wissen, Neugier und Reisegefühl verbindet. Deshalb pflege ich die Inhalte kontinuierlich, erweitere Kategorien und passe Fragen an, damit sie fair und abwechslungsreich bleiben.',
         'Das Punktesystem ist klar geregelt: Normale Fragen bringen 2 Punkte, schwere Fragen 3 Punkte und Hero-Fragen 5 Punkte. Beim zweiten Versuch gibt es unabhängig von der Schwierigkeit immer 1 Punkt.',
         'Die Bilder sind KI-generiert und im gleichen Stil gehalten, damit die Kategorien visuell zusammenpassen. Ziel ist ein ruhiger, konsistenter Look, der das Quiz atmosphärisch macht, aber den Inhalt in den Vordergrund stellt.',
-        'Wenn du Lust hast mitzumachen oder das Quiz mit Fragen und Kategorien zu erweitern und Teil des Projekts zu sein, schreib mir gern an helden@quiz-hero.de.'
+        'Wenn du Lust hast mitzumachen oder das Quiz mit Fragen und Kategorien zu erweitern und Teil des Projekts zu sein, schreib mir gern an info@quiz-hero.de.'
     ];
 
     return `

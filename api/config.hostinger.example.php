@@ -13,7 +13,7 @@ return [
     'QUIZ_HERO_USER_TOKEN_SECRET' => 'SET_NEW_RANDOM_SECRET_PRIVATELY',
     'QUIZ_HERO_SEO_EXPORT_TOKEN' => 'SET_NEW_RANDOM_SECRET_PRIVATELY',
     'SITE_URL' => 'https://quiz-hero-stage.matzeverse.de',
-    'QUIZ_HERO_MAIL_FROM' => 'helden@quiz-hero.de',
+    'QUIZ_HERO_MAIL_FROM' => 'info@quiz-hero.de',
     // No real account/notification mail until a staging mail destination is configured.
     'QUIZ_HERO_MAIL_TRANSPORT' => 'disabled',
     'QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN' => 'false',

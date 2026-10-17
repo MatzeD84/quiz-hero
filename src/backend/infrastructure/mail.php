@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 function send_account_mail(string $to, string $subject, string $message, ?string $htmlMessage = null): void
 {
-    $from = env_value('QUIZ_HERO_MAIL_FROM', 'helden@quiz-hero.de');
+    $from = env_value('QUIZ_HERO_MAIL_FROM', 'info@quiz-hero.de');
     $transport = env_value('QUIZ_HERO_MAIL_TRANSPORT', 'log');
     $encodedSubject = function_exists('mb_encode_mimeheader')
         ? mb_encode_mimeheader($subject, 'UTF-8')
