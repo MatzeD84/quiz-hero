@@ -1,0 +1,9 @@
+{
+  "host": "46.202.158.83",
+  "port": 65002,
+  "user": "u199598707",
+  "siteRoot": "/home/u199598707/domains/quiz-hero-stage.matzeverse.de",
+  "siteUrl": "https://quiz-hero-stage.matzeverse.de",
+  "environment": "staging",
+  "branch": "hostinger"
+}

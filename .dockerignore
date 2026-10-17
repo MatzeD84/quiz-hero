@@ -6,3 +6,6 @@ vendor
 .env
 api/config.local.php
 *.log
+.private
+dist
+.build

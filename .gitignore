@@ -7,3 +7,9 @@ var/*
 !var/.htaccess
 
 .build/
+.private/
+dist/
+.hostinger-server
+/vendor/
+/desktop.ini
+**/desktop.ini

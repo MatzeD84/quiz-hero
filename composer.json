@@ -1,0 +1,11 @@
+{
+  "name": "matzed84/quiz-hero",
+  "description": "Quiz-Hero PHP application and Hostinger deployment hook",
+  "type": "project",
+  "require": { "php": ">=8.3", "ext-pdo": "*", "ext-pdo_mysql": "*", "ext-mbstring": "*" },
+  "scripts": {
+    "post-install-cmd": ["@php scripts/hostinger/build-from-git.php"],
+    "post-update-cmd": ["@php scripts/hostinger/build-from-git.php"]
+  },
+  "config": { "allow-plugins": false }
+}

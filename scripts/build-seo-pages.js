@@ -47,6 +47,12 @@ const withApiVersion = url => {
 };
 
 const loadCategoriesFromSeoExport = async () => {
+    if (process.env.SEO_EXPORT_FILE) {
+        const data = readJson(path.resolve(process.env.SEO_EXPORT_FILE));
+        if (!data.ok || !Array.isArray(data.categories)) throw new Error('Ungültige SEO-Exportdatei.');
+        return data.categories.filter(category => category && category.enabled !== false)
+            .map(category => ({ ...category, questions: Array.isArray(category.questions) ? category.questions.filter(q => q && q.active !== false) : [] }));
+    }
     if (!seoExportUrl || !seoExportToken || typeof fetch !== 'function') {
         throw new Error('SEO_EXPORT_URL und SEO_EXPORT_TOKEN sowie Node.js mit fetch sind erforderlich. Für lokale Vorschauen SEO_SOURCE=json ausdrücklich setzen.');
     }
