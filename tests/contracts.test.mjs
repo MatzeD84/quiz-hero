@@ -171,6 +171,8 @@ function build(env) {
 
 test('SEO export fails closed, excludes inactive questions, removes stale generated pages, protects good output', async () => {
     const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'quiz-hero-seo-test-'));
+    const fileTransport = process.env.QUIZ_HERO_TEST_EXPORT_FILE === 'true';
+    const exportFile = path.join(temp, 'fixture-export.json');
     let status = 200;
     let payload = { ok: true, categories: [{ ...category, questions: [question, { ...question, question: 'Unpublished', active: false }] }] };
     const server = http.createServer((req, res) => {
@@ -178,10 +180,14 @@ test('SEO export fails closed, excludes inactive questions, removes stale genera
         res.writeHead(status, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(payload));
     });
-    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-    const env = { SITE_URL: 'https://example.test', SEO_SOURCE: 'export', SEO_EXPORT_URL: `http://127.0.0.1:${server.address().port}/export`, SEO_EXPORT_TOKEN: 'fixture-only', SEO_OUTPUT_DIR: temp };
+    if (!fileTransport) await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const env = { SITE_URL: 'https://example.test', SEO_SOURCE: 'export', SEO_EXPORT_URL: fileTransport ? '' : `http://127.0.0.1:${server.address().port}/export`, SEO_EXPORT_TOKEN: 'fixture-only', SEO_OUTPUT_DIR: temp, SEO_EXPORT_FILE: fileTransport ? exportFile : '' };
+    const runBuild = async (overrides = {}) => {
+        if (fileTransport) fs.writeFileSync(exportFile, JSON.stringify(status === 200 ? payload : { ok: false }));
+        return build({ ...env, ...overrides });
+    };
     try {
-        let result = await build(env);
+        let result = await runBuild();
         assert.equal(result.code, 0, result.output);
         const file = path.join(temp, 'kategorie/sample.html');
         const good = fs.readFileSync(file, 'utf8');
@@ -192,21 +198,21 @@ test('SEO export fails closed, excludes inactive questions, removes stale genera
         const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
         manifest.pages.push({ file: 'removed.html', count: 1 });
         fs.writeFileSync(manifestPath, JSON.stringify(manifest));
-        result = await build(env);
+        result = await runBuild();
         assert.equal(result.code, 0, result.output);
         assert.ok(!fs.existsSync(path.join(temp, 'kategorie/removed.html')));
         status = 503;
-        assert.notEqual((await build(env)).code, 0);
+        assert.notEqual((await runBuild()).code, 0);
         assert.equal(fs.readFileSync(file, 'utf8'), good);
         status = 200;
         payload = { ok: true, categories: [] };
-        assert.notEqual((await build(env)).code, 0);
+        assert.notEqual((await runBuild()).code, 0);
         payload = { ok: true, categories: [{ ...category, id: '../escape' }] };
-        assert.notEqual((await build(env)).code, 0);
+        assert.notEqual((await runBuild()).code, 0);
         assert.equal(fs.readFileSync(file, 'utf8'), good);
-        assert.notEqual((await build({ ...env, SEO_EXPORT_TOKEN: '' })).code, 0);
+        assert.notEqual((await runBuild(fileTransport ? { SEO_EXPORT_FILE: path.join(temp, 'missing-export.json') } : { SEO_EXPORT_TOKEN: '' })).code, 0);
     } finally {
-        await new Promise(resolve => server.close(resolve));
+        if (!fileTransport) await new Promise(resolve => server.close(resolve));
         fs.rmSync(temp, { recursive: true, force: true });
     }
 });

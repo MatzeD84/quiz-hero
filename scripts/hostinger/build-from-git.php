@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 if (PHP_SAPI !== 'cli') exit(1);
+ini_set('display_errors', 'stderr');
 $root = dirname(__DIR__, 2);
 if (!is_file($root . '/.hostinger-server')) {
     echo "Composer installed locally; no server deployment requested.\n";
@@ -27,6 +28,9 @@ $lock = fopen($siteRoot . '/private/git-build.lock', 'c');
 if (!$lock || !flock($lock, LOCK_EX | LOCK_NB)) throw new RuntimeException('Another Git build is active; retry deployment after it completes');
 $commit = trim(run_command(['git', 'rev-parse', 'HEAD']));
 $version = substr($commit, 0, 12) . '-' . gmdate('YmdHis');
+// Shared hosting blocks the loopback test server; exercise the actual CLI file
+// export transport here. Local tests still exercise the HTTP export transport.
+putenv('QUIZ_HERO_TEST_EXPORT_FILE=true');
 echo run_command([$node, '--test', 'tests/contracts.test.mjs']);
 foreach (glob($root . '/api/*.php') as $php) echo run_command([PHP_BINARY, '-l', $php]);
 foreach (['export-seo.php', 'release.sh', 'rollback.sh', 'check-release.php', 'verify-http.php'] as $helper) {
