@@ -54,6 +54,13 @@ function env_value(string $key, ?string $default = null): ?string
     return $value;
 }
 
+// Optional server-side error log outside the webroot; no mail bodies or tokens are logged.
+$errorLog = env_value('QUIZ_HERO_ERROR_LOG');
+if ($errorLog !== null && $errorLog !== '') {
+    ini_set('log_errors', '1');
+    ini_set('error_log', $errorLog);
+}
+
 function db(): PDO
 {
     static $pdo = null;
