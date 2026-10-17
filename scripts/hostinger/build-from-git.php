@@ -10,7 +10,8 @@ if (!is_file($root . '/.hostinger-server')) {
 $target = json_decode(file_get_contents($root . '/deployment/hostinger.json'), true, 512, JSON_THROW_ON_ERROR);
 $siteRoot = $target['siteRoot'];
 if (!preg_match('#^/home/[a-z0-9]+/domains/[a-z0-9.-]+$#D', $siteRoot)) throw new RuntimeException('Invalid site root');
-if (realpath($root) !== $siteRoot . '/shared/source') throw new RuntimeException('Unexpected repository location');
+$snapshot = dirname($root) === $siteRoot . '/private/builds' && preg_match('/^[a-f0-9]{40}$/D', basename($root));
+if (realpath($root) !== $siteRoot . '/shared/source' && !$snapshot) throw new RuntimeException('Unexpected repository location');
 if ($target['environment'] !== 'staging') throw new RuntimeException('Production switch requires an explicit reviewed configuration change');
 $node = '/opt/alt/alt-nodejs22/root/usr/bin/node';
 if (!is_executable($node)) throw new RuntimeException('Node 22 is unavailable');
@@ -26,7 +27,8 @@ function run_command(array $args): string {
 // Serialize the entire build as Hostinger may receive consecutive push notifications.
 $lock = fopen($siteRoot . '/private/git-build.lock', 'c');
 if (!$lock || !flock($lock, LOCK_EX | LOCK_NB)) throw new RuntimeException('Another Git build is active; retry deployment after it completes');
-$commit = trim(run_command(['git', 'rev-parse', 'HEAD']));
+$commit = $snapshot ? trim(file_get_contents($root . '/.deploy-commit')) : trim(run_command(['git', 'rev-parse', 'HEAD']));
+if (!preg_match('/^[a-f0-9]{40}$/D', $commit) || ($snapshot && basename($root) !== $commit)) throw new RuntimeException('Invalid snapshot commit');
 $version = substr($commit, 0, 12) . '-' . gmdate('YmdHis');
 // Shared hosting blocks the loopback test server; exercise the actual CLI file
 // export transport here. Local tests still exercise the HTTP export transport.
@@ -54,3 +56,4 @@ try {
     throw $failure;
 }
 echo "Hostinger Git deployment verified: $version\n";
+file_put_contents($siteRoot . '/private/deployed-commit', $commit . "\n");

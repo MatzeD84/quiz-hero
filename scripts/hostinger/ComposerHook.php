@@ -11,10 +11,12 @@ final class ComposerHook
             echo "Local Composer installation; server deployment skipped.\n";
             return;
         }
-        // Hostinger applies web disable_functions to CLI too. Start a dedicated
-        // CLI interpreter for the build; no web PHP settings are changed.
-        if (!function_exists('pcntl_exec')) throw new \RuntimeException('Hostinger CLI requires pcntl_exec for the isolated build interpreter');
-        pcntl_exec(PHP_BINARY, ['-d', 'disable_functions=', $root . '/scripts/hostinger/build-from-git.php']);
-        throw new \RuntimeException('Could not start Hostinger CLI build');
+        // hPanel Git jobs have short execution limits. The Hostinger cron worker
+        // builds an immutable commit snapshot without blocking the Git callback.
+        $target = json_decode(file_get_contents($root . '/deployment/hostinger.json'), true, 512, JSON_THROW_ON_ERROR);
+        $site = $target['siteRoot'];
+        if (realpath($root) !== $site . '/shared/source') throw new \RuntimeException('Unexpected repository location');
+        file_put_contents($site . '/private/deploy-requested', gmdate(DATE_ATOM) . "\n");
+        echo "Git updated. Hostinger deployment worker will build the new commit.\n";
     }
 }
