@@ -2,6 +2,9 @@
 declare(strict_types=1);
 /** Called by the Hostinger cron, separately from source deployment. Never changes DB data. */
 if (PHP_SAPI !== 'cli') exit(1);
+ini_set('display_errors', 'stderr');
+// The cron has private umask 077; generated public files must remain readable by LiteSpeed.
+umask(0022);
 $site = dirname(__DIR__);
 if (!preg_match('#^/home/[a-z0-9]+/domains/[a-z0-9.-]+$#D', $site)) throw new RuntimeException('Unexpected site root');
 $lock = fopen($site . '/private/deploy.lock', 'c');
@@ -39,7 +42,9 @@ echo content_command([$node, $active . '/scripts/build-seo-pages.js'], $active);
 echo content_command([$node, $active . '/scripts/apply-asset-version.js', $versionInfo['version'], $build . '/seo'], $active);
 // Hard links share immutable code/assets with the current release. Only generated files are replaced.
 content_command(['cp', '-al', $active, $candidate]);
+touch($candidate);
 $newWeb = $candidate . '/public';
+$previousMarker = is_file($site . '/private/previous-release') ? file_get_contents($site . '/private/previous-release') : '';
 function remove_generated_tree(string $directory): void {
     if (is_link($directory)) throw new RuntimeException('Generated directory must not be a symlink');
     foreach (new FilesystemIterator($directory) as $entry) {
@@ -70,10 +75,11 @@ rename($next, $site . '/public_html');
 file_put_contents($site . '/private/previous-release', $web . "\n");
 file_put_contents($site . '/private/current-release', $newWeb . "\n");
 try {
-    echo content_command([PHP_BINARY, $site . '/private/verify-http.php', $version]);
+    echo content_command([PHP_BINARY, '-d', 'display_errors=stderr', $site . '/private/verify-http.php', $version]);
 } catch (Throwable $failure) {
     symlink($web, $next); rename($next, $site . '/public_html');
     file_put_contents($site . '/private/current-release', $web . "\n");
+    file_put_contents($site . '/private/previous-release', $previousMarker);
     throw $failure;
 }
 file_put_contents($marker, $hash . "\n");

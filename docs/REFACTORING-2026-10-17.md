@@ -31,3 +31,7 @@ Keine neuen Produktfunktionen: Lernverlauf, Fehlerwiederholung und Tagesquiz ble
 ## Validierung
 
 Contracttests, isolierte Migration-/Account-/Admin-/SMTP-/Quiz-Integrationstests und PHP-Syntaxpr?fungen. Browserpr?fung: komplette angemeldete F?nf-Fragen-Runde, falscher erster Versuch, richtiger zweiter Versuch, Fokusf?hrung und best?tigte Ergebnisablage. HTTP-Pr?fung interner Dateien ergibt 404. Hostinger-Ver?ffentlichung und Content-Worker werden zus?tzlich am tats?chlichen Staging-Release ?berpr?ft.
+
+## Ergebnis der tats?chlichen Ver?ffentlichung
+
+15 Contracttests und 45 isolierte Backend-Integrationspr?fungen erfolgreich. Hostinger-Release und unabh?ngige Content-Ver?ffentlichung inklusive HTTP-Abschlusspr?fung erfolgreich. Generierte ?ffentliche Dateien erhalten explizit webserverlesbare Rechte trotz privater Cron-umask. Quellen-Metadaten f?r SEO liegen au?erhalb der HTTP-Wurzel im Release. Vor Migration 009 wurde ein privater SQL-Dump mit gepr?fter Dateigr??e erzeugt; Fragen-, Kategorien-, Nutzer- und Ergebnisanzahlen blieben unver?ndert.
