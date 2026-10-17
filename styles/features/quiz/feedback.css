@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(--gap);
-    gap: 0.25rem;
+    margin-top: var(--space-12);
+    gap: var(--space-4);
 }
 
 .quiz__feedback-icon {
@@ -12,7 +12,7 @@
 }
 
 .quiz__feedback {
-    font-size: 18px;
+    font-size: var(--text-18);
     font-weight: bold;
     margin: 0;
 }

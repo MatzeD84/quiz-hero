@@ -3,7 +3,7 @@
     width: 100%;
     margin: 0 auto;
     max-width: 800px;
-    padding-bottom: 3rem;
+    padding-bottom: var(--space-48);
     text-align: center;
 }
 

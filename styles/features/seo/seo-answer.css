@@ -1,6 +1,6 @@
 .landing-page__faq-list {
     display: grid;
-    gap: var(--gap-small);
+    gap: var(--space-8);
 }
 
 .landing-page__faq-list details {
@@ -9,9 +9,9 @@
 
 .seo-answer__content {
     display: grid;
-    gap: var(--gap-small);
+    gap: var(--space-8);
     overflow-wrap: anywhere;
-    padding-top: var(--gap-small);
+    padding-top: var(--space-8);
 }
 
 .seo-answer__image {
@@ -27,7 +27,7 @@
 .seo-answer {
     display: flex;
     align-items: baseline;
-    gap: var(--gap-small);
+    gap: var(--space-8);
     flex-wrap: wrap;
     margin: 0;
 }
@@ -37,36 +37,36 @@
     display: inline-flex;
     align-items: center;
     min-height: 1.6rem;
-    border-radius: var(--radius-soft);
-    padding: 2px 8px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-8);
+    font-size: var(--text-14);
+    font-weight: var(--font-weight-bold);
     line-height: 1;
 }
 
 .seo-answer__label {
-    background-color: var(--greensea-color);
-    color: var(--clouds-color);
+    background-color: var(--color-success);
+    color: var(--color-on-primary);
 }
 
 .seo-answer__text {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .seo-answer__hint {
     margin: 0;
-    border-left: 3px solid var(--greensea-color);
-    padding: 2px 0 2px var(--gap-small);
-    color: var(--wet-asphalt-color);
+    border-left: var(--border-width-focus) var(--border-style) var(--color-success);
+    padding: var(--space-2) 0 var(--space-2) var(--space-8);
+    color: var(--color-text-secondary);
     text-align: left;
 }
 
 .seo-answer__hint-label {
-    margin-right: 6px;
-    background-color: var(--lighter-gray-color);
-    color: var(--asbestos-color);
+    margin-right: var(--space-4);
+    background-color: var(--color-surface-muted);
+    color: var(--color-text-muted);
 }
 
 .seo-answer--missing {
-    color: var(--asbestos-color);
+    color: var(--color-text-muted);
 }

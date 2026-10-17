@@ -1,13 +1,13 @@
 .account-page-form {
     display: grid;
-    gap: 0.9rem 1rem;
+    gap: var(--space-16) var(--space-16);
     grid-template-columns: repeat(2, minmax(220px, 1fr));
 }
 
 .account-page-form__headline {
-    font-family: "Source Sans 3", sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: var(--text-18);
+    font-weight: var(--font-weight-bold);
     grid-column: 1 / -1;
     letter-spacing: 0;
     margin: 0;
@@ -16,6 +16,6 @@
 
 .account-page-form label {
     display: grid;
-    font-weight: 700;
-    gap: 0.25rem;
+    font-weight: var(--font-weight-bold);
+    gap: var(--space-4);
 }

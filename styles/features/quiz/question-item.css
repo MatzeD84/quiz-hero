@@ -1,15 +1,15 @@
 .question-item {
-    border: 1px solid var(--lighter-gray-color);
-    padding: 10px;
-    margin: 10px 0;
-    background-color: var(--clouds-color);
-    padding: 10px;
+    border: var(--border-width-thin) var(--border-style) var(--color-surface-muted);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+    background-color: var(--color-surface);
+    padding: var(--space-8);
 }
 
 .question-image {
     max-width: 100%;
     height: auto;
     display: block;
-    margin: 10px 0;
+    margin: var(--space-8) 0;
 }
 

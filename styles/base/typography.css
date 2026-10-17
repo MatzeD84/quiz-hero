@@ -1,20 +1,29 @@
 /* === Typography === */
 h1, h2, h3, h4, h5, h6, .headline {
-    font-family: "Oswald", sans-serif;
+    font-family: var(--font-heading);
     font-optical-sizing: auto;
-    font-weight: 300;
+    font-weight: var(--font-weight-heading);
     font-style: normal;
-    letter-spacing: 2px;
+    letter-spacing: var(--tracking-heading);
 }
+
+/* Explicit sizes avoid browser-default intermediate type sizes. */
+h1 { font-size: var(--text-32); }
+h2 { font-size: var(--text-24); }
+h3 { font-size: var(--text-20); }
+h4 { font-size: var(--text-18); }
+h5 { font-size: var(--text-16); }
+h6 { font-size: var(--text-14); }
+small { font-size: var(--text-12); }
 
 @media (max-width: 576px) {
     h2 {
-        margin: var(--gap-small) 0;
-        font-size: 1.3rem;
+        margin: var(--space-8) 0;
+        font-size: var(--text-20);
     }
 }
 
 p {
-    margin: var(--gap-small) 0;
+    margin: var(--space-8) 0;
 }
 

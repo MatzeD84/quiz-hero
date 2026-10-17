@@ -2,12 +2,12 @@
 .btn {
     display: block;
     max-width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    color: var(--clouds-color); 
-    background-color: var(--dark-gray-color);
+    padding: var(--space-8);
+    font-size: var(--text-16);
+    color: var(--color-on-primary);
+    background-color: var(--color-strong);
     border: none;
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
     cursor: pointer;
     text-decoration: none;
 }
@@ -15,19 +15,19 @@
 .btn:visited,
 .btn:focus,
 .btn:hover {
-    color: var(--clouds-color);
+    color: var(--color-on-primary);
     text-decoration: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .btn:hover {
-        background-color: var(--carrot-color);
+        background-color: var(--color-accent);
     }
 }
 
 .btn--disabled {
     opacity: 0.25;
-    background-color: var(--dark-gray-color) !important;
+    background-color: var(--color-strong) !important;
     cursor: not-allowed;
     display: none;
 }

@@ -1,4 +1,4 @@
-﻿# Beta-Design
+# Beta-Design
 
 Isolierter Entwurf auf Branch `design/beta`, ausgehend von `hostinger` bei `8ad65a7`.
 Das Hostinger-Deployment bleibt auf Branch `hostinger` und erhaelt diesen Entwurf nicht automatisch.
@@ -18,13 +18,13 @@ Die existierenden lokalen Anmeldungen funktionieren weiter. Auf der Loginseite k
 
 Helle kuehle Flaechen, dunkles Blau, Petrol und ein dezenter Mint-Akzent. Originale Schriftkombination: Source Sans 3 im Fliesstext (16px), Oswald fuer Ueberschriften (Gewicht 300, 2px Buchstabenabstand). Klarere Typografie, Bildkarten fuer Orte und kompakte Themenkarten. Quizantworten besitzen Buchstaben sowie erkennbare Richtig-/Falsch-Symbole. Formulare, Adminlisten, Navigation, Dialoge und Profil sind auf die gemeinsame Gestaltung abgestimmt.
 
-Der Entwurf liegt bewusst als abschliessende Theme-Schicht unter `styles/themes/beta.css`. `styles/main.css` bindet sie ein; `node scripts/build-css.js` erzeugt `public/styles.css`. So bleibt der Vergleich mit der bisherigen Gestaltung einfach. Bei Uebernahme kann die Theme-Schicht schrittweise in die Komponenten aufgeteilt werden.
+Die Palette und Designwerte liegen zentral in `styles/abstracts/tokens.css` und `styles/themes/beta-tokens.css`. Der Entwurf liegt als abschliessende Theme-Schicht unter `styles/themes/beta.css`; Komponenten verwenden semantische Custom Properties. Die Regeln und automatischen Pruefungen stehen in `styles/README.md`. `styles/main.css` bindet sie ein; `node scripts/build-css.js` erzeugt `public/styles.css`. So bleibt der Vergleich mit der bisherigen Gestaltung einfach. Bei Uebernahme kann die Theme-Schicht schrittweise in die Komponenten aufgeteilt werden.
 
 Es gibt keine neuen Abhaengigkeiten, externen Fonts oder Trackingdienste. Backend, Datenmodell und Quizwertung wurden nicht geaendert.
 
 ## Pruefung
 
-- 15 Contracttests erfolgreich; BEM-Pruefung erfolgreich.
+- 16 Contracttests erfolgreich; BEM-Pruefung erfolgreich.
 - Desktop- und Smartphone-Screens fuer Startseite, Fragenauswahl, Quiz, Ergebnis, Login, Registrierung, Profil und angemeldeten Adminbereich visuell geprueft.
 - Alle Adminreiter bei 320, 768 und 1440 Pixeln Breite ohne horizontalen Seitenueberlauf geprueft; mobile Hauptansichten zusaetzlich bei 390 Pixeln.
 - Komplette angemeldete Fuenf-Fragen-Runde mit richtigem zweiten Versuch und bestaetigter Ergebnisablage ausschliesslich in der lokalen Datenbank gespielt.

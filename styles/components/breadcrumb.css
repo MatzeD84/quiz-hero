@@ -2,35 +2,35 @@
 .breadcrumb {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: var(--space-4);
     justify-content: center;
-    font-size: 0.85rem;
-    color: var(--dark-gray-color);
-    margin-bottom: var(--gap);
+    font-size: var(--text-14);
+    color: var(--color-strong);
+    margin-bottom: var(--space-12);
 }
 
 .breadcrumb__link {
-    color: var(--dark-gray-color);
+    color: var(--color-strong);
     text-decoration: none;
 }
 
 .breadcrumb__link:focus {
-    color: var(--dark-gray-color);
+    color: var(--color-strong);
     text-decoration: underline;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .breadcrumb__link:hover {
-        color: var(--dark-gray-color);
+        color: var(--color-strong);
         text-decoration: underline;
     }
 }
 
 .breadcrumb__sep {
-    color: var(--light-gray-color);
+    color: var(--color-text-muted);
 }
 
 .breadcrumb__current {
-    color: var(--dark-color);
-    font-weight: 600;
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
 }

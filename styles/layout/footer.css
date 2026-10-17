@@ -1,11 +1,11 @@
 .footer {
     width: 100%;
-    background-color: var(--lighter-gray-color);
+    background-color: var(--color-surface-muted);
     text-align: center;
-    box-shadow: 0 0 0 100vmax var(--lighter-gray-color);
+    box-shadow: var(--shadow-bleed-muted);
     clip-path: inset(0 -100vmax);
 }
 
 .footer a {
-    color: var(--belizehole-color);
+    color: var(--color-link);
 }

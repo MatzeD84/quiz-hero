@@ -1,8 +1,8 @@
 .quiz-question-feedback-link {
     display: block;
-    font-size: 0.82rem;
+    font-size: var(--text-14);
     line-height: 1.3;
-    margin: 1.35rem 0 0 auto;
+    margin: var(--space-20) 0 0 auto;
     text-align: right;
 }
 
@@ -25,30 +25,30 @@
 
 .quiz-question-feedback-form {
     display: grid;
-    gap: 1rem;
+    gap: var(--space-16);
 }
 
 .quiz-question-feedback-form fieldset {
-    border: var(--line-frost);
+    border: var(--border-subtle);
     display: grid;
-    gap: 0.55rem;
+    gap: var(--space-8);
     margin: 0;
-    padding: 0.9rem 1rem;
+    padding: var(--space-16) var(--space-16);
 }
 
 .quiz-question-feedback-form legend,
 .quiz-question-feedback-form label span {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .quiz-question-feedback-form label {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-8);
 }
 
 .quiz-question-feedback-form > label {
     display: grid;
-    gap: 0.35rem;
+    gap: var(--space-4);
 }
 
 .quiz-question-feedback-form input[type="checkbox"] {

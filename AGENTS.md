@@ -1,5 +1,14 @@
 # QuizHero-Projektanweisungen
 
+## CSS und Design-Tokens
+
+- Farben ausschliesslich in zentralen Custom Properties unter `styles/abstracts/tokens.css` und `styles/themes/beta-tokens.css` definieren. Komponenten verwenden semantische Rollen wie `--color-answer-correct-bg`; keine direkten Hex-, RGB- oder benannten Farbwerte. Einmalige Transparenzen duerfen lokal mit `color-mix()` aus diesen Rollen abgeleitet werden; keine Prozentwert-Tokenfamilien anlegen.
+- Wiederverwendete Abstaende, Gaps, Schriftfamilien/-groessen/-gewichte, Radien, Rahmenbreiten/-stile, Schatten, Z-Ebenen, Dauer und Easing von Transitionen/Animationen aus den vorhandenen Tokens beziehen. Vor neuen Tokens die bestehenden pruefen.
+- Kompakte Skalen beibehalten: maximal 10 Schriftgroessen, 10 Abstaende und drei Eckradien plus Pill/Kreis. Aehnliche Werte vereinheitlichen. Seltene optische Korrekturen duerfen literal in der Komponente stehen; dafuer keine neuen Tokens erzeugen.
+- Eindeutige Rollen benennen, keine historischen Farbnamen wie `carrot` fuer eine Petrolfarbe. Skalierte Groessen duerfen nummerierte Skalentokens verwenden. Komponentenbezogene Geometrie darf lokale Custom Properties erhalten.
+- Primitive CSS-Werte wie `0`, `auto`, `none`, `100%`, `currentColor` und einmalige Layoutberechnungen nicht mechanisch tokenisieren. Breakpointwerte bleiben in Media Queries literal, weil native Custom Properties dort nicht ausgewertet werden.
+- Quellen unter `styles/` bearbeiten; `public/styles.css` ausschliesslich mit `node scripts/build-css.js` erzeugen. Dieser Build prueft automatisch die Token-Regeln. Bei Stylingaenderungen zusaetzlich `node scripts/check-bem.js` ausfuehren. Dokumentation: `styles/README.md`.
+
 ## Quizfragen erstellen
 
 Wenn der Nutzer neue Quizfragen, einen Fragensatz oder eine importierbare Fragen-JSON anfordert:

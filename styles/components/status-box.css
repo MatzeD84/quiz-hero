@@ -3,31 +3,31 @@
 }
 
 .user-panel__status {
-    border-radius: var(--radius-soft);
-    font-weight: 700;
-    margin: 0.75rem 0 0;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    margin: var(--space-12) 0 0;
     padding: 0;
 }
 
 .user-panel__status:not(:empty) {
-    border: var(--line-focus);
-    padding: 0.85rem 1rem;
+    border: var(--border-input);
+    padding: var(--space-12) var(--space-16);
 }
 
 .user-panel__status[data-status="info"]:not(:empty) {
-    background: var(--clouds-color);
-    border-color: var(--belizehole-color);
-    color: var(--belizehole-color);
+    background: var(--color-surface);
+    border-color: var(--color-link);
+    color: var(--color-link);
 }
 
 .user-panel__status[data-status="success"]:not(:empty) {
-    background: var(--clouds-color);
-    border-color: var(--greensea-color);
-    color: var(--greensea-color);
+    background: var(--color-surface);
+    border-color: var(--color-success);
+    color: var(--color-success);
 }
 
 .user-panel__status[data-status="error"]:not(:empty) {
-    background: var(--clouds-color);
-    border-color: var(--mandarin-color);
-    color: var(--mandarin-color);
+    background: var(--color-surface);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
 }

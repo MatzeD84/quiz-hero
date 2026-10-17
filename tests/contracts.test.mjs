@@ -252,3 +252,25 @@ test('admin import validation remains independent of DOM and flags duplicate que
     assert.equal(result[0].valid, false);
     assert.ok(result[0].errors.some(error => error.includes('bereits')));
 });
+
+
+test('CSS design values use central tokens with no unresolved references or cycles', () => {
+    const { findCssTokenViolations } = createRequire(import.meta.url)('../scripts/check-css-tokens.js');
+    assert.deepEqual(findCssTokenViolations(), []);
+    const definitions = path.resolve('styles/abstracts/tokens.css');
+    const component = path.resolve('styles/components/example.css');
+    const fixtures = new Map([
+        [definitions, ':root { --color-white: #fff; --a: var(--b); --b: var(--a); }'],
+        [component, '.example { color: #fff; padding: 8px; border-radius: 8px; font-size: 15px; gap: var(--missing); }']
+    ]);
+    const violations = findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) });
+    assert.ok(violations.some(issue => issue.includes('color literal')));
+    assert.ok(violations.some(issue => issue.includes('type scale')));
+    assert.ok(violations.some(issue => issue.includes('--missing')));
+    assert.ok(violations.some(issue => issue.includes('cycle')));
+    fixtures.set(definitions, ':root { --color-white: #fff; --space-2: 8px; }');
+    fixtures.set(component, '.example { color: color-mix(in srgb, var(--color-white) 12%, transparent); gap: var(--space-2); padding: 3px; border-radius: 3px; }');
+    assert.deepEqual(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }), []);
+    fixtures.set(definitions, ':root { --color-white: #fff; --space-2: 8px; ' + Array.from({ length: 11 }, (_, i) => `--text-${i}: 1rem;`).join(' ') + ' }');
+    assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('Too many --text-')));
+});

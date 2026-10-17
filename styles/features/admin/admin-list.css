@@ -1,58 +1,58 @@
 .admin-list {
     display: grid;
-    gap: 0.45rem;
+    gap: var(--space-8);
     list-style: none;
     margin: 0;
     max-height: 68vh;
     overflow: auto;
     padding: 0;
-    padding-right: 0.25rem;
+    padding-right: var(--space-4);
 }
 
 .admin-question-button {
     appearance: none;
-    background: #fff;
-    border: var(--line-frost);
-    color: var(--dark-color);
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    color: var(--color-text);
     cursor: pointer;
     display: grid;
-    gap: 0.2rem;
-    padding: 0.65rem 4.1rem 0.65rem 0.75rem;
+    gap: var(--space-4);
+    padding: var(--space-12) 4.1rem var(--space-12) var(--space-12);
     position: relative;
     text-align: left;
-    transition: var(--transition-soft);
+    transition: var(--transition-fast);
     width: 100%;
 }
 
 .admin-question-button:focus-visible,
 .admin-question-button--active {
-    border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    border-color: color-mix(in srgb, var(--color-link) 45%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .admin-question-button:hover {
-        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+        border-color: color-mix(in srgb, var(--color-link) 45%, transparent);
     }
 }
 
 .admin-question-button--active {
-    background: color-mix(in srgb, var(--belizehole-color) 8%, #fff);
+    background: color-mix(in srgb, var(--color-link) 8%, var(--color-white));
 }
 
 .admin-question-button__statuses {
     display: inline-flex;
-    gap: 0.25rem;
+    gap: var(--space-4);
     position: absolute;
-    right: 0.7rem;
-    top: 0.65rem;
+    right: var(--space-12);
+    top: var(--space-12);
 }
 
 .admin-question-button__status {
     align-items: center;
     border-radius: var(--radius-pill);
     display: inline-flex;
-    font-size: 0.78rem;
-    font-weight: 800;
+    font-size: var(--text-12);
+    font-weight: var(--font-weight-bold);
     height: 1.35rem;
     justify-content: center;
     line-height: 1;
@@ -60,28 +60,28 @@
 }
 
 .admin-question-button__status--active {
-    background: color-mix(in srgb, var(--greensea-color) 14%, #fff);
-    color: var(--greensea-color);
+    background: color-mix(in srgb, var(--color-success) 14%, var(--color-white));
+    color: var(--color-success);
 }
 
 .admin-question-button__status--inactive {
-    background: color-mix(in srgb, var(--mandarin-color) 12%, #fff);
-    color: var(--mandarin-color);
+    background: color-mix(in srgb, var(--color-danger) 12%, var(--color-white));
+    color: var(--color-danger);
 }
 
 .admin-question-button__status--reviewed {
-    background: color-mix(in srgb, var(--greensea-color) 14%, #fff);
-    color: var(--greensea-color);
+    background: color-mix(in srgb, var(--color-success) 14%, var(--color-white));
+    color: var(--color-success);
 }
 
 .admin-question-button__status--unreviewed {
-    background: color-mix(in srgb, var(--dark-gray-color) 10%, #fff);
-    color: var(--dark-gray-color);
+    background: color-mix(in srgb, var(--color-strong) 10%, var(--color-white));
+    color: var(--color-strong);
 }
 
 .admin-question-button__title {
     display: -webkit-box;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     line-clamp: 2;
     overflow-wrap: anywhere;
     overflow: hidden;
@@ -91,18 +91,18 @@
 
 .admin-question-button__meta,
 .admin-question-button__date {
-    color: var(--light-gray-color);
-    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-14);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .admin-question-button__date {
-    font-size: 0.78rem;
+    font-size: var(--text-12);
 }
 
 .admin-list__empty {
-    color: var(--light-gray-color);
-    padding: 0.75rem 0;
+    color: var(--color-text-muted);
+    padding: var(--space-12) 0;
 }

@@ -11,13 +11,13 @@
 
 .admin-tabs {
     box-sizing: border-box;
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--space-20);
 }
 
 .admin-panel,
 .admin-layout {
     display: grid;
-    gap: 1.25rem;
+    gap: var(--space-20);
     grid-template-columns: minmax(280px, 0.9fr) minmax(420px, 1.1fr);
 }
 
@@ -34,9 +34,9 @@
 .admin-section-heading {
     align-items: baseline;
     display: flex;
-    gap: 0.75rem;
+    gap: var(--space-12);
     justify-content: space-between;
-    margin-bottom: 0.85rem;
+    margin-bottom: var(--space-12);
 }
 
 .admin-section-heading h2 {
@@ -44,23 +44,23 @@
 }
 
 .admin-count {
-    color: var(--light-gray-color);
-    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-14);
     white-space: nowrap;
 }
 
 .admin-filters {
     display: grid;
-    gap: 0.65rem;
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    margin-bottom: 0.85rem;
+    margin-bottom: var(--space-12);
 }
 
 .admin-filters label,
 .admin-category-select {
     display: grid;
-    font-weight: 700;
-    gap: 0.25rem;
+    font-weight: var(--font-weight-bold);
+    gap: var(--space-4);
     min-width: 0;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .admin-category-select {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-16);
 }
 
 @media (max-width: 900px) {

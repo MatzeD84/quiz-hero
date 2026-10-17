@@ -4,15 +4,15 @@
 
 .admin-feedback-list {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--space-12);
 }
 
 .admin-feedback-card {
-    background: #fff;
-    border: var(--line-frost);
+    background: var(--color-surface);
+    border: var(--border-subtle);
     display: grid;
-    gap: 0.55rem;
-    padding: 0.85rem;
+    gap: var(--space-8);
+    padding: var(--space-12);
 }
 
 .admin-feedback-card h3,
@@ -21,33 +21,33 @@
 }
 
 .admin-feedback-card h3 {
-    font-family: "Source Sans 3", sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
+    font-family: var(--font-body);
+    font-size: var(--text-16);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 0;
 }
 
 .admin-feedback-card__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
+    gap: var(--space-4);
 }
 
 .admin-feedback-card__meta span {
-    background: color-mix(in srgb, var(--belizehole-color) 7%, #fff);
-    border: var(--line-frost);
-    color: var(--light-gray-color);
-    font-size: 0.8rem;
-    padding: 0.2rem 0.4rem;
+    background: color-mix(in srgb, var(--color-link) 7%, var(--color-white));
+    border: var(--border-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--text-12);
+    padding: var(--space-4) var(--space-8);
 }
 
 .admin-feedback-card__comment {
-    color: var(--dark-color);
+    color: var(--color-text);
     overflow-wrap: anywhere;
 }
 
 .admin-feedback-card__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: var(--space-12);
 }

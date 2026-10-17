@@ -1,10 +1,10 @@
 a {
-    color: var(--carrot-color);
-    transition: var(--transition-fade);
+    color: var(--color-accent);
+    transition: var(--transition-interactive);
 }
 
 @media (hover: hover) and (pointer: fine) {
     a:hover {
-        color: var(--amethyst-color);
+        color: var(--color-difficulty-hero);
     }
 }

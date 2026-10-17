@@ -1,9 +1,9 @@
 .user-panel__preview {
     align-items: center;
     display: flex;
-    font-weight: 700;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    gap: var(--space-12);
+    margin-bottom: var(--space-12);
 }
 
 .user-panel--logged-in {
@@ -24,8 +24,8 @@
 }
 
 .user-panel--logged-in .user-panel__preview-text span {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: var(--text-20);
+    font-weight: var(--font-weight-bold);
 }
 
 .user-panel--logged-in .account-tabs {
@@ -52,30 +52,30 @@
     cursor: pointer;
     display: grid;
     font: inherit;
-    gap: 0.15rem;
+    gap: var(--space-2);
     padding: 0;
     text-align: center;
     text-decoration: none;
 }
 
 .user-panel__avatar-link img {
-    border: 3px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
+    border: var(--border-width-focus) var(--border-style) color-mix(in srgb, var(--color-link) 16%, transparent);
     box-shadow: var(--shadow-avatar);
     height: 70px;
-    transition: border-color var(--transition-soft), transform var(--transition-soft);
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
     width: 70px;
 }
 
 .user-panel__avatar-link:focus-visible img {
-    border-color: var(--carrot-color);
+    border-color: var(--color-accent);
     transform: translateY(-1px);
 }
 
 .user-panel__avatar-hint {
-    color: var(--light-gray-color);
-    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-12);
     opacity: 0;
-    transition: opacity var(--transition-soft);
+    transition: opacity var(--transition-fast);
 }
 
 .user-panel__avatar-link:focus-visible .user-panel__avatar-hint {
@@ -84,7 +84,7 @@
 
 @media (hover: hover) and (pointer: fine) {
     .user-panel__avatar-link:hover img {
-        border-color: var(--carrot-color);
+        border-color: var(--color-accent);
         transform: translateY(-1px);
     }
 
@@ -95,10 +95,10 @@
 
 .user-panel__preview-text {
     display: grid;
-    gap: 0.2rem;
+    gap: var(--space-4);
 }
 
 .user-panel__preview-text a {
-    color: var(--belizehole-color);
-    font-size: 0.9rem;
+    color: var(--color-link);
+    font-size: var(--text-14);
 }

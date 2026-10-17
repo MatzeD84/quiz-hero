@@ -1,35 +1,56 @@
 # CSS-Design-System
 
-`public/styles.css` ist ein generiertes Build-Artefakt. Bitte Styles in den Dateien unter `styles/` bearbeiten und danach das Bundle neu bauen:
-
-```powershell
-node scripts/build-css.js
-```
-
-Beim Arbeiten am CSS kann der Watcher laufen bleiben. Er baut `public/styles.css` automatisch neu, sobald sich eine Datei unter `styles/` aendert:
-
-```powershell
-node scripts/watch-css.js
-```
+`public/styles.css` ist generiert. Styles ausschliesslich unter `styles/` bearbeiten und anschliessend `node scripts/build-css.js` ausfuehren. `node scripts/watch-css.js` baut Aenderungen automatisch neu.
 
 ## Struktur
 
-- `abstracts/`: zentrale Tokens wie Farben, Abstaende, Radien, Borders und Shadows
-- `base/`: Reset, Typografie, Links, Utilities und responsive Querschnittsregeln
-- `layout/`: globale Seitenbereiche wie Container, Header, Footer und Account-Navigation
-- `components/`: wiederverwendbare UI-Bloecke wie Buttons, Modals, Breadcrumbs, Badges, Forms, Statusboxen, Avatar-Picker und Action-Rows
-- `features/quiz/`: Quiz-spezifische BEM-Bloecke
-- `features/account/`: Login-, Registrierungs- und Profil-spezifische BEM-Bloecke
-- `features/admin/`: Admin- und Upload-spezifische BEM-Bloecke
-- `features/seo/`: SEO-Landingpage-spezifische BEM-Bloecke
+- `abstracts/tokens.css`: gemeinsame Designwerte und semantische Rollen.
+- `themes/beta-tokens.css`: Palette und Token-Ueberschreibungen des Beta-Designs.
+- `themes/beta.css`: Beta-Layout und Komponentenregeln mit diesen Tokens.
+- `base/`: Reset, Typografie, Links und responsive Querschnittsregeln.
+- `layout/`: Container, Header, Footer und Accountnavigation.
+- `components/`: wiederverwendbare UI-Bloecke wie Buttons, Formulare und Dialoge.
+- `features/`: Quiz-, Account-, Admin- und SEO-spezifische BEM-Bloecke.
+- `main.css`: verbindliche Importreihenfolge; Beta-Tokens und Beta-Regeln stehen zuletzt.
 
-## Regeln
+## Custom Properties verwenden
 
-- Neue Komponenten bekommen bevorzugt eine eigene Datei im passenden Ordner.
-- Gemeinsame Werte zuerst in `abstracts/tokens.css` pruefen, bevor neue Farben, Border-Radien oder Schatten direkt in Komponenten entstehen.
-- BEM-Bloecke bleiben moeglichst zusammen: Block, Elemente und Modifier liegen in derselben Datei.
-- `styles/main.css` bestimmt die finale Reihenfolge der CSS-Ausgabe.
+Farben immer zentral als semantische Rollen definieren, beispielsweise `--color-text`, `--color-surface`, `--color-border` oder `--color-answer-correct-bg`. Einmalige Transparenzen koennen direkt in der Komponente mit `color-mix()` aus diesen Rollen entstehen. Keine eigenen Alpha- oder Prozentwert-Tokenfamilien anlegen. Komponenten sollen ihre Rolle ausdruecken und keine eigene Palette aufbauen.
 
-## Beta-Entwurf
+Wiederverwendete Abstaende, Gaps, Schriftwerte, Radien, Border-Breiten, Schatten und Bewegungswerte verwenden ebenfalls Tokens. Vor einer neuen Definition nach einem passenden vorhandenen Token suchen. BEM-Block, Elemente und Modifier bleiben zusammen in der passenden Komponentendatei.
 
-Auf Branch `design/beta` liegt die experimentelle Gestaltung in `themes/beta.css`. Sie wird zuletzt importiert und kann unabhaengig vom Basisdesign verglichen werden. Vorschau und Rueckwechsel: [docs/BETA-DESIGN.md](../docs/BETA-DESIGN.md).
+```css
+.example {
+    color: var(--color-text);
+    background: var(--color-surface);
+    padding: var(--space-16);
+    gap: var(--space-8);
+    border: var(--border-width-thin) var(--border-style) var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-interactive);
+}
+```
+
+Die Skalen werden bewusst klein gehalten:
+
+- Schrift: 12, 14, 16, 18, 20, 24, 32, 48 und 64 Pixel als rem-Tokens, zum Beispiel `--text-16`. Hoechstens zehn Schriftgroessen. Responsive Headlines duerfen zwischen diesen Grenzen mit clamp() skalieren.
+- Abstaende: 2, 4, 8, 12, 16, 20, 24, 32, 48 und 64 Pixel als rem-Tokens, zum Beispiel `--space-16`. Der Name bezeichnet die Pixelgroesse bei 16 Pixel Basisschrift, keinen abstrakten Skalenindex.
+- Ecken: `--radius-sm` (6px), `--radius-md` (12px), `--radius-lg` (20px), dazu Pill und Kreis.
+
+Aehnliche Werte werden auf diese Skalen vereinheitlicht. Seltene optische Korrekturen und spezielle Geometrie duerfen direkt in der Komponente stehen. Nicht fuer jeden einmaligen Wert eine Variable erzeugen. Schriftfamilien verwenden `--font-body`, `--font-heading` und `--font-code`.
+
+Primitive Werte wie `0`, `auto`, `none`, `100%`, `transparent` und `currentColor` sowie einmalige Layoutgeometrie duerfen direkt stehen. Native Media-Query-Bedingungen verwenden weiterhin konkrete Breakpoints: CSS Custom Properties funktionieren dort nicht. Tokens fuer diese Bedingungen waeren irrefuehrend.
+
+## Pruefung
+
+```powershell
+node scripts/check-css-tokens.js
+node scripts/build-css.js
+node scripts/check-bem.js
+node --test tests/contracts.test.mjs
+```
+
+Der CSS-Build fuehrt die Token-Pruefung automatisch aus. Sie erkennt verstreute Farbwerte, zu grosse Token-Skalen, feste Schriftgroessen, Schriftfamilien, Bewegungszeiten, gemeinsame Border-Breiten und Schatten sowie nicht definierte Variablen und zyklische Referenzen. Die Pruefung ersetzt nicht die inhaltliche Entscheidung, welche Rolle ein neuer Token besitzt.
+
+Der Entwurf bleibt auf Branch `design/beta`. Vorschau und Rueckwechsel: [Beta-Design](../docs/BETA-DESIGN.md).

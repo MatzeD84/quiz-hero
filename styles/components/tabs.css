@@ -1,54 +1,54 @@
 .account-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    gap: var(--space-12);
+    margin-bottom: var(--space-16);
 }
 
 .tabs {
-    background: color-mix(in srgb, var(--belizehole-color) 8%, transparent);
-    border: var(--line-frost);
+    background: color-mix(in srgb, var(--color-link) 8%, transparent);
+    border: var(--border-subtle);
     display: inline-flex;
     flex-wrap: wrap;
     gap: 0;
     max-width: 100%;
     overflow: visible;
-    padding: 0.2rem;
+    padding: var(--space-4);
 }
 
 .tab {
     appearance: none;
     background: transparent;
     border: 0;
-    color: var(--dark-gray-color);
+    color: var(--color-strong);
     cursor: pointer;
     font: inherit;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     min-width: max-content;
-    padding: 0.55rem 1rem;
-    transition: var(--transition-fade);
+    padding: var(--space-8) var(--space-16);
+    transition: var(--transition-interactive);
     white-space: nowrap;
 }
 
 .tab:focus-visible {
-    color: var(--carrot-color);
+    color: var(--color-accent);
 }
 
 .tab--active {
-    background: var(--dark-gray-color);
-    color: var(--clouds-color);
+    background: var(--color-strong);
+    color: var(--color-on-primary);
 }
 
 .tab--active:focus-visible {
-    color: var(--clouds-color);
+    color: var(--color-on-primary);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .tab:hover {
-        color: var(--carrot-color);
+        color: var(--color-accent);
     }
 
     .tab--active:hover {
-        color: var(--clouds-color);
+        color: var(--color-on-primary);
     }
 }

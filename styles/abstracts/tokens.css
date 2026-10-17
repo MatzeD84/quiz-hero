@@ -1,40 +1,114 @@
+/* Shared scales and semantic roles. Keep exceptional geometry local. */
 :root {
-    --primary-color: #666;
-    --dark-color: #1E1E1E;
-    --dark-gray-color: #444;
-    --light-gray-color: #666;
-    --lighter-gray-color: #EDEDED;
-    --clouds-color: #ecf0f1;
-    --mandarin-color: #b52d20;      /* wrong */
-    --greensea-color: #08745f;      /* right */
-    --belizehole-color: #1B5C83;
-    --amethyst-color: #804398;      /* heavy questions*/
-    --carrot-color:#a94c08;
+    /* Ten spacing steps; exceptional geometry stays in the component. */
+    --space-2: 0.125rem;
+    --space-4: 0.25rem;
+    --space-8: 0.5rem;
+    --space-12: 0.75rem;
+    --space-16: 1rem;
+    --space-20: 1.25rem;
+    --space-24: 1.5rem;
+    --space-32: 2rem;
+    --space-48: 3rem;
+    --space-64: 4rem;
 
-    --gap-small: 0.5rem;
-    --gap: 0.75rem;
-    --transition-fade: all 0.3s ease;
-    --transition-soft: 160ms ease;
-    --filter-sepia: sepia(1) hue-rotate(0deg);
+    /* Nine font sizes, from captions to display headings. */
+    --text-12: 0.75rem;
+    --text-14: 0.875rem;
+    --text-16: 1rem;
+    --text-18: 1.125rem;
+    --text-20: 1.25rem;
+    --text-24: 1.5rem;
+    --text-32: 2rem;
+    --text-48: 3rem;
+    --text-64: 4rem;
 
-    --sm: 576px;
-    --md: 768px;
-    --lg: 992px;
-    --xl: 1200px;
-
-    --font-weight-light: 200;
-
-    --radius-soft: 10px;
-    --radius-field: 14px;
-    --radius-shell: 24px;
+    /* Three corner sizes plus pill and circle. */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
     --radius-pill: 999px;
+    --radius-circle: 50%;
 
-    --line-frost: 2px solid color-mix(in srgb, var(--belizehole-color) 12%, transparent);
-    --line-lagoon: 2px solid color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    --line-focus: 2px solid color-mix(in srgb, var(--belizehole-color) 18%, transparent);
-    --line-cloud: 2px solid var(--clouds-color);
+    /* Colors */
+    --color-backdrop: rgb(0 0 0 / 65%);
+    --color-accent: #a94c08;
+    --color-border: #dce5ef;
+    --color-border-strong: #777;
+    --color-danger: #b52d20;
+    --color-danger-text: #8f2d2d;
+    --color-difficulty-hero: #804398;
+    --color-link: #1B5C83;
+    --color-notice: #f1c40f;
+    --color-on-primary: var(--color-surface);
+    --color-page: #fff;
+    --color-primary: #666;
+    --color-strong: #444;
+    --color-success: #08745f;
+    --color-surface: #ecf0f1;
+    --color-surface-muted: #EDEDED;
+    --color-text: #1E1E1E;
+    --color-text-muted: #666;
+    --color-text-secondary: var(--color-text);
+    --color-white: #fff;
 
-    --shadow-shell: 0 18px 55px color-mix(in srgb, var(--belizehole-color) 12%, transparent);
-    --shadow-avatar: 0 8px 22px color-mix(in srgb, var(--belizehole-color) 16%, transparent);
-    --ring-avatar-selected: 0 0 0 4px color-mix(in srgb, var(--carrot-color) 32%, transparent);
+    /* Typography */
+    --font-fallback: Arial, sans-serif;
+    --font-body: "Source Sans 3", sans-serif;
+    --font-code: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    --font-heading: "Oswald", sans-serif;
+    --font-weight-bold: 700;
+    --font-weight-heading: 300;
+    --font-weight-medium: 500;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --line-height-body: 1.5;
+    --line-height-heading: 1.35;
+    --line-height-tight: 1.15;
+
+    /* Shape and borders */
+    --border-input: var(--border-width-strong) var(--border-style) color-mix(in srgb, var(--color-link) 18%, transparent);
+    --border-inverse: var(--border-width-strong) var(--border-style) var(--color-surface);
+    --border-panel: var(--border-width-strong) var(--border-style) color-mix(in srgb, var(--color-link) 16%, transparent);
+    --border-style: solid;
+    --border-subtle: var(--border-width-strong) var(--border-style) color-mix(in srgb, var(--color-link) 12%, transparent);
+    --border-width-focus: 3px;
+    --border-width-strong: 2px;
+    --border-width-thin: 1px;
+
+    /* Controls and stacking */
+    --control-height: 46px;
+    --control-size-touch: 44px;
+    --z-badge: 9;
+    --z-media-watermark: 2;
+    --z-modal: 20;
+    --z-navigation: 5;
+    --z-sticky-status: 12;
+
+    /* Motion */
+    --duration-160: 160ms;
+    --duration-180: 180ms;
+    --duration-300: 0.3s;
+    --duration-feedback: 0.15s;
+    --duration-image: 350ms;
+    --duration-score: 1s;
+    --easing-standard: ease;
+    --transition-fast: var(--duration-160) var(--easing-standard);
+    --transition-interactive: all var(--duration-300) var(--easing-standard);
+
+    /* Shadows */
+    --ring-avatar-selected: 0 0 0 4px color-mix(in srgb, var(--color-accent) 32%, transparent);
+    --shadow-avatar: 0 8px 22px color-mix(in srgb, var(--color-link) 16%, transparent);
+    --shadow-bleed-accent: 0 0 0 100vmax var(--color-accent);
+    --shadow-bleed-muted: 0 0 0 100vmax var(--color-surface-muted);
+    --shadow-modal-base: 0 24px 70px color-mix(in srgb, var(--color-text) 28%, transparent);
+    --shadow-shell: 0 18px 55px color-mix(in srgb, var(--color-link) 12%, transparent);
+
+    /* Other shared values */
+    --filter-sepia: sepia(1) hue-rotate(0deg);
+    /* Tracking */
+    --tracking-dot-04em: .04em;
+    --tracking-dot-08em: .08em;
+    --tracking-dot-15em: .15em;
+    --tracking-heading: 2px;
 }

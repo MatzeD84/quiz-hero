@@ -1,6 +1,6 @@
 .consent-banner__actions {
     display: grid;
-    gap: var(--gap);
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
 }
 ﻿

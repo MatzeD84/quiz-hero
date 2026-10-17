@@ -1,0 +1,52 @@
+/* Beta token overrides and component state colors. No layout selectors in this file. */
+:root {
+
+    /* Colors */
+    --color-accent: #136c83;
+    --color-answer-correct-bg: #e3f2e7;
+    --color-answer-correct-border: #6eab81;
+    --color-answer-correct-text: #155238;
+    --color-answer-hover-bg: #eaf5fa;
+    --color-answer-incorrect-bg: #fcebea;
+    --color-answer-incorrect-border: #d9918b;
+    --color-answer-incorrect-text: #9a2a28;
+    --color-badge-bg: #d9f3f0;
+    --color-border: #dce5ef;
+    --color-danger: #ab302d;
+    --color-focus: #136c83;
+    --color-highlight: #cbf1ec;
+    --color-input-border: #c1d0df;
+    --color-input-focus: #397b99;
+    --color-link: #156c80;
+    --color-on-primary: #fff;
+    --color-overlay: #112c48d9;
+    --color-page: #f4f7fb;
+    --color-primary: #147b86;
+    --color-progress: #19798b;
+    --color-strong: #324c68;
+    --color-success: #17634b;
+    --color-surface: #fff;
+    --color-surface-muted: #edf3f8;
+    --color-text: #172d46;
+    --color-text-muted: #5c6d82;
+
+    /* Typography */
+
+    /* Shape and borders */
+    --border-input: var(--border-width-thin) var(--border-style) #aabed0;
+    --border-panel: var(--border-width-thin) var(--border-style) var(--color-border);
+    --border-subtle: var(--border-width-thin) var(--border-style) var(--color-border);
+
+    /* Motion */
+    --transition-interactive: background-color var(--duration-180) var(--easing-standard), color var(--duration-180) var(--easing-standard), transform var(--duration-180) var(--easing-standard), box-shadow var(--duration-180) var(--easing-standard);
+
+    /* Shadows */
+    --shadow-badge: 0 2px 10px #0001;
+    --shadow-card: 0 3px 8px #17365703;
+    --shadow-card-hover: 0 14px 30px #17365710;
+    --shadow-list-selected: inset 3px 0 #277c97;
+    --shadow-modal: 0 30px 100px #102e4b33;
+    --shadow-quiz: 0 12px 48px #17365706;
+    --shadow-shell: 0 12px 40px #17365708;
+    --shadow-tab: 0 2px 5px #1736570a;
+}

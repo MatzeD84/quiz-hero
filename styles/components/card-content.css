@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px 0;
+    padding: var(--space-8) 0;
 }
 
 .category-card__title,
@@ -14,22 +14,22 @@
 
 .category-card__description,
 .tag-card__description {
-    font-size: 14px;
-    font-weight: var(--font-weight-light);
+    font-size: var(--text-14);
+    font-weight: var(--font-weight-regular);
 }
 
 .category-card__cta,
 .tag-card__cta {
     align-self: center;
-    margin-top: 8px;
-    padding: 4px 12px;
-    border: 1px solid color-mix(in srgb, var(--clouds-color) 55%, transparent);
-    font-size: 14px;
-    font-weight: var(--font-weight-light);
+    margin-top: var(--space-8);
+    padding: var(--space-4) var(--space-12);
+    border: var(--border-width-thin) var(--border-style) color-mix(in srgb, var(--color-surface) 55%, transparent);
+    font-size: var(--text-14);
+    font-weight: var(--font-weight-regular);
     line-height: 1.2;
-    color: var(--clouds-color);
-    background: color-mix(in srgb, var(--dark-color) 16%, transparent);
-    transition: var(--transition-fade);
+    color: var(--color-on-primary);
+    background: color-mix(in srgb, var(--color-text) 16%, transparent);
+    transition: var(--transition-interactive);
 }
 
 .category-card__cta::after,
@@ -39,14 +39,14 @@
 
 .category-card:focus-visible .category-card__cta,
 .tag-card:focus-visible .tag-card__cta {
-    border-color: var(--carrot-color);
-    background: var(--carrot-color);
+    border-color: var(--color-accent);
+    background: var(--color-accent);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .category-card:hover .category-card__cta,
     .tag-card:hover .tag-card__cta {
-        border-color: var(--carrot-color);
-        background: var(--carrot-color);
+        border-color: var(--color-accent);
+        background: var(--color-accent);
     }
 }

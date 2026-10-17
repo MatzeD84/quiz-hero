@@ -8,7 +8,7 @@
 
 .account-empty {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--space-12);
     justify-items: start;
 }
 
@@ -17,5 +17,5 @@
 }
 
 .account-page__back a {
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
 }

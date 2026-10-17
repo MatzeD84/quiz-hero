@@ -3,7 +3,7 @@
 .admin-form,
 .admin-login {
     display: grid;
-    gap: 0.85rem;
+    gap: var(--space-12);
 }
 
 .user-panel__form,
@@ -16,19 +16,19 @@
 .admin-form label,
 .admin-login label {
     display: grid;
-    font-weight: 700;
-    gap: 0.25rem;
+    font-weight: var(--font-weight-bold);
+    gap: var(--space-4);
 }
 
 .login-panel input,
 .account-page-form input {
-    border: var(--line-focus);
-    border-radius: var(--radius-field);
+    border: var(--border-input);
+    border-radius: var(--radius-md);
     font: inherit;
-    padding: 0.7rem 0.85rem;
+    padding: var(--space-12) var(--space-12);
 }
 
 .account-checkbox input {
-    margin-top: 0.3rem;
+    margin-top: var(--space-4);
     width: auto;
 }

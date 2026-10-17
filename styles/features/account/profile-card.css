@@ -1,10 +1,10 @@
 .account-profile-card {
     align-items: center;
-    border-bottom: var(--line-frost);
+    border-bottom: var(--border-subtle);
     display: flex;
-    gap: 1.25rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
+    gap: var(--space-20);
+    margin-bottom: var(--space-24);
+    padding-bottom: var(--space-24);
 }
 
 .account-profile-card__avatar {
@@ -14,31 +14,31 @@
     cursor: pointer;
     display: grid;
     font: inherit;
-    gap: 0.25rem;
+    gap: var(--space-4);
     justify-items: center;
     padding: 0;
 }
 
 .account-profile-card__avatar span {
-    color: var(--carrot-color);
-    font-size: 0.85rem;
-    font-weight: 700;
+    color: var(--color-accent);
+    font-size: var(--text-14);
+    font-weight: var(--font-weight-bold);
     text-decoration: underline;
 }
 
 .account-profile-card__avatar:focus-visible span {
-    color: var(--carrot-color);
+    color: var(--color-accent);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .account-profile-card__avatar:hover span {
-        color: var(--carrot-color);
+        color: var(--color-accent);
     }
 }
 
 .account-profile-card__body {
     display: grid;
-    gap: 0.15rem;
+    gap: var(--space-2);
     text-align: left;
 }
 
@@ -48,9 +48,9 @@
 }
 
 .account-profile-card h2 {
-    font-size: clamp(2rem, 4vw, 2.7rem);
+    font-size: clamp(var(--text-32), 4vw, var(--text-48));
 }
 
 .account-profile-card p {
-    font-size: 1.05rem;
+    font-size: var(--text-16);
 }

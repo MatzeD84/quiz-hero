@@ -1,6 +1,6 @@
 .admin-media-panel {
     display: grid;
-    gap: 1.25rem;
+    gap: var(--space-20);
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.45fr);
 }
 
@@ -16,7 +16,7 @@
 .admin-checkbox-inline {
     align-items: end;
     display: flex !important;
-    gap: 0.5rem !important;
+    gap: var(--space-8) !important;
 }
 
 .admin-checkbox-inline input {
@@ -25,65 +25,65 @@
 
 .admin-media-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    margin-top: 1rem;
+    margin-top: var(--space-16);
 }
 
 .admin-media-card {
     appearance: none;
-    background: #fff;
-    border: var(--line-frost);
-    color: var(--dark-color);
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    color: var(--color-text);
     cursor: pointer;
     display: grid;
-    gap: 0.45rem;
+    gap: var(--space-8);
     min-width: 0;
-    padding: 0.55rem;
+    padding: var(--space-8);
     text-align: left;
-    transition: var(--transition-soft);
+    transition: var(--transition-fast);
 }
 
 .admin-media-card:focus-visible,
 .admin-media-card--active {
-    border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+    border-color: color-mix(in srgb, var(--color-link) 45%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .admin-media-card:hover {
-        border-color: color-mix(in srgb, var(--belizehole-color) 45%, transparent);
+        border-color: color-mix(in srgb, var(--color-link) 45%, transparent);
     }
 }
 
 .admin-media-card img {
     aspect-ratio: 4 / 3;
-    background: color-mix(in srgb, var(--belizehole-color) 6%, #fff);
+    background: color-mix(in srgb, var(--color-link) 6%, var(--color-white));
     object-fit: contain;
     width: 100%;
 }
 
 .admin-media-card__name {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .admin-media-card__meta {
-    color: var(--light-gray-color);
-    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-14);
 }
 
 .admin-media-detail {
     align-self: start;
-    border: var(--line-frost);
+    border: var(--border-subtle);
     display: grid;
-    gap: 0.85rem;
-    padding: 1rem;
+    gap: var(--space-12);
+    padding: var(--space-16);
 }
 
 .admin-media-detail__image {
-    background: #fff;
+    background: var(--color-surface);
     max-height: 280px;
     object-fit: contain;
     width: 100%;
@@ -91,18 +91,18 @@
 
 .admin-media-detail__meta {
     display: grid;
-    gap: 0.45rem;
+    gap: var(--space-8);
     margin: 0;
 }
 
 .admin-media-detail__meta div {
     display: grid;
-    gap: 0.1rem;
+    gap: var(--space-2);
 }
 
 .admin-media-detail__meta dt,
 .admin-media-detail__usage h3 {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .admin-media-detail__meta dd {
@@ -112,22 +112,22 @@
 
 .admin-media-detail__usage ul {
     display: grid;
-    gap: 0.55rem;
+    gap: var(--space-8);
     margin: 0;
-    padding-left: 1.1rem;
+    padding-left: var(--space-16);
 }
 
 .admin-media-detail__usage li {
     display: grid;
-    gap: 0.25rem;
+    gap: var(--space-4);
 }
 
 .admin-media-detail__actions {
     display: grid;
-    gap: 0.65rem;
+    gap: var(--space-12);
 }
 
 .admin-media-detail__note {
-    color: var(--light-gray-color);
+    color: var(--color-text-muted);
     margin: 0;
 }

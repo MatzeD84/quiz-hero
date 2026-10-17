@@ -1,22 +1,22 @@
 .quiz__answer {
     display: grid;
-    gap: var(--gap);
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
 }
 
 .btn--quiz-answer {
-    border: 2px solid transparent;
+    border: var(--border-width-strong) var(--border-style) transparent;
 }
 
 .btn--quiz-answer:disabled {
-    background-color: var(--dark-gray-color);
+    background-color: var(--color-strong);
     cursor: default;
 }
 
 .btn--quiz-answer.btn--answer-correct {
-    background-color: var(--greensea-color);
+    background-color: var(--color-success);
 }
 
 .btn--quiz-answer.btn--answer-incorrect {
-    background-color: var(--mandarin-color);
+    background-color: var(--color-danger);
 }

@@ -1,5 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { findCssTokenViolations } = require('./check-css-tokens.js');
+const tokenViolations = findCssTokenViolations();
+if (tokenViolations.length) throw new Error('CSS token policy failed:\n' + tokenViolations.join('\n'));
 
 const rootDir = path.resolve(__dirname, '..');
 const manifestPath = path.join(rootDir, 'styles', 'main.css');

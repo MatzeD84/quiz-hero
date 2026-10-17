@@ -10,17 +10,17 @@
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    gap: var(--gap-small);
-    margin-top: 1rem;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
 }
 
 .question-count__description {
     margin-top: 0;
-    color: var(--light-gray-color);
+    color: var(--color-text-muted);
 }
 
 .question-count__selection-wrapper {
- margin-bottom: var(--gap-small);
+ margin-bottom: var(--space-8);
 }
 
 .question-count__icon {
@@ -39,38 +39,38 @@
 
 .question-count__options {
     display: grid;
-    gap: var(--gap);
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-    margin-top: var(--gap-small);
+    margin-top: var(--space-8);
 }
 
 .quiz__question {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-16);
     margin-top: 0;
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
 }
 
 .question-count__back {
     background: none;
     border: none;
-    margin-top: 1.5rem;
-    transition: var(--transition-fade);
+    margin-top: var(--space-24);
+    transition: var(--transition-interactive);
     cursor: pointer;
 }
 
 .question-count__back-text {
-    font-size: 1.1rem;
-    color: var(--carrot-color);
+    font-size: var(--text-18);
+    color: var(--color-accent);
     text-decoration: underline;
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
 }
 
 @media (hover: hover) and (pointer: fine) {
     .question-count__back:hover {
-        color: var(--carrot-color)
+        color: var(--color-accent)
     }
 
     .question-count__back-text:hover {
-        color: var(--amethyst-color);
+        color: var(--color-difficulty-hero);
     }
 }

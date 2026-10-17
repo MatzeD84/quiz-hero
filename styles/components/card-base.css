@@ -4,13 +4,13 @@
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    color: var(--clouds-color);
+    color: var(--color-on-primary);
 }
 
 .category-card:hover,
 .category-card:visited,
 .category-card:focus {
-    color: var(--clouds-color);
+    color: var(--color-on-primary);
     text-decoration: none;
 }
 
@@ -26,7 +26,7 @@
     height: auto;
     aspect-ratio: 3 / 2;
     object-fit: cover;
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
 }
 
 @media (hover: hover) and (pointer: fine) {

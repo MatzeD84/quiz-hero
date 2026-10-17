@@ -365,19 +365,12 @@ export class QuizView {
         this.hideElement(this.elements.questionCountContainer);
         this.hideElement(this.elements.quizContent);
         this.hideElement(this.elements.nextButton);
-        this.focusHeading(this.elements.categoryContainer);
     }
 
     showQuestionCount() {
         this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.hideElement(this.elements.categoryContainer);
         this.showElement(this.elements.questionCountContainer);
-        this.focusHeading(this.elements.questionCountContainer);
-    }
-
-    focusHeading(container) {
-        const heading = container?.querySelector('h1, h2, h3');
-        if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
     }
 
     showQuiz() {
@@ -399,8 +392,6 @@ export class QuizView {
                 : LABELS.questions.default;
 
         questionElement.textContent = question.question;
-        questionElement.tabIndex = -1;
-        questionElement.focus();
         if (questionImage) questionImage.alt = question.imageAlt || "Abbildung zur Quizfrage";
         quizHeadertext.textContent = headerLabel;
         quizContent.dataset.difficulty = difficulty;

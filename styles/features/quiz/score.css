@@ -10,7 +10,7 @@
     font-variant-numeric: tabular-nums;
     margin: 0;
     opacity: 1;
-    transition: opacity 0.15s ease;
+    transition: opacity var(--duration-feedback) var(--easing-standard);
     white-space: nowrap;
 }
 
@@ -18,8 +18,8 @@
     align-items: center;
     bottom: 0;
     display: flex;
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: var(--text-18);
+    font-weight: var(--font-weight-bold);
     justify-content: flex-end;
     left: 0;
     opacity: 0;
@@ -34,15 +34,15 @@
 }
 
 .quiz__score-change--gained {
-    color: var(--greensea-color);
+    color: var(--color-success);
 }
 
 .quiz__score-change--none {
-    color: var(--mandarin-color);
+    color: var(--color-danger);
 }
 
 .quiz__score-change--visible {
-    animation: score-change-feedback 1s ease-out;
+    animation: score-change-feedback var(--duration-score) var(--easing-standard)-out;
 }
 
 @keyframes score-change-feedback {

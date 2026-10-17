@@ -1,22 +1,22 @@
 /* === FAQ / Details (SEO Landingpages) === */
 details {
-    border: 1px solid var(--lighter-gray-color);
-    border-radius: var(--radius-soft);
-    padding: var(--gap-small) var(--gap);
-    background-color: var(--clouds-color);
-    margin-bottom: var(--gap-small);
+    border: var(--border-width-thin) var(--border-style) var(--color-surface-muted);
+    border-radius: var(--radius-md);
+    padding: var(--space-8) var(--space-12);
+    background-color: var(--color-surface);
+    margin-bottom: var(--space-8);
 }
 
 details[open] {
-    background-color: var(--clouds-color);
+    background-color: var(--color-surface);
 }
 
 summary {
     position: relative;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     list-style: none;
-    padding-right: 2rem;
+    padding-right: var(--space-32);
 }
 
 summary::-webkit-details-marker {
@@ -30,11 +30,11 @@ summary::after {
     right: 0;
     width: 0.6rem;
     height: 0.6rem;
-    border-right: 3px solid currentColor;
-    border-bottom: 3px solid currentColor;
+    border-right: var(--border-width-focus) var(--border-style) currentColor;
+    border-bottom: var(--border-width-focus) var(--border-style) currentColor;
     transform: translateY(-60%) rotate(45deg);
     transform-origin: 50% 50%;
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
 }
 
 details[open] summary::after {

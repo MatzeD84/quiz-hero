@@ -1,23 +1,23 @@
 .account-avatar-field {
-    border: var(--line-frost);
+    border: var(--border-subtle);
     display: grid;
-    gap: 0.9rem;
+    gap: var(--space-16);
     grid-column: 1 / -1;
     justify-items: center;
-    padding: 1rem;
+    padding: var(--space-16);
 }
 
 .account-avatar-field__title {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin: 0;
 }
 
 .account-avatar-option {
     align-items: center;
-    border: var(--line-frost);
+    border: var(--border-subtle);
     display: flex !important;
-    gap: 0.75rem !important;
-    padding: 0.65rem;
+    gap: var(--space-12) !important;
+    padding: var(--space-12);
 }
 
 .account-avatar-option img {
@@ -30,7 +30,7 @@
 .account-avatar-field:has(.account-avatar-option--compact) {
     align-items: center;
     display: grid;
-    gap: 0.8rem;
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
 }
 
@@ -43,7 +43,7 @@
     cursor: pointer;
     display: grid !important;
     gap: 0 !important;
-    padding: 0.45rem;
+    padding: var(--space-8);
     place-items: center;
 }
 
@@ -51,7 +51,7 @@
 .account-avatar-option--compact input,
 .account-avatar-option--modal input {
     height: 1px;
-    margin: -1px;
+    margin: calc(-1 * var(--space-2));
     opacity: 0;
     overflow: hidden;
     position: absolute;
@@ -61,7 +61,7 @@
 
 .account-avatar-option--compact img {
     height: clamp(48px, 8vw, 64px);
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
     width: clamp(48px, 8vw, 64px);
 }
 
@@ -81,12 +81,12 @@
 
 .avatar-modal {
     display: grid;
-    gap: 1rem;
+    gap: var(--space-16);
 }
 
 .avatar-modal__grid {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
 }
 
@@ -99,14 +99,14 @@
     display: grid !important;
     gap: 0 !important;
     justify-items: center;
-    color: var(--clouds-color);
-    padding: 0.85rem;
-    transition: var(--transition-fade);
+    color: var(--color-on-primary);
+    padding: var(--space-12);
+    transition: var(--transition-interactive);
 }
 
 .account-avatar-option--modal img {
     height: clamp(64px, 12vw, 92px);
-    transition: var(--transition-fade);
+    transition: var(--transition-interactive);
     width: clamp(64px, 12vw, 92px);
 }
 

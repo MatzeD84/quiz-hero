@@ -2,11 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--gap-small);
+    gap: var(--space-8);
 }
 
 .background-knowledge {
-    margin-top: var(--gap-small);
+    margin-top: var(--space-8);
 }
 
 .background-knowledge__content {
