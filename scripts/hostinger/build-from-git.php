@@ -45,7 +45,7 @@ file_put_contents($seoFile, $seo);
 foreach (['SITE_URL' => $target['siteUrl'], 'HOSTINGER_SITE_ROOT' => $siteRoot, 'DEPLOY_ENVIRONMENT' => $target['environment'], 'SEO_EXPORT_FILE' => $seoFile, 'ASSET_VERSION' => $version, 'DEPLOY_COMMIT' => $commit] as $key => $value) putenv($key . '=' . $value);
 echo run_command([$node, 'scripts/build-hostinger.js']);
 $archive = $siteRoot . '/private/' . $version . '.tar.gz';
-echo run_command(['tar', '--format=ustar', '--mode=u+rwX,go+rX', '-czf', $archive, '-C', $root . '/.build/hostinger/public', '.']);
+echo run_command(['tar', '--format=ustar', '--owner=0', '--group=0', '--mode=u+rwX,go+rX', '-czf', $archive, '-C', $root . '/.build/hostinger/public', '.']);
 echo run_command(['bash', $siteRoot . '/private/release.sh', $version, hash_file('sha256', $archive)]);
 try {
     echo run_command([PHP_BINARY, $siteRoot . '/private/verify-http.php', $version]);
