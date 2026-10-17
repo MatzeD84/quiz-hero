@@ -16,7 +16,7 @@
 
 .modal__headline {
     color: var(--dark-color);
-    font-family: "Source Sans 3", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: clamp(1.45rem, 4vw, 1.9rem);
     font-weight: 800;
     letter-spacing: 0;
@@ -132,7 +132,7 @@
 
 .result-summary__kicker {
     color: color-mix(in srgb, var(--dark-color) 62%, transparent);
-    font-family: "Source Sans 3", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0;
@@ -141,7 +141,7 @@
 
 .result-summary__headline {
     color: var(--dark-color);
-    font-family: "Source Sans 3", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: clamp(1.35rem, 4vw, 1.85rem);
     font-weight: 800;
     letter-spacing: 0;
@@ -178,7 +178,7 @@
 }
 
 .result-summary__score-value span {
-    font-family: "Source Sans 3", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: 1.05rem;
     font-weight: 700;
 }
@@ -186,7 +186,7 @@
 .result-summary__solved,
 .result-summary__rules {
     color: color-mix(in srgb, var(--dark-color) 72%, transparent);
-    font-family: "Source Sans 3", sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: 0.95rem;
 }
 
