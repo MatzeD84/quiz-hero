@@ -16,7 +16,7 @@ Die existierenden lokalen Anmeldungen funktionieren weiter. Auf der Loginseite k
 
 ## Gestaltung
 
-Helle kuehle Flaechen, dunkles Blau, Petrol und ein dezenter Mint-Akzent. Oswald fuer Fliesstext und Ueberschriften. Klarere Typografie, Bildkarten fuer Orte und kompakte Themenkarten. Quizantworten besitzen Buchstaben sowie erkennbare Richtig-/Falsch-Symbole. Formulare, Adminlisten, Navigation, Dialoge und Profil sind auf die gemeinsame Gestaltung abgestimmt.
+Helle kuehle Flaechen, dunkles Blau, Petrol und ein dezenter Mint-Akzent. Originale Schriftkombination: Source Sans 3 im Fliesstext (16px), Oswald fuer Ueberschriften (Gewicht 300, 2px Buchstabenabstand). Klarere Typografie, Bildkarten fuer Orte und kompakte Themenkarten. Quizantworten besitzen Buchstaben sowie erkennbare Richtig-/Falsch-Symbole. Formulare, Adminlisten, Navigation, Dialoge und Profil sind auf die gemeinsame Gestaltung abgestimmt.
 
 Der Entwurf liegt bewusst als abschliessende Theme-Schicht unter `styles/themes/beta.css`. `styles/main.css` bindet sie ein; `node scripts/build-css.js` erzeugt `public/styles.css`. So bleibt der Vergleich mit der bisherigen Gestaltung einfach. Bei Uebernahme kann die Theme-Schicht schrittweise in die Komponenten aufgeteilt werden.
 
@@ -41,4 +41,4 @@ Keine der beiden Fassungen muss fuer einen Vergleich geloescht werden. Die Daten
 
 ## Kompakte zweite Fassung
 
-Die Startseite verwendet eine schmale Marken-Kopfzeile statt einer grossen Begruessungsflaeche. Mobil entfaellt der zusaetzliche Beschreibungstext. Im Quiz sitzen Kategorie, Fortschritt, Punkte und Abbrechen in einer kompakten Zeile. Die Accountnavigation ist waehrend der Runde ausgeblendet und nach dem Verlassen wieder verfuegbar. Fragen sind mobil 18 Pixel gross, Bilder auf maximal 220 Pixel beziehungsweise 28 Prozent der Viewporthoehe begrenzt. Antwortflaechen bleiben mindestens 50 Pixel hoch; Abbrechen hat mobil ein 44-Pixel-Touchziel.
+Die Startseite verwendet eine schmale Marken-Kopfzeile statt einer grossen Begruessungsflaeche. Mobil entfaellt der zusaetzliche Beschreibungstext. Im Quiz sitzen Kategorie, Fortschritt, Punkte und Abbrechen in einer kompakten Zeile. Die Accountnavigation ist waehrend der Runde ausgeblendet und nach dem Verlassen wieder verfuegbar. Fragen entsprechen mit 16 Pixeln und Gewicht 400 der urspruenglichen Quiztypografie. Bilder sind auf maximal 220 Pixel beziehungsweise 28 Prozent der Viewporthoehe begrenzt. Antwortflaechen bleiben mindestens 50 Pixel hoch; Abbrechen hat mobil ein 44-Pixel-Touchziel.
