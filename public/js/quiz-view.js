@@ -365,12 +365,19 @@ export class QuizView {
         this.hideElement(this.elements.questionCountContainer);
         this.hideElement(this.elements.quizContent);
         this.hideElement(this.elements.nextButton);
+        this.focusHeading(this.elements.categoryContainer);
     }
 
     showQuestionCount() {
         this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.hideElement(this.elements.categoryContainer);
         this.showElement(this.elements.questionCountContainer);
+        this.focusHeading(this.elements.questionCountContainer);
+    }
+
+    focusHeading(container) {
+        const heading = container?.querySelector('h1, h2, h3');
+        if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
     }
 
     showQuiz() {
@@ -418,6 +425,7 @@ export class QuizView {
                 questionImage.classList.add('u-hidden');
                 this.renderBackgroundKnowledge('Das Bild konnte nicht geladen werden. Du kannst diese Frage mit Weiter überspringen.');
                 this.elements.nextButton.classList.remove('u-hidden');
+                question.skipped = true;
             };
             loader.src = imageUrl;
         } else {
@@ -481,6 +489,7 @@ export class QuizView {
             btn.disabled = true;
         });
         this.elements.nextButton.classList.remove('u-hidden');
+        this.elements.nextButton.focus({ preventScroll: true });
     }
 
     updateScore(score, { pointsGained } = {}) {
@@ -705,6 +714,7 @@ export class QuizView {
         const button = this.elements.answerButtons[index];
         if (button) {
             button.disabled = true;
+            this.elements.answerButtons.find(candidate => !candidate.disabled)?.focus();
         }
     }
 

@@ -5,13 +5,13 @@ import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
 import { spawn } from 'node:child_process';
-import { validateCategories, validateTags } from '../js/validators.js';
-import { QuizDataService } from '../js/quiz-data-service.js';
-import { UserService, SESSION_EXPIRED_MESSAGE } from '../js/user-service.js';
+import { validateCategories, validateTags } from '../public/js/validators.js';
+import { QuizDataService } from '../public/js/quiz-data-service.js';
+import { UserService, SESSION_EXPIRED_MESSAGE } from '../public/js/user-service.js';
 import { createRequire } from 'node:module';
-import { createFormGuard } from '../js/form-guard.js';
-import { QuizState } from '../js/quiz-state.js';
-import { revealStatus } from '../js/status-navigation.js';
+import { createFormGuard } from '../public/js/form-guard.js';
+import { QuizState } from '../public/js/quiz-state.js';
+import { revealStatus } from '../public/js/status-navigation.js';
 
 test('status feedback scrolls into view and respects reduced motion', () => {
     const previousWindow = globalThis.window;
@@ -215,4 +215,40 @@ test('SEO export fails closed, excludes inactive questions, removes stale genera
         if (!fileTransport) await new Promise(resolve => server.close(resolve));
         fs.rmSync(temp, { recursive: true, force: true });
     }
+});
+
+test('question counts and unfinished navigation cannot corrupt a round', () => {
+    const state = new QuizState();
+    for (const value of [-2, '5abc', 0, 1.5, '', null]) assert.throws(() => state.applyCountLimit([1, 2, 3], value));
+    assert.deepEqual(state.applyCountLimit([1, 2], '5'), [1, 2]);
+    state.currentSequence = [{ correct: 0 }, { correct: 1 }];
+    state.nextQuestion();
+    assert.equal(state.currentIndex, 0);
+    state.registerAttempt(false, 'easy');
+    state.registerAttempt(false, 'easy');
+    state.nextQuestion();
+    assert.equal(state.currentIndex, 1);
+});
+
+test('blocked optional storage retains the in-memory profile and cookie session lookup', async () => {
+    const previousWindow = globalThis.window;
+    globalThis.window = { localStorage: { getItem() { throw Error('blocked'); }, setItem() { throw Error('blocked'); }, removeItem() { throw Error('blocked'); } }, sessionStorage: { getItem() { throw Error('blocked'); }, setItem() { throw Error('blocked'); }, removeItem() { throw Error('blocked'); } } };
+    try {
+        let calls = 0;
+        const user = { id: 42, username: 'hero' };
+        const service = new UserService({ fetchFn: async () => { calls++; return { ok: true, text: async () => JSON.stringify({ ok: true, user }) }; } });
+        assert.equal((await service.getCurrentUser(null)).id, 42);
+        assert.equal(calls, 1);
+        assert.equal(service.getStoredUser().id, 42);
+        service.clearUser();
+        assert.equal(service.getStoredUser(), null);
+    } finally { globalThis.window = previousWindow; }
+});
+
+test('admin import validation remains independent of DOM and flags duplicate questions', async () => {
+    const { validateImportQuestions } = await import('../public/js/admin/import-validation.js');
+    const entry = { categoryId: 'rom', question: 'Existing?', answers: ['A','B','C','D'], correct: 0 };
+    const result = validateImportQuestions([entry], { questions: [{question:'Existing?'}], categories:[{id:'rom'}] });
+    assert.equal(result[0].valid, false);
+    assert.ok(result[0].errors.some(error => error.includes('bereits')));
 });

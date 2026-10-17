@@ -5,6 +5,13 @@ site_root=$(cd "$(dirname "$0")/.." && pwd -P)
 [[ "$site_root" =~ ^/home/[a-z0-9]+/domains/[a-z0-9.-]+$ ]] || exit 2
 exec 8>"$site_root/private/worker.lock"
 flock -n 8 || exit 0
+# Content publication is independent of Git pushes and uses the active release's code.
+if [[ -f "$site_root/private/publish-content.php" ]]; then
+    php -d disable_functions= "$site_root/private/publish-content.php" >> "$site_root/private/content-build.log" 2>&1 || echo 'Content publication failed; previous content remains active'
+fi
+if [[ -f "$site_root/private/maintenance.php" ]]; then
+    php -d disable_functions= "$site_root/private/maintenance.php" >> "$site_root/private/maintenance.log" 2>&1 || echo 'Maintenance failed; see private/maintenance.log'
+fi
 cd "$site_root/shared/source"
 commit=$(git rev-parse HEAD)
 [[ "$commit" =~ ^[a-f0-9]{40}$ ]] || exit 2

@@ -11,4 +11,6 @@ COPY docker/php/uploads.ini /usr/local/etc/php/conf.d/quiz-hero-uploads.ini
 
 WORKDIR /var/www/html
 
+RUN sed -ri 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/*.conf
+
 COPY . /var/www/html

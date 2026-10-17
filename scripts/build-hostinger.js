@@ -3,7 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
-const output = path.join(root, '.build', 'hostinger', 'public');
+const artifact = path.join(root, '.build', 'hostinger');
+const output = path.join(artifact, 'public');
 const siteUrl = process.env.SITE_URL || 'https://quiz-hero-stage.matzeverse.de';
 const parsedUrl = new URL(siteUrl);
 if (parsedUrl.protocol !== 'https:' || parsedUrl.origin !== siteUrl) throw new Error('SITE_URL must be an HTTPS origin without a trailing slash.');
@@ -19,11 +20,11 @@ const run = (script, args = [], env = {}) => {
 };
 run('build-css.js');
 run('build-seo-pages.js', [], { SITE_URL: siteUrl, SEO_OUTPUT_DIR: path.join(root, '.build', 'hostinger-seo') });
-fs.rmSync(output, { recursive: true, force: true });
+fs.rmSync(artifact, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const name of ['index.html', 'login.html', 'account.html', 'styles.css', '.htaccess', '.user.ini', '404.html',
-    'admin', 'api', 'content', 'data', 'fonts', 'images', 'js']) {
-    fs.cpSync(path.join(root, name), path.join(output, name), {
+    'admin', 'api', 'content', 'fonts', 'images', 'js']) {
+    fs.cpSync(path.join(root, 'public', name), path.join(output, name), {
         recursive: true,
         filter: source => !['config.local.php', 'config.local.example.php', 'config.hostinger.example.php', 'desktop.ini', 'uploads'].includes(path.basename(source))
     });
@@ -36,10 +37,18 @@ if (staging) {
     fs.writeFileSync(path.join(output, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
     fs.appendFileSync(path.join(output, '.htaccess'), `\n<IfModule mod_headers.c>\nHeader always set X-Robots-Tag "noindex, nofollow, noarchive"\n</IfModule>\nAuthType Basic\nAuthName "Quiz-Hero Staging"\nAuthUserFile ${siteRoot}/private/.htpasswd\nRequire valid-user\n`);
 }
-fs.writeFileSync(path.join(output, 'api', 'config.local.php'), `<?php\ndeclare(strict_types=1);\nreturn require '${siteRoot}/private/config.php';\n`);
-fs.writeFileSync(path.join(output, 'required-migrations.json'), JSON.stringify(fs.readdirSync(path.join(root, 'database', 'migrations')).filter(name => name.endsWith('.sql')).sort()));
+for (const name of ['api', 'src']) fs.cpSync(path.join(root, name), path.join(artifact, name), { recursive: true, filter: source => !path.basename(source).startsWith('config.') });
+fs.mkdirSync(path.join(artifact, 'data'), { recursive: true });
+fs.copyFileSync(path.join(root, 'data', 'avatars.json'), path.join(artifact, 'data', 'avatars.json'));
+fs.writeFileSync(path.join(artifact, 'api', 'config.local.php'), `<?php\ndeclare(strict_types=1);\nreturn require '${siteRoot}/private/config.php';\n`);
+fs.writeFileSync(path.join(artifact, 'required-migrations.json'), JSON.stringify(fs.readdirSync(path.join(root, 'database', 'migrations')).filter(name => name.endsWith('.sql')).sort()));
+const homepage = path.join(output, 'index.html');
+fs.writeFileSync(homepage, fs.readFileSync(homepage, 'utf8').replaceAll('https://quiz-hero.de', siteUrl));
 const configPath = path.join(output, 'js', 'config.js');
 if (staging) fs.writeFileSync(configPath, fs.readFileSync(configPath, 'utf8').replace(/googleAnalyticsId:\s*'[^']*'/, "googleAnalyticsId: ''"));
+fs.copyFileSync(path.join(output, '.htaccess'), path.join(artifact, 'content-policy.htaccess'));
+fs.mkdirSync(path.join(artifact, 'scripts'), { recursive: true });
+for (const script of ['build-seo-pages.js', 'apply-csp-hashes.js', 'apply-asset-version.js']) fs.copyFileSync(path.join(root, 'scripts', script), path.join(artifact, 'scripts', script));
 const version = process.env.ASSET_VERSION || `stage-${Date.now()}`;
 run('apply-asset-version.js', [version, output]);
 run('apply-csp-hashes.js', [output]);

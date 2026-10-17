@@ -3,7 +3,7 @@ const path = require('path');
 
 const rootDir = path.resolve(__dirname, '..');
 const manifestPath = path.join(rootDir, 'styles', 'main.css');
-const outputPath = path.join(rootDir, 'styles.css');
+const outputPath = path.join(rootDir, 'public', 'styles.css');
 
 const readManifestImports = manifest => {
     const importPattern = /@import\s+['"](.+?)['"]\s*;/g;

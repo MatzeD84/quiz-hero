@@ -71,7 +71,7 @@ export class QuizDataService {
         }
         try {
             const params = new URLSearchParams({ action: 'public-data', v: API_VERSION });
-            const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, { cache: 'no-store' });
+            const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, { cache: 'no-store', signal: AbortSignal.timeout(20000) });
             if (!response.ok) {
                 throw new Error(`Quizdaten konnten nicht geladen werden (HTTP ${response.status}).`);
             }
@@ -102,7 +102,7 @@ ${validationErrors.join('\n')}`);
 
     async fetchJson(url) {
         const bustUrl = url.includes('?') ? `${url}&v=${ASSET_VERSION}` : `${url}?v=${ASSET_VERSION}`;
-        const response = await this.fetchFn(bustUrl, { cache: 'no-store' });
+        const response = await this.fetchFn(bustUrl, { cache: 'no-store', signal: AbortSignal.timeout(20000) });
         if (!response.ok) {
             throw new Error(`Request failed for ${bustUrl} (${response.status})`);
         }

@@ -46,15 +46,16 @@ export class QuizController {
     }
 
     async validateStoredUser() {
-        if (!this.userService || !this.currentUser) return false;
+        if (!this.userService) return false;
+        const hadCachedUser = Boolean(this.currentUser);
         try {
             this.currentUser = await this.userService.getCurrentUser(this.currentUser);
             return false;
         } catch (error) {
             if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
                 this.currentUser = null;
-                this.accountStatusMessage = error.message;
-                return true;
+                this.accountStatusMessage = hadCachedUser ? error.message : null;
+                return hadCachedUser;
             }
             if (CONFIG.devMode) {
                 console.warn('Account konnte nicht geprueft werden.', error);
@@ -200,7 +201,9 @@ export class QuizController {
         this.updateSelectionInUrl({ tag });
     }
 
-    handleQuestionCountSelected(count) {
+    async handleQuestionCountSelected(count) {
+        if (this.startingRound) return;
+        this.startingRound = true;
         try {
             if (this.state.activeTag) {
                 this.state.prepareRoundFromTag(this.state.activeTag, count);
@@ -208,6 +211,14 @@ export class QuizController {
                 this.state.prepareRoundFromCategory(this.state.activeCategoryId, count);
             } else {
                 return;
+            }
+            this.state.roundId = null;
+            if (this.currentUser) {
+                const sequence = this.state.currentSequence;
+                const round = await this.userService.startRound(sequence.map(question => question.id), { categoryId: this.state.activeCategoryId, tagId: this.state.activeTag });
+                if (this.state.currentSequence !== sequence) return;
+                this.state.roundId = round.roundId;
+                this.state.currentSequence = round.questions;
             }
             this.view.renderQuizSelectionLabel(this.state.selectionLabel);
             this.view.showQuiz();
@@ -217,7 +228,9 @@ export class QuizController {
             if (CONFIG.devMode) {
                 console.error(error);
             }
-            this.view.showLoadingMessage(LABELS.status.fetchError);
+            this.view.showLoadingMessage(error.message || LABELS.status.fetchError);
+        } finally {
+            this.startingRound = false;
         }
     }
 
@@ -324,6 +337,8 @@ export class QuizController {
     }
 
     handleNextQuestion() {
+        const question = this.state.getCurrentQuestion();
+        if (!question || (!question.answeredCorrectly && this.state.attempts < CONFIG.maxAttempts && !question.skipped)) return;
         const hasMore = this.state.nextQuestion();
         if (hasMore) {
             this.renderCurrentQuestion();
@@ -332,6 +347,8 @@ export class QuizController {
             const context = {
                 categoryId: this.state.activeCategoryId,
                 tagId: this.state.activeTag,
+                roundId: this.state.roundId,
+                answers: this.state.currentSequence.map(question => ({ questionId: question.id, selectedAnswers: [...(question.selectedAnswers || [])] })),
                 count: stats.total
             };
             const saveStatus = this.currentUser

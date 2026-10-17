@@ -1,8 +1,8 @@
 .env
 .docker-cli/
 api/config.local.php
-images/uploads/*
-!images/uploads/.htaccess
+public/images/uploads/*
+!public/images/uploads/.htaccess
 var/*
 !var/.htaccess
 

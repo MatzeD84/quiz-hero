@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const [, , versionArg, targetArg = '.'] = process.argv;
+const [, , versionArg, targetArg = 'public'] = process.argv;
 const version = (versionArg || process.env.ASSET_VERSION || '').trim();
 
 if (!version) {
@@ -22,14 +22,17 @@ const files = [
 
 const jsDir = path.join(targetDir, 'js');
 if (fs.existsSync(jsDir)) {
-    for (const entry of fs.readdirSync(jsDir)) {
-        if (entry.endsWith('.js')) {
-            const relativePath = `js/${entry}`;
-            if (!files.includes(relativePath)) {
-                files.push(relativePath);
+    const collectModules = directory => {
+        for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+            const fullPath = path.join(directory, entry.name);
+            if (entry.isDirectory()) collectModules(fullPath);
+            else if (entry.name.endsWith('.js')) {
+                const relativePath = path.relative(targetDir, fullPath).replaceAll('\\', '/');
+                if (!files.includes(relativePath)) files.push(relativePath);
             }
         }
-    }
+    };
+    collectModules(jsDir);
 }
 
 const seoPagesDir = path.join(targetDir, 'kategorie');

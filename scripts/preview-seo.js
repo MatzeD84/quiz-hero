@@ -1,4 +1,4 @@
-// Local preview of generated pages; application assets come from localhost:8080.
+// Local preview of generated pages; application assets come from localhost:8081.
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -19,11 +19,11 @@ const server = http.createServer(async (request, response) => {
         }
         if (!/^\/(js|fonts|images|content|data)\//.test(url.pathname) && url.pathname !== '/styles.css') {
             const destination = ['/', '/index.html', '/account.html', '/login.html'].includes(url.pathname) ? url.pathname + url.search : '/';
-            response.writeHead(302, { Location: 'http://localhost:8080' + destination }).end(); return;
+            response.writeHead(302, { Location: 'http://localhost:8081' + destination }).end(); return;
         }
-        const upstream = await fetch('http://localhost:8080' + url.pathname + url.search, { redirect: 'error', signal: AbortSignal.timeout(5000) });
+        const upstream = await fetch('http://localhost:8081' + url.pathname + url.search, { redirect: 'error', signal: AbortSignal.timeout(5000) });
         response.writeHead(upstream.status, { 'Content-Type': upstream.headers.get('content-type') || 'application/octet-stream', 'Cache-Control': 'no-store' });
         response.end(request.method === 'HEAD' ? undefined : Buffer.from(await upstream.arrayBuffer()));
-    } catch { response.writeHead(502).end('Lokale Vorschau nicht verfügbar. Läuft die Anwendung auf localhost:8080?'); }
+    } catch { response.writeHead(502).end('Lokale Vorschau nicht verfügbar. Läuft die Anwendung auf localhost:8081?'); }
 });
 server.listen(port, '127.0.0.1', () => console.log(`SEO-Vorschau: http://127.0.0.1:${port}/kategorie/rom.html`));

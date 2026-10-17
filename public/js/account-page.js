@@ -178,12 +178,15 @@ elements.deleteAccount?.addEventListener('click', async () => {
 
 async function init() {
     await loadHeroAvatars();
-    if (currentUser) {
+    {
+        const hadCachedUser = Boolean(currentUser);
         try {
             currentUser = await userService.getCurrentUser(currentUser);
         } catch (error) {
             if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
-                handleRemovedAccount(error.message);
+                currentUser = null;
+                render();
+                if (hadCachedUser) setStatus(error.message, 'info');
                 return;
             }
             render();

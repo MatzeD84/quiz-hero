@@ -38,17 +38,20 @@ export class UserService {
     getStoredUser() {
         try {
             const raw = window.localStorage.getItem(STORAGE_KEY);
-            return raw ? normalizeUser(JSON.parse(raw)) : null;
+            return raw ? normalizeUser(JSON.parse(raw)) : (this.memoryUser || null);
         } catch {
-            return null;
+            return this.memoryUser || null;
         }
     }
 
     storeUser(user) {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeUser(user)));
+        this.memoryUser = normalizeUser(user);
+        try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(this.memoryUser)); }
+        catch { /* The cookie remains authoritative when optional browser storage is blocked. */ }
     }
 
     clearUser() {
+        this.memoryUser = null;
         try { window.localStorage.removeItem(STORAGE_KEY); } catch { /* Storage may be disabled. */ }
         this.storeCsrfToken('');
     }
@@ -62,7 +65,6 @@ export class UserService {
     }
 
     async getCurrentUser(user) {
-        if (!user?.id) return null;
         const data = await this.post('account-me', {});
         if (!data.ok) throw new Error(data.error || 'Account konnte nicht geladen werden.');
         const currentUser = normalizeUser(data.user);
@@ -135,9 +137,17 @@ export class UserService {
         return data;
     }
 
+    async startRound(questionIds, context) {
+        const data = await this.post('start-round', { questionIds, categoryId: context.categoryId || '', tagId: context.tagId || '' }, { csrf: true });
+        if (!data.ok) throw new Error(data.error || 'Quizrunde konnte nicht gestartet werden.');
+        return data;
+    }
+
     async saveResult(user, stats, context) {
         if (!user?.id) return;
         const data = await this.post('save-result', {
+            roundId: context.roundId,
+            answers: context.answers,
             score: stats.score,
             maxScore: stats.maxScore,
             solved: stats.solved,
@@ -159,15 +169,14 @@ export class UserService {
         const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
         if (csrf && this.csrfToken) headers['X-Quiz-Hero-CSRF'] = this.csrfToken;
         const response = await this.fetchFn(`${this.apiUrl}?${params.toString()}`, {
-            method: 'POST', headers, credentials: 'same-origin', body: JSON.stringify(payload)
+            signal: AbortSignal.timeout(20000), method: 'POST', headers, credentials: 'same-origin', body: JSON.stringify(payload)
         });
         const text = await response.text();
         let data;
         try {
             data = JSON.parse(text);
         } catch {
-            const preview = text.replace(/\s+/g, ' ').slice(0, 220);
-            throw new Error(`API antwortet nicht mit JSON (HTTP ${response.status}): ${preview || response.statusText}`);
+            throw new Error(`Serverantwort ungueltig (HTTP ${response.status}). Bitte erneut versuchen.`);
         }
         if (typeof data.csrfToken === 'string') this.storeCsrfToken(data.csrfToken);
         if (!response.ok && data.ok !== false) throw new Error(data.error || `API-Anfrage fehlgeschlagen (HTTP ${response.status}).`);

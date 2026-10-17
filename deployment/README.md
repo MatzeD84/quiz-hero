@@ -54,3 +54,11 @@ Die Versionsdatei `/version.json` zeigt den veröffentlichten Commit hinter dem 
 Hostingers automatischer Git-Abruf verwendet intern einen abgelösten HEAD. Der separate ältere manuelle Git-API-Endpunkt kann deshalb einen Branch-/URL-Abgleich ablehnen; der eingerichtete Auto-Deploymentweg und der Cronworker verwenden den tatsächlich ausgecheckten Commit.
 
 Der bisherige Branch `master` ist unverändert. Erst nach dem abgeschlossenen Umzug sollte entschieden werden, ob `hostinger` zum Hauptbranch wird.
+
+## Refactoring-Layout und Content-Worker
+
+Seit dem Refactoring enth?lt das Archiv einen Release-Root mit public/, api/, src/ und internen Buildwerkzeugen. Nur public/ wird ausgeliefert. Vorherige Releases im alten Layout bleiben r?cksprungf?hig. Migration 009_quiz_rounds.sql vor dem ersten Release separat anwenden und zuvor die Datenbank sichern.
+
+watch-deploy.sh startet publish-content.php unabh?ngig vom Git-Commit. Der Exporthash erkennt Admin?nderungen; SEO und Sitemap werden aus MySQL neu generiert und atomar aktiviert. Bilder/Code werden per Hardlink wiederverwendet. content-build.log protokolliert Fehler; ein Fehler bel?sst das bisherige Content-Release aktiv. maintenance.php l?uft h?chstens t?glich. Details und Aufbewahrungsfristen: docs/REFACTORING-2026-10-17.md.
+
+Secrets, Datenbank und Uploads werden weder aus Git wiederhergestellt noch durch Builds ?berschrieben. Backups m?ssen unabh?ngig von Releases aufbewahrt werden.

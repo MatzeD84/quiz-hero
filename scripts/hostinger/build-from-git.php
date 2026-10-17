@@ -34,8 +34,11 @@ $version = substr($commit, 0, 12) . '-' . gmdate('YmdHis');
 // export transport here. Local tests still exercise the HTTP export transport.
 putenv('QUIZ_HERO_TEST_EXPORT_FILE=true');
 echo run_command([$node, '--test', 'tests/contracts.test.mjs']);
-foreach (glob($root . '/api/*.php') as $php) echo run_command([PHP_BINARY, '-l', $php]);
-foreach (['export-seo.php', 'release.sh', 'rollback.sh', 'check-release.php', 'verify-http.php'] as $helper) {
+foreach (['api', 'src/backend', 'public/api', 'scripts/hostinger'] as $directory) {
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root . '/' . $directory, FilesystemIterator::SKIP_DOTS));
+    foreach ($files as $file) if ($file->isFile() && $file->getExtension() === 'php') echo run_command([PHP_BINARY, '-l', $file->getPathname()]);
+}
+foreach (['export-seo.php', 'release.sh', 'rollback.sh', 'check-release.php', 'verify-http.php', 'publish-content.php', 'maintenance.php'] as $helper) {
     copy(__DIR__ . '/' . $helper, $siteRoot . '/private/' . $helper);
     chmod($siteRoot . '/private/' . $helper, 0600);
 }
@@ -47,7 +50,7 @@ file_put_contents($seoFile, $seo);
 foreach (['SITE_URL' => $target['siteUrl'], 'HOSTINGER_SITE_ROOT' => $siteRoot, 'DEPLOY_ENVIRONMENT' => $target['environment'], 'SEO_EXPORT_FILE' => $seoFile, 'ASSET_VERSION' => $version, 'DEPLOY_COMMIT' => $commit] as $key => $value) putenv($key . '=' . $value);
 echo run_command([$node, 'scripts/build-hostinger.js']);
 $archive = $siteRoot . '/private/' . $version . '.tar.gz';
-echo run_command(['tar', '--format=ustar', '--owner=0', '--group=0', '--mode=u+rwX,go+rX', '-czf', $archive, '-C', $root . '/.build/hostinger/public', '.']);
+echo run_command(['tar', '--format=ustar', '--owner=0', '--group=0', '--mode=u+rwX,go+rX', '-czf', $archive, '-C', $root . '/.build/hostinger', '.']);
 echo run_command(['bash', $siteRoot . '/private/release.sh', $version, hash_file('sha256', $archive)]);
 try {
     echo run_command([PHP_BINARY, $siteRoot . '/private/verify-http.php', $version]);
@@ -55,5 +58,7 @@ try {
     echo run_command(['bash', $siteRoot . '/private/rollback.sh', $version]);
     throw $failure;
 }
+copy(__DIR__ . '/watch-deploy.sh', $siteRoot . '/private/watch-deploy.sh');
+chmod($siteRoot . '/private/watch-deploy.sh', 0600);
 echo "Hostinger Git deployment verified: $version\n";
 file_put_contents($siteRoot . '/private/deployed-commit', $commit . "\n");

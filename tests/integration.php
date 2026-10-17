@@ -81,7 +81,7 @@ try {
     $env['QUIZ_HERO_MAIL_TRANSPORT'] = 'disabled-test-transport';
     $env['QUIZ_HERO_SEO_EXPORT_TOKEN'] = 'audit-export-' . $suffix;
     $env['SITE_URL'] = 'http://' . $address;
-    $server = proc_open([PHP_BINARY, '-S', $address, '-t', dirname(__DIR__)], [['pipe','r'], ['file',$log,'a'], ['file',$log,'a']], $pipes, dirname(__DIR__), $env);
+    $server = proc_open([PHP_BINARY, '-S', $address, '-t', dirname(__DIR__) . '/public'], [['pipe','r'], ['file',$log,'a'], ['file',$log,'a']], $pipes, dirname(__DIR__), $env);
     if (!is_resource($server)) throw new RuntimeException('Could not start isolated API server.');
     for ($i=0; $i<50; $i++) {
         $probe = @stream_socket_client('tcp://' . $address, $errno, $errstr, 0.1);
@@ -100,7 +100,7 @@ try {
             foreach ($cookies as $name => $value) $pairs[] = $name . '=' . $value;
             $headers .= 'Cookie: ' . implode('; ', $pairs) . "\r\n";
         }
-        $userCsrfActions = ['account-logout','account-update','account-delete','save-result','question-feedback-save'];
+        $userCsrfActions = ['start-round','account-logout','account-update','account-delete','save-result','question-feedback-save'];
         $token = str_starts_with($action, 'admin-') && $action !== 'admin-login' ? $csrf : (in_array($action, $userCsrfActions, true) ? $userCsrf : '');
         if ($csrfOverride === false) $token = '';
         elseif (is_string($csrfOverride)) $token = $csrfOverride;
@@ -166,7 +166,14 @@ try {
     request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 403, '', 'invalid');
     request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 403, "Origin: https://evil.example\r\n");
     request('save-result', ['score'=>10,'maxScore'=>2,'solved'=>1,'total'=>1], 422);
-    request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1]);
+    $round = request('start-round', ['questionIds'=>[$questionId], 'categoryId'=>'audit']);
+    $submission = ['roundId'=>$round['roundId'], 'answers'=>[['questionId'=>$questionId, 'selectedAnswers'=>[1,0]]], 'score'=>100000];
+    $result = request('save-result', $submission);
+    check((int) $pdo->query('SELECT score FROM quiz_results ORDER BY id DESC LIMIT 1')->fetchColumn() === 1, 'server scores second attempt and ignores forged totals');
+    request('save-result', $submission);
+    check((int) $pdo->query('SELECT COUNT(*) FROM quiz_results')->fetchColumn() === 1, 'round completion is idempotent');
+    request('save-result', ['roundId'=>$round['roundId'], 'answers'=>[['questionId'=>$questionId,'selectedAnswers'=>[0]]]], 409);
+    request('start-round', ['questionIds'=>[$questionId,$questionId], 'categoryId'=>'audit'], 422);
     check(true, 'user writes reject missing or invalid CSRF and foreign origins');
     $pdo->prepare('UPDATE quiz_users SET deleted_at=NOW() WHERE id=?')->execute([$userId]);
     request('save-result', ['score'=>2,'maxScore'=>2,'solved'=>1,'total'=>1], 401);
@@ -206,12 +213,14 @@ try {
     for ($i=0;$i<8;$i++) request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 401);
     request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 429);
     check(true, 'SQL injection login rejected, legacy bearer payload rejected, admin login rate limit enforced');
-    request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
+    request('admin-question-save', ['id'=>$questionId,'contentVersion'=>hash('sha256',json_encode($pdo->query('SELECT * FROM quiz_questions WHERE id=' . $questionId)->fetch(), JSON_THROW_ON_ERROR)),'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
+    request('admin-question-save', ['id'=>$questionId,'contentVersion'=>'stale','categoryId'=>'audit','question'=>'Overwrite attempt','answers'=>['A','B','C','D'],'correct'=>0], 409);
+    check($pdo->query('SELECT question FROM quiz_questions WHERE id=' . $questionId)->fetchColumn() === 'Updated audit', 'stale editor cannot overwrite a changed question');
     $saved = $pdo->query('SELECT image_url,tags_json FROM quiz_questions')->fetch();
     check($saved['image_url'] === '/images/audit.png' && json_decode($saved['tags_json'], true) === ['Antike'], 'question edit retains root-relative image and canonical tag IDs');
     request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Unsafe','answers'=>['A','B','C','D'],'correct'=>0,'imageUrl'=>'images/../api/index.php'], 422);
     check($pdo->query('SELECT image_url FROM quiz_questions')->fetchColumn() === '/images/audit.png', 'invalid image rejected without clearing saved image');
-    request('admin-category-save', ['id'=>'audit','title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
+    request('admin-category-save', ['id'=>'audit','contentVersion'=>hash('sha256',json_encode($pdo->query("SELECT * FROM quiz_categories WHERE id='audit'")->fetch(), JSON_THROW_ON_ERROR)),'title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
     request('admin-category-save', ['id'=>'delete-me','title'=>'Delete me','enabled'=>false,'badgeActive'=>false,'badgeText'=>'']);
     $deleteQuestion = request('admin-question-save', ['categoryId'=>'delete-me','question'=>'Delete with category','answers'=>['A','B','C','D'],'correct'=>0,'active'=>false]);
     request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'wrong'], 422);
@@ -264,7 +273,7 @@ try {
     $env['QUIZ_HERO_SMTP_SECURE'] = 'none'; $env['QUIZ_HERO_SMTP_USER'] = ''; $env['QUIZ_HERO_SMTP_PASSWORD'] = '';
     // New runtime scope resets only test rate limits.
     foreach (glob($runtime . '/quiz-hero-rate-limits/*.json') ?: [] as $file) unlink($file);
-    $server = proc_open([PHP_BINARY, '-S', $address, '-t', dirname(__DIR__)], [['pipe','r'], ['file',$log,'a'], ['file',$log,'a']], $pipes, dirname(__DIR__), $env);
+    $server = proc_open([PHP_BINARY, '-S', $address, '-t', dirname(__DIR__) . '/public'], [['pipe','r'], ['file',$log,'a'], ['file',$log,'a']], $pipes, dirname(__DIR__), $env);
     for ($i=0; $i<50; $i++) { $probe=@stream_socket_client('tcp://'.$address,$errno,$errstr,0.1); if ($probe) { fclose($probe); break; } usleep(100000); }
     function mail_token(string $parameter): string {
         global $runtime;

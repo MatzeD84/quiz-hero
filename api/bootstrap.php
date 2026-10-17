@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 const QUIZ_HERO_MAX_JSON_BYTES = 1048576;
 const QUIZ_HERO_RATE_LIMIT_DIR = 'quiz-hero-rate-limits';
+const QUIZ_HERO_ROOT = __DIR__ . '/..';
+const QUIZ_HERO_PUBLIC_ROOT = QUIZ_HERO_ROOT . '/public';
 
 function local_config(): array
 {
@@ -104,20 +106,23 @@ function rate_limit(string $scope, int $maxAttempts, int $windowSeconds): void
 {
     $dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . QUIZ_HERO_RATE_LIMIT_DIR;
     if (!is_dir($dir) && !mkdir($dir, 0700, true) && !is_dir($dir)) {
-        return;
+        error_log('Quiz-Hero rate limiter unavailable');
+        json_response(['ok' => false, 'error' => 'Anfragen koennen gerade nicht sicher verarbeitet werden. Bitte erneut versuchen.'], 503);
     }
 
     $key = hash('sha256', $scope . '|' . client_ip());
     $path = $dir . DIRECTORY_SEPARATOR . $key . '.json';
     $handle = fopen($path, 'c+');
     if ($handle === false) {
-        return;
+        error_log('Quiz-Hero rate limiter unavailable');
+        json_response(['ok' => false, 'error' => 'Anfragen koennen gerade nicht sicher verarbeitet werden. Bitte erneut versuchen.'], 503);
     }
 
     $locked = false;
     try {
         if (!flock($handle, LOCK_EX)) {
-            return;
+            error_log('Quiz-Hero rate limiter unavailable');
+        json_response(['ok' => false, 'error' => 'Anfragen koennen gerade nicht sicher verarbeitet werden. Bitte erneut versuchen.'], 503);
         }
         $locked = true;
         $raw = stream_get_contents($handle);
@@ -198,9 +203,14 @@ function require_method(string $method): void
 function require_admin(): void
 {
     quiz_hero_start_session();
+    $admin = $_SESSION['quiz_hero_admin'] ?? null;
+    if ($admin && (time() - ($admin['lastSeenAt'] ?? $admin['loggedInAt']) > 1800 || time() - $admin['loggedInAt'] > 28800)) {
+        unset($_SESSION['quiz_hero_admin'], $_SESSION['quiz_hero_csrf']);
+    }
     if (empty($_SESSION['quiz_hero_admin'])) {
         json_response(['ok' => false, 'error' => 'Admin-Login erforderlich.'], 401);
     }
+    $_SESSION['quiz_hero_admin']['lastSeenAt'] = time();
 }
 
 function slugify(string $value): string

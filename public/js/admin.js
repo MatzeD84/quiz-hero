@@ -1,3 +1,5 @@
+import { createAdminApi } from './admin/api-client.js?v=dev';
+import { importQuestionsFromJson, validateImportQuestions as validateImport } from './admin/import-validation.js?v=dev';
 import { createFormGuard } from './form-guard.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG } from './config.js?v=dev';
@@ -9,7 +11,7 @@ const dirtyStatus = document.createElement('p');
 dirtyStatus.setAttribute('role', 'status');
 document.querySelector('#js-admin-status').after(dirtyStatus);
 const guardedForms = ['#js-admin-question-form', '#js-admin-category-form'].map(selector => document.querySelector(selector));
-const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden erst mit dem nächsten Production-Deployment aktualisiert.';
+const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden automatisch innerhalb weniger Minuten aktualisiert.';
 const withSeoDeploymentNotice = message => `${message} ${SEO_DEPLOYMENT_NOTICE}`;
 const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
     clearPendingCategoryImage(); updateImageState(); updateCategoryImageState();
@@ -55,36 +57,7 @@ const fileNameFromPath = path => {
     return normalized.split('/').filter(Boolean).pop() || '';
 };
 
-const api = async (action, payload = null) => {
-    const headers = { 'Accept': 'application/json' };
-    if (payload) {
-        headers['Content-Type'] = 'application/json';
-    }
-    if (csrfToken && action !== 'admin-login') {
-        headers['X-Quiz-Hero-CSRF'] = csrfToken;
-    }
-    const options = payload ? {
-        method: 'POST',
-        headers,
-        credentials: 'same-origin',
-        body: JSON.stringify(payload)
-    } : { headers, credentials: 'same-origin', cache: 'no-store' };
-    let response, text;
-    try { response = await fetch(apiUrl(action), options); text = await response.text(); }
-    catch { return { ok: false, error: 'Verbindung fehlgeschlagen. Deine Eingaben bleiben erhalten. Bitte erneut versuchen.' }; }
-    let data;
-    try {
-        data = JSON.parse(text);
-    } catch (error) {
-        return { ok: false, error: `Serverantwort ungültig (HTTP ${response.status}). Eingaben bleiben erhalten.` };
-    }
-    if (!data || typeof data !== 'object' || Array.isArray(data)) return { ok: false, error: 'Ungültige Serverantwort. Eingaben bleiben erhalten.' };
-    if (!response.ok) return { ok: false, error: data.error || `Anfrage fehlgeschlagen (HTTP ${response.status}).` };
-    if (data.csrfToken) {
-        csrfToken = data.csrfToken;
-    }
-    return data;
-};
+const api = createAdminApi({ apiUrl, getCsrfToken: () => csrfToken, setCsrfToken: token => { csrfToken = token; } });
 
 const validateImageFile = file => {
     if (!file) {
@@ -978,6 +951,7 @@ function setupDropzone({ dropzoneSelector, fileInputSelector, onFile }) {
 }
 
 function fillQuestion(question = {}) {
+    $('#js-admin-question-form').dataset.contentVersion = question.contentVersion || '';
     $('#js-admin-form-title').textContent = question.id ? 'Frage bearbeiten' : 'Neue Frage';
     selectedQuestionId = question.id || '';
     $('#js-admin-question-id').value = question.id || '';
@@ -1010,6 +984,7 @@ function fillQuestion(question = {}) {
 }
 
 function fillCategory(category = {}) {
+    $('#js-admin-category-form').dataset.contentVersion = category.contentVersion || '';
     clearPendingCategoryImage();
     $('#js-admin-category-edit-select').value = category.id || '';
     $('#js-admin-category-id').value = category.id || '';
@@ -1031,6 +1006,7 @@ function collectQuestion() {
     const imageUrl = $('#js-admin-image').value.trim();
     return {
         id: $('#js-admin-question-id').value,
+        contentVersion: $('#js-admin-question-form').dataset.contentVersion,
         categoryId: $('#js-admin-category').value,
         question: $('#js-admin-question').value,
         answers: $$('.js-admin-answer').map(input => input.value),
@@ -1048,85 +1024,6 @@ function collectQuestion() {
         active: $('#js-admin-active').checked,
         reviewed: $('#js-admin-reviewed').checked
     };
-}
-
-const normalizeQuestionKey = value => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
-
-const importQuestionsFromJson = data => {
-    if (Array.isArray(data)) return data;
-    if (Array.isArray(data?.questions)) return data.questions;
-    throw new Error('JSON muss ein Array oder ein Objekt mit "questions" enthalten.');
-};
-
-const normalizeImportTags = value => {
-    if (Array.isArray(value)) return value.map(tag => String(tag).trim()).filter(Boolean);
-    return String(value || '').split(',').map(tag => tag.trim()).filter(Boolean);
-};
-
-function validateImportQuestions(rawQuestions) {
-    const existingKeys = new Set(questions.map(question => normalizeQuestionKey(question.question)));
-    const knownCategories = new Set(categories.map(category => category.id));
-    const seen = new Set();
-
-    return rawQuestions.map((entry, index) => {
-        const errors = [];
-        const warnings = [];
-        if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
-            return { index, valid: false, question: '', categoryId: '', errors: ['Eintrag ist kein Objekt.'], warnings: [], data: null };
-        }
-
-        const categoryId = String(entry.categoryId || entry.category || '').trim();
-        const questionText = String(entry.question || '').trim();
-        const answers = Array.isArray(entry.answers) ? entry.answers.map(answer => String(answer).trim()).filter(Boolean) : [];
-        const correct = Number(entry.correct ?? 0);
-        const difficulty = String(entry.difficulty || 'easy').trim();
-        const key = normalizeQuestionKey(questionText);
-
-        if (!categoryId) {
-            errors.push('Kategorie fehlt.');
-        } else if (!knownCategories.has(categoryId)) {
-            warnings.push(`Kategorie "${categoryId}" existiert noch nicht und wird automatisch angelegt.`);
-        }
-        if (!questionText) errors.push('Fragetext fehlt.');
-        if (answers.length !== 4) errors.push('Es muessen genau vier Antworten vorhanden sein.');
-        if (!Number.isInteger(correct) || correct < 0 || correct > 3) errors.push('correct muss zwischen 0 und 3 liegen.');
-        if (difficulty && !['easy', 'medium', 'hero'].includes(difficulty)) {
-            warnings.push(`Unbekannte Schwierigkeit "${difficulty}" wird auf easy gesetzt.`);
-        }
-        if (key && existingKeys.has(key)) {
-            errors.push('Diese Frage existiert bereits.');
-        } else if (key && seen.has(key)) {
-            errors.push('Diese Frage kommt mehrfach in der Importdatei vor.');
-        } else if (key) {
-            seen.add(key);
-        }
-
-        return {
-            index,
-            valid: errors.length === 0,
-            question: questionText,
-            categoryId,
-            errors,
-            warnings,
-            data: {
-                categoryId,
-                question: questionText,
-                answers,
-                correct,
-                difficulty,
-                tags: normalizeImportTags(entry.tags ?? entry.tag),
-                imageUrl: String(entry.imageUrl || entry.image || '').trim(),
-                backgroundKnowledge: String(entry.backgroundKnowledge || entry.background || '').trim(),
-                sourceUrl: String(entry.sourceUrl || entry.meta?.sourceUrl || '').trim(),
-                imageAlt: String(entry.imageAlt || '').trim(),
-                reviewedBy: String(entry.reviewedBy || '').trim(),
-                reviewedAt: String(entry.reviewedAt || '').trim(),
-                sortOrder: Number(entry.sortOrder ?? 100),
-                active: entry.active !== false,
-                reviewed: entry.reviewed === true
-            }
-        };
-    });
 }
 
 function renderImportResults(results = []) {
@@ -1184,7 +1081,7 @@ function stageImportText(text) {
     }
     const rawQuestions = importQuestionsFromJson(parsed);
     if (rawQuestions.length > 200) throw new Error('Maximal 200 Fragen pro Import.');
-    const results = validateImportQuestions(rawQuestions);
+    const results = validateImport(rawQuestions, { questions, categories });
     pendingImportQuestions = results.filter(item => item.valid).map(item => item.data);
     $('#js-admin-import-actions').classList.remove('u-hidden');
     renderImportResults(results);
@@ -1409,6 +1306,7 @@ async function init() {
             }
             const result = await api('admin-category-save', {
                 id: $('#js-admin-category-id').value,
+                contentVersion: $('#js-admin-category-form').dataset.contentVersion,
                 title: $('#js-admin-category-title').value,
                 description: $('#js-admin-category-description').value,
                 seoDescription: $('#js-admin-category-seo').value,

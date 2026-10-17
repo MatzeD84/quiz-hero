@@ -64,8 +64,9 @@ export const HERO_AVATARS = [createDefaultHeroAvatar()];
 
 export const loadHeroAvatars = async () => {
     try {
-        const url = new URL('../data/avatars.json', import.meta.url);
-        url.searchParams.set('v', ASSET_VERSION);
+        const url = new URL('../api/index.php?action=avatars', import.meta.url);
+        url.searchParams.set('v', CONFIG.apiVersion);
+        url.searchParams.set('asset', ASSET_VERSION);
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Avatar-Config konnte nicht geladen werden (${response.status})`);

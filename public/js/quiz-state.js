@@ -123,9 +123,10 @@ export class QuizState {
         this.currentSequence = this.applyCountLimit(randomized, count);
         this.activeCategoryId = null;
         this.activeTag = tag;
-        this.selectionLabel = tag;
-        this.selectionDescription = '';
-        this.selectionIcon = '';
+        const meta = this.getTagMeta(tag);
+        this.selectionLabel = meta.title || tag;
+        this.selectionDescription = meta.description || '';
+        this.selectionIcon = meta.icon || '';
         this.currentIndex = 0;
         this.score = 0;
         this.attempts = 0;
@@ -135,8 +136,8 @@ export class QuizState {
         if (count === 'all') {
             return questions;
         }
-        const limit = Number.parseInt(count, 10);
-        if (Number.isNaN(limit)) {
+        const limit = Number(count);
+        if (!Number.isInteger(limit) || limit < 1) {
             throw new Error('Invalid question count');
         }
         return questions.slice(0, Math.min(limit, questions.length));
@@ -170,6 +171,8 @@ export class QuizState {
     }
 
     nextQuestion() {
+        const question = this.getCurrentQuestion();
+        if (!question || (!question.answeredCorrectly && this.attempts < CONFIG.maxAttempts && !question.skipped)) return this.currentIndex < this.currentSequence.length;
         this.currentIndex += 1;
         this.attempts = 0;
         return this.currentIndex < this.currentSequence.length;

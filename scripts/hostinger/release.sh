@@ -15,19 +15,20 @@ release="$site_root/releases/$version"
 mkdir -p "$release" "$site_root/shared/uploads"
 if tar -tzf "$archive" | grep -Eq '(^/|(^|/)\.\.(/|$))'; then echo 'Unsafe archive paths'; exit 1; fi
 tar --no-same-owner --no-same-permissions -xzf "$archive" -C "$release"
-[[ -f "$release/index.html" && -f "$release/api/index.php" && -f "$release/version.json" && -f "$release/.htaccess" ]] || exit 1
-[[ ! -e "$release/images/uploads" && ! -e "$release/.env" && ! -e "$release/.git" && ! -e "$release/.private" ]] || exit 1
+web="$release/public"
+[[ -f "$web/index.html" && -f "$release/api/index.php" && -f "$web/version.json" && -f "$web/.htaccess" ]] || exit 1
+[[ ! -e "$web/images/uploads" && ! -e "$release/.env" && ! -e "$release/.git" && ! -e "$release/.private" ]] || exit 1
 if [[ ! -f "$site_root/shared/.uploads-initialized" ]]; then
     if [[ -d "$site_root/public_html/images/uploads" ]]; then
         rsync -a "$site_root/public_html/images/uploads/" "$site_root/shared/uploads/"
     fi
     touch "$site_root/shared/.uploads-initialized"
 fi
-ln -s "$site_root/shared/uploads" "$release/images/uploads"
+ln -s "$site_root/shared/uploads" "$web/images/uploads"
 if [[ -d "$site_root/shared/source/.git" ]]; then
-    ln -s "$site_root/shared/source" "$release/.deploy-source"
+    ln -s "$site_root/shared/source" "$web/.deploy-source"
 fi
-find "$release/api" -type f -name '*.php' -exec php -l {} \; >/dev/null
+find "$release/api" "$release/src" "$web/api" -type f -name '*.php' -exec php -l {} \; >/dev/null
 php "$site_root/private/check-release.php" "$release"
 if [[ -L "$site_root/public_html" ]]; then
     readlink "$site_root/public_html" > "$site_root/private/previous-release"
@@ -36,7 +37,7 @@ else
     mv "$site_root/public_html" "$legacy"
     printf '%s\n' "$legacy" > "$site_root/private/previous-release"
 fi
-ln -s "$release" "$site_root/.public_html-next"
+ln -s "$web" "$site_root/.public_html-next"
 mv -Tf "$site_root/.public_html-next" "$site_root/public_html"
-printf '%s\n' "$release" > "$site_root/private/current-release"
+printf '%s\n' "$web" > "$site_root/private/current-release"
 echo "Release activated: $version"

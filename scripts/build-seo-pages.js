@@ -564,7 +564,7 @@ const run = async () => {
         throw new Error('SITE_URL muss eine absolute HTTP(S)-Origin ohne Pfad sein.');
     }
     const categoriesWithQuestions = await loadCategories();
-    const { validateCategories } = await import('../js/validators.js');
+    const { validateCategories } = await import('../public/js/validators.js');
     const errors = validateCategories(categoriesWithQuestions);
     const ids = new Set();
     if (!categoriesWithQuestions.length) errors.push('Unerwartet leerer Kategorienexport.');

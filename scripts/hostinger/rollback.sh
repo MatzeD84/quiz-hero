@@ -7,7 +7,7 @@ flock -n 9 || exit 1
 target=$(cat "$site_root/private/previous-release")
 [[ "$target" == "$site_root/releases/"* && -d "$target" && -f "$target/index.html" ]] || exit 1
 current=$(readlink "$site_root/public_html")
-if [[ -n "${1:-}" && "$(basename "$current")" != "$1" ]]; then echo 'A different release is active; refusing rollback'; exit 1; fi
+if [[ -n "${1:-}" && "$(basename "${current%/public}")" != "$1" ]]; then echo 'A different release is active; refusing rollback'; exit 1; fi
 ln -s "$target" "$site_root/.public_html-rollback"
 mv -Tf "$site_root/.public_html-rollback" "$site_root/public_html"
 printf '%s\n' "$current" > "$site_root/private/previous-release"
