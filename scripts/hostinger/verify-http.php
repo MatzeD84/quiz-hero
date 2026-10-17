@@ -23,4 +23,6 @@ if ($status !== 200 || (json_decode($body, true)['version'] ?? '') !== $version)
 if ($status !== 200 || !(json_decode($body, true)['ok'] ?? false)) throw new RuntimeException('Published API failed');
 [$status, $body] = request($origin . '/', $credentials);
 if ($status !== 200 || !str_contains($body, 'Quiz-Hero')) throw new RuntimeException('Published homepage failed');
+[$status] = request($origin . '/.deploy-source/composer.json', $credentials);
+if (!in_array($status, [403, 404], true)) throw new RuntimeException('Git source directory is publicly reachable');
 echo "Published version, homepage, API and access policy verified\n";

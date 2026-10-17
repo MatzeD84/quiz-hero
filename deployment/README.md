@@ -8,7 +8,7 @@ GitHub Actions werden für dieses Deployment nicht verwendet.
 1. Lokal entwickeln und mit `docker compose up -d` auf http://localhost:8081 testen.
 2. Änderungen auf Branch `hostinger` committen und `git push` ausführen.
 3. Hostinger zieht den Branch in `.deploy-source`. Dieses Verzeichnis ist für HTTP gesperrt und verweist auf `shared/source` außerhalb des öffentlichen Webverzeichnisses.
-4. Composer führt `scripts/hostinger/build-from-git.php` aus. Node 22 ist auf Hostinger unter `/opt/alt/alt-nodejs22/root/usr/bin/node` installiert.
+4. Ein Hostinger-Cronworker prüft jede Minute auf einen neuen Commit und baut einen festen Commit-Snapshot. Composer bestätigt nur den Git-Abruf, damit die kurzen Zeitlimits der hPanel-Git-Jobs den Build nicht abbrechen. Node 22 ist auf Hostinger unter `/opt/alt/alt-nodejs22/root/usr/bin/node` installiert.
 5. Vorhandene Contract-Tests und PHP-Syntaxprüfung laufen. Der SEO-Export liest die aktuelle Hostinger-Datenbank über PHP-CLI; kein Zugangstoken muss GitHub erreichen.
    Auf Hostinger verwendet der SEO-Vertragstest denselben Datei-Exporttransport wie der Build, da die Shared-Hosting-Umgebung den temporären lokalen HTTP-Testserver blockiert. Lokal wird weiterhin auch der HTTP-Transport getestet.
 6. CSS, Kategorieseiten, Assetversionen und CSP-Hashes werden gebaut. Ein neues versioniertes Release wird außerhalb des Webroots ausgepackt und gegen Datenbank/Migrationsstand geprüft.
@@ -44,7 +44,13 @@ Ein Registrartransfer migriert weder Datenbank noch E-Mail-Postfächer automatis
 
 Hostinger-GitHub-App: Repository `MatzeD84/quiz-hero` freigegeben.
 Auto-Deployment: Branch `hostinger`, Verzeichnis `.deploy-source`, aktiviert.
+Cronjob `om95mvom6B`: jede Minute (`* * * * *`), `/bin/bash /home/u199598707/domains/quiz-hero-stage.matzeverse.de/private/watch-deploy.sh`.
+Der Worker verwendet `git archive` für einen unveränderlichen Snapshot, einen Ausführungs-Lock und prüft, ob der Commit schon erfolgreich veröffentlicht wurde. Ohne neuen Commit findet kein Build statt.
+Fehlgeschlagene Commits werden nicht minütlich erneut gebaut. Ein korrigierter neuer Commit startet automatisch einen neuen Versuch.
+Für einen bewussten Wiederholungsversuch desselben Commits die Datei `private/failed-commit` per SSH umbenennen und den Worker erneut ausführen.
+Das Buildprotokoll steht außerhalb des Webroots unter `private/git-build.log`.
 Build und veröffentlichte Version lassen sich über die Git-Einstellungen in hPanel und per SSH prüfen.
 Die Versionsdatei `/version.json` zeigt den veröffentlichten Commit hinter dem Staging-Passwortschutz.
+Hostingers automatischer Git-Abruf verwendet intern einen abgelösten HEAD. Der separate ältere manuelle Git-API-Endpunkt kann deshalb einen Branch-/URL-Abgleich ablehnen; der eingerichtete Auto-Deploymentweg und der Cronworker verwenden den tatsächlich ausgecheckten Commit.
 
 Der bisherige Branch `master` ist unverändert. Erst nach dem abgeschlossenen Umzug sollte entschieden werden, ob `hostinger` zum Hauptbranch wird.

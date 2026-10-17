@@ -7,7 +7,7 @@ Die Quelle `C:\Users\mdouw\OneDrive\Dokumente\code\html-quiz` wurde nur gelesen.
 
 Der Ordner ist jetzt mit der vorhandenen Git-Historie verbunden; aktiver Branch ist `hostinger`.
 Hostingers native Git-Anbindung ist mit `MatzeD84/quiz-hero`, Branch `hostinger`, Verzeichnis `.deploy-source` verbunden und automatisch aktiviert.
-Es gibt keine GitHub Action für diesen Ablauf. Composer startet auf Hostinger den Node-22-Build samt Tests.
+Es gibt keine GitHub Action für diesen Ablauf. Ein Hostinger-Cronworker baut neue Git-Commits mit Node 22 samt Tests; geprüft wird jede Minute, unveränderte Commits werden übersprungen.
 Dateireleases liegen unter `releases/`; `public_html` verweist auf das aktive Release.
 Uploads liegen dauerhaft in `shared/uploads`, Secrets in `private/`. Code-Deployments importieren keine Datenbank.
 Die vollständige aktuelle Anleitung steht in [deployment/README.md](deployment/README.md).
