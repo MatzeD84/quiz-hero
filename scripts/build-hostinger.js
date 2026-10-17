@@ -5,12 +5,13 @@ const { spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const artifact = path.join(root, '.build', 'hostinger');
 const output = path.join(artifact, 'public');
-const siteUrl = process.env.SITE_URL || 'https://quiz-hero-stage.matzeverse.de';
+const target = JSON.parse(fs.readFileSync(path.join(root, 'deployment', 'hostinger.json'), 'utf8'));
+const siteUrl = process.env.SITE_URL || target.siteUrl;
 const parsedUrl = new URL(siteUrl);
 if (parsedUrl.protocol !== 'https:' || parsedUrl.origin !== siteUrl) throw new Error('SITE_URL must be an HTTPS origin without a trailing slash.');
 const siteRoot = process.env.HOSTINGER_SITE_ROOT || '/home/u199598707/domains/quiz-hero-stage.matzeverse.de';
 if (!/^\/home\/[a-z0-9]+\/domains\/[a-z0-9.-]+$/.test(siteRoot)) throw new Error('Invalid HOSTINGER_SITE_ROOT');
-const staging = process.env.DEPLOY_ENVIRONMENT !== 'production';
+const staging = (process.env.DEPLOY_ENVIRONMENT || target.environment) !== 'production';
 if (!staging && process.env.ALLOW_PRODUCTION_BUILD !== 'true') throw new Error('Production requires ALLOW_PRODUCTION_BUILD=true');
 const run = (script, args = [], env = {}) => {
     const result = spawnSync(process.execPath, [path.join(root, 'scripts', script), ...args], {
@@ -44,6 +45,11 @@ fs.writeFileSync(path.join(artifact, 'api', 'config.local.php'), `<?php\ndeclare
 fs.writeFileSync(path.join(artifact, 'required-migrations.json'), JSON.stringify(fs.readdirSync(path.join(root, 'database', 'migrations')).filter(name => name.endsWith('.sql')).sort()));
 const homepage = path.join(output, 'index.html');
 fs.writeFileSync(homepage, fs.readFileSync(homepage, 'utf8').replaceAll('https://quiz-hero.de', siteUrl));
+if (!staging) {
+    // The former staging hostname is an alias of this same deployment.
+    const htaccess = path.join(output, '.htaccess');
+    fs.writeFileSync(htaccess, 'RewriteEngine On\nRewriteCond %{HTTP_HOST} ^quiz-hero-stage\\.matzeverse\\.de$ [NC]\nRewriteRule ^ https://quiz-hero.de%{REQUEST_URI} [R=301,L]\n\n' + fs.readFileSync(htaccess, 'utf8'));
+}
 const configPath = path.join(output, 'js', 'config.js');
 if (staging) fs.writeFileSync(configPath, fs.readFileSync(configPath, 'utf8').replace(/googleAnalyticsId:\s*'[^']*'/, "googleAnalyticsId: ''"));
 fs.copyFileSync(path.join(output, '.htaccess'), path.join(artifact, 'content-policy.htaccess'));
@@ -53,5 +59,5 @@ const version = process.env.ASSET_VERSION || `stage-${Date.now()}`;
 run('apply-asset-version.js', [version, output]);
 run('apply-csp-hashes.js', [output]);
 fs.writeFileSync(path.join(output, 'version.json'), JSON.stringify({ version, commit: process.env.GITHUB_SHA || process.env.DEPLOY_COMMIT || null, environment: staging ? 'hostinger-staging' : 'production', siteUrl, builtAt: new Date().toISOString() }, null, 2));
-console.log(`Hostinger staging files: ${output}`);
+console.log(`Hostinger deployment files: ${output}`);
 console.log('Database, migrations and credentials are deliberately outside this public artifact.');
