@@ -17,8 +17,13 @@ function request(string $url, ?array $auth): array {
 }
 if ($auth['enabled'] && request($origin . '/?check=' . rawurlencode($version), null)[0] !== 401) throw new RuntimeException('Staging gate missing');
 $credentials = $auth['enabled'] ? $auth : null;
-[$status, $body] = request($origin . '/version.json?check=' . rawurlencode($version), $credentials);
-if ($status !== 200 || (json_decode($body, true)['version'] ?? '') !== $version) throw new RuntimeException('Published version mismatch');
+$versionMatches = false;
+for ($attempt = 0; $attempt < 6; $attempt++) {
+    [$status, $body] = request($origin . '/version.json?check=' . rawurlencode($version) . '&nonce=' . bin2hex(random_bytes(6)), $credentials);
+    if ($status === 200 && (json_decode($body, true)['version'] ?? '') === $version) { $versionMatches = true; break; }
+    if ($attempt < 5) sleep(1);
+}
+if (!$versionMatches) throw new RuntimeException('Published version mismatch');
 [$status, $body] = request($origin . '/api/index.php?action=public-data&v=1', $credentials);
 if ($status !== 200 || !(json_decode($body, true)['ok'] ?? false)) throw new RuntimeException('Published API failed');
 [$status, $body] = request($origin . '/', $credentials);
