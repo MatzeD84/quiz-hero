@@ -35,7 +35,7 @@ for (const name of ['kategorie', 'sitemap.xml', 'seo-manifest.json']) {
 fs.copyFileSync(path.join(root, '.build', 'hostinger-seo', 'robots.txt'), path.join(output, 'robots.txt'));
 if (staging) {
     fs.writeFileSync(path.join(output, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
-    fs.appendFileSync(path.join(output, '.htaccess'), `\n<IfModule mod_headers.c>\nHeader always set X-Robots-Tag "noindex, nofollow, noarchive"\n</IfModule>\nAuthType Basic\nAuthName "Quiz-Hero Staging"\nAuthUserFile ${siteRoot}/private/.htpasswd\nRequire valid-user\n`);
+    fs.appendFileSync(path.join(output, '.htaccess'), `\n<IfModule mod_headers.c>\nHeader always set X-Robots-Tag "noindex, nofollow, noarchive"\n</IfModule>\n`);
 }
 for (const name of ['api', 'src']) fs.cpSync(path.join(root, name), path.join(artifact, name), { recursive: true, filter: source => !path.basename(source).startsWith('config.') });
 fs.mkdirSync(path.join(artifact, 'data'), { recursive: true });

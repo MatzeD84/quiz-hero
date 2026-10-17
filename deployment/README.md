@@ -62,3 +62,7 @@ Seit dem Refactoring enth?lt das Archiv einen Release-Root mit public/, api/, sr
 watch-deploy.sh startet publish-content.php unabh?ngig vom Git-Commit. Der Exporthash erkennt Admin?nderungen; SEO und Sitemap werden aus MySQL neu generiert und atomar aktiviert. Bilder/Code werden per Hardlink wiederverwendet. content-build.log protokolliert Fehler; ein Fehler bel?sst das bisherige Content-Release aktiv. maintenance.php l?uft h?chstens t?glich. Details und Aufbewahrungsfristen: docs/REFACTORING-2026-10-17.md.
 
 Secrets, Datenbank und Uploads werden weder aus Git wiederhergestellt noch durch Builds ?berschrieben. Backups m?ssen unabh?ngig von Releases aufbewahrt werden.
+
+## Seitenschutz
+
+Der Build erzeugt keinen eigenen HTTP-Basic-Passwortschutz mehr. Optionalen Seitenschutz ausschlie?lich in Hostinger verwalten. Admin- und Accountanmeldung bleiben unver?ndert. noindex und robots.txt bleiben f?r Staging aktiv. Falls Hostinger einen HTTP-Passwortschutz aktiviert, die passenden Zugangsdaten ausschlie?lich in private/healthcheck-auth.json hinterlegen und enabled auf true setzen, damit die externen Release-Pr?fungen weiterhin funktionieren.
