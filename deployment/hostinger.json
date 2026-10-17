@@ -3,7 +3,7 @@
   "port": 65002,
   "user": "u199598707",
   "siteRoot": "/home/u199598707/domains/quiz-hero-stage.matzeverse.de",
-  "siteUrl": "https://quiz-hero-stage.matzeverse.de",
-  "environment": "staging",
+  "siteUrl": "https://quiz-hero.de",
+  "environment": "production",
   "branch": "hostinger"
 }

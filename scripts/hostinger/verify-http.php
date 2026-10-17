@@ -8,6 +8,13 @@ $origin = rtrim($config['SITE_URL'], '/');
 function request(string $url, ?array $auth): array {
     $curl = curl_init($url);
     curl_setopt_array($curl, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 20, CURLOPT_HTTPHEADER => ['Cache-Control: no-cache'], CURLOPT_FOLLOWLOCATION => false]);
+    // Optional bootstrap routing while recursive DNS caches still point to the old provider.
+    // TLS hostname/certificate verification remains enabled. Normal deploys use public DNS.
+    $resolveIp = getenv('QUIZ_HERO_VERIFY_IP');
+    if ($resolveIp !== false && $resolveIp !== '') {
+        if (!filter_var($resolveIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) throw new RuntimeException('Invalid verification IP');
+        curl_setopt($curl, CURLOPT_RESOLVE, [parse_url($url, PHP_URL_HOST) . ':443:' . $resolveIp]);
+    }
     if ($auth) curl_setopt($curl, CURLOPT_USERPWD, $auth['user'] . ':' . $auth['password']);
     $body = curl_exec($curl);
     $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
