@@ -1,5 +1,7 @@
 # Quiz-Hero
 
+Hostinger-Version: [Aktueller Git-Deploymentablauf](deployment/README.md). Der Branch `hostinger` wird direkt auf Hostinger gebaut und bereitgestellt; GitHub Actions sind dafür nicht erforderlich.
+
 Aktueller Sicherheitsblock: [HttpOnly-Cookies und CSRF-Schutz](UMSETZUNG-HTTPONLY-COOKIES.md). Der vorherige Arbeitsblock steht unter [UX, SEO und Sicherheit](UMSETZUNG-UX-SEO-SICHERHEIT.md). Vor dem naechsten Deployment auch Migration 008 anwenden.
 
 Aktueller Stand der Sicherheits-, Daten- und Build-Aenderungen: [Umsetzung 1-6 und Deploymenthinweise](UMSETZUNG-1-6.md). Vor dem naechsten Produktionsdeploy Migration 007 anwenden.

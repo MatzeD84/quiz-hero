@@ -3,6 +3,16 @@
 Stand: 17.10.2026. Arbeitsordner ist ausschließlich dieses Projekt.
 Die Quelle `C:\Users\mdouw\OneDrive\Dokumente\code\html-quiz` wurde nur gelesen.
 
+## Aktuelles Deployment
+
+Der Ordner ist jetzt mit der vorhandenen Git-Historie verbunden; aktiver Branch ist `hostinger`.
+Hostingers native Git-Anbindung ist mit `MatzeD84/quiz-hero`, Branch `hostinger`, Verzeichnis `.deploy-source` verbunden und automatisch aktiviert.
+Es gibt keine GitHub Action für diesen Ablauf. Composer startet auf Hostinger den Node-22-Build samt Tests.
+Dateireleases liegen unter `releases/`; `public_html` verweist auf das aktive Release.
+Uploads liegen dauerhaft in `shared/uploads`, Secrets in `private/`. Code-Deployments importieren keine Datenbank.
+Die vollständige aktuelle Anleitung steht in [deployment/README.md](deployment/README.md).
+Die unten dokumentierten manuellen Uploadschritte beschreiben das erste Bootstrap-Deployment.
+
 ## Lokale Umgebung
 
 - App: `quiz-hero-hostinger`, http://localhost:8081

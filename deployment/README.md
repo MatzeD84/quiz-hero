@@ -10,6 +10,7 @@ GitHub Actions werden für dieses Deployment nicht verwendet.
 3. Hostinger zieht den Branch in `.deploy-source`. Dieses Verzeichnis ist für HTTP gesperrt und verweist auf `shared/source` außerhalb des öffentlichen Webverzeichnisses.
 4. Composer führt `scripts/hostinger/build-from-git.php` aus. Node 22 ist auf Hostinger unter `/opt/alt/alt-nodejs22/root/usr/bin/node` installiert.
 5. Vorhandene Contract-Tests und PHP-Syntaxprüfung laufen. Der SEO-Export liest die aktuelle Hostinger-Datenbank über PHP-CLI; kein Zugangstoken muss GitHub erreichen.
+   Auf Hostinger verwendet der SEO-Vertragstest denselben Datei-Exporttransport wie der Build, da die Shared-Hosting-Umgebung den temporären lokalen HTTP-Testserver blockiert. Lokal wird weiterhin auch der HTTP-Transport getestet.
 6. CSS, Kategorieseiten, Assetversionen und CSP-Hashes werden gebaut. Ein neues versioniertes Release wird außerhalb des Webroots ausgepackt und gegen Datenbank/Migrationsstand geprüft.
 7. `public_html` wird auf das geprüfte Release umgeschaltet. HTTP-Prüfungen kontrollieren Version, Startseite, Quiz-API und Passwortschutz. Bei einem Fehler wird das vorherige Dateirelease wieder aktiviert.
 
@@ -39,6 +40,11 @@ Der Produktionsbuild ist absichtlich gesperrt, bis die Freigabe im Server-Builds
 Erst dann Passwortschutz und Noindex entfernen, Mailversand/Analytics konfigurieren und die Domain umstellen.
 Ein Registrartransfer migriert weder Datenbank noch E-Mail-Postfächer automatisch.
 
-## Erste Aktivierung
+## Aktive Einrichtung
 
-Die Einrichtung wird mit einem echten Git-Push und anschließendem Versions-/HTTP-Abgleich verifiziert. Bis dahin ist die bisherige per SSH bereitgestellte Seite der aktive Stand.
+Hostinger-GitHub-App: Repository `MatzeD84/quiz-hero` freigegeben.
+Auto-Deployment: Branch `hostinger`, Verzeichnis `.deploy-source`, aktiviert.
+Build und veröffentlichte Version lassen sich über die Git-Einstellungen in hPanel und per SSH prüfen.
+Die Versionsdatei `/version.json` zeigt den veröffentlichten Commit hinter dem Staging-Passwortschutz.
+
+Der bisherige Branch `master` ist unverändert. Erst nach dem abgeschlossenen Umzug sollte entschieden werden, ob `hostinger` zum Hauptbranch wird.
