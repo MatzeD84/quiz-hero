@@ -4,7 +4,9 @@
 </IfModule>
 
 RewriteEngine On
-RewriteRule ^\.deploy-source(?:/|$) - [F,L]
+RewriteCond %{REQUEST_URI} ^/\.deploy-source(?:/|$) [NC,OR]
+RewriteCond %{REQUEST_FILENAME} /(?:\.deploy-source|shared/source)(?:/|$) [NC]
+RewriteRule ^ - [F,L]
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
