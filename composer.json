@@ -3,9 +3,10 @@
   "description": "Quiz-Hero PHP application and Hostinger deployment hook",
   "type": "project",
   "require": { "php": ">=8.3", "ext-pdo": "*", "ext-pdo_mysql": "*", "ext-mbstring": "*" },
+  "autoload": { "classmap": ["scripts/hostinger/ComposerHook.php"] },
   "scripts": {
-    "post-install-cmd": ["@php scripts/hostinger/build-from-git.php"],
-    "post-update-cmd": ["@php scripts/hostinger/build-from-git.php"]
+    "post-install-cmd": ["QuizHero\\Hostinger\\ComposerHook::deploy"],
+    "post-update-cmd": ["QuizHero\\Hostinger\\ComposerHook::deploy"]
   },
   "config": { "allow-plugins": false }
 }
