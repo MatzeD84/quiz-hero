@@ -39,7 +39,7 @@ if (staging) {
 }
 for (const name of ['api', 'src']) fs.cpSync(path.join(root, name), path.join(artifact, name), { recursive: true, filter: source => !path.basename(source).startsWith('config.') });
 fs.mkdirSync(path.join(artifact, 'data'), { recursive: true });
-fs.copyFileSync(path.join(root, 'data', 'avatars.json'), path.join(artifact, 'data', 'avatars.json'));
+for (const name of ['avatars.json', 'category-sources.json']) fs.copyFileSync(path.join(root, 'data', name), path.join(artifact, 'data', name));
 fs.writeFileSync(path.join(artifact, 'api', 'config.local.php'), `<?php\ndeclare(strict_types=1);\nreturn require '${siteRoot}/private/config.php';\n`);
 fs.writeFileSync(path.join(artifact, 'required-migrations.json'), JSON.stringify(fs.readdirSync(path.join(root, 'database', 'migrations')).filter(name => name.endsWith('.sql')).sort()));
 const homepage = path.join(output, 'index.html');
