@@ -12,3 +12,6 @@ require_once __DIR__ . '/content/questions.php';
 require_once __DIR__ . '/content/categories.php';
 require_once __DIR__ . '/content/media.php';
 require_once __DIR__ . '/content/validation.php';
+
+require_once __DIR__ . '/accounts/journey.php';
+require_once __DIR__ . '/accounts/practice.php';

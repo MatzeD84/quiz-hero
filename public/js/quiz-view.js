@@ -1,3 +1,4 @@
+import { renderAccountMenu, closeAccountMenus, placeAccountMenu } from './account-menu.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=dev';
@@ -59,8 +60,7 @@ export class QuizView {
             userDeleteButton: document.querySelector(selectors.userDeleteButton),
             userStatus: document.querySelector(selectors.userStatus),
             userPreview: document.querySelector(selectors.userPreview),
-            userLogoutButton: document.querySelector(selectors.userLogoutButton),
-            accountEntryLink: document.querySelector(selectors.accountEntryLink)
+            userLogoutButton: document.querySelector(selectors.userLogoutButton)
         };
     }
 
@@ -199,7 +199,7 @@ export class QuizView {
         }
     }
 
-    renderInvitation({ label, count, reduced, onStart }) {
+    renderInvitation({ label, count, reduced, practice = false, onStart }) {
         this.clearInvitation();
         const container = this.elements.questionCountContainer;
         if (!container) return;
@@ -208,12 +208,14 @@ export class QuizView {
         invitation.dataset.quizInvitation = '';
         const title = document.createElement('h3');
         title.className = 'quiz-invitation__title';
-        title.textContent = 'Du bist eingeladen!';
+        title.textContent = practice ? 'Deine zweite Chance' : 'Du bist eingeladen!';
         const text = document.createElement('p');
         text.className = 'quiz-invitation__text';
         text.textContent = label + ' · ' + count + ' Fragen. Deine Fragen werden neu gemischt – finde heraus, was du weißt!';
+        if (practice) text.textContent = `${label} · ${count} ${count === 1 ? 'Frage' : 'Fragen'}, die zuletzt noch nicht geklappt haben. Du hast wie gewohnt zwei Versuche.`;
         const start = document.createElement('button');
         start.type = 'button'; start.className = 'btn'; start.textContent = 'Deine Runde starten';
+        if (practice) start.textContent = 'Übungsrunde starten';
         start.addEventListener('click', onStart);
         invitation.append(title, text);
         if (reduced) {
@@ -238,13 +240,13 @@ export class QuizView {
                 change.textContent = expanded ? 'Andere Rundengröße wählen' : 'Auswahl ausblenden';
                 options.classList.toggle('u-hidden', expanded);
             });
-            invitation.append(change);
+            if (!practice) invitation.append(change);
             options.before(invitation);
         } else container.append(invitation);
         const heading = container.querySelector('.question-count__header h2');
         if (heading) {
             this.invitationHeadingDefault = heading.textContent;
-            heading.textContent = 'Eine Runde für dich';
+            heading.textContent = practice ? 'Diese Fragen übe ich noch' : 'Eine Runde für dich';
         }
     }
 
@@ -285,40 +287,7 @@ export class QuizView {
         if (!this.elements.userPanel) return;
         this.elements.userPanel.classList.add('u-hidden');
         this.elements.userPanel.classList.toggle('user-panel--logged-in', Boolean(user));
-        if (this.elements.accountEntryLink) {
-            this.elements.accountEntryLink.href = user ? 'account.html' : 'login.html';
-            this.elements.accountEntryLink.setAttribute('aria-label', user ? 'Heldenseite' : 'Login');
-            this.elements.accountEntryLink.classList.toggle('site-account-nav__link--account', Boolean(user));
-            this.elements.accountEntryLink.classList.toggle('site-account-nav__link--login', !user);
-            this.elements.accountEntryLink.innerHTML = '';
-
-            if (user) {
-                if (user.profileImageUrl) {
-                    const image = document.createElement('img');
-                    image.className = 'site-account-nav__image';
-                    image.src = user.profileImageUrl;
-                    image.alt = `${user.name || 'Account'} Profilbild`;
-                    image.loading = 'lazy';
-                    this.elements.accountEntryLink.appendChild(image);
-                }
-
-                const label = document.createElement('span');
-                label.className = 'site-account-nav__label';
-                label.textContent = 'Heldenseite';
-                this.elements.accountEntryLink.appendChild(label);
-            } else {
-                const image = document.createElement('img');
-                image.className = 'site-account-nav__image';
-                image.src = 'images/website/login-avtar.png';
-                image.alt = '';
-                image.loading = 'lazy';
-
-                const label = document.createElement('span');
-                label.className = 'site-account-nav__label';
-                label.textContent = 'Login';
-                this.elements.accountEntryLink.append(image, label);
-            }
-        }
+        renderAccountMenu(user);
         this.elements.userTabs.forEach(tab => {
             tab.classList.toggle('u-hidden', Boolean(user));
         });
@@ -421,21 +390,26 @@ export class QuizView {
 
     showCategories() {
         document.querySelector('#js-quiz-load-status')?.remove();
-        this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.showElement(this.elements.categoryContainer);
         this.hideElement(this.elements.questionCountContainer);
         this.hideElement(this.elements.quizContent);
         this.hideElement(this.elements.nextButton);
+        placeAccountMenu();
     }
 
     showQuestionCount() {
-        this.elements.accountEntryLink?.classList.remove('site-account-nav__link--quiz-hidden');
         this.hideElement(this.elements.categoryContainer);
         this.showElement(this.elements.questionCountContainer);
+        placeAccountMenu();
+    }
+
+    renderRoundMode(practice) {
+        const label = this.elements.quizContent?.querySelector('[data-quiz-mode]');
+        if (label) label.hidden = !practice;
     }
 
     showQuiz() {
-        this.elements.accountEntryLink?.classList.add('site-account-nav__link--quiz-hidden');
+        closeAccountMenus();
         this.hideElement(this.elements.questionCountContainer);
         this.showElement(this.elements.quizContent);
     }
@@ -666,6 +640,8 @@ export class QuizView {
                 const maxEl = this.elements.modalContent.querySelector('[data-result-max]');
                 const progressEl = this.elements.modalContent.querySelector('[data-result-progress]');
                 const actionButtons = this.elements.modalContent.querySelectorAll('[data-result-action]');
+                const kicker = this.elements.modalContent.querySelector('[data-result-kicker]');
+                if (kicker && actions.practice) kicker.textContent = 'Übungsrunde beendet';
                 const progress = maxScore > 0 ? Math.max(0, Math.min(100, Math.round((score / maxScore) * 100))) : 0;
 
                 if (avatarEl) {
@@ -686,6 +662,7 @@ export class QuizView {
                 this.disposeResultShare?.();
                 this.disposeResultShare = bindResultShare(this.elements.modalContent, { score, solved, total, maxScore, ...actions.shareContext });
                 actionButtons.forEach(button => {
+                    if (actions.practice) button.textContent = 'Zurück zum Reisepass';
                     button.addEventListener('click', () => {
                         this.hideResultModal();
                         actions.onOverview?.();
@@ -698,22 +675,54 @@ export class QuizView {
                     <p>${LABELS.modalMaxLabel} <strong>${maxScore}</strong></p>
                 `;
             }
-            // Only failed saves need visible feedback.
-            const resultContent = this.elements.modalContent;
-            const resultCard = resultContent.querySelector('.result-summary');
-            actions.saveStatus?.then(message => {
-                if (!message || resultContent.querySelector('.result-summary') !== resultCard) return;
-                const status = document.createElement('p');
-                status.setAttribute('role', 'status');
-                status.textContent = message;
-                const footer = resultCard?.querySelector('.result-summary__actions');
-                if (footer) footer.before(status);
-                else resultContent.append(status);
-            });
+            this.watchResultSave(actions, { solved, total });
             openDialog(this.elements.modal);
         };
 
         this.loadResultModalTemplate().then(fillContent);
+    }
+
+    watchResultSave(actions, { solved, total }) {
+        if (!actions.saveStatus) return;
+        const card = this.elements.modalContent.querySelector('.result-summary');
+        if (!card) return;
+        const footer = card.querySelector('.result-summary__actions');
+        const navigation = footer?.querySelector('[data-result-action]');
+        const feedback = document.createElement('div');
+        feedback.className = 'result-summary__save';
+        const status = document.createElement('p');
+        status.className = 'result-summary__save-status';
+        status.setAttribute('role', 'status');
+        const retry = document.createElement('button');
+        retry.type = 'button'; retry.className = 'result-summary__secondary';
+        retry.textContent = 'Speichern erneut versuchen'; retry.hidden = true;
+        feedback.append(status, retry);
+        if (footer) footer.before(feedback); else card.append(feedback);
+        const current = () => this.elements.modalContent.querySelector('.result-summary') === card;
+        const run = async promise => {
+            retry.hidden = true;
+            if (navigation && actions.practice) navigation.disabled = true;
+            feedback.hidden = !actions.practice;
+            status.textContent = actions.practice ? 'Deine Übungsrunde wird gespeichert …' : '';
+            status.dataset.status = '';
+            let message;
+            try { message = await promise; }
+            catch { message = 'Dein Ergebnis konnte nicht gespeichert werden. Bitte versuche es erneut.'; }
+            if (!current()) return;
+            if (navigation) navigation.disabled = false;
+            if (message) {
+                feedback.hidden = false;
+                status.textContent = message;
+                status.dataset.status = 'error';
+                retry.hidden = !actions.retrySave;
+            } else if (actions.practice) {
+                status.textContent = `${solved} von ${total} Übungsfragen gelöst. Deinen aktuellen Übungsstand findest du im Reisepass.`;
+            } else feedback.hidden = true;
+        };
+        retry.addEventListener('click', () => {
+            if (!retry.hidden && actions.retrySave) run(Promise.resolve().then(actions.retrySave));
+        });
+        run(actions.saveStatus);
     }
 
     loadResultModalTemplate() {

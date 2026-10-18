@@ -23,7 +23,7 @@ run('build-css.js');
 run('build-seo-pages.js', [], { SITE_URL: siteUrl, SEO_OUTPUT_DIR: path.join(root, '.build', 'hostinger-seo') });
 fs.rmSync(artifact, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
-for (const name of ['index.html', 'login.html', 'account.html', 'styles.css', '.htaccess', '.user.ini', '404.html',
+for (const name of ['index.html', 'login.html', 'account.html', 'passport.html', 'styles.css', '.htaccess', '.user.ini', '404.html',
     'admin', 'api', 'content', 'fonts', 'images', 'js']) {
     fs.cpSync(path.join(root, 'public', name), path.join(output, name), {
         recursive: true,

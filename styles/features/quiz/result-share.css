@@ -1,4 +1,7 @@
 ﻿.result-share { display: grid; }
+.result-summary__save { color: var(--color-text-muted); font-size: var(--text-14); text-align: center; }
+.result-summary__save-status { margin: var(--space-12) 0; }
+.result-summary__save-status[data-status="error"] { color: var(--color-danger); }
 .result-share__title { font-family: var(--font-body); font-size: var(--text-18); font-weight: var(--font-weight-semibold); letter-spacing: 0; margin: 0; }
 .result-share__preview { border-radius: var(--radius-md); display: block; height: auto; width: 100%; }
 .result-share__actions { align-items: center; display: flex; flex-wrap: wrap; gap: var(--space-12) var(--space-16); }

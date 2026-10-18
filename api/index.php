@@ -34,6 +34,7 @@ try {
         'account-login' => account_login(),
         'account-dev-login' => account_dev_login(),
         'account-me' => account_me(),
+        'account-journey' => account_journey(),
         'account-logout' => account_logout(),
         'account-update' => account_update(),
         'account-delete' => account_delete(),

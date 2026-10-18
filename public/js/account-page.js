@@ -195,6 +195,7 @@ async function init() {
         }
     }
     render();
+
 }
 
 // Ensure avatar list is loaded before the first render so the modal shows

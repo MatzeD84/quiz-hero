@@ -162,3 +162,80 @@ INSERT IGNORE INTO schema_migrations (version) VALUES ('006_question_reviewed.sq
 INSERT IGNORE INTO schema_migrations (version) VALUES ('007_user_sessions.sql');
 
 INSERT IGNORE INTO schema_migrations (version) VALUES ('008_question_editorial.sql');
+
+-- Durable learning history, independent of the temporary quiz_rounds snapshots.
+-- question_id deliberately has no FK: deleting a catalog question must not erase history.
+CREATE TABLE IF NOT EXISTS quiz_question_results (
+    result_id BIGINT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    question_version CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    difficulty ENUM('easy','medium','hero') NULL,
+    position SMALLINT UNSIGNED NOT NULL,
+    selected_answers JSON NOT NULL,
+    outcome ENUM('first_try','second_try','incorrect','skipped') NOT NULL,
+    score TINYINT UNSIGNED NOT NULL,
+    max_score TINYINT UNSIGNED NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (result_id, question_id),
+    CONSTRAINT fk_question_results_result FOREIGN KEY (result_id) REFERENCES quiz_results(id) ON DELETE CASCADE,
+    CONSTRAINT fk_question_results_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    INDEX idx_question_results_user_question (user_id, question_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('010_question_results.sql');
+INSERT IGNORE INTO schema_migrations (version) VALUES ('011_question_result_difficulty.sql');
+
+CREATE TABLE IF NOT EXISTS quiz_rounds (
+    id CHAR(64) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    category_id VARCHAR(120) NULL,
+    tag_id VARCHAR(120) NULL,
+    questions_json JSON NOT NULL,
+    submission_hash CHAR(64) NULL,
+    result_id INT UNSIGNED NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    completed_at DATETIME NULL,
+    CONSTRAINT fk_quiz_round_user FOREIGN KEY (user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    INDEX idx_quiz_round_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('009_quiz_rounds.sql');
+-- Shared immutable content; no FK to the editable/deletable question catalog.
+CREATE TABLE IF NOT EXISTS quiz_question_versions (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    question_id INT UNSIGNED NOT NULL,
+    version_hash CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    snapshot_json JSON NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_question_version (question_id, version_hash)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_question_results ADD COLUMN version_id BIGINT UNSIGNED NULL, ADD CONSTRAINT fk_question_result_version FOREIGN KEY (version_id) REFERENCES quiz_question_versions(id) ON DELETE RESTRICT', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_question_results' AND COLUMN_NAME = 'version_id');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_rounds ADD COLUMN category_title VARCHAR(255) NULL, ADD COLUMN tag_title VARCHAR(255) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_rounds' AND COLUMN_NAME = 'category_title');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_results ADD COLUMN category_title VARCHAR(255) NULL, ADD COLUMN tag_title VARCHAR(255) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_results' AND COLUMN_NAME = 'category_title');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('012_history_snapshots.sql');
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_rounds ADD COLUMN is_practice TINYINT(1) NOT NULL DEFAULT 0', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_rounds' AND COLUMN_NAME = 'is_practice');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_results ADD COLUMN is_practice TINYINT(1) NOT NULL DEFAULT 0', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_results' AND COLUMN_NAME = 'is_practice');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+INSERT IGNORE INTO schema_migrations (version) VALUES ('013_practice_round_mode.sql');

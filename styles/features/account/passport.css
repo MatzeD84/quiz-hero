@@ -1,0 +1,62 @@
+﻿/* Private passport: scoped to its own blocks; existing quiz and category cards stay unchanged. */
+.passport { display: grid; gap: var(--space-32); }
+.passport__welcome { align-items: center; background: var(--color-highlight); border-radius: var(--radius-lg); display: flex; gap: var(--space-24); justify-content: space-between; padding: var(--space-24); }
+.passport__intro { min-width: 0; }
+.passport__eyebrow { color: var(--color-link); font-size: var(--text-12); font-weight: var(--font-weight-semibold); letter-spacing: var(--tracking-dot-08em); margin: 0; }
+.passport__greeting { color: var(--color-text); font-family: var(--font-heading); font-size: var(--text-32); font-weight: var(--font-weight-heading); margin: var(--space-8) 0 var(--space-12); overflow-wrap: anywhere; }
+.passport__text { color: var(--color-text); font-size: var(--text-16); line-height: var(--line-height-body); margin: 0; }
+.passport__muted { color: var(--color-text-muted); font-size: var(--text-14); line-height: var(--line-height-body); margin: 0; }
+.passport__stamp { align-items: center; border: var(--border-width-strong) dashed var(--color-link); border-radius: var(--radius-circle); color: var(--color-link); display: flex; flex: none; flex-direction: column; font-size: var(--text-12); gap: var(--space-4); height: 8rem; justify-content: center; transform: rotate(9deg); width: 8rem; }
+.passport__stamp strong { font-family: var(--font-heading); font-size: var(--text-24); font-weight: var(--font-weight-heading); }
+.passport__stats { display: grid; gap: var(--space-12); grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; }
+.passport__difficulty { display: grid; gap: var(--space-12); }
+.passport__difficulty-grid { display: grid; gap: var(--space-12); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.passport__difficulty-card { background: var(--color-surface-muted); border-radius: var(--radius-md); color: var(--color-text); display: grid; gap: var(--space-4); min-width: 0; padding: var(--space-12) var(--space-16); }
+.passport__difficulty-card--medium { background: var(--color-accent); color: var(--color-on-primary); }
+.passport__difficulty-card--hero { background: var(--color-difficulty-hero); color: var(--color-on-primary); }
+.passport__difficulty-label { color: inherit; font-family: var(--font-body); font-size: var(--text-14); font-weight: var(--font-weight-semibold); letter-spacing: 0; margin: 0; }
+.passport__difficulty-value { font-family: var(--font-heading); font-size: var(--text-24); font-weight: var(--font-weight-heading); line-height: var(--line-height-body); }
+.passport__difficulty-count { font-size: var(--text-12); overflow-wrap: anywhere; }
+.passport__practice { background: var(--color-surface-muted); border-radius: var(--radius-md); display: grid; gap: var(--space-12); padding: var(--space-16); }
+.passport__practice-links { display: grid; gap: var(--space-8); }
+.passport__practice-link { align-items: center; background: var(--color-surface); border: var(--border-subtle); border-radius: var(--radius-md); color: var(--color-link); display: flex; gap: var(--space-12); min-height: var(--control-size-touch); padding: var(--space-12); text-decoration: none; transition: background-color var(--duration-180) var(--easing-standard); }
+.passport__practice-link:hover { background: var(--color-answer-hover-bg); }
+.passport__practice-image { aspect-ratio: 1; border-radius: var(--radius-md); flex: none; height: var(--space-48); object-fit: cover; width: var(--space-48); }
+.passport__practice-details { display: grid; flex: 1; gap: var(--space-4); min-width: 0; }
+.passport__practice-action { flex: none; font-size: var(--text-14); font-weight: var(--font-weight-semibold); }
+.passport__stat { background: var(--color-surface-muted); border-radius: var(--radius-md); display: grid; grid-template-rows: auto 1fr; gap: var(--space-4); padding: var(--space-16); }
+.passport__stat dt { color: var(--color-text-muted); font-size: var(--text-14); grid-row: 2; line-height: var(--line-height-body); }
+.passport__stat dd { align-self: start; color: var(--color-text); font-family: var(--font-heading); font-size: var(--text-32); grid-row: 1; line-height: var(--line-height-body); margin: 0; }
+.passport__adventure { background: var(--color-surface); border: var(--border-subtle); border-radius: var(--radius-lg); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; }
+.passport__adventure:not(:has(img)) { grid-template-columns: 1fr; }
+.passport__adventure-image { height: 100%; min-height: 16rem; object-fit: cover; width: 100%; }
+.passport__adventure-body { align-content: center; display: grid; gap: var(--space-12); padding: var(--space-24); }
+.passport__heading { color: var(--color-text); font-family: var(--font-heading); font-size: var(--text-24); font-weight: var(--font-weight-heading); letter-spacing: var(--tracking-heading); margin: 0; overflow-wrap: anywhere; }
+.passport__play { align-content: center; display: block; text-align: center; }
+.passport__link { align-content: center; background: transparent; border: 0; color: var(--color-link); cursor: pointer; font: inherit; font-size: var(--text-14); font-weight: var(--font-weight-semibold); justify-self: start; min-height: var(--control-size-touch); padding: var(--space-4) 0; text-decoration: underline; text-underline-offset: 3px; }
+.passport__section { display: grid; gap: var(--space-16); }
+.passport__grid { display: grid; gap: var(--space-16); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.passport__station { background: var(--color-surface); border: var(--border-subtle); border-radius: var(--radius-md); display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.passport__station-image { aspect-ratio: 3 / 2; height: auto; object-fit: cover; width: 100%; }
+.passport__station-body { align-content: start; display: grid; flex: 1; gap: var(--space-8); padding: var(--space-16); }
+.passport__station-title { color: var(--color-text); font-family: var(--font-body); font-size: var(--text-18); font-weight: var(--font-weight-semibold); letter-spacing: 0; margin: 0; overflow-wrap: anywhere; }
+.passport__empty { background: var(--color-surface-muted); border-radius: var(--radius-md); display: grid; gap: var(--space-12); padding: var(--space-24); }
+@media (max-width: 700px) {
+    .account-shell--passport { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+    .passport__stamp { display: none; }
+    .passport__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .passport__adventure { grid-template-columns: minmax(0, 1fr); }
+    .passport__adventure-image { aspect-ratio: 3 / 2; height: auto; min-height: 0; }
+}
+@media (max-width: 440px) {
+    .passport { gap: var(--space-24); }
+    .passport__welcome, .passport__adventure-body { padding: var(--space-16); }
+    .passport__stats { gap: var(--space-8); }
+    .passport__difficulty-grid { gap: var(--space-8); }
+    .passport__difficulty-card { padding: var(--space-12) var(--space-8); }
+    .passport__stat { padding: var(--space-12) var(--space-8); }
+    .passport__stat dt { font-size: var(--text-12); }
+    .passport__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.account-page .user-panel__status:empty { display: none; }

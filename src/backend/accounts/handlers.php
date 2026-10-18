@@ -284,6 +284,8 @@ function account_delete(): void
 
     $pdo = db();
     revoke_user_sessions((int) $user['id']);
+    $pdo->prepare('DELETE FROM quiz_question_results WHERE user_id = ?')->execute([(int) $user['id']]);
+    $pdo->prepare('DELETE FROM quiz_rounds WHERE user_id = ?')->execute([(int) $user['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');
     $stmt->execute(['id' => (int) $user['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET username = NULL, email = NULL, password_hash = NULL, profile_image_url = NULL, avatar_key = NULL, deleted_at = NOW() WHERE id = :id');

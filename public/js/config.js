@@ -171,8 +171,7 @@ export const SELECTORS = {
     userDeleteButton: '#js-account-delete',
     userStatus: '#js-user-status',
     userPreview: '#js-user-preview',
-    userLogoutButton: '#js-user-logout',
-    accountEntryLink: '#js-account-entry-link'
+    userLogoutButton: '#js-user-logout'
 };
 
 export const ALLOWED_DIFFICULTIES = new Set(Object.keys(CONFIG.score.difficulties));

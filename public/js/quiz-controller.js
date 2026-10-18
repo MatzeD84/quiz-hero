@@ -29,7 +29,7 @@ export class QuizController {
                 this.view.renderUserStatus(this.accountStatusMessage || ACCOUNT_REMOVED_MESSAGE, 'info');
             }
             this.view.showCategories();
-            this.applyInitialSelectionFromUrl();
+            await this.applyInitialSelectionFromUrl();
         } catch (error) {
             if (CONFIG.devMode) {
                 console.error(error);
@@ -73,7 +73,7 @@ export class QuizController {
         this.view.renderUserStatus(message, 'info');
     }
 
-    applyInitialSelectionFromUrl() {
+    async applyInitialSelectionFromUrl() {
         const params = new URLSearchParams(window.location.search);
         const categoryId = params.get('category');
         const tag = params.get('tag');
@@ -83,6 +83,31 @@ export class QuizController {
         if (validCategory) this.handleCategorySelected(categoryId);
         else if (validTag) this.handleTagSelected(tag);
         else return;
+        if (params.get('practice') === '1' && validCategory) {
+            if (!this.currentUser) {
+                this.view.showCategories();
+                this.view.renderUserStatus('Bitte melde dich an und öffne deine Übungsrunde im Reisepass.', 'info');
+                return;
+            }
+            try {
+                const selectionRequest = this.selectionRequest;
+                const journey = await this.userService.getJourney();
+                if (selectionRequest !== this.selectionRequest) return;
+                const selection = journey.practice?.find(item => item.id === categoryId);
+                if (!selection?.count) {
+                    this.view.showCategories();
+                    this.view.renderUserStatus('Hier sind gerade keine Fragen zum Üben offen. Deinen aktuellen Stand findest du im Reisepass.', 'info');
+                    return;
+                }
+                this.practiceMode = true;
+                const count = Math.min(10, selection.count);
+                this.view.renderInvitation({ label: this.state.selectionLabel, count, practice: true, onStart: () => this.handleQuestionCountSelected(count) });
+            } catch (error) {
+                this.view.showCategories();
+                this.view.renderUserStatus(error.message || 'Die Übungsfragen konnten nicht geladen werden. Bitte versuche es im Reisepass erneut.', 'error');
+            }
+            return;
+        }
         const invitation = readQuizInvitation(params);
         if (invitation) {
             const available = this.state.getAvailableCountForSelection();
@@ -97,6 +122,7 @@ export class QuizController {
         params.delete('tag');
         params.delete('invite');
         params.delete('count');
+        params.delete('practice');
         if (categoryId) {
             params.set('category', categoryId);
         }
@@ -167,6 +193,8 @@ export class QuizController {
     }
 
     handleCategorySelected(categoryId) {
+        this.selectionRequest = (this.selectionRequest || 0) + 1;
+        this.practiceMode = false;
         this.view.clearInvitation();
         const category = this.state.getCategory(categoryId);
         if (!category || category.enabled === false) {
@@ -189,6 +217,8 @@ export class QuizController {
     }
 
     handleTagSelected(tag) {
+        this.selectionRequest = (this.selectionRequest || 0) + 1;
+        this.practiceMode = false;
         this.view.clearInvitation();
         if (!this.state.tagIndex.has(tag)) {
             return;
@@ -222,14 +252,18 @@ export class QuizController {
                 return;
             }
             this.state.roundId = null;
+            if (this.practiceMode && !this.currentUser) throw new Error('Bitte melde dich erneut an.');
+            this.currentRoundIsPractice = false;
             if (this.currentUser) {
                 const sequence = this.state.currentSequence;
-                const round = await this.userService.startRound(sequence.map(question => question.id), { categoryId: this.state.activeCategoryId, tagId: this.state.activeTag });
+                const round = await this.userService.startRound(this.practiceMode ? [] : sequence.map(question => question.id), { categoryId: this.state.activeCategoryId, tagId: this.state.activeTag, practice: this.practiceMode });
                 if (this.state.currentSequence !== sequence) return;
                 this.state.roundId = round.roundId;
                 this.state.currentSequence = round.questions;
+                this.currentRoundIsPractice = Boolean(round.isPractice);
             }
             this.view.renderQuizSelectionLabel(this.state.selectionLabel);
+            this.view.renderRoundMode?.(this.currentRoundIsPractice);
             this.view.showQuiz();
             this.renderCurrentQuestion();
             this.view.updateScore(this.state.score);
@@ -360,17 +394,24 @@ export class QuizController {
                 answers: this.state.currentSequence.map(question => ({ questionId: question.id, selectedAnswers: [...(question.selectedAnswers || [])] })),
                 count: stats.total
             };
-            const saveStatus = this.currentUser
-                ? this.userService.saveResult(this.currentUser, stats, context).then(() => null).catch(error => {
+            const roundUser = this.currentUser;
+            const isPractice = this.currentRoundIsPractice;
+            const saveRound = () => roundUser
+                ? this.userService.saveResult(roundUser, stats, context).then(() => null).catch(error => {
                     if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) this.handleRemovedAccount(error.message);
                     return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
                 })
                 : Promise.resolve(null);
-            this.view.showResultModal(stats, this.currentUser, {
+            const saveStatus = saveRound();
+            this.view.showResultModal(stats, roundUser, {
                 saveStatus,
+                retrySave: roundUser ? saveRound : null,
+                practice: isPractice,
                 shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId },
-                onOverview: () => this.handleResultOverview()
+                onOverview: () => isPractice ? window.location.assign('passport.html') : this.handleResultOverview()
             });
+            this.practiceMode = false;
+            this.currentRoundIsPractice = false;
             this.state.resetRound();
             this.view.showCategories();
             this.clearSelectionFromUrl();
@@ -390,6 +431,8 @@ export class QuizController {
     }
 
     handleAbort() {
+        this.selectionRequest = (this.selectionRequest || 0) + 1;
+        this.practiceMode = false;
         this.state.resetRound();
         this.view.showCategories();
         this.view.hideResultModal();

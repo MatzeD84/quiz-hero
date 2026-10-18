@@ -1,3 +1,5 @@
+import { accountMenuLinks } from '../public/js/account-menu.js';
+import { buildPassportModel, selectionUrl, passportDate, difficultySuccessCards } from '../public/js/passport.js';
 import { createQuizInvitation, readQuizInvitation, shareQuizInvitation } from '../public/js/quiz-invitation.js';
 import { QuizController } from '../public/js/quiz-controller.js';
 import test from 'node:test';
@@ -352,4 +354,104 @@ test('invitations use text sharing even when a browser cannot share images', asy
     assert.equal(await shareQuizInvitation(invitation, {}), 'unavailable');
     browser.share = async () => { throw { name: 'AbortError' }; };
     assert.equal(await shareQuizInvitation(invitation, browser), 'cancelled');
+});
+
+test('practice entry waits for confirmation and refreshes unresolved questions before starting', async () => {
+    const oldWindow = globalThis.window;
+    globalThis.window = { location: { search: '?category=rom&practice=1' } };
+    try {
+        const state = new QuizState();
+        state.setData({ categories: [{ id: 'rom', title: 'Rom', enabled: true, questions: [1,2,3].map(id => ({ id, answers: ['A','B','C','D'], correct: 0, difficulty: 'easy' })) }], tags: [], feedback: {} });
+        let offered, submitted, mode, shown = false;
+        const service = { getStoredUser: () => ({ id: 1 }), getJourney: async () => ({ practice: [{ id: 'rom', count: 2 }] }), startRound: async (ids, context) => { submitted = context; return { roundId: 'practice-round', questions: [state.getCategory('rom').questions[1]], isPractice: true }; } };
+        const view = { renderInvitation: data => { offered = data; }, renderQuizSelectionLabel: () => {}, renderRoundMode: value => { mode = value; }, showQuiz: () => { shown = true; }, updateScore: () => {}, showLoadingMessage: message => { throw new Error(message); } };
+        const controller = new QuizController({ state, view, userService: service });
+        controller.handleCategorySelected = () => { state.activeCategoryId = 'rom'; state.selectionLabel = 'Rom'; };
+        controller.renderCurrentQuestion = () => {};
+        await controller.applyInitialSelectionFromUrl();
+        assert.equal(submitted, undefined);
+        assert.equal(offered.practice, true); assert.equal(offered.count, 2);
+        await offered.onStart();
+        assert.equal(submitted.practice, true); assert.equal(mode, true); assert.deepEqual(state.currentSequence.map(question => question.id), [2]); assert.equal(shown, true);
+        assert.equal(state.roundId, 'practice-round');
+    } finally { globalThis.window = oldWindow; }
+});
+
+test('practice cannot start anonymously or with an empty current mistake list', async () => {
+    const oldWindow = globalThis.window;
+    globalThis.window = { location: { search: '?category=rom&practice=1' } };
+    try {
+        for (const user of [null, { id: 1 }]) {
+            let status, offered = false;
+            const controller = new QuizController({ state: { getCategory: () => ({ enabled: true }) }, view: { showCategories: () => {}, renderUserStatus: message => { status = message; }, renderInvitation: () => { offered = true; } }, userService: { getStoredUser: () => user, getJourney: async () => ({ practice: [] }) } });
+            controller.handleCategorySelected = () => {};
+            await controller.applyInitialSelectionFromUrl();
+            assert.equal(offered, false); assert.ok(status);
+        }
+    } finally { globalThis.window = oldWindow; }
+});
+
+test('practice completion preserves the saved submission for retry and returns to passport', async () => {
+    const oldWindow = globalThis.window;
+    let destination;
+    globalThis.window = { location: { assign: url => { destination = url; } } };
+    try {
+        const state = new QuizState();
+        state.currentSequence = [{ id: 2, correct: 0, answeredCorrectly: true, selectedAnswers: [0], difficulty: 'easy' }];
+        state.activeCategoryId = 'rom'; state.selectionLabel = 'Rom'; state.score = 2; state.roundId = 'saved-round';
+        const submissions = [];
+        let actions;
+        const controller = new QuizController({ state, view: { showResultModal: (stats, user, value) => { actions = value; }, showCategories: () => {} }, userService: { getStoredUser: () => ({ id: 1 }), saveResult: async (user, stats, context) => { submissions.push(JSON.stringify(context)); if (submissions.length === 1) throw new Error('Verbindungsfehler'); } } });
+        controller.currentRoundIsPractice = true;
+        controller.clearSelectionFromUrl = () => {};
+        controller.handleNextQuestion();
+        assert.equal(actions.practice, true);
+        assert.equal(state.currentSequence.length, 0);
+        assert.match(await actions.saveStatus, /Verbindungsfehler/);
+        assert.equal(await actions.retrySave(), null);
+        assert.equal(submissions[0], submissions[1]);
+        actions.onOverview(); assert.equal(destination, 'passport.html');
+    } finally { globalThis.window = oldWindow; }
+});
+
+test('passport recommendations use saved visits and keep archived history without claiming question mastery', () => {
+    const visited = { kind: 'category', id: 'rom', title: 'Rom', available: true, rounds: 3, lastPlayed: '2026-10-18T12:00:00Z' };
+    const unplayed = { kind: 'category', id: 'florenz', title: 'Florenz', available: true, rounds: 0, lastPlayed: null };
+    const archived = { kind: 'category', id: 'old', title: 'Altes Quiz', available: false, rounds: 2, lastPlayed: '2026-10-19T12:00:00Z' };
+    const data = { summary: { rounds: 5, categories: 2, topics: 0 }, selections: [unplayed, archived, visited], recent: [{ selectionKey: 'category:old', score: 1 }] };
+    const model = buildPassportModel(data);
+    assert.equal(model.next.id, 'rom'); assert.equal(model.discover.id, 'florenz');
+    assert.equal(selectionUrl(archived), null);
+    assert.equal(selectionUrl({ ...visited, id: 'rom & antike' }), 'index.html?category=rom+%26+antike');
+    assert.equal(model.stations.length, 2);
+    assert.deepEqual(model.stations.map(item => item.id), ['rom', 'florenz']);
+    assert.equal(passportDate('invalid'), 'Datum unbekannt');
+    const empty = buildPassportModel({ summary: { rounds: 0 }, selections: [unplayed], recent: [] });
+    assert.equal(empty.next.id, 'florenz');
+});
+
+test('passport stations rank by completed rounds then German title, independently of next adventure', () => {
+    const selection = (id, title, rounds, lastPlayed, available = true) => ({ kind: 'category', id, title, rounds, lastPlayed, available });
+    const model = buildPassportModel({ summary: {}, recent: [], selections: [
+        selection('rom', 'Rom', 3, '2026-10-18'), selection('neapel', 'Neapel', 8, '2026-10-10'),
+        selection('antike', 'Antike', 3, '2026-10-09'), selection('archiv', 'Archiv', 99, '2026-10-19', false),
+    ] });
+    assert.deepEqual(model.stations.map(item => item.id), ['neapel', 'antike', 'rom']);
+    assert.equal(model.next.id, 'rom');
+});
+
+test('difficulty cards show sample size and distinguish missing data from zero percent', () => {
+    const cards = difficultySuccessCards({ easy: { percent: 82, total: 100 }, medium: { percent: 0, total: 1 } });
+    assert.deepEqual(cards.map(card => card.percent), ['82 %', '0 %', '–']);
+    assert.deepEqual(cards.map(card => card.count), ['100 Fragen', '1 Frage', '0 Fragen']);
+    assert.deepEqual(cards.map(card => card.label), ['Normal', 'Schwer', 'Hero']);
+    assert.deepEqual(difficultySuccessCards().map(card => card.count), ['0 Fragen', '0 Fragen', '0 Fragen']);
+});
+
+test('account menu exposes guest access or account and passport links without personal data', () => {
+    assert.deepEqual(accountMenuLinks(null), [{ label: 'Login', href: 'login.html' }, { label: 'Registrieren', href: 'login.html?view=register' }]);
+    const links = accountMenuLinks({ id: 7, username: 'Private name', email: 'private@example.test' });
+    assert.deepEqual(links, [{ label: 'Mein Konto', href: 'account.html' }, { label: 'Reisepass', href: 'passport.html' }]);
+    assert.doesNotMatch(JSON.stringify(links), /private|Private/);
+    assert.deepEqual(accountMenuLinks({}), accountMenuLinks(null));
 });

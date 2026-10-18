@@ -79,7 +79,7 @@ const renderAvatarChoices = () => {
 };
 
 const redirectAfterLogin = () => {
-    window.location.href = 'index.html';
+    window.location.href = 'passport.html';
 };
 
 elements.tabs.forEach(tab => {

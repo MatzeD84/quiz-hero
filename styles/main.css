@@ -56,3 +56,5 @@
 @import './themes/app-tokens.css';
 @import './themes/app.css';
 @import './features/quiz/result-share.css';
+
+@import './features/account/passport.css';

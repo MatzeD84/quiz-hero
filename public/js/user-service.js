@@ -137,8 +137,14 @@ export class UserService {
         return data;
     }
 
+    async getJourney() {
+        const data = await this.post('account-journey', {}, { csrf: true });
+        if (!data.ok) throw new Error(data.error || 'Dein Reisepass konnte nicht geladen werden.');
+        return data;
+    }
+
     async startRound(questionIds, context) {
-        const data = await this.post('start-round', { questionIds, categoryId: context.categoryId || '', tagId: context.tagId || '' }, { csrf: true });
+        const data = await this.post('start-round', { questionIds, categoryId: context.categoryId || '', tagId: context.tagId || '', practice: Boolean(context.practice) }, { csrf: true });
         if (!data.ok) throw new Error(data.error || 'Quizrunde konnte nicht gestartet werden.');
         return data;
     }

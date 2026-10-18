@@ -1,3 +1,4 @@
+import { renderAccountMenu } from './account-menu.js?v=dev';
 import { normalizeAvatarUrl } from './config.js?v=dev';
 
 const STORAGE_KEY = 'quizHeroUser';
@@ -21,6 +22,7 @@ const resolveSiteAssetUrl = url => {
 };
 
 export const applyAccountHeaderLogo = (user = readStoredUser()) => {
+    renderAccountMenu(user);
     const profileImageUrl = user?.profileImageUrl || '';
     document.querySelectorAll('.main-header__logo-link .main-header__image, .main-header__logo-link .quiz__header-logo-image').forEach(image => {
         if (!image.dataset.defaultLogoSrc) {

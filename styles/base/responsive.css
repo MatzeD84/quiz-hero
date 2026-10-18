@@ -75,7 +75,7 @@
 
 @media (max-width: 768px) {
     button,
-    .site-account-nav__link {
+    .site-account-nav__toggle {
         min-height: var(--control-size-touch);
     }
 
