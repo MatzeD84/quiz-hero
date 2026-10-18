@@ -9,7 +9,7 @@ export function createQuizInvitation({ categoryId = '', tagId = '', total, label
     return {
         url: url.href,
         title: 'Spiel mit bei Quiz-Hero!',
-        text: `Lust auf ${total} ${total === 1 ? 'Frage' : 'Fragen'}${selection ? ` zum Quiz „${selection}“` : ' bei Quiz-Hero'}? Du bekommst deine eigene, neu gemischte Runde.`,
+        text: `Du wurdest herausgefordert. ${total} ${total === 1 ? 'Frage' : 'Fragen'}${selection ? ` zum Quiz „${selection}“` : ' bei Quiz-Hero'}. Bist du bereit?`,
         label: selection, count: total
     };
 }

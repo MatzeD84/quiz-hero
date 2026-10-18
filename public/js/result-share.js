@@ -52,6 +52,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
     const invitationSection = section.querySelector('[data-invitation]');
     if (invitation) {
         invitationSection.hidden = false;
+        invitationSection.querySelector('[data-invitation-message]').textContent = 'Wer kennt sich besser aus? Lade deine Freunde zu einer Quizrunde ein.';
         invitationSection.querySelector('[data-invitation-title]').textContent = (invitation.label || 'Dein Quiz') + ' · ' + invitation.count + ' Fragen';
         const inviteStatus = invitationSection.querySelector('[data-invitation-status]');
         const input = invitationSection.querySelector('[data-invitation-url]');
@@ -79,6 +80,29 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
         });
         invitationSection.querySelector('[data-invitation-copy]').addEventListener('click', copy);
     }
+    const tabs = Array.from(section.querySelectorAll('[data-share-tab]'));
+    const imagePanel = section.querySelector('[data-share-image-panel]');
+    const selectTab = name => {
+        for (const tab of tabs) {
+            const selected = tab.dataset.shareTab === name;
+            tab.setAttribute('aria-selected', String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+        }
+        invitationSection.hidden = name !== 'invitation';
+        imagePanel.hidden = name !== 'image';
+    };
+    section.querySelector('[data-share-tabs]').hidden = !invitation;
+    selectTab(invitation ? 'invitation' : 'image');
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => selectTab(tab.dataset.shareTab));
+        tab.addEventListener('keydown', event => {
+            const moves = { ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 };
+            if (!(event.key in moves)) return;
+            event.preventDefault();
+            const next = tabs[moves[event.key]];
+            selectTab(next.dataset.shareTab); next.focus();
+        });
+    });
     let disposed = false, url, file, busy = false;
     const dispose = () => {
         disposed = true;
@@ -124,6 +148,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
     opener.addEventListener('click', () => {
         if (disposed) return;
         openDialog(shareDialog);
+        if (invitation) tabs.find(tab => tab.getAttribute('aria-selected') === 'true')?.focus();
         if (!file && !busy) {
             busy = true;
             void generate().finally(() => { busy = false; });

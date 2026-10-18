@@ -189,7 +189,14 @@ export class QuizView {
     }
 
     clearInvitation() {
-        this.elements.questionCountContainer?.querySelector('[data-quiz-invitation]')?.remove();
+        const container = this.elements.questionCountContainer;
+        container?.querySelector('[data-quiz-invitation]')?.remove();
+        container?.querySelector('.question-count__options')?.classList.remove('u-hidden');
+        if (this.invitationHeadingDefault !== undefined) {
+            const heading = container?.querySelector('.question-count__header h2');
+            if (heading) heading.textContent = this.invitationHeadingDefault;
+            delete this.invitationHeadingDefault;
+        }
     }
 
     renderInvitation({ label, count, reduced, onStart }) {
@@ -217,8 +224,28 @@ export class QuizView {
         }
         invitation.append(start);
         const options = container.querySelector('.question-count__options');
-        if (options) options.before(invitation);
-        else container.append(invitation);
+        if (options) {
+            options.id ||= 'js-invitation-options';
+            options.classList.add('u-hidden');
+            const change = document.createElement('button');
+            change.type = 'button'; change.className = 'quiz-invitation__change';
+            change.textContent = 'Andere Rundengröße wählen';
+            change.setAttribute('aria-expanded', 'false');
+            change.setAttribute('aria-controls', options.id);
+            change.addEventListener('click', () => {
+                const expanded = change.getAttribute('aria-expanded') === 'true';
+                change.setAttribute('aria-expanded', String(!expanded));
+                change.textContent = expanded ? 'Andere Rundengröße wählen' : 'Auswahl ausblenden';
+                options.classList.toggle('u-hidden', expanded);
+            });
+            invitation.append(change);
+            options.before(invitation);
+        } else container.append(invitation);
+        const heading = container.querySelector('.question-count__header h2');
+        if (heading) {
+            this.invitationHeadingDefault = heading.textContent;
+            heading.textContent = 'Eine Runde für dich';
+        }
     }
 
     renderSelectionLabel(labelText) {
@@ -654,6 +681,8 @@ export class QuizView {
                     progressEl.value = progress;
                     progressEl.textContent = `${progress} %`;
                 }
+                const guestPrompt = this.elements.modalContent.querySelector('[data-result-guest]');
+                if (guestPrompt) guestPrompt.hidden = Boolean(user);
                 this.disposeResultShare?.();
                 this.disposeResultShare = bindResultShare(this.elements.modalContent, { score, solved, total, maxScore, ...actions.shareContext });
                 actionButtons.forEach(button => {

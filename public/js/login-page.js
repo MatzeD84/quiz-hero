@@ -195,7 +195,7 @@ const handleTokens = async () => {
 const initialize = async () => {
     await loadHeroAvatars();
     renderAvatarChoices();
-    showView('login');
+    showView(new URLSearchParams(window.location.search).get('view') === 'register' ? 'register' : 'login');
     handleTokens();
 };
 

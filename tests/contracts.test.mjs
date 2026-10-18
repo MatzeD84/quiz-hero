@@ -315,7 +315,7 @@ test('friend invitations contain only selection and size, never scores, identiti
     const invitation = createQuizInvitation({ categoryId: 'rom', total: 5, label: 'Rom', score: 20, email: 'private@test.invalid', questions: [1,2] });
     assert.equal(invitation.url, 'https://quiz-hero.de/?category=rom&invite=1&count=5');
     assert.doesNotMatch(JSON.stringify(invitation), /private@|questions|score/);
-    assert.match(invitation.text, /neu gemischte Runde/);
+    assert.equal(invitation.text, 'Du wurdest herausgefordert. 5 Fragen zum Quiz „Rom“. Bist du bereit?');
     const tag = createQuizInvitation({ tagId: 'essen & trinken', total: 3 });
     assert.equal(new URL(tag.url).searchParams.get('tag'), 'essen & trinken');
     for (const count of ['0', '-1', '1.5', 'Infinity', '10001', 'all']) {

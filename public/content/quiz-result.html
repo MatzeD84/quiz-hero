@@ -37,9 +37,13 @@
                         </svg>
                 </button>
             </div>
-            <section class="result-share__invitation" data-invitation hidden aria-label="Einladung zur Quizrunde">
+            <div class="result-share__tabs" data-share-tabs role="tablist" aria-label="Was m&ouml;chtest du teilen?">
+                <button class="result-share__tab" id="js-share-invitation-tab" data-share-tab="invitation" type="button" role="tab" aria-selected="true" aria-controls="js-share-invitation-panel">Einladungslink</button>
+                <button class="result-share__tab" id="js-share-image-tab" data-share-tab="image" type="button" role="tab" aria-selected="false" aria-controls="js-share-image-panel" tabindex="-1">Ergebnisbild</button>
+            </div>
+            <section class="result-share__invitation" id="js-share-invitation-panel" data-invitation hidden role="tabpanel" aria-labelledby="js-share-invitation-tab">
                 <h3 class="result-share__invitation-title" data-invitation-title></h3>
-                <p class="result-share__invitation-hint">Gleiches Quiz, neue Runde: Die Fragen werden f&uuml;r jeden neu gemischt.</p>
+                <p class="result-share__invitation-hint" data-invitation-message></p>
                 <div class="result-share__actions">
                     <button class="btn result-share__primary" type="button" data-invitation-share><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span>Einladung teilen</span></button>
                     <button class="result-share__copy" type="button" data-invitation-copy>Link kopieren</button>
@@ -49,14 +53,22 @@
                 </label>
                 <p class="result-share__status" data-invitation-status role="status" aria-live="polite"></p>
             </section>
+            <section class="result-share__image-panel" id="js-share-image-panel" data-share-image-panel role="tabpanel" aria-labelledby="js-share-image-tab" hidden>
             <img class="result-share__preview" data-share-preview alt="" width="1080" height="1350" hidden>
             <div class="result-share__actions">
                 <button class="btn result-share__primary" type="button" data-share-native aria-describedby="js-result-share-status" disabled><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span data-share-label>Bild wird erstellt &hellip;</span></button>
                 <a class="result-share__link" data-share-download hidden>Bild herunterladen</a>
             </div>
             <p class="result-share__status" id="js-result-share-status" data-share-status role="status" aria-live="polite"></p>
+            </section>
         </dialog>
     </section>
+
+    <aside class="result-summary__guest" data-result-guest hidden aria-label="Dein Quiz-Profil">
+        <h3 class="result-summary__guest-title">Behalte deine Ergebnisse im Blick</h3>
+        <p class="result-summary__guest-text">Mit einem kostenlosen Account speicherst du k&uuml;nftige Quizrunden in deinem Profil.</p>
+        <a class="result-summary__guest-link" href="login.html?view=register">Kostenlos registrieren</a>
+    </aside>
 
     <footer class="result-summary__actions">
         <button class="result-summary__secondary" type="button" data-result-action="overview">Zur &Uuml;bersicht</button>
