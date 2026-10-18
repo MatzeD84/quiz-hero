@@ -484,7 +484,7 @@ export class QuizView {
 
     renderBackgroundKnowledge(text) {
         if (!this.elements.backgroundKnowledge) return;
-        const contentElement = this.elements.backgroundKnowledge.querySelector('.background-knowledge__content');
+        const contentElement = this.elements.backgroundKnowledge.querySelector('.background-knowledge__text');
         if (!contentElement) return;
 
         if (text) {

@@ -22,10 +22,19 @@ const elements = {
     resetForm: document.querySelector('#js-reset-form'),
     resetToken: document.querySelector('#js-reset-token'),
     resetPassword: document.querySelector('#js-reset-password'),
+    resend: document.querySelector('#js-login-resend'),
+    resendEmail: document.querySelector('#js-resend-email'),
     status: document.querySelector('#js-login-status')
 };
 
 const userService = new UserService();
+let activeView = 'login';
+
+const showVerificationHelp = (email = '') => {
+    elements.resend.classList.remove('u-hidden');
+    elements.resend.open = true;
+    elements.resendEmail.value = email.includes('@') ? email : '';
+};
 
 const setStatus = (message, type = 'info') => {
     if (!elements.status) return;
@@ -35,6 +44,10 @@ const setStatus = (message, type = 'info') => {
 };
 
 const showView = (view, options = {}) => {
+    activeView = view;
+    elements.resend.classList.add('u-hidden');
+    elements.resend.open = false;
+    elements.resendEmail.value = '';
     if (options.clearStatus) {
         setStatus('');
     }
@@ -79,7 +92,7 @@ const renderAvatarChoices = () => {
 };
 
 const redirectAfterLogin = () => {
-    window.location.href = 'passport.html';
+    window.location.href = 'index.html';
 };
 
 elements.tabs.forEach(tab => {
@@ -100,6 +113,9 @@ elements.loginForm?.addEventListener('submit', async event => {
         setStatus('Login erfolgreich.', 'success');
         redirectAfterLogin();
     } catch (error) {
+        if (activeView === 'login' && error.code === 'EMAIL_NOT_VERIFIED') {
+            showVerificationHelp(elements.loginIdentifier.value);
+        }
         setStatus(error.message || 'Login fehlgeschlagen. Bitte pruefe Username/E-Mail und Passwort.', 'error');
     }
 });
@@ -117,6 +133,7 @@ elements.devLogin?.addEventListener('click', async () => {
 elements.registerForm?.addEventListener('submit', async event => {
     event.preventDefault();
     setStatus('Registrierung wird gespeichert ...', 'info');
+    const email = elements.registerEmail?.value || '';
     try {
         await userService.register({
             username: elements.registerUsername?.value || '',
@@ -127,8 +144,9 @@ elements.registerForm?.addEventListener('submit', async event => {
         });
         elements.registerForm.reset();
         renderAvatarChoices();
-        showView('login');
-        setStatus('Registrierung erfolgreich. Bitte bestätige deine E-Mail.', 'success');
+        showView('verification');
+        showVerificationHelp(email);
+        setStatus('Registrierung erfolgreich. Bitte öffne deine Bestätigungsmail.', 'success');
     } catch (error) {
         setStatus(error.message || 'Registrierung fehlgeschlagen.', 'error');
     }
@@ -179,6 +197,8 @@ const handleTokens = async () => {
             window.history.replaceState({}, '', `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}${window.location.hash}`);
             redirectAfterLogin();
         } catch (error) {
+            showView('verification');
+            showVerificationHelp();
             setStatus(error.message || 'E-Mail konnte nicht bestätigt werden.', 'error');
         }
         return;

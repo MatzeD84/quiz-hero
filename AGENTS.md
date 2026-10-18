@@ -4,6 +4,15 @@
 
 - Nur den aktuell besprochenen Umfang bearbeiten. Keine eigenstaendigen Design- oder Verhaltensaenderungen an anderen Bereichen vornehmen. Bei gemeinsamen CSS-Regeln Auswirkungen auf bestehende Komponenten pruefen und deren Darstellung erhalten.
 
+## Dokumentation
+
+- Dokumentation gehoert zum Abschluss einer Aenderung und wird ohne gesonderte Aufforderung mitgepflegt.
+- Abgeschlossene oder geaenderte Features in `FEATURES.md` knapp und verstaendlich aktualisieren. Umgesetzte Funktionen, vorgemerkte Erweiterungen und unverbindliche Ideen klar unterscheiden.
+- Entwicklungs-, Build-, Deployment-, Betriebs- und Wiederherstellungsprozesse in der passenden README oder Fachdokumentation unter `docs/` beschreiben. Bestehende Dokumentation aktualisieren und verlinken, statt widerspruechliche Doppelbeschreibungen anzulegen.
+- Datenbankaenderungen mit Migration, betroffenen Tabellen/Feldern, Zweck und Auswirkungen auf bestehende Daten dokumentieren. Erforderliche Anwendungsschritte, Backup-/Ruecksprunggrenzen und bekannte Einschraenkungen festhalten; keine Zugangsdaten oder personenbezogenen Beispieldaten aufnehmen.
+- Relevante Pruefungen und verbleibende Grenzen nachvollziehbar festhalten. Lokalen Implementierungsstand und tatsaechlich veroeffentlichten Stand nicht gleichsetzen. Umfang der Dokumentation an die Aenderung anpassen.
+- `hinweise.md` bleibt die persoenliche Erinnerung des Nutzers und wird nur auf ausdruecklichen Wunsch bearbeitet.
+
 ## CSS und Design-Tokens
 
 - Farben ausschliesslich in zentralen Custom Properties unter `styles/abstracts/tokens.css` und `styles/themes/app-tokens.css` definieren. Komponenten verwenden semantische Rollen wie `--color-answer-correct-bg`; keine direkten Hex-, RGB- oder benannten Farbwerte. Einmalige Transparenzen duerfen lokal mit `color-mix()` aus diesen Rollen abgeleitet werden; keine Prozentwert-Tokenfamilien anlegen.

@@ -12,4 +12,6 @@ Mail: `info@quiz-hero.de` is the intended mailbox. DNS contains Hostinger MX, SP
 
 Validation: production build, contract tests, PHP lint, HTTPS release/API checks, canonical URLs, redirects and sitemap. Before rollout back up the private runtime configuration and take a database backup; keep the previous release available for rollback.
 
+Release vom 18. Oktober 2026 nach dem Reisepass: kompaktere Quizansicht, klarere Profil-/Anmeldeablaeufe und Adminverbesserungen mit Tag-Chips, automatischen Kategorie-IDs sowie zentralem Bildaustausch. Keine neuen Migrationen; Schema bis 013 bleibt bestehen. Vorab 100 isolierte Integrationstests, 28 Vertragstests, PHP-Lint, CSS-/BEM-Pruefung und Produktionsbuild erfolgreich. Sicherung vor dem Rollout: `private/backups/before-design-20261018211030/` (Datenbank und private Konfiguration). Details zum Bildaustausch: [Mediathek](MEDIA.md).
+
 During the initial DNS migration only, the worker can be run with `QUIZ_HERO_VERIFY_IP=46.202.158.83` to verify the Hostinger origin despite stale recursive DNS caches. TLS verification stays enabled. This variable is not stored in cron; subsequent automatic deployments verify public DNS normally.

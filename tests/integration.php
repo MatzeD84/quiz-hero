@@ -33,6 +33,7 @@ function clear_test_tables(): void {
 
 $server = null;
 $smtpServer = null;
+$mediaTestFiles = [];
 $log = tempnam(sys_get_temp_dir(), 'quiz-audit-http-');
 $runtime = $log . '-runtime';
 mkdir($runtime, 0700);
@@ -122,6 +123,24 @@ try {
     function user_cookie(): string {
         global $cookies;
         return (string) ($cookies['quiz_hero_session'] ?? '');
+    }
+
+    function replace_media(array $fields, string $bytes, int $expected = 200, bool $withCsrf = true): array {
+        global $address, $cookies, $csrf;
+        $boundary = 'quiz-audit-' . bin2hex(random_bytes(8));
+        $body = '';
+        foreach ($fields as $name => $value) $body .= "--{$boundary}\r\nContent-Disposition: form-data; name=\"{$name}\"\r\n\r\n{$value}\r\n";
+        $body .= "--{$boundary}\r\nContent-Disposition: form-data; name=\"image\"; filename=\"audit-replacement.png\"\r\nContent-Type: image/png\r\n\r\n{$bytes}\r\n--{$boundary}--\r\n";
+        $pairs = [];
+        foreach ($cookies as $name => $value) $pairs[] = $name . '=' . $value;
+        $headers = "Content-Type: multipart/form-data; boundary={$boundary}\r\nCookie: " . implode('; ', $pairs) . "\r\n";
+        if ($withCsrf) $headers .= "X-Quiz-Hero-CSRF: {$csrf}\r\n";
+        $context = stream_context_create(['http'=>['method'=>'POST','header'=>$headers,'content'=>$body,'ignore_errors'=>true,'timeout'=>20]]);
+        $response = file_get_contents('http://' . $address . '/api/index.php?action=admin-media-replace&v=1', false, $context);
+        preg_match('~HTTP/\S+ (\d+)~', $http_response_header[0] ?? '', $status);
+        $data = json_decode((string) $response, true);
+        if ((int) ($status[1] ?? 0) !== $expected || !is_array($data)) throw new RuntimeException('media replacement failed: ' . $response);
+        return $data;
     }
 
     request('admin-data', null, 401);
@@ -355,7 +374,7 @@ try {
     check((int) $pdo->query('SELECT COUNT(*) FROM quiz_questions')->fetchColumn() === 1, 'admin writes reject missing/wrong CSRF and foreign Origin without mutation');
     $savedCookies = $cookies; $cookies = [];
     foreach (['admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
-    foreach (['admin-question-save','admin-category-save','admin-category-delete','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
+    foreach (['admin-question-save','admin-category-save','admin-category-delete','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-media-replace','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
     $cookies = $savedCookies;
     check(true, 'admin read and write endpoints reject unauthenticated access');
     request('account-login', ['identifier'=>"' OR 1=1 --",'password'=>'invalid'], 401);
@@ -372,8 +391,46 @@ try {
     check($saved['image_url'] === '/images/audit.png' && json_decode($saved['tags_json'], true) === ['Antike'], 'question edit retains root-relative image and canonical tag IDs');
     request('admin-question-save', ['id'=>$questionId,'categoryId'=>'audit','question'=>'Unsafe','answers'=>['A','B','C','D'],'correct'=>0,'imageUrl'=>'images/../api/index.php'], 422);
     check($pdo->query('SELECT image_url FROM quiz_questions')->fetchColumn() === '/images/audit.png', 'invalid image rejected without clearing saved image');
+    $mediaDir = QUIZ_HERO_PUBLIC_ROOT . '/images/uploads/media';
+    if (!is_dir($mediaDir)) mkdir($mediaDir, 0755, true);
+    $oldMediaPath = 'images/uploads/media/audit-replace-' . $suffix . '.png';
+    $mediaTestFiles[] = QUIZ_HERO_PUBLIC_ROOT . '/' . $oldMediaPath;
+    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aD1sAAAAASUVORK5CYII=');
+    file_put_contents(end($mediaTestFiles), $png);
+    $pdo->prepare('INSERT INTO quiz_categories(id,title,icon) VALUES(?,?,?)')->execute(['media-test','Media test','/' . $oldMediaPath]);
+    $mediaQuestion = $pdo->prepare('INSERT INTO quiz_questions(category_id,question,answers_json,correct_index,image_url) VALUES(?,?,?,0,?)');
+    foreach ([$oldMediaPath, '../' . $oldMediaPath] as $alias) $mediaQuestion->execute(['media-test','Media question','["A","B","C","D"]',$alias]);
+    $pdo->prepare('INSERT INTO quiz_question_versions(question_id,version_hash,snapshot_json) VALUES(?,?,?)')->execute([(int) $pdo->lastInsertId(),str_repeat('a',64),json_encode(['imageUrl'=>$oldMediaPath])]);
+    $mediaEntry = array_column(request('admin-media-list')['media'], null, 'path')[$oldMediaPath];
+    $replaceFields = ['path'=>$oldMediaPath,'version'=>$mediaEntry['version']];
+    replace_media($replaceFields, $png, 403, false);
+    replace_media(['path'=>'images/../api/index.php','version'=>'invalid'], $png, 404);
+    replace_media($replaceFields, 'not an image', 422);
+    $replacedMedia = replace_media($replaceFields, $png);
+    $mediaTestFiles[] = QUIZ_HERO_PUBLIC_ROOT . '/' . $replacedMedia['path'];
+    check($replacedMedia['path'] !== $oldMediaPath && $replacedMedia['replaced'] === 3
+        && (int) $pdo->query("SELECT COUNT(*) FROM quiz_questions WHERE category_id='media-test' AND image_url=" . $pdo->quote($replacedMedia['path']))->fetchColumn() === 2
+        && $pdo->query("SELECT icon FROM quiz_categories WHERE id='media-test'")->fetchColumn() === $replacedMedia['path'],
+        'media replacement updates all question aliases and category references atomically with a fresh URL');
+    replace_media($replaceFields, $png, 409);
+    $retained = array_column(request('admin-media-list')['media'], null, 'path')[$oldMediaPath];
+    request('admin-media-delete', ['path'=>$oldMediaPath], 409);
+    check(is_file(QUIZ_HERO_PUBLIC_ROOT . '/' . $oldMediaPath) && $retained['historical'] && !$retained['deletable'], 'historical image is retained and protected from deletion after replacement');
+    $pdo->exec("DELETE FROM quiz_questions WHERE category_id='media-test'");
+    $pdo->exec("DELETE FROM quiz_categories WHERE id='media-test'");
     request('admin-category-save', ['id'=>'audit','contentVersion'=>hash('sha256',json_encode($pdo->query("SELECT * FROM quiz_categories WHERE id='audit'")->fetch(), JSON_THROW_ON_ERROR)),'title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
     request('admin-category-save', ['id'=>'delete-me','title'=>'Delete me','enabled'=>false,'badgeActive'=>false,'badgeText'=>'']);
+    $autoCategory = request('admin-category-save', ['id'=>'','title'=>'Neue Reise','enabled'=>true]);
+    $duplicateCategory = request('admin-category-save', ['title'=>'Neue Reise','enabled'=>true]);
+    check($autoCategory['id'] === 'neue-reise' && $duplicateCategory['id'] === 'neue-reise-2', 'category IDs derive from titles and collisions create separate categories');
+    $pdo->exec("UPDATE quiz_categories SET sort_order=37 WHERE id='neue-reise'");
+    $categoryVersion = hash('sha256', json_encode($pdo->query("SELECT * FROM quiz_categories WHERE id='neue-reise'")->fetch(), JSON_THROW_ON_ERROR));
+    request('admin-category-save', ['id'=>$autoCategory['id'],'contentVersion'=>$categoryVersion,'title'=>'Anderer Name','enabled'=>true,'sortOrder'=>999]);
+    check($pdo->query("SELECT title FROM quiz_categories WHERE id='neue-reise'")->fetchColumn() === 'Anderer Name'
+        && (int) $pdo->query("SELECT sort_order FROM quiz_categories WHERE id='neue-reise'")->fetchColumn() === 37
+        && (int) $pdo->query("SELECT sort_order FROM quiz_categories WHERE id='neue-reise-2'")->fetchColumn() === 100,
+        'category rename retains ID and existing order; new categories default to 100');
+    $pdo->exec("DELETE FROM quiz_categories WHERE id IN ('neue-reise', 'neue-reise-2')");
     $deleteQuestion = request('admin-question-save', ['categoryId'=>'delete-me','question'=>'Delete with category','answers'=>['A','B','C','D'],'correct'=>0,'active'=>false]);
     request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'wrong'], 422);
     request('admin-category-delete', ['id'=>'delete-me','confirmation'=>'delete-me','deleteQuestions'=>false], 409);
@@ -451,6 +508,7 @@ try {
     check($original !== $replacement, 'local SMTP: registration, resend, verification, login, password reset and session revocation end-to-end');
     echo "{$checks} integration checks passed.\n";
 } finally {
+    foreach ($mediaTestFiles as $file) if (is_file($file)) unlink($file);
     if (is_resource($server)) { proc_terminate($server); proc_close($server); }
     if (is_resource($smtpServer)) { proc_terminate($smtpServer); proc_close($smtpServer); }
     foreach (['smtp-address','smtp-mails'] as $file) @unlink($runtime.'/'.$file);

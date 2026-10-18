@@ -6,6 +6,11 @@
     align-items: start;
 }
 
+.admin-form label { min-width: 0; }
+.admin-form input:not([type='checkbox']):not([type='radio']),
+.admin-form select,
+.admin-form textarea { min-width: 0; max-width: 100%; width: 100%; }
+
 .admin-form fieldset {
     border: var(--border-width-thin) var(--border-style) var(--color-border-strong);
     display: grid;
@@ -22,6 +27,18 @@
 
 .admin-form textarea {
     min-height: 5rem;
+}
+
+.admin-form__question-settings {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 600px) {
+    .admin-form__question-settings {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 .admin-form__hint {

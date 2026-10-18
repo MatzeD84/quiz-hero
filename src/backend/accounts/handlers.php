@@ -147,7 +147,7 @@ function account_login(): void
         json_response(['ok' => false, 'error' => 'Login-Daten sind ungültig.'], 401);
     }
     if (empty($user['email_verified_at'])) {
-        json_response(['ok' => false, 'error' => 'Bitte bestaetige zuerst deine E-Mail-Adresse.'], 403);
+        json_response(['ok' => false, 'code' => 'EMAIL_NOT_VERIFIED', 'error' => 'Bitte bestätige zuerst deine E-Mail-Adresse. Öffne dafür den Link in deiner Bestätigungsmail.'], 403);
     }
 
     $session = issue_account_session(db(), (int) $user['id']);

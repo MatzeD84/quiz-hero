@@ -10,6 +10,21 @@ const elements = {
     content: document.querySelector('#js-account-page-content'),
     form: document.querySelector('#js-account-page-form'),
     username: document.querySelector('#js-account-page-username'),
+    usernameEdit: document.querySelector('#js-username-edit'),
+    usernameCancel: document.querySelector('#js-username-cancel'),
+    usernameActions: document.querySelector('#js-username-actions'),
+    usernameHint: document.querySelector('#js-username-hint'),
+    passwordForm: document.querySelector('#js-password-form'),
+    passwordSection: document.querySelector('#js-password-section'),
+    passwordRepeat: document.querySelector('#js-password-repeat'),
+    passwordCancel: document.querySelector('#js-password-cancel'),
+    deleteModal: document.querySelector('#js-account-delete-modal'),
+    deleteForm: document.querySelector('#js-account-delete-form'),
+    deletePassword: document.querySelector('#js-account-delete-password'),
+    deleteConfirm: document.querySelector('#js-account-delete-confirm'),
+    deleteStatus: document.querySelector('#js-account-delete-status'),
+    deleteClose: document.querySelector('#js-account-delete-close'),
+    deleteCancel: document.querySelector('#js-account-delete-cancel'),
     password: document.querySelector('#js-account-page-password'),
     currentPassword: document.querySelector('#js-account-page-current-password'),
     profileName: document.querySelector('#js-account-profile-name'),
@@ -25,9 +40,38 @@ const elements = {
 };
 
 const userService = new UserService();
-let currentUser = userService.getStoredUser();
+let currentUser = null;
+let updating = false;
 
 initFooter();
+
+function setBusy(busy) {
+    updating = busy;
+    for (const root of [elements.content, elements.avatarModal, elements.deleteModal]) {
+        root?.querySelectorAll('button, input').forEach(control => { control.disabled = busy; });
+    }
+}
+
+function setUsernameEditing(editing) {
+    elements.username.readOnly = !editing;
+    elements.usernameEdit.hidden = editing;
+    elements.usernameEdit.setAttribute('aria-expanded', String(editing));
+    elements.usernameActions.hidden = !editing;
+    elements.usernameHint.textContent = editing ? 'Gib deinen neuen Benutzernamen ein und speichere die Änderung.' : '';
+    if (editing) elements.username.focus();
+    else elements.username.value = currentUser?.username || currentUser?.name || '';
+}
+
+function resetPasswordForm() {
+    elements.passwordForm.reset();
+    elements.passwordRepeat.setCustomValidity('');
+    elements.passwordSection.open = false;
+}
+
+function handleUpdateError(error, fallback) {
+    if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) handleRemovedAccount(error.message);
+    else setStatus(error.message || fallback, 'error');
+}
 
 const setStatus = (message, type = 'info') => {
     if (!elements.status) return;
@@ -41,14 +85,14 @@ const render = () => {
     elements.loggedOut?.classList.toggle('u-hidden', isLoggedIn);
     elements.content?.classList.toggle('u-hidden', !isLoggedIn);
     if (!isLoggedIn) {
+        setUsernameEditing(false);
+        resetPasswordForm();
         applyAccountHeaderLogo(null);
         return;
     }
 
     const username = currentUser.username || currentUser.name || '';
-    if (elements.username) elements.username.value = username;
-    if (elements.password) elements.password.value = '';
-    if (elements.currentPassword) elements.currentPassword.value = '';
+    if (elements.username?.readOnly) elements.username.value = username;
     if (elements.profileName) elements.profileName.textContent = username;
     if (elements.profileEmail) elements.profileEmail.textContent = currentUser.email || '';
     if (elements.avatarImage) {
@@ -86,26 +130,55 @@ const openAvatarModal = () => {
     openDialog(elements.avatarModal);
 };
 
+elements.usernameEdit?.addEventListener('click', () => setUsernameEditing(true));
+elements.usernameCancel?.addEventListener('click', () => {
+    setUsernameEditing(false);
+    elements.usernameEdit.focus();
+});
 elements.form?.addEventListener('submit', async event => {
     event.preventDefault();
-    if (!currentUser) return;
-    setStatus('Profil wird gespeichert ...', 'info');
+    if (!currentUser || updating || elements.username.readOnly) return;
+    setBusy(true);
+    setStatus('Benutzername wird gespeichert ...', 'info');
     try {
-        currentUser = await userService.updateAccount(currentUser, {
-            username: elements.username?.value || '',
-            password: elements.password?.value || '',
-            currentPassword: elements.currentPassword?.value || '',
-            avatarKey: currentUser.avatarKey || 'hero'
-        });
+        currentUser = await userService.updateAccount(currentUser, { username: elements.username.value, password: '', avatarKey: currentUser.avatarKey || 'hero' });
+        setUsernameEditing(false);
         render();
-        setStatus('Profil gespeichert.', 'success');
+        setStatus('Benutzername gespeichert.', 'success');
     } catch (error) {
-        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
-            handleRemovedAccount(error.message);
-            return;
-        }
-        setStatus(error.message || 'Profil konnte nicht gespeichert werden.', 'error');
+        handleUpdateError(error, 'Benutzername konnte nicht gespeichert werden.');
+    } finally { setBusy(false); }
+});
+elements.passwordCancel?.addEventListener('click', () => {
+    resetPasswordForm();
+    elements.passwordSection.querySelector('summary').focus();
+});
+elements.passwordRepeat?.addEventListener('input', () => elements.passwordRepeat.setCustomValidity(''));
+elements.password?.addEventListener('input', () => elements.passwordRepeat.setCustomValidity(''));
+elements.passwordSection?.addEventListener('toggle', () => {
+    if (!elements.passwordSection.open) {
+        elements.passwordForm.reset();
+        elements.passwordRepeat.setCustomValidity('');
     }
+});
+elements.passwordForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!currentUser || updating) return;
+    if (elements.password.value !== elements.passwordRepeat.value) {
+        elements.passwordRepeat.setCustomValidity('Die neuen Passwörter stimmen nicht überein.');
+        elements.passwordRepeat.reportValidity();
+        return;
+    }
+    setBusy(true);
+    setStatus('Passwort wird geändert …', 'info');
+    try {
+        currentUser = await userService.updateAccount(currentUser, { username: currentUser.username || currentUser.name, avatarKey: currentUser.avatarKey || 'hero', password: elements.password.value, currentPassword: elements.currentPassword.value });
+        resetPasswordForm();
+        render();
+        setStatus('Passwort geändert. Andere angemeldete Geräte wurden abgemeldet.', 'success');
+    } catch (error) {
+        handleUpdateError(error, 'Passwort konnte nicht geändert werden.');
+    } finally { setBusy(false); }
 });
 
 elements.avatarOpen?.addEventListener('click', openAvatarModal);
@@ -118,10 +191,11 @@ elements.avatarModal?.addEventListener('click', event => {
 
 elements.avatarModalContent?.addEventListener('submit', async event => {
     const form = event.target.closest('#js-account-avatar-form');
-    if (!form || !currentUser) return;
+    if (!form || !currentUser || updating) return;
     event.preventDefault();
     const formData = new FormData(form);
     const avatarKey = String(formData.get('avatarKey') || 'hero');
+    setBusy(true);
     setStatus('Bild wird gespeichert ...', 'info');
     try {
         currentUser = await userService.updateAccount(currentUser, {
@@ -139,10 +213,12 @@ elements.avatarModalContent?.addEventListener('submit', async event => {
             return;
         }
         setStatus(error.message || 'Bild konnte nicht gespeichert werden.', 'error');
-    }
+    } finally { setBusy(false); }
 });
 
 elements.logout?.addEventListener('click', async () => {
+    if (updating) return;
+    setBusy(true);
     try {
         await userService.logout(currentUser);
         currentUser = null;
@@ -151,37 +227,55 @@ elements.logout?.addEventListener('click', async () => {
     } catch (error) {
         if (error.message === SESSION_EXPIRED_MESSAGE) handleRemovedAccount(error.message);
         else setStatus(error.message, 'error');
-    }
+    } finally { setBusy(false); }
 });
 
-elements.deleteAccount?.addEventListener('click', async () => {
-    if (!currentUser) return;
-    const confirmValue = window.prompt('Account wirklich löschen? Tippe DELETE zur Bestätigung.');
-    if (confirmValue !== 'DELETE') {
-        setStatus('Löschung abgebrochen.', 'info');
-        return;
-    }
-    setStatus('Account wird gelöscht ...', 'info');
+elements.deleteAccount?.addEventListener('click', () => {
+    if (!currentUser || updating) return;
+    elements.deleteForm.reset();
+    elements.deleteStatus.textContent = '';
+    openDialog(elements.deleteModal);
+});
+const closeDeleteModal = () => {
+    if (!updating) closeDialog(elements.deleteModal);
+};
+elements.deleteClose?.addEventListener('click', closeDeleteModal);
+elements.deleteCancel?.addEventListener('click', closeDeleteModal);
+elements.deleteModal?.addEventListener('click', event => {
+    if (event.target === elements.deleteModal) closeDeleteModal();
+});
+elements.deleteModal?.addEventListener('cancel', event => { if (updating) event.preventDefault(); });
+elements.deleteModal?.addEventListener('close', () => {
+    elements.deleteForm.reset();
+    elements.deleteStatus.textContent = '';
+});
+elements.deleteForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!currentUser || updating) return;
+    setBusy(true);
+    elements.deleteStatus.textContent = 'Account wird gelöscht …';
     try {
-        await userService.deleteAccount(currentUser, confirmValue, elements.currentPassword?.value || '');
+        await userService.deleteAccount(currentUser, elements.deleteConfirm.value, elements.deletePassword.value);
+        closeDialog(elements.deleteModal);
         currentUser = null;
+        resetPasswordForm();
         render();
-        setStatus('Account gelöscht. Ergebnisse wurden anonymisiert.', 'success');
+        setStatus('Account gelöscht. Persönliche Frageergebnisse wurden entfernt, Rundensummen anonymisiert.', 'success');
     } catch (error) {
         if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
+            closeDialog(elements.deleteModal);
             handleRemovedAccount(error.message);
-            return;
-        }
-        setStatus(error.message || 'Account konnte nicht gelöscht werden.', 'error');
-    }
+        } else elements.deleteStatus.textContent = error.message || 'Account konnte nicht gelöscht werden.';
+    } finally { setBusy(false); }
 });
 
 async function init() {
     await loadHeroAvatars();
     {
-        const hadCachedUser = Boolean(currentUser);
+        const storedUser = userService.getStoredUser();
+        const hadCachedUser = Boolean(storedUser);
         try {
-            currentUser = await userService.getCurrentUser(currentUser);
+            currentUser = await userService.getCurrentUser(storedUser);
         } catch (error) {
             if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
                 currentUser = null;

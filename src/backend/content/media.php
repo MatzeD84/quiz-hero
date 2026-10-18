@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-function admin_image_upload(): void
+function admin_image_upload(bool $replace = false): void
 {
     require_method('POST');
     require_admin_csrf();
@@ -12,7 +12,18 @@ function admin_image_upload(): void
         json_response(['ok' => false, 'error' => 'Das Bild ist zu groß. Maximal erlaubt sind 6 MB.'], 413);
     }
 
-    $context = clean_string($_POST['context'] ?? 'question', 40);
+    $oldPath = '';
+    if ($replace) {
+        $oldPath = normalize_local_image_path((string) ($_POST['path'] ?? ''));
+        $known = array_column(list_uploaded_media(), null, 'path');
+        if ($oldPath === '' || !isset($known[$oldPath])) {
+            json_response(['ok' => false, 'error' => 'Das ausgewählte Bild wurde nicht gefunden.'], 404);
+        }
+        if (!hash_equals($known[$oldPath]['version'], (string) ($_POST['version'] ?? ''))) {
+            json_response(['ok' => false, 'error' => 'Das Bild oder seine Verwendungen wurden geändert. Bitte neu auswählen.'], 409);
+        }
+    }
+    $context = $replace ? 'media' : clean_string($_POST['context'] ?? 'question', 40);
     $rawCategoryId = clean_string($_POST['categoryId'] ?? '', 120);
     if ($rawCategoryId === '' && $context === 'category') {
         $rawCategoryId = clean_string($_POST['categoryTitle'] ?? '', 120);
@@ -81,7 +92,7 @@ function admin_image_upload(): void
     $originalName = pathinfo((string) ($file['name'] ?? 'quiz-bild'), PATHINFO_FILENAME);
     $safeName = slugify($originalName);
     $extension = $allowed[$mime];
-    if (uploaded_image_name_exists($categoryDir, $safeName)) {
+    if (!$replace && uploaded_image_name_exists($categoryDir, $safeName)) {
         json_response(['ok' => false, 'error' => 'In dieser Kategorie gibt es bereits ein Bild mit diesem Dateinamen. Bitte benenne die Datei um oder entferne das vorhandene Bild.'], 409);
     }
 
@@ -98,10 +109,41 @@ function admin_image_upload(): void
     @chmod($target, 0644);
 
     $relativePath = sprintf('images/uploads/%s/%s', $uploadFolder, $filename);
+    $replaced = 0;
+    if ($replace) {
+        $pdo = db();
+        try {
+            $pdo->beginTransaction();
+            // Lock the current catalog before checking usage and updating all aliases.
+            $questions = $pdo->query('SELECT id,image_url FROM quiz_questions ORDER BY id FOR UPDATE')->fetchAll();
+            $categories = $pdo->query('SELECT id,icon FROM quiz_categories ORDER BY id FOR UPDATE')->fetchAll();
+            $references = load_media_references();
+            $currentVersion = media_version($oldPath, $references[$oldPath] ?? []);
+            if (!hash_equals($currentVersion, (string) ($_POST['version'] ?? ''))) {
+                $pdo->rollBack();
+                @unlink($target);
+                json_response(['ok' => false, 'error' => 'Die Verwendungen wurden inzwischen geändert. Bitte neu auswählen.'], 409);
+            }
+            foreach (['quiz_questions' => [$questions, 'image_url'], 'quiz_categories' => [$categories, 'icon']] as $table => [$rows, $column]) {
+                $update = $pdo->prepare("UPDATE {$table} SET {$column}=? WHERE id=?");
+                foreach ($rows as $row) {
+                    if (normalize_local_image_path((string) ($row[$column] ?? '')) !== $oldPath) continue;
+                    $update->execute([$relativePath, $row['id']]);
+                    $replaced++;
+                }
+            }
+            $pdo->commit();
+        } catch (Throwable $error) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            @unlink($target);
+            throw $error;
+        }
+    }
     json_response([
         'ok' => true,
         'apiVersion' => QUIZ_HERO_API_VERSION,
         'path' => $relativePath,
+        'replaced' => $replaced,
         'mimeType' => $mime,
         'size' => $size,
         'width' => (int) ($imageInfo[0] ?? 0),
@@ -137,7 +179,7 @@ function admin_media_delete(): void
     if (!$entry) {
         json_response(['ok' => false, 'error' => 'Bild wurde nicht gefunden.'], 404);
     }
-    if (!empty($entry['used'])) {
+    if (!empty($entry['used']) || !empty($entry['historical'])) {
         json_response(['ok' => false, 'error' => 'Bild wird noch verwendet und kann nicht geloescht werden.'], 409);
     }
 
@@ -157,6 +199,7 @@ function list_uploaded_media(): array
 {
     $baseDir = QUIZ_HERO_PUBLIC_ROOT . '/images/uploads';
     $references = load_media_references();
+    $historical = historical_media_paths();
     $items = [];
     $indexed = [];
 
@@ -168,7 +211,7 @@ function list_uploaded_media(): array
             if (!$file instanceof SplFileInfo || !$file->isFile()) {
                 continue;
             }
-            $item = build_media_item($file->getPathname(), $references);
+            $item = build_media_item($file->getPathname(), $references, $historical);
             if (!$item) {
                 continue;
             }
@@ -177,7 +220,7 @@ function list_uploaded_media(): array
         }
     }
 
-    foreach (array_keys($references) as $relative) {
+    foreach (array_keys($references + $historical) as $relative) {
         if (isset($indexed[$relative])) {
             continue;
         }
@@ -185,7 +228,7 @@ function list_uploaded_media(): array
         if (!is_file($absolute)) {
             continue;
         }
-        $item = build_media_item($absolute, $references);
+        $item = build_media_item($absolute, $references, $historical);
         if ($item) {
             $items[] = $item;
         }
@@ -195,7 +238,7 @@ function list_uploaded_media(): array
     return $items;
 }
 
-function build_media_item(string $path, array $references): ?array
+function build_media_item(string $path, array $references, array $historical = []): ?array
 {
     $mime = detect_mime_type($path);
     if (!in_array($mime, ['image/jpeg', 'image/png', 'image/webp'], true)) {
@@ -232,7 +275,9 @@ function build_media_item(string $path, array $references): ?array
         'usage' => $usage,
         'categories' => $categories,
         'tags' => $tags,
-        'deletable' => str_starts_with($relative, 'images/uploads/') && count($usage) === 0,
+        'version' => media_version($relative, $usage),
+        'historical' => isset($historical[$relative]),
+        'deletable' => str_starts_with($relative, 'images/uploads/') && count($usage) === 0 && !isset($historical[$relative]),
     ];
 }
 
@@ -240,7 +285,7 @@ function load_media_references(): array
 {
     $references = [];
     $pdo = db();
-    $questions = $pdo->query('SELECT id, category_id, question, image_url, tags_json FROM quiz_questions WHERE image_url IS NOT NULL AND image_url <> ""')->fetchAll();
+    $questions = $pdo->query('SELECT id, category_id, question, image_url, tags_json FROM quiz_questions WHERE image_url IS NOT NULL AND image_url <> "" ORDER BY id')->fetchAll();
     foreach ($questions as $question) {
         $path = normalize_local_image_path((string) ($question['image_url'] ?? ''));
         if ($path === '') {
@@ -255,7 +300,7 @@ function load_media_references(): array
         ];
     }
 
-    $categories = $pdo->query('SELECT id, title, icon FROM quiz_categories WHERE icon IS NOT NULL AND icon <> ""')->fetchAll();
+    $categories = $pdo->query('SELECT id, title, icon FROM quiz_categories WHERE icon IS NOT NULL AND icon <> "" ORDER BY id')->fetchAll();
     foreach ($categories as $category) {
         $path = normalize_local_image_path((string) ($category['icon'] ?? ''));
         if ($path === '') {
@@ -271,6 +316,32 @@ function load_media_references(): array
     }
 
     return $references;
+}
+
+function media_version(string $relative, array $usage): string
+{
+    $root = realpath(QUIZ_HERO_PUBLIC_ROOT . '/images');
+    $path = realpath(QUIZ_HERO_PUBLIC_ROOT . '/' . $relative);
+    $hash = $root !== false && $path !== false && str_starts_with($path, $root . DIRECTORY_SEPARATOR) && is_file($path)
+        ? hash_file('sha256', $path) : '';
+    return hash('sha256', $hash . json_encode($usage, JSON_THROW_ON_ERROR));
+}
+
+function historical_media_paths(): array
+{
+    $paths = [];
+    foreach (db()->query('SELECT snapshot_json FROM quiz_question_versions') as $row) {
+        $snapshot = decode_json_field($row['snapshot_json'], []);
+        $path = normalize_local_image_path((string) ($snapshot['imageUrl'] ?? ''));
+        if ($path !== '') $paths[$path] = true;
+    }
+    foreach (db()->query('SELECT questions_json FROM quiz_rounds') as $row) {
+        foreach (decode_json_field($row['questions_json'], []) as $question) {
+            $path = normalize_local_image_path((string) ($question['imageUrl'] ?? ''));
+            if ($path !== '') $paths[$path] = true;
+        }
+    }
+    return $paths;
 }
 
 function normalize_local_image_path(string $path): string

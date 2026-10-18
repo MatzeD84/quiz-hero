@@ -1,0 +1,13 @@
+.tag-picker { display: grid; gap: var(--space-8); min-width: 0; }
+.tag-picker__field { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); border: var(--border-input); border-radius: var(--radius-md); padding: var(--space-8); }
+.tag-picker__field:focus-within { border-color: var(--color-input-focus); }
+.tag-picker__chips { display: contents; }
+.tag-picker__chip { display: inline-flex; align-items: center; gap: var(--space-4); background: var(--color-surface-muted); border-radius: var(--radius-pill); padding-left: var(--space-12); max-width: 100%; }
+.tag-picker__chip > span { overflow-wrap: anywhere; min-width: 0; }
+.tag-picker__chip button { background: transparent; border: 0; color: var(--color-link); cursor: pointer; min-width: var(--control-size-touch); min-height: var(--control-size-touch); border-radius: var(--radius-circle); font: inherit; }
+.tag-picker__chip button:hover { color: var(--color-danger); }
+.tag-picker__field input { flex: 1; min-width: 120px; width: 100%; border: 0; padding: var(--space-8); background: transparent; }
+.tag-picker__options:not([hidden]) { display: grid; gap: var(--space-4); border: var(--border-input); border-radius: var(--radius-md); padding: var(--space-4); }
+.tag-picker__options button { text-align: left; background: var(--color-surface); border: 0; border-radius: var(--radius-sm); padding: var(--space-8) var(--space-12); font: inherit; color: var(--color-text); cursor: pointer; }
+.tag-picker__options button:hover, .tag-picker__options button[aria-selected='true'] { background: var(--color-surface-muted); color: var(--color-link); }
+.tag-picker__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

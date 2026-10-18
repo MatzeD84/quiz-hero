@@ -51,6 +51,7 @@ try {
         'admin-category-save' => admin_category_save(),
         'admin-category-delete' => admin_category_delete(),
         'admin-image-upload' => admin_image_upload(),
+        'admin-media-replace' => admin_image_upload(true),
         'admin-media-list' => admin_media_list(),
         'admin-media-delete' => admin_media_delete(),
         'admin-users-list' => admin_users_list(),

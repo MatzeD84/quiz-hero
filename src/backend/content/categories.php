@@ -7,7 +7,8 @@ function admin_category_save(): void
     require_admin_csrf();
     $data = read_json_body();
     $title = clean_string($data['title'] ?? '', 120);
-    $id = slugify((string) ($data['id'] ?? $title));
+    $automaticId = trim((string) ($data['id'] ?? '')) === '';
+    $id = slugify($automaticId ? $title : (string) $data['id']);
     if ($title === '') {
         json_response(['ok' => false, 'error' => 'Kategorie-Titel fehlt.'], 422);
     }
@@ -27,16 +28,40 @@ function admin_category_save(): void
         'icon' => $icon ?: null,
         'enabled' => !empty($data['enabled']) ? 1 : 0,
         'badge_json' => json_encode(['active' => !empty($data['badgeActive']), 'text' => $badgeText], JSON_UNESCAPED_UNICODE),
-        'sort_order' => ensure_int($data['sortOrder'] ?? 100, 0, 100000),
+        'sort_order' => 100,
     ];
     $pdo = db();
     $pdo->beginTransaction();
+    if ($automaticId) {
+        $base = mb_substr($id, 0, 90);
+        $id = $base;
+        $probe = $pdo->prepare('SELECT id FROM quiz_categories WHERE id=?');
+        for ($suffix = 2; ; $suffix++) {
+            $probe->execute([$id]);
+            if (!$probe->fetchColumn()) break;
+            $id = $base . '-' . $suffix;
+        }
+        $payload['id'] = $id;
+    }
     $existing = $pdo->prepare('SELECT * FROM quiz_categories WHERE id=? FOR UPDATE');
     $existing->execute([$id]);
     $row = $existing->fetch();
     if ($row) assert_content_version($row, $data);
+    if ($row) $payload['sort_order'] = (int) $row['sort_order'];
     $stmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
-    $stmt->execute($payload);
+    if ($automaticId) {
+        // A concurrent creation must never overwrite a category with the same generated ID.
+        $stmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order)');
+    }
+    try {
+        $stmt->execute($payload);
+    } catch (PDOException $error) {
+        $pdo->rollBack();
+        if ($automaticId && ($error->errorInfo[1] ?? null) === 1062) {
+            json_response(['ok' => false, 'error' => 'Eine Kategorie wurde gleichzeitig angelegt. Bitte erneut speichern.'], 409);
+        }
+        throw $error;
+    }
     $pdo->commit();
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $id]);
 }

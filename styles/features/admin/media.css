@@ -4,6 +4,12 @@
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.45fr);
 }
 
+.admin-media-loading { position: fixed; bottom: var(--space-16); left: var(--space-16); z-index: var(--z-sticky-status); max-width: calc(100% - var(--space-32)); padding: var(--space-8) var(--space-12); background: var(--color-surface); color: var(--color-link); border: var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-card); font-size: var(--text-14); }
+.admin-media-loading:not([hidden]) { display: flex; align-items: center; gap: var(--space-8); }
+.admin-media-loading__spinner { width: var(--space-16); height: var(--space-16); flex: none; border: var(--border-width-strong) var(--border-style) var(--color-border); border-top-color: var(--color-link); border-radius: var(--radius-circle); animation: media-loading-spin var(--duration-score) linear infinite; }
+@keyframes media-loading-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .admin-media-loading__spinner { animation: none; } }
+
 .admin-media-browser,
 .admin-media-detail {
     min-width: 0;

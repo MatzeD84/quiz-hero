@@ -28,7 +28,6 @@
 
         <section id="js-admin-app" class="u-hidden">
             <div class="admin-toolbar">
-                <button id="js-admin-refresh" class="btn btn--modal" type="button">Daten neu laden</button>
                 <button id="js-admin-logout" class="account-action-link" type="button">Logout</button>
             </div>
 
@@ -93,8 +92,10 @@
                             <label>Antwort 3* <input class="js-admin-answer" name="answer-3" type="text" required></label>
                             <label>Antwort 4* <input class="js-admin-answer" name="answer-4" type="text" required></label>
                         </div>
-                        <label>Richtige Antwort* <select id="js-admin-correct" required><option value="0">Antwort 1</option><option value="1">Antwort 2</option><option value="2">Antwort 3</option><option value="3">Antwort 4</option></select></label>
-                        <label>Schwierigkeit* <select id="js-admin-difficulty" required><option value="easy">Easy</option><option value="medium">Medium</option><option value="hero">Hero</option></select></label>
+                        <div class="admin-form__question-settings">
+                            <label>Richtige Antwort* <select id="js-admin-correct" required><option value="0">Antwort 1</option><option value="1">Antwort 2</option><option value="2">Antwort 3</option><option value="3">Antwort 4</option></select></label>
+                            <label>Schwierigkeit* <select id="js-admin-difficulty" required><option value="easy">Easy</option><option value="medium">Medium</option><option value="hero">Hero</option></select></label>
+                        </div>
                         <input id="js-admin-type" type="hidden" value="text">
                         <section class="admin-image-field">
                             <h3>Bild zur Frage</h3>
@@ -120,13 +121,22 @@
                             </div>
                             <p class="admin-form__hint">Das Bild wird automatisch unter <code>images/uploads/&lt;kategorie&gt;/</code> gespeichert.</p>
                         </section>
-                        <label>Tags, kommagetrennt <input id="js-admin-tags" type="text" placeholder="italien, antike"></label>
+                        <div class="tag-picker" id="js-admin-tag-picker">
+                            <label for="js-admin-tag-entry">Tags</label>
+                            <input id="js-admin-tags" type="hidden">
+                            <div class="tag-picker__field">
+                                <div class="tag-picker__chips"></div>
+                                <input id="js-admin-tag-entry" type="text" placeholder="Tag hinzufügen …" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="js-admin-tag-options" aria-describedby="js-admin-tag-hint">
+                            </div>
+                            <div id="js-admin-tag-options" class="tag-picker__options" role="listbox" aria-label="Vorhandene Tags" hidden></div>
+                            <p id="js-admin-tag-hint" class="admin-form__hint">Vorhandene Tags auswählen oder eigene mit Enter hinzufügen.</p>
+                            <span class="tag-picker__status" role="status"></span>
+                        </div>
                         <label>Hintergrundwissen <textarea id="js-admin-background"></textarea></label>
                         <fieldset><legend>Bildbeschreibung und Quellen</legend>
                         <label>Bildbeschreibung (ohne die Lösung vorwegzunehmen)<input id="js-admin-image-alt" maxlength="500" aria-describedby="js-admin-image-alt-hint"></label>
                         <p id="js-admin-image-alt-hint" class="admin-form__hint">Optional: Ohne eigenen Text verwendet das Quiz weiterhin die allgemeine Standardbeschreibung; die SEO-Seite verwendet den Fragetext als Fallback.</p>
                         <label>Quellen-URL<input id="js-admin-source" type="url" maxlength="1000" placeholder="https://…"></label>
-                        <label>Fachlich geprüft von<input id="js-admin-reviewed-by" maxlength="120"></label>
                         <label>Prüfdatum<input id="js-admin-reviewed-at" type="date"></label>
                         <p>Nur tatsächlich geprüfte Angaben eintragen. Eine KI-Markierung ersetzt keine fachliche Prüfung.</p></fieldset>
                         <input id="js-admin-sort" type="hidden" value="100">
@@ -140,7 +150,7 @@
                 </section>
             </div>
 
-            <div id="js-admin-category-panel" class="admin-panel u-hidden">
+            <div id="js-admin-category-panel" class="admin-panel admin-panel--single u-hidden">
                 <section class="admin-category-editor">
                     <div class="admin-section-heading">
                         <h2>Kategorie anlegen/bearbeiten</h2>
@@ -151,7 +161,7 @@
                         <select id="js-admin-category-edit-select"></select>
                     </label>
                     <form id="js-admin-category-form" class="admin-form">
-                        <label>ID <input id="js-admin-category-id" type="text" placeholder="z-b-berlin"></label>
+                        <input id="js-admin-category-id" type="hidden">
                         <label>Titel* <input id="js-admin-category-title" type="text" required></label>
                         <label>Beschreibung <input id="js-admin-category-description" type="text"></label>
                         <label>SEO-Text <textarea id="js-admin-category-seo"></textarea></label>
@@ -178,7 +188,6 @@
                                 </dl>
                             </div>
                         </section>
-                        <label>Sortierung <input id="js-admin-category-sort" type="number" min="0" value="100"><small>Kleinere Zahlen erscheinen weiter oben.</small></label>
                         <label><input id="js-admin-category-enabled" type="checkbox" checked> Aktiv</label>
                         <label><input id="js-admin-category-badge-active" type="checkbox"> Badge anzeigen</label>
                         <label>Badge-Text <input id="js-admin-category-badge-text" type="text" value="Neu"></label>

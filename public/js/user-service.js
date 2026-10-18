@@ -88,7 +88,11 @@ export class UserService {
 
     async login({ identifier, password }) {
         const data = await this.post('account-login', { identifier, password });
-        if (!data.ok) throw new Error(data.error || 'Login fehlgeschlagen.');
+        if (!data.ok) {
+            const error = new Error(data.error || 'Login fehlgeschlagen.');
+            error.code = data.code;
+            throw error;
+        }
         const user = normalizeUser(data.user);
         this.storeUser(user);
         return user;

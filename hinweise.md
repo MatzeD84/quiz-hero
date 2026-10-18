@@ -618,6 +618,38 @@ Die Prüfung läuft nach einer erfolgreich gespeicherten Runde auf dem Server. D
 - Nach Einführung können wir bestehende Ergebnisse berücksichtigen, soweit deren Daten die jeweilige Bedingung zuverlässig belegen.
 - Neue Souvenirs lassen sich hinzufügen, ohne alte Regeln unbemerkt zu verändern.
 
+#### Ergänzung: Reisepass-Meilensteine und Souvenirs als gemeinsames Feature
+
+**Meilenstein und Souvenir gehören zusammen:** Der Meilenstein ist die erreichte Bedingung, das Souvenir die persönliche Belohnung dafür. Dafür brauchen wir keine zwei getrennten Systeme.
+
+**Vorschlag für den Einstieg: zwei Souvenirs pro Kategorie.**
+
+| Souvenir | Bedingung | Darstellung |
+|---|---|---|
+| Erster Besuch | Erste Runde der Kategorie beendet | Kleiner Reisestempel |
+| Entdecker | Eine festgelegte Anzahl unterschiedlicher Fragen tatsächlich beantwortet | Besondere Souvenirkarte im Stil der Kategorie |
+
+Die Fragenanzahl wird am jeweiligen Bestand ausgerichtet. Wiederholungen derselben Frage erhöhen den Entdecker-Fortschritt nicht; übersprungene Fragen zählen nicht als tatsächlich beantwortet. Das wichtigste Souvenir verlangt kein perfektes Ergebnis: Auch wer Fehler macht und dazulernt, soll seine Sammlung aufbauen können.
+
+Die Motive bleiben ortsbezogen und persönlich: beispielsweise eine Reisemarke für Rom, ein Skizzenbuch für Florenz und eine Keramikkachel für die Amalfiküste. Allgemeine Auszeichnungen wie „Erste Hero-Frage gelöst“ werden zunächst zurückgestellt.
+
+**Darstellung im Reisepass:** Unter „Deine Quiz-Reisen“ könnte eine kompakte Sammlung „Deine Souvenirs“ erscheinen. Erhaltene Motive werden farbig dargestellt; bei noch offenen Souvenirs sieht man das nächste konkrete Ziel, zum Beispiel:
+
+> **Dein Rom-Souvenir**  
+> Noch 4 unterschiedliche Fragen entdecken.
+
+Beim Freischalten erscheint im Ergebnismodul ein kleiner Hinweis:
+
+> **Ein Stück Rom gehört jetzt zu deiner Sammlung.**
+
+Kein zusätzliches Pflichtfenster und keine Unterbrechung mitten im Quiz.
+
+**Technische Grundlage:** Die vorhandenen Rundenergebnisse belegen den ersten Besuch. Die inzwischen ergänzten einzelnen Frageergebnisse ermöglichen das Zählen unterschiedlicher tatsächlich beantworteter Fragen. Alte Ergebnisse ohne Einzelantworten können hierfür nicht nachträglich als Entdecker-Fortschritt angenommen werden.
+
+Die oben skizzierte Tabelle `quiz_user_souvenirs` hält erhaltene Souvenirs mit Nutzer, Vergabezeitpunkt, Regelversion und auslösendem Ergebnis fest. Die Vergabe erfolgt serverseitig und nur einmal. Erhaltene Souvenirs bleiben bestehen, wenn später neue Fragen hinzukommen. Regeldefinitionen werden versioniert; neue Regeln verändern bereits verdiente Auszeichnungen nicht stillschweigend.
+
+**Empfohlener Einstieg:** Ortsbezogene Reisestempel und Souvenirkarten umsetzen, bevor weitere allgemeine Auszeichnungen hinzukommen. So erhält der Reisepass mehr Persönlichkeit, ohne mit zusätzlichen Belohnungssystemen überladen zu werden.
+
 ### 6. Teilen, Herausforderungen und Freunde
 
 Hier würde ich drei Ausbaustufen unterscheiden. So können wir früh etwas Schönes veröffentlichen, ohne sofort ein vollständiges soziales Netzwerk bauen zu müssen.

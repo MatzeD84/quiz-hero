@@ -19,3 +19,19 @@
     font-weight: var(--font-weight-bold);
     gap: var(--space-4);
 }
+
+.account-page-form__field { grid-column: 1 / -1; min-width: 0; }
+.account-page-form__input-wrap { position: relative; }
+.account-page-form__input-wrap input { box-sizing: border-box; padding-right: calc(var(--control-size-touch) + var(--space-16)); width: 100%; }
+.account-page-form__input-wrap input[readonly] { background: var(--color-surface-muted); }
+.account-page-form__edit { background: transparent; border: 0; border-radius: var(--radius-sm); color: var(--color-link); cursor: pointer; height: var(--control-size-touch); margin: auto 0; padding: var(--space-8); position: absolute; inset-block: 0; right: var(--space-4); width: var(--control-size-touch); transition: background-color var(--duration-180) var(--easing-standard); }
+.account-page-form__edit:hover { background: var(--color-highlight); }
+.account-page-form__edit svg { display: block; fill: none; height: 100%; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; width: 100%; }
+.account-page-form__hint { color: var(--color-text-muted); font-size: var(--text-14); font-weight: var(--font-weight-regular); line-height: var(--line-height-body); margin: var(--space-8) 0; }
+.account-page-form__hint:empty { display: none; }
+.account-page-form__edit-actions { grid-column: 1 / -1; }
+.account-page-form__edit-actions:not([hidden]) { align-items: center; display: flex; flex-wrap: wrap; gap: var(--space-12); }
+.account-page-form--single { grid-template-columns: minmax(0, 1fr); }
+.account-security { border-top: var(--border-subtle); margin-top: var(--space-24); padding-top: var(--space-16); }
+.account-security__toggle { color: var(--color-link); cursor: pointer; font-size: var(--text-18); font-weight: var(--font-weight-semibold); line-height: var(--line-height-body); padding: var(--space-8) 0; }
+.account-security .account-page-form { margin-top: var(--space-16); }

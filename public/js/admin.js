@@ -4,6 +4,9 @@ import { createFormGuard } from './form-guard.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG } from './config.js?v=dev';
 import { revealStatus } from './status-navigation.js?v=dev';
+import { createTagPicker } from './admin/tag-picker.js?v=dev';
+import { createMediaReplacement } from './admin/media-replace.js?v=dev';
+import { createMediaLoading } from './admin/media-loading.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -14,7 +17,7 @@ const guardedForms = ['#js-admin-question-form', '#js-admin-category-form'].map(
 const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden automatisch innerhalb weniger Minuten aktualisiert.';
 const withSeoDeploymentNotice = message => `${message} ${SEO_DEPLOYMENT_NOTICE}`;
 const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
-    clearPendingCategoryImage(); updateImageState(); updateCategoryImageState();
+    clearPendingCategoryImage(); updateImageState(); updateCategoryImageState(); tagPicker.render();
 });
 let savingForm = false;
 const submitForm = async (form, action) => {
@@ -29,11 +32,13 @@ document.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (savingForm && target) { event.preventDefault(); event.stopImmediatePropagation(); return; }
     if (!target || target.closest('#js-admin-question-form, #js-admin-category-form')) return;
-    if (target.matches('[data-admin-tab], #js-admin-refresh, #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
+    if (target.matches('[data-admin-tab], #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
         if (!formGuard.confirm()) { event.preventDefault(); event.stopImmediatePropagation(); }
     }
 }, true);
 let csrfToken = '';
+const tagPicker = createTagPicker($('#js-admin-tag-picker'), () => questions.flatMap(question => question.tag || []));
+const mediaLoading = createMediaLoading($('#js-admin-media-panel'));
 const API_VERSION = CONFIG.apiVersion || '1';
 const MAX_IMAGE_UPLOAD_BYTES = 6 * 1024 * 1024;
 const MAX_JSON_IMPORT_BYTES = 1024 * 1024;
@@ -71,7 +76,7 @@ const validateImageFile = file => {
     }
 };
 
-const uploadImage = async ({ file, context = 'question', categoryId = '', categoryTitle = '' }) => {
+const uploadImage = async ({ file, context = 'question', categoryId = '', categoryTitle = '', replace = null }) => {
     validateImageFile(file);
 
     const formData = new FormData();
@@ -79,13 +84,17 @@ const uploadImage = async ({ file, context = 'question', categoryId = '', catego
     formData.append('categoryId', categoryId);
     formData.append('categoryTitle', categoryTitle);
     formData.append('image', file);
+    if (replace) {
+        formData.append('path', replace.path);
+        formData.append('version', replace.version);
+    }
 
     const headers = { 'Accept': 'application/json' };
     if (csrfToken) {
         headers['X-Quiz-Hero-CSRF'] = csrfToken;
     }
 
-    const response = await fetch(apiUrl('admin-image-upload'), {
+    const response = await fetch(apiUrl(replace ? 'admin-media-replace' : 'admin-image-upload'), {
         method: 'POST',
         headers,
         credentials: 'same-origin',
@@ -105,6 +114,17 @@ const uploadImage = async ({ file, context = 'question', categoryId = '', catego
 
     return data;
 };
+
+const mediaReplacement = createMediaReplacement({
+    validateFile: validateImageFile,
+    replaceImage: async (item, file) => {
+        const result = await uploadImage({ file, context: 'media', replace: item });
+        selectedMediaPath = result.path;
+        try { await loadData(); await loadMedia(); }
+        catch { setStatus('Bild wurde ausgetauscht. Bitte lade die Seite neu, um die Ansicht zu aktualisieren.', 'info'); return; }
+        setStatus('Bild wurde ausgetauscht. Alle Verwendungen wurden automatisch aktualisiert.', 'success');
+    }
+});
 
 let categories = [];
 let questions = [];
@@ -159,11 +179,14 @@ async function loadData() {
 }
 
 async function loadMedia() {
-    const data = await api('admin-media-list');
-    if (!data.ok) throw new Error(data.error || 'Mediathek konnte nicht geladen werden.');
-    mediaItems = data.media || [];
-    renderMediaFilters();
-    renderMedia();
+    mediaLoading.begin();
+    try {
+        const data = await api('admin-media-list');
+        if (!data.ok) throw new Error(data.error || 'Mediathek konnte nicht geladen werden.');
+        mediaItems = data.media || [];
+        renderMediaFilters();
+        renderMedia();
+    } finally { mediaLoading.end(); }
 }
 
 async function loadUsers() {
@@ -349,6 +372,12 @@ function renderMediaDetail(item) {
         usageWrap.appendChild(list);
     }
     const actions = detail.querySelector('.admin-media-detail__actions');
+    const replaceButton = document.createElement('button');
+    replaceButton.className = 'btn btn--modal';
+    replaceButton.type = 'button';
+    replaceButton.textContent = 'Bild austauschen';
+    replaceButton.addEventListener('click', () => mediaReplacement.open(item));
+    actions.appendChild(replaceButton);
     if (item.deletable) {
         const deleteButton = document.createElement('button');
         deleteButton.id = 'js-admin-media-delete';
@@ -357,10 +386,10 @@ function renderMediaDetail(item) {
         deleteButton.textContent = 'Bild löschen';
         deleteButton.addEventListener('click', () => deleteMedia(item));
         actions.appendChild(deleteButton);
-    } else if (item.used) {
+    } else if (item.used || item.historical) {
         const note = document.createElement('p');
         note.className = 'admin-media-detail__note';
-        note.textContent = 'Löschen nicht möglich, Bild wird noch verwendet.';
+        note.textContent = item.historical && !item.used ? 'Dieses Bild bleibt für frühere oder laufende Quizrunden erhalten.' : 'Löschen nicht möglich, Bild wird noch verwendet.';
         actions.appendChild(note);
     } else {
         const note = document.createElement('p');
@@ -756,6 +785,7 @@ function setAdminTab(tab, options = {}) {
     $('#js-admin-users-panel').classList.toggle('u-hidden', tab !== 'users');
     $('#js-admin-feedback-panel').classList.toggle('u-hidden', tab !== 'feedback');
     $('#js-admin-question-browser').classList.toggle('u-hidden', tab === 'new');
+    $('#js-admin-question-panel').classList.toggle('admin-panel--single', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
     } else if (tab === 'categories' && !$('#js-admin-category-id').value) {
@@ -847,10 +877,10 @@ async function uploadCategoryImage(file, options = {}) {
             if (deferIfMissing) {
                 setPendingCategoryImage(file);
                 $('#js-admin-category-image-file').value = '';
-                setStatus('Bild ist vorgemerkt. Bitte Kategorie-Titel oder ID eintragen und speichern.');
+                setStatus('Bild ist vorgemerkt. Bitte den Kategorienamen eintragen und speichern.');
                 return false;
             }
-            throw new Error('Bitte zuerst eine Kategorie-ID oder einen Titel eintragen.');
+            throw new Error('Bitte zuerst den Kategorienamen eintragen.');
         }
         setStatus('Kategorie-Bild wird hochgeladen...');
         const result = await uploadImage({
@@ -964,10 +994,11 @@ function fillQuestion(question = {}) {
     $('#js-admin-type').value = question.imageUrl ? 'image' : 'text';
     $('#js-admin-image-file').value = '';
     $('#js-admin-tags').value = (question.tag || []).join(', ');
+    tagPicker.reset();
     $('#js-admin-background').value = question.backgroundKnowledge || '';
     $('#js-admin-image-alt').value = question.imageAlt || '';
     $('#js-admin-source').value = question.sourceUrl || '';
-    $('#js-admin-reviewed-by').value = question.reviewedBy || '';
+    $('#js-admin-question-form').dataset.reviewedBy = question.reviewedBy || '';
     $('#js-admin-reviewed-at').value = question.reviewedAt || '';
     $('#js-admin-sort').value = question.sortOrder ?? 100;
     $('#js-admin-active').checked = question.active !== false;
@@ -988,12 +1019,10 @@ function fillCategory(category = {}) {
     clearPendingCategoryImage();
     $('#js-admin-category-edit-select').value = category.id || '';
     $('#js-admin-category-id').value = category.id || '';
-    $('#js-admin-category-id').disabled = Boolean(category.id);
     $('#js-admin-category-title').value = category.title || '';
     $('#js-admin-category-description').value = category.description || '';
     $('#js-admin-category-seo').value = category.seoDescription || '';
     $('#js-admin-category-icon').value = category.icon || '';
-    $('#js-admin-category-sort').value = category.sortOrder ?? 100;
     $('#js-admin-category-enabled').checked = category.enabled !== false;
     $('#js-admin-category-badge-active').checked = Boolean(category.badge?.active);
     $('#js-admin-category-badge-text').value = category.badge?.text || 'Neu';
@@ -1018,7 +1047,7 @@ function collectQuestion() {
         backgroundKnowledge: $('#js-admin-background').value,
         imageAlt: $('#js-admin-image-alt').value,
         sourceUrl: $('#js-admin-source').value,
-        reviewedBy: $('#js-admin-reviewed-by').value,
+        reviewedBy: $('#js-admin-question-form').dataset.reviewedBy || '',
         reviewedAt: $('#js-admin-reviewed-at').value,
         sortOrder: Number($('#js-admin-sort').value || 100),
         active: $('#js-admin-active').checked,
@@ -1181,7 +1210,6 @@ async function init() {
         setStatus('Ausgeloggt.');
     });
 
-    $('#js-admin-refresh').addEventListener('click', () => loadData().catch(error => setStatus(error.message, 'error')));
     $$('[data-admin-tab]').forEach(button => {
         button.addEventListener('click', () => setAdminTab(button.dataset.adminTab, { clearStatus: true }));
     });
@@ -1311,7 +1339,6 @@ async function init() {
                 description: $('#js-admin-category-description').value,
                 seoDescription: $('#js-admin-category-seo').value,
                 icon: $('#js-admin-category-icon').value,
-                sortOrder: Number($('#js-admin-category-sort').value || 100),
                 enabled: $('#js-admin-category-enabled').checked,
                 badgeActive: $('#js-admin-category-badge-active').checked,
                 badgeText: $('#js-admin-category-badge-text').value

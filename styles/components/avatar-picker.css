@@ -21,9 +21,11 @@
 }
 
 .account-avatar-option img {
-    border-radius: var(--radius-pill);
-    height: 48px;
-    object-fit: cover;
+    aspect-ratio: 1;
+    border-radius: var(--radius-circle);
+    display: block;
+    height: auto;
+    object-fit: contain;
     width: 48px;
 }
 
@@ -60,7 +62,6 @@
 }
 
 .account-avatar-option--compact img {
-    height: clamp(48px, 8vw, 64px);
     transition: var(--transition-interactive);
     width: clamp(48px, 8vw, 64px);
 }
@@ -105,7 +106,6 @@
 }
 
 .account-avatar-option--modal img {
-    height: clamp(64px, 12vw, 92px);
     transition: var(--transition-interactive);
     width: clamp(64px, 12vw, 92px);
 }

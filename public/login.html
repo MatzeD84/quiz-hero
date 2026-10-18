@@ -51,6 +51,7 @@
             </form>
 
             <form id="js-register-form" class="user-panel__form login-panel login-panel--register js-login-panel u-hidden" data-login-panel="register">
+                <p class="login-panel__intro">Nach der Registrierung erhältst du eine E-Mail. Bestätige deine Adresse, um loszulegen.</p>
                 <label>
                     <span>Username*</span>
                     <input id="js-register-username" type="text" maxlength="25" autocomplete="username" required>
@@ -95,8 +96,14 @@
                 <button class="btn btn--modal login-panel__submit" type="submit">Passwort speichern</button>
             </form>
 
-            <details class="login-resend">
-                <summary>Bestätigungsmail fehlt oder Link abgelaufen?</summary>
+            <div class="login-panel js-login-panel u-hidden" data-login-panel="verification">
+                <h2>Bestätige deine E-Mail-Adresse</h2>
+                <p>Öffne den Link in deiner Bestätigungsmail. Schau auch im Spamordner nach. Danach kannst du mit deinem Account loslegen.</p>
+                <button class="account-action-link js-login-tab" type="button" data-login-view="login">Zurück zum Login</button>
+            </div>
+
+            <details id="js-login-resend" class="login-resend u-hidden">
+                <summary>Bestätigungsmail erneut senden</summary>
                 <form id="js-resend-form" class="login-panel">
                     <label>E-Mail-Adresse <input id="js-resend-email" type="email" autocomplete="email" required maxlength="190"></label>
                     <button class="btn" type="submit">Bestätigung erneut senden</button>

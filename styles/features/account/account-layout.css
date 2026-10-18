@@ -12,6 +12,15 @@
     justify-items: start;
 }
 
+.account-shell > .user-panel__status:not(:empty) + .account-empty {
+    margin-top: var(--space-24);
+}
+
+.account-empty > h2,
+.account-empty > p {
+    margin: 0;
+}
+
 .account-page__back {
     text-align: center;
 }

@@ -41,27 +41,50 @@
                 </div>
 
                 <form id="js-account-page-form" class="account-page-form">
-                    <h2 class="account-page-form__headline">Zugangsdaten</h2>
-                    <label>
-                        <span>Username*</span>
-                        <input id="js-account-page-username" type="text" maxlength="25" autocomplete="username" required>
-                    </label>
-                    <label>
-                        <span>Neues Passwort</span>
-                        <input id="js-account-page-password" type="password" minlength="10" autocomplete="new-password" placeholder="leer lassen, wenn unverändert">
-                    </label>
-                    <label>Aktuelles Passwort
-                        <input id="js-account-page-current-password" type="password" autocomplete="current-password" aria-describedby="account-reauth-hint">
-                        <small id="account-reauth-hint">Erforderlich für Passwortänderung und Kontolöschung.</small>
-                    </label>
-                    <div class="account-page-form__actions">
-                        <button class="btn btn--modal account-page-form__save" type="submit">Profil speichern</button>
-                        <div class="account-page-form__secondary-actions">
-                            <button id="js-account-page-logout" class="account-action-link" type="button">Abmelden</button>
-                            <button id="js-account-page-delete" class="account-action-link account-action-link--danger" type="button">Account löschen</button>
+                    <h2 class="account-page-form__headline">Benutzername</h2>
+                    <div class="account-page-form__field">
+                        <label for="js-account-page-username">Dein Benutzername</label>
+                        <div class="account-page-form__input-wrap">
+                            <input id="js-account-page-username" type="text" maxlength="25" autocomplete="username" aria-describedby="js-username-hint" required readonly>
+                            <button id="js-username-edit" class="account-page-form__edit" type="button" aria-label="Benutzernamen ändern" title="Benutzernamen ändern" aria-controls="js-account-page-username" aria-expanded="false">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z"/></svg>
+                            </button>
                         </div>
+                        <p id="js-username-hint" class="account-page-form__hint" role="status"></p>
+                    </div>
+                    <div id="js-username-actions" class="account-page-form__edit-actions" hidden>
+                        <button class="btn btn--modal" type="submit">Benutzernamen speichern</button>
+                        <button id="js-username-cancel" class="account-action-link" type="button">Abbrechen</button>
                     </div>
                 </form>
+
+                <details id="js-password-section" class="account-security">
+                    <summary class="account-security__toggle">Passwort ändern</summary>
+                    <p id="account-reauth-hint" class="account-page-form__hint">Bestätige mit deinem aktuellen Passwort, dass du diese Änderung selbst vornimmst.</p>
+                    <form id="js-password-form" class="account-page-form">
+                        <label class="account-page-form__field">Aktuelles Passwort
+                            <input id="js-account-page-current-password" type="password" autocomplete="current-password" aria-describedby="account-reauth-hint" required>
+                        </label>
+                        <label>Neues Passwort
+                            <input id="js-account-page-password" type="password" minlength="10" autocomplete="new-password" aria-describedby="js-password-hint" required>
+                        </label>
+                        <label>Neues Passwort wiederholen
+                            <input id="js-password-repeat" type="password" minlength="10" autocomplete="new-password" required>
+                        </label>
+                        <p id="js-password-hint" class="account-page-form__hint account-page-form__field">Mindestens 10 Zeichen. Andere angemeldete Geräte werden danach abgemeldet.</p>
+                        <div class="account-page-form__edit-actions">
+                            <button class="btn btn--modal" type="submit">Passwort ändern</button>
+                            <button id="js-password-cancel" class="account-action-link" type="button">Abbrechen</button>
+                        </div>
+                    </form>
+                </details>
+
+                <div class="account-page-form__actions">
+                    <div class="account-page-form__secondary-actions">
+                        <button id="js-account-page-logout" class="account-action-link" type="button">Abmelden</button>
+                        <button id="js-account-page-delete" class="account-action-link account-action-link--danger" type="button">Account löschen</button>
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -104,6 +127,31 @@
                 </button>
             </div>
             <div id="js-account-avatar-modal-content"></div>
+        </div>
+    </dialog>
+
+    <dialog id="js-account-delete-modal" class="modal u-hidden" aria-labelledby="js-account-delete-title">
+        <div class="modal__content">
+            <div class="modal__close">
+                <button id="js-account-delete-close" class="modal__close-button icon-button" type="button" aria-label="Löschbestätigung schließen">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 10.93 5.719-5.72a.75.75 0 0 1 1.062 1.062L13.06 12l5.72 5.719a.75.75 0 0 1-1.062 1.062L12 13.06l-5.719 5.72a.75.75 0 0 1-1.062-1.062L10.94 12l-5.72-5.719a.75.75 0 0 1 1.062-1.062z"/></svg>
+                </button>
+            </div>
+            <h2 id="js-account-delete-title" class="modal__headline">Account wirklich löschen?</h2>
+            <p>Dein Profil und deine persönlichen Frageergebnisse werden gelöscht. Bisherige Rundensummen bleiben ohne Kontozuordnung erhalten. Diese Aktion lässt sich nicht rückgängig machen.</p>
+            <form id="js-account-delete-form" class="account-page-form account-page-form--single">
+                <label>Dein aktuelles Passwort
+                    <input id="js-account-delete-password" type="password" autocomplete="current-password" required>
+                </label>
+                <label>Tippe DELETE zur Bestätigung
+                    <input id="js-account-delete-confirm" type="text" autocomplete="off" spellcheck="false" pattern="DELETE" required>
+                </label>
+                <p id="js-account-delete-status" class="user-panel__status account-page-form__field" role="status"></p>
+                <div class="account-page-form__edit-actions">
+                    <button class="btn btn--modal" type="submit">Account endgültig löschen</button>
+                    <button id="js-account-delete-cancel" class="account-action-link" type="button">Abbrechen</button>
+                </div>
+            </form>
         </div>
     </dialog>
 

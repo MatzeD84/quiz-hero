@@ -97,7 +97,7 @@
     --transition-interactive: all var(--duration-300) var(--easing-standard);
 
     /* Shadows */
-    --ring-avatar-selected: 0 0 0 4px color-mix(in srgb, var(--color-accent) 32%, transparent);
+    --ring-avatar-selected: 0 0 0 var(--border-width-focus) var(--color-link);
     --shadow-avatar: 0 8px 22px color-mix(in srgb, var(--color-link) 16%, transparent);
     --shadow-bleed-accent: 0 0 0 100vmax var(--color-accent);
     --shadow-bleed-muted: 0 0 0 100vmax var(--color-surface-muted);

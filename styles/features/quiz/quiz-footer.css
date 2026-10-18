@@ -11,4 +11,18 @@
 
 .background-knowledge__content {
     text-wrap: auto;
+    display: grid;
+    grid-template-columns: var(--space-20) minmax(0, 1fr);
+    gap: var(--space-8);
+}
+
+.background-knowledge__icon {
+    color: var(--color-link);
+    fill: none;
+    height: var(--space-20);
+    width: var(--space-20);
+    margin-top: 3px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
 }
