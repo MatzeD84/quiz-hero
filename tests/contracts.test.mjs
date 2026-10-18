@@ -1,3 +1,5 @@
+import { createQuizInvitation, readQuizInvitation, shareQuizInvitation } from '../public/js/quiz-invitation.js';
+import { QuizController } from '../public/js/quiz-controller.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -42,6 +44,10 @@ test('image sharing requires file support and handles cancellation and failure',
     assert.equal(await shareResult(file, browser), 'opened');
     assert.deepEqual(received.files, [file]);
     assert.equal(received.url, undefined);
+    const invitation = createQuizInvitation({ categoryId: 'rom', total: 5 });
+    assert.equal(await shareResult(file, browser, invitation), 'opened');
+    assert.equal(received.url, invitation.url);
+    assert.deepEqual(received.files, [file]);
 });
 
 test('status feedback scrolls into view and respects reduced motion', () => {
@@ -304,4 +310,47 @@ test('CSS design values use central tokens with no unresolved references or cycl
     assert.deepEqual(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }), []);
     fixtures.set(definitions, ':root { --color-white: #fff; --space-2: 8px; ' + Array.from({ length: 11 }, (_, i) => `--text-${i}: 1rem;`).join(' ') + ' }');
     assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('Too many --text-')));
+});
+
+test('friend invitations contain only selection and size, never scores, identities or fixed questions', () => {
+    const invitation = createQuizInvitation({ categoryId: 'rom', total: 5, label: 'Rom', score: 20, email: 'private@test.invalid', questions: [1,2] });
+    assert.equal(invitation.url, 'https://quiz-hero.de/?category=rom&invite=1&count=5');
+    assert.doesNotMatch(JSON.stringify(invitation), /private@|questions|score/);
+    assert.match(invitation.text, /neu gemischte Runde/);
+    const tag = createQuizInvitation({ tagId: 'essen & trinken', total: 3 });
+    assert.equal(new URL(tag.url).searchParams.get('tag'), 'essen & trinken');
+    for (const count of ['0', '-1', '1.5', 'Infinity', '10001', 'all']) {
+        assert.equal(readQuizInvitation(new URLSearchParams('category=rom&invite=1&count=' + count)), null);
+    }
+    assert.equal(readQuizInvitation(new URLSearchParams('category=rom&count=5')), null);
+    assert.equal(createQuizInvitation({ total: 5 }), null);
+});
+
+test('opening an invitation offers a fresh round without starting it or taking a question sequence from the URL', () => {
+    const oldWindow = globalThis.window;
+    let offered, started;
+    globalThis.window = { location: { search: '?category=rom&invite=1&count=10' } };
+    try {
+        const controller = new QuizController({ state: { getCategory: () => ({ enabled: true }), getAvailableCountForSelection: () => 7, selectionLabel: 'Rom' }, view: { renderInvitation: data => { offered = data; } } });
+        controller.handleCategorySelected = () => {};
+        controller.handleQuestionCountSelected = count => { started = count; };
+        controller.applyInitialSelectionFromUrl();
+        assert.equal(started, undefined);
+        assert.equal(offered.count, 7);
+        assert.equal(offered.reduced, true);
+        offered.onStart();
+        assert.equal(started, 7);
+    } finally { globalThis.window = oldWindow; }
+});
+
+test('invitations use text sharing even when a browser cannot share images', async () => {
+    const invitation = createQuizInvitation({ categoryId: 'rom', total: 5 });
+    let received;
+    const browser = { canShare: data => !data.files, share: async data => { received = data; } };
+    assert.equal(await shareQuizInvitation(invitation, browser), 'opened');
+    assert.equal(received.url, invitation.url);
+    assert.equal(received.files, undefined);
+    assert.equal(await shareQuizInvitation(invitation, {}), 'unavailable');
+    browser.share = async () => { throw { name: 'AbortError' }; };
+    assert.equal(await shareQuizInvitation(invitation, browser), 'cancelled');
 });

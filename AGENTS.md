@@ -1,5 +1,9 @@
 # QuizHero-Projektanweisungen
 
+## Aenderungsumfang
+
+- Nur den aktuell besprochenen Umfang bearbeiten. Keine eigenstaendigen Design- oder Verhaltensaenderungen an anderen Bereichen vornehmen. Bei gemeinsamen CSS-Regeln Auswirkungen auf bestehende Komponenten pruefen und deren Darstellung erhalten.
+
 ## CSS und Design-Tokens
 
 - Farben ausschliesslich in zentralen Custom Properties unter `styles/abstracts/tokens.css` und `styles/themes/app-tokens.css` definieren. Komponenten verwenden semantische Rollen wie `--color-answer-correct-bg`; keine direkten Hex-, RGB- oder benannten Farbwerte. Einmalige Transparenzen duerfen lokal mit `color-mix()` aus diesen Rollen abgeleitet werden; keine Prozentwert-Tokenfamilien anlegen.
@@ -8,6 +12,12 @@
 - Eindeutige Rollen benennen, keine historischen Farbnamen wie `carrot` fuer eine Petrolfarbe. Skalierte Groessen duerfen nummerierte Skalentokens verwenden. Komponentenbezogene Geometrie darf lokale Custom Properties erhalten.
 - Primitive CSS-Werte wie `0`, `auto`, `none`, `100%`, `currentColor` und einmalige Layoutberechnungen nicht mechanisch tokenisieren. Breakpointwerte bleiben in Media Queries literal, weil native Custom Properties dort nicht ausgewertet werden.
 - Quellen unter `styles/` bearbeiten; `public/styles.css` ausschliesslich mit `node scripts/build-css.js` erzeugen. Dieser Build prueft automatisch die Token-Regeln. Bei Stylingaenderungen zusaetzlich `node scripts/check-bem.js` ausfuehren. Dokumentation: `styles/README.md`.
+
+## Deaktivierte Buttons
+
+- Deaktivierte Buttons bleiben sichtbar und nutzen den zentralen Token `--opacity-disabled` (0.45) und `cursor: not-allowed`; keine komponentenweisen Opazitaetswerte. Keine aktiven Hovereffekte bei deaktivierten Aktionen.
+- Native Buttons mit `disabled` sperren. `aria-disabled="true"` allein blockiert keine Aktion: Verhalten ebenfalls absichern. Bei fehlender Browser-Unterstuetzung Begruendung und Alternative anzeigen.
+- Ausnahme: Als richtig/falsch markierte Quizantworten bleiben nach dem Sperren deckend, damit die Ergebnisfarben gut lesbar bleiben.
 
 ## Quizfragen erstellen
 

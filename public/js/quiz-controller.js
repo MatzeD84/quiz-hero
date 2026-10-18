@@ -1,3 +1,4 @@
+import { readQuizInvitation } from './quiz-invitation.js?v=dev';
 import { CONFIG, LABELS } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
@@ -77,12 +78,16 @@ export class QuizController {
         const categoryId = params.get('category');
         const tag = params.get('tag');
 
-        if (categoryId) {
-            this.handleCategorySelected(categoryId);
-            return;
-        }
-        if (tag) {
-            this.handleTagSelected(tag);
+        const validCategory = categoryId && this.state.getCategory(categoryId)?.enabled !== false && this.state.getCategory(categoryId);
+        const validTag = !categoryId && tag && this.state.tagIndex.has(tag);
+        if (validCategory) this.handleCategorySelected(categoryId);
+        else if (validTag) this.handleTagSelected(tag);
+        else return;
+        const invitation = readQuizInvitation(params);
+        if (invitation) {
+            const available = this.state.getAvailableCountForSelection();
+            const count = Math.min(invitation.count, available);
+            if (count > 0) this.view.renderInvitation({ label: this.state.selectionLabel, count, reduced: count < invitation.count, onStart: () => this.handleQuestionCountSelected(count) });
         }
     }
 
@@ -90,6 +95,8 @@ export class QuizController {
         const params = new URLSearchParams(window.location.search);
         params.delete('category');
         params.delete('tag');
+        params.delete('invite');
+        params.delete('count');
         if (categoryId) {
             params.set('category', categoryId);
         }
@@ -160,6 +167,7 @@ export class QuizController {
     }
 
     handleCategorySelected(categoryId) {
+        this.view.clearInvitation();
         const category = this.state.getCategory(categoryId);
         if (!category || category.enabled === false) {
             return;
@@ -181,6 +189,7 @@ export class QuizController {
     }
 
     handleTagSelected(tag) {
+        this.view.clearInvitation();
         if (!this.state.tagIndex.has(tag)) {
             return;
         }

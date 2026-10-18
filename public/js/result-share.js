@@ -1,4 +1,5 @@
-﻿import { openDialog, closeDialog } from './dialog.js?v=dev';
+﻿import { createQuizInvitation, shareQuizInvitation } from './quiz-invitation.js?v=dev';
+import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { renderResultCard } from './result-card.js?v=dev';
 
 export function createResultShare({ score, maxScore, total, solved = 0, label = '', image = '' }) {
@@ -14,10 +15,10 @@ export function supportsResultShare(file, browser = globalThis.navigator) {
     catch { return false; }
 }
 
-export async function shareResult(file, browser = globalThis.navigator) {
+export async function shareResult(file, browser = globalThis.navigator, invitation = null) {
     if (!supportsResultShare(file, browser)) return 'unavailable';
     try {
-        await browser.share({ files: [file], title: 'Mein Quiz-Hero-Ergebnis' });
+        await browser.share({ files: [file], title: 'Mein Quiz-Hero-Ergebnis', ...(invitation ? { text: invitation.text, url: invitation.url } : {}) });
         return 'opened';
     } catch (error) { return error?.name === 'AbortError' ? 'cancelled' : 'failed'; }
 }
@@ -45,6 +46,39 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
     const dialog = section.closest('dialog');
     const shareDialog = section.querySelector('[data-share-dialog]');
     const opener = section.querySelector('[data-share-open]');
+    // Keep local preview invitations local; production links always use the canonical domain.
+    const origin = ['localhost', '127.0.0.1'].includes(location.hostname) ? location.origin : 'https://quiz-hero.de';
+    const invitation = createQuizInvitation(result, origin);
+    const invitationSection = section.querySelector('[data-invitation]');
+    if (invitation) {
+        invitationSection.hidden = false;
+        invitationSection.querySelector('[data-invitation-title]').textContent = (invitation.label || 'Dein Quiz') + ' · ' + invitation.count + ' Fragen';
+        const inviteStatus = invitationSection.querySelector('[data-invitation-status]');
+        const input = invitationSection.querySelector('[data-invitation-url]');
+        const inviteShare = invitationSection.querySelector('[data-invitation-share]');
+        input.value = invitation.url;
+        const copy = async () => {
+            try {
+                if (typeof browser?.clipboard?.writeText !== 'function') throw Error('Clipboard unavailable');
+                await browser.clipboard.writeText(invitation.url);
+                inviteStatus.textContent = 'Einladungslink kopiert. Bereit für deine Freunde!';
+            } catch {
+                invitationSection.querySelector('[data-invitation-fallback]').hidden = false;
+                input.focus(); input.select();
+                inviteStatus.textContent = 'Kopiere den markierten Link und schicke ihn an deine Freunde.';
+            }
+        };
+        inviteShare.addEventListener('click', async () => {
+            inviteShare.disabled = true;
+            inviteStatus.textContent = '';
+            try {
+                const outcome = await shareQuizInvitation(invitation, browser);
+                if (outcome === 'opened') inviteStatus.textContent = 'Einladung an dein Teilen-Menü übergeben.';
+                if (outcome === 'unavailable' || outcome === 'failed') await copy();
+            } finally { inviteShare.disabled = false; }
+        });
+        invitationSection.querySelector('[data-invitation-copy]').addEventListener('click', copy);
+    }
     let disposed = false, url, file, busy = false;
     const dispose = () => {
         disposed = true;
@@ -81,7 +115,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
         if (!file) { void generate(); return; }
         busy = true; primary.disabled = true; status.textContent = '';
         try {
-            const outcome = await shareResult(file, browser);
+            const outcome = await shareResult(file, browser, invitation);
             if (disposed) return;
             if (outcome === 'opened') status.textContent = 'An dein Teilen-Menü übergeben.';
             if (outcome === 'failed' || outcome === 'unavailable') status.textContent = 'Teilen ist gerade nicht verfügbar. Lade dein Bild herunter und teile es anschließend.';

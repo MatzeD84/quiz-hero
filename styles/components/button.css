@@ -14,21 +14,32 @@
 
 .btn:visited,
 .btn:focus,
-.btn:hover {
+.btn:hover:where(:not(:disabled):not([aria-disabled='true'])) {
     color: var(--color-on-primary);
     text-decoration: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .btn:hover {
+    .btn:hover:where(:not(:disabled):not([aria-disabled='true'])) {
         background-color: var(--color-accent);
     }
 }
 
 .btn--disabled {
-    opacity: 0.25;
+    opacity: var(--opacity-disabled);
     background-color: var(--color-strong) !important;
     cursor: not-allowed;
     display: none;
 }
 
+
+/* Disabled controls stay visible and clearly distinct from available actions. */
+:where(button, .btn):is(:disabled, [aria-disabled='true']) {
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+}
+
+/* Answer feedback must remain legible after the quiz locks the controls. */
+.btn--quiz-answer:is(.btn--answer-correct, .btn--answer-incorrect):disabled {
+    opacity: 1;
+}

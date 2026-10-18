@@ -105,6 +105,7 @@
     --shadow-shell: 0 18px 55px color-mix(in srgb, var(--color-link) 12%, transparent);
 
     /* Other shared values */
+    --opacity-disabled: 0.45;
     --filter-sepia: sepia(1) hue-rotate(0deg);
     /* Tracking */
     --tracking-dot-04em: .04em;

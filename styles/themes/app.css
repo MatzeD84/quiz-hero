@@ -47,7 +47,7 @@ a { color: var(--color-link); text-underline-offset: 4px; }
 .tag-card__title { font-size: var(--text-16); font-weight: var(--font-weight-regular); }
 .tag-card__badge { top: var(--space-8); right: var(--space-8); font-size: var(--text-12); padding: var(--space-2) var(--space-8); }
 .btn { border-radius: var(--radius-md); padding: var(--space-12) var(--space-20); min-height: var(--control-height); font-weight: var(--font-weight-semibold); background: var(--color-text); color: var(--color-on-primary); }
-.btn:hover { background: var(--color-link); }
+.btn:hover:where(:not(:disabled):not([aria-disabled='true'])) { background: var(--color-link); }
 .btn--category, .btn--tag { padding: 0; }
 .btn--tag { padding: var(--space-12); }
 .btn:disabled { cursor: not-allowed; }

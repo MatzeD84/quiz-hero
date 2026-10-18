@@ -188,6 +188,39 @@ export class QuizView {
         }
     }
 
+    clearInvitation() {
+        this.elements.questionCountContainer?.querySelector('[data-quiz-invitation]')?.remove();
+    }
+
+    renderInvitation({ label, count, reduced, onStart }) {
+        this.clearInvitation();
+        const container = this.elements.questionCountContainer;
+        if (!container) return;
+        const invitation = document.createElement('section');
+        invitation.className = 'quiz-invitation';
+        invitation.dataset.quizInvitation = '';
+        const title = document.createElement('h3');
+        title.className = 'quiz-invitation__title';
+        title.textContent = 'Du bist eingeladen!';
+        const text = document.createElement('p');
+        text.className = 'quiz-invitation__text';
+        text.textContent = label + ' · ' + count + ' Fragen. Deine Fragen werden neu gemischt – finde heraus, was du weißt!';
+        const start = document.createElement('button');
+        start.type = 'button'; start.className = 'btn'; start.textContent = 'Deine Runde starten';
+        start.addEventListener('click', onStart);
+        invitation.append(title, text);
+        if (reduced) {
+            const note = document.createElement('p');
+            note.className = 'quiz-invitation__text';
+            note.textContent = 'Aktuell sind weniger Fragen verfügbar. Die Rundengröße wurde angepasst.';
+            invitation.append(note);
+        }
+        invitation.append(start);
+        const options = container.querySelector('.question-count__options');
+        if (options) options.before(invitation);
+        else container.append(invitation);
+    }
+
     renderSelectionLabel(labelText) {
         if (!this.elements.selectionLabel) return;
         this.elements.selectionLabel.textContent = labelText || '';

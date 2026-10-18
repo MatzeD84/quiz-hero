@@ -26,17 +26,29 @@
         <img class="result-summary__selection-image" data-result-selection-image alt="" hidden>
     </div>
 
-    <section class="result-share" data-result-share aria-label="Ergebnis teilen">
-        <button class="btn result-share__primary" type="button" data-share-open><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span>Ergebnis teilen</span></button>
+    <section class="result-share" data-result-share aria-label="Freunde herausfordern">
+        <button class="btn result-share__primary" type="button" data-share-open><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span>Freunde herausfordern</span></button>
         <dialog class="result-share__dialog" id="js-result-share-dialog" data-share-dialog>
             <div class="result-share__dialog-header">
-                <h2 class="result-share__title">Deine Ergebniskarte</h2>
+                <h2 class="result-share__title">Freunde herausfordern</h2>
                 <button class="modal__close-button icon-button" type="button" data-share-close aria-label="Vorschau schlie&szlig;en">
                     <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
                         </svg>
                 </button>
             </div>
+            <section class="result-share__invitation" data-invitation hidden aria-label="Einladung zur Quizrunde">
+                <h3 class="result-share__invitation-title" data-invitation-title></h3>
+                <p class="result-share__invitation-hint">Gleiches Quiz, neue Runde: Die Fragen werden f&uuml;r jeden neu gemischt.</p>
+                <div class="result-share__actions">
+                    <button class="btn result-share__primary" type="button" data-invitation-share><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span>Einladung teilen</span></button>
+                    <button class="result-share__copy" type="button" data-invitation-copy>Link kopieren</button>
+                </div>
+                <label class="result-share__invitation-hint" data-invitation-fallback hidden>Dein Einladungslink
+                    <input class="result-share__invitation-url" data-invitation-url type="text" readonly>
+                </label>
+                <p class="result-share__status" data-invitation-status role="status" aria-live="polite"></p>
+            </section>
             <img class="result-share__preview" data-share-preview alt="" width="1080" height="1350" hidden>
             <div class="result-share__actions">
                 <button class="btn result-share__primary" type="button" data-share-native aria-describedby="js-result-share-status" disabled><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span data-share-label>Bild wird erstellt &hellip;</span></button>

@@ -3,7 +3,6 @@
 .result-share__preview { border-radius: var(--radius-md); display: block; height: auto; width: 100%; }
 .result-share__actions { align-items: center; display: flex; flex-wrap: wrap; gap: var(--space-12) var(--space-16); }
 .result-share__primary { align-items: center; display: inline-flex; gap: var(--space-8); justify-content: center; background: var(--color-link); min-height: var(--control-size-touch); }
-.result-share__primary:disabled { cursor: default; opacity: 0.65; }
 .result-share [hidden] { display: none; }
 .result-share__link { align-items: center; color: var(--color-link); display: inline-flex; font-size: var(--text-14); min-height: var(--control-size-touch); text-decoration: underline; text-underline-offset: 3px; }
 .result-share__status { color: var(--color-text-muted); font-size: var(--text-12); line-height: var(--line-height-body); margin: 0; }
@@ -38,3 +37,14 @@
 
 .result-share__icon { fill: none; flex: none; height: 1.25em; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; width: 1.25em; }
 .result-share__dialog .result-share__preview { max-height: 55dvh; object-fit: contain; }
+
+.result-share__invitation { background: var(--color-surface); border: var(--border-subtle); border-radius: var(--radius-md); display: grid; gap: var(--space-12); margin-bottom: var(--space-16); padding: var(--space-16); }
+.result-share__invitation-title { font-family: var(--font-body); font-size: var(--text-18); font-weight: var(--font-weight-semibold); letter-spacing: 0; margin: 0; }
+.result-share__invitation-hint { color: var(--color-text-muted); font-size: var(--text-14); line-height: var(--line-height-body); margin: 0; }
+.result-share__copy { background: transparent; border: 0; color: var(--color-link); cursor: pointer; font: inherit; font-size: var(--text-14); min-height: var(--control-size-touch); text-decoration: underline; }
+.result-share__invitation-url { box-sizing: border-box; display: block; font: inherit; margin-top: var(--space-8); width: 100%; }
+.quiz-invitation { background: var(--color-highlight); border-radius: var(--radius-md); display: grid; gap: var(--space-12); margin-top: var(--space-20); padding: var(--space-20); }
+.quiz-invitation__title { color: var(--color-text); font-family: var(--font-body); font-size: var(--text-20); font-weight: var(--font-weight-semibold); letter-spacing: 0; margin: 0; }
+.quiz-invitation__text { color: var(--color-text); font-size: var(--text-16); margin: 0; }
+
+.result-share__dialog:has([data-invitation]:not([hidden])) .result-share__preview { max-height: 32dvh; }

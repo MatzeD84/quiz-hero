@@ -54,3 +54,7 @@ node --test tests/contracts.test.mjs
 Der CSS-Build fuehrt die Token-Pruefung automatisch aus. Sie erkennt verstreute Farbwerte, zu grosse Token-Skalen, feste Schriftgroessen, Schriftfamilien, Bewegungszeiten, gemeinsame Border-Breiten und Schatten sowie nicht definierte Variablen und zyklische Referenzen. Die Pruefung ersetzt nicht die inhaltliche Entscheidung, welche Rolle ein neuer Token besitzt.
 
 Das uebernommene Design ist der Standard auf `master`. Dokumentation: [Design](../docs/DESIGN.md). Production wird weiterhin ausschliesslich vom Branch `hostinger` veroeffentlicht.
+
+## Deaktivierte Buttons
+
+Deaktivierte Aktionen bleiben sichtbar und verwenden zentral `--opacity-disabled: 0.45` sowie `cursor: not-allowed`. Keine eigenen Opazitaetswerte pro Komponente verwenden. Hovereffekte duerfen keinen aktiven Zustand suggerieren. Native Buttons mit `disabled` deaktivieren; bei `aria-disabled="true"` muss die Anwendung die Aktion zusaetzlich unterbinden. Bei fehlender Browser-Unterstuetzung eine sichtbare Begruendung und eine nutzbare Alternative anbieten. Richtige und falsche Quizantworten bleiben nach dem Sperren deckend, damit die Ergebnisfarben lesbar bleiben.
