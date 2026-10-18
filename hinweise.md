@@ -74,6 +74,8 @@ Ideen ChatGPT:
 ----------------------------------------
 Ideen:
 
+- Auswählbare Schwierigkeitslevel
+
 Aktuelle news auf Startseite
 - user kann news schließen --> soll gemerkt werden
 - "Neue Fragen zu Rom" oder "Noch kein Account. Hier gets lang"
@@ -455,4 +457,305 @@ Am Ende:
 - Oder bei perfektem Lauf: „Hero-Bonusfrage freigeschaltet“
 - Erhöht Spannung und Abschlussgefühl.
 
+-----
+Ideen-Ausarbetung
 
+Ich würde diese drei Ideen verbinden: **Dein Reisepass zeigt, was du entdeckt hast. Souvenirs machen Fortschritt sichtbar. Geteilte Reisen laden andere zum Mitspielen ein.** So entsteht ein zusammenhängendes Erlebnis.
+
+### 3. Die Heldenseite als persönlicher Reisepass
+
+Die aktuelle Profilseite bietet vor allem Kontoeinstellungen. Der Reisepass würde sie zum persönlichen Ausgangspunkt machen.
+
+**So könnte sie aufgebaut sein:**
+
+| Bereich | Inhalt |
+|---|---|
+| Dein nächstes Abenteuer | Eine passende Empfehlung: letzte Stadt weiterspielen oder eine neue entdecken |
+| Deine Städte | Karten für Rom, Florenz usw. mit nachvollziehbarem Fortschritt |
+| Letzte Reisen | Gespielte Runden mit Datum, Ergebnis und Wiederholen-Aktion |
+| Deine Sammlung | Erhaltene Souvenirs und erreichbare nächste Ziele |
+| Einstellungen | Name, Avatar und Zugangsdaten als zurückhaltender Nebenbereich |
+
+Eine Stadtkarte könnte beispielsweise zeigen:
+
+> **Rom**  
+> 18 unterschiedliche Fragen beim ersten Versuch gelöst  
+> 3 Themen entdeckt · zuletzt gestern gespielt  
+> **Rom weiter entdecken**
+
+Dabei würde ich **„gespielt“, „richtig beantwortet“ und „gemeistert“ unterscheiden**. Ein einzelner Glückstreffer sollte noch nicht als dauerhaft gelernt gelten.
+
+Für den Anfang reichen zwei klare Werte:
+
+- **Entdeckt:** unterschiedliche Fragen, die du abgeschlossen hast.
+- **Sicher beantwortet:** unterschiedliche Fragen, die beim ersten Versuch richtig waren.
+
+„Dauerhaft gemeistert“ könnten wir später ergänzen, wenn erfolgreiche Wiederholungen an verschiedenen Tagen erfasst werden.
+
+**Wichtig bei neuen Fragen:** Der Fortschritt darf sich nicht wie ein Rückschritt anfühlen. Statt „Dein Rom-Fortschritt ist von 80 auf 60 Prozent gefallen“ lieber:
+
+> Du hast bereits 40 Fragen entdeckt. In Rom warten 12 neue auf dich.
+
+#### Technische Umsetzung
+
+Den **Ergebnisverlauf können wir weitgehend mit vorhandenen Daten** bauen. Gespeicherte Runden enthalten bereits Kategorie, Punkte, Maximalpunkte, gelöste Fragen und Zeitpunkt. Dazu käme ein geschützter API-Endpunkt wie:
+
+`account-journey`
+
+Dieser liefert ausschließlich Daten des angemeldeten Benutzers. Seine Benutzer-ID wird aus der Sitzung bestimmt, nicht aus einem frei übergebenen Parameter.
+
+Für dauerhaften Fortschritt pro Frage brauchen wir zusätzliche Daten. Die bisherigen Ergebnis-Summen reichen dafür nicht.
+
+Ich würde eine Tabelle für abgeschlossene Antworten ergänzen, beispielsweise:
+
+```text
+quiz_result_answers
+- result_id
+- question_id
+- question_revision
+- attempt_count
+- correct_on_first_attempt
+- solved
+- skipped
+```
+
+Die Auswertung entsteht **serverseitig beim Speichern einer Runde**. Der Server kennt bereits den eingefrorenen Fragenstand und prüft die Antworten. Damit muss der Browser keine vertrauenswürdigen Statistikwerte liefern.
+
+Ein eindeutiger Schlüssel auf `result_id + question_id` verhindert doppelte Einträge bei erneutem Absenden.
+
+Daraus lassen sich zunächst die Statistiken berechnen. Eine zusätzliche Statistik-Tabelle würde ich erst anlegen, wenn die Abfragen tatsächlich zu langsam werden.
+
+**Grenzen und Sonderfälle:**
+
+- Alte Ergebnisse bleiben im Verlauf sichtbar. Fehlende Antwortdetails werden nicht nachträglich erfunden.
+- Wesentlich überarbeitete Fragen brauchen eine fachliche Revision, damit früherer Fortschritt richtig eingeordnet wird.
+- Kleine Rechtschreibkorrekturen sollten keine Lernerfolge zurücksetzen.
+- Gelöschte Fragen dürfen historische Ergebnisse nicht kaputtmachen.
+- Der Reisepass ist standardmäßig privat.
+
+**Meine Empfehlung:** Zuerst den Verlauf und schöne Stadtkarten bauen. Danach die genauere Fortschrittsmessung ergänzen.
+
+### 5. Souvenirs: eine Sammlung mit Persönlichkeit
+
+Hier sehe ich viel Potenzial, gerade weil Quiz-Hero einen eigenen Bildstil besitzt.
+
+Ich würde keine Flut aus generischen Medaillen wie „100 Klicks geschafft“ anbieten. **Ein Souvenir sollte zu einer Stadt passen und eine kleine Geschichte erzählen.**
+
+Unverbindliche Motive:
+
+- **Rom:** eine kleine Reisemarke oder ein stilisiertes Stadt-Souvenir.
+- **Florenz:** ein Skizzenbuch mit Renaissance-Anmutung.
+- **Neapel:** eine illustrierte Postkarte.
+- **Amalfiküste:** eine Keramikkachel.
+
+Die genaue Motivwahl könnten wir später passend zum vorhandenen Stil entwickeln.
+
+**Drei Möglichkeiten der Darstellung:**
+
+| Variante | Wirkung | Meine Einschätzung |
+|---|---|---|
+| Reisestempel | Kompakt, gut in Stadtkarten integrierbar | Idealer Einstieg |
+| Souvenirkarte | Größeres Motiv mit kurzer Beschreibung | Besonders schön für eine Sammlung |
+| Avatar-Rahmen | Als persönliche Auszeichnung nutzbar | Gute spätere Ergänzung |
+
+Zum Start würde ich **pro Stadt einen Stempel und eine besondere Souvenirkarte** vorsehen. Mehr braucht es zunächst nicht.
+
+#### Wie verdient man sie?
+
+Die Ziele sollten transparent und mit unterschiedlichen Spielgewohnheiten erreichbar sein.
+
+Beispielsweise:
+
+- **Erster Besuch:** erste abgeschlossene Runde in einer Stadt.
+- **Entdecker-Souvenir:** eine festgelegte Anzahl unterschiedlicher Fragen gespielt und mehrere Themen entdeckt.
+
+Die konkreten Schwellen müssen wir am tatsächlichen Fragenbestand ausrichten. Eine kleine Kategorie darf nicht dieselben Anforderungen erhalten wie Rom mit deutlich mehr Fragen.
+
+Ich würde **keine perfekte Runde verlangen**, um das wichtigste Stadt-Souvenir zu erhalten. Das würde schwächere Spieler unnötig ausschließen. Eine besondere Auszeichnung für fehlerfreie Runden kann später zusätzlich kommen.
+
+Beim Freischalten reicht ein kurzer, schöner Moment:
+
+> **Ein Stück Florenz gehört jetzt zu deiner Sammlung.**  
+> Dein neues Souvenir wartet im Reisepass.
+
+Keine große Unterbrechung mitten im Quiz. Die Auszeichnung erscheint im Ergebnis und lässt sich dort näher ansehen.
+
+#### Technische Umsetzung
+
+Die Definitionen können zunächst als versionierte Konfiguration im Repository liegen:
+
+```text
+souvenir_id
+category_id
+title
+description
+asset
+rule_type
+rule_version
+thresholds
+```
+
+Die vergebenen Auszeichnungen gehören dagegen in die Datenbank:
+
+```text
+quiz_user_souvenirs
+- user_id
+- souvenir_id
+- awarded_at
+- rule_version
+- source_result_id
+```
+
+Ein eindeutiger Schlüssel auf `user_id + souvenir_id` verhindert doppelte Vergaben.
+
+Die Prüfung läuft nach einer erfolgreich gespeicherten Runde auf dem Server. Das Ergebnis kann direkt enthalten, welche Souvenirs neu hinzugekommen sind.
+
+**Für eine faire Sammlung würde ich festlegen:**
+
+- Bereits erhaltene Souvenirs bleiben bestehen, wenn später neue Fragen hinzukommen.
+- Eine Wiederholung derselben fünf Fragen zählt nicht als fünf neue Entdeckungen.
+- Auszeichnungen werden bei einem erneuten Speicherversuch nicht nochmals vergeben.
+- Nach Einführung können wir bestehende Ergebnisse berücksichtigen, soweit deren Daten die jeweilige Bedingung zuverlässig belegen.
+- Neue Souvenirs lassen sich hinzufügen, ohne alte Regeln unbemerkt zu verändern.
+
+### 6. Teilen, Herausforderungen und Freunde
+
+Hier würde ich drei Ausbaustufen unterscheiden. So können wir früh etwas Schönes veröffentlichen, ohne sofort ein vollständiges soziales Netzwerk bauen zu müssen.
+
+#### Stufe A: Ergebnis über WhatsApp oder Social Media teilen
+
+Nach der Runde erscheint **„Ergebnis teilen“**.
+
+Der Inhalt könnte so aussehen:
+
+> Rom erkundet: 38 von 50 Punkten.  
+> Wie gut kennst du die Ewige Stadt?  
+> Spiel mit auf Quiz-Hero.
+
+Dazu eine visuelle Karte mit:
+
+- Stadtbild oder Illustration,
+- Ergebnis,
+- Quiz-Hero-Logo,
+- optional einem erhaltenen Souvenir,
+- einem Link.
+
+**Technisch würde ich zwei Wege anbieten:**
+
+1. Die native Teilen-Funktion des Geräts, wenn der Browser sie unterstützt.
+2. Als zuverlässige Alternative „Link kopieren“ und „Bild herunterladen“.
+
+Welche Apps im Teilen-Menü erscheinen und ob Bilddateien direkt übergeben werden können, hängt vom Gerät und Browser ab. Für WhatsApp ist ein zusätzlicher Link zum Teilen von Text und URL denkbar. Für bildorientierte Plattformen bleibt die herunterladbare Karte eine gute Alternative.
+
+Die Bildkarte können wir mit HTML-Canvas erzeugen. Dafür verwenden wir eigene, lokal verfügbare Bilder und Fonts. **Ein externer Bilddienst oder eine kostenpflichtige API ist dafür nicht nötig.**
+
+Der Anzeigename sollte freiwillig sein; E-Mail-Adresse und Kontodaten gehören nie auf die Karte.
+
+Ein einfacher Start wäre ein Link zur jeweiligen Kategorie. Dann ist das Teilen öffentlich möglich, ohne persönliche Ergebnisse auf dem Server öffentlich zugänglich zu machen.
+
+#### Stufe B: „Spiel genau meine Runde“
+
+Das ist die spannendere Erweiterung:
+
+> **Ich habe 38 Punkte geschafft. Schlägst du mich in genau diesen fünf Fragen?**
+
+Der Link öffnet eine kleine Herausforderungsseite. Dort stehen Kategorie, Umfang und das zu schlagende Ergebnis. Danach beginnt die Runde.
+
+Entscheidend ist, was „dieselbe Runde“ bedeutet:
+
+- dieselben Fragen und Schwierigkeiten,
+- dieselbe fachliche Version,
+- dieselben Regeln und dieselbe Maximalpunktzahl,
+- möglichst dieselbe Reihenfolge.
+
+Die Antwortoptionen können unterschiedlich angeordnet sein, solange die Zuordnung korrekt bleibt.
+
+**Technisch brauchen wir dafür einen eigenen Challenge-Datensatz.** Die normalen Runden werden derzeit nicht unbegrenzt aufbewahrt; eine geteilte Herausforderung sollte deshalb nicht nur auf deren flüchtige ID verweisen.
+
+Beispiel:
+
+```text
+quiz_challenges
+- id
+- public_token
+- creator_user_id
+- source_result_id
+- question_snapshot
+- rules_version
+- expires_at
+- revoked_at
+```
+
+Der öffentliche Link enthält einen langen, zufälligen Token. Er veröffentlicht weder eine interne Benutzer-ID noch Sitzungsdaten.
+
+Die Herausforderung sollte sich bewusst erstellen, befristen und zurückziehen lassen. Wenn eine enthaltene Frage fachlich gesperrt wird, müssen wir entscheiden, ob die Herausforderung ebenfalls pausiert wird.
+
+**Eine ehrliche Grenze:** Unsere Lösungen sind im Lernmodus öffentlich verfügbar. Herausforderungen sind deshalb ein freundlicher Vergleich, kein betrugssicherer Wettbewerb. Dafür passt die Funktion sehr gut; eine globale „beste Spieler“-Rangliste wäre damit weniger glaubwürdig.
+
+Gäste könnten eine Herausforderung sofort spielen. Wer das Ergebnis dauerhaft speichern oder eine private Gegeneinladung schicken möchte, legt anschließend einen Account an.
+
+#### Stufe C: Freunde innerhalb von Quiz-Hero einladen
+
+Das würde ich zunächst als **kleinen privaten Freundeskreis** bauen.
+
+Im Profil gäbe es:
+
+- „Freunde“,
+- „Einladungen“,
+- „Offene Herausforderungen“.
+
+Nach einer Runde:
+
+> **Freund herausfordern**  
+> Wähle jemanden aus deinem Freundeskreis.
+
+Die andere Person sieht bei ihrem nächsten Besuch eine Einladung:
+
+> Matze fordert dich zu fünf Fragen über Rom heraus.
+
+Erst nach dem eigenen Abschluss werden die Ergebnisse nebeneinander dargestellt. Vorher keine Antworten oder detaillierten Lösungsinformationen zeigen.
+
+**So würde ich Freunde hinzufügen lassen:**
+
+- über einen persönlichen Einladungslink,
+- alternativ über einen eindeutigen, freiwillig gewählten Spielernamen,
+- immer mit Annahme durch die andere Person.
+
+Eine Suche nach E-Mail-Adressen würde ich nicht öffentlich anbieten. So verraten wir nicht, wer ein Konto besitzt. Auch ein Adressbuch-Upload ist für dieses Projekt unnötig.
+
+Technisch kämen Beziehungen und Einladungen hinzu:
+
+```text
+quiz_friendships
+- requester_id
+- recipient_id
+- status
+- created_at
+- accepted_at
+```
+
+Dazu Challenge-Einladungen mit Empfänger und Status. Der Server prüft bei jeder Aktion, ob der angemeldete Benutzer sie ausführen darf.
+
+Von Anfang an gehören dazu:
+
+- Einladungen ablehnen und Freunde entfernen,
+- Personen blockieren,
+- begrenzte Anzahl offener Anfragen,
+- Schutz gegen wiederholte Belästigung,
+- eindeutige Regeln für gelöschte Accounts.
+
+**Ich würde zunächst auf Chat, Kommentare und automatische Einladungs-Mails verzichten.** Eine interne Benachrichtigung reicht für den ersten Freundeskreis. E-Mail-Hinweise können später freiwillig hinzukommen.
+
+### Meine empfohlene Reihenfolge
+
+| Schritt | Ergebnis | Aufwand |
+|---|---|---|
+| 1 | Reisepass mit vorhandenen Ergebnissen und Stadtkarten | Mittel |
+| 2 | Ergebnis teilen: Text, Link und Bildkarte | Klein bis mittel |
+| 3 | Dauerhafter Fragenfortschritt und erste Stadt-Souvenirs | Mittel bis größer |
+| 4 | Herausforderung mit identischem Fragenset | Größer |
+| 5 | Private Freundeskreise und interne Einladungen | Größer, auch im laufenden Betrieb |
+
+**Mein Favorit für den ersten sichtbaren Ausbau:** Reisepass plus Teilen-Karte. Das schafft sofort mehr Persönlichkeit und einen nachvollziehbaren Account-Nutzen. Anschließend bekommen die Stadtkarten echte Fortschrittswerte und Souvenirs.
+
+Vor Änderungen am Datenmodell würde ich wieder eine getrennte Stage-Umgebung herstellen. Diese Ausarbeitung bleibt hier im Chat; `hinweise.md` bleibt unverändert.

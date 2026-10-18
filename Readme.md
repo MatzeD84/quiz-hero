@@ -44,4 +44,10 @@ Admin?nderungen schreiben direkt in MySQL. Code-Deployments importieren keine Fr
 
 Gespeicherte Runden besitzen einen serverseitigen Fragen-Snapshot. Der Server berechnet Punkte aus den gew?hlten Antworten und speichert jede Runde h?chstens einmal. L?sungen bleiben im Lernmodus ?ffentlich; dies ist kein manipulationssicherer Pr?fungsmodus.
 
-[Audit](docs/ARCHITEKTUR-AUDIT-2026-10-17.md) ? [Refactoring und Betrieb](docs/REFACTORING-2026-10-17.md). Die fr?here README liegt als historische Dokumentation unter `docs/archive/`; ihre alten GitHub-Action-Anweisungen sind nicht mehr aktuell.
+[Audit](docs/ARCHITEKTUR-AUDIT-2026-10-17.md) ? [Refactoring und Betrieb](docs/REFACTORING-2026-10-17.md).
+
+## Wartung und Hilfsdateien
+
+Alle aktiven Build- und Diagnosewerkzeuge liegen unter `scripts/`. Einmalige Migrationsskripte, HTTP-Mitschnitte und alte Beta-Testdateien gehoeren nicht zum Quellcode. Reproduzierbare Ausgaben unter `.build/` und `dist/` duerfen nach Gebrauch entfernt werden. Lokale Zugangsdaten, Datenbank-Dumps und Sicherungen bleiben unter `.private/` und werden niemals veroeffentlicht.
+
+SEO lokal: `scripts/build-seo.bat` (JSON-Vorschau), `node scripts/preview-seo.js` und `node scripts/verify-seo.js`. `scripts/build-seed-sql.js` bleibt ausschliesslich fuer eine explizite Neuinitialisierung aus den historischen JSON-Daten; keine Seeds auf Production anwenden.

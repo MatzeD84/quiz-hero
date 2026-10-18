@@ -33,12 +33,11 @@ Per SSH:
 bash /home/u199598707/domains/quiz-hero-stage.matzeverse.de/private/rollback.sh
 ```
 
-## Späterer Domainwechsel
+## Production
 
-Das Ziel steht in `deployment/hostinger.json`. Für den echten Wechsel `siteUrl`, `environment` und gegebenenfalls `siteRoot` anpassen und die private Serverkonfiguration abstimmen.
-Der Produktionsbuild ist absichtlich gesperrt, bis die Freigabe im Server-Buildskript gezielt angepasst ist.
-Erst dann Passwortschutz und Noindex entfernen, Mailversand/Analytics konfigurieren und die Domain umstellen.
-Ein Registrartransfer migriert weder Datenbank noch E-Mail-Postfächer automatisch.
+Aktive URL: https://quiz-hero.de. Der fruehere Stage-Hostname leitet auf Production weiter; eine getrennte Stage-Datenbank existiert derzeit nicht. Der technische Verzeichnisname mit `quiz-hero-stage.matzeverse.de` bleibt absichtlich erhalten. Ziel und Umgebung stehen in `deployment/hostinger.json`.
+
+Die Produktionsfreigabe ist im Build-Hook eingerichtet. E-Mail-Versand nutzt SMTP und die ausschliesslich serverseitige private Konfiguration. Weitere Details: [Hostinger Production](../docs/HOSTINGER-PRODUCTION.md).
 
 ## Aktive Einrichtung
 
@@ -50,7 +49,7 @@ Fehlgeschlagene Commits werden nicht minütlich erneut gebaut. Ein korrigierter 
 Für einen bewussten Wiederholungsversuch desselben Commits die Datei `private/failed-commit` per SSH umbenennen und den Worker erneut ausführen.
 Das Buildprotokoll steht außerhalb des Webroots unter `private/git-build.log`.
 Build und veröffentlichte Version lassen sich über die Git-Einstellungen in hPanel und per SSH prüfen.
-Die Versionsdatei `/version.json` zeigt den veröffentlichten Commit hinter dem Staging-Passwortschutz.
+Die Versionsdatei `/version.json` zeigt den veröffentlichten Commit auf der Produktionsdomain.
 Hostingers automatischer Git-Abruf verwendet intern einen abgelösten HEAD. Der separate ältere manuelle Git-API-Endpunkt kann deshalb einen Branch-/URL-Abgleich ablehnen; der eingerichtete Auto-Deploymentweg und der Cronworker verwenden den tatsächlich ausgecheckten Commit.
 
 Der bisherige Branch `master` ist unverändert. Erst nach dem abgeschlossenen Umzug sollte entschieden werden, ob `hostinger` zum Hauptbranch wird.
