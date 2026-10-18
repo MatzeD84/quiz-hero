@@ -27,7 +27,7 @@
     </div>
 
     <section class="result-share" data-result-share aria-label="Ergebnis teilen">
-        <button class="btn result-share__primary" type="button" data-share-open>Ergebnis teilen</button>
+        <button class="btn result-share__primary" type="button" data-share-open><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span>Ergebnis teilen</span></button>
         <dialog class="result-share__dialog" id="js-result-share-dialog" data-share-dialog>
             <div class="result-share__dialog-header">
                 <h2 class="result-share__title">Deine Ergebniskarte</h2>
@@ -39,10 +39,10 @@
             </div>
             <img class="result-share__preview" data-share-preview alt="" width="1080" height="1350" hidden>
             <div class="result-share__actions">
-                <button class="btn result-share__primary" type="button" data-share-native disabled>Bild wird erstellt &hellip;</button>
+                <button class="btn result-share__primary" type="button" data-share-native aria-describedby="js-result-share-status" disabled><svg class="result-share__icon" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M12 15V3m-5 5 5-5 5 5M4 14v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6"/></svg><span data-share-label>Bild wird erstellt &hellip;</span></button>
                 <a class="result-share__link" data-share-download hidden>Bild herunterladen</a>
             </div>
-            <p class="result-share__status" data-share-status role="status" aria-live="polite"></p>
+            <p class="result-share__status" id="js-result-share-status" data-share-status role="status" aria-live="polite"></p>
         </dialog>
     </section>
 

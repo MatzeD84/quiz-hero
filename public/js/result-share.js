@@ -39,6 +39,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
     }
     const preview = section.querySelector('[data-share-preview]');
     const primary = section.querySelector('[data-share-native]');
+    const primaryLabel = primary.querySelector('[data-share-label]');
     const download = section.querySelector('[data-share-download]');
     const status = section.querySelector('[data-share-status]');
     const dialog = section.closest('dialog');
@@ -54,7 +55,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
     dialog?.addEventListener('close', dispose, { once: true });
     const generate = async () => {
         primary.disabled = true; download.hidden = true;
-        primary.textContent = 'Bild wird erstellt …'; status.textContent = '';
+        primaryLabel.textContent = 'Bild wird erstellt …'; status.textContent = '';
         try {
             const blob = await renderResultCard(payload);
             if (disposed) return;
@@ -65,14 +66,15 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
             preview.hidden = false;
             download.href = url; download.download = file.name;
             const native = supportsResultShare(file, browser);
-            primary.hidden = !native;
-            primary.textContent = 'Bild teilen';
+            primary.disabled = !native;
+            if (!native) status.textContent = 'Dein Browser bietet das direkte Teilen von Bildern nicht an. Du kannst dein Bild herunterladen und in deiner Lieblings-App teilen.';
+            primaryLabel.textContent = 'Bild teilen';
             download.hidden = false;
         } catch {
             if (disposed) return;
-            primary.hidden = false; primary.textContent = 'Erneut versuchen';
+            primary.hidden = false; primaryLabel.textContent = 'Erneut versuchen';
             status.textContent = 'Deine Bildkarte konnte nicht erstellt werden. Bitte versuche es noch einmal.';
-        } finally { if (!disposed) primary.disabled = false; }
+        } finally { if (!disposed) primary.disabled = Boolean(file) && !supportsResultShare(file, browser); }
     };
     primary.addEventListener('click', async () => {
         if (busy || disposed) return;
