@@ -15,10 +15,10 @@ export function supportsResultShare(file, browser = globalThis.navigator) {
     catch { return false; }
 }
 
-export async function shareResult(file, browser = globalThis.navigator, invitation = null) {
+export async function shareResult(file, browser = globalThis.navigator) {
     if (!supportsResultShare(file, browser)) return 'unavailable';
     try {
-        await browser.share({ files: [file], title: 'Mein Quiz-Hero-Ergebnis', ...(invitation ? { text: invitation.text, url: invitation.url } : {}) });
+        await browser.share({ files: [file] });
         return 'opened';
     } catch (error) { return error?.name === 'AbortError' ? 'cancelled' : 'failed'; }
 }
@@ -115,7 +115,7 @@ export function bindResultShare(root, result, browser = globalThis.navigator) {
         if (!file) { void generate(); return; }
         busy = true; primary.disabled = true; status.textContent = '';
         try {
-            const outcome = await shareResult(file, browser, invitation);
+            const outcome = await shareResult(file, browser);
             if (disposed) return;
             if (outcome === 'opened') status.textContent = 'An dein Teilen-Menü übergeben.';
             if (outcome === 'failed' || outcome === 'unavailable') status.textContent = 'Teilen ist gerade nicht verfügbar. Lade dein Bild herunter und teile es anschließend.';

@@ -46,8 +46,7 @@ test('image sharing requires file support and handles cancellation and failure',
     assert.equal(received.url, undefined);
     const invitation = createQuizInvitation({ categoryId: 'rom', total: 5 });
     assert.equal(await shareResult(file, browser, invitation), 'opened');
-    assert.equal(received.url, invitation.url);
-    assert.deepEqual(received.files, [file]);
+    assert.deepEqual(received, { files: [file] });
 });
 
 test('status feedback scrolls into view and respects reduced motion', () => {
