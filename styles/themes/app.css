@@ -243,7 +243,6 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--color-link); }
 .question-count__icon { flex: 0 0 180px; width: 180px; }
 .result-summary__score { border-radius: var(--radius-md); padding: var(--space-24); background: var(--color-answer-hover-bg); border: 0; gap: var(--space-12); }
 .result-summary__score-value strong { color: var(--color-text); font-weight: var(--font-weight-bold); }
-.result-summary__rules { background: var(--color-surface-muted); color: var(--color-text-muted); font-size: var(--text-14); }
 .result-summary__progress::-webkit-progress-value { background: var(--color-progress); }
 .result-summary__progress::-moz-progress-bar { background: var(--color-progress); }
 @media (max-width: 600px) {

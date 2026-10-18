@@ -12,6 +12,37 @@ import { createRequire } from 'node:module';
 import { createFormGuard } from '../public/js/form-guard.js';
 import { QuizState } from '../public/js/quiz-state.js';
 import { revealStatus } from '../public/js/status-navigation.js';
+import { createResultShare, supportsResultShare, shareResult } from '../public/js/result-share.js';
+
+test('image result metadata excludes account data and rejects impossible results', () => {
+    const payload = createResultShare({ score: 8, maxScore: 10, total: 5, solved: 4, label: '  Rom  ', email: 'private@example.test', roundId: 'secret' });
+    assert.deepEqual(payload, { score: 8, maxScore: 10, total: 5, solved: 4, label: 'Rom' });
+    assert.throws(() => createResultShare({ score: 11, maxScore: 10, total: 5 }));
+    assert.throws(() => createResultShare({ score: 1, maxScore: 10, total: 5, solved: 6 }));
+    assert.equal(createResultShare({ score: 0, maxScore: 0, total: 1 }).score, 0);
+    const result = { score: 8, maxScore: 10, total: 5, label: 'Rom' };
+    assert.equal(createResultShare({ ...result, image: 'images/website/kategorie/kategorie-rom-2.png' }).image, 'images/website/kategorie/kategorie-rom-2.png');
+    for (const image of ['https://external.test/avatar.png', 'javascript:alert(1)', 'images/../private/config.php']) {
+        assert.equal(createResultShare({ ...result, image }).image, undefined);
+    }
+});
+
+test('image sharing requires file support and handles cancellation and failure', async () => {
+    const file = new File(['png'], 'result.png', { type: 'image/png' });
+    assert.equal(supportsResultShare(file, {}), false);
+    assert.equal(supportsResultShare(file, { share() {} }), false);
+    assert.equal(supportsResultShare(file, { share() {}, canShare() { throw Error('blocked'); } }), false);
+    assert.equal(await shareResult(file, {}), 'unavailable');
+    const browser = { canShare: data => data.files[0] === file, share: async () => { throw { name: 'AbortError' }; } };
+    assert.equal(await shareResult(file, browser), 'cancelled');
+    browser.share = async () => { throw Error('denied'); };
+    assert.equal(await shareResult(file, browser), 'failed');
+    let received;
+    browser.share = async data => { received = data; };
+    assert.equal(await shareResult(file, browser), 'opened');
+    assert.deepEqual(received.files, [file]);
+    assert.equal(received.url, undefined);
+});
 
 test('status feedback scrolls into view and respects reduced motion', () => {
     const previousWindow = globalThis.window;

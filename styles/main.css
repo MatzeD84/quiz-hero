@@ -52,6 +52,7 @@
 @import './base/utilities.css';
 @import './base/responsive.css';
 
-/* Isolated Beta design experiment: design/beta branch. */
+/* Application theme. */
 @import './themes/app-tokens.css';
 @import './themes/app.css';
+@import './features/quiz/result-share.css';

@@ -2,6 +2,7 @@ import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=dev';
 import { revealStatus } from './status-navigation.js?v=dev';
+import { bindResultShare } from './result-share.js?v=dev';
 
 export class QuizView {
     constructor(selectors = SELECTORS) {
@@ -620,15 +621,12 @@ export class QuizView {
                     progressEl.value = progress;
                     progressEl.textContent = `${progress} %`;
                 }
+                this.disposeResultShare?.();
+                this.disposeResultShare = bindResultShare(this.elements.modalContent, { score, solved, total, maxScore, ...actions.shareContext });
                 actionButtons.forEach(button => {
                     button.addEventListener('click', () => {
-                        const action = button.dataset.resultAction;
                         this.hideResultModal();
-                        if (action === 'retry') {
-                            actions.onRetry?.();
-                        } else {
-                            actions.onOverview?.();
-                        }
+                        actions.onOverview?.();
                     });
                 });
             } else {
@@ -638,10 +636,18 @@ export class QuizView {
                     <p>${LABELS.modalMaxLabel} <strong>${maxScore}</strong></p>
                 `;
             }
-            const saveStatus = document.createElement('p'); saveStatus.setAttribute('role', 'status');
-            saveStatus.textContent = user ? 'Ergebnis wird gespeichert …' : '';
-            this.elements.modalContent.append(saveStatus);
-            actions.saveStatus?.then(message => { saveStatus.textContent = message; });
+            // Only failed saves need visible feedback.
+            const resultContent = this.elements.modalContent;
+            const resultCard = resultContent.querySelector('.result-summary');
+            actions.saveStatus?.then(message => {
+                if (!message || resultContent.querySelector('.result-summary') !== resultCard) return;
+                const status = document.createElement('p');
+                status.setAttribute('role', 'status');
+                status.textContent = message;
+                const footer = resultCard?.querySelector('.result-summary__actions');
+                if (footer) footer.before(status);
+                else resultContent.append(status);
+            });
             openDialog(this.elements.modal);
         };
 
@@ -684,6 +690,8 @@ export class QuizView {
     }
 
     hideResultModal() {
+        this.disposeResultShare?.();
+        this.disposeResultShare = null;
         closeDialog(this.elements.modal);
     }
 

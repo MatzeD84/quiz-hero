@@ -1,5 +1,6 @@
 .quiz__feedback-container {
-    display: flex;
+    /* Temporarily hidden; feedback markup and quiz logic remain available. */
+    display: none;
     align-items: center;
     justify-content: center;
     margin-top: var(--space-12);

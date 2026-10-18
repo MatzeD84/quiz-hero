@@ -7,6 +7,11 @@
         </div>
     </header>
 
+    <div class="result-summary__selection" data-result-selection hidden>
+        <p class="result-summary__selection-label" data-result-selection-label></p>
+    </div>
+
+    <div class="result-summary__result">
     <section class="result-summary__score" aria-label="Quiz-Ergebnis">
         <p class="result-summary__score-value">
             <strong data-result-score></strong>
@@ -18,12 +23,30 @@
         <progress class="result-summary__progress" data-result-progress max="100" value="0" aria-label="Erreichter Punkteanteil">0 %</progress>
     </section>
 
-    <p class="result-summary__rules">
-        Punkte: Normal 2 &middot; Schwer 3 &middot; Hero 5 &middot; zweiter Versuch 1
-    </p>
-
-    <div class="result-summary__actions">
-        <button class="btn btn--modal result-summary__primary" type="button" data-result-action="retry">Nochmal spielen</button>
-        <button class="result-summary__secondary" type="button" data-result-action="overview">Zur &Uuml;bersicht</button>
+        <img class="result-summary__selection-image" data-result-selection-image alt="" hidden>
     </div>
+
+    <section class="result-share" data-result-share aria-label="Ergebnis teilen">
+        <button class="btn result-share__primary" type="button" data-share-open>Ergebnis teilen</button>
+        <dialog class="result-share__dialog" id="js-result-share-dialog" data-share-dialog>
+            <div class="result-share__dialog-header">
+                <h2 class="result-share__title">Deine Ergebniskarte</h2>
+                <button class="modal__close-button icon-button" type="button" data-share-close aria-label="Vorschau schlie&szlig;en">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                        </svg>
+                </button>
+            </div>
+            <img class="result-share__preview" data-share-preview alt="" width="1080" height="1350" hidden>
+            <div class="result-share__actions">
+                <button class="btn result-share__primary" type="button" data-share-native disabled>Bild wird erstellt &hellip;</button>
+                <a class="result-share__link" data-share-download hidden>Bild herunterladen</a>
+            </div>
+            <p class="result-share__status" data-share-status role="status" aria-live="polite"></p>
+        </dialog>
+    </section>
+
+    <footer class="result-summary__actions">
+        <button class="result-summary__secondary" type="button" data-result-action="overview">Zur &Uuml;bersicht</button>
+    </footer>
 </article>

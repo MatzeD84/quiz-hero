@@ -352,32 +352,20 @@ export class QuizController {
                 count: stats.total
             };
             const saveStatus = this.currentUser
-                ? this.userService.saveResult(this.currentUser, stats, context).then(() => 'Ergebnis im Profil gespeichert.').catch(error => {
+                ? this.userService.saveResult(this.currentUser, stats, context).then(() => null).catch(error => {
                     if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) this.handleRemovedAccount(error.message);
                     return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
                 })
-                : Promise.resolve('Als Gast bleibt diese Auswertung nur auf dieser Seite.');
+                : Promise.resolve(null);
             this.view.showResultModal(stats, this.currentUser, {
                 saveStatus,
-                onRetry: () => this.handleRetryRound(context),
+                shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId },
                 onOverview: () => this.handleResultOverview()
             });
             this.state.resetRound();
             this.view.showCategories();
             this.clearSelectionFromUrl();
         }
-    }
-
-    handleRetryRound(context) {
-        if (context.categoryId) {
-            this.handleCategorySelected(context.categoryId);
-        } else if (context.tagId) {
-            this.handleTagSelected(context.tagId);
-        } else {
-            this.handleResultOverview();
-            return;
-        }
-        this.handleQuestionCountSelected(context.count);
     }
 
     handleResultOverview() {
