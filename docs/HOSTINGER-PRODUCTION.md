@@ -2,7 +2,20 @@
 
 Production URL: https://quiz-hero.de. Hostinger Git deployment remains on branch `hostinger`. The adopted application design is developed on `master`; publishing it requires a reviewed merge into `hostinger`.
 
-## Souvenirs und Heldenbelohnungen – 22.10.2026
+## Quizdarstellung und CSS-Pflege – Folgerelease 22.10.2026
+
+Release **`cb23f51a0cc4-20261022131903`**, Commit `cb23f51a0cc4df6ee9f179cb1d3bc4d4d3fd8df3`, erfolgreich aktiviert. Maßgeblich für den jeweils aktiven Stand bleibt `/version.json`.
+
+- Veröffentlicht: Schwierigkeitstags und Punkte vor den Antworten, zweiter Versuch mit 1-Punkt-Hinweis, reiner Fragenzähler im Header, passende Hoverfarben, modulare CSS-Struktur und eindeutige zentrale Tokens. Siena-Bild als vorbereitete Datei enthalten; keine Kategorie angelegt.
+- Backup: `private/backups/before-souvenirs-20261022131540/`, einschließlich SQL-Dump, Konfiguration, Uploads und Manifest. Vorheriges Dateirelease `8b84553884fa-20261022101348` bleibt für Rücksprung erhalten.
+- Keine Migration oder Datenänderung nötig; Schema bleibt bis 019. Bestehende Fragen, Accounts, Fortschritte und Uploads wurden nicht importiert oder zurückgesetzt.
+- Lokal: 34 Frontendtests, CSS-/BEM-Prüfung, Build und 24 Browserkombinationen erfolgreich. Server: Vertragstests, PHP-Lint, SEO-Export aus der Produktionsdatenbank, Release-/Migrationsprüfung und HTTPS-Prüfung erfolgreich.
+- Live: Startseite, Konto, Login, Admin, Reisepass, Souvenirs und öffentliche API HTTP 200; CSS-/JS-Änderungen sowie Release-Cacheversionen bestätigt. Tag/Punkte/Zähler und Bildposition im Produktionsbrowser ohne Speichern einer Runde geprüft.
+- Siena-Original auf dem Server hat denselben SHA-256 wie lokal: `4b82bc607e27188599f881c9c9197a63ffb141c5f200022f433c0a6581478a45`. Die über Hostingers CDN gelieferte PNG ist byteweise anders (`26966b08b0110a9faf52b5f121f98859cf6e2378c417f84b440de6b037c87455`), plausibel durch Bildoptimierung. HTTP 200, PNG-Format, 1536 × 1024 Pixel und das korrekte menschenleere vereinfachte Motiv wurden separat geprüft; kein bytegleicher HTTPS-Transport behauptet.
+
+Details und Prüfgrenzen: [Abschlussprüfung](QUIZ-ABSCHLUSSPRUEFUNG-2026-10-22.md). Nachträgliche reine Dokumentationspflege auf `master` verändert den aktiven Code-Commit auf `hostinger` nicht.
+
+## Souvenirs und Heldenbelohnungen – vorheriger Rollout am 22.10.2026
 
 Basisrelease `aec5d3a61f20-20261022100902`, Commit `aec5d3a61f209eae347bd08c6e2108e7ad139c44`, erfolgreich aktiviert und per HTTPS geprüft. Ein anschließendes Folgerelease ergänzt die Cacheversionierung von `reisepass.html` und `souvenirs.html`; dafür gibt es einen gezielten Regressionstest. Der tatsächlich aktive Commit und die Release-ID stehen immer unter `/version.json`.
 

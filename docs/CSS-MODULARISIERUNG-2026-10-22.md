@@ -1,6 +1,6 @@
 # CSS-Modularisierung – 22.10.2026
 
-**Für den Release vom 22.10.2026 freigegeben.** Die Strukturpflege ändert keine Spielregeln, Datenbank oder Nutzerabläufe. Die Darstellung des zuvor veröffentlichten Stands dient als Vergleichsbasis. Die später ergänzten Quiz-Tags, Punktehinweise und Hoverfarben sind eine separate, bewusst sichtbare Änderung; Abschlussprüfung und Rollout: [Quiz-Release](QUIZ-ABSCHLUSSPRUEFUNG-2026-10-22.md).
+**Auf Production veröffentlicht mit Release `cb23f51a0cc4-20261022131903`.** Die Strukturpflege ändert keine Spielregeln, Datenbank oder Nutzerabläufe. Die Darstellung des zuvor veröffentlichten Stands dient als Vergleichsbasis. Die später ergänzten Quiz-Tags, Punktehinweise und Hoverfarben sind eine separate, bewusst sichtbare Änderung; Abschlussprüfung und Rollout: [Quiz-Release](QUIZ-ABSCHLUSSPRUEFUNG-2026-10-22.md).
 
 ## Zuständigkeiten
 

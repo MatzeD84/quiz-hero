@@ -1,6 +1,6 @@
 # Abschlussprüfung: Quizdarstellung und CSS-Pflege
 
-Stand: 22.10.2026. Zur Veröffentlichung auf `https://quiz-hero.de` freigegeben. Der tatsächlich aktive Commit steht in `/version.json`; Rollout und Sicherung siehe [Production](HOSTINGER-PRODUCTION.md).
+Stand: 22.10.2026. Auf `https://quiz-hero.de` veröffentlicht als `cb23f51a0cc4-20261022131903`, Code-Commit `cb23f51a0cc4df6ee9f179cb1d3bc4d4d3fd8df3`. Der tatsächlich aktive Commit steht in `/version.json`; Rollout und Sicherung siehe [Production](HOSTINGER-PRODUCTION.md).
 
 ## Umfang
 
@@ -18,6 +18,7 @@ Stand: 22.10.2026. Zur Veröffentlichung auf `https://quiz-hero.de` freigegeben.
 - Lokaler Hostinger-Build mit ausdrücklich gewählter JSON-SEO-Vorschau erfolgreich. Der serverseitige Build verwendet die Produktionsdatenbank für SEO.
 - Browser: alle drei Schwierigkeiten mit und ohne Bild bei 320, 390, 768 und 1440 Pixeln geprüft (24 Kombinationen). Kein horizontaler Überlauf; Hinweis unter dem Bild und vor den Antworten, korrekte Tags/Punkte/Zähler, zweiter Versuch sichtbar, nach Auflösung verborgen, Antworten gesperrt und 1 Punkt bei zweitem korrektem Versuch.
 - Hoverregeln im Browser mit erzwungenen Selektorzuständen geprüft: drei passende Farben, deaktivierte/richtige/falsche Antworten ohne Hoveränderung.
+- Serverseitiger Build einschließlich Tests, PHP-Lint und Datenbank-/Releaseprüfung sowie HTTP-Verifikation erfolgreich. Live-Seiten/API und Cacheversionen geprüft; produktive Anzeige einmal ohne Ergebnisübermittlung geprüft. Siena-Originaldatei serverseitig hashgleich; CDN-Antwort byteweise abweichend, Format/Abmessungen und korrektes Motiv visuell bestätigt (Details im Rolloutprotokoll).
 
 Keine Datenbank- oder Backendänderung; keine Migration erforderlich. Keine Test-Runden an echte Productionaccounts gesendet. Browserprüfung verwendet emulierte Viewports und DOM/Layoutzustände, keinen physischen Surface-Laptop. Ein vollständiger produktiver Nutzer-/Registrierungsdurchlauf ist damit nicht behauptet.
 

@@ -104,7 +104,7 @@ Die Erfolgsquoten zählen beide Versuche und wiederholte Fragen mit. Alte Runden
 
 ## Release vom 22.10.2026 – Quizdarstellung und CSS-Pflege
 
-Zur Veröffentlichung freigegeben nach lokaler Abschlussprüfung. Aktiven Stand und Rolloutprotokoll siehe [Production](docs/HOSTINGER-PRODUCTION.md).
+Auf Production veröffentlicht als `cb23f51a0cc4-20261022131903`. Aktiven Stand und Rolloutprotokoll siehe [Production](docs/HOSTINGER-PRODUCTION.md).
 
 ### Schwierigkeit und Punkte im Quiz
 

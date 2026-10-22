@@ -1,6 +1,6 @@
 # Siena: vorbereitetes Kategorienbild
 
-Stand: 22.10.2026, Asset für das nächste Release vorbereitet. Die Kategorie und ihre Fragen wurden nicht angelegt; die Bilddatei allein aktiviert keine neue Kategorie.
+Stand: 22.10.2026, Asset im Release `cb23f51a0cc4-20261022131903` enthalten. Die Kategorie und ihre Fragen wurden nicht angelegt; die Bilddatei allein aktiviert keine neue Kategorie.
 
 - Datei: `public/images/website/kategorie/kategorie-siena-v2.png`, PNG, 1536 × 1024 Pixel.
 - Motiv: Piazza del Campo mit Palazzo Pubblico und Torre del Mangia, warme geometrische Low-Poly-Illustration passend zur vorhandenen Kategorienserie.
