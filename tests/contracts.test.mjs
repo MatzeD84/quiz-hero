@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { validateCategories, validateTags } from '../public/js/validators.js';
 import { QuizDataService } from '../public/js/quiz-data-service.js';
 import { UserService, SESSION_EXPIRED_MESSAGE } from '../public/js/user-service.js';
@@ -20,6 +20,21 @@ import { createResultShare, supportsResultShare, shareResult } from '../public/j
 import { createLoadingStatus } from '../public/js/admin/loading-status.js';
 import { souvenirItems, startedSouvenirs } from '../public/js/souvenirs.js';
 import { isAvatarAvailable } from '../public/js/avatar-policy.js';
+
+test('private collection and passport pages use the release asset version', () => {
+    const temp=fs.mkdtempSync(path.join(os.tmpdir(),'quiz-hero-asset-version-'));
+    try {
+        for(const page of ['reisepass.html','souvenirs.html'])fs.copyFileSync(path.resolve('public',page),path.join(temp,page));
+        const result=spawnSync(process.execPath,['scripts/apply-asset-version.js','audit-release',temp],{encoding:'utf8'});
+        assert.equal(result.status,0,result.stderr);
+        for(const page of ['reisepass.html','souvenirs.html']){
+            const html=fs.readFileSync(path.join(temp,page),'utf8');
+            assert.match(html,/styles\.css\?v=audit-release/);
+            assert.match(html,/passport-page\.js\?v=audit-release/);
+            assert.doesNotMatch(html,/\?v=dev/);
+        }
+    }finally{fs.rmSync(temp,{recursive:true,force:true});}
+});
 
 test('reward avatars require an entitlement while base avatars stay available', () => {
     const reward={key:'astra',unlockRule:'hero_first_try'};

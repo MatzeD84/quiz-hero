@@ -1,8 +1,8 @@
 ﻿# Quiz-Reisepass
 
-Lokaler Stand vom 22.10.2026: Die Souvenir-Sammlung liegt ausschliesslich auf ihrer separaten Seite; im Reisepass gibt es keine Souvenir-Sektion mehr. Noch nicht auf Production. Regeln, Verwaltung, Datenhaltung und Tests stehen zentral in [Souvenir.md](../Souvenir.md). Der Login führt inzwischen zur Startseite.
+Lokaler Stand vom 22.10.2026: Die Souvenir-Sammlung liegt ausschliesslich auf ihrer separaten Seite; im Reisepass gibt es keine Souvenir-Sektion mehr. Seit dem 22.10.2026 auf Production. Regeln, Verwaltung, Datenhaltung und Tests stehen zentral in [Souvenir.md](../Souvenir.md). Der Login führt inzwischen zur Startseite.
 
-Der private Quiz-Reisepass liegt lokal unter `reisepass.html`; die bisherige Adresse `passport.html` leitet dauerhaft dorthin weiter. Nach dem Login landest du auf der Startseite. Das Kontomenue bietet Mein Konto (`account.html`), Reisepass (`reisepass.html`) und die separate Sammlung (`souvenirs.html`). Erhaltene und begonnene Souvenirs stehen ausschliesslich auf der Souvenir-Seite ohne Kategorie- oder Artfilter. Die Adressumstellung ist noch nicht auf Production veroeffentlicht. Interne Modul- und CSS-Namen bleiben unveraendert.
+Der private Quiz-Reisepass liegt lokal unter `reisepass.html`; die bisherige Adresse `passport.html` leitet dauerhaft dorthin weiter. Nach dem Login landest du auf der Startseite. Das Kontomenue bietet Mein Konto (`account.html`), Reisepass (`reisepass.html`) und die separate Sammlung (`souvenirs.html`). Erhaltene und begonnene Souvenirs stehen ausschliesslich auf der Souvenir-Seite ohne Kategorie- oder Artfilter. Die Adressumstellung ist seit dem 22.10.2026 auf Production veroeffentlicht. Interne Modul- und CSS-Namen bleiben unveraendert.
 
 Die alte Adresse `passport.html` wird dauerhaft auf `reisepass.html` weitergeleitet; Queryparameter bleiben erhalten. Der Build nimmt `reisepass.html` und `souvenirs.html` auf. Aktuelle Abschlussprüfung und Freischaltregeln stehen in [Souvenir.md](../Souvenir.md).
 

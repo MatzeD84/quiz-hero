@@ -1,6 +1,6 @@
 # Souvenirs, Meilensteine und Belohnungen
 
-Stand: **22. Oktober 2026**. Zentrale, fortlaufend gepflegte Übersicht. **Der hier beschriebene Featurestand ist lokal implementiert und noch nicht auf Production veröffentlicht.** Die lokale Datenbank enthält Migrationen 014–019; deren Anwendung auf Production steht aus.
+Stand: **22. Oktober 2026**. Zentrale, fortlaufend gepflegte Übersicht. **Der hier beschriebene Featurestand ist seit dem 22.10.2026 auf Production veröffentlicht.** Migrationen 014–019 sind lokal und auf Production angewendet. Release und Live-Prüfungen: [Production-Protokoll](docs/HOSTINGER-PRODUCTION.md).
 
 ## Aktuelle Bedingungen auf einen Blick
 
@@ -126,7 +126,7 @@ Ergebnislöschung entzieht erhaltene Souvenirs oder Avatarrechte nicht automatis
 
 ### Amalfi-Erweiterung: Betrieb und Motive
 
-Lokal angewendet und geprüft: beide aktiven Regeln mit Ziel 1/20, beide transparenten RGBA-PNGs mit 1254 × 1254 Pixeln per HTTP 200. 179 Integrationstests und 32 Frontendtests erfolgreich, einschließlich Amalfi-Schwelle, einmaliger Vergabe und Seed-Wiederholung ohne Überschreiben einer Adminänderung. Lokaler Deployment-Build enthält beide Motive und Migration 019. Testdatenbank entfernt; keine Vergaben am echten Testaccount erzeugt, kein Production-Deployment.
+Lokal angewendet und geprüft: beide aktiven Regeln mit Ziel 1/20, beide transparenten RGBA-PNGs mit 1254 × 1254 Pixeln per HTTP 200. 179 Integrationstests und 32 Frontendtests erfolgreich, einschließlich Amalfi-Schwelle, einmaliger Vergabe und Seed-Wiederholung ohne Überschreiben einer Adminänderung. Lokaler Deployment-Build enthält beide Motive und Migration 019. Testdatenbank entfernt; keine Vergaben am echten Testaccount erzeugt, Vorabprüfung ohne Production-Änderung; Veröffentlichung inzwischen am 22.10.2026 erfolgt.
 
 Migration 019 ergänzt ausschließlich zwei Definitionen, keine Accountdaten oder Tabellenfelder. Vor lokalem Anwenden wurde der Definitions- und Migrationsbestand privat unter `.private/before-souvenirs-amalfi-20261022.sql` gesichert. Anwendung über `php database/migrate.php` nach Bereitstellung beider Bilddateien; `database/schema.sql` enthält dieselben Seeds und den Migrationsmarker. Keine Freischaltung allein durch die Migration: Nachweisbar erfüllte Bedingungen können beim nächsten geschützten Abgleich beziehungsweise Rundenabschluss berücksichtigt werden.
 
@@ -135,17 +135,17 @@ Die beiden neuen Assets liegen unter `public/images/souvenirs/amalfi-stamp-v1.pn
 - **Stempel:** Eigenständiges rundes petrolfarbenes Low-Poly-Siegel mit schmalem Goldrand und vier kleinen Kompassakzenten; gestaffelte bunte Häuser von Positano, Küstenfelsen, kleine Kuppel und türkisfarbenes Meer. Vollständiges Motiv auf transparentem quadratischem Hintergrund, keine Schrift oder Wasserzeichen.
 - **Reisemarke:** Wertigeres goldenes Low-Poly-Medaillon mit Petrolakzenten, Küstenhäusern und Meer; zwei Zitronen mit grünen Blättern am unteren Rand. Gleiche Lesbarkeit bei 112 Pixeln, transparentes Umfeld, keine Schrift oder Wasserzeichen.
 
-Vor Production weiterhin vollständige Datenbank-/Uploadsicherung und ausstehende Migrationen anwenden. Ein Rücksprung auf Code vor 019 entfernt die Definitionen nicht automatisch. Bei Problemen neue Amalfi-Vergaben über Archivierung pausieren und vorwärts korrigieren; Definitionen mit persönlichen Vergaben nicht löschen. Keine destruktive Rückmigration. Historische erhaltene Stücke bleiben erhalten.
+Vor künftigen Deployments weiterhin vollständige Datenbank-/Uploadsicherung und ausstehende Migrationen anwenden. Ein Rücksprung auf Code vor 019 entfernt die Definitionen nicht automatisch. Bei Problemen neue Amalfi-Vergaben über Archivierung pausieren und vorwärts korrigieren; Definitionen mit persönlichen Vergaben nicht löschen. Keine destruktive Rückmigration. Historische erhaltene Stücke bleiben erhalten.
 
 ### Gesamtcheck
 
-**Letzte ausgeführte Prüfung:** 179 isolierte Integrationstests und 32 Frontendtests erfolgreich; PHP-/JS-Syntax geprüft. CSS-Build, Token-/BEM-Prüfung und lokaler Deployment-Build erfolgreich. Umfang, Bereinigung, Browserbefunde und verbleibende Deployment-Schritte: [Abschlussprüfung](docs/SOUVENIRS-ABSCHLUSSPRUEFUNG.md). Keine Production-Veröffentlichung.
+**Letzte ausgeführte Prüfung:** 179 isolierte Integrationstests und 32 Frontendtests erfolgreich; PHP-/JS-Syntax geprüft. CSS-Build, Token-/BEM-Prüfung und lokaler Deployment-Build erfolgreich. Umfang, Bereinigung, Browserbefunde und verbleibende Deployment-Schritte: [Abschlussprüfung](docs/SOUVENIRS-ABSCHLUSSPRUEFUNG.md). Production-Veröffentlichung am 22.10.2026 mit gesondertem Livecheck erfolgt.
 
 Abgedeckt sind unter anderem erste/zweite richtige Antworten, falsche und übersprungene Antworten, spätere Korrektur, Wiederholungen, Schwellen 5/20, Kategorie-/Themenrunden, eingefrorene Zuordnung, Backfill, Retry, Archivierung, Definitionsrevisionen, Adminschutz, Avatarberechtigungen/Lifecycle, Medienzuordnung, Reset und Kontolöschung. Integrationstests verwenden ausschließlich wegwerfbare `quiz_hero_audit_*`-Datenbanken; echte Accounts wurden dafür nicht zurückgesetzt.
 
 Der lokale Browserabschlusscheck bei 390 und 1440 Pixeln prüft leere und begonnene Sammlungen, alle vier Stadtpaare, Filter, Fortschritt und Dialoge anhand temporärer Darstellungsdaten. Gastzugriff bleibt gesperrt, alle acht Bilder laden und kein horizontaler Überlauf tritt auf. Frühere Screenshot-Aufnahmen über das Browserwerkzeug konnten nicht zuverlässig abgeschlossen werden; dies ist eine DOM-/Layoutprüfung.
 
-Vor Production:
+Deploymentablauf (am 22.10.2026 erfolgreich durchgeführt):
 
 1. Lokaler Gesamtcheck erfolgreich; beim Deployment aktuellen Production-Bestand und Migrationsstand erneut abgleichen.
 2. Vollständige Datenbank- und Uploadsicherung; Wiederherstellungspfad prüfen.
@@ -154,7 +154,7 @@ Vor Production:
 
 Ein Code-Rollback ist kein Datenbank-Restore. Code vor 017/018 kennt neue Katalogeinträge beziehungsweise Aktivierung/Löschmarkierungen nicht zuverlässig. Keine destruktive Rückmigration oder isolierte Entfernung von Migrationsmarkierungen. Vorwärts korrigieren oder Code und Daten konsistent aus Sicherung wiederherstellen; dabei möglichen Verlust neuer Fortschritte berücksichtigen. Lokale private Sicherungen sind kein Ersatz für ein frisches Productionbackup.
 
-Technische Ergänzungen und bestehende Prozesse: [Quiz-Reisepass](docs/QUIZ-REISEPASS.md), [Mediathek](docs/MEDIA.md), [Feature-Übersicht](FEATURES.md). Keine Veröffentlichung durch diese Dokumentationsbereinigung.
+Technische Ergänzungen und bestehende Prozesse: [Quiz-Reisepass](docs/QUIZ-REISEPASS.md), [Mediathek](docs/MEDIA.md), [Feature-Übersicht](FEATURES.md). Die Dokumentationsbereinigung allein veröffentlicht nichts; der gesonderte Production-Rollout erfolgte danach am 22.10.2026.
 
 ## Nächste Erweiterungen – noch nicht implementiert
 
@@ -207,6 +207,10 @@ Weitere spätere Adminideen: manuelle Einzelvergabe, Vergabevorschau mit betroff
 | 22.10.2026 | Amalfi-Küste mit Reisestempel und 20-Fragen-Reisemarke ergänzt. Lokaler Bestand zur Zielprüfung: 27 aktive Fragen. Zwei neue transparente Low-Poly-Motive, keine Änderung an bestehenden Städten. |
 
 Die vollständige frühere Arbeitsfassung einschließlich aller ursprünglichen Vorschläge, Zwischenprüfungen und Generierungsprompts liegt im [historischen Archiv](docs/archive/SOUVENIRS-ARBEITSSTAND-2026-10-22.md). Sie enthält überholte Angaben und ist **keine aktuelle Spezifikation**. Vorhandene Assets: acht Stadtmotive unter `public/images/souvenirs/` und Astra unter `public/images/website/avatar/astra-v1.png`. Erzeugt mit dem eingebauten Imagegen-Werkzeug; keine separat abgerechnete KI-API und keine Laufzeitgenerierung im Spiel.
+
+## Veröffentlichung am 22.10.2026
+
+Datenbank und Uploads vorab gesichert, Migrationen 014–019 erfolgreich angewendet, alle acht Souvenirbilder und Astra mit SHA-256 und HTTP 200 geprüft. Acht aktive Definitionen und 27 Profilbilder; bestehende Katalog-/Account-/Ergebniszahlen erhalten. Test-Reset auf Production gesperrt. Basisrelease `aec5d3a61f20-20261022100902`; aktueller Dateistand unter `/version.json`. Die Cacheversionierung der beiden privaten Seiten ist mit eigenem Regressionstest abgesichert (33 Frontendtests). Details: [Production](docs/HOSTINGER-PRODUCTION.md).
 
 ## Pflege dieser Datei
 

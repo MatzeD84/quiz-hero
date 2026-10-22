@@ -1,6 +1,6 @@
 # Souvenirs: lokaler Abschlusscheck
 
-Stand: 22.10.2026. **Lokal geprüft, nicht auf Production veröffentlicht.** Aktuelle Regeln und offene Erweiterungen: [Souvenir.md](../Souvenir.md).
+Stand: 22.10.2026. **Lokaler Vorabcheck erfolgreich; anschließend am 22.10.2026 auf Production veröffentlicht.** Liveprüfung und Sicherung: [Production](HOSTINGER-PRODUCTION.md). Aktuelle Regeln und offene Erweiterungen: [Souvenir.md](../Souvenir.md).
 
 ## Ergebnis
 

@@ -14,6 +14,8 @@ const files = [
     'index.html',
     'login.html',
     'account.html',
+    'reisepass.html',
+    'souvenirs.html',
     '404.html',
     'admin/index.html',
     'js/config.js',

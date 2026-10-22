@@ -2,6 +2,21 @@
 
 Production URL: https://quiz-hero.de. Hostinger Git deployment remains on branch `hostinger`. The adopted application design is developed on `master`; publishing it requires a reviewed merge into `hostinger`.
 
+## Souvenirs und Heldenbelohnungen – 22.10.2026
+
+Basisrelease `aec5d3a61f20-20261022100902`, Commit `aec5d3a61f209eae347bd08c6e2108e7ad139c44`, erfolgreich aktiviert und per HTTPS geprüft. Ein anschließendes Folgerelease ergänzt die Cacheversionierung von `reisepass.html` und `souvenirs.html`; dafür gibt es einen gezielten Regressionstest. Der tatsächlich aktive Commit und die Release-ID stehen immer unter `/version.json`.
+
+- Vorabbackup: `private/backups/before-souvenirs-20261022100619/` mit vollständigem SQL-Dump, privater Konfiguration, Uploadarchiv und SHA-256-Manifest. Vorheriges Dateirelease bleibt erhalten. Keine Sicherungsdateien im Webroot.
+- Migrationen **014–019** vor Codeaktivierung ausdrücklich angewendet. Acht aktive Souvenirdefinitionen für Rom, Neapel, Florenz und Amalfi-Küste; Avatar-Katalog mit 27 Einträgen einschließlich Astra. Bestandszahlen vor/nach Migration unverändert. Keine lokalen Fragen oder Accounts nach Production importiert.
+- Alle acht Souvenir-PNGs und Astra im Release enthalten, serverseitig per SHA-256 gegen die lokalen Originale abgeglichen und öffentlich mit HTTP 200 / `image/png` geprüft. Gemeinsame bestehende Uploads bleiben erhalten.
+- Deployment lief über Hostinger-Gitbranch und Cronworker, einschließlich serverseitiger Frontendtests, PHP-Lint, SEO-Export aus der Produktionsdatenbank, Migrationsprüfung und atomarer Aktivierung.
+- Livecheck: Startseite, öffentliche API, Konto, Login, Admin und beide privaten Seiten erreichbar; alte Adresse `passport.html` leitet mit Queryparametern auf `reisepass.html`. Gastansicht zeigt keine persönliche Sammlung. Test-Reset bleibt auf Production gesperrt.
+- Kein künstlicher Spielabschluss, Reset oder Belohnungs-Backfill an echten Productionaccounts für die Prüfung ausgeführt. Persönliche Vergaben erfolgen regulär bei Rundenabschluss beziehungsweise geschütztem Abgleich.
+
+Beim vorbereitenden privaten Migrationspaket fehlten zunächst Bootstrap-Abhängigkeiten; der Start scheiterte vor jeder Migration. Vollständige Abhängigkeiten und passende Arbeitsverzeichnisrechte ergänzen, danach lief 014–019 erfolgreich. Für spätere Migrationen immer den vollständigen Quellstand außerhalb des Webroots mit privatem Konfigurationsverweis bereitstellen, nicht nur `migrate.php` und `bootstrap.php`. Windows-Tararchive mit `--no-same-owner --no-same-permissions --no-overwrite-dir` in ein zuvor schreibbares privates Arbeitsverzeichnis entpacken. Zugangsdateien und Dumps nicht ausgeben.
+
+Ein Rücksprung auf Code vor 017/018 berücksichtigt Aktivierung/Löschmarkierungen und neue Profilbilder nicht vollständig. Bei Problemen bevorzugt vorwärts korrigieren beziehungsweise konsistent aus Backup wiederherstellen; ein Dateirücksprung allein setzt Datenbank und neu vergebenen Fortschritt nicht zurück. Details der Regeln: [Souvenir.md](../Souvenir.md); lokale Vorabprüfung: [Prüfbericht](SOUVENIRS-ABSCHLUSSPRUEFUNG.md).
+
 The existing website root `/home/u199598707/domains/quiz-hero-stage.matzeverse.de` is retained intentionally: `quiz-hero.de` is its Hostinger alias. Both names share the same release, uploads and database. This is not an isolated staging environment. The former staging hostname redirects to production; create a separate database and website before using it for development again.
 
 `deployment/hostinger.json` controls the build origin and environment. Production builds require `ALLOW_PRODUCTION_BUILD=true`; the Hostinger build hook sets this only after validating the reviewed production target. Set the private server configuration's `SITE_URL` to the same origin. Credentials remain outside Git.
