@@ -4,6 +4,7 @@ import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE, UserService } from '.
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 import { revealStatus } from './status-navigation.js?v=dev';
+import { isAvatarAvailable } from './avatar-policy.js?v=dev';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -30,10 +31,8 @@ const elements = {
     profileName: document.querySelector('#js-account-profile-name'),
     profileEmail: document.querySelector('#js-account-profile-email'),
     avatarImage: document.querySelector('#js-account-avatar-image'),
-    avatarOpen: document.querySelector('#js-account-avatar-open'),
-    avatarModal: document.querySelector('#js-account-avatar-modal'),
-    avatarModalClose: document.querySelector('#js-account-avatar-close'),
-    avatarModalContent: document.querySelector('#js-account-avatar-modal-content'),
+    avatarSection: document.querySelector('#js-account-avatar-section'),
+    avatarContent: document.querySelector('#js-account-avatar-content'),
     logout: document.querySelector('#js-account-page-logout'),
     deleteAccount: document.querySelector('#js-account-page-delete'),
     status: document.querySelector('#js-account-page-status')
@@ -47,8 +46,8 @@ initFooter();
 
 function setBusy(busy) {
     updating = busy;
-    for (const root of [elements.content, elements.avatarModal, elements.deleteModal]) {
-        root?.querySelectorAll('button, input').forEach(control => { control.disabled = busy; });
+    for (const root of [elements.content, elements.avatarSection, elements.deleteModal]) {
+        root?.querySelectorAll('button, input').forEach(control => { control.disabled = busy || control.dataset.rewardLocked === 'true'; });
     }
 }
 
@@ -85,6 +84,8 @@ const render = () => {
     elements.loggedOut?.classList.toggle('u-hidden', isLoggedIn);
     elements.content?.classList.toggle('u-hidden', !isLoggedIn);
     if (!isLoggedIn) {
+        elements.avatarSection.open = false;
+        elements.avatarContent.replaceChildren();
         setUsernameEditing(false);
         resetPasswordForm();
         applyAccountHeaderLogo(null);
@@ -108,26 +109,29 @@ const handleRemovedAccount = (message = ACCOUNT_REMOVED_MESSAGE) => {
     setStatus(message, 'info');
 };
 
-const closeAvatarModal = () => {
-    closeDialog(elements.avatarModal);
+const closeAvatarPicker = () => {
+    elements.avatarSection.open = false;
+    elements.avatarContent.replaceChildren();
 };
 
-const openAvatarModal = () => {
-    if (!elements.avatarModal || !elements.avatarModalContent || !currentUser) return;
+const openAvatarPicker = () => {
+    if (!elements.avatarSection || !elements.avatarContent || !currentUser || updating) return;
     const currentKey = currentUser.avatarKey || 'hero';
-    elements.avatarModalContent.innerHTML = '<h2 class="modal__headline">Bild ändern</h2><form id="js-account-avatar-form" class="avatar-modal"><div class="avatar-modal__grid"></div><button class="btn btn--modal" type="submit">Bild speichern</button></form>';
-    const grid = elements.avatarModalContent.querySelector('.avatar-modal__grid');
-    for (const avatar of HERO_AVATARS) {
-        const label = document.createElement('label');
-        label.className = 'account-avatar-option account-avatar-option--modal';
-        const input = document.createElement('input');
-        input.type = 'radio'; input.name = 'avatarKey'; input.value = avatar.key;
-        input.checked = avatar.key === currentKey;
-        const image = document.createElement('img');
-        image.src = avatar.url; image.alt = avatar.label;
-        label.append(input, image); grid.append(label);
+    elements.avatarContent.innerHTML = '<div class="profile-avatar"><p class="account-page-form__hint">Wähle deinen Helden. Deine Auswahl wird automatisch gespeichert.</p><p class="user-panel__status" id="js-avatar-save-status" role="status" aria-live="polite"></p><div class="profile-avatar__grid" role="radiogroup" aria-label="Helden auswählen"></div></div>';
+    const grid = elements.avatarContent.querySelector('.profile-avatar__grid');
+    for (const avatar of currentUser.availableAvatars || HERO_AVATARS) {
+        if(!isAvatarAvailable(avatar,currentUser))continue;
+        const label=document.createElement('label');label.className='profile-avatar__card';
+        const input=document.createElement('input');input.type='radio';input.name='avatarKey';input.value=avatar.key;input.checked=avatar.key===currentKey;
+        const image=document.createElement('img');image.src=avatar.url;image.alt='';image.width=112;image.height=112;image.loading='lazy';
+        const name=document.createElement('strong');name.textContent=avatar.label;
+        const state=document.createElement('span');state.className='profile-avatar__state';
+        const updateState=()=>{state.textContent=input.checked?'Ausgewählt':avatar.unlockRule?'Freigeschaltet':'Verfügbar';};
+        input.addEventListener('change',()=>grid.querySelectorAll('input').forEach(radio=>radio.dispatchEvent(new Event('avatar-state'))));
+        input.addEventListener('avatar-state',updateState);updateState();
+        label.append(input,image,name,state);grid.append(label);
     }
-    openDialog(elements.avatarModal);
+    elements.avatarSection.open = true;
 };
 
 elements.usernameEdit?.addEventListener('click', () => setUsernameEditing(true));
@@ -181,39 +185,39 @@ elements.passwordForm?.addEventListener('submit', async event => {
     } finally { setBusy(false); }
 });
 
-elements.avatarOpen?.addEventListener('click', openAvatarModal);
-elements.avatarModalClose?.addEventListener('click', closeAvatarModal);
-elements.avatarModal?.addEventListener('click', event => {
-    if (event.target === elements.avatarModal) {
-        closeAvatarModal();
-    }
+elements.avatarSection?.addEventListener('toggle', () => {
+    if(elements.avatarSection.open && !elements.avatarContent.children.length)openAvatarPicker();
 });
-
-elements.avatarModalContent?.addEventListener('submit', async event => {
-    const form = event.target.closest('#js-account-avatar-form');
-    if (!form || !currentUser || updating) return;
-    event.preventDefault();
-    const formData = new FormData(form);
-    const avatarKey = String(formData.get('avatarKey') || 'hero');
+elements.avatarContent?.addEventListener('change', async event => {
+    const input=event.target.closest('input[name="avatarKey"]');
+    if(!input||!currentUser||updating)return;
+    const avatarKey=input.value;
+    if(avatarKey===(currentUser.avatarKey||'hero'))return;
+    const status=elements.avatarContent.querySelector('#js-avatar-save-status');
+    const notify=(message,type)=>{status.textContent=message;status.dataset.status=type;};
     setBusy(true);
-    setStatus('Bild wird gespeichert ...', 'info');
+    elements.avatarContent.setAttribute('aria-busy','true');
+    notify('Dein Held wird gespeichert ...','info');
     try {
-        currentUser = await userService.updateAccount(currentUser, {
-            username: currentUser.username || currentUser.name,
-            password: '',
-            avatarKey
+        currentUser=await userService.updateAccount(currentUser,{
+            username:currentUser.username||currentUser.name,
+            password:'',avatarKey
         });
         render();
-        closeAvatarModal();
-        setStatus('Bild gespeichert.', 'success');
-    } catch (error) {
-        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
-            closeAvatarModal();
-            handleRemovedAccount(error.message);
-            return;
+        notify('Dein Held wurde gespeichert.','success');
+    } catch(error) {
+        if([ACCOUNT_REMOVED_MESSAGE,SESSION_EXPIRED_MESSAGE].includes(error.message)){
+            closeAvatarPicker();handleRemovedAccount(error.message);return;
         }
-        setStatus(error.message || 'Bild konnte nicht gespeichert werden.', 'error');
-    } finally { setBusy(false); }
+        notify(error.message||'Dein Held konnte nicht gespeichert werden. Bitte erneut auswählen.','error');
+    } finally {
+        for(const radio of elements.avatarContent.querySelectorAll('input[name="avatarKey"]')){
+            radio.checked=radio.value===(currentUser?.avatarKey||'hero');
+            radio.dispatchEvent(new Event('avatar-state'));
+        }
+        elements.avatarContent.removeAttribute('aria-busy');
+        setBusy(false);
+    }
 });
 
 elements.logout?.addEventListener('click', async () => {
@@ -289,11 +293,14 @@ async function init() {
         }
     }
     render();
-
+    if(currentUser&&window.location.hash==='#avatar'){
+        openAvatarPicker();
+        elements.avatarSection.scrollIntoView({block:'start'});
+    }
 }
 
-// Ensure avatar list is loaded before the first render so the modal shows
-// the avatars from `data/avatars.json` (register page already loads them).
+// Ensure avatar list is loaded before the first render so the picker shows
+// the avatars from the server catalog (register page already loads them).
 init().catch(err => {
     console.warn('Fehler beim Laden der Account-Seite:', err);
     render();

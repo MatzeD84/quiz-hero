@@ -3,25 +3,7 @@ declare(strict_types=1);
 
 function hero_avatars(): array
 {
-    $path = QUIZ_HERO_ROOT . '/data/avatars.json';
-    $defaults = [
-        'hero' => ['key' => 'hero', 'label' => 'Quiz-Hero', 'url' => 'images/website/avatar/quizo.png'],
-    ];
-
-    if (!is_file($path)) {
-        return $defaults;
-    }
-
-    $contents = @file_get_contents($path);
-    if ($contents === false) {
-        return $defaults;
-    }
-
-    $data = json_decode($contents, true);
-    if (!is_array($data)) {
-        return $defaults;
-    }
-
+    $data=db()->query('SELECT avatar_key AS `key`,label,image_url AS url,unlock_rule AS unlockRule FROM quiz_avatars WHERE enabled=1 AND deleted_at IS NULL ORDER BY sort_order,avatar_key')->fetchAll();
     $avatars = [];
     foreach ($data as $entry) {
         if (!is_array($entry)) {
@@ -34,15 +16,27 @@ function hero_avatars(): array
             continue;
         }
         $avatars[$key] = ['key' => $key, 'label' => $label, 'url' => $url];
+        if (!empty($entry['unlockRule'])) $avatars[$key]['unlockRule']=$entry['unlockRule'];
     }
 
-    return $avatars !== [] ? $avatars : $defaults;
+    return $avatars;
 }
 
 function normalize_avatar_key(?string $key): string
 {
     $key = clean_string($key ?? '', 80);
     return array_key_exists($key, hero_avatars()) ? $key : 'hero';
+}
+
+function lock_avatar_catalog(PDO $pdo): void
+{
+    $pdo->query("SELECT avatar_key FROM quiz_avatars WHERE avatar_key='hero' FOR UPDATE")->fetchColumn();
+}
+
+function selectable_avatars(int $userId=0): array
+{
+    $owned=$userId?unlocked_avatar_keys(db(),$userId):[];
+    return array_values(array_filter(hero_avatars(),static fn($avatar)=>empty($avatar['unlockRule'])||in_array($avatar['key'],$owned,true)));
 }
 
 function avatar_url(string $avatarKey): string
@@ -135,6 +129,8 @@ function format_account_user(array $user): array
         'avatarKey' => $avatarKey,
         'profileImageUrl' => avatar_url($avatarKey),
         'emailVerified' => !empty($user['email_verified_at']),
+        'unlockedAvatarKeys' => unlocked_avatar_keys(db(),(int)$user['id']),
+        'availableAvatars' => selectable_avatars((int)$user['id']),
     ];
 }
 
@@ -155,6 +151,7 @@ function format_admin_user(array $user): array
         'createdAt' => isset($user['created_at']) ? date(DATE_ATOM, strtotime((string) $user['created_at'])) : '',
         'lastSeenAt' => isset($user['last_seen_at']) && $user['last_seen_at'] !== null ? date(DATE_ATOM, strtotime((string) $user['last_seen_at'])) : '',
         'resultCount' => (int) ($user['result_count'] ?? 0),
+        'canReset' => test_reset_allowed($user),
     ];
 }
 

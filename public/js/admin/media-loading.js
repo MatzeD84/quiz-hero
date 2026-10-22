@@ -1,17 +1,12 @@
-export function createMediaLoading(panel) {
-    const notice = document.createElement('div');
-    notice.className = 'admin-media-loading';
-    notice.setAttribute('role', 'status');
-    notice.setAttribute('aria-live', 'polite');
-    notice.hidden = true;
-    notice.innerHTML = '<span class="admin-media-loading__spinner" aria-hidden="true"></span><span>Bilder werden geladen …</span>';
-    document.body.append(notice);
+export function createMediaLoading(panel, loading) {
     const nearby = new Set();
     const observed = new Set();
-    let requests = 0;
+    let finish = null;
     const update = () => {
-        for (const img of nearby) if (!img.isConnected || img.complete) nearby.delete(img);
-        notice.hidden = Boolean(panel.closest('.u-hidden')) || (requests === 0 && nearby.size === 0);
+        for (const img of nearby) if (!img.isConnected || img.complete || img.closest('.u-hidden, [hidden]')) nearby.delete(img);
+        const pending = !panel.closest('.u-hidden') && nearby.size > 0;
+        if (pending && !finish) finish = loading.begin('Bilder werden geladen …');
+        else if (!pending && finish) { finish(); finish = null; }
     };
     const intersection = new IntersectionObserver(entries => {
         for (const { target, isIntersecting } of entries) {
@@ -38,5 +33,4 @@ export function createMediaLoading(panel) {
     new MutationObserver(scan).observe(panel, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'class'] });
     new MutationObserver(update).observe(panel.parentElement, { attributes: true, attributeFilter: ['class'] });
     scan();
-    return { begin() { requests++; update(); }, end() { requests = Math.max(0, requests - 1); scan(); } };
 }

@@ -2,7 +2,7 @@
 const menus = new WeakMap();
 export function accountMenuLinks(user) {
     return user?.id
-        ? [{ label: 'Mein Konto', href: 'account.html' }, { label: 'Reisepass', href: 'passport.html' }]
+        ? [{ label: 'Mein Konto', href: 'account.html' }, { label: 'Reisepass', href: 'reisepass.html' }, { label: 'Souvenirs', href: 'souvenirs.html' }]
         : [{ label: 'Login', href: 'login.html' }, { label: 'Registrieren', href: 'login.html?view=register' }];
 }
 export function closeAccountMenus() {
@@ -20,7 +20,8 @@ export function placeAccountMenu() {
 function menuIcon(href) {
     const paths = {
         'account.html': 'M20 21v-2a6 6 0 0 0-6-6h-4a6 6 0 0 0-6 6v2M16 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
-        'passport.html': 'M5 3h14v18H5zM5 17h14M15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0M12 7v6M9 10h6',
+        'reisepass.html': 'M5 3h14v18H5zM5 17h14M15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0M12 7v6M9 10h6',
+        'souvenirs.html': 'M8 3h8l-1 6H9zM12 9a6 6 0 1 0 0 12 6 6 0 0 0 0-12M12 12v6M9 15h6',
         'login.html': 'M14 3h6v18h-6M3 12h12M10 7l5 5-5 5',
         'login.html?view=register': 'M14 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M2 21v-2a6 6 0 0 1 6-6h4M19 14v8M15 18h8'
     };
@@ -28,7 +29,7 @@ function menuIcon(href) {
     svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('aria-hidden', 'true');
     svg.classList.add('site-account-nav__item-icon');
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', paths[href] || paths['passport.html']); svg.append(path); return svg;
+    path.setAttribute('d', paths[href] || paths['reisepass.html']); svg.append(path); return svg;
 }
 function initMenu(root, index) {
     const button = document.createElement('button');

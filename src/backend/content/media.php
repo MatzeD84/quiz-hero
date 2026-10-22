@@ -15,6 +15,8 @@ function admin_image_upload(bool $replace = false): void
     $oldPath = '';
     if ($replace) {
         $oldPath = normalize_local_image_path((string) ($_POST['path'] ?? ''));
+        foreach(db()->query('SELECT image_url FROM quiz_avatars WHERE deleted_at IS NULL') as $avatar)if(normalize_local_image_path($avatar['image_url'])===$oldPath)json_response(['ok'=>false,'error'=>'Profilbilder bitte im Tab Profilbilder bearbeiten.'],422);
+        foreach(db()->query('SELECT image_url FROM quiz_souvenir_definitions') as $souvenir)if(normalize_local_image_path($souvenir['image_url'])===$oldPath)json_response(['ok'=>false,'error'=>'Verwendete Souvenirmotive bitte in der Souvenir-Verwaltung bearbeiten.'],422);
         $known = array_column(list_uploaded_media(), null, 'path');
         if ($oldPath === '' || !isset($known[$oldPath])) {
             json_response(['ok' => false, 'error' => 'Das ausgewählte Bild wurde nicht gefunden.'], 404);
@@ -23,12 +25,12 @@ function admin_image_upload(bool $replace = false): void
             json_response(['ok' => false, 'error' => 'Das Bild oder seine Verwendungen wurden geändert. Bitte neu auswählen.'], 409);
         }
     }
-    $context = $replace ? 'media' : clean_string($_POST['context'] ?? 'question', 40);
+    $context = $replace ? ((str_starts_with($oldPath,'images/souvenirs/')||str_starts_with($oldPath,'images/uploads/souvenirs/'))?'souvenir':'media') : clean_string($_POST['context'] ?? 'question', 40);
     $rawCategoryId = clean_string($_POST['categoryId'] ?? '', 120);
     if ($rawCategoryId === '' && $context === 'category') {
         $rawCategoryId = clean_string($_POST['categoryTitle'] ?? '', 120);
     }
-    if ($rawCategoryId === '' && $context === 'media') {
+    if ($rawCategoryId === '' && in_array($context,['media','avatar','souvenir'],true)) {
         $rawCategoryId = 'media';
     }
     if ($rawCategoryId === '') {
@@ -36,7 +38,7 @@ function admin_image_upload(bool $replace = false): void
     }
     $categoryId = slugify($rawCategoryId);
 
-    if (!in_array($context, ['category', 'media'], true)) {
+    if (!in_array($context, ['category', 'media', 'avatar', 'souvenir'], true)) {
         $stmt = db()->prepare('SELECT id FROM quiz_categories WHERE id = :id');
         $stmt->execute(['id' => $categoryId]);
         if (!$stmt->fetch()) {
@@ -79,9 +81,12 @@ function admin_image_upload(bool $replace = false): void
     }
 
     $baseDir = QUIZ_HERO_PUBLIC_ROOT . '/images/uploads';
+    if($context==='avatar' && $imageInfo[0]!==$imageInfo[1])json_response(['ok'=>false,'error'=>'Profilbilder müssen quadratisch sein (gleiche Breite und Höhe).'],422);
     $uploadFolder = match ($context) {
         'category' => 'categories/' . $categoryId,
         'media' => 'media',
+        'avatar' => 'avatars',
+        'souvenir' => 'souvenirs',
         default => $categoryId,
     };
     $categoryDir = $baseDir . '/' . $uploadFolder;
@@ -92,7 +97,7 @@ function admin_image_upload(bool $replace = false): void
     $originalName = pathinfo((string) ($file['name'] ?? 'quiz-bild'), PATHINFO_FILENAME);
     $safeName = slugify($originalName);
     $extension = $allowed[$mime];
-    if (!$replace && uploaded_image_name_exists($categoryDir, $safeName)) {
+    if (!$replace && $context!=='avatar' && uploaded_image_name_exists($categoryDir, $safeName)) {
         json_response(['ok' => false, 'error' => 'In dieser Kategorie gibt es bereits ein Bild mit diesem Dateinamen. Bitte benenne die Datei um oder entferne das vorhandene Bild.'], 409);
     }
 
@@ -203,9 +208,10 @@ function list_uploaded_media(): array
     $items = [];
     $indexed = [];
 
-    if (is_dir($baseDir)) {
+    foreach([$baseDir,QUIZ_HERO_PUBLIC_ROOT.'/images/souvenirs'] as $scanDir) {
+        if(!is_dir($scanDir))continue;
         $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($baseDir, FilesystemIterator::SKIP_DOTS)
+            new RecursiveDirectoryIterator($scanDir, FilesystemIterator::SKIP_DOTS)
         );
         foreach ($iterator as $file) {
             if (!$file instanceof SplFileInfo || !$file->isFile()) {
@@ -234,6 +240,10 @@ function list_uploaded_media(): array
         }
     }
 
+    $souvenirPaths=array_fill_keys(array_map('normalize_local_image_path',db()->query('SELECT image_url FROM quiz_souvenir_definitions')->fetchAll(PDO::FETCH_COLUMN)),true);
+    foreach($items as &$item){$item['souvenirUsed']=isset($souvenirPaths[$item['path']]);$item['mediaKind']=$item['souvenirUsed']||str_starts_with($item['path'],'images/souvenirs/')||str_starts_with($item['path'],'images/uploads/souvenirs/')?'souvenirs':'images';}unset($item);
+    $avatarPaths=array_fill_keys(array_map('normalize_local_image_path',db()->query('SELECT image_url FROM quiz_avatars WHERE deleted_at IS NULL')->fetchAll(PDO::FETCH_COLUMN)),true);
+    $items=array_values(array_filter($items,static fn($item)=>!isset($avatarPaths[$item['path']])));
     usort($items, static fn(array $a, array $b): int => strcmp($a['filename'], $b['filename']));
     return $items;
 }
@@ -330,6 +340,9 @@ function media_version(string $relative, array $usage): string
 function historical_media_paths(): array
 {
     $paths = [];
+    foreach(db()->query('SELECT image_url FROM quiz_souvenir_definitions') as $row){
+        $path=normalize_local_image_path($row['image_url']);if($path!=='')$paths[$path]=true;
+    }
     foreach (db()->query('SELECT snapshot_json FROM quiz_question_versions') as $row) {
         $snapshot = decode_json_field($row['snapshot_json'], []);
         $path = normalize_local_image_path((string) ($snapshot['imageUrl'] ?? ''));

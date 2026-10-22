@@ -12,6 +12,9 @@ function account_journey(): void
     json_response(['ok' => true] + journey_result_summary($pdo, $userId, $catalog) + [
         'difficultyStats' => journey_difficulty_stats($pdo, $userId),
         'practice' => practice_selections($userId, $catalog),
+        'souvenirs' => souvenir_collection($pdo,$userId,$catalog),
+        'avatarRewards' => avatar_rewards($pdo,$userId),
+        'availableAvatars' => selectable_avatars($userId),
     ]);
 }
 

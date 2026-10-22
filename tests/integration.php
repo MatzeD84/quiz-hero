@@ -79,6 +79,7 @@ try {
     $env['QUIZ_HERO_ADMIN_PASSWORD'] = $password;
     $env['QUIZ_HERO_ADMIN_PASSWORD_HASH'] = '';
     $env['QUIZ_HERO_ALLOW_DEV_ACCOUNT_LOGIN'] = 'false';
+    $env['QUIZ_HERO_ENABLE_TEST_RESET'] = 'true';
     $env['QUIZ_HERO_MAIL_TRANSPORT'] = 'disabled-test-transport';
     $env['QUIZ_HERO_SEO_EXPORT_TOKEN'] = 'audit-export-' . $suffix;
     $env['SITE_URL'] = 'http://' . $address;
@@ -101,7 +102,7 @@ try {
             foreach ($cookies as $name => $value) $pairs[] = $name . '=' . $value;
             $headers .= 'Cookie: ' . implode('; ', $pairs) . "\r\n";
         }
-        $userCsrfActions = ['account-journey','start-round','account-logout','account-update','account-delete','save-result','question-feedback-save'];
+        $userCsrfActions = ['account-souvenir-sync','account-journey','start-round','account-logout','account-update','account-delete','save-result','question-feedback-save'];
         $token = str_starts_with($action, 'admin-') && $action !== 'admin-login' ? $csrf : (in_array($action, $userCsrfActions, true) ? $userCsrf : '');
         if ($csrfOverride === false) $token = '';
         elseif (is_string($csrfOverride)) $token = $csrfOverride;
@@ -125,7 +126,7 @@ try {
         return (string) ($cookies['quiz_hero_session'] ?? '');
     }
 
-    function replace_media(array $fields, string $bytes, int $expected = 200, bool $withCsrf = true): array {
+    function replace_media(array $fields, string $bytes, int $expected = 200, bool $withCsrf = true, string $action = 'admin-media-replace'): array {
         global $address, $cookies, $csrf;
         $boundary = 'quiz-audit-' . bin2hex(random_bytes(8));
         $body = '';
@@ -136,7 +137,7 @@ try {
         $headers = "Content-Type: multipart/form-data; boundary={$boundary}\r\nCookie: " . implode('; ', $pairs) . "\r\n";
         if ($withCsrf) $headers .= "X-Quiz-Hero-CSRF: {$csrf}\r\n";
         $context = stream_context_create(['http'=>['method'=>'POST','header'=>$headers,'content'=>$body,'ignore_errors'=>true,'timeout'=>20]]);
-        $response = file_get_contents('http://' . $address . '/api/index.php?action=admin-media-replace&v=1', false, $context);
+        $response = file_get_contents('http://' . $address . '/api/index.php?action='.rawurlencode($action).'&v=1', false, $context);
         preg_match('~HTTP/\S+ (\d+)~', $http_response_header[0] ?? '', $status);
         $data = json_decode((string) $response, true);
         if ((int) ($status[1] ?? 0) !== $expected || !is_array($data)) throw new RuntimeException('media replacement failed: ' . $response);
@@ -373,8 +374,8 @@ try {
     request('admin-question-delete', ['id'=>$questionId], 403, "Origin: https://evil.example\r\n");
     check((int) $pdo->query('SELECT COUNT(*) FROM quiz_questions')->fetchColumn() === 1, 'admin writes reject missing/wrong CSRF and foreign Origin without mutation');
     $savedCookies = $cookies; $cookies = [];
-    foreach (['admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
-    foreach (['admin-question-save','admin-category-save','admin-category-delete','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-media-replace','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
+    foreach (['admin-avatars','admin-data', 'admin-users-list', 'admin-media-list', 'admin-question-feedback-list'] as $route) request($route, null, 401);
+    foreach (['admin-avatar-delete','admin-avatar-save','admin-question-save','admin-category-save','admin-category-delete','admin-user-delete','admin-question-feedback-delete','admin-media-delete','admin-media-replace','admin-question-import','admin-image-upload'] as $route) request($route, [], 401);
     $cookies = $savedCookies;
     check(true, 'admin read and write endpoints reject unauthenticated access');
     request('account-login', ['identifier'=>"' OR 1=1 --",'password'=>'invalid'], 401);
@@ -506,6 +507,11 @@ try {
     request('account-me', [], 401);
     request('account-login', ['identifier'=>$mailUser,'password'=>$newPassword]);
     check($original !== $replacement, 'local SMTP: registration, resend, verification, login, password reset and session revocation end-to-end');
+    require __DIR__.'/souvenirs.inc.php';
+    require __DIR__.'/avatar-rewards.inc.php';
+    require __DIR__.'/avatar-catalog.inc.php';
+    require __DIR__.'/avatar-lifecycle.inc.php';
+    require __DIR__.'/souvenir-media.inc.php';
     echo "{$checks} integration checks passed.\n";
 } finally {
     foreach ($mediaTestFiles as $file) if (is_file($file)) unlink($file);

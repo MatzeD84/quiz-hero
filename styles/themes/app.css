@@ -138,12 +138,12 @@ input[type='checkbox'], input[type='radio'] { accent-color: var(--color-link); }
 .login-panel__intro { text-align: left; }
 .login-panel__intro h2 { font-size: var(--text-20); }
 .login-panel__actions { padding-top: var(--space-12); }
-.account-profile-card { background: var(--color-surface-muted); border: none; border-radius: var(--radius-md); padding: var(--space-24); margin-bottom: var(--space-32); }
+.account-profile-card { background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--color-on-primary) 12%, transparent), transparent 65%), linear-gradient(120deg, var(--color-difficulty-hero), color-mix(in srgb, var(--color-difficulty-hero) 75%, var(--color-text))); color: var(--color-on-primary); border: none; border-radius: var(--radius-md); padding: var(--space-24); margin-bottom: var(--space-32); }
 .account-profile-card__avatar img { width: 100px; height: 100px; border-radius: var(--radius-circle); background: var(--color-surface); border: var(--border-width-focus) var(--border-style) var(--color-white); }
-.account-profile-card__body h2 { font-size: var(--text-24); }
-.account-profile-card__body p { color: var(--color-text-muted); overflow-wrap: anywhere; }
+.account-profile-card__body h2 { color: var(--color-on-primary); font-size: var(--text-24); }
+.account-profile-card__body p { color: var(--color-on-primary); overflow-wrap: anywhere; }
 .account-page-form__headline { font-size: var(--text-24); }
-.account-page-form__actions { border-top: var(--border-subtle); padding-top: var(--space-24); margin-top: var(--space-8); }
+.account-page-form__actions { padding-top: var(--space-24); margin-top: var(--space-8); }
 .account-action-link { min-height: var(--control-size-touch); padding: var(--space-8); color: var(--color-link); }
 .account-action-link--danger { color: var(--color-danger); }
 .avatar-option { border-radius: var(--radius-md); }

@@ -79,7 +79,8 @@ export const loadHeroAvatars = async () => {
             .map(avatar => ({
                 key: String(avatar?.key || '').trim(),
                 label: String(avatar?.label || '').trim(),
-                url: normalizeAvatarUrl(String(avatar?.url || '').trim())
+                url: normalizeAvatarUrl(String(avatar?.url || '').trim()),
+                unlockRule: avatar?.unlockRule || ''
             }))
             .filter(avatar => avatar.key && avatar.label && avatar.url);
         if (normalized.length > 0) {

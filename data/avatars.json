@@ -128,5 +128,11 @@
     "key": "winterseherin",
     "label": "Winterseherin",
     "url": "images/website/avatar/winterseherin.png"
+  },
+  {
+    "key": "astra",
+    "label": "Astra",
+    "url": "images/website/avatar/astra-v1.png",
+    "unlockRule": "hero_first_try"
   }
 ]

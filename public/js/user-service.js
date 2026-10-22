@@ -166,6 +166,7 @@ export class UserService {
             tagId: context.tagId || ''
         }, { csrf: true });
         if (!data.ok) throw new Error(data.error || 'Ergebnis konnte nicht gespeichert werden.');
+        return data;
     }
 
     async submitQuestionFeedback(user, { questionId, types, comment }) {

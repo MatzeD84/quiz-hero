@@ -1,4 +1,4 @@
-﻿const dateFormat = new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'short', year: 'numeric' });
+const dateFormat = new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'short', year: 'numeric' });
 export function passportDate(value) {
     const date = new Date(value);
     return value && Number.isFinite(date.getTime()) ? dateFormat.format(date) : 'Datum unbekannt';
@@ -121,6 +121,9 @@ export function renderPassport(root, data, user) {
         const body = element('div', 'passport__station-body');
         body.append(element('p', 'passport__eyebrow', selection.kind === 'tag' ? 'THEMA' : 'KATEGORIE'), element('h3', 'passport__station-title', selection.title), element('p', 'passport__text', selection.rounds ? `${selection.rounds} ${selection.rounds === 1 ? 'Runde beendet' : 'Runden beendet'}` : 'Dein nächstes Ziel?'));
         if (selection.lastPlayed) body.append(element('p', 'passport__muted', `Zuletzt am ${passportDate(selection.lastPlayed)}`));
+        if(selection.kind==='category' && data.souvenirs?.earned?.some(item=>item.categoryId===selection.id&&item.rule==='first_visit')) {
+            body.append(element('span','souvenir__visit','Reisestempel erhalten'));
+        }
         body.append(playLink(selection, selection.rounds ? 'Neu entdecken' : 'Quiz entdecken')); card.append(body); grid.append(card);
     }
     if (!model.stations.length) grid.append(element('p', 'passport__text', 'Gerade sind keine Quizziele verfügbar. Schau bald wieder vorbei.'));

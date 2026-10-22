@@ -32,6 +32,6 @@
 .account-page-form__edit-actions { grid-column: 1 / -1; }
 .account-page-form__edit-actions:not([hidden]) { align-items: center; display: flex; flex-wrap: wrap; gap: var(--space-12); }
 .account-page-form--single { grid-template-columns: minmax(0, 1fr); }
-.account-security { border-top: var(--border-subtle); margin-top: var(--space-24); padding-top: var(--space-16); }
+.account-security { border: var(--border-width-thin) var(--border-style) var(--color-input-border); margin-top: var(--space-24); padding-top: var(--space-16); }
 .account-security__toggle { color: var(--color-link); cursor: pointer; font-size: var(--text-18); font-weight: var(--font-weight-semibold); line-height: var(--line-height-body); padding: var(--space-8) 0; }
 .account-security .account-page-form { margin-top: var(--space-16); }

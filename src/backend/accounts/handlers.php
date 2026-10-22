@@ -50,7 +50,8 @@ function account_register(): void
     $username = normalize_username($data['username'] ?? '');
     $email = normalize_email($data['email'] ?? '');
     $password = (string) ($data['password'] ?? '');
-    $avatarKey = normalize_avatar_key($data['avatarKey'] ?? '');
+    $avatarKey = clean_string($data['avatarKey'] ?? 'hero',80) ?: 'hero';
+    require_avatar_access($avatarKey);
     $privacyAccepted = !empty($data['privacyAccepted']);
 
     require_username_length($username);
@@ -65,6 +66,8 @@ function account_register(): void
     $pdo = db();
     try {
         $pdo->beginTransaction();
+        lock_avatar_catalog($pdo);
+        require_avatar_access($avatarKey);
         $stmt = $pdo->prepare('INSERT INTO quiz_users (username, email, password_hash, profile_image_url, avatar_key, privacy_accepted_at, last_seen_at) VALUES (:username, :email, :password_hash, :profile_image_url, :avatar_key, NOW(), NOW())');
         $stmt->execute([
             'username' => $username,
@@ -222,9 +225,13 @@ function account_update(): void
     require_method('POST');
     $data = read_json_body();
     db()->beginTransaction();
+    lock_avatar_catalog(db());
     $user = require_account();
     $username = normalize_username($data['username'] ?? $user['username']);
-    $avatarKey = normalize_avatar_key($data['avatarKey'] ?? $user['avatar_key']);
+    $lock=db()->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
+    require_account();
+    $avatarKey = clean_string($data['avatarKey'] ?? $user['avatar_key'],80);
+    require_avatar_access($avatarKey,(int)$user['id']);
     $password = (string) ($data['password'] ?? '');
     require_username_length($username);
 
@@ -284,6 +291,8 @@ function account_delete(): void
 
     $pdo = db();
     revoke_user_sessions((int) $user['id']);
+    $pdo->prepare('DELETE FROM quiz_user_souvenirs WHERE user_id=?')->execute([(int)$user['id']]);
+    $pdo->prepare('DELETE FROM quiz_user_avatar_unlocks WHERE user_id=?')->execute([(int)$user['id']]);
     $pdo->prepare('DELETE FROM quiz_question_results WHERE user_id = ?')->execute([(int) $user['id']]);
     $pdo->prepare('DELETE FROM quiz_rounds WHERE user_id = ?')->execute([(int) $user['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');

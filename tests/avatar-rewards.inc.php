@@ -1,0 +1,43 @@
+<?php
+// HTTP integration inside the guarded, disposable audit database only.
+request('account-login',['identifier'=>$legacyName,'password'=>$password]);
+request('account-update',['username'=>$legacyName,'avatarKey'=>'astra'],422);
+request('account-register',['username'=>'locked'.$suffix,'email'=>'locked'.$suffix.'@example.test','password'=>$password,'avatarKey'=>'astra','privacyAccepted'=>true],422);
+check(!in_array('astra',request('account-me',[])['user']['unlockedAvatarKeys'],true),'locked reward avatar cannot be selected or claimed during registration');
+$pdo->prepare('INSERT INTO quiz_questions(category_id,question,answers_json,correct_index,tags_json,difficulty) VALUES(?,?,?,?,?,?)')->execute(['rom','Avatar reward audit','["A","B","C","D"]',0,'[]','hero']);
+$heroId=(int)$pdo->lastInsertId();
+foreach([[],[1,2],[1,0]] as $attempts){$round=souvenir_round([$heroId],[$attempts]);$result=request('save-result',$round['payload']);check($result['avatarRewards']===[],'skipped, incorrect and second-try Hero answers do not unlock an avatar');}
+$easy=souvenir_round([$romIds[1]],[[0]]);$easy['payload']['difficulty']='hero';$easyResult=request('save-result',$easy['payload']);
+check($easyResult['avatarRewards']===[],'forged client difficulty cannot turn a normal answer into a Hero reward');
+$first=souvenir_round([$heroId],[[0]]);
+$pdo->prepare("UPDATE quiz_questions SET difficulty='easy' WHERE id=?")->execute([$heroId]);
+$firstResult=request('save-result',$first['payload']);
+check(count($firstResult['avatarRewards'])===1&&$firstResult['avatarRewards'][0]['avatarKey']==='astra','first-try answer unlocks Astra using frozen Hero difficulty');
+$repeat=request('save-result',$first['payload']);
+check($repeat['avatarRewards']===$firstResult['avatarRewards']&&(int)$pdo->query('SELECT COUNT(*) FROM quiz_user_avatar_unlocks WHERE user_id='.$legacyUser)->fetchColumn()===1,'save retry returns the same reward without duplicate entitlements');
+$me=request('account-me',[])['user'];
+check(in_array('astra',$me['unlockedAvatarKeys'],true)&&$me['avatarKey']==='hero','earned avatar becomes selectable without replacing current profile image');
+$other='rewardother'.$suffix;
+$pdo->prepare('INSERT INTO quiz_users(username,email,password_hash,avatar_key,email_verified_at) VALUES(?,?,?,?,NOW())')->execute([$other,$other.'@example.test',password_hash($password,PASSWORD_DEFAULT),'hero']);
+request('account-login',['identifier'=>$other,'password'=>$password]);
+request('account-update',['username'=>$other,'avatarKey'=>'astra'],422);
+check(request('account-me',[])['user']['unlockedAvatarKeys']===[],'another account cannot use or inherit the earned avatar');
+request('account-login',['identifier'=>$legacyName,'password'=>$password]);
+$changed=request('account-update',['username'=>$legacyName,'avatarKey'=>'astra'])['user'];
+check($changed['avatarKey']==='astra'&&str_ends_with($changed['profileImageUrl'],'astra-v1.png'),'unlocked avatar persists through protected account update');
+$pdo->prepare("UPDATE quiz_questions SET difficulty='hero' WHERE id=?")->execute([$heroId]);
+$again=souvenir_round([$heroId],[[0]]);check(request('save-result',$again['payload'])['avatarRewards']===[],'later Hero successes do not announce an already owned avatar again');
+$pdo->prepare('DELETE FROM quiz_results WHERE id=?')->execute([$firstResult['resultId']]);
+check(in_array('astra',request('account-me',[])['user']['unlockedAvatarKeys'],true),'deleting the source result does not revoke an earned avatar');
+request('admin-user-reset',['id'=>$legacyUser,'confirmation'=>'RESET '.$legacyName]);
+request('account-me',[],401);
+request('account-login',['identifier'=>$legacyName,'password'=>$password]);request('account-souvenir-sync',[]);
+$reset=request('account-me',[])['user'];
+check($reset['unlockedAvatarKeys']===[]&&$reset['avatarKey']==='hero','local reset clears entitlements and selected reward avatar while revoking old sessions');
+$old=souvenir_round([$heroId],[[0]]);$oldResult=request('save-result',$old['payload']);
+$pdo->prepare('DELETE FROM quiz_user_avatar_unlocks WHERE user_id=?')->execute([$legacyUser]);
+request('account-souvenir-sync',[]);request('account-souvenir-sync',[]);
+$backfilled=request('account-journey',[])['avatarRewards'];
+check(count($backfilled)===1&&$backfilled[0]['backfilled'],'proven historical first-try Hero answer reconciles exactly once');
+request('account-delete',['confirm'=>'DELETE','currentPassword'=>$password]);
+check((int)$pdo->query('SELECT COUNT(*) FROM quiz_user_avatar_unlocks WHERE user_id='.$legacyUser)->fetchColumn()===0,'account deletion removes personal avatar entitlements');

@@ -17,6 +17,64 @@ import { createFormGuard } from '../public/js/form-guard.js';
 import { QuizState } from '../public/js/quiz-state.js';
 import { revealStatus } from '../public/js/status-navigation.js';
 import { createResultShare, supportsResultShare, shareResult } from '../public/js/result-share.js';
+import { createLoadingStatus } from '../public/js/admin/loading-status.js';
+import { souvenirItems, startedSouvenirs } from '../public/js/souvenirs.js';
+import { isAvatarAvailable } from '../public/js/avatar-policy.js';
+
+test('reward avatars require an entitlement while base avatars stay available', () => {
+    const reward={key:'astra',unlockRule:'hero_first_try'};
+    assert.equal(isAvatarAvailable({key:'hero'},null),true);
+    assert.equal(isAvatarAvailable(reward,null),false);
+    assert.equal(isAvatarAvailable(reward,{unlockedAvatarKeys:[]}),false);
+    assert.equal(isAvatarAvailable(reward,{unlockedAvatarKeys:['astra']}),true);
+    assert.equal(isAvatarAvailable(reward,{unlockedAvatarKeys:['another']}),false);
+});
+
+test('souvenir collection orders newest awards first and filters goals and awards together', () => {
+    const old = { categoryId: 'rom', rule: 'first_visit', awardedAt: '2026-10-01T10:00:00Z' };
+    const recent = { categoryId: 'florenz', rule: 'discover', awardedAt: '2026-10-20T10:00:00Z' };
+    const goal = { categoryId: 'rom', rule: 'discover', target: 20, current: 5 };
+    const collection = { earned: [old, recent], goals: [goal] };
+    assert.deepEqual(souvenirItems(collection).earned, [recent, old]);
+    assert.deepEqual(souvenirItems(collection, 'rom'), { earned: [old], goals: [goal] });
+    assert.deepEqual(souvenirItems(collection, '', 'discover'), { earned: [recent], goals: [goal] });
+    assert.deepEqual(souvenirItems(collection, 'neapel'), { earned: [], goals: [] });
+    assert.deepEqual(collection.earned, [old, recent]);
+    assert.deepEqual(souvenirItems(), { earned: [], goals: [] });
+});
+
+test('collection only includes discovery souvenirs with actual progress', () => {
+    const started={rule:'discover',current:5,target:20};
+    const goals=[{rule:'first_visit',current:0}, {rule:'discover',current:0,target:20}, started];
+    assert.deepEqual(startedSouvenirs({goals}),[started]);
+    assert.deepEqual(startedSouvenirs(),[]);
+    assert.equal(goals.length,3);
+});
+
+test('shared loading notice survives overlapping requests and clears after failures', async () => {
+    const previousDocument = globalThis.document;
+    const element = () => ({ children: [], setAttribute() {}, append(...items) { this.children.push(...items); } });
+    globalThis.document = { createElement: element };
+    try {
+        const root = element(), loading = createLoadingStatus(root), notice = root.children[0];
+        assert.equal(notice.hidden, true);
+        const first = loading.begin('Spieler werden geladen …');
+        assert.equal(notice.hidden, false);
+        assert.equal(notice.children[1].textContent, 'Spieler werden geladen …');
+        const second = loading.begin('Souvenirs werden geladen …');
+        assert.equal(notice.children[1].textContent, 'Daten werden geladen …');
+        first(); first();
+        assert.equal(notice.hidden, false);
+        assert.equal(notice.children[1].textContent, 'Souvenirs werden geladen …');
+        second();
+        assert.equal(notice.hidden, true);
+        await assert.rejects(loading.track('Daten werden geladen …', async () => { throw new Error('offline'); }), /offline/);
+        assert.equal(notice.hidden, true);
+        assert.equal(await loading.track('Daten werden geladen …', async () => 42), 42);
+        assert.equal(notice.hidden, true);
+        assert.equal(root.children.length, 1);
+    } finally { globalThis.document = previousDocument; }
+});
 
 test('image result metadata excludes account data and rejects impossible results', () => {
     const payload = createResultShare({ score: 8, maxScore: 10, total: 5, solved: 4, label: '  Rom  ', email: 'private@example.test', roundId: 'secret' });
@@ -410,7 +468,7 @@ test('practice completion preserves the saved submission for retry and returns t
         assert.match(await actions.saveStatus, /Verbindungsfehler/);
         assert.equal(await actions.retrySave(), null);
         assert.equal(submissions[0], submissions[1]);
-        actions.onOverview(); assert.equal(destination, 'passport.html');
+        actions.onOverview(); assert.equal(destination, 'reisepass.html');
     } finally { globalThis.window = oldWindow; }
 });
 
@@ -451,7 +509,7 @@ test('difficulty cards show sample size and distinguish missing data from zero p
 test('account menu exposes guest access or account and passport links without personal data', () => {
     assert.deepEqual(accountMenuLinks(null), [{ label: 'Login', href: 'login.html' }, { label: 'Registrieren', href: 'login.html?view=register' }]);
     const links = accountMenuLinks({ id: 7, username: 'Private name', email: 'private@example.test' });
-    assert.deepEqual(links, [{ label: 'Mein Konto', href: 'account.html' }, { label: 'Reisepass', href: 'passport.html' }]);
+    assert.deepEqual(links, [{ label: 'Mein Konto', href: 'account.html' }, { label: 'Reisepass', href: 'reisepass.html' }, { label: 'Souvenirs', href: 'souvenirs.html' }]);
     assert.doesNotMatch(JSON.stringify(links), /private|Private/);
     assert.deepEqual(accountMenuLinks({}), accountMenuLinks(null));
 });

@@ -15,6 +15,7 @@
     --color-danger: #ab302d;
     --color-focus: #136c83;
     --color-highlight: #cbf1ec;
+    --color-hero-surface: color-mix(in srgb, var(--color-difficulty-hero) 9%, var(--color-surface));
     --color-input-border: #c1d0df;
     --color-input-focus: #397b99;
     --color-link: #156c80;
@@ -45,6 +46,7 @@
     --shadow-card: 0 3px 8px #17365703;
     --shadow-card-hover: 0 14px 30px #17365710;
     --shadow-list-selected: inset 0 0 0 var(--border-width-thin) var(--color-input-focus);
+    --shadow-hero-selected: inset 0 0 0 var(--border-width-thin) var(--color-difficulty-hero);
     --shadow-modal: 0 30px 100px #102e4b33;
     --shadow-quiz: 0 12px 48px #17365706;
     --shadow-shell: 0 12px 40px #17365708;

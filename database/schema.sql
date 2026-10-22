@@ -239,3 +239,130 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
 INSERT IGNORE INTO schema_migrations (version) VALUES ('013_practice_round_mode.sql');
+
+-- Historical category: never guess old topic-question categories from today's catalog.
+SET @sql = (SELECT IF(COUNT(*)=0,'ALTER TABLE quiz_question_results ADD COLUMN category_id_at_play VARCHAR(120) NULL, ADD INDEX idx_question_discoveries(user_id,category_id_at_play,question_id,outcome)','SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_question_results' AND COLUMN_NAME='category_id_at_play');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+UPDATE quiz_question_results d JOIN quiz_results r ON r.id=d.result_id
+SET d.category_id_at_play=r.category_id WHERE r.category_id IS NOT NULL AND d.category_id_at_play IS NULL;
+
+CREATE TABLE IF NOT EXISTS quiz_souvenir_definitions (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    souvenir_key VARCHAR(120) NOT NULL,
+    revision INT UNSIGNED NOT NULL,
+    category_id VARCHAR(120) NOT NULL,
+    title VARCHAR(120) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    rule_type ENUM('first_visit','discover') NOT NULL,
+    target INT UNSIGNED NOT NULL DEFAULT 1,
+    state ENUM('draft','active','archived') NOT NULL DEFAULT 'draft',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_souvenir_revision(souvenir_key,revision)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_user_souvenirs (
+    user_id INT UNSIGNED NOT NULL,
+    souvenir_key VARCHAR(120) NOT NULL,
+    definition_id BIGINT UNSIGNED NOT NULL,
+    awarded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    source_result_id BIGINT UNSIGNED NULL,
+    is_backfill TINYINT(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(user_id,souvenir_key),
+    CONSTRAINT fk_souvenir_user FOREIGN KEY(user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_souvenir_definition FOREIGN KEY(definition_id) REFERENCES quiz_souvenir_definitions(id) ON DELETE RESTRICT,
+    CONSTRAINT fk_souvenir_result FOREIGN KEY(source_result_id) REFERENCES quiz_results(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO quiz_souvenir_definitions(souvenir_key,revision,category_id,title,description,image_url,rule_type,target,state) VALUES
+('rom-first-visit',1,'rom','Rom besucht','Dein erster Halt in der Ewigen Stadt. Die Reise hat gerade erst begonnen.','images/souvenirs/rom-stamp-v1.png','first_visit',1,'active'),
+('rom-discoverer',1,'rom','Deine römische Reisemarke','Zwischen antiken Gassen und neuen Geschichten: ein Stück Rom gehört jetzt zu deiner Sammlung.','images/souvenirs/rom-token-v1.png','discover',20,'active');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('014_souvenirs.sql');
+
+-- Additive definitions; existing awards and admin revisions remain unchanged.
+INSERT IGNORE INTO quiz_souvenir_definitions(souvenir_key,revision,category_id,title,description,image_url,rule_type,target,state) VALUES
+('neapel-first-visit',1,'neapel','Neapel besucht','Dein erster Halt am Golf von Neapel. Zwischen Meer und Vesuv beginnt dein Abenteuer.','images/souvenirs/neapel-stamp-v1.png','first_visit',1,'active'),
+('neapel-discoverer',1,'neapel','Deine neapolitanische Reisemarke','Neue Geschichten am Fuße des Vesuvs: Ein Stück Neapel reist mit dir weiter.','images/souvenirs/neapel-token-v1.png','discover',5,'active'),
+('florenz-first-visit',1,'florenz','Florenz besucht','Willkommen in der Stadt der Renaissance. Deine erste Entdeckung ist erst der Anfang.','images/souvenirs/florenz-stamp-v1.png','first_visit',1,'active'),
+('florenz-discoverer',1,'florenz','Deine florentinische Reisemarke','Kunst, Kuppeln und kluge Köpfe: Deine Entdeckungen machen Florenz zu einem Teil deiner Sammlung.','images/souvenirs/florenz-token-v1.png','discover',20,'active');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('015_souvenirs_neapel_florenz.sql');
+
+-- Durable avatar entitlement; deleting results must not revoke earned rewards.
+CREATE TABLE IF NOT EXISTS quiz_user_avatar_unlocks (
+    user_id INT UNSIGNED NOT NULL,
+    avatar_key VARCHAR(80) NOT NULL,
+    rule_key VARCHAR(80) NOT NULL,
+    awarded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    source_result_id BIGINT UNSIGNED NULL,
+    is_backfill TINYINT(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(user_id,avatar_key),
+    CONSTRAINT fk_avatar_unlock_user FOREIGN KEY(user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_avatar_unlock_result FOREIGN KEY(source_result_id) REFERENCES quiz_results(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('016_avatar_rewards.sql');
+
+-- Admin-managed avatar catalog. Stable keys retain account selections and unlocks.
+CREATE TABLE IF NOT EXISTS quiz_avatars (
+    avatar_key VARCHAR(80) PRIMARY KEY,
+    label VARCHAR(80) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    unlock_rule VARCHAR(80) NULL,
+    sort_order INT NOT NULL DEFAULT 100,
+    revision INT UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO quiz_avatars(avatar_key,label,image_url,unlock_rule,sort_order) VALUES
+('hero','Quiz-Hero','images/website/avatar/quizo.png',NULL,'0'),
+('akuma','Akuma','images/website/avatar/akuma.png',NULL,'1'),
+('amphos','Amphos','images/website/avatar/amphos.png',NULL,'2'),
+('anubia','Anubia','images/website/avatar/anubia.png',NULL,'3'),
+('bobo','Bobo','images/website/avatar/bobo.png',NULL,'4'),
+('bronko','Bronko','images/website/avatar/bronko.png',NULL,'5'),
+('burgo','Burgo','images/website/avatar/burgo.png',NULL,'6'),
+('cassius','Cassius','images/website/avatar/cassius.png',NULL,'7'),
+('cedric','Cedric','images/website/avatar/cedric.png',NULL,'8'),
+('dash','Dash','images/website/avatar/dash.png',NULL,'9'),
+('goldzahn','Goldzahn','images/website/avatar/goldzahn.png',NULL,'10'),
+('horus','Horus','images/website/avatar/horus.png',NULL,'11'),
+('kitsu','Kitsu','images/website/avatar/kitsu.png',NULL,'12'),
+('krygon','Krygon','images/website/avatar/krygon.png',NULL,'13'),
+('magmore','Magmore','images/website/avatar/magmore.png',NULL,'14'),
+('milo','Milo','images/website/avatar/milo.png',NULL,'15'),
+('morbix','Morbix','images/website/avatar/morbix.png',NULL,'16'),
+('nagero','Nagero','images/website/avatar/nagero.png',NULL,'17'),
+('nefara','Nefara','images/website/avatar/nefara.png',NULL,'18'),
+('professor-blitzbirne','Professor Blitzbirne','images/website/avatar/professor-blitzbirne.png',NULL,'19'),
+('quizo','Quizo','images/website/avatar/quizo.png',NULL,'20'),
+('shinzo','Shinzo','images/website/avatar/shinzo.png',NULL,'21'),
+('sir-emmental','Sir Emmental','images/website/avatar/sir-emmental.png',NULL,'22'),
+('sporix','Sporix','images/website/avatar/sporix.png',NULL,'23'),
+('sternenfunke','Sternenfunke','images/website/avatar/sternenfunke.png',NULL,'24'),
+('winterseherin','Winterseherin','images/website/avatar/winterseherin.png',NULL,'25'),
+('astra','Astra','images/website/avatar/astra-v1.png','hero_first_try','26');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('017_avatar_catalog.sql');
+
+-- Keep deleted keys as tombstones so replaying old seeds cannot resurrect them.
+SET @sql = (SELECT IF(COUNT(*)=0,'ALTER TABLE quiz_avatars ADD COLUMN enabled TINYINT(1) NOT NULL DEFAULT 1','SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_avatars' AND COLUMN_NAME='enabled');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SET @sql = (SELECT IF(COUNT(*)=0,'ALTER TABLE quiz_avatars ADD COLUMN deleted_at DATETIME NULL','SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_avatars' AND COLUMN_NAME='deleted_at');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('018_avatar_lifecycle.sql');
+
+-- Additive Amalfi Coast definitions; existing awards and admin revisions stay unchanged.
+-- Explorer progress uses correctly solved distinct questions (first or second try).
+INSERT IGNORE INTO quiz_souvenir_definitions(souvenir_key,revision,category_id,title,description,image_url,rule_type,target,state) VALUES
+('amalfi-first-visit',1,'amalfi','Amalfi-Küste besucht','Dein erster Halt zwischen bunten Häusern, Zitronenhainen und türkisblauem Meer. Die Küste heißt dich willkommen.','images/souvenirs/amalfi-stamp-v1.png','first_visit',1,'active'),
+('amalfi-discoverer',1,'amalfi','Deine Reisemarke der Amalfi-Küste','Zwischen Küstenpfaden und kleinen Entdeckungen: Ein sonniges Stück Amalfi-Küste begleitet deine Quizreise.','images/souvenirs/amalfi-token-v1.png','discover',20,'active');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('019_souvenirs_amalfi.sql');

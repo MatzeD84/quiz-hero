@@ -11,6 +11,7 @@
 
 .user-panel__status:not(:empty) {
     border: var(--border-input);
+    margin-bottom: var(--space-16);
     padding: var(--space-12) var(--space-16);
 }
 

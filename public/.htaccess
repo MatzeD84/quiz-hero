@@ -4,6 +4,7 @@
 </IfModule>
 
 RewriteEngine On
+RewriteRule ^passport\.html$ /reisepass.html [L,R=301]
 RewriteCond %{REQUEST_URI} ^/\.deploy-source(?:/|$) [NC,OR]
 RewriteCond %{REQUEST_FILENAME} /(?:\.deploy-source|shared/source)(?:/|$) [NC]
 RewriteRule ^ - [F,L]

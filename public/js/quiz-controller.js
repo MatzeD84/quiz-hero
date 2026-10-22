@@ -396,8 +396,10 @@ export class QuizController {
             };
             const roundUser = this.currentUser;
             const isPractice = this.currentRoundIsPractice;
+            let souvenirAwards = [];
+            let avatarRewards = [];
             const saveRound = () => roundUser
-                ? this.userService.saveResult(roundUser, stats, context).then(() => null).catch(error => {
+                ? this.userService.saveResult(roundUser, stats, context).then(data => { souvenirAwards = data?.souvenirs || []; avatarRewards = data?.avatarRewards || []; return null; }).catch(error => {
                     if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) this.handleRemovedAccount(error.message);
                     return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
                 })
@@ -405,10 +407,12 @@ export class QuizController {
             const saveStatus = saveRound();
             this.view.showResultModal(stats, roundUser, {
                 saveStatus,
+                getSouvenirs: () => souvenirAwards,
+                getAvatarRewards: () => avatarRewards,
                 retrySave: roundUser ? saveRound : null,
                 practice: isPractice,
                 shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId },
-                onOverview: () => isPractice ? window.location.assign('passport.html') : this.handleResultOverview()
+                onOverview: () => isPractice ? window.location.assign('reisepass.html') : this.handleResultOverview()
             });
             this.practiceMode = false;
             this.currentRoundIsPractice = false;

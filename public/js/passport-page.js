@@ -3,8 +3,10 @@ import { UserService, ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE } from '.
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 import { renderPassport, renderPassportLoading, renderPassportError } from './passport.js?v=dev';
+import { renderSouvenirCollection } from './souvenirs.js?v=dev';
 
 const root = document.querySelector('#js-account-journey');
+const isCollection = root.hasAttribute('data-souvenir-collection');
 const content = document.querySelector('#js-passport-content');
 const loggedOut = document.querySelector('#js-passport-logged-out');
 const status = document.querySelector('#js-passport-status');
@@ -25,14 +27,24 @@ async function loadJourney() {
     if (!currentUser?.id) return;
     const request = ++requestId;
     renderPassportLoading(root);
+    if(isCollection)root.firstElementChild.textContent='Deine Sammlung wird geladen …';
     try {
+        const sync = await service.post('account-souvenir-sync', {}, { csrf: true });
+        if (!sync.ok) throw new Error(sync.error || 'Sammlung konnte nicht aktualisiert werden.');
         const data = await service.getJourney();
-        if (request === requestId && currentUser) renderPassport(root, data, currentUser);
+        if (request === requestId && currentUser) {
+            if(isCollection)renderSouvenirCollection(root,data);
+            else renderPassport(root, data, currentUser);
+            if (window.location.hash === '#souvenirs') document.querySelector('#souvenirs')?.scrollIntoView({ block: 'start' });
+        }
     } catch (error) {
         if (request !== requestId) return;
         if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
             showUser(null); status.textContent = error.message;
-        } else renderPassportError(root, loadJourney);
+        } else {
+            renderPassportError(root, loadJourney);
+            if(isCollection)root.querySelector('[role=status]').textContent='Deine Sammlung konnte gerade nicht geladen werden. Bitte versuche es erneut.';
+        }
     }
 }
 async function init() {

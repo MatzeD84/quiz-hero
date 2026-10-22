@@ -1,6 +1,10 @@
 ﻿# Quiz-Reisepass
 
-Der private Quiz-Reisepass liegt unter `passport.html`; nach dem Login landest du direkt dort. Das Kontomenue bietet zwei getrennte Ziele: Reisepass fuer die Quiz-Reisen und Mein Konto (`account.html`) fuer Avatar, Profil, Zugangsdaten und Kontoverwaltung.
+Lokaler Stand vom 22.10.2026: Die Souvenir-Sammlung liegt ausschliesslich auf ihrer separaten Seite; im Reisepass gibt es keine Souvenir-Sektion mehr. Noch nicht auf Production. Regeln, Verwaltung, Datenhaltung und Tests stehen zentral in [Souvenir.md](../Souvenir.md). Der Login führt inzwischen zur Startseite.
+
+Der private Quiz-Reisepass liegt lokal unter `reisepass.html`; die bisherige Adresse `passport.html` leitet dauerhaft dorthin weiter. Nach dem Login landest du auf der Startseite. Das Kontomenue bietet Mein Konto (`account.html`), Reisepass (`reisepass.html`) und die separate Sammlung (`souvenirs.html`). Erhaltene und begonnene Souvenirs stehen ausschliesslich auf der Souvenir-Seite ohne Kategorie- oder Artfilter. Die Adressumstellung ist noch nicht auf Production veroeffentlicht. Interne Modul- und CSS-Namen bleiben unveraendert.
+
+Die alte Adresse `passport.html` wird dauerhaft auf `reisepass.html` weitergeleitet; Queryparameter bleiben erhalten. Der Build nimmt `reisepass.html` und `souvenirs.html` auf. Aktuelle Abschlussprüfung und Freischaltregeln stehen in [Souvenir.md](../Souvenir.md).
 
 
 ## Erste Version
@@ -62,7 +66,7 @@ Die temporaere `quiz_rounds`-Bereinigung nach 90 Tagen entfernt keine dauerhafte
 
 Die Datenbasis traegt die persoenlichen Schwierigkeitsquoten und Fehlerwiederholung. Eine historische Einzelantwortansicht und Admin-Auswertungen sind noch nicht eingefuehrt; es gibt keinen neuen oeffentlichen Zugriff auf Antwortdetails.
 
-Rundensummen sind kein Fortschritt ueber unterschiedliche Fragen: Wiederholungen koennen dieselben Fragen enthalten. Deshalb keine Prozentwerte fuer „gemeistert“, keine rueckwirkend erfundenen Antwortdetails und keine Souvenir-Auszeichnungen. Fragenfortschritt und Souvenirs sind spaetere, gesonderte Erweiterungen entsprechend den Ideen in `hinweise.md`.
+Rundensummen belegen keine unterschiedlichen gelösten Fragen. Das lokale Souvenirfeature wertet deshalb nur nachweisbare Einzelantworten aus. Aktuelle Regeln, Schemaergänzungen 014–019 und die separate Sammlung stehen zentral in [Souvenir.md](../Souvenir.md).
 
 ## Pruefung
 

@@ -1,3 +1,4 @@
+import { renderSouvenirUnlock } from './souvenirs.js?v=dev';
 import { renderAccountMenu, closeAccountMenus, placeAccountMenu } from './account-menu.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
@@ -571,7 +572,7 @@ export class QuizView {
         const name = user?.username || user?.name || '';
         if (!name) {
             if (score <= 0) {
-                return 'Runde geschafft. Beim naechsten Versuch holst du Punkte.';
+                return 'Runde geschafft. Beim nächsten Versuch holst du Punkte.';
             }
             if (score >= maxScore) {
                 return 'Perfekte Runde. Alles richtig beantwortet.';
@@ -579,7 +580,7 @@ export class QuizView {
             return 'Deine Runde ist geschafft.';
         }
         if (score <= 0) {
-            return `Runde geschafft, ${name}. Beim naechsten Versuch holst du Punkte.`;
+            return `Runde geschafft, ${name}. Beim nächsten Versuch holst du Punkte.`;
         }
         if (score >= maxScore) {
             return `Perfekte Runde, ${name}.`;
@@ -710,6 +711,7 @@ export class QuizView {
             catch { message = 'Dein Ergebnis konnte nicht gespeichert werden. Bitte versuche es erneut.'; }
             if (!current()) return;
             if (navigation) navigation.disabled = false;
+            if (!message) renderSouvenirUnlock(card,actions.getSouvenirs?.() || [],actions.getAvatarRewards?.() || []);
             if (message) {
                 feedback.hidden = false;
                 status.textContent = message;

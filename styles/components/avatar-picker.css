@@ -11,130 +11,15 @@
     font-weight: var(--font-weight-bold);
     margin: 0;
 }
+.account-avatar-field > .profile-avatar__grid { width: 100%; }
 
-.account-avatar-option {
-    align-items: center;
-    border: var(--border-subtle);
-    display: flex !important;
-    gap: var(--space-12) !important;
-    padding: var(--space-12);
-}
-
-.account-avatar-option img {
-    aspect-ratio: 1;
-    border-radius: var(--radius-circle);
-    display: block;
-    height: auto;
-    object-fit: contain;
-    width: 48px;
-}
-
-.account-avatar-field:has(.account-avatar-option--compact) {
-    align-items: center;
-    display: grid;
-    gap: var(--space-12);
-    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
-}
-
-.account-avatar-field:has(.account-avatar-option--compact) .account-avatar-field__title {
-    grid-column: 1 / -1;
-}
-
-.account-avatar-option--compact {
-    border: 0;
-    cursor: pointer;
-    display: grid !important;
-    gap: 0 !important;
-    padding: var(--space-8);
-    place-items: center;
-}
-
-.account-avatar-option input,
-.account-avatar-option--compact input,
-.account-avatar-option--modal input {
-    height: 1px;
-    margin: calc(-1 * var(--space-2));
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-}
-
-.account-avatar-option--compact img {
-    transition: var(--transition-interactive);
-    width: clamp(48px, 8vw, 64px);
-}
-
-.account-avatar-option--compact:focus-within {
-    border-color: transparent;
-}
-
-.account-avatar-option--compact:has(input:checked) {
-    background: transparent;
-    border-color: transparent;
-}
-
-.account-avatar-option--compact:focus-within img,
-.account-avatar-option--compact input:checked + img {
-    box-shadow: var(--ring-avatar-selected);
-}
-
-.avatar-modal {
-    display: grid;
-    gap: var(--space-16);
-}
-
-.avatar-modal__grid {
-    display: grid;
-    gap: var(--space-12);
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-}
-
-.account-avatar-option--modal {
-    aspect-ratio: 1;
-    align-items: center;
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    display: grid !important;
-    gap: 0 !important;
-    justify-items: center;
-    color: var(--color-on-primary);
-    padding: var(--space-12);
-    transition: var(--transition-interactive);
-}
-
-.account-avatar-option--modal img {
-    transition: var(--transition-interactive);
-    width: clamp(64px, 12vw, 92px);
-}
-
-.account-avatar-option--modal:focus-within {
-    border-color: transparent;
-}
-
-.account-avatar-option--modal:has(input:checked) {
-    background: transparent;
-    border-color: transparent;
-}
-
-.account-avatar-option--modal:focus-within img,
-.account-avatar-option--modal:has(input:checked) img {
-    box-shadow: var(--ring-avatar-selected);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .account-avatar-option--compact:hover {
-        border-color: transparent;
-    }
-
-    .account-avatar-option--compact:hover img,
-    .account-avatar-option--modal:hover img {
-        box-shadow: var(--ring-avatar-selected);
-    }
-
-    .account-avatar-option--modal:hover {
-        border-color: transparent;
-    }
-}
+.profile-avatar { display: grid; gap: var(--space-16); padding-top: var(--space-16); }
+.profile-avatar__grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(100%,140px),1fr)); gap: var(--space-12); }
+.profile-avatar__card { position: relative; display: grid; justify-items: center; align-content: start; gap: var(--space-8); min-width: 0; padding: var(--space-16); border: var(--border-subtle); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); text-align: center; cursor: pointer; transition: var(--transition-interactive); overflow-wrap: anywhere; }
+.profile-avatar__card img { width: 100%; max-width: 112px; height: auto; aspect-ratio: 1; object-fit: contain; }
+.profile-avatar__card input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.profile-avatar__card:has(input:checked) { border-color: var(--color-difficulty-hero); background: var(--color-hero-surface); box-shadow: var(--shadow-hero-selected); }
+.profile-avatar__card:focus-within { outline: var(--border-width-focus) var(--border-style) var(--color-focus); outline-offset: var(--space-4); }
+.profile-avatar__state { font-size: var(--text-12); color: var(--color-text-muted); }
+.profile-avatar__card:has(input:disabled) { opacity: var(--opacity-disabled); cursor: not-allowed; }
+@media (hover:hover) and (pointer:fine) { .profile-avatar__card:not(:has(input:disabled)):hover { border-color: var(--color-difficulty-hero); } }

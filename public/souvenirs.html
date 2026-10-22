@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Quiz-Hero Souvenirs</title>
+    <link rel="icon" type="image/png" href="/images/website/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="stylesheet" href="fonts/fonts.css?v=dev" />
+    <link rel="stylesheet" href="styles.css?v=dev" />
+</head>
+<body>
+    <nav class="site-account-nav" aria-label="Konto"><a href="login.html">Login</a></nav>
+    <main class="container account-page">
+        <header class="main-header">
+            <a class="main-header__logo-link" href="index.html" title="Zur Startseite">
+                <img class="main-header__image" src="images/website/avatar/logo.png" alt="Zur Startseite" loading="eager">
+            </a>
+            <h1 class="main-header__headline" tabindex="-1">Souvenirs</h1>
+        </header>
+
+        <section class="account-shell account-shell--passport" aria-live="polite">
+            <p id="js-passport-status" class="user-panel__status" role="status" aria-live="polite"></p>
+
+            <div id="js-passport-logged-out" class="account-empty u-hidden">
+                <h2>Du bist nicht angemeldet.</h2>
+                <p>Melde dich an und entdecke deine pers&ouml;nliche Souvenir-Sammlung.</p>
+                <a class="btn btn--modal" href="login.html">Anmelden</a>
+            </div>
+
+            <div id="js-passport-content" class="u-hidden">
+                <div id="js-account-journey" class="passport" data-souvenir-collection aria-live="polite"></div>
+
+            </div>
+
+        </section>
+
+        <p class="account-page__back">
+            <a href="index.html">Zurück zum Quiz</a>
+        </p>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__text">
+            <small>
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/impressum.html">Impressum</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/datenschutz.html">Datenschutz</a> |
+                <a href="#" class="js-footer-modal-link" data-footer-modal-url="content/cookies.html">Cookies</a>
+            </small>
+        </p>
+    </footer>
+
+    <dialog id="js-footer-modal" class="modal u-hidden" role="dialog" aria-modal="true">
+        <div class="modal__content">
+            <div class="modal__close">
+                <button id="js-footer-modal-close" class="modal__close-button icon-button" type="button" aria-label="Modal schließen">
+                    <svg class="icon-button__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="js-footer-modal-content"></div>
+        </div>
+    </dialog>
+
+    <script type="module" src="js/passport-page.js?v=dev"></script>
+</body>
+</html>

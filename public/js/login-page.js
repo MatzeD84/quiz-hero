@@ -72,9 +72,14 @@ const renderAvatarChoices = () => {
     elements.avatarGroups.forEach(group => {
         const target = group.dataset.avatarTarget || 'register';
         group.innerHTML = '<p class="account-avatar-field__title">Wähle dein Heldenbild</p>';
-        HERO_AVATARS.forEach((avatar, index) => {
+        const grid=document.createElement('div');
+        grid.className='profile-avatar__grid';
+        grid.setAttribute('role','radiogroup');
+        grid.setAttribute('aria-label','Helden auswählen');
+        group.append(grid);
+        HERO_AVATARS.filter(avatar=>!avatar.unlockRule).forEach((avatar, index) => {
             const label = document.createElement('label');
-            label.className = 'account-avatar-option account-avatar-option--compact';
+            label.className = 'profile-avatar__card';
             label.setAttribute('aria-label', avatar.label);
             const input = document.createElement('input');
             input.type = 'radio';
@@ -83,10 +88,16 @@ const renderAvatarChoices = () => {
             input.checked = index === 0;
             const image = document.createElement('img');
             image.src = avatar.url;
-            image.alt = avatar.label;
+            image.alt = '';
             image.loading = 'lazy';
-            label.append(input, image);
-            group.appendChild(label);
+            image.width=112;image.height=112;
+            const name=document.createElement('strong');name.textContent=avatar.label;
+            const state=document.createElement('span');state.className='profile-avatar__state';
+            const updateState=()=>{state.textContent=input.checked?'Ausgewählt':'Verfügbar';};
+            input.addEventListener('change',()=>grid.querySelectorAll('input').forEach(radio=>radio.dispatchEvent(new Event('avatar-state'))));
+            input.addEventListener('avatar-state',updateState);updateState();
+            label.append(input,image,name,state);
+            grid.appendChild(label);
         });
     });
 };

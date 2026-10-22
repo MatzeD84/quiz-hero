@@ -70,7 +70,11 @@ function start_round(): void
     foreach ($catalog['categories'] as $entry) if ($entry['id'] === $category) $categoryTitle = $entry['title'];
     foreach ($catalog['tags'] as $entry) if ($entry['id'] === $tag) $tagTitle = $entry['title'];
     $stmt = db()->prepare('INSERT INTO quiz_rounds(id,user_id,category_id,tag_id,category_title,tag_title,questions_json,is_practice) VALUES(?,?,?,?,?,?,?,?)');
+    db()->beginTransaction();
+    $lock=db()->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
+    require_account();
     $stmt->execute([$roundId, $user['id'], $category ?: null, $tag ?: null, $categoryTitle, $tagTitle, json_encode($questions, JSON_THROW_ON_ERROR), (int) $practice]);
+    db()->commit();
     json_response(['ok' => true, 'roundId' => $roundId, 'questions' => $questions, 'isPractice' => $practice]);
 }
 
@@ -88,6 +92,8 @@ function save_result(): void
     }
     $pdo = db();
     $pdo->beginTransaction();
+    $lock=$pdo->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
+    require_account();
     $stmt = $pdo->prepare('SELECT * FROM quiz_rounds WHERE id=? AND user_id=? FOR UPDATE');
     $stmt->execute([$id, $user['id']]);
     $round = $stmt->fetch();
@@ -124,18 +130,22 @@ function save_result(): void
     if ($round['completed_at'] !== null) {
         $pdo->rollBack();
         if (!hash_equals($round['submission_hash'], $hash)) json_response(['ok' => false, 'error' => 'Diese Runde wurde bereits abgeschlossen.'], 409);
-        json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => (int) $round['result_id']]);
+        json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => (int) $round['result_id'], 'souvenirs'=>souvenir_awards($pdo,(int)$user['id'],(int)$round['result_id']), 'avatarRewards'=>avatar_rewards($pdo,(int)$user['id'],(int)$round['result_id'])]);
     }
     if (strtotime($round['created_at']) < time() - 86400) { $pdo->rollBack(); json_response(['ok' => false, 'error' => 'Diese Runde ist abgelaufen.'], 410); }
     $stmt = $pdo->prepare('INSERT INTO quiz_results(user_id,category_id,tag_id,category_title,tag_title,score,max_score,solved,total_questions,is_practice) VALUES(?,?,?,?,?,?,?,?,?,?)');
     $stmt->execute([$user['id'], $round['category_id'], $round['tag_id'], $round['category_title'], $round['tag_title'], $score, $maxScore, $solved, count($questions), (int) $round['is_practice']]);
     $resultId = (int) $pdo->lastInsertId();
-    $detail = $pdo->prepare('INSERT INTO quiz_question_results(result_id,user_id,question_id,question_version,difficulty,position,selected_answers,outcome,score,max_score,version_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)');
+    $detail = $pdo->prepare('INSERT INTO quiz_question_results(result_id,user_id,question_id,question_version,difficulty,position,selected_answers,outcome,score,max_score,version_id,category_id_at_play) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
     foreach ($questionResults as $i => $questionResult) {
         $versionId = store_question_version($pdo, $questions[$i]);
-        $detail->execute([$resultId, $user['id'], ...$questionResult, $versionId]);
+        $detail->execute([$resultId, $user['id'], ...$questionResult, $versionId, $questions[$i]['categoryId']??$round['category_id']]);
     }
     $pdo->prepare('UPDATE quiz_rounds SET submission_hash=?,result_id=?,completed_at=NOW() WHERE id=?')->execute([$hash, $resultId, $id]);
+    award_souvenirs($pdo,(int)$user['id'],$resultId);
+    award_avatar_rewards($pdo,(int)$user['id'],$resultId);
+    $souvenirs=souvenir_awards($pdo,(int)$user['id'],$resultId);
+    $rewards=avatar_rewards($pdo,(int)$user['id'],$resultId);
     $pdo->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => $resultId]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => $resultId, 'souvenirs'=>$souvenirs, 'avatarRewards'=>$rewards]);
 }

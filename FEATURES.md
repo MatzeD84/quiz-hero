@@ -76,17 +76,40 @@ Die Erfolgsquoten zählen beide Versuche und wiederholte Fragen mit. Alte Runden
 - **Startseite nach Anmeldung:** Login und erfolgreiche E-Mail-Bestätigung einer Registrierung führen zur Kategorienübersicht. Der Reisepass bleibt über das Kontomenü erreichbar.
 - **E-Mail-Bestätigung im passenden Schritt:** Registrierung erklärt die Bestätigung und führt danach in einen eigenen Hinweisbereich. Erneuten Versand nur nach Registrierung, bei unbestätigtem Login oder fehlgeschlagenem Bestätigungslink anbieten; beim Passwort-Zurücksetzen ausblenden.
 - **Klarere Profilverwaltung:** Benutzername erst per Stift bearbeiten und separat speichern; Passwortwechsel mit eigener Bestätigung und Wiederholung. Kontolöschung in einem eigenen Bestätigungsdialog.
+- **Profilbildauswahl im Konto (lokal):** Aufklappbarer Bereich unter dem Benutzernamen statt Profilbild-Dialog. Verfügbare Helden als Karten mit Namen und Auswahlmarkierung; automatisches Speichern bei Auswahl. Belohnungslinks öffnen den Bereich direkt.
+- **Helden auswählen (lokal):** Das Konto-Akkordeon heißt „Helden auswählen“. Der zusätzliche Link „Bild ändern“ am aktuellen Profilbild entfällt; das Bild selbst ist nicht mehr anklickbar.
+- **Ausgewählter Held in Hero-Farben (lokal):** Lila Rahmen und dezent lila Hintergrund über zentrale Tokens; andere Auswahlkomponenten behalten ihre bisherigen Farben.
+- **Heldenkarten bei Registrierung (lokal):** Gleiche benannte Karten wie im Konto einschließlich lila Rahmen und dezent lila Hintergrund der Auswahl. Die Wahl wird weiterhin erst mit der Registrierung übermittelt.
+- **Heldenprofil-Kopf (lokal):** Hero-lila Verlauf mit dezentem Lichtakzent und heller Schrift; aktuelles Profilbild bleibt auf weißer Kreisfläche sichtbar. Darstellung mit langen Namen und E-Mail-Adressen auf schmalen Ansichten abgesichert.
+- **Erkennbare Konto-Akkordeons (lokal):** Profilbildauswahl und Passwortänderung mit durchgehendem dünnem Rahmen in der bestehenden Eingabefeld-Rahmenfarbe.
+- **Profilabschluss ohne doppelten Trenner (lokal):** Zusätzliche Linie zwischen Passwort-Akkordeon und Kontoaktionen entfernt; Abstand und Akkordeonrahmen bleiben erhalten.
+- **Abstand nach Benachrichtigungen (lokal):** Befüllte Konto-/Login-/Reisepass-/Souvenir-Statusmeldungen erhalten einen einheitlichen Abstand zum folgenden Inhalt; gilt für Erfolg, Fehler und Hinweise. Leere Meldungen erhalten keinen zusätzlichen Abstand.
 - **Info-Icon im Hintergrundwissen:** Ein dezentes Symbol am Textanfang kennzeichnet die ergänzende Wissenskarte im Quiz.
 - **Kompaktere Quizansicht auf Laptops:** Weniger vertikale Abstände und schlankere Antwortbuttons machen „Weiter“ bei typischen Laptop-Höhen ohne Scrollen erreichbar. Sehr lange Inhalte können weiterhin Scrollen benötigen; Schrift und Bildbegrenzung bleiben erhalten.
 
 ## Mögliche nächste Features
 
+### Lokal umgesetzt – Souvenirs Version 1 (noch nicht veröffentlicht)
+
+- **Städte-Sammlung:** Reisestempel für den ersten tatsächlichen Kategorienbesuch und Low-Poly-Reisemarke für Rom, Florenz und Amalfi-Küste nach 20, für Neapel nach fünf unterschiedlichen richtig gelösten Fragen; erster oder zweiter Versuch zählt. Serverseitige, einmalige Vergabe.
+- **Ergebnishinweise:** Neue Erinnerungsstücke erscheinen einzeln mit Motiv und Namen vor „Freunde herausfordern“; der Ergebnislink führt zur separaten Souvenir-Seite. Keine Souvenir-Sektion im Reisepass. Belegbarer Altfortschritt wird berücksichtigt.
+- **Eigene Souvenir-Seite:** `souvenirs.html` für angemeldete Nutzer, erreichbar über das Kontomenü. Erhaltene und begonnene Entdecker-Souvenirs je Kategorie: Stempel links, Marke rechts, mobil untereinander. Fortschritt nur durch richtige Antworten; Sepia-Motiv und dezenter grauer Hintergrund bis zur Vergabe. Ohne Filter, zusätzlichen Gesamtzähler oder Profilbildbereich.
+- **Profilbild als Belohnung (lokal):** Neuer Low-Poly-Held Astra nach einer Hero-Frage, die im ersten Versuch richtig gelöst wurde. Vergabe beim bestätigten Rundenabschluss; vor Erhalt verborgen, dauerhafte Berechtigung danach, Ergebnishinweis „Neue Heldenbelohnung“ mit „Neues Profilbild freigeschaltet“. Kein automatischer Profilbildwechsel; lokaler Test-Reset entfernt die Freischaltung.
+- **Profilbilder in der Mediathek (lokal):** Eigener Tab mit Namen, Suche, Upload und Motivwechsel. Frei oder Belohnung wählen, Bilder aktivieren/deaktivieren und löschen. Aktive freie Bilder stehen automatisch in der Profilbildauswahl; Belohnungen erst nach Erhalt. Betroffene Accounts fallen beim Deaktivieren/Löschen auf den geschützten Standardhelden zurück. Details: [Mediathek](docs/MEDIA.md).
+- **Einheitliche Medienkacheln (lokal):** Profilbilder verwenden dieselben Bildflächen, Abstände, Rahmen und linksbündigen Beschriftungen wie Fragebilder. Heldenmotive bleiben vollständig sichtbar.
+- **Souvenir-Bilder in der Mediathek (lokal):** Eigener Reiter für bestehende Motive und neue Uploads; diese erscheinen nicht mehr unter Bilder. Verwendete Motive werden über die versionierte Souvenir-Verwaltung bearbeitet. Details: [Mediathek](docs/MEDIA.md).
+- **Adminpflege:** Feste Regeln, Zielwerte, Motive aus Mediathek/Upload, Entwurf/Aktiv/Archiviert und versionierte Änderungen. Lokaler Test-Reset für `@example.test`-Accounts; in Production gesperrt.
+- **Souvenir-Bestand im Admin:** Motivübersicht mit Name, Kategorie, Regel/Zielwert und Status, Suche und Filtern. Klick auf eine Kachel öffnet die Bearbeitung darunter; neue Souvenirs werden über „Neu anlegen“ erstellt. Schutz ungespeicherter Änderungen bleibt erhalten.
+- **Reisemarken und Adresse (lokal):** Auch erhaltene Reisemarken zeigen ihren erreichten Fortschritt als „20 von 20 Fragen richtig gelöst“ mit gefülltem Balken; Reisestempel bleiben ohne Balken. Reisepass unter `reisepass.html`, alte Adresse mit dauerhafter Weiterleitung.
+- **Einheitlicher Admin-Ladehinweis (lokal):** Gemeinsamer Spinner unten links für Fragen/Kategorien, Spieler, Feedback, Souvenirs, Mediathek und sichtbare/nahe Bilder. Parallele Anfragen teilen sich eine Anzeige; Abschluss und Fehler beenden den jeweiligen Ladezustand. Details: [Mediathek und Ladeanzeige](docs/MEDIA.md).
+- **Datenbank:** Migrationen 014 bis 019 lokal angewendet; vor einem späteren Deployment auf Production separat anwenden. Migration 019 ergänzt die Amalfi-Definitionen ohne Schemaänderung. Details, Tests und weitere Ideen: [Souvenir.md](Souvenir.md).
+
 ### Bereits gemeinsam vertieft / vorgemerkt
 
 | Idee | Kurzer Ausblick |
 |---|---|
-| **Souvenirs und Reisepass-Meilensteine** | Ortsbezogene Reisestempel und besondere Sammelkarten für den ersten Besuch und eine Anzahl unterschiedlicher beantworteter Fragen. |
-| **Persönliche Sammlung** | Erhaltene Souvenirs und das nächste erreichbare Ziel im Reisepass zeigen; neue Souvenirs dezent im Ergebnis ankündigen. |
+| **Souvenirs und Reisepass-Meilensteine** | Ortsbezogene Reisestempel und besondere Sammelkarten; Regeln, Status und weitere Belohnungsideen stehen zentral in [Souvenir.md](Souvenir.md). |
+| **Sammlung erweitern** | Weitere Städte und Belohnungsarten auf der separaten Souvenir-Seite ergänzen; Regeln vor Umsetzung festlegen. |
 | **Private Freunde und interne Einladungen** | Andere Accounts nach gegenseitiger Zustimmung verbinden und innerhalb von Quiz-Hero zu eigenen, neu gemischten Runden einladen. |
 | **Admin-Auswertung der Quizaktivität** | Beendete Runden und Ergebnisse je Nutzer und Kategorie nachvollziehen; später häufige Stolperfragen erkennen. |
 

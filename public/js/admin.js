@@ -7,6 +7,9 @@ import { revealStatus } from './status-navigation.js?v=dev';
 import { createTagPicker } from './admin/tag-picker.js?v=dev';
 import { createMediaReplacement } from './admin/media-replace.js?v=dev';
 import { createMediaLoading } from './admin/media-loading.js?v=dev';
+import { createLoadingStatus } from './admin/loading-status.js?v=dev';
+import { createSouvenirAdmin } from './admin/souvenirs.js?v=dev';
+import { createAvatarAdmin } from './admin/avatars.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -32,13 +35,16 @@ document.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (savingForm && target) { event.preventDefault(); event.stopImmediatePropagation(); return; }
     if (!target || target.closest('#js-admin-question-form, #js-admin-category-form')) return;
-    if (target.matches('[data-admin-tab], #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
+    if (target.matches('[data-admin-tab], [data-media-tab], #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
+        if (!avatarAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+        if (!souvenirAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
         if (!formGuard.confirm()) { event.preventDefault(); event.stopImmediatePropagation(); }
     }
 }, true);
 let csrfToken = '';
 const tagPicker = createTagPicker($('#js-admin-tag-picker'), () => questions.flatMap(question => question.tag || []));
-const mediaLoading = createMediaLoading($('#js-admin-media-panel'));
+const loadingStatus = createLoadingStatus();
+createMediaLoading($('#js-admin-app'), loadingStatus);
 const API_VERSION = CONFIG.apiVersion || '1';
 const MAX_IMAGE_UPLOAD_BYTES = 6 * 1024 * 1024;
 const MAX_JSON_IMPORT_BYTES = 1024 * 1024;
@@ -62,7 +68,18 @@ const fileNameFromPath = path => {
     return normalized.split('/').filter(Boolean).pop() || '';
 };
 
-const api = createAdminApi({ apiUrl, getCsrfToken: () => csrfToken, setCsrfToken: token => { csrfToken = token; } });
+const requestApi = createAdminApi({ apiUrl, getCsrfToken: () => csrfToken, setCsrfToken: token => { csrfToken = token; } });
+const datasetLabels = {
+    'admin-data': 'Fragen und Kategorien werden geladen …',
+    'admin-media-list': 'Bilder werden geladen …',
+    'admin-users-list': 'Spieler werden geladen …',
+    'admin-question-feedback-list': 'Feedback wird geladen …',
+    'admin-souvenirs': 'Souvenirs werden geladen …',
+    'admin-avatars': 'Profilbilder werden geladen …'
+};
+const api = (action, payload = null) => !payload && action !== 'admin-me'
+    ? loadingStatus.track(datasetLabels[action] || 'Daten werden geladen …', () => requestApi(action, payload))
+    : requestApi(action, payload);
 
 const validateImageFile = file => {
     if (!file) {
@@ -126,6 +143,9 @@ const mediaReplacement = createMediaReplacement({
     }
 });
 
+const souvenirAdmin = createSouvenirAdmin({ api, getCategories: () => categories, uploadImage, setupDropzone });
+const avatarAdmin = createAvatarAdmin({api,uploadImage,setupDropzone,loadMedia});
+
 let categories = [];
 let questions = [];
 let selectedQuestionId = '';
@@ -133,6 +153,7 @@ let activeAdminTab = 'edit';
 let pendingCategoryImageFile = null;
 let pendingCategoryPreviewUrl = '';
 let mediaItems = [];
+let activeMediaKind = 'images';
 let selectedMediaPath = '';
 let pendingMediaPreviewUrl = '';
 let pendingMediaUploadFile = null;
@@ -178,15 +199,15 @@ async function loadData() {
     }
 }
 
-async function loadMedia() {
-    mediaLoading.begin();
-    try {
+async function loadMedia(kind=activeMediaKind) {
+        if(kind!==activeMediaKind){clearPendingMediaPreview();clearMediaFilters();selectedMediaPath='';}
+        activeMediaKind=kind;
         const data = await api('admin-media-list');
         if (!data.ok) throw new Error(data.error || 'Mediathek konnte nicht geladen werden.');
-        mediaItems = data.media || [];
+        mediaItems = (data.media || []).filter(item=>(item.mediaKind||'images')===activeMediaKind);
+        $('#js-admin-media-panel .admin-section-heading h2').textContent=activeMediaKind==='souvenirs'?'Souvenir-Bilder':'Mediathek';
         renderMediaFilters();
         renderMedia();
-    } finally { mediaLoading.end(); }
 }
 
 async function loadUsers() {
@@ -375,8 +396,8 @@ function renderMediaDetail(item) {
     const replaceButton = document.createElement('button');
     replaceButton.className = 'btn btn--modal';
     replaceButton.type = 'button';
-    replaceButton.textContent = 'Bild austauschen';
-    replaceButton.addEventListener('click', () => mediaReplacement.open(item));
+    replaceButton.textContent = item.souvenirUsed?'Souvenirs bearbeiten':'Bild austauschen';
+    replaceButton.addEventListener('click', () => item.souvenirUsed?setAdminTab('souvenirs'):mediaReplacement.open(item));
     actions.appendChild(replaceButton);
     if (item.deletable) {
         const deleteButton = document.createElement('button');
@@ -666,6 +687,15 @@ function renderUsers() {
         actions.appendChild(deleteButton);
 
         card.append(avatar, body, actions);
+        if (user.canReset) {
+            const reset = document.createElement('button');reset.type='button';reset.className='account-action-link';reset.textContent='Testfortschritt zurücksetzen';
+            reset.addEventListener('click', async () => {
+                const confirmation=window.prompt(`Nur der Spielstand von ${user.username} wird gelöscht. Zugangsdaten bleiben erhalten. Bestätige mit RESET ${user.username}`);
+                if(confirmation===null)return;reset.disabled=true;
+                try{const result=await api('admin-user-reset',{id:user.id,confirmation});if(!result.ok)throw new Error(result.error);await loadUsers();setStatus('Testfortschritt zurückgesetzt. Alte Sitzungen wurden abgemeldet.','success');}
+                catch(error){setStatus(error.message,'error');reset.disabled=false;}
+            });actions.append(reset);
+        }
         list.appendChild(card);
     });
 }
@@ -778,9 +808,11 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-pressed', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('u-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback');
+    $('#js-admin-question-panel').classList.toggle('u-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback' || tab === 'souvenirs');
+    souvenirAdmin.show(tab === 'souvenirs');
     $('#js-admin-category-panel').classList.toggle('u-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('u-hidden', tab !== 'media');
+    if(tab!=='media')avatarAdmin.show(false);
     $('#js-admin-import-panel').classList.toggle('u-hidden', tab !== 'import');
     $('#js-admin-users-panel').classList.toggle('u-hidden', tab !== 'users');
     $('#js-admin-feedback-panel').classList.toggle('u-hidden', tab !== 'feedback');
@@ -793,7 +825,7 @@ function setAdminTab(tab, options = {}) {
         const category = categories.find(item => item.id === currentCategoryId) || categories[0];
         fillCategory(category || {});
     } else if (tab === 'media') {
-        loadMedia().catch(error => setStatus(error.message || 'Mediathek konnte nicht geladen werden.'));
+        avatarAdmin.show(true).catch(error => setStatus(error.message || 'Mediathek konnte nicht geladen werden.'));
     } else if (tab === 'users') {
         loadUsers().catch(error => setStatus(error.message || 'Spieler konnten nicht geladen werden.'));
     } else if (tab === 'feedback') {
@@ -921,7 +953,7 @@ async function uploadPendingMediaImage() {
     }
     try {
         setStatus('Bild wird in die Mediathek hochgeladen...');
-        const result = await uploadImage({ file: pendingMediaUploadFile, context: 'media' });
+        const result = await uploadImage({ file: pendingMediaUploadFile, context: activeMediaKind==='souvenirs'?'souvenir':'media' });
         $('#js-admin-media-file').value = '';
         selectedMediaPath = result.path || '';
         await loadMedia();
