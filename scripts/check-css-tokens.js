@@ -14,11 +14,23 @@ function findCssTokenViolations({ files = listCssFiles(stylesDir), readFile = fi
     const defined = new Set();
     const references = [];
     const effectiveDefinitions = new Map();
+    const centralDefinitions = new Set();
     for (const file of files) {
         const name = path.relative(stylesDir, file).replace(/\\/g, '/');
         const css = readFile(file);
         const central = tokenFiles.has(name);
+        if (name.startsWith('themes/') && !central) {
+            violations.push(`${name}: themes contain only central token definitions; place layout and component rules in their owning modules.`);
+        }
         for (const { property, value } of declarations(css)) {
+            if (central && property.startsWith('--')) {
+                if (centralDefinitions.has(property)) violations.push(`${name}: duplicate central token ${property}; define each token only once.`);
+                centralDefinitions.add(property);
+                if (name === 'abstracts/tokens.css' && property.startsWith('--color-')) violations.push(`${name}: define the application palette in themes/app-tokens.css.`);
+            }
+            if (central && !property.startsWith('--')) {
+                violations.push(`${name}: token files may only declare custom properties, not ${property}.`);
+            }
             if (property.startsWith('--')) { defined.add(property); effectiveDefinitions.set(property, value); }
             for (const match of value.matchAll(/var\(\s*(--[\w-]+)/g)) references.push({ file: name, variable: match[1] });
             if (!central && /#[a-f\d]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklch|oklab|color)\s*\(|\b(?:white|black|red|blue|green|purple|yellow|gr[ae]y)\b/i.test(value.replace(/--[\w-]+/g, ''))) {
@@ -36,7 +48,7 @@ function findCssTokenViolations({ files = listCssFiles(stylesDir), readFile = fi
         if ([...defined].filter(name => name.startsWith(prefix)).length > limit) violations.push(`Too many ${prefix} tokens; keep the shared scale within ${limit} steps.`);
     }
     for (const { file, variable } of references) if (!defined.has(variable)) violations.push(`${file}: undefined custom property ${variable}.`);
-    // Detect cycles after applying later theme overrides, just as the cascade does.
+    // Detect cycles in the effective custom property references.
     const visited = new Set();
     const visiting = new Set();
     function visit(variable) {

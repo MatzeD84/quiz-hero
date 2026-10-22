@@ -1,0 +1,58 @@
+/* Quiz exit controls; generic icon rendering stays in components/icon-button.css. */
+
+.quiz__abort-button {
+    appearance: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: var(--transition-interactive);
+    background-color: unset;
+    border: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .quiz__abort-button:hover {
+        background-color: var(--color-danger);
+    }
+
+    .quiz__abort-button:hover .icon-button__icon {
+        fill: var(--color-on-primary);
+        transition: var(--transition-interactive);
+    }
+}
+
+.quiz__abort-button {
+    border-radius: var(--radius-circle);
+    background: var(--color-surface-muted);
+}
+
+.quiz__abort {
+    top: var(--space-12);
+    right: var(--space-12);
+}
+
+@media (max-width: 600px) {
+    .quiz__abort {
+        flex-shrink: 0;
+    }
+}
+
+.quiz__abort {
+    position: static;
+    display: flex;
+}
+
+.quiz__abort-button {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: var(--space-8);
+}
+
+@media (max-width: 600px) {
+    .quiz__abort-button {
+        width: var(--control-size-touch);
+        height: var(--control-size-touch);
+        min-height: var(--control-size-touch);
+    }
+}

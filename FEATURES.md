@@ -102,9 +102,31 @@ Die Erfolgsquoten zählen beide Versuche und wiederholte Fragen mit. Alte Runden
 - **Einheitlicher Admin-Ladehinweis:** Gemeinsamer Spinner unten links für Fragen/Kategorien, Spieler, Feedback, Souvenirs, Mediathek und sichtbare/nahe Bilder. Parallele Anfragen teilen sich eine Anzeige; Abschluss und Fehler beenden den jeweiligen Ladezustand. Details: [Mediathek und Ladeanzeige](docs/MEDIA.md).
 - **Datenbank:** Migrationen 014 bis 019 lokal und auf Production angewendet. Migration 019 ergänzt die Amalfi-Definitionen ohne Schemaänderung. Details, Tests und weitere Ideen: [Souvenir.md](Souvenir.md).
 
+## Release vom 22.10.2026 – Quizdarstellung und CSS-Pflege
+
+Zur Veröffentlichung freigegeben nach lokaler Abschlussprüfung. Aktiven Stand und Rolloutprotokoll siehe [Production](docs/HOSTINGER-PRODUCTION.md).
+
+### Schwierigkeit und Punkte im Quiz
+
+Antwortbuttons erhalten beim Hover eine dezente Fläche und einen Rahmen passend zur Schwierigkeit: dunkles Blau für einfache, Petrol für schwere, vorhandenes helles Hero-Lila für Hero-Fragen. Gesperrte und bereits bewertete Antworten behalten ihre Ergebnisdarstellung; andere Komponenten sind nicht betroffen.
+
+Links neben dem Hinweis steht ein kleines Schwierigkeitstag: „Einfache Frage“ in dunklem Blau, „Schwere Frage“ in Petrol, „Hero-Frage“ im bestehenden Lila, jeweils mit weißer Schrift. Zentrale semantische Farbrollen halten die Zuordnung fest. Das Tag bleibt beim Hinweis auf die zweite Chance sichtbar; bei aufgelöster Frage verschwindet die Hinweiszeile wie bisher. Der Header zeigt nur den Fragenzähler „1 von 25“, keine zusätzliche Schwierigkeitsbezeichnung.
+
+Zu Beginn jeder Frage steht direkt vor den Antwortmöglichkeiten und unter einem eventuell vorhandenen Bild die mögliche Punktzahl im ersten Versuch: normale Fragen 2, schwere Fragen 3, Hero-Fragen 5 Punkte. Die dezente Textzeile verwendet dieselbe Wertungsfunktion wie die Punktevergabe. Nach der ersten falschen Antwort ersetzt der Hinweis auf die zweite Chance die Punktanzeige an derselben Stelle; im Header steht keine zusätzliche Punktanzeige.
+
+Nach der ersten falschen Quizantwort erscheint an derselben Stelle über den Antwortmöglichkeiten „Noch eine Chance – jetzt für 1 Punkt.“ Die Punktzahl stammt aus der bestehenden Wertungsregel. Kleine Schrift ohne zusätzliche Kachel; bei Auflösung verschwindet der Hinweis, die nächste Frage beginnt wieder mit ihrer Punktzahl. Für Screenreader als Statusmeldung ausgezeichnet. Wertung und Anzahl der Versuche bleiben unverändert.
+
+### CSS-Strukturpflege
+
+Die Farbpalette liegt ausschließlich in `styles/themes/app-tokens.css`; gemeinsame Skalen, Typografie und Bewegung in `styles/abstracts/tokens.css`. Doppelte zentrale Token-Definitionen wurden bei unveränderten wirksamen Werten entfernt.
+
+Die zentrale Theme-/Responsive-Überschreibung ist in die zuständigen Layout-, Komponenten- und Featuredateien aufgeteilt. Kartenstyling zusammengeführt, doppelte Deklarationen bereinigt und Theme-Dateien automatisch auf reine Token-Definitionen begrenzt. Bestehende Darstellung als Browser-Vergleichsbasis erhalten; keine neue Funktion und keine Datenbankänderung. Details: [CSS-Modularisierung](docs/CSS-MODULARISIERUNG-2026-10-22.md).
+
 ## Mögliche nächste Features
 
 ### Bereits gemeinsam vertieft / vorgemerkt
+
+Siena ist als weitere Kategorie vorgesehen. Ein zusätzliches Kategorienmotiv im bestehenden Low-Poly-Stil ist als Asset vorbereitet; Kategorie und Fragen sind noch nicht angelegt. [Bild und Generierungsauftrag](docs/SIENA-KATEGORIENBILD.md).
 
 | Idee | Kurzer Ausblick |
 |---|---|

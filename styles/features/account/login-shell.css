@@ -1,10 +1,8 @@
-.login-shell__header {
-    margin-bottom: var(--space-20);
-    text-align: center;
+.login-shell {
+    max-width: 960px;
 }
 
-.login-shell__header h2,
-.login-shell__header p {
+.login-shell__header h2, .login-shell__header p {
     margin-top: 0;
 }
 
@@ -20,19 +18,16 @@
     align-items: end;
 }
 
-.login-panel--login,
-.login-panel--reset {
+.login-panel--login, .login-panel--reset {
     margin-inline: auto;
     max-width: 760px;
 }
 
 .login-panel__intro {
     grid-column: 1 / -1;
-    text-align: center;
 }
 
-.login-panel__intro h2,
-.login-panel__intro p {
+.login-panel__intro h2, .login-panel__intro p {
     margin-top: 0;
 }
 
@@ -59,4 +54,79 @@
 
 .login-panel--register > .login-panel__submit {
     grid-column: 2;
+}
+
+@media (max-width: 760px) {
+    .login-panel__actions, .login-panel__secondary-actions {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .login-panel--register > .login-panel__submit {
+        grid-column: 1;
+    }
+
+    .login-shell__tabs {
+        display: flex;
+        width: 100%;
+    }
+}
+
+.login-shell {
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-shell);
+    padding: var(--space-32);
+    margin: var(--space-16) 0 var(--space-24);
+    text-align: left;
+}
+
+.login-shell__header {
+    text-align: left;
+    margin-bottom: var(--space-24);
+}
+
+.login-shell__header h2 {
+    font-size: var(--text-32);
+}
+
+.login-shell__header p, .login-panel__intro p {
+    color: var(--color-text-muted);
+}
+
+.login-shell__tabs {
+    margin-bottom: var(--space-32);
+}
+
+.login-panel__intro {
+    text-align: left;
+}
+
+.login-panel__intro h2 {
+    font-size: var(--text-20);
+}
+
+.login-panel__actions {
+    padding-top: var(--space-12);
+}
+
+@media (max-width: 600px) {
+    .login-shell {
+        padding: var(--space-20);
+        border-radius: var(--radius-lg);
+    }
+
+    .login-shell__tabs .tab {
+        flex: 1;
+    }
+
+    .login-panel__submit {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .login-panel__actions {
+        width: 100%;
+    }
 }

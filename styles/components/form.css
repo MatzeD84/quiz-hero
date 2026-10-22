@@ -1,27 +1,26 @@
-.user-panel__form,
-.login-panel,
-.admin-form,
-.admin-login {
+.user-panel input, .admin-shell input, .admin-shell select, .admin-shell textarea {
+    border: var(--border-input);
+    border-radius: var(--radius-md);
+    font: inherit;
+    padding: var(--space-12) var(--space-12);
+}
+
+.user-panel__form, .login-panel, .admin-form, .admin-login {
     display: grid;
     gap: var(--space-12);
 }
 
-.user-panel__form,
-.login-panel {
+.user-panel__form, .login-panel {
     grid-template-columns: repeat(2, minmax(180px, 1fr));
 }
 
-.user-panel__form label,
-.login-panel label,
-.admin-form label,
-.admin-login label {
+.user-panel__form label, .login-panel label, .admin-form label, .admin-login label {
     display: grid;
     font-weight: var(--font-weight-bold);
     gap: var(--space-4);
 }
 
-.login-panel input,
-.account-page-form input {
+.login-panel input, .account-page-form input {
     border: var(--border-input);
     border-radius: var(--radius-md);
     font: inherit;
@@ -31,4 +30,53 @@
 .account-checkbox input {
     margin-top: var(--space-4);
     width: auto;
+}
+
+@media (max-width: 760px) {
+    .user-panel__form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-shell input, .admin-shell select, .admin-shell textarea {
+        box-sizing: border-box;
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    button {
+        min-height: var(--control-size-touch);
+    }
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+input:not([type='checkbox']):not([type='radio']), select, textarea, .admin-shell input:not([type='checkbox']), .admin-shell select, .admin-shell textarea {
+    border: var(--border-width-thin) var(--border-style) var(--color-input-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-12) var(--space-12);
+    color: var(--color-text);
+    background: var(--color-surface);
+    min-height: var(--control-height);
+    box-shadow: none;
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-regular);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-input-focus);
+}
+
+label {
+    font-size: var(--text-16);
+}
+
+input[type='checkbox'], input[type='radio'] {
+    accent-color: var(--color-link);
 }

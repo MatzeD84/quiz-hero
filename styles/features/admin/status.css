@@ -8,7 +8,6 @@
 
 .admin-status:not(:empty) {
     border: var(--border-input);
-    padding: var(--space-12) var(--space-16);
 }
 
 .admin-status[data-status="info"]:not(:empty) {
@@ -27,4 +26,18 @@
     background: var(--color-surface);
     border-color: var(--color-danger);
     color: var(--color-danger);
+}
+
+@media (max-width: 768px) {
+    .admin-status {
+        background: var(--color-white);
+        position: sticky;
+        top: 0;
+        z-index: var(--z-sticky-status);
+    }
+}
+
+.admin-status:not(:empty) {
+    border-radius: var(--radius-md);
+    padding: var(--space-12) var(--space-16);
 }

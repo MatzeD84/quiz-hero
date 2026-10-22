@@ -1,6 +1,6 @@
 /* === Score Feedback === */
+
 .quiz__score-feedback {
-    align-self: flex-start;
     min-width: 7.5rem;
     position: relative;
     text-align: right;
@@ -11,7 +11,6 @@
     margin: 0;
     opacity: 1;
     transition: opacity var(--duration-feedback) var(--easing-standard);
-    white-space: nowrap;
 }
 
 .quiz__score-change {
@@ -46,10 +45,21 @@
 }
 
 @keyframes score-change-feedback {
-    0% { opacity: 0; }
-    15% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -60,5 +70,45 @@
     .quiz__score-change--visible {
         animation: none;
         opacity: 1;
+    }
+}
+
+.quiz__score-container {
+    align-items: center;
+    gap: var(--space-16);
+    padding: 0 var(--space-4) var(--space-12);
+    margin: 0;
+}
+
+.quiz__score-feedback {
+    align-self: center;
+}
+
+.quiz__score {
+    background: var(--color-highlight);
+    color: var(--color-text);
+    border-radius: var(--radius-pill);
+    padding: var(--space-8) var(--space-16);
+    font-size: var(--text-16);
+    white-space: nowrap;
+    letter-spacing: var(--tracking-heading);
+    font-weight: var(--font-weight-heading);
+}
+
+@media (max-width: 600px) {
+    .quiz__score-container {
+        flex-wrap: nowrap;
+        gap: var(--space-8);
+        padding-bottom: var(--space-12);
+    }
+
+    .quiz__score-feedback {
+        min-width: 0;
+        flex-shrink: 0;
+    }
+
+    .quiz__score {
+        font-size: var(--text-14);
+        padding: var(--space-4) var(--space-8);
     }
 }

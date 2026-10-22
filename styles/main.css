@@ -1,14 +1,14 @@
 ﻿@import './abstracts/tokens.css';
+@import './themes/app-tokens.css';
 @import './base/reset.css';
 @import './base/typography.css';
 @import './base/links.css';
+@import './base/accessibility.css';
 @import './layout/container.css';
 @import './layout/main-header.css';
 @import './components/button.css';
 @import './components/category-grid.css';
-@import './components/card-base.css';
-@import './components/badge.css';
-@import './components/card-content.css';
+@import './components/cards.css';
 @import './features/quiz/question-count.css';
 @import './features/quiz/quiz-layout.css';
 @import './features/quiz/question-media.css';
@@ -18,6 +18,7 @@
 @import './features/quiz/quiz-footer.css';
 @import './components/button-next.css';
 @import './components/icon-button.css';
+@import './features/quiz/navigation.css';
 @import './components/modal.css';
 @import './components/consent-banner.css';
 @import './features/quiz/score.css';
@@ -27,7 +28,6 @@
 @import './components/breadcrumb.css';
 @import './layout/footer.css';
 @import './layout/site-account-nav.css';
-@import './components/shell.css';
 @import './features/account/user-panel.css';
 @import './components/avatar-image.css';
 @import './components/form.css';
@@ -51,11 +51,7 @@
 @import './features/account/account-form.css';
 @import './features/admin/upload.css';
 @import './base/utilities.css';
-@import './base/responsive.css';
 
-/* Application theme. */
-@import './themes/app-tokens.css';
-@import './themes/app.css';
 @import './features/quiz/result-share.css';
 
 @import './features/account/passport.css';

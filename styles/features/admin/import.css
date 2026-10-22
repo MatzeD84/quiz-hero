@@ -50,7 +50,6 @@
     font-family: var(--font-code);
     font-size: var(--text-14);
     line-height: 1.45;
-    min-height: 220px;
     resize: vertical;
     width: 100%;
 }
@@ -88,8 +87,7 @@
     border-color: color-mix(in srgb, var(--color-danger) 48%, transparent);
 }
 
-.admin-import-item h3,
-.admin-import-item p {
+.admin-import-item h3, .admin-import-item p {
     margin: 0;
 }
 
@@ -101,9 +99,7 @@
     line-height: 1.25;
 }
 
-.admin-import-item__meta,
-.admin-import-item__warning,
-.admin-import-item__error {
+.admin-import-item__meta, .admin-import-item__warning, .admin-import-item__error {
     font-size: var(--text-14);
 }
 

@@ -10,7 +10,7 @@ Hostinger veroeffentlicht weiterhin nur den Branch `hostinger`. Ein Push auf `ma
 
 ## Aufbau
 
-`styles/abstracts/tokens.css` enthaelt die gemeinsamen Skalen und Rollen. `styles/themes/app-tokens.css` definiert die aktuelle Palette; `styles/themes/app.css` die abschliessende Gestaltung. `styles/main.css` legt die Importreihenfolge fest. Regeln: [CSS-Design-System](../styles/README.md).
+`styles/abstracts/tokens.css` enthaelt die gemeinsamen Skalen und Rollen; `styles/themes/app-tokens.css` definiert die aktuelle Palette. Die Strukturbereinigung vom 22.10.2026 ordnet Gestaltung und responsive Regeln direkt den Basis-, Layout-, Komponenten- und Featuremodulen zu. Eine nachgeschaltete `themes/app.css` ist aufgeloest; die Bereinigung ist fuer den Release vom 22.10.2026 freigegeben (Rollout: HOSTINGER-PRODUCTION.md). `styles/main.css` legt die Importreihenfolge fest. Regeln: [CSS-Design-System](../styles/README.md), Pruefung: [Modularisierung](CSS-MODULARISIERUNG-2026-10-22.md).
 
 Source Sans 3 fuer Fliesstext, Oswald fuer Headlines. Neun Schriftgroessen, zehn Abstandsstufen und drei Eckradien plus Pill/Kreis. Die Farbpalette verwendet helle Flaechen, dunkles Blau, Petrol und Mint. Karten bleiben beim Hover stehen; der Bildfilter blendet weich ein und aus.
 

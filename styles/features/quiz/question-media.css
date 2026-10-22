@@ -1,7 +1,6 @@
 .quiz__question-image-container {
     position: relative;
     margin: 0 auto;
-    margin-bottom: var(--space-16);
     max-width: 100%;
     width: fit-content;
 }
@@ -29,4 +28,18 @@
     color: var(--color-on-primary);
     background: var(--color-text-muted);
     opacity: 0.6;
+}
+
+.quiz__question-image-container {
+    margin-bottom: var(--space-16);
+}
+
+.quiz__question-image {
+    border-radius: var(--radius-md);
+}
+
+@media (max-width: 600px) {
+    .quiz__question-image-container {
+        margin-bottom: var(--space-16);
+    }
 }

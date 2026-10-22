@@ -179,6 +179,36 @@ test('score feedback reports zero for a wrong answer and one point for a correct
     assert.equal(state.score, 1);
 });
 
+test('retry hints follow remaining attempts and cannot award duplicate points', () => {
+    for (const difficulty of ['easy', 'medium', 'hero']) {
+        for (const correctSecond of [false, true]) {
+            const state = new QuizState();
+            state.currentSequence = [{ correct: 0, difficulty }];
+            const feedback = [];
+            const view = {
+                markAnswerButton() {}, disableAnswerButton() {}, updateScore() {},
+                highlightCorrectAnswer() {}, lockAnswers() {}, renderBackgroundKnowledge() {},
+                renderFeedback(message, options) { feedback.push({ message, ...options }); }
+            };
+            const controller = new QuizController({ state, view });
+            controller.pickFeedbackArray = () => ['resolved'];
+            controller.pickRandomEntry = entries => entries[0];
+            controller.handleAnswerSelected(1);
+            assert.equal(feedback[0].canRetry, true);
+            assert.match(feedback[0].message, /1 Punkt\./);
+            controller.handleAnswerSelected(1);
+            assert.equal(feedback.length, 1);
+            controller.handleAnswerSelected(correctSecond ? 0 : 2);
+            assert.equal(feedback[1].canRetry, false);
+            assert.equal(feedback[1].message, 'resolved');
+            assert.equal(state.score, correctSecond ? 1 : 0);
+            controller.handleAnswerSelected(0);
+            assert.equal(feedback.length, 2);
+            assert.equal(state.score, correctSecond ? 1 : 0);
+        }
+    }
+});
+
 const question = { question: 'Which?', answers: ['A', 'B', 'C', 'D'], correct: 0, active: true };
 const category = { id: 'sample', title: 'Sample', enabled: true, badge: { active: false, text: '' }, questions: [question] };
 
@@ -379,11 +409,21 @@ test('CSS design values use central tokens with no unresolved references or cycl
     assert.ok(violations.some(issue => issue.includes('type scale')));
     assert.ok(violations.some(issue => issue.includes('--missing')));
     assert.ok(violations.some(issue => issue.includes('cycle')));
-    fixtures.set(definitions, ':root { --color-white: #fff; --space-2: 8px; }');
+    assert.ok(violations.some(issue => issue.includes('application palette')));
+    const palette = path.resolve('styles/themes/app-tokens.css');
+    fixtures.set(palette, ':root { --color-white: #fff; }');
+    fixtures.set(definitions, ':root { --space-2: 8px; }');
     fixtures.set(component, '.example { color: color-mix(in srgb, var(--color-white) 12%, transparent); gap: var(--space-2); padding: 3px; border-radius: 3px; }');
     assert.deepEqual(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }), []);
+    fixtures.set(palette, ':root { --color-white: #fff; --color-white: #fff; }');
+    assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('duplicate central token')));
+    fixtures.set(palette, ':root { --color-white: #fff; }');
     fixtures.set(definitions, ':root { --color-white: #fff; --space-2: 8px; ' + Array.from({ length: 11 }, (_, i) => `--text-${i}: 1rem;`).join(' ') + ' }');
     assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('Too many --text-')));
+    fixtures.set(definitions, ':root { --color-white: #fff; display: block; }');
+    assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('only declare custom properties')));
+    fixtures.set(path.resolve('styles/themes/overrides.css'), '.example { display: block; }');
+    assert.ok(findCssTokenViolations({ files: [...fixtures.keys()], readFile: file => fixtures.get(file) }).some(issue => issue.includes('owning modules')));
 });
 
 test('friend invitations contain only selection and size, never scores, identities or fixed questions', () => {

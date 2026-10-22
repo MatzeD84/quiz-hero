@@ -11,7 +11,6 @@
 
 .admin-dropzone {
     align-items: center;
-    background: var(--color-surface);
     border: var(--border-width-strong) dashed color-mix(in srgb, var(--color-link) 28%, transparent);
     cursor: pointer;
     display: grid;
@@ -23,8 +22,7 @@
     transition: var(--transition-fast);
 }
 
-.admin-dropzone:focus-visible,
-.admin-dropzone--dragover {
+.admin-dropzone:focus-visible, .admin-dropzone--dragover {
     background: color-mix(in srgb, var(--color-link) 8%, var(--color-white));
     border-color: var(--color-link);
 }
@@ -146,4 +144,10 @@
 .admin-image-field__meta dd {
     margin: 0;
     overflow-wrap: anywhere;
+}
+
+.admin-dropzone {
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+    border-color: var(--color-input-border);
 }

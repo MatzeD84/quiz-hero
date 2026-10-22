@@ -33,8 +33,7 @@
     min-width: 0;
 }
 
-.admin-user-card__body h3,
-.admin-user-card__email {
+.admin-user-card__body h3, .admin-user-card__email {
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -65,10 +64,6 @@
 
 .admin-user-card__actions {
     justify-self: end;
-}
-
-.account-action-link--danger {
-    color: var(--color-danger-text, var(--color-danger-text));
 }
 
 @media (max-width: 700px) {

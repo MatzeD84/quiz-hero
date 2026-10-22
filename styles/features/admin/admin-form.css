@@ -6,27 +6,26 @@
     align-items: start;
 }
 
-.admin-form label { min-width: 0; }
-.admin-form input:not([type='checkbox']):not([type='radio']),
-.admin-form select,
-.admin-form textarea { min-width: 0; max-width: 100%; width: 100%; }
+.admin-form label {
+    min-width: 0;
+}
+
+.admin-form input:not([type='checkbox']):not([type='radio']), .admin-form select, .admin-form textarea {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+}
 
 .admin-form fieldset {
-    border: var(--border-width-thin) var(--border-style) var(--color-border-strong);
     display: grid;
     gap: var(--space-12);
     min-width: 0;
-    padding: var(--space-12);
 }
 
 .admin-form__answers {
     display: grid;
     gap: var(--space-12);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.admin-form textarea {
-    min-height: 5rem;
 }
 
 .admin-form__question-settings {
@@ -55,4 +54,66 @@
 
 .admin-form input[type="checkbox"] {
     width: auto;
+}
+
+@media (max-width: 760px) {
+    .admin-form__answers {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-form .admin-actions {
+        background: var(--color-surface);
+        bottom: 0;
+        padding: var(--space-12) 0;
+        position: sticky;
+    }
+}
+
+.admin-login {
+    background: var(--color-surface);
+    border: var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-32);
+    width: min(100%, 460px);
+    margin: var(--space-48) auto;
+}
+
+.admin-login h2 {
+    margin-bottom: var(--space-24);
+}
+
+.admin-login label {
+    display: grid;
+    gap: var(--space-8);
+    margin: var(--space-16) 0;
+}
+
+.admin-login .btn {
+    width: 100%;
+    margin-top: var(--space-24);
+}
+
+.admin-form {
+    gap: var(--space-16);
+}
+
+.admin-form fieldset {
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-16);
+}
+
+.admin-form legend {
+    color: var(--color-text-muted);
+    font-size: var(--text-14);
+    padding: 0 var(--space-8);
+}
+
+@media (max-width: 600px) {
+    .admin-login {
+        padding: var(--space-24);
+        margin: var(--space-32) auto;
+    }
 }

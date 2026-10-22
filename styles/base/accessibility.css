@@ -1,0 +1,12 @@
+:focus-visible {
+    outline: var(--border-width-focus) var(--border-style) var(--color-focus);
+    outline-offset: var(--space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}

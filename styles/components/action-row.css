@@ -1,5 +1,4 @@
-.admin-actions,
-.admin-toolbar {
+.admin-actions, .admin-toolbar {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +14,6 @@
     gap: var(--space-12) var(--space-16);
     grid-column: 1 / -1;
     justify-content: space-between;
-    margin-top: var(--space-4);
 }
 
 .account-page-form__save {
@@ -34,10 +32,8 @@
     appearance: none;
     background: transparent;
     border: 0;
-    color: var(--color-text-muted);
     cursor: pointer;
     font: inherit;
-    padding: 0;
     text-decoration: underline;
     transition: var(--transition-interactive);
 }
@@ -58,4 +54,30 @@
     .account-action-link--danger:hover {
         color: var(--color-danger);
     }
+}
+
+@media (max-width: 760px) {
+    .account-page-form__actions {
+        grid-template-columns: 1fr;
+    }
+
+    .account-page-form__actions, .account-page-form__secondary-actions {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}
+
+.account-page-form__actions {
+    padding-top: var(--space-24);
+    margin-top: var(--space-8);
+}
+
+.account-action-link {
+    min-height: var(--control-size-touch);
+    padding: var(--space-8);
+    color: var(--color-link);
+}
+
+.account-action-link--danger {
+    color: var(--color-danger);
 }

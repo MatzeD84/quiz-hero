@@ -2,5 +2,5 @@
     display: grid;
     gap: var(--space-12);
     grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr));
+    margin-top: var(--space-24);
 }
-﻿

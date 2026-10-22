@@ -1,10 +1,9 @@
 /* === Buttons === */
+
 .btn {
     display: block;
     max-width: 100%;
-    padding: var(--space-8);
     font-size: var(--text-16);
-    color: var(--color-on-primary);
     background-color: var(--color-strong);
     border: none;
     transition: var(--transition-interactive);
@@ -12,9 +11,7 @@
     text-decoration: none;
 }
 
-.btn:visited,
-.btn:focus,
-.btn:hover:where(:not(:disabled):not([aria-disabled='true'])) {
+.btn:visited, .btn:focus, .btn:hover:where(:not(:disabled):not([aria-disabled='true'])) {
     color: var(--color-on-primary);
     text-decoration: none;
 }
@@ -32,14 +29,32 @@
     display: none;
 }
 
-
 /* Disabled controls stay visible and clearly distinct from available actions. */
+
 :where(button, .btn):is(:disabled, [aria-disabled='true']) {
     cursor: not-allowed;
     opacity: var(--opacity-disabled);
 }
 
 /* Answer feedback must remain legible after the quiz locks the controls. */
+
 .btn--quiz-answer:is(.btn--answer-correct, .btn--answer-incorrect):disabled {
     opacity: 1;
+}
+
+.btn {
+    border-radius: var(--radius-md);
+    padding: var(--space-12) var(--space-20);
+    min-height: var(--control-height);
+    font-weight: var(--font-weight-semibold);
+    background: var(--color-text);
+    color: var(--color-on-primary);
+}
+
+.btn:hover:where(:not(:disabled):not([aria-disabled='true'])) {
+    background: var(--color-link);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
 }

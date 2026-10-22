@@ -303,7 +303,12 @@ export class QuizController {
 
         const feedbackArray = this.pickFeedbackArray(question, isCorrect);
         const message = this.pickRandomEntry(feedbackArray);
-        this.view.renderFeedback(message, { isCorrect });
+        const canRetry = !isCorrect && this.state.attempts + 1 < CONFIG.maxAttempts;
+        const retryPoints = CONFIG.score.secondTry;
+        const feedbackMessage = canRetry
+            ? `Noch eine Chance – jetzt für ${retryPoints} ${retryPoints === 1 ? 'Punkt' : 'Punkte'}.`
+            : message;
+        this.view.renderFeedback(feedbackMessage, { isCorrect, canRetry });
         const pointsGained = this.state.registerAttempt(isCorrect, difficulty);
         (question.selectedAnswers ||= []).push(index);
         if (!isCorrect && this.state.attempts < CONFIG.maxAttempts) {

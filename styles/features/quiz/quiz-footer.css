@@ -5,10 +5,6 @@
     gap: var(--space-8);
 }
 
-.background-knowledge {
-    margin-top: var(--space-8);
-}
-
 .background-knowledge__content {
     text-wrap: auto;
     display: grid;
@@ -25,4 +21,21 @@
     stroke: currentColor;
     stroke-width: 2;
     stroke-linecap: round;
+}
+
+.background-knowledge {
+    margin-top: var(--space-20);
+    text-align: left;
+}
+
+.background-knowledge__content {
+    padding: var(--space-16);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    line-height: 1.65;
+}
+
+.quiz__footer {
+    margin-top: var(--space-12);
 }

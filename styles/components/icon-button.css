@@ -1,33 +1,5 @@
-.quiz__abort {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-.quiz__abort-button {
-    appearance: none;
-    display: grid;
-    place-items: center;
-    padding: var(--space-4);
-    cursor: pointer;
-    transition: var(--transition-interactive);
-    background-color: unset;
-    border: none;
-}
-
 .icon-button__icon {
     width: 24px;
     height: 24px;
     fill: var(--color-strong);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .quiz__abort-button:hover {
-        background-color: var(--color-danger);
-    }
-
-    .quiz__abort-button:hover .icon-button__icon {
-        fill: var(--color-on-primary);
-        transition: var(--transition-interactive);
-    }
 }

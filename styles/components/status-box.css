@@ -1,8 +1,5 @@
 .user-panel__status {
     min-height: 1.4rem;
-}
-
-.user-panel__status {
     border-radius: var(--radius-md);
     font-weight: var(--font-weight-bold);
     margin: var(--space-12) 0 0;
@@ -12,7 +9,6 @@
 .user-panel__status:not(:empty) {
     border: var(--border-input);
     margin-bottom: var(--space-16);
-    padding: var(--space-12) var(--space-16);
 }
 
 .user-panel__status[data-status="info"]:not(:empty) {
@@ -31,4 +27,9 @@
     background: var(--color-surface);
     border-color: var(--color-danger);
     color: var(--color-danger);
+}
+
+.user-panel__status:not(:empty) {
+    border-radius: var(--radius-md);
+    padding: var(--space-12) var(--space-16);
 }

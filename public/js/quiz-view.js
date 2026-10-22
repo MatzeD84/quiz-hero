@@ -1,7 +1,7 @@
 import { renderSouvenirUnlock } from './souvenirs.js?v=dev';
 import { renderAccountMenu, closeAccountMenus, placeAccountMenu } from './account-menu.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
-import { CONFIG, LABELS, SELECTORS } from './config.js?v=dev';
+import { CONFIG, LABELS, SELECTORS, getPointsForDifficulty } from './config.js?v=dev';
 import { applyImageWatermark, clearImageWatermark } from './image-watermark.js?v=dev';
 import { revealStatus } from './status-navigation.js?v=dev';
 import { bindResultShare } from './result-share.js?v=dev';
@@ -416,21 +416,19 @@ export class QuizView {
     }
 
     renderQuestion(question, meta) {
-        const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, feedbackContainer, feedbackElement, nextButton } = this.elements;
+        const { questionElement, questionImage, quizContent, quizHeadertext, answerButtons, nextButton } = this.elements;
         const { type, imageUrl, answers } = question;
         const questionImageContainer = questionImage?.parentElement;
         const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
-        const isHero = difficulty === 'hero';
-        const headerLabel = difficulty === 'hero'
-            ? LABELS.questions.hero
-            : difficulty === 'medium'
-                ? LABELS.questions.medium
-                : LABELS.questions.default;
 
         questionElement.textContent = question.question;
         if (questionImage) questionImage.alt = question.imageAlt || "Abbildung zur Quizfrage";
-        quizHeadertext.textContent = headerLabel;
+        quizHeadertext.textContent = '';
         quizContent.dataset.difficulty = difficulty;
+        const difficultyTag = quizContent.querySelector('.quiz__difficulty-tag');
+        if (difficultyTag) {
+            difficultyTag.textContent = difficulty === 'hero' ? 'Hero-Frage' : difficulty === 'medium' ? 'Schwere Frage' : 'Einfache Frage';
+        }
 
         const imageRequest = this.imageRequest = (this.imageRequest || 0) + 1;
         const showImage = type === 'image' && Boolean(imageUrl);
@@ -469,15 +467,14 @@ export class QuizView {
         });
 
         this.renderBackgroundKnowledge('');
-        this.hideElement(feedbackContainer);
-        feedbackElement.textContent = '';
-        feedbackElement.classList.add('u-hidden');
         nextButton.classList.add('u-hidden');
         this.elements.feedbackIconCorrect.classList.add('u-hidden');
         this.elements.feedbackIconIncorrect.classList.add('u-hidden');
+        const points = getPointsForDifficulty(difficulty, 0);
+        this.renderFeedback(`${points} ${points === 1 ? 'Punkt' : 'Punkte'} im ersten Versuch`, { isHint: true });
 
         this.elements.currentQuestion.textContent = `${meta.index}`;
-        this.elements.totalQuestions.textContent = `/${meta.total}`;
+        this.elements.totalQuestions.textContent = ` von ${meta.total}`;
         if (meta.selectionLabel) {
             this.renderQuizSelectionLabel(meta.selectionLabel);
         }
@@ -497,7 +494,8 @@ export class QuizView {
         }
     }
 
-    renderFeedback(message, { isCorrect }) {
+    renderFeedback(message, { isCorrect, canRetry = false, isHint = canRetry }) {
+        this.elements.feedbackContainer.classList.toggle('quiz__feedback-container--hint', isHint);
         this.showElement(this.elements.feedbackContainer);
         this.elements.feedbackElement.textContent = message;
         this.elements.feedbackElement.classList.remove('u-hidden');

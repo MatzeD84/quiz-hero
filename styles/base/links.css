@@ -1,5 +1,4 @@
 a {
-    color: var(--color-accent);
     transition: var(--transition-interactive);
 }
 
@@ -7,4 +6,9 @@ a {
     a:hover {
         color: var(--color-difficulty-hero);
     }
+}
+
+a {
+    color: var(--color-link);
+    text-underline-offset: 4px;
 }

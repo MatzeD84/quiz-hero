@@ -4,16 +4,24 @@
 
 ## Struktur
 
-- `abstracts/tokens.css`: gemeinsame Designwerte und semantische Rollen.
-- `themes/app-tokens.css`: Palette und Token-Ueberschreibungen des aktuellen Designs.
-- `themes/app.css`: App-Layout und Komponentenregeln mit diesen Tokens.
-- `base/`: Reset, Typografie, Links und responsive Querschnittsregeln.
+- `abstracts/tokens.css`: gemeinsame Skalen, Typografie, Geometrie und Bewegung ohne eigene Farbpalette.
+- `themes/app-tokens.css`: einzige Farbpalette sowie farbabhaengige Rahmen und Schatten des aktuellen Designs. Jeder zentrale Token ist genau einmal definiert; keine gegenseitigen Ueberschreibungen.
+- `themes/`: ausschliesslich zentrale Token-Definitionen; keine Layout- oder Komponentenregeln.
+- `base/`: Reset, Typografie, Links und globale Barrierefreiheit (Fokus, reduzierte Bewegung).
 - `layout/`: Container, Header, Footer und Accountnavigation.
-- `components/`: wiederverwendbare UI-Bloecke wie Buttons, Formulare und Dialoge.
+- `components/`: wiederverwendbare UI-Bloecke wie Buttons, Formulare und Dialoge; `cards.css` haelt Kategorie-/Themenkarten einschliesslich Bild, Badge, Beschriftung und Zustaenden zusammen.
 - `features/`: Quiz-, Account-, Admin- und SEO-spezifische BEM-Bloecke.
-- `main.css`: verbindliche Importreihenfolge; Theme-Tokens und Theme-Regeln stehen zuletzt.
+- `main.css`: verbindliche Importreihenfolge. Gemeinsame Tokens und App-Tokenwerte kommen zuerst, danach Basis, Layout, Komponenten und ihre Feature-Abhaengigkeiten. Keine nachgeschaltete zentrale Theme-Override-Datei.
+
+Seit der lokalen Bereinigung vom 22.10.2026 sind `themes/app.css`, `base/responsive.css`, die getrennten Kartenfragmente `badge.css`/`card-content.css` und die ehemalige Shell-Sammeldatei aufgeloest. Responsive Regeln stehen bei dem Block, den sie anpassen. Account- und Loginflaechen liegen in ihren Featuremodulen; Quiz-Abbruchnavigation unter `features/quiz/navigation.css`. Die Produktionsdarstellung wurde als Vergleichsbasis verwendet; diese Strukturbereinigung ist fuer den Release vom 22.10.2026 freigegeben (aktiver Stand: /version.json). Pruefbericht: [CSS-Modularisierung](../docs/CSS-MODULARISIERUNG-2026-10-22.md).
+
+Bei Aenderungen zuerst die verantwortliche Datei suchen. Basiszustand, Modifier, Interaktion und zugehoerige Media Queries dort pflegen. Gemeinsame Regeln duerfen mehrere BEM-Bloecke ausdruecklich zusammenfassen, etwa Karten oder Formulargrundlagen. Keine spaeten Reparaturregeln in einer Sammeldatei anhaengen. Die Importreihenfolge ist Teil der Kaskade und darf nicht ohne Darstellungsvergleich umsortiert werden.
 
 ## Custom Properties verwenden
+
+Antwort-Hover im Quiz verwendet passende helle Flächen: `--color-difficulty-easy-surface`, `--color-difficulty-medium-surface` und die bestehende `--color-hero-surface`. Alle drei mischen die jeweilige Schwierigkeitsfarbe mit der normalen Oberfläche (9 Prozent Farbe). Der Hoverrahmen folgt derselben Schwierigkeitsrolle. Deaktivierte oder bereits richtig/falsch markierte Antworten sind ausgeschlossen; allgemeine Hoverflächen anderer Komponenten bleiben unverändert.
+
+Feste Schwierigkeitsfarben: `--color-difficulty-easy` = dunkles Blau (Alias der Textfarbe), `--color-difficulty-medium` = Petrol (Alias der Akzentfarbe), `--color-difficulty-hero` = bestehendes Hero-Lila. Auf farbigen Schwierigkeitstags steht helle Schrift über `--color-on-difficulty`. Neue Schwierigkeitsanzeigen verwenden diese Rollen statt allgemeiner Farbrollen; allgemeine Tokens werden nicht umbenannt, weil sie auch andere Aufgaben erfüllen. Die Beschriftung „Einfache Frage“/„Schwere Frage“/„Hero-Frage“ ergänzt stets die Farbe.
 
 Farben immer zentral als semantische Rollen definieren, beispielsweise `--color-text`, `--color-surface`, `--color-border` oder `--color-answer-correct-bg`. Einmalige Transparenzen koennen direkt in der Komponente mit `color-mix()` aus diesen Rollen entstehen. Keine eigenen Alpha- oder Prozentwert-Tokenfamilien anlegen. Komponenten sollen ihre Rolle ausdruecken und keine eigene Palette aufbauen.
 
@@ -52,6 +60,10 @@ node --test tests/contracts.test.mjs
 ```
 
 Der CSS-Build fuehrt die Token-Pruefung automatisch aus. Sie erkennt verstreute Farbwerte, zu grosse Token-Skalen, feste Schriftgroessen, Schriftfamilien, Bewegungszeiten, gemeinsame Border-Breiten und Schatten sowie nicht definierte Variablen und zyklische Referenzen. Die Pruefung ersetzt nicht die inhaltliche Entscheidung, welche Rolle ein neuer Token besitzt.
+
+Die Pruefung lehnt zudem normale CSS-Deklarationen in Token-Dateien und neue Theme-Sammeldateien ab. Neue Gestaltung gehoert in die verantwortlichen Module, neue zentrale Designwerte in die beiden Token-Dateien.
+
+Doppelte zentrale Token-Definitionen werden abgelehnt. `--color-*`-Rollen gehoeren ausschliesslich in `themes/app-tokens.css`, damit keine versteckten Palette-Ueberschreibungen entstehen.
 
 Das uebernommene Design ist der Standard auf `master`. Dokumentation: [Design](../docs/DESIGN.md). Production wird weiterhin ausschliesslich vom Branch `hostinger` veroeffentlicht.
 

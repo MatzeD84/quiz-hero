@@ -1,5 +1,6 @@
 .quiz__feedback-container {
-    /* Temporarily hidden; feedback markup and quiz logic remain available. */
+    /* Temporarily hidden;
+    feedback markup and quiz logic remain available. */
     display: none;
     align-items: center;
     justify-content: center;
@@ -13,8 +14,61 @@
 }
 
 .quiz__feedback {
-    font-size: var(--text-18);
-    font-weight: bold;
     margin: 0;
 }
 
+.quiz__feedback-container {
+    margin-top: var(--space-24);
+    padding: var(--space-12);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+}
+
+.quiz__feedback {
+    font-size: var(--text-16);
+    font-weight: var(--font-weight-semibold);
+}
+
+.quiz__feedback-container--hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    margin: 0 0 var(--space-16);
+    padding: 0;
+    background: none;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.quiz__feedback-container--hint .quiz__feedback {
+    font-size: var(--text-14);
+    font-weight: var(--font-weight-regular);
+}
+
+.quiz__feedback-container--hint .quiz__feedback-icon {
+    display: none;
+}
+
+.quiz__difficulty-tag {
+    display: none;
+    flex-shrink: 0;
+    padding: var(--space-2) var(--space-8);
+    border-radius: var(--radius-sm);
+    background: var(--color-difficulty-easy);
+    color: var(--color-on-difficulty);
+    font-size: var(--text-12);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-body);
+}
+
+.quiz__feedback-container--hint .quiz__difficulty-tag {
+    display: inline-block;
+}
+
+[data-difficulty="medium"] .quiz__difficulty-tag {
+    background: var(--color-difficulty-medium);
+}
+
+[data-difficulty="hero"] .quiz__difficulty-tag {
+    background: var(--color-difficulty-hero);
+}

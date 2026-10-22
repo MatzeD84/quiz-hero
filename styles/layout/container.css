@@ -1,10 +1,7 @@
 .container {
     flex: 1;
-    width: 100%;
     margin: 0 auto;
-    max-width: 800px;
     padding-bottom: var(--space-48);
-    text-align: center;
 }
 
 .container--small {
@@ -13,3 +10,15 @@
     margin: 0 auto;
 }
 
+.container {
+    max-width: 1160px;
+    width: calc(100% - 64px);
+    padding: 0 0 var(--space-48);
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: calc(100% - 32px);
+    }
+}

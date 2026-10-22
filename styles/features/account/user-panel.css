@@ -1,3 +1,13 @@
+.user-panel {
+    background: var(--color-surface);
+    border: var(--border-panel);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-shell);
+    margin: var(--space-24) auto;
+    max-width: 960px;
+    padding: var(--space-16);
+}
+
 .user-panel__preview {
     align-items: center;
     display: flex;
@@ -10,8 +20,7 @@
     display: none;
 }
 
-.user-panel--logged-in .account-tabs,
-.user-panel--logged-in .user-panel__status:empty {
+.user-panel--logged-in .account-tabs, .user-panel--logged-in .user-panel__status:empty {
     display: none;
 }
 
@@ -36,8 +45,7 @@
     flex-basis: 100%;
 }
 
-.user-panel__preview img,
-.account-profile-card__avatar img {
+.user-panel__preview img, .account-profile-card__avatar img {
     border-radius: var(--radius-pill);
     height: 52px;
     object-fit: cover;
@@ -101,4 +109,11 @@
 .user-panel__preview-text a {
     color: var(--color-link);
     font-size: var(--text-14);
+}
+
+@media (max-width: 760px) {
+    .user-panel--logged-in {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }

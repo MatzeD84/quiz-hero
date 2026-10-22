@@ -1,11 +1,12 @@
 /* === Base / Reset === */
+
 /* <weight>: Use a value from 200 to 900 */
+
 * {
     font-family: var(--font-body);
     font-optical-sizing: auto;
     font-weight: var(--font-weight-regular);
     font-style: normal;
-    text-wrap: balance;
 }
 
 html {
@@ -15,11 +16,6 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    min-height: 100vh;
-    margin: 0 var(--space-12);
-    color: var(--color-text);
-    font-family: var(--font-fallback);
 }
 
 img {
@@ -27,7 +23,18 @@ img {
     max-width: 100%;
 }
 
-:focus-visible {
-    outline: var(--border-width-focus) var(--border-style) var(--color-link);
-    outline-offset: var(--space-2);
+* {
+    box-sizing: border-box;
+    text-wrap: pretty;
+}
+
+body {
+    margin: 0;
+    height: auto;
+    min-height: 100dvh;
+    background: var(--color-page);
+    color: var(--color-text);
+    line-height: var(--line-height-body);
+    font-size: var(--text-16);
+    font-family: var(--font-body);
 }

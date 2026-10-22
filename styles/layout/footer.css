@@ -1,11 +1,21 @@
 .footer {
     width: 100%;
     background-color: var(--color-surface-muted);
-    text-align: center;
     box-shadow: var(--shadow-bleed-muted);
     clip-path: inset(0 -100vmax);
+    margin-top: auto;
+    padding: var(--space-24) var(--space-20);
+    border-top: var(--border-subtle);
+    color: var(--color-text-muted);
+    background: transparent;
+    text-align: center;
+    font-size: var(--text-14);
 }
 
 .footer a {
     color: var(--color-link);
+}
+
+.footer__text {
+    margin: 0;
 }
