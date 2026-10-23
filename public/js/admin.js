@@ -11,6 +11,7 @@ import { createLoadingStatus } from './admin/loading-status.js?v=dev';
 import { createSouvenirAdmin } from './admin/souvenirs.js?v=dev';
 import { createAvatarAdmin } from './admin/avatars.js?v=dev';
 import { categoryWorldRemovalImpact } from './admin/world-impact.js?v=dev';
+import { renderQuestionWorldChoices, selectedDirectQuestionWorlds } from './admin/question-world-choices.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -22,7 +23,7 @@ const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden automatisch innerhalb wen
 const withSeoDeploymentNotice = message => `${message} ${SEO_DEPLOYMENT_NOTICE}`;
 const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
     clearPendingCategoryImage(); updateImageState(); updateCategoryImageState(); tagPicker.render();
-    renderQuestionWorlds($$('#js-admin-question-worlds input:checked').map(input => input.value));
+    renderQuestionWorlds(selectedDirectQuestionWorlds($('#js-admin-question-worlds')));
 });
 let savingForm = false;
 const submitForm = async (form, action) => {
@@ -269,8 +270,8 @@ function renderWorldChoices(ids, selector) {
 }
 
 function renderQuestionWorlds(ids) {
-    renderWorldChoices(ids, '#js-admin-question-worlds');
     const category = categories.find(item => item.id === $('#js-admin-category').value);
+    renderQuestionWorldChoices($('#js-admin-question-worlds'), worlds, ids, category?.worldIds || [], category?.title || '');
     const inherited = (category?.worldIds || []).map(id => worlds.find(world => world.id === id)?.title || id);
     $('#js-admin-inherited-worlds').textContent = inherited.length
         ? `${inherited.join(', ')} · über Kategorie ${category.title}`
@@ -1143,7 +1144,7 @@ function collectQuestion() {
         id: $('#js-admin-question-id').value,
         contentVersion: $('#js-admin-question-form').dataset.contentVersion,
         categoryId: $('#js-admin-category').value,
-        worldIds: $$('#js-admin-question-worlds input:checked').map(input => input.value),
+        worldIds: selectedDirectQuestionWorlds($('#js-admin-question-worlds')),
         question: $('#js-admin-question').value,
         answers: $$('.js-admin-answer').map(input => input.value),
         correct: Number($('#js-admin-correct').value),
@@ -1287,7 +1288,7 @@ function closeImportExample() {
 
 async function init() {
     $('#js-admin-category').addEventListener('change', () => {
-        const direct = $$('#js-admin-question-worlds input:checked').map(input => input.value);
+        const direct = selectedDirectQuestionWorlds($('#js-admin-question-worlds'));
         renderQuestionWorlds(direct);
     });
     $('#js-admin-new-world').addEventListener('click', () => {

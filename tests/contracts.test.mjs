@@ -21,6 +21,35 @@ import { createLoadingStatus } from '../public/js/admin/loading-status.js';
 import { souvenirItems, startedSouvenirs } from '../public/js/souvenirs.js';
 import { isAvatarAvailable } from '../public/js/avatar-policy.js';
 import { categoryWorldRemovalImpact } from '../public/js/admin/world-impact.js';
+import { renderQuestionWorldChoices, selectedDirectQuestionWorlds } from '../public/js/admin/question-world-choices.js';
+
+test('question worlds lock inheritance without copying it into direct selections', () => {
+    const previousDocument = globalThis.document;
+    const element = () => ({ children: [], events: {}, append(...items) { this.children.push(...items); }, addEventListener(name, fn) { this.events[name] = fn; } });
+    globalThis.document = { createElement: element, createTextNode: text => text };
+    const list = { children: [], replaceChildren(...items) { this.children = items; }, querySelectorAll() { return this.children.map(label => label.children[2]); } };
+    const worlds = [{ id: 'italien', title: 'Italien', enabled: true }, { id: 'kunst', title: 'Kunst', enabled: true }];
+    try {
+        renderQuestionWorldChoices(list, worlds, [], ['italien'], 'Rom');
+        assert.equal(list.children[0].children[0].checked, true);
+        assert.equal(list.children[0].children[0].disabled, true);
+        assert.match(list.children[0].children[1], /Rom/);
+        assert.deepEqual(selectedDirectQuestionWorlds(list), []);
+        const extra = list.children[1].children[0];
+        assert.equal(extra.disabled, false);
+        extra.checked = true; extra.events.change();
+        assert.deepEqual(selectedDirectQuestionWorlds(list), ['kunst']);
+        renderQuestionWorldChoices(list, worlds, selectedDirectQuestionWorlds(list), [], 'Andere Kategorie');
+        assert.equal(list.children[0].children[0].checked, false);
+        assert.equal(list.children[0].children[0].disabled, false);
+        assert.deepEqual(selectedDirectQuestionWorlds(list), ['kunst']);
+        renderQuestionWorldChoices(list, worlds, ['italien'], ['italien'], 'Rom');
+        assert.deepEqual(selectedDirectQuestionWorlds(list), ['italien']);
+        renderQuestionWorldChoices(list, worlds, selectedDirectQuestionWorlds(list), [], 'Andere Kategorie');
+        assert.equal(list.children[0].children[0].checked, true);
+        assert.equal(list.children[0].children[0].disabled, false);
+    } finally { globalThis.document = previousDocument; }
+});
 
 test('category world removal respects direct assignments and replacement worlds', () => {
     const category = { id: 'rom', worldIds: ['italien'] };

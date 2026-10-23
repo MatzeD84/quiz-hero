@@ -8,6 +8,10 @@ Stand: 23.10.2026. **Auf Production veröffentlicht; Migrationen 020 und 021 lok
 
 ## Modell
 
+### Lokale Formular-Nachbesserung (noch nicht veröffentlicht)
+
+Bei „Frage bearbeiten“ und „Neue Frage“ sind Kategorie-Quizwelten automatisch angekreuzt und nativ deaktiviert, mit Herkunft am Häkchen. Andere Welten bleiben zusätzlich auswählbar. Beim Kategorienwechsel werden geerbte Werte neu berechnet; direkte Ergänzungen bleiben erhalten. Bestehende explizite Zuordnungen, die zugleich geerbt werden, bleiben intern bewahrt. Ausgeblendete Formularwerte halten direkte IDs getrennt von der sichtbaren Vereinigung, auch beim Verwerfen von Änderungen. Keine Datenbankänderung nötig. 41 Frontendtests erfolgreich; der neue Test prüft Sperre, Auswahl, Kategorienwechsel und bestehende direkte Zuordnungen.
+
 Eine Frage gehört weiterhin genau einer Kategorie, besitzt flexible Tags und kann **mehreren Quizwelten** zugeordnet werden. Beispiel: Kategorie Rom, Welten Italien und Kunst, Tag Architektur. Sie bleibt eine einzige Frage mit stabiler ID. „Quizwelten“ bezeichnet den übergeordneten Kontext; die bisherigen „Themen“-Runden bleiben Tag-Runden.
 
 Quizwelten können jetzt auch direkt an Kategorien gepflegt werden. Die wirksamen Welten einer Frage sind die **Vereinigung aus Kategorie-Vorgaben und direkten Ergänzungen**, ohne Duplikate. Vererbung ist dynamisch, keine Kopie in jede Frage: Neue Fragen erben sofort, Änderungen an der Kategorie wirken auf bestehende Fragen. Ein Kategorienwechsel berechnet die geerbten Welten neu und behält direkte Ergänzungen. Beim Entfernen von Kategorie-Vorgaben können Fragen ohne direkte Ergänzung unzugeordnet werden; sie erscheinen im Adminfilter „Ohne Zuordnung“ und bleiben öffentlich sichtbar. Für das explizite Speichern einer Frage ist mindestens eine direkte oder geerbte Welt erforderlich.
