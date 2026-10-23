@@ -17,8 +17,10 @@ export class QuizController {
         try {
             const data = await this.dataService.loadAll();
             this.state.setData(data);
+            // World assignments are managed in admin; public world selection is deferred.
+            this.state.selectWorld(null);
             this.clearLegacySavedRound();
-            this.view.renderCategoryButtons(data.categories);
+            this.view.renderCategoryButtons(this.state.categories);
             this.view.renderTagButtons(this.state.getAvailableTags());
             this.view.initAccountUi?.();
             this.registerEvents();
@@ -129,6 +131,7 @@ export class QuizController {
         if (tag) {
             params.set('tag', tag);
         }
+        params.delete('world');
         const query = params.toString();
         const nextUrl = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
         window.history.replaceState({}, '', nextUrl);
@@ -256,7 +259,7 @@ export class QuizController {
             this.currentRoundIsPractice = false;
             if (this.currentUser) {
                 const sequence = this.state.currentSequence;
-                const round = await this.userService.startRound(this.practiceMode ? [] : sequence.map(question => question.id), { categoryId: this.state.activeCategoryId, tagId: this.state.activeTag, practice: this.practiceMode });
+                const round = await this.userService.startRound(this.practiceMode ? [] : sequence.map(question => question.id), { categoryId: this.state.activeCategoryId, tagId: this.state.activeTag, practice: this.practiceMode, worldId: this.practiceMode ? null : this.state.activeWorldId });
                 if (this.state.currentSequence !== sequence) return;
                 this.state.roundId = round.roundId;
                 this.state.currentSequence = round.questions;
@@ -394,6 +397,7 @@ export class QuizController {
             const stats = this.state.getStats();
             const context = {
                 categoryId: this.state.activeCategoryId,
+                worldId: this.state.activeWorldId,
                 tagId: this.state.activeTag,
                 roundId: this.state.roundId,
                 answers: this.state.currentSequence.map(question => ({ questionId: question.id, selectedAnswers: [...(question.selectedAnswers || [])] })),
@@ -416,7 +420,7 @@ export class QuizController {
                 getAvatarRewards: () => avatarRewards,
                 retrySave: roundUser ? saveRound : null,
                 practice: isPractice,
-                shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId },
+                shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId, worldId: context.worldId },
                 onOverview: () => isPractice ? window.location.assign('reisepass.html') : this.handleResultOverview()
             });
             this.practiceMode = false;

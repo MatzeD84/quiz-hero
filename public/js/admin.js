@@ -10,17 +10,19 @@ import { createMediaLoading } from './admin/media-loading.js?v=dev';
 import { createLoadingStatus } from './admin/loading-status.js?v=dev';
 import { createSouvenirAdmin } from './admin/souvenirs.js?v=dev';
 import { createAvatarAdmin } from './admin/avatars.js?v=dev';
+import { categoryWorldRemovalImpact } from './admin/world-impact.js?v=dev';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => Array.from(document.querySelectorAll(selector));
 const dirtyStatus = document.createElement('p');
 dirtyStatus.setAttribute('role', 'status');
 document.querySelector('#js-admin-status').after(dirtyStatus);
-const guardedForms = ['#js-admin-question-form', '#js-admin-category-form'].map(selector => document.querySelector(selector));
+const guardedForms = ['#js-admin-question-form', '#js-admin-category-form', '#js-admin-world-form'].map(selector => document.querySelector(selector));
 const SEO_DEPLOYMENT_NOTICE = 'SEO-Landingpages werden automatisch innerhalb weniger Minuten aktualisiert.';
 const withSeoDeploymentNotice = message => `${message} ${SEO_DEPLOYMENT_NOTICE}`;
 const formGuard = createFormGuard(guardedForms, dirtyStatus, () => {
     clearPendingCategoryImage(); updateImageState(); updateCategoryImageState(); tagPicker.render();
+    renderQuestionWorlds($$('#js-admin-question-worlds input:checked').map(input => input.value));
 });
 let savingForm = false;
 const submitForm = async (form, action) => {
@@ -34,7 +36,7 @@ const submitForm = async (form, action) => {
 document.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (savingForm && target) { event.preventDefault(); event.stopImmediatePropagation(); return; }
-    if (!target || target.closest('#js-admin-question-form, #js-admin-category-form')) return;
+    if (!target || target.closest('#js-admin-question-form, #js-admin-category-form, #js-admin-world-form')) return;
     if (target.matches('[data-admin-tab], [data-media-tab], #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
         if (!avatarAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
         if (!souvenirAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
@@ -70,7 +72,7 @@ const fileNameFromPath = path => {
 
 const requestApi = createAdminApi({ apiUrl, getCsrfToken: () => csrfToken, setCsrfToken: token => { csrfToken = token; } });
 const datasetLabels = {
-    'admin-data': 'Fragen und Kategorien werden geladen …',
+    'admin-data': 'Fragen, Kategorien und Quizwelten werden geladen …',
     'admin-media-list': 'Bilder werden geladen …',
     'admin-users-list': 'Spieler werden geladen …',
     'admin-question-feedback-list': 'Feedback wird geladen …',
@@ -147,6 +149,7 @@ const souvenirAdmin = createSouvenirAdmin({ api, getCategories: () => categories
 const avatarAdmin = createAvatarAdmin({api,uploadImage,setupDropzone,loadMedia});
 
 let categories = [];
+let worlds = [];
 let questions = [];
 let selectedQuestionId = '';
 let activeAdminTab = 'edit';
@@ -188,8 +191,16 @@ async function loadData() {
     const data = await api('admin-data');
     if (!data.ok) throw new Error(data.error || 'Daten konnten nicht geladen werden.');
     categories = data.categories || [];
+    worlds = data.worlds || [];
+    renderWorlds();
     questions = categories.flatMap(category => (category.questions || []).map(question => ({ ...question, categoryTitle: category.title })));
     renderCategories();
+    const selectedCategory=categories.find(category => category.id === $('#js-admin-category-id').value);
+    if (selectedCategory) fillCategory(selectedCategory);
+    else {
+        renderWorldChoices([], '#js-admin-category-worlds');
+        formGuard.clean($('#js-admin-category-form'));
+    }
     renderQuestions();
     if (!selectedQuestionId && questions[0]) {
         fillQuestion(questions[0]);
@@ -222,6 +233,60 @@ async function loadQuestionFeedback() {
     if (!data.ok) throw new Error(data.error || 'Feedback konnte nicht geladen werden.');
     questionFeedback = data.feedback || [];
     renderQuestionFeedback();
+}
+
+function renderWorlds() {
+    const select = $('#js-admin-world-select');
+    const current = $('#js-admin-world-id').value;
+    select.replaceChildren(new Option('Neue Quizwelt', ''), ...worlds.map(world => new Option(`${world.title}${world.enabled ? '' : ' (inaktiv)'}`, world.id)));
+    select.value = current;
+    const filter = $('#js-admin-filter-world');
+    const previous = filter.value;
+    filter.replaceChildren(new Option('Alle Quizwelten', ''),new Option('Ohne Zuordnung', '__unassigned'),...worlds.map(world => new Option(world.title,world.id)));
+    filter.value = previous;
+}
+
+function fillWorld(world = {}) {
+    const form = $('#js-admin-world-form');
+    form.dataset.contentVersion = world.contentVersion || '';
+    $('#js-admin-world-id').value = world.id || '';
+    $('#js-admin-world-select').value = world.id || '';
+    $('#js-admin-world-title').value = world.title || '';
+    $('#js-admin-world-description').value = world.description || '';
+    $('#js-admin-world-enabled').checked = world.enabled !== false;
+    formGuard.clean(form);
+}
+
+function renderWorldChoices(ids, selector) {
+    const list = $(selector);
+    list.replaceChildren(...worlds.map(world => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'checkbox'; input.name = 'worldIds'; input.value = world.id; input.checked = ids.includes(world.id);
+        label.append(input, document.createTextNode(`${world.title}${world.enabled ? '' : ' (inaktiv)'}`));
+        return label;
+    }));
+}
+
+function renderQuestionWorlds(ids) {
+    renderWorldChoices(ids, '#js-admin-question-worlds');
+    const category = categories.find(item => item.id === $('#js-admin-category').value);
+    const inherited = (category?.worldIds || []).map(id => worlds.find(world => world.id === id)?.title || id);
+    $('#js-admin-inherited-worlds').textContent = inherited.length
+        ? `${inherited.join(', ')} · über Kategorie ${category.title}`
+        : 'Keine Quizwelt über die Kategorie zugeordnet.';
+}
+
+function questionWorldSummary(question) {
+    const inherited = question.inheritedWorldIds || [];
+    const direct = question.directWorldIds ?? question.worldIds ?? [];
+    return (question.worldIds || []).map(id => {
+        const name = worlds.find(world => world.id === id)?.title || id;
+        const sources = [];
+        if (inherited.includes(id)) sources.push(`über Kategorie ${question.categoryTitle}`);
+        if (direct.includes(id)) sources.push('direkt');
+        return `${name} (${sources.join(', ')})`;
+    }).join(' · ') || 'Keine Quizwelt zugeordnet';
 }
 
 function renderCategories() {
@@ -484,6 +549,7 @@ function renderTagFilter() {
 }
 
 function getFilteredQuestions() {
+    const worldId = $('#js-admin-filter-world').value;
     const search = $('#js-admin-question-search').value.trim().toLowerCase();
     const categoryId = $('#js-admin-filter-category').value;
     const tag = $('#js-admin-filter-tag').value;
@@ -499,7 +565,8 @@ function getFilteredQuestions() {
             ...tags
         ].join(' ').toLowerCase();
 
-        return (!categoryId || question.categoryId === categoryId)
+        return (!worldId || (worldId === '__unassigned' ? !question.worldIds?.length : question.worldIds?.includes(worldId)))
+            && (!categoryId || question.categoryId === categoryId)
             && (!tag || tags.includes(tag))
             && (!search || searchable.includes(search));
     }).sort((a, b) => compareAdminItems(a, b, sort, {
@@ -598,6 +665,7 @@ function renderQuestions() {
             </span>
             <span class="admin-question-button__title"></span>
             <span class="admin-question-button__meta"></span>
+            <span class="admin-question-button__worlds"></span>
             <span class="admin-question-button__date"></span>
         `;
         const publishStatus = button.querySelector('.admin-question-button__status--publish');
@@ -613,6 +681,7 @@ function renderQuestions() {
         button.querySelector('.admin-question-button__title').textContent = question.question;
         const createdAt = formatAdminDate(question.createdAt);
         button.querySelector('.admin-question-button__meta').textContent = [question.categoryTitle, question.difficulty, tags].filter(Boolean).join(' \u00b7 ');
+        button.querySelector('.admin-question-button__worlds').textContent = questionWorldSummary(question);
         button.querySelector('.admin-question-button__date').textContent = createdAt ? `hochgeladen am ${createdAt}` : '';
         button.addEventListener('click', () => {
             setAdminTab('edit');
@@ -808,7 +877,8 @@ function setAdminTab(tab, options = {}) {
         button.classList.toggle('tab--active', active);
         button.setAttribute('aria-pressed', String(active));
     });
-    $('#js-admin-question-panel').classList.toggle('u-hidden', tab === 'categories' || tab === 'media' || tab === 'import' || tab === 'users' || tab === 'feedback' || tab === 'souvenirs');
+    $('#js-admin-question-panel').classList.toggle('u-hidden', !['edit','new'].includes(tab));
+    $('#js-admin-world-panel').classList.toggle('u-hidden', tab !== 'worlds');
     souvenirAdmin.show(tab === 'souvenirs');
     $('#js-admin-category-panel').classList.toggle('u-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('u-hidden', tab !== 'media');
@@ -820,6 +890,8 @@ function setAdminTab(tab, options = {}) {
     $('#js-admin-question-panel').classList.toggle('admin-panel--single', tab === 'new');
     if (tab === 'new') {
         fillQuestion();
+    } else if (tab === 'worlds') {
+        fillWorld(worlds.find(world => world.id === $('#js-admin-world-id').value) || worlds[0]);
     } else if (tab === 'categories' && !$('#js-admin-category-id').value) {
         const currentCategoryId = $('#js-admin-category').value;
         const category = categories.find(item => item.id === currentCategoryId) || categories[0];
@@ -1018,6 +1090,7 @@ function fillQuestion(question = {}) {
     selectedQuestionId = question.id || '';
     $('#js-admin-question-id').value = question.id || '';
     $('#js-admin-category').value = question.categoryId || categories[0]?.id || '';
+    renderQuestionWorlds(question.directWorldIds ?? question.worldIds ?? []);
     $('#js-admin-question').value = question.question || '';
     $$('.js-admin-answer').forEach((input, index) => { input.value = question.answers?.[index] || ''; });
     $('#js-admin-correct').value = String(question.correct ?? 0);
@@ -1052,6 +1125,7 @@ function fillCategory(category = {}) {
     $('#js-admin-category-edit-select').value = category.id || '';
     $('#js-admin-category-id').value = category.id || '';
     $('#js-admin-category-title').value = category.title || '';
+    renderWorldChoices(category.worldIds || [], '#js-admin-category-worlds');
     $('#js-admin-category-description').value = category.description || '';
     $('#js-admin-category-seo').value = category.seoDescription || '';
     $('#js-admin-category-icon').value = category.icon || '';
@@ -1069,6 +1143,7 @@ function collectQuestion() {
         id: $('#js-admin-question-id').value,
         contentVersion: $('#js-admin-question-form').dataset.contentVersion,
         categoryId: $('#js-admin-category').value,
+        worldIds: $$('#js-admin-question-worlds input:checked').map(input => input.value),
         question: $('#js-admin-question').value,
         answers: $$('.js-admin-answer').map(input => input.value),
         correct: Number($('#js-admin-correct').value),
@@ -1142,7 +1217,7 @@ function stageImportText(text) {
     }
     const rawQuestions = importQuestionsFromJson(parsed);
     if (rawQuestions.length > 200) throw new Error('Maximal 200 Fragen pro Import.');
-    const results = validateImport(rawQuestions, { questions, categories });
+    const results = validateImport(rawQuestions, { questions, categories, worlds });
     pendingImportQuestions = results.filter(item => item.valid).map(item => item.data);
     $('#js-admin-import-actions').classList.remove('u-hidden');
     renderImportResults(results);
@@ -1211,6 +1286,35 @@ function closeImportExample() {
 
 
 async function init() {
+    $('#js-admin-category').addEventListener('change', () => {
+        const direct = $$('#js-admin-question-worlds input:checked').map(input => input.value);
+        renderQuestionWorlds(direct);
+    });
+    $('#js-admin-new-world').addEventListener('click', () => {
+        if (!formGuard.confirm()) return;
+        fillWorld(); $('#js-admin-world-title').focus();
+    });
+    $('#js-admin-world-select').addEventListener('change', event => {
+        if (!formGuard.confirm()) { event.target.value = $('#js-admin-world-id').value; return; }
+        fillWorld(worlds.find(world => world.id === event.target.value));
+    });
+    $('#js-admin-world-form').addEventListener('submit', async event => {
+        event.preventDefault();
+        await submitForm(event.target, async () => {
+            const result = await api('admin-world-save', {
+                id: $('#js-admin-world-id').value,
+                contentVersion: event.target.dataset.contentVersion,
+                title: $('#js-admin-world-title').value,
+                description: $('#js-admin-world-description').value,
+                enabled: $('#js-admin-world-enabled').checked
+            });
+            if (!result.ok) { setStatus(result.error, 'error'); return; }
+            formGuard.clean(event.target);
+            await loadData();
+            fillWorld(worlds.find(world => world.id === result.id));
+            setStatus('Quizwelt gespeichert.', 'success');
+        });
+    });
     const me = await api('admin-me');
     setLoggedIn(Boolean(me.admin));
     if (me.admin) await loadData();
@@ -1245,7 +1349,7 @@ async function init() {
     $$('[data-admin-tab]').forEach(button => {
         button.addEventListener('click', () => setAdminTab(button.dataset.adminTab, { clearStatus: true }));
     });
-    ['#js-admin-question-search', '#js-admin-filter-category', '#js-admin-filter-tag', '#js-admin-question-sort'].forEach(selector => {
+    ['#js-admin-question-search', '#js-admin-filter-category', '#js-admin-filter-tag', '#js-admin-filter-world', '#js-admin-question-sort'].forEach(selector => {
         $(selector).addEventListener('input', renderQuestions);
         $(selector).addEventListener('change', renderQuestions);
     });
@@ -1326,7 +1430,7 @@ async function init() {
                 setStatus('Aktion erfolgreich, aber Ansicht konnte nicht aktualisiert werden: ' + error.message, 'error');
                 return;
             }
-            if (isNewQuestion) fillQuestion({ categoryId });
+            if (isNewQuestion) fillQuestion({ categoryId, worldIds: payload.worldIds });
             setStatus(withSeoDeploymentNotice('Frage gespeichert.'), 'success');
         });
     });
@@ -1360,6 +1464,13 @@ async function init() {
         event.preventDefault();
         await submitForm(event.target, async () => {
             const isNewCategory = !$('#js-admin-category-id').value;
+            const worldIds = $$('#js-admin-category-worlds input:checked').map(input => input.value);
+            const category = categories.find(item => item.id === $('#js-admin-category-id').value);
+            const impact = categoryWorldRemovalImpact(category, worldIds, questions);
+            if (impact.removedWorldIds.length) {
+                const names = impact.removedWorldIds.map(id => worlds.find(world => world.id === id)?.title || id).join(', ');
+                if (!window.confirm(`Quizwelt-Zuordnung entfernen: ${names}\n\n${impact.affectedCount} Fragen verlieren dadurch mindestens eine Quizwelt-Zuordnung.\n${impact.unassignedCount} Fragen sind danach ohne Quizwelt. Direkte Zuordnungen bleiben erhalten.\n\nKategorie trotzdem speichern?`)) return;
+            }
             if (pendingCategoryImageFile && !$('#js-admin-category-icon').value) {
                 const uploaded = await uploadCategoryImage(pendingCategoryImageFile, { deferIfMissing: false });
                 if (!uploaded) return;
@@ -1367,6 +1478,7 @@ async function init() {
             const result = await api('admin-category-save', {
                 id: $('#js-admin-category-id').value,
                 contentVersion: $('#js-admin-category-form').dataset.contentVersion,
+                worldIds,
                 title: $('#js-admin-category-title').value,
                 description: $('#js-admin-category-description').value,
                 seoDescription: $('#js-admin-category-seo').value,

@@ -38,6 +38,8 @@ Die Backendmodule haben bewusst benannte Funktionen ohne Frameworkwechsel. `api/
 
 ## Bereitstellung und Daten
 
+Quizwelten mit Kategorie-Vererbung (lokal, noch nicht auf Production): [Datenmodell, Migrationen 020/021, Pflege und Prüfstand](docs/QUIZWELTEN.md).
+
 Hostinger zieht Branch `hostinger`; Build, Tests und SSH-Werkzeuge laufen ausschlie?lich dort. Keine GitHub Actions oder API-Secrets in GitHub. Ablauf und R?cksprung: [deployment/README.md](deployment/README.md).
 
 Admin?nderungen schreiben direkt in MySQL. Code-Deployments importieren keine Fragen, Nutzer, Ergebnisse oder Uploads. Ein unabh?ngiger Worker aktualisiert die SEO-Seiten aus dem aktuellen Datenbankstand.

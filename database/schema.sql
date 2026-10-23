@@ -366,3 +366,62 @@ INSERT IGNORE INTO quiz_souvenir_definitions(souvenir_key,revision,category_id,t
 ('amalfi-discoverer',1,'amalfi','Deine Reisemarke der Amalfi-Küste','Zwischen Küstenpfaden und kleinen Entdeckungen: Ein sonniges Stück Amalfi-Küste begleitet deine Quizreise.','images/souvenirs/amalfi-token-v1.png','discover',20,'active');
 
 INSERT IGNORE INTO schema_migrations(version) VALUES ('019_souvenirs_amalfi.sql');
+
+CREATE TABLE IF NOT EXISTS quiz_worlds (
+    id VARCHAR(120) PRIMARY KEY,
+    title VARCHAR(120) NOT NULL,
+    description VARCHAR(255) NOT NULL DEFAULT '',
+    enabled TINYINT(1) NOT NULL DEFAULT 1,
+    revision INT UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS quiz_question_worlds (
+    question_id INT UNSIGNED NOT NULL,
+    world_id VARCHAR(120) NOT NULL,
+    PRIMARY KEY (question_id, world_id),
+    INDEX idx_question_worlds_world (world_id, question_id),
+    CONSTRAINT fk_question_worlds_question FOREIGN KEY (question_id) REFERENCES quiz_questions(id) ON DELETE CASCADE,
+    CONSTRAINT fk_question_worlds_world FOREIGN KEY (world_id) REFERENCES quiz_worlds(id) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO quiz_worlds(id,title,description) VALUES ('italien','Italien','Entdecke Italien und seine Städte.');
+-- Only the existing Italian city categories; unrelated future categories are not inferred.
+INSERT IGNORE INTO quiz_question_worlds(question_id,world_id)
+SELECT q.id,'italien' FROM quiz_questions q WHERE q.category_id IN ('rom','neapel','florenz','amalfi','siena')
+AND NOT EXISTS (SELECT 1 FROM quiz_question_worlds qw WHERE qw.question_id=q.id);
+
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_rounds ADD COLUMN world_id VARCHAR(120) NULL, ADD COLUMN world_title VARCHAR(120) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_rounds' AND COLUMN_NAME = 'world_id');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_results ADD COLUMN world_id VARCHAR(120) NULL, ADD COLUMN world_title VARCHAR(120) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'quiz_results' AND COLUMN_NAME = 'world_id');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('020_quiz_worlds.sql');
+
+CREATE TABLE IF NOT EXISTS quiz_category_worlds (
+    category_id VARCHAR(120) NOT NULL,
+    world_id VARCHAR(120) NOT NULL,
+    PRIMARY KEY (category_id, world_id),
+    INDEX idx_category_worlds_world (world_id, category_id),
+    CONSTRAINT fk_category_worlds_category FOREIGN KEY (category_id) REFERENCES quiz_categories(id) ON DELETE CASCADE,
+    CONSTRAINT fk_category_worlds_world FOREIGN KEY (world_id) REFERENCES quiz_worlds(id) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- One-time promotion of the known Italian city categories. Never replay over admin edits.
+INSERT IGNORE INTO quiz_category_worlds(category_id,world_id)
+SELECT c.id,'italien' FROM quiz_categories c
+WHERE c.id IN ('rom','neapel','florenz','amalfi','siena')
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='021_category_worlds.sql')
+AND NOT EXISTS (SELECT 1 FROM quiz_category_worlds cw WHERE cw.category_id=c.id);
+
+-- Effective membership is unchanged; preserve all additional explicit worlds.
+DELETE qw FROM quiz_question_worlds qw
+JOIN quiz_questions q ON q.id=qw.question_id
+JOIN quiz_category_worlds cw ON cw.category_id=q.category_id AND cw.world_id=qw.world_id
+WHERE qw.world_id='italien' AND q.category_id IN ('rom','neapel','florenz','amalfi','siena')
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='021_category_worlds.sql');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('021_category_worlds.sql');

@@ -131,6 +131,9 @@ questions.forEach((question, index) => {
 
     if (!auditOnly) {
         if (!category) errors.push(`${label}: categoryId fehlt; alternativ --category angeben.`);
+        if (question.worldIds !== undefined && (!Array.isArray(question.worldIds) || question.worldIds.length > 30 || question.worldIds.some(id => typeof id !== 'string' || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(id)))) errors.push(`${label}: worldIds muss ein Array gültiger Quizwelt-IDs sein.`);
+        if (Array.isArray(question.worldIds) && question.worldIds.length === 0) warnings.push(`${label}: Leere direkte Zuordnung setzt geerbte Quizwelten an der Zielkategorie voraus.`);
+        if (question.worldIds === undefined) warnings.push(`${label}: worldIds fehlt; Kategorie-Vorgabe wird geerbt, ansonsten gilt der Italien-Altimportstandard.`);
         if (!text) errors.push(`${label}: question fehlt.`);
         if (text.length > 1000) errors.push(`${label}: question ist länger als 1000 Zeichen.`);
         if (answers.length !== 4 || answers.some(answer => typeof answer !== 'string' || !answer.trim())) errors.push(`${label}: answers muss genau vier nicht leere Texte enthalten.`);

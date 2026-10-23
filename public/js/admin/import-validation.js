@@ -11,7 +11,7 @@ const normalizeImportTags = value => {
     return String(value || '').split(',').map(tag => tag.trim()).filter(Boolean);
 };
 
-export function validateImportQuestions(rawQuestions, { questions, categories }) {
+export function validateImportQuestions(rawQuestions, { questions, categories, worlds = null }) {
     const existingKeys = new Set(questions.map(question => normalizeQuestionKey(question.question)));
     const knownCategories = new Set(categories.map(category => category.id));
     const seen = new Set();
@@ -24,6 +24,11 @@ export function validateImportQuestions(rawQuestions, { questions, categories })
         }
 
         const categoryId = String(entry.categoryId || entry.category || '').trim();
+        const inherited = categories.find(category => category.id === categoryId)?.worldIds || [];
+        const worldIds = Object.hasOwn(entry, 'worldIds') ? entry.worldIds : (inherited.length ? [] : ['italien']);
+        if (entry.worldIds === undefined && !inherited.length) warnings.push('Quizwelten fehlen und die Kategorie hat keine Vorgabe: Der Altimport wird Italien zugeordnet.');
+        if (!Array.isArray(worldIds) || (!worldIds.length && !inherited.length) || worldIds.length > 30 || worldIds.some(id => typeof id !== 'string' || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(id))) errors.push('Mindestens eine direkte oder über die Kategorie geerbte Quizwelt auswählen.');
+        else if (worlds && worldIds.some(id => !worlds.some(world => world.id === id))) errors.push('Eine ausgewählte Quizwelt existiert nicht.');
         const questionText = String(entry.question || '').trim();
         const answers = Array.isArray(entry.answers) ? entry.answers.map(answer => String(answer).trim()).filter(Boolean) : [];
         const correct = Number(entry.correct ?? 0);
@@ -57,6 +62,7 @@ export function validateImportQuestions(rawQuestions, { questions, categories })
             errors,
             warnings,
             data: {
+                worldIds: Array.isArray(worldIds) ? [...new Set(worldIds)] : [],
                 categoryId,
                 question: questionText,
                 answers,

@@ -791,3 +791,11 @@ Von Anfang an gehören dazu:
 **Mein Favorit für den ersten sichtbaren Ausbau:** Reisepass plus Teilen-Karte. Das schafft sofort mehr Persönlichkeit und einen nachvollziehbaren Account-Nutzen. Anschließend bekommen die Stadtkarten echte Fortschrittswerte und Souvenirs.
 
 Vor Änderungen am Datenmodell würde ich wieder eine getrennte Stage-Umgebung herstellen. Diese Ausarbeitung bleibt hier im Chat; `hinweise.md` bleibt unverändert.
+
+
+## Quizwelten: Ideen für später (23.10.2026)
+
+Vorgemerkt, noch nicht umgesetzt:
+
+- **Visuelle Einstiege in Quizwelten:** Karten mit Bild und kurzer Beschreibung, etwa Italien, Kunst oder Weltgeschichte. Die öffentliche Filterung bleibt vorerst ausgeblendet; Gestaltung und Navigation werden separat ausgearbeitet.
+- **Weltenübergreifende Meilensteine:** Belohnungen für Entdeckungen in mehreren Quizwelten. Fragen behalten ihre stabile ID und dürfen durch Mehrfachzuordnungen nicht mehrfach zum Fragenfortschritt zählen. Schwellen und Regeln legen wir vor der Umsetzung fest.

@@ -1,8 +1,9 @@
 ﻿// Invitations identify a selection and round length, never accounts, answers or a fixed question set.
-export function createQuizInvitation({ categoryId = '', tagId = '', total, label = '' }, origin = 'https://quiz-hero.de') {
+export function createQuizInvitation({ categoryId = '', tagId = '', worldId = '', total, label = '' }, origin = 'https://quiz-hero.de') {
     if (!Number.isInteger(total) || total < 1 || total > 10000 || (!categoryId && !tagId)) return null;
     const url = new URL('/', origin);
     url.searchParams.set(categoryId ? 'category' : 'tag', categoryId || tagId);
+    if (worldId) url.searchParams.set('world', worldId);
     url.searchParams.set('invite', '1');
     url.searchParams.set('count', String(total));
     const selection = String(label).replace(/\s+/g, ' ').trim().slice(0, 100);
@@ -17,7 +18,7 @@ export function createQuizInvitation({ categoryId = '', tagId = '', total, label
 export function readQuizInvitation(params) {
     const rawCount = params.get('count');
     if (params.get('invite') !== '1' || !/^[1-9]\d{0,4}$/.test(rawCount || '')) return null;
-    return createQuizInvitation({ categoryId: params.get('category'), tagId: params.get('tag'), total: Number(rawCount) });
+    return createQuizInvitation({ categoryId: params.get('category'), tagId: params.get('tag'), worldId: params.get('world'), total: Number(rawCount) });
 }
 
 export async function shareQuizInvitation(invitation, browser = globalThis.navigator) {

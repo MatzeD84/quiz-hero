@@ -32,6 +32,12 @@ function start_round(): void
     $practice = $data['practice'] ?? false;
     $ids = $data['questionIds'] ?? null;
     $catalog = load_quiz_data(true, true);
+    $worldId=$data['worldId'] ?? '';
+    if ($worldId === null) $worldId='';
+    if (!is_string($worldId)) json_response(['ok'=>false,'error'=>'Ungültige Quizwelt.'],422);
+    $worldTitle=null;
+    foreach ($catalog['worlds'] as $world) if ($world['id']===$worldId) $worldTitle=$world['title'];
+    if ($worldId!=='' && $worldTitle===null) json_response(['ok'=>false,'error'=>'Quizwelt nicht verfügbar.'],422);
     if ($practice) {
         $practiceCategory = clean_string($data['categoryId'] ?? '', 120);
         if ($practiceCategory === '' || !empty($data['tagId'])) json_response(['ok'=>false,'error'=>'Eine Kategorie fuer die Uebungsrunde auswaehlen.'], 422);
@@ -56,6 +62,7 @@ function start_round(): void
     foreach ($catalog['categories'] as $entry) {
         if ($category !== '' && $entry['id'] !== $category) continue;
         foreach ($entry['questions'] as $question) {
+            if ($worldId!=='' && !in_array($worldId,$question['worldIds'],true)) continue;
             if ($tag !== '' && !in_array($tag, $question['tag'], true)) continue;
             $available[$question['id']] = $question;
         }
@@ -69,11 +76,11 @@ function start_round(): void
     $categoryTitle = $tagTitle = null;
     foreach ($catalog['categories'] as $entry) if ($entry['id'] === $category) $categoryTitle = $entry['title'];
     foreach ($catalog['tags'] as $entry) if ($entry['id'] === $tag) $tagTitle = $entry['title'];
-    $stmt = db()->prepare('INSERT INTO quiz_rounds(id,user_id,category_id,tag_id,category_title,tag_title,questions_json,is_practice) VALUES(?,?,?,?,?,?,?,?)');
+    $stmt = db()->prepare('INSERT INTO quiz_rounds(id,user_id,category_id,tag_id,category_title,tag_title,questions_json,is_practice,world_id,world_title) VALUES(?,?,?,?,?,?,?,?,?,?)');
     db()->beginTransaction();
     $lock=db()->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
     require_account();
-    $stmt->execute([$roundId, $user['id'], $category ?: null, $tag ?: null, $categoryTitle, $tagTitle, json_encode($questions, JSON_THROW_ON_ERROR), (int) $practice]);
+    $stmt->execute([$roundId, $user['id'], $category ?: null, $tag ?: null, $categoryTitle, $tagTitle, json_encode($questions, JSON_THROW_ON_ERROR), (int) $practice, $worldId ?: null, $worldTitle]);
     db()->commit();
     json_response(['ok' => true, 'roundId' => $roundId, 'questions' => $questions, 'isPractice' => $practice]);
 }
@@ -133,8 +140,8 @@ function save_result(): void
         json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => (int) $round['result_id'], 'souvenirs'=>souvenir_awards($pdo,(int)$user['id'],(int)$round['result_id']), 'avatarRewards'=>avatar_rewards($pdo,(int)$user['id'],(int)$round['result_id'])]);
     }
     if (strtotime($round['created_at']) < time() - 86400) { $pdo->rollBack(); json_response(['ok' => false, 'error' => 'Diese Runde ist abgelaufen.'], 410); }
-    $stmt = $pdo->prepare('INSERT INTO quiz_results(user_id,category_id,tag_id,category_title,tag_title,score,max_score,solved,total_questions,is_practice) VALUES(?,?,?,?,?,?,?,?,?,?)');
-    $stmt->execute([$user['id'], $round['category_id'], $round['tag_id'], $round['category_title'], $round['tag_title'], $score, $maxScore, $solved, count($questions), (int) $round['is_practice']]);
+    $stmt = $pdo->prepare('INSERT INTO quiz_results(user_id,category_id,tag_id,category_title,tag_title,score,max_score,solved,total_questions,is_practice,world_id,world_title) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
+    $stmt->execute([$user['id'], $round['category_id'], $round['tag_id'], $round['category_title'], $round['tag_title'], $score, $maxScore, $solved, count($questions), (int) $round['is_practice'], $round['world_id'], $round['world_title']]);
     $resultId = (int) $pdo->lastInsertId();
     $detail = $pdo->prepare('INSERT INTO quiz_question_results(result_id,user_id,question_id,question_version,difficulty,position,selected_answers,outcome,score,max_score,version_id,category_id_at_play) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
     foreach ($questionResults as $i => $questionResult) {

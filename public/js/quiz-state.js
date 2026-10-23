@@ -10,6 +10,9 @@ const cloneDeep = value => {
 export class QuizState {
     constructor() {
         this.categories = [];
+        this.allCategories = [];
+        this.worlds = [];
+        this.activeWorldId = null;
         this.tagsMeta = new Map();
         this.feedbackMessages = {};
         this.tagIndex = new Map();
@@ -24,14 +27,27 @@ export class QuizState {
         this.attempts = 0;
     }
 
-    setData({ categories, tags, feedback }) {
+    setData({ categories, tags, feedback, worlds = [] }) {
+        this.allCategories = categories;
         this.categories = categories;
+        this.worlds = worlds.filter(world => world.enabled !== false);
         const normalizedTags = tags.map(tag => ({
             ...tag,
             enabled: tag.enabled !== false
         }));
         this.tagsMeta = new Map(normalizedTags.map(tag => [tag.id, tag]));
         this.feedbackMessages = feedback;
+        this.buildTagIndex();
+    }
+
+    selectWorld(worldId) {
+        if (worldId && !this.worlds.some(world => world.id === worldId)) throw new Error('Quizwelt nicht verfügbar.');
+        this.resetRound();
+        this.activeWorldId = worldId || null;
+        this.categories = this.allCategories.map(category => ({
+            ...category,
+            questions: category.questions.filter(question => !worldId || question.worldIds?.includes(worldId))
+        })).filter(category => !worldId || category.questions.length > 0);
         this.buildTagIndex();
     }
 

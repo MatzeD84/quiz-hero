@@ -20,6 +20,23 @@ import { createResultShare, supportsResultShare, shareResult } from '../public/j
 import { createLoadingStatus } from '../public/js/admin/loading-status.js';
 import { souvenirItems, startedSouvenirs } from '../public/js/souvenirs.js';
 import { isAvatarAvailable } from '../public/js/avatar-policy.js';
+import { categoryWorldRemovalImpact } from '../public/js/admin/world-impact.js';
+
+test('category world removal respects direct assignments and replacement worlds', () => {
+    const category = { id: 'rom', worldIds: ['italien'] };
+    const questions = [
+        { categoryId: 'rom', directWorldIds: [] },
+        { categoryId: 'rom', directWorldIds: ['italien'] },
+        { categoryId: 'rom', directWorldIds: ['kunst'] },
+        { categoryId: 'florenz', directWorldIds: [] }
+    ];
+    assert.deepEqual(categoryWorldRemovalImpact(category, [], questions), {
+        removedWorldIds: ['italien'], affectedCount: 2, unassignedCount: 1
+    });
+    assert.equal(categoryWorldRemovalImpact(category, ['kunst'], questions).unassignedCount, 0);
+    assert.equal(categoryWorldRemovalImpact(category, ['italien'], questions).affectedCount, 0);
+    assert.equal(categoryWorldRemovalImpact(undefined, [], questions).removedWorldIds.length, 0);
+});
 
 test('private collection and passport pages use the release asset version', () => {
     const temp=fs.mkdtempSync(path.join(os.tmpdir(),'quiz-hero-asset-version-'));
@@ -170,6 +187,50 @@ test('a solved question cannot award points twice', () => {
     assert.equal(state.registerAttempt(true, 'easy'), 2);
     assert.equal(state.registerAttempt(true, 'easy'), 0);
     assert.equal(state.score, 2); assert.equal(state.attempts, 1);
+});
+
+test('quiz worlds scope category and topic rounds without duplicating shared questions', () => {
+    const state = new QuizState();
+    const shared = { id: 1, correct: 0, tag: ['Architektur'], worldIds: ['italien','kunst'] };
+    const italian = { id: 2, correct: 0, tag: ['Architektur'], worldIds: ['italien'] };
+    const german = { id: 3, correct: 0, tag: ['Architektur'], worldIds: ['deutschland'] };
+    state.setData({
+        worlds: ['italien','kunst','deutschland'].map(id => ({ id, title: id })).concat({ id:'hidden',enabled:false }),
+        categories: [{ id:'rom',questions:[shared,italian] },{ id:'berlin',questions:[german] }],
+        tags:[{id:'Architektur',title:'Architektur'}],feedback:{}
+    });
+    state.selectWorld('kunst');
+    assert.deepEqual(state.categories.map(c => c.id), ['rom']);
+    assert.equal(state.getAvailableTags().length, 1);
+    state.prepareRoundFromTag('Architektur', 'all');
+    assert.deepEqual(state.currentSequence.map(q => q.id), [1]);
+    state.selectWorld('italien');
+    state.prepareRoundFromCategory('rom', 'all');
+    assert.deepEqual(state.currentSequence.map(q => q.id).sort(), [1,2]);
+    state.selectWorld('deutschland');
+    state.prepareRoundFromTag('Architektur', 'all');
+    assert.deepEqual(state.currentSequence.map(q => q.id), [3]);
+    assert.throws(() => state.selectWorld('hidden'));
+    state.resetRound(); assert.equal(state.activeWorldId, 'deutschland');
+    assert.equal(state.allCategories[0].questions.length, 2);
+});
+
+test('world invitations preserve the quiz scope but no question identities', () => {
+    const invitation = createQuizInvitation({ categoryId:'rom', worldId:'kunst', total:5 });
+    const params = new URL(invitation.url).searchParams;
+    assert.equal(params.get('world'),'kunst');
+    assert.equal(new URL(readQuizInvitation(params).url).searchParams.get('world'),'kunst');
+    assert.equal(params.has('questionIds'),false);
+});
+
+test('authenticated round requests retain the selected quiz world', async () => {
+    const service = new UserService({ fetchFn: async () => { throw new Error('Unexpected network'); } });
+    let sent;
+    service.post = async (action, payload) => { sent = { action, payload }; return { ok:true, roundId:'round', questions:[] }; };
+    await service.startRound([1,2], { categoryId:'rom', worldId:'kunst' });
+    assert.equal(sent.action,'start-round');
+    assert.equal(sent.payload.worldId,'kunst');
+    assert.deepEqual(sent.payload.questionIds,[1,2]);
 });
 
 test('score feedback reports zero for a wrong answer and one point for a correct second try', () => {
@@ -392,6 +453,35 @@ test('admin import validation remains independent of DOM and flags duplicate que
     const result = validateImportQuestions([entry], { questions: [{question:'Existing?'}], categories:[{id:'rom'}] });
     assert.equal(result[0].valid, false);
     assert.ok(result[0].errors.some(error => error.includes('bereits')));
+});
+
+test('question imports preserve multiple worlds and warn about the Italy legacy default', async () => {
+    const { validateImportQuestions } = await import('../public/js/admin/import-validation.js');
+    const context={questions:[],categories:[{id:'rom'}],worlds:[{id:'italien'},{id:'kunst'}]};
+    const entry={categoryId:'rom',question:'World example?',answers:['A','B','C','D'],correct:0,worldIds:['italien','kunst','kunst']};
+    const result=validateImportQuestions([entry],context)[0];
+    assert.equal(result.valid,true);
+    assert.deepEqual(result.data.worldIds,['italien','kunst']);
+    assert.equal(validateImportQuestions([{...entry,worldIds:[]}],context)[0].valid,false);
+    assert.equal(validateImportQuestions([{...entry,worldIds:null}],context)[0].valid,false);
+    assert.equal(validateImportQuestions([{...entry,worldIds:['unknown']}],context)[0].valid,false);
+    const legacy={...entry};delete legacy.worldIds;
+    const legacyResult=validateImportQuestions([legacy],context)[0];
+    assert.deepEqual(legacyResult.data.worldIds,['italien']);
+    assert.ok(legacyResult.warnings.some(warning=>warning.includes('Italien')));
+});
+
+test('question imports inherit category worlds without creating direct duplicates', async () => {
+    const { validateImportQuestions } = await import('../public/js/admin/import-validation.js');
+    const context={questions:[],categories:[{id:'rom',worldIds:['italien']}],worlds:[{id:'italien'},{id:'kunst'}]};
+    const entry={categoryId:'rom',question:'Inherited import?',answers:['A','B','C','D'],correct:0};
+    const inherited=validateImportQuestions([entry],context)[0];
+    assert.equal(inherited.valid,true);
+    assert.deepEqual(inherited.data.worldIds,[]);
+    assert.deepEqual(inherited.warnings,[]);
+    assert.equal(validateImportQuestions([{...entry,worldIds:[]}],context)[0].valid,true);
+    assert.deepEqual(validateImportQuestions([{...entry,worldIds:['kunst']}],context)[0].data.worldIds,['kunst']);
+    assert.equal(validateImportQuestions([{...entry,worldIds:null}],context)[0].valid,false);
 });
 
 

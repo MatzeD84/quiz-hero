@@ -45,6 +45,7 @@ try {
         'admin-logout' => admin_logout(),
         'admin-me' => admin_me(),
         'admin-data' => admin_data(),
+        'admin-world-save' => admin_world_save(),
         'seo-export' => seo_export(),
         'admin-question-save' => admin_question_save(),
         'admin-question-import' => admin_question_import(),

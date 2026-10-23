@@ -29,6 +29,12 @@ function seo_export(): void
 function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
 {
     $pdo = db();
+    $worldRows = $pdo->query('SELECT * FROM quiz_worlds ORDER BY title,id')->fetchAll();
+    $worlds = array_map(static fn($row) => ['id'=>$row['id'],'title'=>$row['title'],'description'=>$row['description'],'enabled'=>(bool)$row['enabled'],'contentVersion'=>content_version($row)], array_values(array_filter($worldRows,static fn($row)=>!$onlyActive || $row['enabled'])));
+    $worldMap = [];
+    foreach ($pdo->query('SELECT question_id,world_id FROM quiz_question_worlds ORDER BY world_id')->fetchAll() as $link) $worldMap[(int)$link['question_id']][]=$link['world_id'];
+    $categoryWorldMap=[];
+    foreach ($pdo->query('SELECT category_id,world_id FROM quiz_category_worlds ORDER BY world_id')->fetchAll() as $link) $categoryWorldMap[$link['category_id']][]=$link['world_id'];
 
     $categoriesStmt = $pdo->query('SELECT * FROM quiz_categories ORDER BY sort_order ASC, title ASC');
     $categoryRows = array_values(array_filter(
@@ -40,11 +46,12 @@ function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
     $questionRows = $pdo->query($questionSql)->fetchAll();
     $questionsByCategory = [];
     foreach ($questionRows as $questionRow) {
+        $questionRow=question_with_worlds($questionRow,$worldMap[(int)$questionRow['id']] ?? [],$categoryWorldMap[$questionRow['category_id']] ?? []);
         $questionsByCategory[$questionRow['category_id']][] = format_question($questionRow);
     }
 
     $categories = array_map(
-        static fn(array $category): array => format_category($category, $questionsByCategory[$category['id']] ?? []),
+        static fn(array $category): array => format_category($category + ['worldIds'=>$categoryWorldMap[$category['id']] ?? []], $questionsByCategory[$category['id']] ?? []),
         $categoryRows
     );
 
@@ -64,7 +71,7 @@ function load_quiz_data(bool $onlyActive, bool $onlyEnabledCategories): array
         $feedback[$entry['feedback_key']] = decode_json_field($entry['messages_json'] ?? null, []);
     }
 
-    return ['categories' => $categories, 'tags' => $tags, 'feedback' => $feedback];
+    return ['worlds' => $worlds, 'categories' => $categories, 'tags' => $tags, 'feedback' => $feedback];
 }
 
 function require_seo_export_token(): void
@@ -86,6 +93,9 @@ function format_question(array $question): array
         'id' => (int) $question['id'],
         'contentVersion' => content_version($question),
         'categoryId' => $question['category_id'],
+        'worldIds' => $question['worldIds'] ?? [],
+        'directWorldIds' => $question['directWorldIds'] ?? [],
+        'inheritedWorldIds' => $question['inheritedWorldIds'] ?? [],
         'question' => $question['question'],
         'answers' => decode_json_field($question['answers_json'] ?? null, []),
         'correct' => (int) $question['correct_index'],

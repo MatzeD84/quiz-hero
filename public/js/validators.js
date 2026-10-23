@@ -95,6 +95,9 @@ export function validateCategories(categories) {
                 errors.push(`"correct" in ${questionRef} liegt au\u00dferhalb des Antwortbereichs.`);
             }
 
+            if (question.worldIds !== undefined && (!Array.isArray(question.worldIds) || question.worldIds.some(id => typeof id !== 'string' || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(id)))) {
+                errors.push(`${questionRef} besitzt ungültige Quizwelten.`);
+            }
             if (question.tag && !Array.isArray(question.tag)) {
                 errors.push(`${questionRef} besitzt ein ung\u00fcltiges tag-Feld.`);
             } else if (Array.isArray(question.tag)) {

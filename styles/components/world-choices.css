@@ -1,0 +1,19 @@
+.world-choices__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12) var(--space-20);
+}
+
+.world-choices__list > label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.world-choices__list input[type="checkbox"] {
+    width: auto;
+    min-height: auto;
+}

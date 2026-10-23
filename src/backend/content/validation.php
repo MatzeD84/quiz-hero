@@ -56,6 +56,11 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
 
     $categoryRaw = trim((string) ($entry['categoryId'] ?? $entry['category'] ?? ''));
     $categoryId = $categoryRaw === '' ? '' : slugify($categoryRaw);
+    $inherited=category_world_ids($categoryId);
+    $worldIds=array_key_exists('worldIds',$entry) ? $entry['worldIds'] : ($inherited ? [] : ['italien']);
+    if (!array_key_exists('worldIds',$entry) && !$inherited) $warnings[]='Quizwelten fehlen und die Kategorie hat keine Vorgabe: Altimport wird Italien zugeordnet.';
+    $errors=array_merge($errors,world_id_errors($worldIds,true));
+    if (!$errors && !$worldIds && !$inherited) $errors[]='Mindestens eine direkte oder über die Kategorie geerbte Quizwelt auswählen.';
     $questionText = clean_string($entry['question'] ?? '', 1000);
     $answers = is_array($entry['answers'] ?? null)
         ? array_values(array_map(static fn($answer): string => clean_string((string) $answer, 255), $entry['answers']))
@@ -106,6 +111,7 @@ function validate_import_question(mixed $entry, int $index, array $categoryIds, 
     $payload = null;
     if ($errors === []) {
         $payload = [
+            'worldIds' => array_values(array_unique($worldIds)),
             'category_id' => $categoryId,
             'question' => $questionText,
             'answers_json' => json_encode($answers, JSON_UNESCAPED_UNICODE),
@@ -213,6 +219,7 @@ function format_category(array $category, array $questions): array
     return [
         'id' => $category['id'],
         'contentVersion' => content_version($category),
+        'worldIds' => $category['worldIds'] ?? [],
         'title' => $category['title'],
         'enabled' => (bool) $category['enabled'],
         'icon' => $category['icon'] ?? '',

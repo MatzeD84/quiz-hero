@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/content/catalog.php';
+require_once __DIR__ . '/content/worlds.php';
 require_once __DIR__ . '/accounts/model.php';
 require_once __DIR__ . '/accounts/avatar-rewards.php';
 require_once __DIR__ . '/infrastructure/mail.php';

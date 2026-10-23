@@ -46,7 +46,13 @@ function admin_category_save(): void
     $existing = $pdo->prepare('SELECT * FROM quiz_categories WHERE id=? FOR UPDATE');
     $existing->execute([$id]);
     $row = $existing->fetch();
-    if ($row) assert_content_version($row, $data);
+    if ($row) {
+        $row['worldIds']=category_world_ids($id);
+        assert_content_version($row, $data);
+    }
+    $worldIds=array_key_exists('worldIds',$data) ? $data['worldIds'] : ($row['worldIds'] ?? []);
+    $worldErrors=world_id_errors($worldIds,true);
+    if ($worldErrors) { $pdo->rollBack();json_response(['ok'=>false,'error'=>implode(' ',$worldErrors)],422); }
     if ($row) $payload['sort_order'] = (int) $row['sort_order'];
     $stmt = $pdo->prepare('INSERT INTO quiz_categories (id, title, description, seo_description, icon, enabled, badge_json, sort_order) VALUES (:id, :title, :description, :seo_description, :icon, :enabled, :badge_json, :sort_order) ON DUPLICATE KEY UPDATE title = VALUES(title), description = VALUES(description), seo_description = VALUES(seo_description), icon = VALUES(icon), enabled = VALUES(enabled), badge_json = VALUES(badge_json), sort_order = VALUES(sort_order)');
     if ($automaticId) {
@@ -62,6 +68,7 @@ function admin_category_save(): void
         }
         throw $error;
     }
+    replace_category_worlds($id,$worldIds);
     $pdo->commit();
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $id]);
 }

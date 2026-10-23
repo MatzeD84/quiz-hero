@@ -60,7 +60,13 @@ export class QuizDataService {
 
         const tags = tagsData.tags ?? [];
 
-        this.cache = { categories, tags, feedback };
+        const worlds = categoriesManifest.worlds ?? [{ id: 'italien', title: 'Italien', enabled: true }];
+        for (const category of categories) for (const question of category.questions) {
+            question.directWorldIds ??= question.worldIds ?? (category.worldIds?.length ? [] : ['italien']);
+            question.inheritedWorldIds = category.worldIds || [];
+            question.worldIds = [...new Set([...question.directWorldIds,...question.inheritedWorldIds])].sort();
+        }
+        this.cache = { categories, tags, feedback, worlds };
         return this.cache;
     }
 
@@ -91,7 +97,9 @@ export class QuizDataService {
                 throw new Error(`Ungültige API-Daten:
 ${validationErrors.join('\n')}`);
             }
-            return { categories, tags, feedback };
+            const worlds = data.worlds ?? [];
+            if (!Array.isArray(worlds) || worlds.some(world => !world || typeof world.id !== 'string' || typeof world.title !== 'string')) throw new Error('Ungültige Quizwelten.');
+            return { categories, tags, feedback, worlds };
         } catch (error) {
             if (CONFIG.devMode) {
                 console.warn('Datenbank-API nicht verfügbar.', error);

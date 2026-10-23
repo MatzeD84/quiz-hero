@@ -12,6 +12,7 @@
         },
         {
             "id": "rom",
+            "worldIds": ["italien"],
             "title": "Rom",
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-rom-2.png",
@@ -22,6 +23,7 @@
         },
         {
             "id": "neapel",
+            "worldIds": ["italien"],
             "title": "Neapel",
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-neapel.png",
@@ -32,6 +34,7 @@
         },
         {
             "id": "amalfi",
+            "worldIds": ["italien"],
             "title": "Amalfi Küste",
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-amalfikueste.png",
@@ -42,6 +45,7 @@
         },
         {
             "id": "florenz",
+            "worldIds": ["italien"],
             "title": "Florenz",
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-florenz.png",
@@ -52,6 +56,7 @@
         },
         {
             "id": "siena",
+            "worldIds": ["italien"],
             "title": "Siena",
             "enabled": true,
             "icon": "images/website/kategorie/kategorie-siena.png",

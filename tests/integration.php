@@ -18,7 +18,10 @@ function check(bool $condition, string $label): void {
     echo "PASS: {$label}\n";
 }
 function execute_sql_file(string $file): void {
-    foreach (split_sql_statements(file_get_contents($file)) as $sql) db()->exec($sql);
+    foreach (split_sql_statements(file_get_contents($file)) as $sql) {
+        $statement=db()->query($sql);
+        $statement->closeCursor();
+    }
 }
 function clear_test_tables(): void {
     // Guard repeated at the destructive boundary.
@@ -385,7 +388,11 @@ try {
     for ($i=0;$i<8;$i++) request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 401);
     request('admin-login', ['username'=>'attack'.$suffix,'password'=>'invalid'], 429);
     check(true, 'SQL injection login rejected, legacy bearer payload rejected, admin login rate limit enforced');
-    request('admin-question-save', ['id'=>$questionId,'contentVersion'=>hash('sha256',json_encode($pdo->query('SELECT * FROM quiz_questions WHERE id=' . $questionId)->fetch(), JSON_THROW_ON_ERROR)),'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
+    $questionVersionRow=$pdo->query('SELECT * FROM quiz_questions WHERE id='.$questionId)->fetch();
+    $questionVersionRow['directWorldIds']=[];
+    $questionVersionRow['inheritedWorldIds']=[];
+    $questionVersionRow['worldIds']=[];
+    request('admin-question-save', ['id'=>$questionId,'contentVersion'=>hash('sha256',json_encode($questionVersionRow, JSON_THROW_ON_ERROR)),'categoryId'=>'audit','question'=>'Updated audit','answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'easy','imageUrl'=>'/images/audit.png','tags'=>'Antike, antike, ','active'=>true,'sourceUrl'=>'https://example.test/source','imageAlt'=>'Audit image','reviewedBy'=>'Test editor','reviewedAt'=>'2026-01-01']);
     request('admin-question-save', ['id'=>$questionId,'contentVersion'=>'stale','categoryId'=>'audit','question'=>'Overwrite attempt','answers'=>['A','B','C','D'],'correct'=>0], 409);
     check($pdo->query('SELECT question FROM quiz_questions WHERE id=' . $questionId)->fetchColumn() === 'Updated audit', 'stale editor cannot overwrite a changed question');
     $saved = $pdo->query('SELECT image_url,tags_json FROM quiz_questions')->fetch();
@@ -419,13 +426,14 @@ try {
     check(is_file(QUIZ_HERO_PUBLIC_ROOT . '/' . $oldMediaPath) && $retained['historical'] && !$retained['deletable'], 'historical image is retained and protected from deletion after replacement');
     $pdo->exec("DELETE FROM quiz_questions WHERE category_id='media-test'");
     $pdo->exec("DELETE FROM quiz_categories WHERE id='media-test'");
-    request('admin-category-save', ['id'=>'audit','contentVersion'=>hash('sha256',json_encode($pdo->query("SELECT * FROM quiz_categories WHERE id='audit'")->fetch(), JSON_THROW_ON_ERROR)),'title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
+    $categoryVersionRow=$pdo->query("SELECT * FROM quiz_categories WHERE id='audit'")->fetch();$categoryVersionRow['worldIds']=[];
+    request('admin-category-save', ['id'=>'audit','contentVersion'=>hash('sha256',json_encode($categoryVersionRow, JSON_THROW_ON_ERROR)),'title'=>'Audit','enabled'=>true,'badgeActive'=>false,'badgeText'=>'']);
     request('admin-category-save', ['id'=>'delete-me','title'=>'Delete me','enabled'=>false,'badgeActive'=>false,'badgeText'=>'']);
     $autoCategory = request('admin-category-save', ['id'=>'','title'=>'Neue Reise','enabled'=>true]);
     $duplicateCategory = request('admin-category-save', ['title'=>'Neue Reise','enabled'=>true]);
     check($autoCategory['id'] === 'neue-reise' && $duplicateCategory['id'] === 'neue-reise-2', 'category IDs derive from titles and collisions create separate categories');
     $pdo->exec("UPDATE quiz_categories SET sort_order=37 WHERE id='neue-reise'");
-    $categoryVersion = hash('sha256', json_encode($pdo->query("SELECT * FROM quiz_categories WHERE id='neue-reise'")->fetch(), JSON_THROW_ON_ERROR));
+    $categoryVersion = array_column(request('admin-data')['categories'],'contentVersion','id')['neue-reise'];
     request('admin-category-save', ['id'=>$autoCategory['id'],'contentVersion'=>$categoryVersion,'title'=>'Anderer Name','enabled'=>true,'sortOrder'=>999]);
     check($pdo->query("SELECT title FROM quiz_categories WHERE id='neue-reise'")->fetchColumn() === 'Anderer Name'
         && (int) $pdo->query("SELECT sort_order FROM quiz_categories WHERE id='neue-reise'")->fetchColumn() === 37
@@ -512,6 +520,8 @@ try {
     require __DIR__.'/avatar-catalog.inc.php';
     require __DIR__.'/avatar-lifecycle.inc.php';
     require __DIR__.'/souvenir-media.inc.php';
+    require __DIR__.'/worlds.inc.php';
+    require __DIR__.'/category-worlds.inc.php';
     echo "{$checks} integration checks passed.\n";
 } finally {
     foreach ($mediaTestFiles as $file) if (is_file($file)) unlink($file);

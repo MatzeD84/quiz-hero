@@ -35,6 +35,7 @@
                 <button class="tab tab--active" type="button" data-admin-tab="edit" aria-pressed="true">Frage bearbeiten</button>
                 <button class="tab" type="button" data-admin-tab="new" aria-pressed="false">Neue Frage</button>
                 <button class="tab" type="button" data-admin-tab="categories" aria-pressed="false">Kategorien</button>
+                <button class="tab" type="button" data-admin-tab="worlds" aria-pressed="false">Quizwelten</button>
                 <button class="tab" type="button" data-admin-tab="media" aria-pressed="false">Mediathek</button>
                 <button class="tab" type="button" data-admin-tab="import" aria-pressed="false">Import</button>
                 <button class="tab" type="button" data-admin-tab="feedback" aria-pressed="false">Feedback</button>
@@ -49,6 +50,7 @@
                         <span id="js-admin-question-count" class="admin-count"></span>
                     </div>
                     <div class="admin-filters" aria-label="Fragen filtern">
+                        <label><span>Quizwelt</span><select id="js-admin-filter-world"></select></label>
                         <label>
                             <span>Suche</span>
                             <input id="js-admin-question-search" type="search" placeholder="Frage suchen">
@@ -86,6 +88,12 @@
 
                         <input id="js-admin-question-id" type="hidden">
                         <label>Kategorie* <select id="js-admin-category" required></select></label>
+                        <fieldset class="world-choices">
+                            <legend>Quizwelten</legend>
+                            <p id="js-admin-inherited-worlds" class="admin-form__hint"></p>
+                            <p class="admin-form__hint">Zusätzliche direkte Zuordnungen auswählen. Geerbte Quizwelten werden an der Kategorie gepflegt; ein Häkchen hier gilt unabhängig davon.</p>
+                            <div id="js-admin-question-worlds" class="world-choices__list"></div>
+                        </fieldset>
                         <label>Frage* <textarea id="js-admin-question" required></textarea></label>
                         <div class="admin-form__answers">
                             <label>Antwort 1* <input class="js-admin-answer" name="answer-1" type="text" required></label>
@@ -151,6 +159,20 @@
                 </section>
             </div>
 
+            <div id="js-admin-world-panel" class="admin-panel admin-panel--single u-hidden">
+                <section class="admin-category-editor">
+                    <div class="admin-section-heading"><h2>Quizwelten</h2><button id="js-admin-new-world" class="account-action-link" type="button">Neue Quizwelt</button></div>
+                    <label class="admin-category-select">Bestehende Quizwelt<select id="js-admin-world-select"></select></label>
+                    <form id="js-admin-world-form" class="admin-form">
+                        <input id="js-admin-world-id" type="hidden">
+                        <label>Name*<input id="js-admin-world-title" maxlength="120" required></label>
+                        <label>Beschreibung<input id="js-admin-world-description" maxlength="255"></label>
+                        <label><input id="js-admin-world-enabled" type="checkbox" checked> Aktiv</label>
+                        <p class="admin-form__hint">Deaktivierte Quizwelten verschwinden aus der Auswahl. Fragen, Zuordnungen und bisherige Ergebnisse bleiben erhalten.</p>
+                        <button class="btn btn--modal" type="submit">Quizwelt speichern</button>
+                    </form>
+                </section>
+            </div>
             <div id="js-admin-category-panel" class="admin-panel admin-panel--single u-hidden">
                 <section class="admin-category-editor">
                     <div class="admin-section-heading">
@@ -164,6 +186,11 @@
                     <form id="js-admin-category-form" class="admin-form">
                         <input id="js-admin-category-id" type="hidden">
                         <label>Titel* <input id="js-admin-category-title" type="text" required></label>
+                        <fieldset class="world-choices">
+                            <legend>Quizwelten für diese Kategorie</legend>
+                            <p class="admin-form__hint">Gelten automatisch für alle bestehenden und zukünftigen Fragen dieser Kategorie. Direkte Ergänzungen an Fragen bleiben erhalten.</p>
+                            <div id="js-admin-category-worlds" class="world-choices__list"></div>
+                        </fieldset>
                         <label>Beschreibung <input id="js-admin-category-description" type="text"></label>
                         <label>SEO-Text <textarea id="js-admin-category-seo"></textarea></label>
                         <section class="admin-image-field">
@@ -309,6 +336,7 @@
   "questions": [
     {
       "categoryId": "rom",
+      "worldIds": ["italien"],
       "question": "Welcher römische Platz war in der Antike das politische und religiöse Zentrum der Stadt?",
       "answers": [
         "Forum Romanum",
@@ -326,6 +354,7 @@
     },
     {
       "categoryId": "neapel",
+      "worldIds": ["italien"],
       "question": "Welcher Vulkan liegt in der Nähe von Neapel und verschüttete im Jahr 79 n. Chr. Pompeji?",
       "answers": [
         "Ätna",

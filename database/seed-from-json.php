@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/../api/bootstrap.php';
+require __DIR__ . '/../src/backend/modules.php';
 
 function read_json_file(string $path): array
 {
@@ -37,6 +38,10 @@ try {
         ]);
 
         $deleteQuestionsStmt->execute(['category_id' => $category['id']]);
+        if (array_key_exists('worldIds',$category)) {
+            if (world_id_errors($category['worldIds'],true)) throw new RuntimeException('Invalid category worldIds in seed data.');
+            replace_category_worlds($category['id'],$category['worldIds']);
+        }
 
         $file = $category['questionsFile'] ?? '';
         if ($file === '' || !is_file($root . '/' . $file)) {
@@ -44,6 +49,9 @@ try {
         }
         $questions = read_json_file($root . '/' . $file)['questions'] ?? [];
         foreach ($questions as $questionSort => $question) {
+            $inherited=category_world_ids($category['id']);
+            $worldIds=$question['directWorldIds'] ?? $question['worldIds'] ?? ($inherited ? [] : ['italien']);
+            if (world_id_errors($worldIds,true) || (!$worldIds && !$inherited)) throw new RuntimeException('Unknown or invalid worldIds in seed data.');
             $questionStmt->execute([
                 'category_id' => $category['id'],
                 'question' => $question['question'],
@@ -58,6 +66,7 @@ try {
                 'reviewed' => !empty($question['reviewed']) ? 1 : 0,
                 'sort_order' => ($questionSort + 1) * 10,
             ]);
+            replace_question_worlds((int)$pdo->lastInsertId(),$worldIds);
         }
     }
 

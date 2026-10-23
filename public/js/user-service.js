@@ -148,7 +148,7 @@ export class UserService {
     }
 
     async startRound(questionIds, context) {
-        const data = await this.post('start-round', { questionIds, categoryId: context.categoryId || '', tagId: context.tagId || '', practice: Boolean(context.practice) }, { csrf: true });
+        const data = await this.post('start-round', { questionIds, categoryId: context.categoryId || '', tagId: context.tagId || '', worldId: context.worldId || null, practice: Boolean(context.practice) }, { csrf: true });
         if (!data.ok) throw new Error(data.error || 'Quizrunde konnte nicht gestartet werden.');
         return data;
     }

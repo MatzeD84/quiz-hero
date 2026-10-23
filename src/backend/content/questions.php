@@ -10,17 +10,31 @@ function admin_question_save(): void
     $pdo = db();
 
     $pdo->beginTransaction();
+    $categoryLock=$pdo->prepare('SELECT id FROM quiz_categories WHERE id=? FOR UPDATE');
+    $categoryLock->execute([$question['category_id']]);
+    if (!$categoryLock->fetchColumn()) { $pdo->rollBack();json_response(['ok'=>false,'error'=>'Kategorie existiert nicht mehr.'],422); }
+    $inherited=category_world_ids($question['category_id']);
+    $hasWorldIds = array_key_exists('worldIds',$data);
+    $worldIds = $hasWorldIds ? $data['worldIds'] : null;
     if (!empty($data['id'])) {
         $existing = $pdo->prepare('SELECT * FROM quiz_questions WHERE id=? FOR UPDATE');
         $existing->execute([ensure_int($data['id'], 1, PHP_INT_MAX)]);
-        assert_content_version($existing->fetch() ?: null, $data);
+        $row=$existing->fetch() ?: null;
+        if ($row) $row=question_with_worlds($row,question_world_ids((int)$row['id']),category_world_ids($row['category_id']));
+        assert_content_version($row, $data);
+        if (!$hasWorldIds) $worldIds=$row['directWorldIds'] ?: ($inherited ? [] : ['italien']);
         $stmt = $pdo->prepare('UPDATE quiz_questions SET category_id = :category_id, question = :question, answers_json = :answers_json, correct_index = :correct_index, difficulty = :difficulty, question_type = :question_type, image_url = :image_url, tags_json = :tags_json, background_knowledge = :background_knowledge, editorial_json = :editorial_json, active = :active, reviewed = :reviewed, sort_order = :sort_order WHERE id = :id');
         $question['id'] = ensure_int($data['id'], 1, PHP_INT_MAX);
     } else {
         $stmt = $pdo->prepare('INSERT INTO quiz_questions (category_id, question, answers_json, correct_index, difficulty, question_type, image_url, tags_json, background_knowledge, editorial_json, active, reviewed, sort_order) VALUES (:category_id, :question, :answers_json, :correct_index, :difficulty, :question_type, :image_url, :tags_json, :background_knowledge, :editorial_json, :active, :reviewed, :sort_order)');
     }
+    if (!$hasWorldIds && $worldIds === null) $worldIds=$inherited ? [] : ['italien'];
+    $worldErrors=world_id_errors($worldIds,true);
+    if (!$worldErrors && !$worldIds && !$inherited) $worldErrors[]='Mindestens eine direkte oder über die Kategorie geerbte Quizwelt auswählen.';
+    if ($worldErrors) { $pdo->rollBack(); json_response(['ok'=>false,'error'=>implode(' ',$worldErrors)],422); }
     $stmt->execute($question);
     $savedId = !empty($question['id']) ? $question['id'] : (int) $pdo->lastInsertId();
+    replace_question_worlds($savedId,$worldIds);
     $pdo->commit();
 
     json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'id' => $savedId]);
@@ -75,6 +89,7 @@ function admin_question_import(): void
     $pdo->beginTransaction();
     try {
         foreach ($validQuestions as $question) {
+            $worldIds=$question['worldIds'];unset($question['worldIds']);
             if (!isset($categoryIds[$question['category_id']])) {
                 $categoryStmt->execute([
                     'id' => $question['category_id'],
@@ -83,7 +98,14 @@ function admin_question_import(): void
                 ]);
                 $categoryIds[$question['category_id']] = true;
             }
+            $categoryLock=$pdo->prepare('SELECT id FROM quiz_categories WHERE id=? FOR UPDATE');
+            $categoryLock->execute([$question['category_id']]);
+            if (!$worldIds && !category_world_ids($question['category_id'])) {
+                $pdo->rollBack();
+                json_response(['ok'=>false,'error'=>'Die geerbten Quizwelten wurden geändert. Import bitte erneut prüfen.'],409);
+            }
             $stmt->execute($question);
+            replace_question_worlds((int)$pdo->lastInsertId(),$worldIds);
         }
         $pdo->commit();
     } catch (Throwable $exception) {

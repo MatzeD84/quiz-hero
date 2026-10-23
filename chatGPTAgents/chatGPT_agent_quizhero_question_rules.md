@@ -14,6 +14,8 @@ Jede ausgegebene Frage muss:
 
 KI-generierte Fragen gelten nie automatisch als redaktionell geprüft. Sie werden mit `active: false` und `reviewed: false` ausgegeben.
 
+Quizwelten, lokale erste Version vom 23.10.2026 mit Kategorie-Vererbung: Neue Importdateien verwenden `worldIds` als direkte Ergänzungen. Kategorie-Vorgaben gelten automatisch; `[]` ist zulässig, wenn die Zielkategorie bereits passende Quizwelten vererbt. Fehlt das Feld und es gibt keine Kategorie-Vorgabe, gilt der historische Italien-Standard mit Warnung. Diesen Standard nicht für neue nicht-italienische Inhalte verwenden. Eine Frage wird für mehrere Welten nicht dupliziert. Verfügbare Welt-IDs und Kategorie-Vorgaben im jeweils aktuellen Datenbestand prüfen, nichts erfinden. Bei fachlich unklarer Zuordnung gebündelt nachfragen. Solange Migrationen 020/021 noch nicht auf Production laufen, lokale und produktive Verfügbarkeit unterscheiden. Definition und Schema: [Quizwelten](../docs/QUIZWELTEN.md).
+
 Die projektweite `AGENTS.md` aktiviert diese Regeln automatisch. Der Nutzer muss diese Datei nicht im Prompt nennen.
 
 ## Kurze Aufträge und Standardwerte
