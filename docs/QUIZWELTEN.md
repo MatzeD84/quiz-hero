@@ -8,7 +8,7 @@ Stand: 23.10.2026. **Auf Production veröffentlicht; Migrationen 020 und 021 lok
 
 ## Modell
 
-### Lokale Formular-Nachbesserung (noch nicht veröffentlicht)
+### Formular-Nachbesserung (auf Production seit 23.10.2026)
 
 Bei „Frage bearbeiten“ und „Neue Frage“ sind Kategorie-Quizwelten automatisch angekreuzt und nativ deaktiviert, mit Herkunft am Häkchen. Andere Welten bleiben zusätzlich auswählbar. Beim Kategorienwechsel werden geerbte Werte neu berechnet; direkte Ergänzungen bleiben erhalten. Bestehende explizite Zuordnungen, die zugleich geerbt werden, bleiben intern bewahrt. Ausgeblendete Formularwerte halten direkte IDs getrennt von der sichtbaren Vereinigung, auch beim Verwerfen von Änderungen. Keine Datenbankänderung nötig. 41 Frontendtests erfolgreich; der neue Test prüft Sperre, Auswahl, Kategorienwechsel und bestehende direkte Zuordnungen.
 

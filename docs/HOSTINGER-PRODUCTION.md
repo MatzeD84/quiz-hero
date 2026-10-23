@@ -1,5 +1,13 @@
 # Hostinger production
 
+## Quizwelt-Formulare – Folgerelease am 23.10.2026
+
+Release `d4d6af0000a0-20261023153242`, Commit `d4d6af0000a0649af193b594639ed0319fa6b8d6`, erfolgreich aktiviert. Geerbte Quizwelten sind in bestehenden und neuen Fragen angekreuzt und gesperrt; zusätzliche direkte Zuordnungen bleiben wählbar. Keine Migration, Schema bleibt bis 021.
+
+- Vollständiges Vorabbackup: `private/backups/before-souvenirs-20261023153206/`. Vorheriges Release bleibt erhalten.
+- 41 lokale Frontendtests und Browserprüfung von Auswahl, Kategorienwechsel und Verwerfen erfolgreich. Serverbuild mit Vertragstests, PHP-Lint, SEO-Export, Migrationsprüfung und HTTPS-Freigabe erfolgreich. Ausgeliefertes Adminmodul einschließlich Cacheversion und nativer Checkbox-Sperre per HTTPS bestätigt; Startseite, Admin und öffentliche API HTTP 200.
+- Ein erster Worker-Aufruf überschnitt sich mit Hostingers Gitabruf und konnte den neuen Commit noch nicht archivieren. Nach abgeschlossenem Abruf lief der unveränderte Worker erfolgreich; bis zur Freigabe blieb das vorherige Release aktiv. Keine Production-Testdaten geschrieben.
+
 ## Quizwelten – Rollout am 23.10.2026
 
 Release `69aca6949c36-20261023151957`, Commit `69aca6949c36db89c3c6923534462ebb208e8f5e`, aktiviert und per HTTPS geprüft. `/version.json` bleibt die maßgebliche Quelle für den aktiven Stand.

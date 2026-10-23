@@ -6,7 +6,7 @@ Stand: 23. Oktober 2026. Kompakter Überblick über den aktuellen Projektstand u
 
 ### Quizwelten – erste Version auf Production (23.10.2026)
 
-- Lokale Nachbesserung, noch nicht veröffentlicht: Geerbte Quizwelten sind in bestehenden und neuen Fragen angekreuzt und gesperrt. Zusätzliche Welten bleiben wählbar; ein Kategorienwechsel berechnet die Vererbung neu, ohne geerbte Werte als direkte Zuordnung zu speichern.
+- Nachbesserung auf Production (23.10.2026): Geerbte Quizwelten sind in bestehenden und neuen Fragen angekreuzt und gesperrt. Zusätzliche Welten bleiben wählbar; ein Kategorienwechsel berechnet die Vererbung neu, ohne geerbte Werte als direkte Zuordnung zu speichern.
 
 - Bestätigung vor dem Entfernen von Kategorie-Quizwelten: zeigt betroffene und danach unzugeordnete Fragen unter Berücksichtigung direkter Ergänzungen. Abbrechen erhält die Eingaben.
 
