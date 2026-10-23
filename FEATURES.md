@@ -4,16 +4,16 @@ Stand: 23. Oktober 2026. Kompakter Überblick über den aktuellen Projektstand u
 
 ## Bereits implementiert
 
-### Quizwelten – erste Version lokal (23.10.2026, noch nicht veröffentlicht)
+### Quizwelten – erste Version auf Production (23.10.2026)
 
 - Bestätigung vor dem Entfernen von Kategorie-Quizwelten: zeigt betroffene und danach unzugeordnete Fragen unter Berücksichtigung direkter Ergänzungen. Abbrechen erhält die Eingaben.
 
 - Neue Ebene über Kategorien und Tags: eine Frage kann mehreren Quizwelten wie Italien und Kunst zugeordnet werden, ohne kopiert zu werden.
 - Admin-Reiter für Weltpflege und Aktivierung; Mehrfachauswahl im Fragenformular, Filter nach Welt oder fehlender Zuordnung, Import mit `worldIds`.
-- Quizwelten an Kategorien werden automatisch an bestehende und neue Fragen vererbt. Direkte Ergänzungen bleiben erhalten; Fragenliste und Formular unterscheiden „über Kategorie …“ und „direkt“. Migration 021 lokal angewendet, bekannte italienische Stadtkategorien zu Italien verknüpft und redundante Einzelzuordnungen bereinigt.
+- Quizwelten an Kategorien werden automatisch an bestehende und neue Fragen vererbt. Direkte Ergänzungen bleiben erhalten; Fragenliste und Formular unterscheiden „über Kategorie …“ und „direkt“. Migration 021 lokal und auf Production angewendet, bekannte italienische Stadtkategorien zu Italien verknüpft und redundante Einzelzuordnungen bereinigt.
 - Die Startseite zeigt weiterhin alle verfügbaren Kategorien und Tag-Runden ohne Quizweltfilter. Eine gestaltete öffentliche Weltwahl folgt später. Serverseitige Weltprüfung und Weltkontext in Einladungen sind für später vorbereitet.
-- Bekannte italienische Stadtkategorien lokal zu Italien migriert. Bestehende Fragen-IDs, Fortschritte und Souvenirs bleiben erhalten; keine separate Weltstatistik in dieser Version.
-- Migrationen 020 und 021 nur lokal angewendet; Details zu Schema, Altimporten, Grenzen und Erweiterungen: [Quizwelten](docs/QUIZWELTEN.md).
+- Bekannte italienische Stadtkategorien lokal und auf Production zu Italien migriert. Bestehende Fragen-IDs, Fortschritte und Souvenirs bleiben erhalten; keine separate Weltstatistik in dieser Version.
+- Migrationen 020 und 021 lokal und auf Production angewendet; Details zu Schema, Altimporten, Grenzen und Erweiterungen: [Quizwelten](docs/QUIZWELTEN.md).
 
 ### Quiz spielen
 

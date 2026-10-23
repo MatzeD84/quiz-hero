@@ -1,5 +1,16 @@
 # Hostinger production
 
+## Quizwelten – Rollout am 23.10.2026
+
+Release `69aca6949c36-20261023151957`, Commit `69aca6949c36db89c3c6923534462ebb208e8f5e`, aktiviert und per HTTPS geprüft. `/version.json` bleibt die maßgebliche Quelle für den aktiven Stand.
+
+- Veröffentlicht: Quizweltpflege, Kategorie-Vererbung, direkte Ergänzungen an Fragen, Herkunftsanzeige, Import und Bestätigung vor dem Entfernen von Kategorie-Zuordnungen. Die Startseite bleibt ohne Quizweltfilter.
+- Vollständiges Backup vor Migration: `private/backups/before-souvenirs-20261023151709/` mit SQL-Dump, Konfiguration, Uploadarchiv und Manifest. Frühere abgebrochene Backupanläufe enthalten keinen vollständigen Dump und sind kein Wiederherstellungspunkt. Das erfolgreiche Backup nutzte wie der bestehende Worker `php -d disable_functions=`; ohne diese CLI-Option war `proc_open` gesperrt.
+- Migrationen 020/021 vor Codeaktivierung angewendet. Vollständige Backendabhängigkeiten privat bereitgestellt; Windows-Archivrechte vor dem erfolgreichen Entpacken korrigiert. Fragenzeilen per Hash unverändert; 6 Kategorien, 297 Fragen, 5 Accounts und 11 Ergebnisse vor/nach Migration unverändert. Keine Seeds, Resets oder Produktions-Testabschlüsse ausgeführt.
+- Italien-Vorgaben für Rom, Neapel, Florenz, Amalfi-Küste und Siena gesetzt. Öffentliche API bestätigt Italien-Vererbung bei allen 233 veröffentlichten Fragen dieser aktiven Stadtkategorien. Testkategorie bleibt unzugeordnet; Siena wird durch die Migration nicht aktiviert.
+- Lokal 40 Frontendtests, 204 isolierte Integrationstests, CSS-/BEM-Prüfung und Build erfolgreich. Serverbuild mit Vertragstests, PHP-Lint, SEO-Export aus Production, Migrationsprüfung und HTTPS-Freigabe erfolgreich. Startseite, Admin, Konto, Login, Reisepass und Souvenirs HTTP 200; Admin-Script und neues Vorschau-Modul ausgeliefert. Produktionsbrowser zeigt alle verfügbaren Kategorien ohne Weltfilter und ohne horizontalen Überlauf bei 1440 Pixeln.
+- Vorheriges Dateirelease `cb23f51a0cc4-20261022131903` bleibt erhalten. Ein Dateirücksprung stellt keine Datenbank wieder her. Grenzen und Wiederherstellungshinweise: [Quizwelten](QUIZWELTEN.md). Admin-Schreibpfade wurden isoliert getestet; keine echten Productiondaten zur Funktionsprüfung geändert.
+
 Production URL: https://quiz-hero.de. Hostinger Git deployment remains on branch `hostinger`. The adopted application design is developed on `master`; publishing it requires a reviewed merge into `hostinger`.
 
 ## Quizdarstellung und CSS-Pflege – Folgerelease 22.10.2026

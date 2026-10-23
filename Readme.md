@@ -38,7 +38,7 @@ Die Backendmodule haben bewusst benannte Funktionen ohne Frameworkwechsel. `api/
 
 ## Bereitstellung und Daten
 
-Quizwelten mit Kategorie-Vererbung (lokal, noch nicht auf Production): [Datenmodell, Migrationen 020/021, Pflege und Prüfstand](docs/QUIZWELTEN.md).
+Quizwelten mit Kategorie-Vererbung (Production seit 23.10.2026): [Datenmodell, Migrationen 020/021, Pflege und Prüfstand](docs/QUIZWELTEN.md).
 
 Hostinger zieht Branch `hostinger`; Build, Tests und SSH-Werkzeuge laufen ausschlie?lich dort. Keine GitHub Actions oder API-Secrets in GitHub. Ablauf und R?cksprung: [deployment/README.md](deployment/README.md).
 
