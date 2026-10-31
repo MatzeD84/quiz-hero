@@ -1,5 +1,7 @@
 # Heldenfähigkeiten
 
+**Production-Stand 31.10.2026:** Der aktuelle implementierte Helden-/Belohnungsstand ist mit Release `97ff6254492f-20261031202004` veröffentlicht. Datierte lokale Prüfnotizen darunter dokumentieren die Vorabprüfung; vorgemerkte Ideen bleiben nicht implementiert. Nachweis und Datenübertragung: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md).
+
 Stand: **31.10.2026**. Fortlaufende Übersicht über Regeln, Umsetzung, Adminpflege und neue Ideen. **Version 1 ist lokal implementiert und Migrationen 022–027 lokal angewendet. Noch nicht auf Production.**
 
 Diese Datei bei jeder Änderung ergänzen. Tatsächliche Funktionen, verbindliche Regeln und spätere Ideen getrennt halten. Verwandte Dokumentation: [Souvenirs](Souvenir.md), [Feature-Übersicht](FEATURES.md), [Production](HOSTINGER-PRODUCTION.md).

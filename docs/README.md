@@ -15,6 +15,8 @@ Die fachlichen Übersichten und Betriebsdokumente liegen gesammelt in diesem Ord
 
 ## Entwicklung und Betrieb
 
+- [Helden-Rollout vom 31.10.2026](HELDEN-ROLLOUT-2026-10-31.md)
+
 - [Design](DESIGN.md)
 - [CSS-Anleitung](../styles/README.md)
 - [Deployment](../deployment/README.md)

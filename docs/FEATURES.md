@@ -1,5 +1,7 @@
 # Quiz-Hero – Feature-Übersicht
 
+**Production-Stand 31.10.2026:** Der aktuelle implementierte Helden-/Belohnungsstand ist mit Release `97ff6254492f-20261031202004` veröffentlicht. Datierte lokale Prüfnotizen darunter dokumentieren die Vorabprüfung; vorgemerkte Ideen bleiben nicht implementiert. Nachweis und Datenübertragung: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md).
+
 Stand: 23. Oktober 2026. Kompakter Überblick über den aktuellen Projektstand und mögliche nächste Erweiterungen. Lokale Änderungen sind gesondert gekennzeichnet. Die Ideen am Ende sind noch nicht implementiert und keine verbindliche Reihenfolge.
 
 ## Bereits implementiert

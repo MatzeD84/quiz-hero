@@ -41,4 +41,12 @@ Migrationen 022–027 und die freigegebene Konfiguration sind auf Production ang
 
 Beim privaten Vorbereitungsarchiv wurden Windows-Verzeichnisrechte korrigiert und eine auf Shared Hosting nicht verfügbare Prozesssubstitution durch eine normale Listendatei ersetzt. Diese beiden abgebrochenen Anläufe erfolgten vor dem Start der Migrationen. Der anschließende vollständige Lauf war erfolgreich.
 
-Codeaktivierung und abschließende Liveprüfungen stehen noch aus. Nach Erfolg werden Release-ID, Commit und Bildnachweise hier ergänzt.
+**Erfolgreich veröffentlicht:** Release `97ff6254492f-20261031202004`, Commit `97ff6254492f3666554c25e726f89659eb6b1e12`. Aktiviert am 31.10.2026; maßgeblich bleibt die aktuelle `/version.json`. Vorheriges Release `d4d6af0000a0-20261023153242` ist erhalten. Die eingangs datierten lokalen Prüfnotizen in den Fachdokumenten sind Vorabstände; die hier aufgeführten Features sind nun auf Production.
+
+- Serverbuild: 57 Frontendtests, vollständiges PHP-Lint, fünf SEO-Seiten aus dem Liveexport, CSS, versionierte Assets, CSP, Migrationsprüfung und atomare Aktivierung erfolgreich. HTTPS-Freigabe des Workers erfolgreich.
+- Direkter aktiver Servercheck: 31 Avatar-/Fähigkeitsbilder stimmen per SHA-256 mit dem Projekt überein. Fünf Fähigkeiten, fünf Belohnungsdefinitionen, alle 27 nicht gelöschten Helden und ihre Zuordnungen entsprechen der freigegebenen Konfiguration. Keine sichtbaren Testduplikate und kein erlaubter Production-Testreset.
+- HTTPS: Startseite, Admin, Konto, Login, Reisepass, Souvenirs, Versionsdatei und öffentliche Daten-API HTTP 200. Alle fünf Fähigkeits-PNGs als gültige PNGs mit `image/png` erreichbar. CDN-Bytes können durch Bildoptimierung von den Originalen abweichen; Bytegleichheit wurde serverseitig nachgewiesen.
+- Öffentliche Profilwahl enthält 19 freie aktive Helden; deaktivierte und Belohnungshelden sind ausgeblendet. Registrierungsvorschau liefert nur Startfähigkeiten mit Ziel 0. Mobiler Produktionsbrowser (390 Pixel): Quiz-Hero/Burgo nur mit Heldenblick, Bobo ohne gesperrte Fähigkeiten, korrekter Leerhinweis, einheitliches Schließen-X und kein horizontaler Überlauf. „Lokal testen“ bleibt unsichtbar. Kein Account registriert, keine Productionrunde oder künstliche Vergabe zur Prüfung gespeichert.
+- Nach allen Änderungen weiter 6 Kategorien, 297 Fragen, 5 Konten, 11 Ergebnisse und 0 persönliche Avatarvergaben. Geschützte Inhalts-Hashes vor/nach Konfigurationsübertragung identisch. Lokale isolierte Audit-Datenbank nach Abschluss entfernt.
+
+Nachträgliche Dokumentationspflege auf `master` verändert den hier genannten veröffentlichten Code-Commit auf `hostinger` nicht.

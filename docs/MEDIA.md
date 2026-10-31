@@ -1,5 +1,7 @@
 # Mediathek: Bild austauschen
 
+**Production-Stand 31.10.2026:** Der aktuelle implementierte Helden-/Belohnungsstand ist mit Release `97ff6254492f-20261031202004` veröffentlicht. Datierte lokale Prüfnotizen darunter dokumentieren die Vorabprüfung; vorgemerkte Ideen bleiben nicht implementiert. Nachweis und Datenübertragung: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md).
+
 ## Trennung von Bildern und Heldenpflege (31.10.2026, lokal)
 
 Unter **Mediathek → Profilbilder** lassen sich vorhandene Bilder nur noch austauschen oder löschen. Name, Verfügbarkeit (frei/Belohnung) und Aktivstatus werden unter **Helden → Heldenkarte** gepflegt, zusammen mit der bisherigen Fähigkeitszuordnung. Fähigkeiten stehen im selben Formular vor „Held speichern“. Der eine Button speichert Stammdaten und Zuordnung gemeinsam in einer Datenbanktransaktion; Fehler oder veraltete Versionswerte verwerfen den gesamten Schreibvorgang. Individuelle Belohnungsbedingungen bleiben unter **Belohnungen → Neue Helden**.

@@ -1,5 +1,17 @@
 # Hostinger production
 
+## Heldenfähigkeiten und Belohnungsbaukasten – Rollout am 31.10.2026
+
+Release **`97ff6254492f-20261031202004`**, Commit `97ff6254492f3666554c25e726f89659eb6b1e12`, erfolgreich auf https://quiz-hero.de aktiviert und per HTTPS bestätigt. Migrationen **022–027** nach vollständigem Backup angewendet. Lokale Helden-/Fähigkeits-/Belohnungskonfiguration gezielt übertragen, keine lokalen Accounts, Ergebnisse oder persönlichen Vergaben importiert. Keine doppelten Testhelden erzeugt.
+
+- Backup: `private/backups/before-heroes-20261031201513/`, einschließlich Datenbank, Konfiguration, Uploadarchiv und Manifest. Vorheriges Dateirelease bleibt vorhanden.
+- Lokal 57 Frontendtests, 301 isolierte Integrationstests, PHP-Lint, CSS-/BEM- und Produktionsbuild erfolgreich. Serverbuild und atomare Aktivierung einschließlich eigenständiger HTTPS-Freigabe erfolgreich.
+- 31 Bilddateien direkt auf dem aktiven Server per SHA-256 bestätigt, darunter alle fünf neuen Fähigkeitsmotive. Öffentliche PNGs und alle Hauptseiten HTTP 200. Keine unterstellte Bytegleichheit nach CDN-Bildoptimierung.
+- 27 Helden, fünf Fähigkeiten, fünf Belohnungsdefinitionen und Zuordnungen abgeglichen. Startfähigkeit Heldenblick (0 Runden) im mobilen Livebrowser bestätigt; gesperrte Fähigkeiten bleiben verborgen. Produktions-Testreset gesperrt, „Lokal testen“ unsichtbar.
+- Kategorien/Fragen/Quizweltverknüpfungen per Hash unverändert; weiter 6 Kategorien, 297 Fragen, 5 Accounts, 11 Ergebnisse. Eine nicht mehr zulässige Heldenauswahl durch die neue Verfügbarkeit auf Standardheld umgestellt, keine Berechtigung entfernt.
+
+Vollständige Regeln der Konfigurationsübertragung, Prüfumfang, vorherige abgebrochene Archivvorbereitung und Rücksprunggrenzen: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md). `/version.json` bleibt die maßgebliche Quelle für das aktuell aktive Release. Dokumentationsnachpflege auf `master` ist kein neuer Production-Code-Deploy.
+
 ## Quizwelt-Formulare – Folgerelease am 23.10.2026
 
 Release `d4d6af0000a0-20261023153242`, Commit `d4d6af0000a0649af193b594639ed0319fa6b8d6`, erfolgreich aktiviert. Geerbte Quizwelten sind in bestehenden und neuen Fragen angekreuzt und gesperrt; zusätzliche direkte Zuordnungen bleiben wählbar. Keine Migration, Schema bleibt bis 021.

@@ -1,5 +1,7 @@
 # Heldenfähigkeiten – Bildmotive
 
+**Production-Stand 31.10.2026:** Der aktuelle implementierte Helden-/Belohnungsstand ist mit Release `97ff6254492f-20261031202004` veröffentlicht. Datierte lokale Prüfnotizen darunter dokumentieren die Vorabprüfung; vorgemerkte Ideen bleiben nicht implementiert. Nachweis und Datenübertragung: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md).
+
 Stand: 31.10.2026, lokal implementiert, noch nicht veröffentlicht.
 
 ## Neue Motive: Scharfblick und Glücksanker (31.10.2026)

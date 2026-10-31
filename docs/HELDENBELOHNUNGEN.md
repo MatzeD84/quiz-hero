@@ -1,5 +1,7 @@
 # Heldenbelohnungen: Regel-Baukasten
 
+**Production-Stand 31.10.2026:** Der aktuelle implementierte Helden-/Belohnungsstand ist mit Release `97ff6254492f-20261031202004` veröffentlicht. Datierte lokale Prüfnotizen darunter dokumentieren die Vorabprüfung; vorgemerkte Ideen bleiben nicht implementiert. Nachweis und Datenübertragung: [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md).
+
 Stand: 31.10.2026. Erste Version lokal implementiert und geprüft, **noch nicht auf Production**. Bestehende Souvenirregeln bleiben unverändert. Übersicht: [Souvenirs und Belohnungen](Souvenir.md), [Profilbildverwaltung](MEDIA.md).
 
 ## Adminbedienung
