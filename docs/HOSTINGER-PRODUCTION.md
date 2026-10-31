@@ -1,5 +1,13 @@
 # Hostinger production
 
+## E-Mail-Bestätigung ohne automatische Anmeldung – 31.10.2026
+
+Release `8b933c187c67-20261031204504`, Commit `8b933c187c67b9dd5ffc5e33fda58c0b52bcaae8`, auf https://quiz-hero.de veröffentlicht und über Versionsdatei, ausgelieferte Browsermodule sowie aktiven PHP-Handler bestätigt. Der Bestätigungslink setzt nur den Bestätigungsstatus; er erstellt keine Sitzung und liefert kein angemeldetes Profil oder Sitzungstoken. Danach bleibt die Loginmaske mit Erfolgsmeldung sichtbar. Bestehende Sitzungen bleiben erhalten. [Ablauf für Nutzer](ACCOUNT-SICHERHEIT.md).
+
+Geprüft: 58 Frontendtests und 303 Integrationstests in einer isolierten Wegwerfdatenbank. Darunter Bestätigung ohne neue Sitzung, Passwortpflicht beim folgenden Login, Einmalverwendung und unveränderte Sitzung bei Bestätigung eines anderen Accounts. Isolierter Browsercheck mit simulierter Bestätigungsantwort: Login sichtbar, Token aus URL entfernt, kein Profil gespeichert. Keine echten Bestätigungsmails oder Accounts auf Production zu Testzwecken erzeugt. Serverbuild, PHP-Lint, Migrationsprüfung, atomare Aktivierung und HTTP-Freigabe erfolgreich.
+
+Keine Migration oder Änderung bestehender Passwörter und Sitzungen. Bereits ausgestellte, gültige Links verwenden ebenfalls die neue Logik. Vorheriges Dateirelease `97ff6254492f-20261031202004` bleibt als Rücksprung vorhanden; ein Rücksprung würde das bisherige automatische Einloggen wieder aktivieren. Keine Datenbankwiederherstellung für diese Codeänderung erforderlich. Die vorherige Dokumentationsbereinigung ist mit ausgeliefert; der technische Migrationsstand bleibt 027.
+
 ## Heldenfähigkeiten und Belohnungsbaukasten – Rollout am 31.10.2026
 
 Release **`97ff6254492f-20261031202004`**, Commit `97ff6254492f3666554c25e726f89659eb6b1e12`, erfolgreich auf https://quiz-hero.de aktiviert und per HTTPS bestätigt. Migrationen **022–027** nach vollständigem Backup angewendet. Lokale Helden-/Fähigkeits-/Belohnungskonfiguration gezielt übertragen, keine lokalen Accounts, Ergebnisse oder persönlichen Vergaben importiert. Keine doppelten Testhelden erzeugt.
