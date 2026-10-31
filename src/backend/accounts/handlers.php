@@ -128,9 +128,8 @@ function account_verify_email(): void
     $stmt->execute(['id' => $row['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_users SET email_verified_at = NOW() WHERE id = :id');
     $stmt->execute(['id' => $row['user_id']]);
-    $session = issue_account_session($pdo, (int) $row['user_id']);
     $pdo->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'user' => $session['user'], 'csrfToken' => $session['csrfToken']]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'message' => 'E-Mail bestätigt. Du kannst dich jetzt anmelden.']);
 }
 
 function account_login(): void

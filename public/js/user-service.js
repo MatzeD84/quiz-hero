@@ -81,9 +81,7 @@ export class UserService {
     async verifyEmail(token) {
         const data = await this.post('account-verify-email', { token });
         if (!data.ok) throw new Error(data.error || 'E-Mail konnte nicht bestaetigt werden.');
-        const user = normalizeUser(data.user);
-        this.storeUser(user);
-        return user;
+        return data;
     }
 
     async login({ identifier, password }) {

@@ -27,6 +27,17 @@ import { abilityUseReason } from '../public/js/hero-abilities.js';
 import { abilityDialogItems } from '../public/js/quiz-abilities.js';
 import { avatarRewardSummary } from '../public/js/admin/avatar-rewards.js';
 
+test('email verification does not store a profile or replace the existing login', async () => {
+    const service = new UserService({ fetchFn: async () => new Response(JSON.stringify({ok:true,message:'E-Mail bestätigt.'})) });
+    let profileWrites = 0;
+    service.storeUser = () => { profileWrites++; };
+    service.csrfToken = 'existing-session';
+    const result = await service.verifyEmail('verification-token');
+    assert.equal(result.ok, true);
+    assert.equal(profileWrites, 0);
+    assert.equal(service.csrfToken, 'existing-session');
+});
+
 test('souvenir collection links awarded heroes to the account hero picker and omits an empty hero section', () => {
     const previousDocument=globalThis.document, previousLocation=globalThis.location;
     const node=()=>({children:[],dataset:{},className:'',classList:{add(){}},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;},setAttribute(){},addEventListener(){}});

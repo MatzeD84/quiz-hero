@@ -192,10 +192,11 @@ const handleTokens = async () => {
         setStatus('E-Mail wird bestätigt ...', 'info');
         try {
             await userService.verifyEmail(verifyToken);
-            setStatus('E-Mail bestätigt. Du bist eingeloggt.', 'success');
+            showView('login');
+            setStatus('E-Mail bestätigt. Du kannst dich jetzt anmelden.', 'success');
             params.delete('verifyToken');
             window.history.replaceState({}, '', `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}${window.location.hash}`);
-            redirectAfterLogin();
+            elements.loginIdentifier?.focus();
         } catch (error) {
             showView('verification');
             showVerificationHelp();

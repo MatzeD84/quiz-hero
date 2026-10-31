@@ -357,7 +357,12 @@ try {
     $verificationUser = (int) $pdo->lastInsertId();
     $verification = bin2hex(random_bytes(32));
     $pdo->prepare('INSERT INTO quiz_email_verifications(user_id,token_hash,expires_at) VALUES(?,?,DATE_ADD(NOW(),INTERVAL 1 HOUR))')->execute([$verificationUser,hash('sha256',$verification)]);
-    $verified = request('account-verify-email', ['token'=>$verification])['user'];
+    $sessionsBeforeVerification = (int) $pdo->query('SELECT COUNT(*) FROM quiz_user_sessions')->fetchColumn();
+    $verified = request('account-verify-email', ['token'=>$verification]);
+    check(!isset($verified['user']) && !isset($verified['csrfToken']) && (int) $pdo->query('SELECT COUNT(*) FROM quiz_user_sessions')->fetchColumn() === $sessionsBeforeVerification, 'email verification confirms address without creating a session or returning login credentials');
+    request('account-me', [], 401);
+    request('account-login', ['identifier'=>'verify'.$suffix,'password'=>$password.'wrong'], 401);
+    $verified = request('account-login', ['identifier'=>'verify'.$suffix,'password'=>$password])['user'];
     $emptyJourney = request('account-journey', []);
     check($emptyJourney['summary'] === ['rounds'=>0,'categories'=>0,'topics'=>0] && $emptyJourney['practice'] === [] && $emptyJourney['difficultyStats']['easy']['percent'] === null, 'new account has honest empty statistics and no invented practice questions');
     $pdo->prepare('INSERT INTO quiz_results(user_id,category_id,score,max_score,solved,total_questions) VALUES(?,?,?,?,?,?)')->execute([$verificationUser,'audit',2,2,1,1]);
@@ -367,7 +372,7 @@ try {
     $pdo->prepare('DELETE FROM quiz_results WHERE id=?')->execute([$legacyOnlyResult]);
     request('account-me', []);
     request('account-verify-email', ['token'=>$verification], 400);
-    check(true, 'verification produces usable session and cannot be replayed');
+    check(true, 'verification requires password login afterwards and cannot be replayed');
 
     $admin = request('admin-login', ['username'=>$env['QUIZ_HERO_ADMIN_USER'],'password'=>$password]);
     request('admin-question-delete', ['id'=>$questionId], 403);
@@ -505,7 +510,10 @@ try {
     request('account-resend-verification', ['email'=>$mailUser.'@example.test']);
     $replacement = mail_token('verifyToken');
     request('account-verify-email', ['token'=>$original], 400);
-    $mailAccount = request('account-verify-email', ['token'=>$replacement])['user'];
+    $previousAccount = request('account-me', [])['user'];
+    request('account-verify-email', ['token'=>$replacement]);
+    check(request('account-me', [])['user']['id'] === $previousAccount['id'], 'verifying another account does not replace an existing authenticated session');
+    $mailAccount = request('account-login', ['identifier'=>$mailUser,'password'=>$password])['user'];
     $mailAccountCookies = $cookies; $mailAccountCsrf = $userCsrf;
     request('account-login', ['identifier'=>$mailUser,'password'=>$password]);
     request('account-request-password-reset', ['email'=>$mailUser.'@example.test']);
