@@ -1,210 +1,52 @@
-# Souvenirs, Meilensteine und Belohnungen
+# Souvenirs und Belohnungen
 
-Stand: **31. Oktober 2026**. Zentrale, fortlaufend gepflegte Übersicht. Der Grundstand ist seit dem 22.10.2026 auf Production veröffentlicht; die Übersicht freigeschalteter Helden ist eine lokale Erweiterung vom 31.10.2026 und noch nicht veröffentlicht. Migrationen 014–019 sind lokal und auf Production angewendet. Release und Live-Prüfungen: [Production-Protokoll](HOSTINGER-PRODUCTION.md).
+Stand: 31.10.2026 · veröffentlicht. Diese Übersicht beschreibt die geltenden Regeln.
 
-## Aktuelle Bedingungen auf einen Blick
+## Wann bekommt man was?
 
-Lokal ergänzt (31.10.2026, noch nicht veröffentlicht): **Belohnungen → Neue Helden** bietet einen Regel-Baukasten mit beiden Zeitrahmen, Gesamtfortschritt und Einzelrunde. Anzahl, Schwierigkeit, Antwortversuch, Heldenhilfe und Kategorie sind einstellbar. Die folgende Astra-Bedingung bleibt zunächst die bestehende Vorgabe; im Baukasten ist sie anpassbar. Datenmodell, Regeln und Pflege: [Heldenbelohnungen](HELDENBELOHNUNGEN.md). Migration 025 lokal nach Sicherung angewendet; bestehende Vergaben bleiben erhalten.
-
-| Auszeichnung | Bedingung für die Vergabe | Sichtbarkeit |
-|---|---|---|
-| **Reisestempel** | Erste erfolgreich gespeicherte Kategorie- oder kategorienbezogene Übungsrunde mit mindestens einer tatsächlich beantworteten Frage. Die Antwort darf falsch sein. Nur übersprungene Fragen genügen nicht. | Erst nach Vergabe, farbig in der Souvenir-Sammlung. |
-| **Entdecker-Souvenir / Reisemarke** | Kategorienbesuch wie beim Reisestempel plus die festgelegte Anzahl **unterschiedlicher richtig beantworteter Fragen**, im ersten oder zweiten Versuch. | Bereits ab einer richtig gelösten Frage mit Fortschritt sichtbar. Vor Vergabe Sepia-Motiv und leicht grauer Kartenhintergrund; nach Vergabe farbig mit vollem Balken. |
-| **Profilbild-Belohnung, derzeit Astra** | Mindestens eine Hero-Frage **im ersten Versuch richtig** beantworten und die Runde erfolgreich abschließen und speichern. Kategorie-, Themen- und Übungsrunden zählen. Das Profilbild muss aktiv sein und die Regel `hero_first_try` verwenden. | Vor Freischaltung verborgen, danach im Konto auswählbar. Lokal zusätzlich als Übersicht auf der Souvenir-Seite; kein automatischer Wechsel des aktuellen Bildes. |
-| **Frei verfügbares Profilbild** | Im Admin als frei und aktiv eingestellt; keine Spielleistung nötig. | In Registrierung und Profilbildauswahl im Konto. Keine verdiente Belohnung. |
-
-Aktuell angelegte Städte:
-
-| Kategorie | Reisestempel | Ziel für die Reisemarke |
-|---|---|---|
-| Rom | Erster Kategorienbesuch mit tatsächlicher Antwort | 20 unterschiedliche Fragen richtig lösen |
-| Neapel | Erster Kategorienbesuch mit tatsächlicher Antwort | 5 unterschiedliche Fragen richtig lösen |
-| Florenz | Erster Kategorienbesuch mit tatsächlicher Antwort | 20 unterschiedliche Fragen richtig lösen |
-| Amalfi-Küste | Erster Kategorienbesuch mit tatsächlicher Antwort | 20 unterschiedliche Fragen richtig lösen |
-
-Die persönlichen Vergaben gelten für angemeldete Accounts. Neue Souvenirvergaben benötigen eine aktive Definition und aktive Kategorie. Die Fragenanzahl wird nicht automatisch bei Katalogerweiterungen erhöht. Die interne Testkategorie erhält keine Souvenirdefinitionen.
-
-### Entdecker-Regel Version 2
-
-Seit dem 22.10.2026 zählen ausschließlich gespeicherte Ergebnisse `first_try` und `second_try`. Falsche, übersprungene oder lediglich angezeigte Fragen zählen nicht. Eine zunächst falsche Frage kann nach späterer richtiger Lösung einmalig beitragen.
-
-- Gezählt werden unterschiedliche Fragen-IDs je Account und damaliger Kategorie. Wiederholungen und neue Versionen derselben Frage zählen nicht zusätzlich.
-- Fortschritt entsteht aus erfolgreich gespeicherten, abgeschlossenen Runden; abgebrochene Runden zählen nicht.
-- Themenrunden tragen anhand der beim Start eingefrorenen Fragenkategorie bei, ersetzen aber keinen Kategorienbesuch.
-- Offener Fortschritt wird aus bestehenden Einzelantworten nach der aktuellen Regel berechnet und kann durch die Umstellung niedriger ausfallen.
-- Bereits vergebene Souvenirs werden nicht entzogen; sie behalten ihre zugeordnete Definition. Die Regelumstellung benötigt keine Migration und löscht keine vorhandenen Daten.
-- Die frühere Regel „jede beantwortete Frage zählt“ ist abgelöst. Reisestempel und Astra-Regel wurden dadurch nicht verändert.
-
-## Begriffe
-
-| Begriff | Bedeutung | Beispiel |
-|---|---|---|
-| **Meilenstein** | Überprüfbare erreichte Bedingung; derzeit kein frei konfigurierbares eigenständiges System | 20 unterschiedliche Rom-Fragen richtig gelöst und Rom besucht |
-| **Reisestempel** | Ortsbezogene Auszeichnung für den ersten belegten Besuch | Rom besucht |
-| **Souvenir / Reisemarke** | Persönliches Sammelmotiv für ein Entdeckerziel | Römische Reisemarke |
-| **Belohnung** | Oberbegriff für Sammelstücke und nutzbare Freischaltungen | Reisemarke oder Profilbild Astra |
-| **Freischaltung** | Serverseitig bestätigter Übergang zur dauerhaften Berechtigung | Astra wird im Konto auswählbar |
-
-Ein Meilenstein kann künftig mehrere Belohnungen auslösen. Eine allgemeine Zuordnung dafür ist noch nicht implementiert.
-
-## Aktuelle Darstellung
-
-Profilbildauswahl im Konto: Unter dem Benutzernamen liegt der aufklappbare Bereich „Helden auswählen“. Verfügbare freie und freigeschaltete Helden erscheinen als Karten mit Motiv, Namen und Auswahlstatus. Lokal seit 31.10.2026 öffnet ein Kartenklick zuerst die kompakte Heldenvorstellung mit Bild und Fähigkeiten einschließlich persönlichem Lernstand. Erst „Helden auswählen“ im Dialog speichert; Abbrechen verändert nichts. Die Registrierung verwendet denselben Dialog, merkt die Auswahl jedoch nur bis zur Registrierung vor. Berechtigungsprüfung und Vergaberegeln bleiben unverändert. Der zusätzliche Link „Bild ändern“ am aktuellen Profilbild entfällt; dieses Bild ist nicht anklickbar. Der Ergebnislink `account.html#avatar` öffnet und scrollt zum Akkordeon. Die lokale Souvenir-Ansicht zeigt verdiente Helden mit Link zur Kontoauswahl. Details und Prüfstand: [Heldenfähigkeiten](Heldenfähigkeit.md). Noch nicht veröffentlicht.
-
-### Souvenir-Seite
-
-- Eigene private Seite `souvenirs.html`, über das Kontomenü nur für angemeldete Nutzer erreichbar. Gäste bekommen eine Anmeldung angeboten, keine persönlichen Sammlungsdaten.
-- Beginn direkt mit „Deine Souvenirs“ und dem kurzen Untertitel. Kein zusätzlicher Einleitungstext oder Gesamtzähler darüber; keine Kategorie-/Artfilter.
-- Je Kategorie stehen Reisestempel links und die zugehörige Reisemarke rechts. Mobil untereinander, Stempel vor Marke. Fehlt ein anzeigbares Gegenstück, wird kein unbegonnenes Ziel eingeblendet.
-- Nur erhaltene Stücke und begonnene Entdecker-Souvenirs erscheinen. Keine Sektion „Deine nächsten Ziele“ und keine Vorschau unverdienter Reisestempel.
-- Begonnene Marken zeigen die Zahl richtig gelöster Fragen, einen Fortschrittsbalken, einen leicht grauen Kartenhintergrund und exakt den zentralen Filter `--filter-sepia`, wie Kategorie-Bilder und Logo beim Hover. Das ist ein Sepia-Effekt, kein reiner Graustufenfilter.
-- Erhaltene Marken zeigen den erreichten Zielwert mit vollem Balken; Stempel haben keinen Balken. Detaildialoge zeigen Motiv, Beschreibung, Bedingung und Vergabedatum. Einmalige Besuchserfolge haben keinen Link „Kategorie spielen“.
-- Lokale Erweiterung (31.10.2026): „Deine freigeschalteten Helden“ unter den Souvenirs, mit Bild, Name und Anzahl. Ausschließlich persönliche Belohnungen aus `account-journey.avatarRewards`, keine freien oder gesperrten Helden. Ohne persönliche Freischaltung wird die Sektion nicht gerendert. Jede Heldenkarte bietet den Link „Profilbild auswählen“ zu `account.html#avatar`. Dort wird „Helden auswählen“ automatisch aufgeklappt und in den sichtbaren Bereich gescrollt. Der Link selbst wechselt oder speichert kein Profilbild. Vorhandene serverseitige Katalogfilter gelten weiterhin (inaktive/gelöschte Helden werden nicht angezeigt). Keine API- oder Datenbankänderung. 46 Frontendtests sowie CSS-Build, Token- und BEM-Prüfung erfolgreich; Fälle ohne, mit einer und mit zwei Belohnungen geprüft. Noch nicht veröffentlicht.
-
-### Reisepass und Ergebnis
-
-Im Reisepass gibt es **keine Souvenir-Sektion und keine Drei-Stücke-Vorschau** mehr. Der kleine Hinweis „Reisestempel erhalten“ auf einer Quizreise-Karte bleibt davon unabhängig bestehen.
-
-Nach bestätigtem Speichern zeigt das Ergebnis alle neuen Stücke einzeln mit Motiv, Typ und Namen **vor „Freunde herausfordern“**. „Souvenirs ansehen“ führt zur separaten Sammlung. Neue Profilbild-Belohnungen tragen „Neue Heldenbelohnung“ und „Neues Profilbild freigeschaltet“; „Profilbild auswählen“ führt zu `account.html#avatar`. Ohne Vergabe erscheint kein Hinweis. Speicherfehler dürfen keine erfolgreiche Vergabe vortäuschen.
-
-## Adminpflege – implementiert
-
-### Souvenirs
-
-Eigener Haupttab mit Motivbestand, Suche, Kategorie-/Statusfiltern, Auswahl und Bearbeitung. Diese Adminfilter bleiben bestehen; entfernt wurden nur die Filter der privaten Sammlung.
-
-- Feste Regeltypen `first_visit` und `discover`; Namen, Beschreibung, Motiv, Zielwert und Entwurf/Aktiv/Archiviert pflegen.
-- Jede Speicherung erzeugt eine Definitionsrevision. Ein Entwurf verdrängt keine aktive Revision; Aktivierung oder Archivierung beendet die bisher aktive Revision desselben Schlüssels.
-- Kategorie und Regeltyp einer bestehenden Belohnung bleiben stabil. Andere Bedeutung benötigt eine neue Belohnung.
-- Bereits erhaltene Stücke behalten Titel, Motiv und Definitionsbezug ihrer Vergabe. Archivierung entzieht sie nicht.
-- Aktivierung prüft aktive Kategorie, vorhandenes Motiv und erreichbares Ziel anhand aktiver Fragen. Spätere Bestandsänderungen können die Erreichbarkeit beeinflussen; die Verwaltung warnt, ändert Ziele aber nicht automatisch.
-- Adminsession, CSRF-/Origin- und optimistische Versionsprüfung schützen Änderungen.
-
-### Mediathek und Profilbilder
-
-Die Mediathek trennt **Bilder**, **Profilbilder** und **Souvenir-Bilder**. Souvenirmotive erscheinen nicht im normalen Bilder-Reiter. Bestehende Definitionen einschließlich älterer Revisionen und die Souvenirordner bestimmen die Zuordnung. Neue Motivuploads liegen unter `images/uploads/souvenirs/`. Verwendete Motive werden über die versionierte Souvenir-Verwaltung gepflegt, nicht still über den allgemeinen Bildaustausch ersetzt.
-
-Profilbilder haben einen eigenen Katalog mit Name, Motiv, frei/Belohnung und Aktivierung. Der Standardheld `hero` bleibt aktiv und frei verfügbar. Die Regel „Später festlegen“ vergibt noch nichts automatisch.
-
-- Deaktivieren: aus der Auswahl entfernen, Berechtigungen erhalten, betroffene aktuelle Auswahl auf `hero` zurücksetzen.
-- Reaktivieren: wieder anbieten, frühere Auswahl nicht automatisch wiederherstellen.
-- Löschen: aus dem Katalog ausblenden, Berechtigungen entfernen und betroffene Auswahl auf `hero` setzen. Intern verhindert eine Löschmarkierung die Wiederanlage durch alte Seeds; die Bilddatei wird nicht automatisch gelöscht.
-- Frei → Belohnung: aktuelle Auswahl ohne passende Berechtigung auf `hero` zurücksetzen.
-
-Vollständige Pflege-, Upload- und Lifecycle-Regeln: [Mediathek](MEDIA.md).
-
-### Lokaler Test-Reset
-
-Unter Spieler kann der Fortschritt zugelassener Testaccounts mit Bestätigung `RESET Benutzername` zurückgesetzt werden. Voraussetzungen: Serverflag `QUIZ_HERO_ENABLE_TEST_RESET=true`, `SITE_URL` mit Host localhost/127.0.0.1 und Zielaccount mit `@example.test`. Production bleibt auch bei versehentlich gesetztem Flag gesperrt.
-
-Entfernt werden persönliche Runden, Einzelantworten, Ergebnisse, Souvenirvergaben und Avatar-Freischaltungen. Sitzungen werden widerrufen; alte Tabs können ihren Fortschritt nicht wiederherstellen. Ein ausgewählter Belohnungsavatar fällt auf den Standardhelden zurück. Zugangsdaten, E-Mail-Bestätigung und freie Profilbildauswahl bleiben erhalten. Globale Fragen, Medien, Definitionen und gemeinsame Fragenversionen werden nicht gelöscht. Der Vorgang wird knapp im Serverlog protokolliert.
-
-## Datenhaltung und Vergabe
-
-| Migration | Tabellen / Felder | Zweck und Auswirkungen |
-|---|---|---|
-| **014** `014_souvenirs.sql` | `quiz_question_results.category_id_at_play` samt Index; `quiz_souvenir_definitions`; `quiz_user_souvenirs` | Historische Fragenkategorie, versionierte Definitionen und einmalige persönliche Vergaben. Alte Kategoriendetails nur anhand belegbarer Rundenauswahl ergänzen; alte Themenzuordnungen bleiben bei fehlendem Beleg NULL. Zwei Rom-Definitionen als Seed. |
-| **015** `015_souvenirs_neapel_florenz.sql` | Weitere Definitionen | Stempel und Reisemarken für Neapel und Florenz; bestehende Rom-Daten erhalten. |
-| **016** `016_avatar_rewards.sql` | `quiz_user_avatar_unlocks` | Dauerhafte Berechtigung je Account/Avatar, Regel, Vergabezeit, optionales Quellergebnis und Backfill-Kennzeichnung. |
-| **017** `017_avatar_catalog.sql` | `quiz_avatars` | Stabiler Schlüssel, Name, Motiv, Regel, Sortierung und Revision; initial 27 Profile einschließlich Astra. Seeds überschreiben spätere Adminpflege nicht. `data/avatars.json` ist nur historische Ausgangsliste. |
-| **018** `018_avatar_lifecycle.sql` | `quiz_avatars.enabled`, `deleted_at` | Aktivierung und logisches Löschen; bestehende Profile bleiben zunächst aktiv. |
-| **019** `019_souvenirs_amalfi.sql` | Zwei weitere Zeilen in `quiz_souvenir_definitions` | Aktiver Amalfi-Reisestempel und Entdecker-Reisemarke mit Ziel 20. Stabile Schlüssel `amalfi-first-visit` und `amalfi-discoverer`; idempotente Seeds überschreiben keine Adminänderungen oder vorhandenen Vergaben. Keine Schemaänderung. |
-
-Souvenirvergaben sind je Nutzer und stabilem Souvenir-Schlüssel eindeutig und referenzieren die konkrete Definitionsrevision. Fortschritt wird aus Einzelantworten berechnet; keine zusätzliche Fortschrittstabelle. Motive werden gemeinsam gespeichert, nicht pro Account kopiert. Regeltypen sind Backendcode, keine im Admin ausführbaren Formeln. „Entdecker-Regel Version 2“ bezeichnet die dokumentierte Auswertungsänderung; sie erzeugt keine neue Datenbank-Definitionsrevision.
-
-### Ablauf und Bestandsschutz
-
-1. Session, eingefrorenen Rundenstand und Antworten serverseitig prüfen.
-2. Ergebnis und Einzelantworten speichern, Regeln auswerten und Vergaben in derselben Transaktion sichern.
-3. Neue Freischaltungen erst mit bestätigter Speicherantwort anzeigen.
-
-Nutzer-/Rundensperren und eindeutige Schlüssel verhindern doppelte Vergaben. Ein identischer Speicherretry liefert die zum Ergebnis gehörenden Auszeichnungen erneut; spätere Runden melden bereits erhaltene Belohnungen nicht nochmals als neu.
-
-`account-souvenir-sync` ist ein geschützter POST für den Abgleich nachweisbaren Altfortschritts. `account-journey` bleibt lesend. Alte Gesamtsummen belegen keine unterschiedlichen gelösten Fragen. Für den Stempel können ältere Ergebnisse mit `solved > 0` einen Besuch belegen; fehlende Details werden nicht erfunden. Backfills verwenden das tatsächliche heutige Vergabedatum und sind als Ergänzung gekennzeichnet.
-
-Ergebnislöschung entzieht erhaltene Souvenirs oder Avatarrechte nicht automatisch; ein Quellbezug darf NULL werden. Reset und Kontolöschung entfernen persönliche Vergaben ausdrücklich. Neue Fragenversionen ändern keine bereits gezählten Fragen-IDs; die damalige Kategorie bleibt eingefroren. Keine Vergabe aus behaupteten Clientpunkten oder manipulierter Avatarwahl.
-
-## Prüfung und Veröffentlichung
-
-### Amalfi-Erweiterung: Betrieb und Motive
-
-Lokal angewendet und geprüft: beide aktiven Regeln mit Ziel 1/20, beide transparenten RGBA-PNGs mit 1254 × 1254 Pixeln per HTTP 200. 179 Integrationstests und 32 Frontendtests erfolgreich, einschließlich Amalfi-Schwelle, einmaliger Vergabe und Seed-Wiederholung ohne Überschreiben einer Adminänderung. Lokaler Deployment-Build enthält beide Motive und Migration 019. Testdatenbank entfernt; keine Vergaben am echten Testaccount erzeugt, Vorabprüfung ohne Production-Änderung; Veröffentlichung inzwischen am 22.10.2026 erfolgt.
-
-Migration 019 ergänzt ausschließlich zwei Definitionen, keine Accountdaten oder Tabellenfelder. Vor lokalem Anwenden wurde der Definitions- und Migrationsbestand privat unter `.private/before-souvenirs-amalfi-20261022.sql` gesichert. Anwendung über `php database/migrate.php` nach Bereitstellung beider Bilddateien; `database/schema.sql` enthält dieselben Seeds und den Migrationsmarker. Keine Freischaltung allein durch die Migration: Nachweisbar erfüllte Bedingungen können beim nächsten geschützten Abgleich beziehungsweise Rundenabschluss berücksichtigt werden.
-
-Die beiden neuen Assets liegen unter `public/images/souvenirs/amalfi-stamp-v1.png` und `amalfi-token-v1.png`. Die Mediathek ordnet sie automatisch dem Tab Souvenir-Bilder zu; die bestehenden Sammlungskarten und Vergaberegeln benötigen keinen Sondercode für Amalfi. Generiert mit dem eingebauten Imagegen-Werkzeug, echter Transparenz und ohne separat abgerechnete API. Motivvorgaben:
-
-- **Stempel:** Eigenständiges rundes petrolfarbenes Low-Poly-Siegel mit schmalem Goldrand und vier kleinen Kompassakzenten; gestaffelte bunte Häuser von Positano, Küstenfelsen, kleine Kuppel und türkisfarbenes Meer. Vollständiges Motiv auf transparentem quadratischem Hintergrund, keine Schrift oder Wasserzeichen.
-- **Reisemarke:** Wertigeres goldenes Low-Poly-Medaillon mit Petrolakzenten, Küstenhäusern und Meer; zwei Zitronen mit grünen Blättern am unteren Rand. Gleiche Lesbarkeit bei 112 Pixeln, transparentes Umfeld, keine Schrift oder Wasserzeichen.
-
-Vor künftigen Deployments weiterhin vollständige Datenbank-/Uploadsicherung und ausstehende Migrationen anwenden. Ein Rücksprung auf Code vor 019 entfernt die Definitionen nicht automatisch. Bei Problemen neue Amalfi-Vergaben über Archivierung pausieren und vorwärts korrigieren; Definitionen mit persönlichen Vergaben nicht löschen. Keine destruktive Rückmigration. Historische erhaltene Stücke bleiben erhalten.
-
-### Gesamtcheck
-
-**Letzte ausgeführte Prüfung:** 179 isolierte Integrationstests und 32 Frontendtests erfolgreich; PHP-/JS-Syntax geprüft. CSS-Build, Token-/BEM-Prüfung und lokaler Deployment-Build erfolgreich. Umfang, Bereinigung, Browserbefunde und verbleibende Deployment-Schritte: [Abschlussprüfung](SOUVENIRS-ABSCHLUSSPRUEFUNG.md). Production-Veröffentlichung am 22.10.2026 mit gesondertem Livecheck erfolgt.
-
-Abgedeckt sind unter anderem erste/zweite richtige Antworten, falsche und übersprungene Antworten, spätere Korrektur, Wiederholungen, Schwellen 5/20, Kategorie-/Themenrunden, eingefrorene Zuordnung, Backfill, Retry, Archivierung, Definitionsrevisionen, Adminschutz, Avatarberechtigungen/Lifecycle, Medienzuordnung, Reset und Kontolöschung. Integrationstests verwenden ausschließlich wegwerfbare `quiz_hero_audit_*`-Datenbanken; echte Accounts wurden dafür nicht zurückgesetzt.
-
-Der lokale Browserabschlusscheck bei 390 und 1440 Pixeln prüft leere und begonnene Sammlungen, alle vier Stadtpaare, Filter, Fortschritt und Dialoge anhand temporärer Darstellungsdaten. Gastzugriff bleibt gesperrt, alle acht Bilder laden und kein horizontaler Überlauf tritt auf. Frühere Screenshot-Aufnahmen über das Browserwerkzeug konnten nicht zuverlässig abgeschlossen werden; dies ist eine DOM-/Layoutprüfung.
-
-Deploymentablauf (am 22.10.2026 erfolgreich durchgeführt):
-
-1. Lokaler Gesamtcheck erfolgreich; beim Deployment aktuellen Production-Bestand und Migrationsstand erneut abgleichen.
-2. Vollständige Datenbank- und Uploadsicherung; Wiederherstellungspfad prüfen.
-3. Ausstehende Migrationen 014–019 ausdrücklich vor Aktivierung des neuen Codes anwenden. Ein Push allein führt sie nicht aus.
-4. Über den bestehenden dokumentierten Deploymentprozess veröffentlichen und anschließend prüfen.
-
-Ein Code-Rollback ist kein Datenbank-Restore. Code vor 017/018 kennt neue Katalogeinträge beziehungsweise Aktivierung/Löschmarkierungen nicht zuverlässig. Keine destruktive Rückmigration oder isolierte Entfernung von Migrationsmarkierungen. Vorwärts korrigieren oder Code und Daten konsistent aus Sicherung wiederherstellen; dabei möglichen Verlust neuer Fortschritte berücksichtigen. Lokale private Sicherungen sind kein Ersatz für ein frisches Productionbackup.
-
-Technische Ergänzungen und bestehende Prozesse: [Quiz-Reisepass](QUIZ-REISEPASS.md), [Mediathek](MEDIA.md), [Feature-Übersicht](FEATURES.md). Die Dokumentationsbereinigung allein veröffentlicht nichts; der gesonderte Production-Rollout erfolgte danach am 22.10.2026.
-
-## Nächste Erweiterungen – noch nicht implementiert
-
-| Idee | Inhalt | Offene Definition |
-|---|---|---|
-| Weitere Städte | Individuelle Stempel und Reisemarken | Geeignete Kategorien, erreichbare Ziele und Motive |
-| Reise durch Italien | Kategorienübergreifendes Sammelmotiv | Zahl und Kombination besuchter Kategorien |
-| Drangeblieben | Lernbelohnung für später gelöste Fehlerfragen | Anzahl, Zeitbezug und Versuche |
-| Hero-Master / besonderer Hero-Moment | Anspruchsvollere Auszeichnung für mehrere Hero-Fragen | Ziel, Erst-/Zweitversuche und erlaubte Hilfen |
-| Fehlerfreie Runde / Zweiter Versuch gerettet | Besondere Leistungs- oder Lernerfolge | Mindestgröße, Fehlerbegriff und Wertung |
-| Weitere Profilbilder / Avatar-Rahmen | Kosmetische Belohnungen | Motive und Freischaltbedingungen; Rahmen noch ohne Darstellung |
-| Lieblingssouvenir | Erhaltenes Stück als Favorit wählen | Profilplatz und Darstellung |
-| Geteiltes Souvenir | Optionales Motiv auf der Teilen-Karte | Gestaltung, ohne automatische Veröffentlichung |
-| Neue Fragen entdecken | Gezieltere Runde für fehlenden Fortschritt | Auswahlregeln; normale Zufallsauswahl bislang unverändert |
-| Allgemeine Meilensteinverwaltung | Mehrere Belohnungen einem Meilenstein zuordnen | Datenmodell, Adminvorschau und Auswirkungen |
-
-Frühere Motivideen bleiben vorgemerkt: Florenz-Skizzenbuch, Neapel-Postkarte, Amalfiküsten-Keramikkachel und Siena-Erinnerungsstück. Die vorhandenen ersten Stadtmotive sind stattdessen Stempel und Medaillons. Keine tägliche Pflichtserie, Zufallsbelohnungen oder zusätzliche Punktewährung für den Einstieg vorgesehen. Eine kleine Sammlung klarer Ziele bleibt die Leitidee.
-
-### Heldenfähigkeiten / Joker
-
-**Version 1 lokal implementiert, noch nicht auf Production.** Heldenblick, Schutzschild und Neues Abenteuer mit heldengebundenem Erwerb, globalen Definitionen, maximal drei Fähigkeiten je Held und Adminpflege. Jede freigeschaltete Fähigkeit ist automatisch einmal pro Runde nutzbar, ohne Vorauswahl oder Grundfähigkeit-Kennzeichnung. Die aktuelle Definition liegt zentral in [Heldenfähigkeit.md](Heldenfähigkeit.md). Wissensfunke bleibt vorgemerkt. Unterstützte richtige Antworten zählen zum Entdeckerfortschritt, die unterstützte Hero-Frage jedoch nicht zur Astra-Erstversuchsfreischaltung. Migrationen 022/023 nur lokal angewendet.
-
-Weitere spätere Adminideen: manuelle Einzelvergabe, Vergabevorschau mit betroffenen Accounts und allgemeine Verknüpfung mehrerer Belohnungen. Kein weitergehender Production-Reset ohne neue ausdrückliche Entscheidung. Gäste erhalten bislang keine dauerhaften Belohnungen; eine spätere Übernahme anonymer Leistungen ist nicht zugesagt.
-
-## Entscheidungen und Historie
-
-| Datum | Entscheidung / Umsetzung |
+| Auszeichnung | Voraussetzung |
 |---|---|
-| 20.–21.10.2026 | Lokale erste Version: Rom, danach Neapel und Florenz; versionierte Adminpflege, Medienbestand, Test-Reset und Astra. Erweiterung des Avatar-Katalogs und Lifecycle mit Migrationen 016–018. |
-| 22.10.2026 | Sammlung ohne Nutzerfilter oder Profilbildbereich; nur erhaltene und begonnene Stücke, Kategoriepaare, Sepia-Filter und dezenter Fortschrittshintergrund. Souvenir-Sektion aus Reisepass entfernt. |
-| 22.10.2026 | Entdecker-Regel Version 2: nur unterschiedliche richtige Antworten in erstem oder zweitem Versuch. Erhaltene Vergaben bleiben bestehen. |
-| 22.10.2026 | Dokumentation konsolidiert; bisheriges Arbeitsprotokoll archiviert. |
-| 22.10.2026 | Amalfi-Küste mit Reisestempel und 20-Fragen-Reisemarke ergänzt. Lokaler Bestand zur Zielprüfung: 27 aktive Fragen. Zwei neue transparente Low-Poly-Motive, keine Änderung an bestehenden Städten. |
+| **Reisestempel** | Eine Kategorie- oder kategorienbezogene Übungsrunde abschließen und erfolgreich speichern; mindestens eine Frage tatsächlich beantworten. Die Antwort darf falsch sein. Nur Überspringen genügt nicht. |
+| **Entdecker-Souvenir / Reisemarke** | Die Kategorie wie oben besucht haben und die festgelegte Anzahl unterschiedlicher Fragen dieser Kategorie richtig lösen. Erster oder zweiter Versuch zählt. |
+| **Neuer Held als Profilbild** | Die aktive Belohnungsregel dieses Helden erfüllen. Beispiel Astra: eine Hero-Frage im ersten Versuch ohne Hilfe richtig lösen und die Runde speichern. Details im [Belohnungsbaukasten](HELDENBELOHNUNGEN.md). |
+| **Frei verfügbarer Held** | Im Admin aktiv und frei verfügbar eingestellt. Er braucht keine Freischaltung und ist keine verdiente Belohnung. |
 
-Die vollständige frühere Arbeitsfassung einschließlich aller ursprünglichen Vorschläge, Zwischenprüfungen und Generierungsprompts liegt im [historischen Archiv](archive/SOUVENIRS-ARBEITSSTAND-2026-10-22.md). Sie enthält überholte Angaben und ist **keine aktuelle Spezifikation**. Vorhandene Assets: acht Stadtmotive unter `public/images/souvenirs/` und Astra unter `public/images/website/avatar/astra-v1.png`. Erzeugt mit dem eingebauten Imagegen-Werkzeug; keine separat abgerechnete KI-API und keine Laufzeitgenerierung im Spiel.
+Für Reisemarken zählt jede Frage nur einmal. Richtig gelöste Fragen mit Heldenhilfe zählen mit; bloßes Anschauen, falsche Antworten und Trostpunkte nicht. Themenrunden tragen richtige Fragen ihrer jeweiligen Kategorie bei, ersetzen aber keinen Kategorienbesuch. Abgebrochene oder nicht gespeicherte Runden bringen keinen Fortschritt. Bereits verdiente Auszeichnungen bleiben bei späteren Regeländerungen erhalten.
 
-## Veröffentlichung am 22.10.2026
+## Vorhandene Städte
 
-Datenbank und Uploads vorab gesichert, Migrationen 014–019 erfolgreich angewendet, alle acht Souvenirbilder und Astra mit SHA-256 und HTTP 200 geprüft. Acht aktive Definitionen und 27 Profilbilder; bestehende Katalog-/Account-/Ergebniszahlen erhalten. Test-Reset auf Production gesperrt. Basisrelease `aec5d3a61f20-20261022100902`; aktueller Dateistand unter `/version.json`. Die Cacheversionierung der beiden privaten Seiten ist mit eigenem Regressionstest abgesichert (33 Frontendtests). Details: [Production](HOSTINGER-PRODUCTION.md).
+| Kategorie | Reisestempel | Ziel der Reisemarke |
+|---|---|---|
+| Rom | Erster belegter Besuch | 20 unterschiedliche Fragen richtig |
+| Neapel | Erster belegter Besuch | 5 unterschiedliche Fragen richtig |
+| Florenz | Erster belegter Besuch | 20 unterschiedliche Fragen richtig |
+| Amalfi-Küste | Erster belegter Besuch | 20 unterschiedliche Fragen richtig |
 
-## Pflege dieser Datei
+Die Zielwerte sind im Admin pflegbar und wachsen nicht automatisch mit dem Fragenbestand. Die interne Testkategorie erhält keine Souvenirs.
 
-Bei jeder Änderung im selben Arbeitsschritt aktualisieren:
+## Die persönliche Sammlung
 
-1. Bedingungen und Zielwerte ganz oben, einschließlich Sichtbarkeit und Bestandsschutz.
-2. Tatsächlich implementierte Nutzer-/Adminabläufe und technische Datenhaltung.
-3. Migrationen, Auswirkungen auf bestehende Daten und Wiederherstellungsgrenzen.
-4. Relevante Prüfungen sowie lokalen und veröffentlichten Stand getrennt.
-5. Offene Ideen als solche kennzeichnen; erledigte Ideen in den aktuellen Stand übernehmen.
+Die separate Seite **Souvenirs** ist über das Menü für angemeldete Spieler erreichbar. Sie zeigt verdiente Stücke und bereits begonnene Entdeckerziele mit Fortschrittsbalken. Es gibt keine Kategorie-/Artfilter und keine allgemeine Vorschau aller zukünftigen Ziele.
 
-Historische Entscheidungen kurz im Protokoll halten, keine widersprüchlichen Nachträge als aktuelle Regeln anhängen. `hinweise.md` bleibt die persönliche Erinnerung des Nutzers und wird nur auf ausdrücklichen Wunsch verändert.
+Je Kategorie steht der Reisestempel links und die Reisemarke daneben. Noch nicht abgeschlossene Reisemarken haben den gemeinsamen Sepia-Filter und einen leicht grauen Kartenhintergrund. Nach Abschluss erscheinen sie farbig. Die Detailansicht erklärt Motiv, Bedingung und Vergabe.
+
+Zusätzlich werden **freigeschaltete Belohnungshelden** mit Bild und Namen gezeigt. „Profilbild auswählen“ führt direkt zum geöffneten Auswahlbereich im Konto. Freie und noch gesperrte Helden gehören nicht in diese Übersicht.
+
+Der Quizabschluss zeigt neue Erinnerungsstücke und Heldenbelohnungen nach erfolgreichem Speichern. Im **Reisepass** gibt es keine eigene Souvenirsektion mehr.
+
+## Im Admin pflegen
+
+Unter **Belohnungen → Meilensteine & Souvenirs** bestehende Definitionen suchen und bearbeiten oder neue anlegen: Kategorie, Motiv, Beschreibung, Besuchs-/Entdeckerregel, Ziel und Status. Für einen neuen Inhalt eine neue Definition verwenden, statt eine alte Auszeichnung in etwas anderes umzudeuten. Bereits vergebene Stücke behalten ihren damaligen Stand.
+
+Motive liegen unter **Mediathek → Souvenir-Bilder**. Heldenbelohnungen haben daneben ihren eigenen [Regel-Baukasten](HELDENBELOHNUNGEN.md). „Meilenstein“ bezeichnet das erreichte Ziel; ein allgemeines System, das beliebige mehrere Belohnungen bündelt, ist noch nicht umgesetzt.
+
+## Später denkbar
+
+- Weitere Städte und städteübergreifende Ziele, etwa eine Reise durch Italien.
+- Auszeichnungen für korrigierte Fehler, besondere Hero-Leistungen oder fehlerfreie Runden.
+- Lieblingssouvenir, zusätzliche kosmetische Belohnungen und freiwillig teilbare Sammelmotive.
+- Gezielte Fragen für offene Entdeckerziele; Vorschau der Auswirkungen von Regeländerungen.
+
+Keine tägliche Pflichtserie, Zufallsvergabe oder neue Währung vorgesehen. Ideen sind keine zugesagten Funktionen.
+
+Weiterlesen: [Reisepass](QUIZ-REISEPASS.md), [Heldenfähigkeiten](Heldenfähigkeit.md), [Mediathek](MEDIA.md). Technische Unterlagen: [Production-Betrieb](HOSTINGER-PRODUCTION.md), [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md), [ursprüngliche Umsetzung und Migrationen](archive/2026-10-31/Souvenir.md).
