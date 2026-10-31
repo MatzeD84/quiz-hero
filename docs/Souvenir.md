@@ -1,14 +1,16 @@
 # Souvenirs, Meilensteine und Belohnungen
 
-Stand: **22. Oktober 2026**. Zentrale, fortlaufend gepflegte Übersicht. **Der hier beschriebene Featurestand ist seit dem 22.10.2026 auf Production veröffentlicht.** Migrationen 014–019 sind lokal und auf Production angewendet. Release und Live-Prüfungen: [Production-Protokoll](docs/HOSTINGER-PRODUCTION.md).
+Stand: **31. Oktober 2026**. Zentrale, fortlaufend gepflegte Übersicht. Der Grundstand ist seit dem 22.10.2026 auf Production veröffentlicht; die Übersicht freigeschalteter Helden ist eine lokale Erweiterung vom 31.10.2026 und noch nicht veröffentlicht. Migrationen 014–019 sind lokal und auf Production angewendet. Release und Live-Prüfungen: [Production-Protokoll](HOSTINGER-PRODUCTION.md).
 
 ## Aktuelle Bedingungen auf einen Blick
+
+Lokal ergänzt (31.10.2026, noch nicht veröffentlicht): **Belohnungen → Neue Helden** bietet einen Regel-Baukasten mit beiden Zeitrahmen, Gesamtfortschritt und Einzelrunde. Anzahl, Schwierigkeit, Antwortversuch, Heldenhilfe und Kategorie sind einstellbar. Die folgende Astra-Bedingung bleibt zunächst die bestehende Vorgabe; im Baukasten ist sie anpassbar. Datenmodell, Regeln und Pflege: [Heldenbelohnungen](HELDENBELOHNUNGEN.md). Migration 025 lokal nach Sicherung angewendet; bestehende Vergaben bleiben erhalten.
 
 | Auszeichnung | Bedingung für die Vergabe | Sichtbarkeit |
 |---|---|---|
 | **Reisestempel** | Erste erfolgreich gespeicherte Kategorie- oder kategorienbezogene Übungsrunde mit mindestens einer tatsächlich beantworteten Frage. Die Antwort darf falsch sein. Nur übersprungene Fragen genügen nicht. | Erst nach Vergabe, farbig in der Souvenir-Sammlung. |
 | **Entdecker-Souvenir / Reisemarke** | Kategorienbesuch wie beim Reisestempel plus die festgelegte Anzahl **unterschiedlicher richtig beantworteter Fragen**, im ersten oder zweiten Versuch. | Bereits ab einer richtig gelösten Frage mit Fortschritt sichtbar. Vor Vergabe Sepia-Motiv und leicht grauer Kartenhintergrund; nach Vergabe farbig mit vollem Balken. |
-| **Profilbild-Belohnung, derzeit Astra** | Mindestens eine Hero-Frage **im ersten Versuch richtig** beantworten und die Runde erfolgreich abschließen und speichern. Kategorie-, Themen- und Übungsrunden zählen. Das Profilbild muss aktiv sein und die Regel `hero_first_try` verwenden. | Vor Freischaltung verborgen, danach im Konto auswählbar. Keine Profilbilder auf der Souvenir-Seite und kein automatischer Wechsel des aktuellen Bildes. |
+| **Profilbild-Belohnung, derzeit Astra** | Mindestens eine Hero-Frage **im ersten Versuch richtig** beantworten und die Runde erfolgreich abschließen und speichern. Kategorie-, Themen- und Übungsrunden zählen. Das Profilbild muss aktiv sein und die Regel `hero_first_try` verwenden. | Vor Freischaltung verborgen, danach im Konto auswählbar. Lokal zusätzlich als Übersicht auf der Souvenir-Seite; kein automatischer Wechsel des aktuellen Bildes. |
 | **Frei verfügbares Profilbild** | Im Admin als frei und aktiv eingestellt; keine Spielleistung nötig. | In Registrierung und Profilbildauswahl im Konto. Keine verdiente Belohnung. |
 
 Aktuell angelegte Städte:
@@ -47,7 +49,7 @@ Ein Meilenstein kann künftig mehrere Belohnungen auslösen. Eine allgemeine Zuo
 
 ## Aktuelle Darstellung
 
-Profilbildauswahl im Konto (lokale Anpassung vom 22.10.2026): Statt eines Dialogs liegt unter dem Benutzernamen ein aufklappbarer Bereich „Helden auswählen“. Verfügbare freie und freigeschaltete Helden erscheinen als Karten mit Motiv, Namen und Auswahlstatus. Die Wahl wird beim Auswählen automatisch gespeichert; Berechtigungsprüfung und Vergaberegeln bleiben unverändert. Der zusätzliche Link „Bild ändern“ am aktuellen Profilbild entfällt; dieses Bild ist nicht anklickbar. Der Ergebnislink `account.html#avatar` öffnet und scrollt zum Akkordeon. Auf der Souvenir-Seite werden weiterhin keine Profilbilder angezeigt.
+Profilbildauswahl im Konto: Unter dem Benutzernamen liegt der aufklappbare Bereich „Helden auswählen“. Verfügbare freie und freigeschaltete Helden erscheinen als Karten mit Motiv, Namen und Auswahlstatus. Lokal seit 31.10.2026 öffnet ein Kartenklick zuerst die kompakte Heldenvorstellung mit Bild und Fähigkeiten einschließlich persönlichem Lernstand. Erst „Helden auswählen“ im Dialog speichert; Abbrechen verändert nichts. Die Registrierung verwendet denselben Dialog, merkt die Auswahl jedoch nur bis zur Registrierung vor. Berechtigungsprüfung und Vergaberegeln bleiben unverändert. Der zusätzliche Link „Bild ändern“ am aktuellen Profilbild entfällt; dieses Bild ist nicht anklickbar. Der Ergebnislink `account.html#avatar` öffnet und scrollt zum Akkordeon. Die lokale Souvenir-Ansicht zeigt verdiente Helden mit Link zur Kontoauswahl. Details und Prüfstand: [Heldenfähigkeiten](Heldenfähigkeit.md). Noch nicht veröffentlicht.
 
 ### Souvenir-Seite
 
@@ -57,7 +59,7 @@ Profilbildauswahl im Konto (lokale Anpassung vom 22.10.2026): Statt eines Dialog
 - Nur erhaltene Stücke und begonnene Entdecker-Souvenirs erscheinen. Keine Sektion „Deine nächsten Ziele“ und keine Vorschau unverdienter Reisestempel.
 - Begonnene Marken zeigen die Zahl richtig gelöster Fragen, einen Fortschrittsbalken, einen leicht grauen Kartenhintergrund und exakt den zentralen Filter `--filter-sepia`, wie Kategorie-Bilder und Logo beim Hover. Das ist ein Sepia-Effekt, kein reiner Graustufenfilter.
 - Erhaltene Marken zeigen den erreichten Zielwert mit vollem Balken; Stempel haben keinen Balken. Detaildialoge zeigen Motiv, Beschreibung, Bedingung und Vergabedatum. Einmalige Besuchserfolge haben keinen Link „Kategorie spielen“.
-- Keine Sektion „Deine Heldenbilder“. Profilbilder bleiben ausschließlich im Konto auswählbar.
+- Lokale Erweiterung (31.10.2026): „Deine freigeschalteten Helden“ unter den Souvenirs, mit Bild, Name und Anzahl. Ausschließlich persönliche Belohnungen aus `account-journey.avatarRewards`, keine freien oder gesperrten Helden. Ohne persönliche Freischaltung wird die Sektion nicht gerendert. Jede Heldenkarte bietet den Link „Profilbild auswählen“ zu `account.html#avatar`. Dort wird „Helden auswählen“ automatisch aufgeklappt und in den sichtbaren Bereich gescrollt. Der Link selbst wechselt oder speichert kein Profilbild. Vorhandene serverseitige Katalogfilter gelten weiterhin (inaktive/gelöschte Helden werden nicht angezeigt). Keine API- oder Datenbankänderung. 46 Frontendtests sowie CSS-Build, Token- und BEM-Prüfung erfolgreich; Fälle ohne, mit einer und mit zwei Belohnungen geprüft. Noch nicht veröffentlicht.
 
 ### Reisepass und Ergebnis
 
@@ -89,7 +91,7 @@ Profilbilder haben einen eigenen Katalog mit Name, Motiv, frei/Belohnung und Akt
 - Löschen: aus dem Katalog ausblenden, Berechtigungen entfernen und betroffene Auswahl auf `hero` setzen. Intern verhindert eine Löschmarkierung die Wiederanlage durch alte Seeds; die Bilddatei wird nicht automatisch gelöscht.
 - Frei → Belohnung: aktuelle Auswahl ohne passende Berechtigung auf `hero` zurücksetzen.
 
-Vollständige Pflege-, Upload- und Lifecycle-Regeln: [Mediathek](docs/MEDIA.md).
+Vollständige Pflege-, Upload- und Lifecycle-Regeln: [Mediathek](MEDIA.md).
 
 ### Lokaler Test-Reset
 
@@ -139,7 +141,7 @@ Vor künftigen Deployments weiterhin vollständige Datenbank-/Uploadsicherung un
 
 ### Gesamtcheck
 
-**Letzte ausgeführte Prüfung:** 179 isolierte Integrationstests und 32 Frontendtests erfolgreich; PHP-/JS-Syntax geprüft. CSS-Build, Token-/BEM-Prüfung und lokaler Deployment-Build erfolgreich. Umfang, Bereinigung, Browserbefunde und verbleibende Deployment-Schritte: [Abschlussprüfung](docs/SOUVENIRS-ABSCHLUSSPRUEFUNG.md). Production-Veröffentlichung am 22.10.2026 mit gesondertem Livecheck erfolgt.
+**Letzte ausgeführte Prüfung:** 179 isolierte Integrationstests und 32 Frontendtests erfolgreich; PHP-/JS-Syntax geprüft. CSS-Build, Token-/BEM-Prüfung und lokaler Deployment-Build erfolgreich. Umfang, Bereinigung, Browserbefunde und verbleibende Deployment-Schritte: [Abschlussprüfung](SOUVENIRS-ABSCHLUSSPRUEFUNG.md). Production-Veröffentlichung am 22.10.2026 mit gesondertem Livecheck erfolgt.
 
 Abgedeckt sind unter anderem erste/zweite richtige Antworten, falsche und übersprungene Antworten, spätere Korrektur, Wiederholungen, Schwellen 5/20, Kategorie-/Themenrunden, eingefrorene Zuordnung, Backfill, Retry, Archivierung, Definitionsrevisionen, Adminschutz, Avatarberechtigungen/Lifecycle, Medienzuordnung, Reset und Kontolöschung. Integrationstests verwenden ausschließlich wegwerfbare `quiz_hero_audit_*`-Datenbanken; echte Accounts wurden dafür nicht zurückgesetzt.
 
@@ -154,7 +156,7 @@ Deploymentablauf (am 22.10.2026 erfolgreich durchgeführt):
 
 Ein Code-Rollback ist kein Datenbank-Restore. Code vor 017/018 kennt neue Katalogeinträge beziehungsweise Aktivierung/Löschmarkierungen nicht zuverlässig. Keine destruktive Rückmigration oder isolierte Entfernung von Migrationsmarkierungen. Vorwärts korrigieren oder Code und Daten konsistent aus Sicherung wiederherstellen; dabei möglichen Verlust neuer Fortschritte berücksichtigen. Lokale private Sicherungen sind kein Ersatz für ein frisches Productionbackup.
 
-Technische Ergänzungen und bestehende Prozesse: [Quiz-Reisepass](docs/QUIZ-REISEPASS.md), [Mediathek](docs/MEDIA.md), [Feature-Übersicht](FEATURES.md). Die Dokumentationsbereinigung allein veröffentlicht nichts; der gesonderte Production-Rollout erfolgte danach am 22.10.2026.
+Technische Ergänzungen und bestehende Prozesse: [Quiz-Reisepass](QUIZ-REISEPASS.md), [Mediathek](MEDIA.md), [Feature-Übersicht](FEATURES.md). Die Dokumentationsbereinigung allein veröffentlicht nichts; der gesonderte Production-Rollout erfolgte danach am 22.10.2026.
 
 ## Nächste Erweiterungen – noch nicht implementiert
 
@@ -175,24 +177,7 @@ Frühere Motivideen bleiben vorgemerkt: Florenz-Skizzenbuch, Neapel-Postkarte, A
 
 ### Heldenfähigkeiten / Joker
 
-**Nutzeridee, noch nicht implementiert:** Wenige dauerhaft freigeschaltete Fähigkeiten, freiwillig einsetzbar. Dauerhafte Berechtigung und Nutzungslimit sind getrennte Regeln. Empfehlung, noch nicht beschlossen: höchstens zwei Fähigkeiten zum Einstieg und ein klares Limit pro Runde.
-
-| Arbeitstitel | Wirkung | Vorschlag und offene Punkte |
-|---|---|---|
-| Heldenblick | Eine garantiert falsche Antwort ausblenden | Einmal pro Runde vor dem ersten Versuch, zunächst Schwer (`medium`); Hero-Zulässigkeit, Freischaltziel, Punkte und Erfolgsregeln klären. |
-| Neues Abenteuer | Unbeantwortete Frage gegen eine zufällige Ersatzfrage tauschen | Auswahlart und Größe erhalten, möglichst gleiche Schwierigkeit; Ersatzbestand, Übungsmodus und Statistik klären. |
-
-Vor Umsetzung festlegen:
-
-- Welche Leistung schaltet die Fähigkeit frei? Bleibt sie accountbezogen auch bei Profilbildwechsel erhalten?
-- Welche Runden, Schwierigkeitsgrade und Fragezustände erlauben den Einsatz?
-- Wie wirken Hilfen auf Punkte, Erfolgsquoten, Astra und andere Leistungsziele? Korrektheit allein darf diese Entscheidung nicht vorwegnehmen.
-- Kein automatischer Einsatz. Wirkung, verbleibendes Limit und Verbrauch verständlich anzeigen.
-- Keine Ersatzfrage vorhanden: deaktivieren, begründen und keinen Einsatz verbrauchen. Keine in der Runde vorhandene oder bereits herausgetauschte Frage erneut ziehen. Eine unbeantwortet getauschte Frage zählt weder als Lösung noch Fehler.
-- Übungsrunden nicht still in normale Runden verwandeln. Gegebenenfalls nur aus passenden offenen Fehlerfragen ersetzen.
-- Backend prüft Berechtigung, Eigentümer, Limit und Fragezustand. Transaktionen, Rundensperre und eindeutige Aktionskennung sichern Parallelität, Reload und wiederholte Requests ab.
-- Unterstützte Antworten und Einsätze historisch speichern; dauerhafte Freischaltung und Rundenaktionen getrennt modellieren. Lösungen dürfen nicht an den Browser verraten werden.
-- Admin darf geprüfte Regel-/Effekttypen mit zulässigen Parametern pflegen; neue Spiellogik braucht Code und Tests. Freie Formeln oder SQL bleiben ausgeschlossen.
+**Version 1 lokal implementiert, noch nicht auf Production.** Heldenblick, Schutzschild und Neues Abenteuer mit heldengebundenem Erwerb, globalen Definitionen, maximal drei Fähigkeiten je Held und Adminpflege. Jede freigeschaltete Fähigkeit ist automatisch einmal pro Runde nutzbar, ohne Vorauswahl oder Grundfähigkeit-Kennzeichnung. Die aktuelle Definition liegt zentral in [Heldenfähigkeit.md](Heldenfähigkeit.md). Wissensfunke bleibt vorgemerkt. Unterstützte richtige Antworten zählen zum Entdeckerfortschritt, die unterstützte Hero-Frage jedoch nicht zur Astra-Erstversuchsfreischaltung. Migrationen 022/023 nur lokal angewendet.
 
 Weitere spätere Adminideen: manuelle Einzelvergabe, Vergabevorschau mit betroffenen Accounts und allgemeine Verknüpfung mehrerer Belohnungen. Kein weitergehender Production-Reset ohne neue ausdrückliche Entscheidung. Gäste erhalten bislang keine dauerhaften Belohnungen; eine spätere Übernahme anonymer Leistungen ist nicht zugesagt.
 
@@ -206,11 +191,11 @@ Weitere spätere Adminideen: manuelle Einzelvergabe, Vergabevorschau mit betroff
 | 22.10.2026 | Dokumentation konsolidiert; bisheriges Arbeitsprotokoll archiviert. |
 | 22.10.2026 | Amalfi-Küste mit Reisestempel und 20-Fragen-Reisemarke ergänzt. Lokaler Bestand zur Zielprüfung: 27 aktive Fragen. Zwei neue transparente Low-Poly-Motive, keine Änderung an bestehenden Städten. |
 
-Die vollständige frühere Arbeitsfassung einschließlich aller ursprünglichen Vorschläge, Zwischenprüfungen und Generierungsprompts liegt im [historischen Archiv](docs/archive/SOUVENIRS-ARBEITSSTAND-2026-10-22.md). Sie enthält überholte Angaben und ist **keine aktuelle Spezifikation**. Vorhandene Assets: acht Stadtmotive unter `public/images/souvenirs/` und Astra unter `public/images/website/avatar/astra-v1.png`. Erzeugt mit dem eingebauten Imagegen-Werkzeug; keine separat abgerechnete KI-API und keine Laufzeitgenerierung im Spiel.
+Die vollständige frühere Arbeitsfassung einschließlich aller ursprünglichen Vorschläge, Zwischenprüfungen und Generierungsprompts liegt im [historischen Archiv](archive/SOUVENIRS-ARBEITSSTAND-2026-10-22.md). Sie enthält überholte Angaben und ist **keine aktuelle Spezifikation**. Vorhandene Assets: acht Stadtmotive unter `public/images/souvenirs/` und Astra unter `public/images/website/avatar/astra-v1.png`. Erzeugt mit dem eingebauten Imagegen-Werkzeug; keine separat abgerechnete KI-API und keine Laufzeitgenerierung im Spiel.
 
 ## Veröffentlichung am 22.10.2026
 
-Datenbank und Uploads vorab gesichert, Migrationen 014–019 erfolgreich angewendet, alle acht Souvenirbilder und Astra mit SHA-256 und HTTP 200 geprüft. Acht aktive Definitionen und 27 Profilbilder; bestehende Katalog-/Account-/Ergebniszahlen erhalten. Test-Reset auf Production gesperrt. Basisrelease `aec5d3a61f20-20261022100902`; aktueller Dateistand unter `/version.json`. Die Cacheversionierung der beiden privaten Seiten ist mit eigenem Regressionstest abgesichert (33 Frontendtests). Details: [Production](docs/HOSTINGER-PRODUCTION.md).
+Datenbank und Uploads vorab gesichert, Migrationen 014–019 erfolgreich angewendet, alle acht Souvenirbilder und Astra mit SHA-256 und HTTP 200 geprüft. Acht aktive Definitionen und 27 Profilbilder; bestehende Katalog-/Account-/Ergebniszahlen erhalten. Test-Reset auf Production gesperrt. Basisrelease `aec5d3a61f20-20261022100902`; aktueller Dateistand unter `/version.json`. Die Cacheversionierung der beiden privaten Seiten ist mit eigenem Regressionstest abgesichert (33 Frontendtests). Details: [Production](HOSTINGER-PRODUCTION.md).
 
 ## Pflege dieser Datei
 

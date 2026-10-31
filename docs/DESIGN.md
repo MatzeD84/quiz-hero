@@ -1,5 +1,25 @@
 # Quiz-Hero Design
 
+## Erfolgreiches Speichern im Dialog
+
+Lokal seit 31.10.2026: `completeDialogSave(dialog, message)` in `dialog.js` schließt nach serverseitig bestätigtem Schreiben und zeigt über `save-notice.js` eine gemeinsame Bestätigung für vier Sekunden unten links. Kein automatisches Schließen auf Submit oder bei Fehlern. Abbrechen und bloße Vorauswahl bei Registrierung bleiben ohne gespeicherte Erfolgsmeldung. Konto-Heldenauswahl und Mediathek-Bildaustausch verwenden denselben Abschluss; erfolgreiches Fragefeedback schließt ebenfalls sofort und bestätigt die Speicherung.
+
+Der Helden-Admin markiert nach bestätigtem Schreiben das Formular sauber und schließt bereits vor dem anschließenden Listenabruf. Ein Fehler dieses Abrufs wird außerhalb des Dialogs ausdrücklich als Aktualisierungsproblem nach erfolgreicher Speicherung gemeldet; kein irreführender Schreibfehler und kein zweiter Speicherauftrag. Nach Abruf und Entsperren kehrt der Fokus zur Heldenkarte zurück. Tatsächliche Schreibfehler bleiben im offenen Dialog, erhalten Werte und erlauben erneutes Speichern.
+
+`viewport-status` ist der gemeinsame feste Bereich für bestehende Ladehinweise und die Speicherbestätigung. Elemente stehen in einem kompakten Raster untereinander; mobile Randabstände und maximale Breite bleiben erhalten. Erfolgsmeldung als `role=status`, `aria-live=polite`, `aria-atomic=true`, ohne Fokusübernahme. Wiederholte Erfolge aktualisieren dieselbe Meldung und starten ihre Anzeigedauer neu; keine unbeschränkte Meldungsliste. Bestehende Inline-Statusbereiche bleiben für Kontext und Fehler erhalten.
+
+Prüfung: 56 Frontendtests, CSS-/Token-/BEM-Build und JS-Syntax erfolgreich. Browserfixture: fehlgeschlagenes Helden-Speichern hält Dialog und Eingaben, erfolgreiches Schreiben schließt auch bei anschließendem Listenfehler, Bestätigung und Loader überlagern sich nicht und erzeugen keinen horizontalen Überlauf. Keine echten Datensätze verändert, keine Backend-/Datenbankänderung und keine Veröffentlichung.
+
+## Speicheraktionen nur bei Änderungen
+
+Lokal seit 31.10.2026, noch nicht veröffentlicht: `public/js/save-button-state.js` steuert Datensatz-Speicherbuttons anhand von Änderungs- und Sperrzustand. Der bestehende `form-guard.js` bindet die Funktion zentral für alle geschützten Adminformulare ein. Nur geänderte Formularwerte aktivieren den nativen Submitbutton; Fokus/Klick ohne Wertänderung nicht. Rücknahme auf den geladenen Stand und erfolgreiches Speichern deaktivieren ihn wieder. Auch Enter beziehungsweise programmatische Submit-Ereignisse ohne Änderung werden vor den Speicherhandlern abgefangen. Neue Datensätze werden nach Eingabe/Upload speicherbar; bestehende Pflichtfeldvalidierung bleibt zusätzlich aktiv.
+
+Die Snapshots ignorieren Aktionsbuttons, Fieldsets und ausdrücklich mit `data-save-ignore` markierte Hilfefelder (Tagsuche). Verbindlich ausgewählte Tags, Checkboxen, Textfelder und versteckte Bildpfade zählen. Nach programmgesteuerten Änderungen weiterhin `guard.refresh()`, nach Laden beziehungsweise bestätigtem Speichern `guard.clean(form)` aufrufen. `inert`/`aria-busy` am Formular oder seinen Vorfahren bleiben wirksam. Ein MutationObserver gleicht bestehende pauschale Button-Freigaben nach Lade-/Speicherende ab, ohne Erfolgsmeldungen zu löschen. Bei Fehlern wird der geänderte Stand nicht als gespeichert markiert; Abbrechen und Löschen werden von dieser Speicherlogik nicht gesperrt.
+
+Die Kontoseite verwendet dieselbe Steuerung für Benutzername und Passwort; keine Änderung der bisherigen Navigation oder Einführung weiterer Verwerfen-Dialoge. Der bereits gewählte Held hat im Vorstellungsdialog eine deaktivierte Auswahlaktion. Authentifizierung, Registrierung und andere ausdrücklich ausgelöste Aktionen sind keine Änderung eines geladenen Datensatzes und erhalten ihre bisherige Bedienlogik. Der Bildaustauschdialog besitzt bereits seine Dateiauswahl-Sperre. Vorhandener zentraler Disabled-Stil (`--opacity-disabled`, 0.45, kein Hover, `cursor: not-allowed`) unverändert.
+
+Prüfung: 55 Frontendtests und JS-Syntax erfolgreich. Browserfixtures prüfen Grundzustand, Fokus, Änderung/Rücknahme, Checkboxen, Bildpfadänderung, Tastatur-Submit ohne Schreibaufruf, Busy-Sperre, Erneutversuch nach Fehler und Sperre nach Erfolg einschließlich nachträglicher pauschaler Buttonfreigabe. Zusätzlich echter Helden-Dialog mit simuliertem Speicherfehler/Erfolg sowie Konto-Benutzername und Passwortreset geprüft. Native Deaktivierung und Deckkraft 0.45 bestätigt. Keine echten Kontodaten verändert, keine Backend-/Datenbankänderung; Production unverändert.
+
 Das bisherige Beta-Design ist seit dem 17.10.2026 der gemeinsame Standard auf `master`. Der separate Branch `design/beta` wird nach der Uebernahme entfernt. Alle spaeteren Designaenderungen bauen auf diesem Stand auf.
 
 ## Entwicklung und Deployment
@@ -63,3 +83,8 @@ Weitere Ergaenzung im selben Release: Die Hintergrundwissenskarte beginnt mit ei
 `node scripts/build-css.js` (inklusive Token-Pruefung), `node scripts/check-bem.js` und `node --test tests/contracts.test.mjs`. Der Hostinger-Produktionsbuild wird mit expliziter Produktionsfreigabe geprueft. Browserpruefungen umfassen mobile Quizansichten bei 320/390 Pixeln und Desktop bei 1440 Pixeln.
 
 Produktionskonfiguration und Datenhaltung: [Hostinger Production](HOSTINGER-PRODUCTION.md). Ein Branchwechsel oder Deployment importiert keine Fragen und setzt die Datenbank nicht zurueck.
+# Mobile Dialogabstände (lokale Anpassung, 31.10.2026)
+
+Standarddialoge verwenden unterhalb beziehungsweise bei 768 Pixeln für `.modal__content` die Breite `min(calc(100% - var(--space-24)), 600px)` mit `border-box`. Das ergibt mindestens 12 Pixel seitlichen Abstand. Bestehende engere Maximalbreiten bleiben wirksam. Die Regel liegt nach den allgemeinen Modalregeln, welche die frühere mobile Breite überschrieben hatten. Desktoplayout und bestehende Innenabstände bleiben erhalten. Der separate Teilen-Dialog besitzt bereits eigenen seitlichen Abstand und wird nicht geändert.
+
+Browserprüfung bei 430 Pixeln: Footer-, Ergebnis- und Fragenfeedbackdialog jeweils 12 Pixel links/rechts, kein horizontaler Überlauf. Bei 320 Pixeln Footer ebenfalls 12 Pixel je Seite ohne Überlauf. CSS-Build mit Token- und BEM-Prüfung erfolgreich. Keine Anwendung oder Datenbank veröffentlicht; Änderung nur lokal.

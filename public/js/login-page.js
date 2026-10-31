@@ -1,3 +1,4 @@
+import { createHeroPreview } from './hero-preview.js?v=dev';
 import { CONFIG, HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 import { UserService } from './user-service.js?v=dev';
@@ -29,6 +30,15 @@ const elements = {
 
 const userService = new UserService();
 let activeView = 'login';
+let previewGroup = null;
+const heroPreview = createHeroPreview({ load: key => userService.heroPreview(key), onSelect: avatar => {
+    if (!previewGroup) return;
+    previewGroup.dataset.selectedAvatar = avatar.key;
+    for (const card of previewGroup.querySelectorAll('[data-avatar-key]')) {
+        const selected = card.dataset.avatarKey === avatar.key;card.setAttribute('aria-pressed', String(selected));
+
+    }
+} });
 
 const showVerificationHelp = (email = '') => {
     elements.resend.classList.remove('u-hidden');
@@ -63,42 +73,21 @@ const showView = (view, options = {}) => {
     });
 };
 
-const selectedAvatar = target => {
-    const input = document.querySelector(`input[name="login-avatar-${target}"]:checked`);
-    return input?.value || HERO_AVATARS[0]?.key || 'hero';
-};
+const selectedAvatar = target => elements.avatarGroups.find(group => (group.dataset.avatarTarget || 'register') === target)?.dataset.selectedAvatar || HERO_AVATARS[0]?.key || 'hero';
 
 const renderAvatarChoices = () => {
     elements.avatarGroups.forEach(group => {
-        const target = group.dataset.avatarTarget || 'register';
+        const avatars=HERO_AVATARS.filter(avatar=>!avatar.unlockRule);
+        if(!avatars.some(a=>a.key===group.dataset.selectedAvatar))group.dataset.selectedAvatar=avatars[0]?.key||'hero';
         group.innerHTML = '<p class="account-avatar-field__title">Wähle dein Heldenbild</p>';
-        const grid=document.createElement('div');
-        grid.className='profile-avatar__grid';
-        grid.setAttribute('role','radiogroup');
-        grid.setAttribute('aria-label','Helden auswählen');
-        group.append(grid);
-        HERO_AVATARS.filter(avatar=>!avatar.unlockRule).forEach((avatar, index) => {
-            const label = document.createElement('label');
-            label.className = 'profile-avatar__card';
-            label.setAttribute('aria-label', avatar.label);
-            const input = document.createElement('input');
-            input.type = 'radio';
-            input.name = `login-avatar-${target}`;
-            input.value = avatar.key;
-            input.checked = index === 0;
-            const image = document.createElement('img');
-            image.src = avatar.url;
-            image.alt = '';
-            image.loading = 'lazy';
-            image.width=112;image.height=112;
+        const grid=document.createElement('div');grid.className='profile-avatar__grid';grid.setAttribute('role','group');grid.setAttribute('aria-label','Helden auswählen');group.append(grid);
+        for(const avatar of avatars){
+            const card=document.createElement('button');card.type='button';card.className='profile-avatar__card';card.dataset.avatarKey=avatar.key;card.setAttribute('aria-pressed',String(avatar.key===group.dataset.selectedAvatar));card.setAttribute('aria-haspopup','dialog');
+            const image=document.createElement('img');image.src=avatar.url;image.alt='';image.loading='lazy';image.width=112;image.height=112;
             const name=document.createElement('strong');name.textContent=avatar.label;
-            const state=document.createElement('span');state.className='profile-avatar__state';
-            const updateState=()=>{state.textContent=input.checked?'Ausgewählt':'Verfügbar';};
-            input.addEventListener('change',()=>grid.querySelectorAll('input').forEach(radio=>radio.dispatchEvent(new Event('avatar-state'))));
-            input.addEventListener('avatar-state',updateState);updateState();
-            label.append(input,image,name,state);
-            grid.appendChild(label);
-        });
+
+            card.append(image,name);card.addEventListener('click',()=>{previewGroup=group;heroPreview.open(avatar);});grid.append(card);
+        }
     });
 };
 

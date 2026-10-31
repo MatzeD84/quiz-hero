@@ -1,6 +1,6 @@
 # Historisches Arbeitsprotokoll Souvenirs
 
-Archiviert am 22.10.2026. Diese unveränderte Arbeitsfassung enthält überholte Regeln und widersprüchliche Zwischenstände. Sie ist keine aktuelle Spezifikation. Gültiger Stand: [Souvenir.md](../../Souvenir.md). Alte relative Links sind gegebenenfalls vom Projektstamm aus aufzulösen.
+Archiviert am 22.10.2026. Diese unveränderte Arbeitsfassung enthält überholte Regeln und widersprüchliche Zwischenstände. Sie ist keine aktuelle Spezifikation. Gültiger Stand: [Souvenir.md](../Souvenir.md). Alte relative Links sind gegebenenfalls vom Projektstamm aus aufzulösen.
 
 ---
 
@@ -33,7 +33,7 @@ Deaktivierte Profilbilder verschwinden aus der Auswahl; ihre Freischaltung bleib
 
 Im Reisepass bleibt die Vorschau auf die drei neuesten **erhaltenen** Souvenirs beschränkt und ist ohne erhaltene Stücke verborgen. Begonnene Entdecker-Souvenirs stehen ausschließlich auf der Souvenir-Seite.
 
-Diese Datei ist die zentrale, fortlaufend gepflegte Arbeitsübersicht für das Feature. Sie sammelt besprochene Ideen, Regeln, offene Entscheidungen und den tatsächlichen Umsetzungsstand. Die persönliche Sammlung [hinweise.md](hinweise.md) bleibt unverändert.
+Diese Datei ist die zentrale, fortlaufend gepflegte Arbeitsübersicht für das Feature. Sie sammelt besprochene Ideen, Regeln, offene Entscheidungen und den tatsächlichen Umsetzungsstand. Die persönliche Sammlung [hinweise.md](../hinweise.md) bleibt unverändert.
 
 ## Status und Pflege
 
@@ -43,7 +43,7 @@ Die lokale Datenbank ist auf Migration `018_avatar_lifecycle.sql` (einschließli
 
 Statuswerte: **Vorhanden**, **Vorschlag**, **Beschlossen**, **In Umsetzung**, **Lokal umgesetzt**, **Veröffentlicht**, **Zurückgestellt**. Eine besprochene Idee gilt nicht automatisch als beschlossen.
 
-Bei Änderungen diese Datei aktualisieren: Regel und Status, lokale Prüfung, gegebenenfalls Migration und tatsächlicher Production-Release. Veränderte Freischaltbedingungen mit einer neuen Regelversion dokumentieren. Die allgemeine [Feature-Übersicht](FEATURES.md) verweist hierher; technische Grundlagen stehen in [docs/QUIZ-REISEPASS.md](docs/QUIZ-REISEPASS.md).
+Bei Änderungen diese Datei aktualisieren: Regel und Status, lokale Prüfung, gegebenenfalls Migration und tatsächlicher Production-Release. Veränderte Freischaltbedingungen mit einer neuen Regelversion dokumentieren. Die allgemeine [Feature-Übersicht](../FEATURES.md) verweist hierher; technische Grundlagen stehen in [docs/QUIZ-REISEPASS.md](../QUIZ-REISEPASS.md).
 
 | Bereich | Aktueller Stand | Nächster Schritt |
 |---|---|---|
@@ -470,7 +470,7 @@ Nach Abschluss erscheint das Heldenbild vor „Freunde herausfordern“ mit „P
 
 ### Pflege und Grenzen dieser Version
 
-Seit der lokalen Migration 017 stehen Motive, Namen und Regeln im Datenbank-Katalog `quiz_avatars` (`avatar_key: astra`, `unlock_rule: hero_first_try`). `data/avatars.json` bleibt die historische Ausgangsliste; Änderungen dort sind keine laufende Adminpflege mehr. Der Mediathek-Tab „Profilbilder“ erlaubt Namen, Motivwechsel und seit Migration 018 freie Profile oder Belohnungen, Aktivieren/Deaktivieren und Löschen. Belohnungen können die vorhandene Hero-Testregel oder „Freischaltung später festlegen“ verwenden; letzteres vergibt noch nichts automatisch. Schlüssel bleiben unverändert. Neue frei definierbare Regeltypen oder manuelle Einzelvergabe sind nicht enthalten. Die vorhandene Souvenir-Verwaltung pflegt weiterhin Reisestempel und Entdecker-Souvenirs; eine Verbindung mehrerer Belohnungen mit einem beliebigen Meilenstein bleibt vorgemerkt. Technische Details einschließlich Standardheld-Fallback und Löschverhalten: [Mediathek](docs/MEDIA.md).
+Seit der lokalen Migration 017 stehen Motive, Namen und Regeln im Datenbank-Katalog `quiz_avatars` (`avatar_key: astra`, `unlock_rule: hero_first_try`). `data/avatars.json` bleibt die historische Ausgangsliste; Änderungen dort sind keine laufende Adminpflege mehr. Der Mediathek-Tab „Profilbilder“ erlaubt Namen, Motivwechsel und seit Migration 018 freie Profile oder Belohnungen, Aktivieren/Deaktivieren und Löschen. Belohnungen können die vorhandene Hero-Testregel oder „Freischaltung später festlegen“ verwenden; letzteres vergibt noch nichts automatisch. Schlüssel bleiben unverändert. Neue frei definierbare Regeltypen oder manuelle Einzelvergabe sind nicht enthalten. Die vorhandene Souvenir-Verwaltung pflegt weiterhin Reisestempel und Entdecker-Souvenirs; eine Verbindung mehrerer Belohnungen mit einem beliebigen Meilenstein bleibt vorgemerkt. Technische Details einschließlich Standardheld-Fallback und Löschverhalten: [Mediathek](../MEDIA.md).
 
 ### Motiv und Prüfungen
 

@@ -69,7 +69,7 @@ export function createSouvenirAdmin({api,getCategories,uploadImage,setupDropzone
     setupDropzone({dropzoneSelector:'#js-souvenir-dropzone',fileInputSelector:'#js-souvenir-upload',onFile:uploadFile});
     form.addEventListener('submit',async event=>{
         event.preventDefault();if(busy)return;busy=true;form.inert=true;
-        try{const payload=Object.fromEntries(['title','categoryId','rule','target','description','image','state'].map(n=>[n,field(n).value]));const result=await api('admin-souvenir-save',{...payload,key:current?.souvenir_key||'',contentVersion:current?.contentVersion||''});if(!result.ok)throw new Error(result.error);await load(result.key);status.textContent='Neue Version gespeichert. Bereits erhaltene Souvenirs bleiben erhalten.';}
+        try{const payload=Object.fromEntries(['title','categoryId','rule','target','description','image','state'].map(n=>[n,field(n).value]));const result=await api('admin-souvenir-save',{...payload,key:current?.souvenir_key||'',contentVersion:current?.contentVersion||''});if(!result.ok)throw new Error(result.error);guard.clean(form);await load(result.key);status.textContent='Neue Version gespeichert. Bereits erhaltene Souvenirs bleiben erhalten.';}
         catch(e){status.textContent=e.message;}finally{busy=false;form.inert=false;}
     });
     return {confirmLeave:()=>!busy&&guard.confirm(),async show(active){panel.classList.toggle('u-hidden',!active);if(active){try{await load(current?.souvenir_key);}catch(e){count.textContent=e.message;}}}};

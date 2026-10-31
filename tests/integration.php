@@ -105,7 +105,7 @@ try {
             foreach ($cookies as $name => $value) $pairs[] = $name . '=' . $value;
             $headers .= 'Cookie: ' . implode('; ', $pairs) . "\r\n";
         }
-        $userCsrfActions = ['account-souvenir-sync','account-journey','start-round','account-logout','account-update','account-delete','save-result','question-feedback-save'];
+        $userCsrfActions = ['account-hero-preview','account-abilities','account-ability-equip','use-round-ability','account-souvenir-sync','account-journey','start-round','account-logout','account-update','account-delete','save-result','question-feedback-save'];
         $token = str_starts_with($action, 'admin-') && $action !== 'admin-login' ? $csrf : (in_array($action, $userCsrfActions, true) ? $userCsrf : '');
         if ($csrfOverride === false) $token = '';
         elseif (is_string($csrfOverride)) $token = $csrfOverride;
@@ -522,6 +522,12 @@ try {
     require __DIR__.'/souvenir-media.inc.php';
     require __DIR__.'/worlds.inc.php';
     require __DIR__.'/category-worlds.inc.php';
+    require __DIR__.'/abilities.inc.php';
+    require __DIR__.'/ability-media.inc.php';
+    require __DIR__.'/hero-preview.inc.php';
+    require __DIR__.'/avatar-rule-builder.inc.php';
+    require __DIR__.'/focus-lucky.inc.php';
+    require __DIR__.'/default-abilities.inc.php';
     echo "{$checks} integration checks passed.\n";
 } finally {
     foreach ($mediaTestFiles as $file) if (is_file($file)) unlink($file);

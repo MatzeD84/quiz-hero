@@ -259,14 +259,6 @@ body:has(dialog[open]) {
     overflow: hidden;
 }
 
-@media (max-width: 768px) {
-    .modal__content {
-        width: calc(100% - 2rem);
-        margin: var(--space-16) auto;
-        box-sizing: border-box;
-    }
-}
-
 .modal {
     padding: 0 var(--space-16);
     background: var(--color-overlay);
@@ -319,5 +311,13 @@ body:has(dialog[open]) {
 @media (max-width: 600px) {
     .result-summary__score {
         padding: var(--space-20);
+    }
+}
+
+/* Keep the mobile inset after the shared content width so it cannot be overridden. */
+@media (max-width: 768px) {
+    .modal__content {
+        width: min(calc(100% - var(--space-24)), 600px);
+        box-sizing: border-box;
     }
 }

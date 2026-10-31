@@ -9,7 +9,9 @@ import { createMediaReplacement } from './admin/media-replace.js?v=dev';
 import { createMediaLoading } from './admin/media-loading.js?v=dev';
 import { createLoadingStatus } from './admin/loading-status.js?v=dev';
 import { createSouvenirAdmin } from './admin/souvenirs.js?v=dev';
+import { createAvatarRewardAdmin, createRewardTabs } from './admin/avatar-rewards.js?v=dev';
 import { createAvatarAdmin } from './admin/avatars.js?v=dev';
+import { createAbilityAdmin } from './admin/abilities.js?v=dev';
 import { categoryWorldRemovalImpact } from './admin/world-impact.js?v=dev';
 import { renderQuestionWorldChoices, selectedDirectQuestionWorlds } from './admin/question-world-choices.js?v=dev';
 
@@ -37,10 +39,14 @@ const submitForm = async (form, action) => {
 document.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (savingForm && target) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+    // Same-panel jump links only scroll; they cannot discard an edited form.
+    if (target?.matches('[data-ability-jump]')) return;
     if (!target || target.closest('#js-admin-question-form, #js-admin-category-form, #js-admin-world-form')) return;
     if (target.matches('[data-admin-tab], [data-media-tab], #js-admin-logout, #js-admin-new-category, a') || target.closest('#js-admin-question-list, #js-admin-media-detail, #js-admin-feedback-panel')) {
         if (!avatarAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
         if (!souvenirAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+        if (!avatarRewardAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
+        if (!abilityAdmin.confirmLeave()) { event.preventDefault(); event.stopImmediatePropagation(); return; }
         if (!formGuard.confirm()) { event.preventDefault(); event.stopImmediatePropagation(); }
     }
 }, true);
@@ -77,6 +83,7 @@ const datasetLabels = {
     'admin-media-list': 'Bilder werden geladen …',
     'admin-users-list': 'Spieler werden geladen …',
     'admin-question-feedback-list': 'Feedback wird geladen …',
+    'admin-avatar-rewards': 'Heldenbelohnungen werden geladen …',
     'admin-souvenirs': 'Souvenirs werden geladen …',
     'admin-avatars': 'Profilbilder werden geladen …'
 };
@@ -147,6 +154,9 @@ const mediaReplacement = createMediaReplacement({
 });
 
 const souvenirAdmin = createSouvenirAdmin({ api, getCategories: () => categories, uploadImage, setupDropzone });
+const avatarRewardAdmin = createAvatarRewardAdmin({ api, getCategories: () => categories });
+const rewardTabs = createRewardTabs({ souvenirs: souvenirAdmin, heroes: avatarRewardAdmin });
+const abilityAdmin = createAbilityAdmin({ api, uploadImage, setupDropzone });
 const avatarAdmin = createAvatarAdmin({api,uploadImage,setupDropzone,loadMedia});
 
 let categories = [];
@@ -217,7 +227,7 @@ async function loadMedia(kind=activeMediaKind) {
         const data = await api('admin-media-list');
         if (!data.ok) throw new Error(data.error || 'Mediathek konnte nicht geladen werden.');
         mediaItems = (data.media || []).filter(item=>(item.mediaKind||'images')===activeMediaKind);
-        $('#js-admin-media-panel .admin-section-heading h2').textContent=activeMediaKind==='souvenirs'?'Souvenir-Bilder':'Mediathek';
+        $('#js-admin-media-panel .admin-section-heading h2').textContent=activeMediaKind==='souvenirs'?'Souvenir-Bilder':activeMediaKind==='abilities'?'Heldenfähigkeiten':'Mediathek';
         renderMediaFilters();
         renderMedia();
 }
@@ -446,12 +456,12 @@ function renderMediaDetail(item) {
         item.usage.forEach(ref => {
             const li = document.createElement('li');
             const span = document.createElement('span');
-            span.textContent = `${ref.type === 'category' ? 'Kategorie' : 'Frage'}: ${ref.title}`;
+            span.textContent = `${ref.type === 'ability' ? 'Heldenfähigkeit' : ref.type === 'category' ? 'Kategorie' : 'Frage'}: ${ref.title}`;
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'account-action-link';
-            button.textContent = ref.type === 'category' ? 'Zur Kategorie' : 'Zur Frage';
-            button.addEventListener('click', () => openMediaReference(ref));
+            button.textContent = ref.type === 'ability' ? 'Zur Fähigkeit' : ref.type === 'category' ? 'Zur Kategorie' : 'Zur Frage';
+            button.addEventListener('click', () => ref.type === 'ability' ? setAdminTab('abilities') : openMediaReference(ref));
             li.appendChild(span);
             li.appendChild(button);
             list.appendChild(li);
@@ -462,8 +472,8 @@ function renderMediaDetail(item) {
     const replaceButton = document.createElement('button');
     replaceButton.className = 'btn btn--modal';
     replaceButton.type = 'button';
-    replaceButton.textContent = item.souvenirUsed?'Souvenirs bearbeiten':'Bild austauschen';
-    replaceButton.addEventListener('click', () => item.souvenirUsed?setAdminTab('souvenirs'):mediaReplacement.open(item));
+    replaceButton.textContent = item.abilityUsed?'Fähigkeiten bearbeiten':item.souvenirUsed?'Souvenirs bearbeiten':'Bild austauschen';
+    replaceButton.addEventListener('click', () => item.abilityUsed?setAdminTab('abilities'):item.souvenirUsed?setAdminTab('souvenirs'):mediaReplacement.open(item));
     actions.appendChild(replaceButton);
     if (item.deletable) {
         const deleteButton = document.createElement('button');
@@ -880,7 +890,8 @@ function setAdminTab(tab, options = {}) {
     });
     $('#js-admin-question-panel').classList.toggle('u-hidden', !['edit','new'].includes(tab));
     $('#js-admin-world-panel').classList.toggle('u-hidden', tab !== 'worlds');
-    souvenirAdmin.show(tab === 'souvenirs');
+    rewardTabs.show(tab === 'souvenirs');
+    abilityAdmin.show(tab === 'abilities').catch(error => setStatus(error.message));
     $('#js-admin-category-panel').classList.toggle('u-hidden', tab !== 'categories');
     $('#js-admin-media-panel').classList.toggle('u-hidden', tab !== 'media');
     if(tab!=='media')avatarAdmin.show(false);
@@ -1026,7 +1037,7 @@ async function uploadPendingMediaImage() {
     }
     try {
         setStatus('Bild wird in die Mediathek hochgeladen...');
-        const result = await uploadImage({ file: pendingMediaUploadFile, context: activeMediaKind==='souvenirs'?'souvenir':'media' });
+        const result = await uploadImage({ file: pendingMediaUploadFile, context: activeMediaKind==='souvenirs'?'souvenir':activeMediaKind==='abilities'?'ability':'media' });
         $('#js-admin-media-file').value = '';
         selectedMediaPath = result.path || '';
         await loadMedia();

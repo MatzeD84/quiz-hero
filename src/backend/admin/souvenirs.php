@@ -57,7 +57,7 @@ function admin_user_reset(): void
     revoke_user_sessions($id);
     $selected=$user['avatar_key']??'hero';
     if(!empty(hero_avatars()[$selected]['unlockRule'])) $pdo->prepare('UPDATE quiz_users SET avatar_key=?,profile_image_url=? WHERE id=?')->execute(['hero',avatar_url('hero'),$id]);
-    foreach(['quiz_user_avatar_unlocks','quiz_user_souvenirs','quiz_rounds','quiz_question_results','quiz_results'] as $table)$pdo->prepare("DELETE FROM {$table} WHERE user_id=?")->execute([$id]);
+    foreach(['quiz_user_abilities','quiz_ability_equipment','quiz_hero_round_history','quiz_user_avatar_unlocks','quiz_user_souvenirs','quiz_rounds','quiz_question_results','quiz_results'] as $table)$pdo->prepare("DELETE FROM {$table} WHERE user_id=?")->execute([$id]);
     $pdo->commit();
     error_log(json_encode(['event'=>'local-test-progress-reset','userId'=>$id,'admin'=>$_SESSION['quiz_hero_admin']['username']??'','at'=>gmdate(DATE_ATOM)]));
     json_response(['ok'=>true]);

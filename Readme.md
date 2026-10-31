@@ -1,5 +1,7 @@
 # Quiz-Hero
 
+Gesammelte Feature-, Konzept- und Betriebsdokumentation: [Dokumentationsübersicht](docs/README.md).
+
 PHP/MySQL-Quiz mit JavaScript-Modulen und einem Adminbereich. Das bestehende Erscheinungsbild und der Lernmodus mit zwei Versuchen bleiben erhalten.
 
 ## Lokal starten
@@ -38,6 +40,8 @@ Die Backendmodule haben bewusst benannte Funktionen ohne Frameworkwechsel. `api/
 
 ## Bereitstellung und Daten
 
+Heldenfähigkeiten sind lokal implementiert, noch nicht veröffentlicht: [Regeln, Bildverwaltung und Migrationen 022–024](docs/Heldenfähigkeit.md).
+
 Quizwelten mit Kategorie-Vererbung (Production seit 23.10.2026): [Datenmodell, Migrationen 020/021, Pflege und Prüfstand](docs/QUIZWELTEN.md).
 
 Hostinger zieht Branch `hostinger`; Build, Tests und SSH-Werkzeuge laufen ausschlie?lich dort. Keine GitHub Actions oder API-Secrets in GitHub. Ablauf und R?cksprung: [deployment/README.md](deployment/README.md).
@@ -53,3 +57,5 @@ Gespeicherte Runden besitzen einen serverseitigen Fragen-Snapshot. Der Server be
 Alle aktiven Build- und Diagnosewerkzeuge liegen unter `scripts/`. Einmalige Migrationsskripte, HTTP-Mitschnitte und alte Beta-Testdateien gehoeren nicht zum Quellcode. Reproduzierbare Ausgaben unter `.build/` und `dist/` duerfen nach Gebrauch entfernt werden. Lokale Zugangsdaten, Datenbank-Dumps und Sicherungen bleiben unter `.private/` und werden niemals veroeffentlicht.
 
 SEO lokal: `scripts/build-seo.bat` (JSON-Vorschau), `node scripts/preview-seo.js` und `node scripts/verify-seo.js`. `scripts/build-seed-sql.js` bleibt ausschliesslich fuer eine explizite Neuinitialisierung aus den historischen JSON-Daten; keine Seeds auf Production anwenden.
+
+Heldenfähigkeiten (Version 1 lokal, noch nicht auf Production): [Regeln, Testbelegung, Adminpflege und Migrationen 022/023](docs/Heldenfähigkeit.md).

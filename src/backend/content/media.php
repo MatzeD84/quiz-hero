@@ -15,6 +15,7 @@ function admin_image_upload(bool $replace = false): void
     $oldPath = '';
     if ($replace) {
         $oldPath = normalize_local_image_path((string) ($_POST['path'] ?? ''));
+        foreach(db()->query('SELECT image_url FROM quiz_abilities WHERE image_url IS NOT NULL') as $ability)if(normalize_local_image_path($ability['image_url'])===$oldPath)json_response(['ok'=>false,'error'=>'Fähigkeitsmotive bitte in der Fähigkeiten-Verwaltung bearbeiten.'],422);
         foreach(db()->query('SELECT image_url FROM quiz_avatars WHERE deleted_at IS NULL') as $avatar)if(normalize_local_image_path($avatar['image_url'])===$oldPath)json_response(['ok'=>false,'error'=>'Profilbilder bitte im Tab Profilbilder bearbeiten.'],422);
         foreach(db()->query('SELECT image_url FROM quiz_souvenir_definitions') as $souvenir)if(normalize_local_image_path($souvenir['image_url'])===$oldPath)json_response(['ok'=>false,'error'=>'Verwendete Souvenirmotive bitte in der Souvenir-Verwaltung bearbeiten.'],422);
         $known = array_column(list_uploaded_media(), null, 'path');
@@ -25,12 +26,17 @@ function admin_image_upload(bool $replace = false): void
             json_response(['ok' => false, 'error' => 'Das Bild oder seine Verwendungen wurden geändert. Bitte neu auswählen.'], 409);
         }
     }
-    $context = $replace ? ((str_starts_with($oldPath,'images/souvenirs/')||str_starts_with($oldPath,'images/uploads/souvenirs/'))?'souvenir':'media') : clean_string($_POST['context'] ?? 'question', 40);
+    $context=clean_string($_POST['context']??'question',40);
+    if($replace){
+        if(str_starts_with($oldPath,'images/abilities/')||str_starts_with($oldPath,'images/uploads/abilities/'))$context='ability';
+        elseif(str_starts_with($oldPath,'images/souvenirs/')||str_starts_with($oldPath,'images/uploads/souvenirs/'))$context='souvenir';
+        else $context='media';
+    }
     $rawCategoryId = clean_string($_POST['categoryId'] ?? '', 120);
     if ($rawCategoryId === '' && $context === 'category') {
         $rawCategoryId = clean_string($_POST['categoryTitle'] ?? '', 120);
     }
-    if ($rawCategoryId === '' && in_array($context,['media','avatar','souvenir'],true)) {
+    if ($rawCategoryId === '' && in_array($context,['media','avatar','souvenir','ability'],true)) {
         $rawCategoryId = 'media';
     }
     if ($rawCategoryId === '') {
@@ -38,7 +44,7 @@ function admin_image_upload(bool $replace = false): void
     }
     $categoryId = slugify($rawCategoryId);
 
-    if (!in_array($context, ['category', 'media', 'avatar', 'souvenir'], true)) {
+    if (!in_array($context, ['category', 'media', 'avatar', 'souvenir', 'ability'], true)) {
         $stmt = db()->prepare('SELECT id FROM quiz_categories WHERE id = :id');
         $stmt->execute(['id' => $categoryId]);
         if (!$stmt->fetch()) {
@@ -87,6 +93,7 @@ function admin_image_upload(bool $replace = false): void
         'media' => 'media',
         'avatar' => 'avatars',
         'souvenir' => 'souvenirs',
+        'ability' => 'abilities',
         default => $categoryId,
     };
     $categoryDir = $baseDir . '/' . $uploadFolder;
@@ -208,7 +215,7 @@ function list_uploaded_media(): array
     $items = [];
     $indexed = [];
 
-    foreach([$baseDir,QUIZ_HERO_PUBLIC_ROOT.'/images/souvenirs'] as $scanDir) {
+    foreach([$baseDir,QUIZ_HERO_PUBLIC_ROOT.'/images/souvenirs',QUIZ_HERO_PUBLIC_ROOT.'/images/abilities'] as $scanDir) {
         if(!is_dir($scanDir))continue;
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($scanDir, FilesystemIterator::SKIP_DOTS)
@@ -242,6 +249,8 @@ function list_uploaded_media(): array
 
     $souvenirPaths=array_fill_keys(array_map('normalize_local_image_path',db()->query('SELECT image_url FROM quiz_souvenir_definitions')->fetchAll(PDO::FETCH_COLUMN)),true);
     foreach($items as &$item){$item['souvenirUsed']=isset($souvenirPaths[$item['path']]);$item['mediaKind']=$item['souvenirUsed']||str_starts_with($item['path'],'images/souvenirs/')||str_starts_with($item['path'],'images/uploads/souvenirs/')?'souvenirs':'images';}unset($item);
+    $abilityPaths=array_fill_keys(array_map('normalize_local_image_path',db()->query('SELECT image_url FROM quiz_abilities WHERE image_url IS NOT NULL')->fetchAll(PDO::FETCH_COLUMN)),true);
+    foreach($items as &$item){$item['abilityUsed']=isset($abilityPaths[$item['path']]);if($item['abilityUsed']||str_starts_with($item['path'],'images/abilities/')||str_starts_with($item['path'],'images/uploads/abilities/'))$item['mediaKind']='abilities';}unset($item);
     $avatarPaths=array_fill_keys(array_map('normalize_local_image_path',db()->query('SELECT image_url FROM quiz_avatars WHERE deleted_at IS NULL')->fetchAll(PDO::FETCH_COLUMN)),true);
     $items=array_values(array_filter($items,static fn($item)=>!isset($avatarPaths[$item['path']])));
     usort($items, static fn(array $a, array $b): int => strcmp($a['filename'], $b['filename']));
@@ -325,6 +334,9 @@ function load_media_references(): array
         ];
     }
 
+    foreach($pdo->query('SELECT id,title,image_url FROM quiz_abilities WHERE image_url IS NOT NULL') as $ability){
+        $path=normalize_local_image_path($ability['image_url']);if($path!=='')$references[$path][]=['type'=>'ability','id'=>$ability['id'],'title'=>$ability['title'],'categoryId'=>null,'tags'=>[]];
+    }
     return $references;
 }
 
@@ -342,6 +354,13 @@ function historical_media_paths(): array
     $paths = [];
     foreach(db()->query('SELECT image_url FROM quiz_souvenir_definitions') as $row){
         $path=normalize_local_image_path($row['image_url']);if($path!=='')$paths[$path]=true;
+    }
+    foreach(db()->query('SELECT snapshot_json FROM quiz_round_abilities') as $row){
+        $snapshot=decode_json_field($row['snapshot_json'],[]);foreach(snapshot_abilities($snapshot) as $ability){$path=normalize_local_image_path((string)($ability['image']??''));if($path!=='')$paths[$path]=true;}
+    }
+    foreach(db()->query('SELECT ability_json FROM quiz_hero_round_history WHERE ability_json IS NOT NULL') as $row){
+        $abilities=decode_json_field($row['ability_json'],[]);if(!is_array($abilities))continue;if(isset($abilities['id']))$abilities=[$abilities];
+        foreach($abilities as $ability){$path=normalize_local_image_path((string)($ability['image']??''));if($path!=='')$paths[$path]=true;}
     }
     foreach (db()->query('SELECT snapshot_json FROM quiz_question_versions') as $row) {
         $snapshot = decode_json_field($row['snapshot_json'], []);

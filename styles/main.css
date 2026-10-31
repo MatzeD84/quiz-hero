@@ -20,6 +20,7 @@
 @import './components/icon-button.css';
 @import './features/quiz/navigation.css';
 @import './components/modal.css';
+@import './components/viewport-status.css';
 @import './components/consent-banner.css';
 @import './features/quiz/score.css';
 @import './features/quiz/question-item.css';
@@ -58,3 +59,5 @@
 @import './features/account/souvenirs.css';
 @import './features/admin/tag-picker.css';
 @import './components/world-choices.css';
+
+@import "./features/hero-abilities.css";

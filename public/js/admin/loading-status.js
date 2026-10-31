@@ -1,3 +1,4 @@
+import { viewportStatusRoot } from '../save-notice.js?v=dev';
 // One viewport notice for concurrent dataset requests and visible image loads.
 export function createLoadingStatus(root = document.body) {
     const notice = document.createElement('div');
@@ -10,7 +11,7 @@ export function createLoadingStatus(root = document.body) {
     spinner.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
     notice.append(spinner, label);
-    root.append(notice);
+    (root===document.body?viewportStatusRoot():root).append(notice);
     const pending = new Map();
     function update() {
         const messages = [...new Set(pending.values())];

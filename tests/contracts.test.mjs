@@ -14,13 +14,157 @@ import { QuizDataService } from '../public/js/quiz-data-service.js';
 import { UserService, SESSION_EXPIRED_MESSAGE } from '../public/js/user-service.js';
 import { createRequire } from 'node:module';
 import { createFormGuard } from '../public/js/form-guard.js';
+import { createSaveButtonState } from '../public/js/save-button-state.js';
+import { completeDialogSave } from '../public/js/dialog.js';
 import { QuizState } from '../public/js/quiz-state.js';
 import { revealStatus } from '../public/js/status-navigation.js';
 import { createResultShare, supportsResultShare, shareResult } from '../public/js/result-share.js';
 import { createLoadingStatus } from '../public/js/admin/loading-status.js';
-import { souvenirItems, startedSouvenirs } from '../public/js/souvenirs.js';
+import { souvenirItems, startedSouvenirs, renderSouvenirCollection, renderSouvenirUnlock } from '../public/js/souvenirs.js';
 import { isAvatarAvailable } from '../public/js/avatar-policy.js';
 import { categoryWorldRemovalImpact } from '../public/js/admin/world-impact.js';
+import { abilityUseReason } from '../public/js/hero-abilities.js';
+import { abilityDialogItems } from '../public/js/quiz-abilities.js';
+import { avatarRewardSummary } from '../public/js/admin/avatar-rewards.js';
+
+test('souvenir collection links awarded heroes to the account hero picker and omits an empty hero section', () => {
+    const previousDocument=globalThis.document, previousLocation=globalThis.location;
+    const node=()=>({children:[],dataset:{},className:'',classList:{add(){}},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;},setAttribute(){},addEventListener(){}});
+    globalThis.document={createElement:node};globalThis.location={href:'https://example.test/souvenirs.html',origin:'https://example.test'};
+    try {
+        const root=node();renderSouvenirCollection(root,{avatarRewards:[]});assert.equal(root.children.length,1);
+        renderSouvenirCollection(root,{avatarRewards:[{title:'Astra',image:'images/website/avatar/astra.png'},{title:'Neuer Held',image:'images/website/avatar/hero.png'}]});
+        assert.equal(root.children.length,2);
+        const section=root.children[1];assert.equal(section.children[0].textContent,'Deine freigeschalteten Helden');assert.equal(section.children[1].textContent,'2 Helden freigeschaltet');
+        const cards=section.children[2].children;assert.equal(cards.length,2);assert.equal(cards[0].children[1].children[1].textContent,'Astra');assert.equal(cards[0].children[0].src,'https://example.test/images/website/avatar/astra.png');
+        for(const card of cards){const link=card.children[1].children[2];assert.equal(link.textContent,'Profilbild auswählen');assert.equal(link.href,'account.html#avatar');}
+        renderSouvenirCollection(root,{avatarRewards:[{title:'Astra',image:'images/website/avatar/astra.png'}]});assert.equal(root.children[1].children[1].textContent,'1 Held freigeschaltet');
+    } finally {globalThis.document=previousDocument;globalThis.location=previousLocation;}
+});
+
+test('result hero rewards show a supplied reason as plain text and omit missing historical reasons',()=>{
+    const previousDocument=globalThis.document,previousLocation=globalThis.location;
+    const node=()=>({children:[],className:'',setAttribute(){},append(...items){this.children.push(...items);},querySelector(){return null;},addEventListener(){}});
+    globalThis.document={createElement:node};globalThis.location={href:'https://example.test/index.html',origin:'https://example.test'};
+    try{
+        const card=node();renderSouvenirUnlock(card,[],[{avatarKey:'akuma',title:'Akuma',reason:'2 Hero-Fragen insgesamt ohne Hilfe richtig beantwortet.'},{avatarKey:'old',title:'Alt'}]);
+        const rows=card.children[0].children[1].children;
+        assert.equal(rows[0].children[0].children[2].className,'souvenir-unlock__reason');
+        assert.match(rows[0].children[0].children[2].textContent,/2 Hero-Fragen/);
+        assert.equal(rows[1].children[0].children.some(c=>c.className==='souvenir-unlock__reason'),false);
+    }finally{globalThis.document=previousDocument;globalThis.location=previousLocation;}
+});
+
+test('hero preview separates public registration details from CSRF-protected personal abilities', async () => {
+    const previousWindow=globalThis.window;const calls=[];
+    globalThis.window={location:{href:'https://example.test/login.html'},sessionStorage:{getItem:()=> 'preview-csrf'}};
+    try {
+        const service=new UserService({apiUrl:'/api/index.php',fetchFn:async(url,options)=>{calls.push({url:String(url),options});return new Response(JSON.stringify({ok:true,hero:{key:'hero'},items:[]}));}});
+        await service.heroPreview('hero');await service.heroPreview('hero',true);
+        const publicUrl=new URL(calls[0].url);assert.equal(publicUrl.searchParams.get('action'),'hero-preview');assert.equal(publicUrl.searchParams.get('heroKey'),'hero');assert.notEqual(calls[0].options.method,'POST');
+        assert.equal(calls[1].options.method,'POST');assert.equal(calls[1].options.headers['X-Quiz-Hero-CSRF'],'preview-csrf');assert.deepEqual(JSON.parse(calls[1].options.body),{heroKey:'hero'});
+    } finally {globalThis.window=previousWindow;}
+});
+
+test('ability eligibility distinguishes unanswered swaps, retry helpers and exhausted rounds', () => {
+    assert.equal(abilityUseReason({ effect: 'swap' }, {}, 0, false), '');
+    assert.notEqual(abilityUseReason({ effect: 'swap' }, {}, 1, false), '');
+    assert.equal(abilityUseReason({ effect: 'eliminate' }, {}, 1, false), '');
+    assert.equal(abilityUseReason({ effect: 'shield' }, {}, 1, false), '');
+    for (const effect of ['swap', 'eliminate', 'shield']) {
+        assert.notEqual(abilityUseReason({ effect }, {}, 1, true), '');
+        assert.notEqual(abilityUseReason({ effect }, { answeredCorrectly: true }, 1, false), '');
+        assert.notEqual(abilityUseReason({ effect }, { skipped: true }, 1, false), '');
+    }
+});
+
+test('hero reward builder clearly distinguishes cumulative and single-round conditions', () => {
+    const rule={target:5,difficulty:'hero',attempts:'first',withoutHelp:true,period:'total'};
+    const total=avatarRewardSummary(rule);assert.match(total,/insgesamt/);assert.doesNotMatch(total,/einzigen Questrunde/);assert.match(total,/5 unterschiedliche Hero-Fragen/);assert.match(total,/im ersten Versuch ohne Hilfe durch Heldenfähigkeiten/);
+    assert.match(avatarRewardSummary({...rule,target:1}),/insgesamt 1 Hero-Frage/);
+    const round=avatarRewardSummary({...rule,period:'round',difficulty:'medium',attempts:'any',withoutHelp:false},'Rom');assert.match(round,/innerhalb einer einzigen Questrunde/);assert.match(round,/schwere Fragen in der Kategorie „Rom“/);assert.match(round,/ersten oder zweiten Versuch/);assert.match(round,/Heldenfähigkeiten erlaubt/);
+});
+
+test('quiz ability dialog hides unmet prerequisites while retaining spent abilities and uncertain retries', () => {
+    const abilities=[{id:'eye',effect:'eliminate'},{id:'shield',effect:'shield'},{id:'swap',effect:'swap'}];
+    const options={abilities,question:{id:1},attempts:0,used:{}};
+    const ids=extra=>abilityDialogItems({...options,...extra}).map(a=>a.id);
+    assert.deepEqual(ids({}),['swap']);
+    assert.deepEqual(ids({attempts:1}),['eye','shield']);
+    assert.deepEqual(ids({attempts:1,used:{swap:true}}),['eye','shield','swap']);
+    assert.deepEqual(ids({pendingId:'eye',attempts:1}),['eye']);
+    assert.deepEqual(ids({question:{answeredCorrectly:true}}),[]);
+    assert.deepEqual(ids({question:{answeredCorrectly:true},used:{eye:true}}),['eye']);
+    assert.deepEqual(ids({question:{id:1},abilities:[{id:'swap',effect:'swap',swapAvailableIds:[]}]}),[]);
+});
+
+test('new effects expose only valid timings and cannot stack on a supported question',()=>{
+    const q={answers:['A','B','C','D']};
+    assert.equal(abilityUseReason({effect:'focus'},q,0,false),'');
+    assert.notEqual(abilityUseReason({effect:'focus'},q,1,false),'');
+    assert.notEqual(abilityUseReason({effect:'focus'},{answers:['A','B']},0,false),'');
+    assert.equal(abilityUseReason({effect:'lucky'},q,1,false),'');
+    assert.notEqual(abilityUseReason({effect:'lucky'},q,0,false),'');
+    assert.notEqual(abilityUseReason({effect:'focus'},{...q,abilityApplied:true},0,false),'');
+    for(const effect of ['swap','eliminate','shield','focus','lucky'])assert.notEqual(abilityUseReason({effect},{...q,abilityExclusive:true},1,false),'');
+});
+
+test('focus caps correct first-attempt and maximum points without inflating the second attempt',()=>{
+    const state=new QuizState();state.currentSequence=[{id:1,difficulty:'hero',abilityFocus:true},{id:2,difficulty:'hero',abilityFocus:true}];
+    assert.equal(state.registerAttempt(true,'hero'),2);state.nextQuestion();
+    assert.equal(state.registerAttempt(false,'hero'),0);assert.equal(state.registerAttempt(true,'hero'),1);
+    assert.deepEqual(state.getStats(),{total:2,solved:2,percentage:100,score:3,maxScore:4});
+});
+
+test('lucky consolation awards one point for a failed second answer without marking it solved',()=>{
+    const state=new QuizState();state.currentSequence=[{id:1,difficulty:'hero',abilityLucky:true}];
+    assert.equal(state.registerAttempt(false,'hero'),0);assert.equal(state.registerAttempt(false,'hero'),1);
+    assert.equal(state.registerAttempt(false,'hero'),0);assert.equal(state.score,1);assert.equal(state.getStats().solved,0);
+    const correct=new QuizState();correct.currentSequence=[{id:2,difficulty:'hero',abilityLucky:true}];correct.registerAttempt(false,'hero');
+    assert.equal(correct.registerAttempt(true,'hero'),1);assert.equal(correct.getStats().solved,1);
+});
+
+test('shield affects only the supported second attempt and cannot award points twice', () => {
+    const state = new QuizState();state.currentSequence = [{ id: 1, difficulty: 'medium', abilityShield: true }, { id: 2, difficulty: 'medium' }];
+    state.registerAttempt(false, 'medium');assert.equal(state.registerAttempt(true, 'medium'), 2);
+    assert.equal(state.registerAttempt(true, 'medium'), 0);state.nextQuestion();
+    state.registerAttempt(false, 'medium');assert.equal(state.registerAttempt(true, 'medium'), 1);
+    assert.equal(state.score, 3);
+});
+
+test('uncertain ability response retries the identical action before unlocking answers', async () => {
+    const state = new QuizState();state.roundId = 'a'.repeat(64);state.currentSequence = [{ id: 1, categoryId: 'rom', difficulty: 'medium', answers: ['A', 'B', 'C', 'D'], correct: 0 }];
+    const requests = [], buttons = Array.from({ length: 4 }, () => ({ disabled: false }));let attempt = 0;
+    const view = { elements: { answerButtons: buttons }, renderQuestion() {} };
+    const service = { getStoredUser: () => null, async useAbility(payload) { requests.push(structuredClone(payload));if (attempt++ === 0) throw Error('Network timeout');return { effect: 'swap', question: { id: 2, answers: ['A', 'B', 'C', 'D'], correct: 0 } }; } };
+    const controller = new QuizController({ state, view, userService: service });controller.roundAbilities = [{ id: 'neues-abenteuer', effect: 'swap' }];controller.usedAbilities = {};
+    await controller.handleAbility('neues-abenteuer');assert.ok(controller.abilityPending);assert.ok(buttons.every(b => b.disabled));assert.equal(state.currentSequence[0].id, 1);
+    await controller.handleAbility();assert.deepEqual(requests[1], requests[0]);assert.equal(controller.abilityPending, null);assert.equal(controller.usedAbilities['neues-abenteuer'], true);assert.equal(state.currentSequence[0].id, 2);assert.ok(buttons.every(b => !b.disabled));
+});
+
+test('all three abilities can be used once in the same round without equipment', async () => {
+    const state = new QuizState();state.roundId = 'a'.repeat(64);state.currentSequence = [{ id: 1, answers: ['A','B','C','D'], correct: 0, difficulty: 'medium' }];
+    const calls = [], buttons = Array.from({ length: 4 }, () => ({ disabled: false }));
+    const view = { elements: { answerButtons: buttons }, renderQuestion() {}, renderFeedback() {} };
+    const service = { getStoredUser: () => null, async useAbility(payload) { calls.push(payload.abilityId);if (payload.abilityId === 'swap') return { effect: 'swap', question: { id: 2, answers: ['A','B','C','D'], correct: 0, difficulty: 'medium' } };return payload.abilityId === 'blink' ? { effect: 'eliminate', removedAnswer: 2 } : { effect: 'shield' }; } };
+    const controller = new QuizController({ state, view, userService: service });controller.roundAbilities = [{id:'swap',effect:'swap'},{id:'blink',effect:'eliminate'},{id:'shield',effect:'shield'}];controller.usedAbilities = {};
+    await controller.handleAbility('swap');state.currentSequence[0].selectedAnswers = [1];state.attempts = 1;
+    await controller.handleAbility('blink');await controller.handleAbility('shield');
+    await controller.handleAbility('blink');await controller.handleAbility('shield');
+    assert.deepEqual(calls, ['swap','blink','shield']);assert.deepEqual(state.currentSequence[0].removedAnswers, [2]);assert.equal(state.registerAttempt(true,'medium'),2);assert.equal(Object.keys(controller.usedAbilities).length,3);
+});
+
+test('new ability responses disable both removed choices and keep other-question uses available',async()=>{
+    const state=new QuizState();state.roundId='a'.repeat(64);state.currentSequence=[{id:1,answers:['A','B','C','D'],correct:0,difficulty:'hero'},{id:2,answers:['A','B','C','D'],correct:0,difficulty:'hero'}];
+    const buttons=Array.from({length:4},()=>({disabled:false})),calls=[],feedback=[];
+    const view={elements:{answerButtons:buttons},renderFeedback:text=>feedback.push(text)};
+    const service={getStoredUser:()=>null,useAbility:async p=>{calls.push(p.abilityId);return p.abilityId==='focus'?{effect:'focus',removedAnswers:[2,3]}:{effect:'lucky'};}};
+    const controller=new QuizController({state,view,userService:service});controller.roundAbilities=[{id:'focus',effect:'focus'},{id:'lucky',effect:'lucky'}];
+    await controller.handleAbility('focus');assert.deepEqual(state.getCurrentQuestion().removedAnswers,[2,3]);assert.deepEqual(buttons.map(b=>b.disabled),[false,false,true,true]);
+    state.registerAttempt(false,'hero');await controller.handleAbility('lucky');assert.deepEqual(calls,['focus']);
+    state.registerAttempt(true,'hero');state.nextQuestion();state.registerAttempt(false,'hero');state.getCurrentQuestion().selectedAnswers=[1];
+    await controller.handleAbility('lucky');assert.deepEqual(calls,['focus','lucky']);assert.equal(state.getCurrentQuestion().abilityLucky,true);assert.match(feedback.at(-1),/auch bei falscher Antwort/);
+});
 import { renderQuestionWorldChoices, selectedDirectQuestionWorlds } from '../public/js/admin/question-world-choices.js';
 
 test('question worlds lock inheritance without copying it into direct selections', () => {
@@ -209,6 +353,48 @@ test('form guard retains edits on cancel, restores on discard and guards unload'
         accept = true; assert.equal(guard.confirm(), true); assert.equal(field.value, 'original');
         field.value = 'saved'; guard.clean(form); assert.equal(guard.refresh(), false);
     } finally { globalThis.window = previous; }
+});
+
+test('save actions respect changed values, busy locks and keyboard submission without affecting cancel',()=>{
+    const events={},submit={disabled:false},cancel={disabled:false};let changed=false,busy=false,prevented=0;
+    const form={querySelectorAll:()=>[submit],addEventListener:(name,fn)=>{events[name]=fn;}};
+    const state=createSaveButtonState(form,{isChanged:()=>changed,isBlocked:()=>busy});
+    assert.equal(submit.disabled,true);assert.equal(cancel.disabled,false);
+    events.submit({preventDefault:()=>prevented++,stopImmediatePropagation(){}});assert.equal(prevented,1);
+    changed=true;events.input();assert.equal(submit.disabled,false);
+    busy=true;state.update();assert.equal(submit.disabled,true);
+    busy=false;state.update();assert.equal(submit.disabled,false);
+    changed=false;events.change();assert.equal(submit.disabled,true);
+});
+
+test('confirmed dialog saves close and reuse one accessible, expiring viewport notice',()=>{
+    const previous={document:globalThis.document,setTimeout:globalThis.setTimeout,clearTimeout:globalThis.clearTimeout};
+    const timers=new Map();let nextTimer=0,root;
+    const node=()=>({children:[],isConnected:false,attributes:{},append(child){child.isConnected=true;this.children.push(child);},setAttribute(k,v){this.attributes[k]=v;}});
+    globalThis.document={body:{append(child){root=child;child.isConnected=true;}},querySelector:()=>root,createElement:node};
+    globalThis.setTimeout=(fn,ms)=>{assert.equal(ms,4000);timers.set(++nextTimer,fn);return nextTimer;};globalThis.clearTimeout=id=>timers.delete(id);
+    try{
+        const dialog={open:true,close(){this.open=false;}};completeDialogSave(dialog,'Held gespeichert.');assert.equal(dialog.open,false);
+        const notice=root.children[0];assert.equal(notice.textContent,'Held gespeichert.');assert.equal(notice.hidden,false);assert.equal(notice.attributes.role,'status');
+        completeDialogSave(dialog,'Bild gespeichert.');assert.equal(root.children.length,1);assert.equal(timers.size,1);assert.equal(notice.textContent,'Bild gespeichert.');
+        [...timers.values()][0]();assert.equal(notice.hidden,true);
+    }finally{Object.assign(globalThis,previous);}
+});
+
+test('form snapshots ignore actions and tag search, track checkbox changes and clean after saving',()=>{
+    const previous=globalThis.window;globalThis.window={addEventListener(){},confirm:()=>true};
+    try{
+        const checkbox={name:'active',type:'checkbox',value:'on',checked:true};
+        const tagSearch={id:'tag-search',value:'',dataset:{saveIgnore:'true'}};
+        const submit={type:'submit',value:'',disabled:false},events={};
+        const form={elements:[checkbox,tagSearch,submit],querySelectorAll:()=>[submit],addEventListener:(name,fn)=>{events[name]=fn;}};
+        const guard=createFormGuard([form],{});assert.equal(submit.disabled,true);
+        tagSearch.value='Searching';assert.equal(guard.refresh(),false);
+        checkbox.checked=false;events.change();assert.equal(submit.disabled,false);
+        checkbox.checked=true;events.change();assert.equal(submit.disabled,true);
+        checkbox.checked=false;guard.clean(form);assert.equal(submit.disabled,true);
+        checkbox.checked=true;assert.equal(guard.confirm(),true);assert.equal(checkbox.checked,false);assert.equal(submit.disabled,true);
+    }finally{globalThis.window=previous;}
 });
 
 test('a solved question cannot award points twice', () => {

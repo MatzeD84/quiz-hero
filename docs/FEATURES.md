@@ -4,6 +4,54 @@ Stand: 23. Oktober 2026. Kompakter Überblick über den aktuellen Projektstand u
 
 ## Bereits implementiert
 
+- **Startfähigkeiten mit 0 Runden (lokal, 31.10.2026):** Fähigkeiteneditor akzeptiert 0–100 Runden. Null bedeutet sofort verfügbar für zugeordnete Helden und sichtbar in Registrierung/Konto; positive Werte bleiben erlernbar. Startfähigkeiten erzeugen keine falsche Lernerfolgsmeldung. Bestehende Schwellen und Zuordnungen unverändert, keine Migration, noch nicht veröffentlicht. [Regeln](Heldenfähigkeit.md#startfähigkeiten-mit-0-runden-31102026-lokal).
+
+- **Heldenvorstellung nur mit freigeschalteten Fähigkeiten (lokal, 31.10.2026):** Konto zeigt ausschließlich persönlich für diesen Helden erlernte und aktuell verfügbare Fähigkeiten. Registrierung zeigt bei Start ohne Freischaltungen keine Fähigkeitskarten. Leere Vorschau ohne Einsatzhinweis/Leerleiste, stattdessen kurzer Freischalthinweis. Admin-Repertoire und Lernregeln unverändert; keine neuen Sofort- oder Grundfähigkeiten. Keine Migration, noch nicht veröffentlicht.
+
+- **Lernerfolg nennt den Helden (lokal, 31.10.2026):** Quiz-Ergebnis formuliert „Burgo hat eine neue Heldenfähigkeit erlernt“ beziehungsweise „… zwei/drei neue Heldenfähigkeiten erlernt“. Der bei Rundenstart übernommene Heldenname wird für die Ergebnisansicht festgehalten; kein späterer Profilwechsel als Textquelle. 57 Frontendtests und Browserprüfung erfolgreich. Keine Migration oder Vergabeänderung, noch nicht veröffentlicht.
+
+- **Freischaltgrund bei neuen Helden im Quiz-Ergebnis (lokal, 31.10.2026):** Kleine Beschreibung unter dem Heldennamen erklärt Anzahl, Schwierigkeit, Zeitraum, Kategorie und relevante Erstversuchs-/Hilfebedingungen. Grundlage sind historische Vergabe-Snapshots statt heutiger Regeln. 57 Frontendtests, 290 Integrationstests und Browser-/CSS-Prüfung erfolgreich. Keine Migration, noch nicht veröffentlicht. [Regeln und Daten](HELDENBELOHNUNGEN.md#freischaltgrund-im-quiz-ergebnis).
+
+- **Speicherdialoge nach Erfolg schließen (lokal, 31.10.2026):** Heldenbearbeitung schließt nach bestätigtem gemeinsamen Speichern. Einheitliche kurze Bestätigung unten links, auch für Bildaustausch und gespeicherten Konto-Helden; Feedbackdialog schließt nach erfolgreicher Übermittlung sofort. Speicherfehler behalten Dialog und Eingaben. Ladeanzeige und Bestätigung stehen ohne Überlagerung untereinander. 56 Frontendtests, Browser-, CSS-/BEM- und Syntaxprüfung erfolgreich. Keine Migration, noch nicht veröffentlicht.
+
+- **Speichern nur bei Änderungen (lokal, 31.10.2026):** Gemeinsame Sperre für Datensatzformulare in Fragen, Kategorien, Quizwelten, Profilbild-Mediathek, Souvenirs, Heldenbelohnungen sowie Helden und Fähigkeiten. Speicherbuttons sind ohne Änderung nativ deaktiviert, nach Rücknahme oder Erfolg erneut gesperrt; Eingaben bleiben nach Fehlern erneut speicherbar. Konto: Benutzername/Passwort und bereits ausgewählter Held ebenfalls berücksichtigt. 55 Frontendtests und Browserprüfungen erfolgreich. Keine Migration, noch nicht veröffentlicht. [Technik und Grenzen](DESIGN.md#speicheraktionen-nur-bei-änderungen).
+
+- **Motive für Scharfblick und Glücksanker (lokal, 31.10.2026):** Zwei transparente Low-Poly-Medaillons erzeugt, im Projekt gespeichert und per Migration 027 mit den Fähigkeiten verknüpft. Bestehende Motivverwaltung und Mediathek-Reiter verwenden sie automatisch. [Dateien und Prompts](HELDENFAEHIGKEITEN-BILDER.md). Noch nicht veröffentlicht.
+
+- **Scharfblick und Glücksanker (lokal, 31.10.2026):** Zwei falsche Antworten vor dem ersten Versuch bei maximal zwei Punkten beziehungsweise ein Trostpunkt nach zwei Fehlversuchen. Trostpunkt bleibt falsch beantwortet; keine Kombination dieser Hilfen an derselben Frage. Adminpflege und persönliche Freischaltung integriert, Migration 026 lokal angewendet. Beispielzuordnung: Anubia/Bobo. Spurensuche, Dunkler Pakt und Revanche bleiben Ideen. [Regeln und Betrieb](Heldenfähigkeit.md#scharfblick-und-glücksanker-31102026-lokal-implementiert). Noch nicht veröffentlicht.
+
+Dokumentierter Ausblick, **nicht implementiert**: Spurensuche, Dunkler Pakt und Revanche mit Einsatzbedingungen und Wertungsideen in [Heldenfähigkeit.md](Heldenfähigkeit.md#vorschlagsrunde-vom-31102026-fünf-zusätzliche-fähigkeiten). Scharfblick und Glücksanker aus dieser Vorschlagsrunde sind inzwischen umgesetzt, siehe oben.
+
+- **Kompakte Fähigkeitsübersicht auf Admin-Heldenkarten (lokal, 31.10.2026):** Anzahl als „1 Fähigkeit“/„2 Fähigkeiten“ statt „von 3“. Zugeordnete Namen als kleine, umbrechende Labels mit dezenter Hero-Fläche; leere Zuordnungen nur mit „Keine Fähigkeiten“, ohne zusätzliche Leerzeile. Keine Verhaltensänderung, noch nicht veröffentlicht.
+
+- **Heldenverwaltung übersichtlicher (lokal, 31.10.2026):** Freischalt-Dropdown entfernt; bestehende Regelquelle bleibt beim Speichern erhalten, neue Belohnungszuordnung verweist auf den Baukasten unter Belohnungen. Belohnungshelden tragen dasselbe „Belohnung“-Tag wie im Konto. Inaktive Heldenbilder verwenden dauerhaft den zentralen Sepia-Filter; Karten bleiben bearbeitbar. Keine Migration, noch nicht veröffentlicht.
+
+- **Held gemeinsam speichern (lokal, 31.10.2026):** Fähigkeiten im Heldenformular oberhalb von „Held speichern“. Ein Button und ein Request übernehmen Stammdaten und Zuordnung atomar; Versionskonflikte oder ungültige Fähigkeiten verhindern auch Teiländerungen. Kein separater Zuordnungsbutton und keine neue Migration. Noch nicht veröffentlicht.
+
+- **Belohnungshelden im Konto markieren (lokal, 31.10.2026):** Freigeschaltete Belohnungshelden tragen in der Heldenauswahl unter ihrem Namen ein kleines „Belohnung“-Tag mit heller Hero-Fläche und lila Text. Freie Helden und Registrierung unverändert; keine neue Datenbanklogik. Noch nicht veröffentlicht.
+
+- **Heldenpflege getrennt von Mediathek (lokal, 31.10.2026):** Name, Verfügbarkeit, Freischaltquelle und Aktivstatus im Heldenkarten-Dialog; Mediathek-Profilbilder nur mit Bildaustausch und Löschen. Neue Uploads vorläufig nach Datei benannt und inaktiv. Bestehender Standardheld-Fallback unverändert. 49 Frontendtests und Browserprüfung mit simulierten Speicherantworten erfolgreich; noch nicht veröffentlicht. [Bedienung](MEDIA.md#trennung-von-bildern-und-heldenpflege-31102026-lokal).
+
+- **Lokale Testbelohnungen (31.10.2026):** Vier aktive Beispielregeln für Gesamtfortschritt, Einzelrunde, Hero-Fragen und Rom direkt Amphos, Cassius, Akuma und Horus zugeordnet. Ursprüngliche Testduplikate zusammengeführt und aus dem sichtbaren Bestand entfernt; Freischaltungen erhalten, Datenbankabgleich erfolgreich. Die vier echten Helden sind lokal jetzt Belohnungshelden; kein Produktionsimport. [Testbedingungen](HELDENBELOHNUNGEN.md#lokale-testdatensätze-31102026).
+
+- **Heldenbelohnungen frei konfigurieren (lokal, 31.10.2026, noch nicht veröffentlicht):** Hauptreiter „Souvenirs“ heißt „Belohnungen“, mit Unterbereichen für Souvenirs und neue Helden. Regel-Baukasten für Anzahl, Schwierigkeit, Versuch, Hilfe, Kategorie und beide Zeitrahmen (insgesamt/eine Questrunde); Live-Zusammenfassung, Bildauswahl aus Belohnungsprofilen, Entwurf/aktiv/archiviert. Unterschiedliche gespeicherte Fragen zählen, bestehende Freischaltungen bleiben erhalten. Migration 025 lokal angewendet; 49 Frontendtests und 272 Integrationstests erfolgreich. [Regeln, Pflege und Betrieb](HELDENBELOHNUNGEN.md).
+
+- **Admin-Reiter „Helden“ (lokal):** Bisherigen Hauptreiter „Heldenfähigkeiten“ umbenannt. Heldenkarten und Fähigkeitszuordnung stehen zuerst, darunter die Bearbeitung vorhandener Fähigkeiten. Zwei kleine Sprunglinks navigieren innerhalb der Ansicht, ohne Änderungen zu verwerfen. Mediathek-Reiter „Heldenfähigkeiten“ und bestehende Speicherlogik bleiben erhalten. 48 Frontendtests, CSS-/BEM-Build und mobile Browserprüfung erfolgreich.
+
+- **Mobile Dialogränder (lokal):** Gemeinsame Standardmodale behalten bis 768 Pixel Breite mindestens 12 Pixel Abstand links und rechts. Die mobile Breitenregel steht nach der allgemeinen Modalbreite und wird nicht mehr überschrieben. Browserprüfung bei 320/430 Pixeln ohne Überlauf; CSS-/Token-/BEM-Build erfolgreich.
+
+- **Ruhigere Fähigkeitenauswahl (lokal):** Fähigkeitskarten in Quiz, Profil und Registrierung standardmäßig transparent, ausgewählte Karte auf derselben hellen Surface wie die Erklärung. Keine reduzierte Deckkraft aktiver Karten. Quiz-Einstieg rahmenlos ohne Hintergrund, kleines Sepia-Heldenbild mit „Hilfe · N Fähigkeiten bereit“; Einzahl und leerer Zustand ausdrücklich sichtbar. Hover unterstreicht nur „Hilfe“.
+
+- **Fähigkeitserklärung hervorgehoben (lokal):** In der Heldenvorstellung erscheint die angeklickte Fähigkeit als helle Infokarte mit durchgehendem dünnem lila Rahmen und kleiner Überschrift „[Fähigkeit] · Deine Fähigkeit“. Beschreibung bleibt gut lesbar in normaler Textfarbe; jeweils nur eine Erklärung sichtbar.
+
+- **Kürzerer Hinweis im Heldendialog (lokal):** „Jede erlernte Fähigkeit ist einmal pro Questrunde nutzbar.“ Kein zusätzlicher Hinweis zur Mindestfragenzahl; Spiellogik unverändert.
+
+- **Einheitliche Dialogdetails (lokal, 31.10.2026):** Fähigkeiten in der Heldenvorstellung als kompakte Karten mit dezentem lila Rahmen/Hintergrund, Namen in normaler Textfarbe. Standarddialoge erhalten ihr Schließen-SVG zentral aus `public/js/dialog.js`, einschließlich der Heldenvorstellung; Position, Hover und Fokus bleiben über die gemeinsamen Modal-Klassen geregelt. Browservergleich und 47 Frontendtests erfolgreich; noch nicht veröffentlicht.
+
+- **Heldenvorstellung vor Auswahl (lokal, 31.10.2026, noch nicht veröffentlicht):** In Konto und Registrierung öffnet die Heldenkarte zuerst einen kompakten Dialog mit Bild, Name und Fähigkeiten. Fähigkeiten stehen als kompakte Bild-/Namensleiste mit anklickbarer gemeinsamer Erklärung bereit. Keine Statuszusätze an Helden oder Fähigkeiten; Auswahl bleibt farblich und zugänglich markiert. Dialog in Hero-Lila. Erst „Helden auswählen“ speichert im Konto beziehungsweise merkt die Auswahl für die Registrierung vor. Abbrechen ändert nichts. Neue lesende Vorschau-Endpunkte, keine Migration; 47 Frontendtests und 254 isolierte Integrationstests erfolgreich.
+
+- **Dokumentation gebündelt (lokal, 31.10.2026):** Feature-Übersicht, Souvenir- und Heldenfähigkeitenkonzept sowie persönliche Hinweise liegen unter `docs/`. [Dokumentationsübersicht](README.md) als Einstieg; interne Verweise und Projektanweisungen angepasst. Keine Anwendungs- oder Datenbankänderung.
+
 ### Quizwelten – erste Version auf Production (23.10.2026)
 
 - Nachbesserung auf Production (23.10.2026): Geerbte Quizwelten sind in bestehenden und neuen Fragen angekreuzt und gesperrt. Zusätzliche Welten bleiben wählbar; ein Kategorienwechsel berechnet die Vererbung neu, ohne geerbte Werte als direkte Zuordnung zu speichern.
@@ -15,7 +63,17 @@ Stand: 23. Oktober 2026. Kompakter Überblick über den aktuellen Projektstand u
 - Quizwelten an Kategorien werden automatisch an bestehende und neue Fragen vererbt. Direkte Ergänzungen bleiben erhalten; Fragenliste und Formular unterscheiden „über Kategorie …“ und „direkt“. Migration 021 lokal und auf Production angewendet, bekannte italienische Stadtkategorien zu Italien verknüpft und redundante Einzelzuordnungen bereinigt.
 - Die Startseite zeigt weiterhin alle verfügbaren Kategorien und Tag-Runden ohne Quizweltfilter. Eine gestaltete öffentliche Weltwahl folgt später. Serverseitige Weltprüfung und Weltkontext in Einladungen sind für später vorbereitet.
 - Bekannte italienische Stadtkategorien lokal und auf Production zu Italien migriert. Bestehende Fragen-IDs, Fortschritte und Souvenirs bleiben erhalten; keine separate Weltstatistik in dieser Version.
-- Migrationen 020 und 021 lokal und auf Production angewendet; Details zu Schema, Altimporten, Grenzen und Erweiterungen: [Quizwelten](docs/QUIZWELTEN.md).
+- Migrationen 020 und 021 lokal und auf Production angewendet; Details zu Schema, Altimporten, Grenzen und Erweiterungen: [Quizwelten](QUIZWELTEN.md).
+
+### Heldenfähigkeiten – Version 1 lokal (23.10.2026, noch nicht veröffentlicht)
+
+- Heldenblick, Schutzschild und Neues Abenteuer; maximal drei Fähigkeiten je Held, jede freigeschaltete automatisch einmal pro Runde ab fünf Fragen nutzbar.
+- Erwerb standardmäßig nach drei gespeicherten Runden mit mindestens fünf beantworteten Fragen mit dem jeweiligen Helden. Globale Definitionen technisch vorbereitet; neue Fähigkeiten werden in der Entwicklung ergänzt. Keine rückwirkende Zuordnung alter Runden.
+- Der Fähigkeitenbereich im Profil ist vorerst entfernt und wird später neu gestaltet; Ergebnis meldet weiterhin neue Freischaltungen. Admin zum Bearbeiten vorhandener Fähigkeiten mit Namen, Texten, Rundenanzahl und Zuordnung je Held über Bildkarten und Bearbeitungsdialog; keine Anlagefunktion. Die Abstände im Fähigkeitenformular sind vereinheitlicht.
+- Drei eigene Low-Poly-Motive; neue Fähigkeiten erscheinen im Ergebnis einzeln mit Bild und Beschreibung vor „Freunde herausfordern“. Admin mit Motivvorschau, Mediatheksauswahl und Drag-and-drop-Upload. Eigener Mediathek-Reiter „Heldenfähigkeiten“.
+- Ergebnisdarstellung vereinheitlicht: Fähigkeitsmotive nutzen dieselbe Bildgröße wie Souvenirs, Fähigkeitsnamen die kleine fette Souvenir-Typografie in Hero-Lila. Fähigkeitsflächen verwenden den bestehenden Hero-Surface-Token.
+- Im laufenden Quiz ein rahmenloser Einstieg mit kleinem Sepia-Heldenbild und „Hilfe · N Fähigkeiten bereit“; keine farbige Hintergrundfläche, Hover unterstreicht nur den Linktext. Im Dialog steht der Heldenname als Überschrift, darunter die verfügbare Anzahl als „1 Heldenfähigkeit verfügbar“ beziehungsweise „2 Heldenfähigkeiten verfügbar“. Dialog mit Fähigkeitskarten und kurzer Erklärung; erst „Jetzt einsetzen“ verbraucht die Fähigkeit und schließt nach Erfolg. Nicht erfüllte Voraussetzungen blenden die Karte aus. Verbrauchte Fähigkeiten bleiben im Dialog ausgegraut. Der Hilfe-Einstieg wird nur angezeigt, solange eine Fähigkeit einsetzbar ist; keine Leeranzeige, auch wenn alle Einsätze verbraucht sind. Unklare Netzwerkanfragen bleiben mit derselben Aktionskennung erneut prüfbar; Antworten bleiben bis zur Klärung gesperrt. Ersetzt die vorherigen einzelnen Icons/Popover. 48 Frontendtests und mobile Browserprüfungen erfolgreich; nur lokal.
+- Migrationen 022–024 lokal angewendet. Keine Grundfähigkeit-Unterscheidung. Wissensfunke bewusst vertagt. Regeln, Testbelegung und Betrieb: [Heldenfähigkeit.md](Heldenfähigkeit.md).
 
 ### Quiz spielen
 
@@ -89,7 +147,7 @@ Die Erfolgsquoten zählen beide Versuche und wiederholte Fragen mit. Alte Runden
 - **Startseite nach Anmeldung:** Login und erfolgreiche E-Mail-Bestätigung einer Registrierung führen zur Kategorienübersicht. Der Reisepass bleibt über das Kontomenü erreichbar.
 - **E-Mail-Bestätigung im passenden Schritt:** Registrierung erklärt die Bestätigung und führt danach in einen eigenen Hinweisbereich. Erneuten Versand nur nach Registrierung, bei unbestätigtem Login oder fehlgeschlagenem Bestätigungslink anbieten; beim Passwort-Zurücksetzen ausblenden.
 - **Klarere Profilverwaltung:** Benutzername erst per Stift bearbeiten und separat speichern; Passwortwechsel mit eigener Bestätigung und Wiederholung. Kontolöschung in einem eigenen Bestätigungsdialog.
-- **Profilbildauswahl im Konto:** Aufklappbarer Bereich unter dem Benutzernamen statt Profilbild-Dialog. Verfügbare Helden als Karten mit Namen und Auswahlmarkierung; automatisches Speichern bei Auswahl. Belohnungslinks öffnen den Bereich direkt.
+- **Profilbildauswahl im Konto:** Aufklappbarer Bereich unter dem Benutzernamen mit benannten Heldenkarten und Auswahlmarkierung. Lokal seit 31.10.2026 öffnet der Kartenklick erst den Vorstellungsdialog mit Fähigkeiten; Speicherung nach „Helden auswählen“. Belohnungslinks öffnen den Bereich direkt.
 - **Helden auswählen:** Das Konto-Akkordeon heißt „Helden auswählen“. Der zusätzliche Link „Bild ändern“ am aktuellen Profilbild entfällt; das Bild selbst ist nicht mehr anklickbar.
 - **Ausgewählter Held in Hero-Farben:** Lila Rahmen und dezent lila Hintergrund über zentrale Tokens; andere Auswahlkomponenten behalten ihre bisherigen Farben.
 - **Heldenkarten bei Registrierung:** Gleiche benannte Karten wie im Konto einschließlich lila Rahmen und dezent lila Hintergrund der Auswahl. Die Wahl wird weiterhin erst mit der Registrierung übermittelt.
@@ -104,20 +162,20 @@ Die Erfolgsquoten zählen beide Versuche und wiederholte Fragen mit. Alte Runden
 
 - **Städte-Sammlung:** Reisestempel für den ersten tatsächlichen Kategorienbesuch und Low-Poly-Reisemarke für Rom, Florenz und Amalfi-Küste nach 20, für Neapel nach fünf unterschiedlichen richtig gelösten Fragen; erster oder zweiter Versuch zählt. Serverseitige, einmalige Vergabe.
 - **Ergebnishinweise:** Neue Erinnerungsstücke erscheinen einzeln mit Motiv und Namen vor „Freunde herausfordern“; der Ergebnislink führt zur separaten Souvenir-Seite. Keine Souvenir-Sektion im Reisepass. Belegbarer Altfortschritt wird berücksichtigt.
-- **Eigene Souvenir-Seite:** `souvenirs.html` für angemeldete Nutzer, erreichbar über das Kontomenü. Erhaltene und begonnene Entdecker-Souvenirs je Kategorie: Stempel links, Marke rechts, mobil untereinander. Fortschritt nur durch richtige Antworten; Sepia-Motiv und dezenter grauer Hintergrund bis zur Vergabe. Ohne Filter, zusätzlichen Gesamtzähler oder Profilbildbereich.
+- **Eigene Souvenir-Seite:** `souvenirs.html` für angemeldete Nutzer, erreichbar über das Kontomenü. Erhaltene und begonnene Entdecker-Souvenirs je Kategorie: Stempel links, Marke rechts, mobil untereinander. Fortschritt nur durch richtige Antworten; Sepia-Motiv und dezenter grauer Hintergrund bis zur Vergabe. Ohne Filter oder zusätzlichen Gesamtzähler. Lokal ergänzt (31.10.2026, noch nicht veröffentlicht): reine Übersicht freigeschalteter Belohnungshelden mit Bild, Name und Anzahl, verborgen ohne Freischaltungen; Link „Profilbild auswählen“ öffnet im Konto direkt das Akkordeon „Helden auswählen“.
 - **Profilbild als Belohnung:** Neuer Low-Poly-Held Astra nach einer Hero-Frage, die im ersten Versuch richtig gelöst wurde. Vergabe beim bestätigten Rundenabschluss; vor Erhalt verborgen, dauerhafte Berechtigung danach, Ergebnishinweis „Neue Heldenbelohnung“ mit „Neues Profilbild freigeschaltet“. Kein automatischer Profilbildwechsel; lokaler Test-Reset entfernt die Freischaltung.
-- **Profilbilder in der Mediathek:** Eigener Tab mit Namen, Suche, Upload und Motivwechsel. Frei oder Belohnung wählen, Bilder aktivieren/deaktivieren und löschen. Aktive freie Bilder stehen automatisch in der Profilbildauswahl; Belohnungen erst nach Erhalt. Betroffene Accounts fallen beim Deaktivieren/Löschen auf den geschützten Standardhelden zurück. Details: [Mediathek](docs/MEDIA.md).
+- **Profilbilder in der Mediathek:** Eigener Tab mit Namen, Suche, Upload und Motivwechsel. Frei oder Belohnung wählen, Bilder aktivieren/deaktivieren und löschen. Aktive freie Bilder stehen automatisch in der Profilbildauswahl; Belohnungen erst nach Erhalt. Betroffene Accounts fallen beim Deaktivieren/Löschen auf den geschützten Standardhelden zurück. Details: [Mediathek](MEDIA.md).
 - **Einheitliche Medienkacheln:** Profilbilder verwenden dieselben Bildflächen, Abstände, Rahmen und linksbündigen Beschriftungen wie Fragebilder. Heldenmotive bleiben vollständig sichtbar.
-- **Souvenir-Bilder in der Mediathek:** Eigener Reiter für bestehende Motive und neue Uploads; diese erscheinen nicht mehr unter Bilder. Verwendete Motive werden über die versionierte Souvenir-Verwaltung bearbeitet. Details: [Mediathek](docs/MEDIA.md).
+- **Souvenir-Bilder in der Mediathek:** Eigener Reiter für bestehende Motive und neue Uploads; diese erscheinen nicht mehr unter Bilder. Verwendete Motive werden über die versionierte Souvenir-Verwaltung bearbeitet. Details: [Mediathek](MEDIA.md).
 - **Adminpflege:** Feste Regeln, Zielwerte, Motive aus Mediathek/Upload, Entwurf/Aktiv/Archiviert und versionierte Änderungen. Lokaler Test-Reset für `@example.test`-Accounts; in Production gesperrt.
 - **Souvenir-Bestand im Admin:** Motivübersicht mit Name, Kategorie, Regel/Zielwert und Status, Suche und Filtern. Klick auf eine Kachel öffnet die Bearbeitung darunter; neue Souvenirs werden über „Neu anlegen“ erstellt. Schutz ungespeicherter Änderungen bleibt erhalten.
 - **Reisemarken und Adresse:** Auch erhaltene Reisemarken zeigen ihren erreichten Fortschritt als „20 von 20 Fragen richtig gelöst“ mit gefülltem Balken; Reisestempel bleiben ohne Balken. Reisepass unter `reisepass.html`, alte Adresse mit dauerhafter Weiterleitung.
-- **Einheitlicher Admin-Ladehinweis:** Gemeinsamer Spinner unten links für Fragen/Kategorien, Spieler, Feedback, Souvenirs, Mediathek und sichtbare/nahe Bilder. Parallele Anfragen teilen sich eine Anzeige; Abschluss und Fehler beenden den jeweiligen Ladezustand. Details: [Mediathek und Ladeanzeige](docs/MEDIA.md).
+- **Einheitlicher Admin-Ladehinweis:** Gemeinsamer Spinner unten links für Fragen/Kategorien, Spieler, Feedback, Souvenirs, Mediathek und sichtbare/nahe Bilder. Parallele Anfragen teilen sich eine Anzeige; Abschluss und Fehler beenden den jeweiligen Ladezustand. Details: [Mediathek und Ladeanzeige](MEDIA.md).
 - **Datenbank:** Migrationen 014 bis 019 lokal und auf Production angewendet. Migration 019 ergänzt die Amalfi-Definitionen ohne Schemaänderung. Details, Tests und weitere Ideen: [Souvenir.md](Souvenir.md).
 
 ## Release vom 22.10.2026 – Quizdarstellung und CSS-Pflege
 
-Auf Production veröffentlicht als `cb23f51a0cc4-20261022131903`. Aktiven Stand und Rolloutprotokoll siehe [Production](docs/HOSTINGER-PRODUCTION.md).
+Auf Production veröffentlicht als `cb23f51a0cc4-20261022131903`. Aktiven Stand und Rolloutprotokoll siehe [Production](HOSTINGER-PRODUCTION.md).
 
 ### Schwierigkeit und Punkte im Quiz
 
@@ -133,13 +191,14 @@ Nach der ersten falschen Quizantwort erscheint an derselben Stelle über den Ant
 
 Die Farbpalette liegt ausschließlich in `styles/themes/app-tokens.css`; gemeinsame Skalen, Typografie und Bewegung in `styles/abstracts/tokens.css`. Doppelte zentrale Token-Definitionen wurden bei unveränderten wirksamen Werten entfernt.
 
-Die zentrale Theme-/Responsive-Überschreibung ist in die zuständigen Layout-, Komponenten- und Featuredateien aufgeteilt. Kartenstyling zusammengeführt, doppelte Deklarationen bereinigt und Theme-Dateien automatisch auf reine Token-Definitionen begrenzt. Bestehende Darstellung als Browser-Vergleichsbasis erhalten; keine neue Funktion und keine Datenbankänderung. Details: [CSS-Modularisierung](docs/CSS-MODULARISIERUNG-2026-10-22.md).
+Die zentrale Theme-/Responsive-Überschreibung ist in die zuständigen Layout-, Komponenten- und Featuredateien aufgeteilt. Kartenstyling zusammengeführt, doppelte Deklarationen bereinigt und Theme-Dateien automatisch auf reine Token-Definitionen begrenzt. Bestehende Darstellung als Browser-Vergleichsbasis erhalten; keine neue Funktion und keine Datenbankänderung. Details: [CSS-Modularisierung](CSS-MODULARISIERUNG-2026-10-22.md).
 
 ## Mögliche nächste Features
 
 ### Bereits gemeinsam vertieft / vorgemerkt
 
-Siena ist als weitere Kategorie vorgesehen. Ein zusätzliches Kategorienmotiv im bestehenden Low-Poly-Stil ist als Asset vorbereitet; Kategorie und Fragen sind noch nicht angelegt. [Bild und Generierungsauftrag](docs/SIENA-KATEGORIENBILD.md).
+
+Siena ist als weitere Kategorie vorgesehen. Ein zusätzliches Kategorienmotiv im bestehenden Low-Poly-Stil ist als Asset vorbereitet; Kategorie und Fragen sind noch nicht angelegt. [Bild und Generierungsauftrag](SIENA-KATEGORIENBILD.md).
 
 | Idee | Kurzer Ausblick |
 |---|---|

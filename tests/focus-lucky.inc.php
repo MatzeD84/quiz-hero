@@ -1,0 +1,50 @@
+<?php
+// Isolated audit DB only. Exercise both new effects through the real HTTP API.
+$newPowerName='powers'.$suffix;
+$pdo->prepare('INSERT INTO quiz_users(username,email,password_hash,avatar_key,email_verified_at) VALUES(?,?,?,?,NOW())')->execute([$newPowerName,$newPowerName.'@example.test',password_hash($abilityPassword,PASSWORD_DEFAULT),'hero']);
+$newPowerUser=(int)$pdo->lastInsertId();request('account-login',['identifier'=>$newPowerName,'password'=>$abilityPassword]);
+$powerIds=[];
+for($n=0;$n<5;$n++)$powerIds[]=request('admin-question-save',['categoryId'=>$abilityCat,'question'=>'New power '.$n.' '.$suffix,'answers'=>['A','B','C','D'],'correct'=>0,'difficulty'=>'hero','active'=>true,'worldIds'=>[]])['id'];
+$powerRound=['categoryId'=>$abilityCat,'questionIds'=>$powerIds];
+$h=array_column(request('admin-abilities')['heroes'],null,'avatar_key')['hero'];
+request('admin-hero-abilities-save',['heroKey'=>'hero','contentVersion'=>$h['contentVersion'],'abilityIds'=>['scharfblick','gluecksanker','schutzschild']]);
+foreach(['scharfblick','gluecksanker'] as $id){
+    $a=array_column(request('admin-abilities')['abilities'],null,'id')[$id];
+    request('admin-ability-save',['id'=>$id,'contentVersion'=>$a['contentVersion'],'title'=>$a['title'],'description'=>$a['description'],'roundsRequired'=>1,'enabled'=>true]);
+}
+$r=request('start-round',$powerRound);
+check($r['abilities']===[],'new effects are not granted merely by assigning them to a hero');
+$unlock=request('save-result',['roundId'=>$r['roundId'],'answers'=>$roundAnswers($r['questions'])]);
+check(count(array_intersect(['scharfblick','gluecksanker'],array_column($unlock['abilityAwards'],'id')))===2,'both new effects are learned through the ordinary qualifying round mechanism');
+$pdo->prepare('INSERT IGNORE INTO quiz_user_abilities(user_id,ability_id,hero_key) VALUES(?,?,?)')->execute([$newPowerUser,'schutzschild','hero']);
+$r=request('start-round',$powerRound);
+$focus=['roundId'=>$r['roundId'],'abilityId'=>'scharfblick','actionId'=>bin2hex(random_bytes(16)),'position'=>0,'answers'=>[['questionId'=>$powerIds[0],'selectedAnswers'=>[]]]];
+request('use-round-ability',array_replace($focus,['answers'=>[['questionId'=>$powerIds[0],'selectedAnswers'=>[1]]]]),422);
+$lucky=array_replace($focus,['abilityId'=>'gluecksanker','actionId'=>bin2hex(random_bytes(16))]);request('use-round-ability',$lucky,422);
+$used=request('use-round-ability',$focus);
+check(count($used['removedAnswers'])===2&&count(array_unique($used['removedAnswers']))===2&&!in_array(0,$used['removedAnswers'],true),'Scharfblick removes exactly two distinct false answers before the first attempt');
+check(request('use-round-ability',$focus)==$used,'Scharfblick replay returns the same removed answers without another use');
+$remaining=array_values(array_diff([1,2,3],$used['removedAnswers']))[0];
+$sameQuestion=array_replace($lucky,['answers'=>[['questionId'=>$powerIds[0],'selectedAnswers'=>[$remaining]]]]);request('use-round-ability',$sameQuestion,422);
+request('use-round-ability',array_replace($sameQuestion,['abilityId'=>'schutzschild']),422);
+request('use-round-ability',array_replace($focus,['actionId'=>bin2hex(random_bytes(16))]),409);
+$answers=$roundAnswers($r['questions']);$answers[0]['selectedAnswers']=[$used['removedAnswers'][0],0];request('save-result',['roundId'=>$r['roundId'],'answers'=>$answers],422);
+$lucky['position']=1;$lucky['answers']=[['questionId'=>$powerIds[0],'selectedAnswers'=>[0]],['questionId'=>$powerIds[1],'selectedAnswers'=>[1]]];
+$anchor=request('use-round-ability',$lucky);check(request('use-round-ability',$lucky)==$anchor,'Glücksanker is idempotent after the first mistake');
+request('use-round-ability',array_replace($lucky,['abilityId'=>'schutzschild','actionId'=>bin2hex(random_bytes(16))]),422);
+$answers=$roundAnswers($r['questions']);$answers[1]['selectedAnswers']=[1,2];
+$saved=request('save-result',['roundId'=>$r['roundId'],'answers'=>$answers]);$resultId=(int)$saved['resultId'];
+$stats=$pdo->query('SELECT score,max_score,solved FROM quiz_results WHERE id='.$resultId)->fetch();
+check((int)$stats['score']===18&&(int)$stats['max_score']===22&&(int)$stats['solved']===4,'focus caps Hero points at two and lucky adds one consolation point without solving the failed question');
+$details=$pdo->query('SELECT outcome,score,max_score,assisted_ability FROM quiz_question_results WHERE result_id='.$resultId.' ORDER BY position')->fetchAll();
+check($details[0]['outcome']==='first_try'&&(int)$details[0]['score']===2&&(int)$details[0]['max_score']===2&&$details[0]['assisted_ability']==='scharfblick','focus scoring and assisted marker persist in immutable question results');
+check($details[1]['outcome']==='incorrect'&&(int)$details[1]['score']===1&&$details[1]['assisted_ability']==='gluecksanker','consolation remains incorrect for explorer and correct-answer reward rules');
+check(request('save-result',['roundId'=>$r['roundId'],'answers'=>$answers])['resultId']===$saved['resultId'],'replayed result cannot grant consolation points twice');
+$r=request('start-round',$powerRound);$focus['roundId']=$r['roundId'];$focus['actionId']=bin2hex(random_bytes(16));$used=request('use-round-ability',$focus);
+$remaining=array_values(array_diff([1,2,3],$used['removedAnswers']))[0];
+$lucky['roundId']=$r['roundId'];$lucky['actionId']=bin2hex(random_bytes(16));$lucky['answers'][0]['selectedAnswers']=[$remaining,0];request('use-round-ability',$lucky);
+$answers=$roundAnswers($r['questions']);$answers[0]['selectedAnswers']=[$remaining,0];$answers[1]['selectedAnswers']=[1,0];
+$saved=request('save-result',['roundId'=>$r['roundId'],'answers'=>$answers]);
+check((int)$pdo->query('SELECT score FROM quiz_results WHERE id='.(int)$saved['resultId'])->fetchColumn()===17,'both effects retain one point for a correct second attempt rather than adding a bonus');
+$a=array_column(request('admin-abilities')['abilities'],null,'id')['scharfblick'];execute_sql_file(__DIR__.'/../database/migrations/026_focus_and_lucky_abilities.sql');
+check(array_column(request('admin-abilities')['abilities'],null,'id')['scharfblick']===$a,'migration replay preserves edited new ability definitions and learning thresholds');

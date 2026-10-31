@@ -153,6 +153,29 @@ export class UserService {
         return data;
     }
 
+    async abilities() {
+        const data = await this.post('account-abilities', {}, { csrf: true });
+        if (!data.ok) throw new Error(data.error || 'Fähigkeiten konnten nicht geladen werden.');
+        return data;
+    }
+
+    async heroPreview(heroKey, personal = false) {
+        let data;
+        if (personal) data = await this.post('account-hero-preview', { heroKey }, { csrf: true });
+        else {
+            const url = new URL(this.apiUrl, window.location.href);url.searchParams.set('action', 'hero-preview');url.searchParams.set('heroKey', heroKey);
+            const response = await this.fetchFn(url, { cache: 'no-store', signal: AbortSignal.timeout(20000) });data = await response.json();
+        }
+        if (!data.ok) throw new Error(data.error || 'Held konnte nicht geladen werden.');
+        return data;
+    }
+
+    async useAbility(payload) {
+        const data = await this.post('use-round-ability', payload, { csrf: true });
+        if (!data.ok) { const error = new Error(data.error || 'Fähigkeit konnte nicht eingesetzt werden.');error.definitive = true;throw error; }
+        return data;
+    }
+
     async saveResult(user, stats, context) {
         if (!user?.id) return;
         const data = await this.post('save-result', {

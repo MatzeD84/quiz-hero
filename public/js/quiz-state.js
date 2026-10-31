@@ -180,8 +180,11 @@ export class QuizState {
         if (isCorrect) {
             this.getCurrentQuestion().answeredCorrectly = true;
             pointsGained = getPointsForDifficulty(difficulty, this.attempts);
-            this.score += pointsGained;
+            if (this.attempts === 1 && this.getCurrentQuestion().abilityShield) pointsGained = 2;
+            if(this.getCurrentQuestion().abilityFocus)pointsGained=Math.min(pointsGained,2);
         }
+        if(!isCorrect&&this.attempts===1&&this.getCurrentQuestion().abilityLucky)pointsGained=1;
+        this.score += pointsGained;
         this.attempts += 1;
         return pointsGained;
     }
@@ -212,7 +215,8 @@ export class QuizState {
         const percentage = total === 0 ? 0 : Math.round((solved / total) * 100);
         const maxScore = this.currentSequence.reduce((sum, question) => {
             const difficulty = question.difficulty || CONFIG.score.defaultDifficulty;
-            return sum + getPointsForDifficulty(difficulty, 0);
+            const points=getPointsForDifficulty(difficulty,0);
+            return sum + (question.abilityFocus?Math.min(points,2):points);
         }, 0);
         return { total, solved, percentage, score: this.score, maxScore };
     }

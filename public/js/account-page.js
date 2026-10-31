@@ -1,3 +1,4 @@
+import { createHeroPreview } from './hero-preview.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { HERO_AVATARS, loadHeroAvatars } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE, UserService } from './user-service.js?v=dev';
@@ -5,6 +6,7 @@ import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
 import { initFooter } from './footer.js?v=dev';
 import { revealStatus } from './status-navigation.js?v=dev';
 import { isAvatarAvailable } from './avatar-policy.js?v=dev';
+import { createSaveButtonState } from './save-button-state.js?v=dev';
 
 const elements = {
     loggedOut: document.querySelector('#js-account-page-logged-out'),
@@ -41,6 +43,12 @@ const elements = {
 const userService = new UserService();
 let currentUser = null;
 let updating = false;
+const saveStates=[
+    createSaveButtonState(elements.form,{isChanged:()=>elements.username.value.trim()!==(currentUser?.username||currentUser?.name||'').trim(),isBlocked:()=>updating||!currentUser||elements.username.readOnly}),
+    createSaveButtonState(elements.passwordForm,{isChanged:()=>Boolean(elements.password.value),isBlocked:()=>updating||!currentUser})
+];
+const updateSaveButtons=()=>saveStates.forEach(state=>state.update());
+const heroPreview = createHeroPreview({ load: key => userService.heroPreview(key, true), onSelect: selectHero, isSelected:avatar=>avatar.key===(currentUser?.avatarKey||'hero'), savedMessage:'Dein Held wurde gespeichert.' });
 
 initFooter();
 
@@ -49,6 +57,7 @@ function setBusy(busy) {
     for (const root of [elements.content, elements.avatarSection, elements.deleteModal]) {
         root?.querySelectorAll('button, input').forEach(control => { control.disabled = busy || control.dataset.rewardLocked === 'true'; });
     }
+    updateSaveButtons();
 }
 
 function setUsernameEditing(editing) {
@@ -59,6 +68,7 @@ function setUsernameEditing(editing) {
     elements.usernameHint.textContent = editing ? 'Gib deinen neuen Benutzernamen ein und speichere die Änderung.' : '';
     if (editing) elements.username.focus();
     else elements.username.value = currentUser?.username || currentUser?.name || '';
+    updateSaveButtons();
 }
 
 function resetPasswordForm() {
@@ -101,6 +111,7 @@ const render = () => {
         elements.avatarImage.alt = `${username} Profilbild`;
     }
     applyAccountHeaderLogo(currentUser);
+    updateSaveButtons();
 };
 
 const handleRemovedAccount = (message = ACCOUNT_REMOVED_MESSAGE) => {
@@ -117,19 +128,19 @@ const closeAvatarPicker = () => {
 const openAvatarPicker = () => {
     if (!elements.avatarSection || !elements.avatarContent || !currentUser || updating) return;
     const currentKey = currentUser.avatarKey || 'hero';
-    elements.avatarContent.innerHTML = '<div class="profile-avatar"><p class="account-page-form__hint">Wähle deinen Helden. Deine Auswahl wird automatisch gespeichert.</p><p class="user-panel__status" id="js-avatar-save-status" role="status" aria-live="polite"></p><div class="profile-avatar__grid" role="radiogroup" aria-label="Helden auswählen"></div></div>';
+    elements.avatarContent.innerHTML = '<div class="profile-avatar"><p class="account-page-form__hint">Wähle deinen Helden. Ein Klick stellt ihn und seine Fähigkeiten vor.</p><p class="user-panel__status" id="js-avatar-save-status" role="status" aria-live="polite"></p><div class="profile-avatar__grid" role="group" aria-label="Helden auswählen"></div></div>';
     const grid = elements.avatarContent.querySelector('.profile-avatar__grid');
     for (const avatar of currentUser.availableAvatars || HERO_AVATARS) {
         if(!isAvatarAvailable(avatar,currentUser))continue;
-        const label=document.createElement('label');label.className='profile-avatar__card';
-        const input=document.createElement('input');input.type='radio';input.name='avatarKey';input.value=avatar.key;input.checked=avatar.key===currentKey;
+        const card=document.createElement('button');card.type='button';card.className='profile-avatar__card';card.setAttribute('aria-pressed',String(avatar.key===currentKey));card.setAttribute('aria-haspopup','dialog');
         const image=document.createElement('img');image.src=avatar.url;image.alt='';image.width=112;image.height=112;image.loading='lazy';
         const name=document.createElement('strong');name.textContent=avatar.label;
-        const state=document.createElement('span');state.className='profile-avatar__state';
-        const updateState=()=>{state.textContent=input.checked?'Ausgewählt':avatar.unlockRule?'Freigeschaltet':'Verfügbar';};
-        input.addEventListener('change',()=>grid.querySelectorAll('input').forEach(radio=>radio.dispatchEvent(new Event('avatar-state'))));
-        input.addEventListener('avatar-state',updateState);updateState();
-        label.append(input,image,name,state);grid.append(label);
+
+        card.append(image,name);
+        if(avatar.unlockRule){
+            const tag=document.createElement('span');tag.className='profile-avatar__reward-tag';tag.textContent='Belohnung';card.append(tag);
+        }
+        card.addEventListener('click',()=>{if(!updating)heroPreview.open(avatar);});grid.append(card);
     }
     elements.avatarSection.open = true;
 };
@@ -188,37 +199,20 @@ elements.passwordForm?.addEventListener('submit', async event => {
 elements.avatarSection?.addEventListener('toggle', () => {
     if(elements.avatarSection.open && !elements.avatarContent.children.length)openAvatarPicker();
 });
-elements.avatarContent?.addEventListener('change', async event => {
-    const input=event.target.closest('input[name="avatarKey"]');
-    if(!input||!currentUser||updating)return;
-    const avatarKey=input.value;
-    if(avatarKey===(currentUser.avatarKey||'hero'))return;
-    const status=elements.avatarContent.querySelector('#js-avatar-save-status');
-    const notify=(message,type)=>{status.textContent=message;status.dataset.status=type;};
+async function selectHero(avatar) {
+    if (!currentUser || updating) throw new Error('Bitte melde dich erneut an.');
+    if (avatar.key === (currentUser.avatarKey || 'hero')) return;
     setBusy(true);
-    elements.avatarContent.setAttribute('aria-busy','true');
-    notify('Dein Held wird gespeichert ...','info');
     try {
-        currentUser=await userService.updateAccount(currentUser,{
-            username:currentUser.username||currentUser.name,
-            password:'',avatarKey
-        });
+        currentUser = await userService.updateAccount(currentUser, { username: currentUser.username || currentUser.name, password: '', avatarKey: avatar.key });
         render();
-        notify('Dein Held wurde gespeichert.','success');
-    } catch(error) {
-        if([ACCOUNT_REMOVED_MESSAGE,SESSION_EXPIRED_MESSAGE].includes(error.message)){
-            closeAvatarPicker();handleRemovedAccount(error.message);return;
-        }
-        notify(error.message||'Dein Held konnte nicht gespeichert werden. Bitte erneut auswählen.','error');
-    } finally {
-        for(const radio of elements.avatarContent.querySelectorAll('input[name="avatarKey"]')){
-            radio.checked=radio.value===(currentUser?.avatarKey||'hero');
-            radio.dispatchEvent(new Event('avatar-state'));
-        }
-        elements.avatarContent.removeAttribute('aria-busy');
-        setBusy(false);
-    }
-});
+    } catch (error) {
+        if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) { closeAvatarPicker();handleRemovedAccount(error.message); }
+        throw error;
+    } finally { setBusy(false); }
+    openAvatarPicker();
+    const status = elements.avatarContent.querySelector('#js-avatar-save-status');status.textContent = 'Dein Held wurde gespeichert.';status.dataset.status = 'success';
+}
 
 elements.logout?.addEventListener('click', async () => {
     if (updating) return;

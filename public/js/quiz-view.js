@@ -1,4 +1,5 @@
 import { renderSouvenirUnlock } from './souvenirs.js?v=dev';
+import { renderAbilityUnlock } from './hero-abilities.js?v=dev';
 import { renderAccountMenu, closeAccountMenus, placeAccountMenu } from './account-menu.js?v=dev';
 import { openDialog, closeDialog } from './dialog.js?v=dev';
 import { CONFIG, LABELS, SELECTORS, getPointsForDifficulty } from './config.js?v=dev';
@@ -710,6 +711,7 @@ export class QuizView {
             if (!current()) return;
             if (navigation) navigation.disabled = false;
             if (!message) renderSouvenirUnlock(card,actions.getSouvenirs?.() || [],actions.getAvatarRewards?.() || []);
+            if (!message) renderAbilityUnlock(card, actions.getAbilityAwards?.() || [], actions.abilityHeroName);
             if (message) {
                 feedback.hidden = false;
                 status.textContent = message;

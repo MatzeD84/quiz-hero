@@ -2,6 +2,9 @@ import { readQuizInvitation } from './quiz-invitation.js?v=dev';
 import { CONFIG, LABELS } from './config.js?v=dev';
 import { ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE } from './user-service.js?v=dev';
 import { applyAccountHeaderLogo } from './account-logo.js?v=dev';
+import { abilityUseReason } from './hero-abilities.js?v=dev';
+import { renderAbilityControls, closeAbilityControls } from './quiz-abilities.js?v=dev';
+import { showSaveNotice } from './save-notice.js?v=dev';
 
 export class QuizController {
     constructor({ dataService, state, view, userService = null }) {
@@ -255,6 +258,7 @@ export class QuizController {
                 return;
             }
             this.state.roundId = null;
+            this.roundAbilities = [];this.usedAbilities = {};this.roundHero = null;this.abilityPending = null;this.abilityBusy = false;this.abilityMessage = '';
             if (this.practiceMode && !this.currentUser) throw new Error('Bitte melde dich erneut an.');
             this.currentRoundIsPractice = false;
             if (this.currentUser) {
@@ -263,7 +267,9 @@ export class QuizController {
                 if (this.state.currentSequence !== sequence) return;
                 this.state.roundId = round.roundId;
                 this.state.currentSequence = round.questions;
+                this.roundAbilities = round.abilities || [];
                 this.currentRoundIsPractice = Boolean(round.isPractice);
+                this.roundHero = (this.currentUser.availableAvatars || []).find(a => a.key === this.currentUser.avatarKey) || { label: 'Dein Held', url: this.currentUser.profileImageUrl };
             }
             this.view.renderQuizSelectionLabel(this.state.selectionLabel);
             this.view.renderRoundMode?.(this.currentRoundIsPractice);
@@ -291,11 +297,72 @@ export class QuizController {
             total: this.state.currentSequence.length,
             selectionLabel: this.state.selectionLabel
         });
+        this.renderAbility();
+    }
+
+    renderAbility() {
+        const content = this.view.elements?.quizContent;if (!content) return;
+        let bar = content.querySelector('.hero-abilities__bar');
+        if (!bar) { bar = document.createElement('div');bar.className = 'hero-abilities__bar';content.querySelector('.quiz__answer').before(bar); }
+        renderAbilityControls(bar, {
+            abilities: this.roundAbilities || [], question: this.state.getCurrentQuestion(), attempts: this.state.attempts,
+            used: this.usedAbilities, pendingId: this.abilityPending?.abilityId, busy: this.abilityBusy,
+            hero: this.roundHero,
+            message: this.abilityMessage, onUse: id => this.handleAbility(id)
+        });
+    }
+
+    async handleAbility(abilityId) {
+        const ability = (this.roundAbilities || []).find(a => a.id === (this.abilityPending?.abilityId || abilityId));
+        if (!ability || this.abilityBusy || (!this.abilityPending && abilityUseReason(ability, this.state.getCurrentQuestion(), this.state.attempts, this.usedAbilities?.[ability.id]))) return;
+        const roundId = this.state.roundId, position = this.state.currentIndex, question = this.state.getCurrentQuestion();
+        if (!this.abilityPending) this.abilityPending = { roundId, position, abilityId: ability.id, actionId: Array.from(crypto.getRandomValues(new Uint8Array(16)), n => n.toString(16).padStart(2, '0')).join(''), answers: this.state.currentSequence.slice(0, position + 1).map(q => ({ questionId: q.id, selectedAnswers: [...(q.selectedAnswers || [])] })) };
+        this.abilityBusy = true;this.abilityMessage = 'Fähigkeit wird eingesetzt …';this.renderAbility();
+        const buttons = this.view.elements.answerButtons;
+        buttons.forEach(button => { button.disabled = true; });
+        try {
+            const result = await this.userService.useAbility(this.abilityPending);
+            if (this.state.roundId !== roundId) return;
+            this.abilityPending = null;(this.usedAbilities ||= {})[ability.id] = true;this.abilityMessage = '';
+            if (result.effect === 'swap') { this.state.currentSequence[position] = result.question;this.state.attempts = 0;this.renderCurrentQuestion(); }
+            else {
+                if (result.effect === 'shield') { question.abilityShield = true;this.view.renderFeedback('Noch eine Chance – jetzt für 2 Punkte.', { canRetry: true }); }
+                if (result.effect === 'eliminate') (question.removedAnswers ||= []).push(result.removedAnswer);
+                if(result.effect==='focus'){
+                    question.abilityFocus=true;(question.removedAnswers ||= []).push(...result.removedAnswers);
+                    this.view.renderFeedback('2 Punkte im ersten Versuch · mit Scharfblick',{isHint:true});
+                }
+                if(result.effect==='lucky'){
+                    question.abilityLucky=true;
+                    this.view.renderFeedback('Noch eine Chance – 1 Punkt, auch bei falscher Antwort.',{canRetry:true});
+                }
+            }
+            const supported=this.state.getCurrentQuestion();supported.abilityApplied=true;
+            if(['focus','lucky'].includes(result.effect))supported.abilityExclusive=true;
+        } catch (error) {
+            if (this.state.roundId !== roundId) return;
+            if (error.definitive) this.abilityPending = null;
+            this.abilityMessage = error.message + (this.abilityPending ? ' Bitte den Einsatz erneut prüfen, bevor du weiterspielst.' : ' Dein Einsatz bleibt verfügbar.');
+        } finally {
+            if (this.state.roundId === roundId) {
+                this.abilityBusy = false;
+                const current = this.state.getCurrentQuestion();
+                buttons.forEach((button, index) => {
+                    const removed = current.removedAnswers?.includes(index);
+                    button.disabled = Boolean(this.abilityPending || current.selectedAnswers?.includes(index) || removed || current.answeredCorrectly || this.state.attempts >= 2);
+                    if (removed) button.textContent = 'Durch Fähigkeit ausgeblendet';
+                });
+                this.renderAbility();
+                if (this.abilityPending) this.view.elements.quizContent?.querySelector('.hero-abilities__bar button:not([disabled])')?.focus({ preventScroll: true });
+                else buttons.find(button => !button.disabled)?.focus?.({ preventScroll: true });
+            }
+        }
     }
 
     handleAnswerSelected(index) {
+        if (this.abilityBusy || this.abilityPending) return;
         const question = this.state.getCurrentQuestion();
-        if (!question || question.answeredCorrectly || !Number.isInteger(index) || index < 0 || index > 3 || question.selectedAnswers?.includes(index) || this.state.attempts >= CONFIG.maxAttempts) {
+        if (!question || question.answeredCorrectly || !Number.isInteger(index) || index < 0 || index > 3 || question.removedAnswers?.includes(index) || question.selectedAnswers?.includes(index) || this.state.attempts >= CONFIG.maxAttempts) {
             return;
         }
 
@@ -308,9 +375,10 @@ export class QuizController {
         const message = this.pickRandomEntry(feedbackArray);
         const canRetry = !isCorrect && this.state.attempts + 1 < CONFIG.maxAttempts;
         const retryPoints = CONFIG.score.secondTry;
-        const feedbackMessage = canRetry
+        let feedbackMessage = canRetry
             ? `Noch eine Chance – jetzt für ${retryPoints} ${retryPoints === 1 ? 'Punkt' : 'Punkte'}.`
             : message;
+        if(!isCorrect&&!canRetry&&question.abilityLucky)feedbackMessage='Leider falsch – dein Glücksanker sichert dir 1 Trostpunkt.';
         this.view.renderFeedback(feedbackMessage, { isCorrect, canRetry });
         const pointsGained = this.state.registerAttempt(isCorrect, difficulty);
         (question.selectedAnswers ||= []).push(index);
@@ -333,6 +401,7 @@ export class QuizController {
             }
             this.view.lockAnswers();
         }
+        this.renderAbility();
     }
 
     async handleQuestionFeedbackSubmit({ types, comment }) {
@@ -355,7 +424,7 @@ export class QuizController {
             });
             this.view.elements.questionFeedbackForm?.reset();
             this.view.renderQuestionFeedbackStatus('Danke, dein Feedback wurde gesendet.', 'success');
-            window.setTimeout(() => this.view.closeQuestionFeedbackModal(), 900);
+            this.view.closeQuestionFeedbackModal();showSaveNotice('Feedback gespeichert. Vielen Dank!');
         } catch (error) {
             if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) {
                 this.handleRemovedAccount(error.message);
@@ -388,6 +457,7 @@ export class QuizController {
     }
 
     handleNextQuestion() {
+        if (this.abilityBusy || this.abilityPending) return;
         const question = this.state.getCurrentQuestion();
         if (!question || (!question.answeredCorrectly && this.state.attempts < CONFIG.maxAttempts && !question.skipped)) return;
         const hasMore = this.state.nextQuestion();
@@ -407,8 +477,9 @@ export class QuizController {
             const isPractice = this.currentRoundIsPractice;
             let souvenirAwards = [];
             let avatarRewards = [];
+            let abilityAwards = [];
             const saveRound = () => roundUser
-                ? this.userService.saveResult(roundUser, stats, context).then(data => { souvenirAwards = data?.souvenirs || []; avatarRewards = data?.avatarRewards || []; return null; }).catch(error => {
+                ? this.userService.saveResult(roundUser, stats, context).then(data => { souvenirAwards = data?.souvenirs || []; avatarRewards = data?.avatarRewards || []; abilityAwards = data?.abilityAwards || []; return null; }).catch(error => {
                     if ([ACCOUNT_REMOVED_MESSAGE, SESSION_EXPIRED_MESSAGE].includes(error.message)) this.handleRemovedAccount(error.message);
                     return 'Ergebnis nicht im Profil gespeichert: ' + (error.message || 'Verbindungsfehler.');
                 })
@@ -418,6 +489,8 @@ export class QuizController {
                 saveStatus,
                 getSouvenirs: () => souvenirAwards,
                 getAvatarRewards: () => avatarRewards,
+                getAbilityAwards: () => abilityAwards,
+                abilityHeroName: this.roundHero?.label || 'Dein Held',
                 retrySave: roundUser ? saveRound : null,
                 practice: isPractice,
                 shareContext: { label: this.state.selectionLabel, image: this.state.selectionIcon, categoryId: context.categoryId, tagId: context.tagId, worldId: context.worldId },
@@ -444,6 +517,7 @@ export class QuizController {
     }
 
     handleAbort() {
+        closeAbilityControls(this.view.elements?.quizContent?.querySelector('.hero-abilities__bar'));
         this.selectionRequest = (this.selectionRequest || 0) + 1;
         this.practiceMode = false;
         this.state.resetRound();

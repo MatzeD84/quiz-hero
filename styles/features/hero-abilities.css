@@ -1,0 +1,147 @@
+.hero-abilities { padding: var(--space-20); }
+.hero-abilities__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-16);
+    margin-block: var(--space-16);
+}
+.hero-abilities__card {
+    min-width: 0;
+    padding: var(--space-20);
+    border: var(--border-width-thin) var(--border-style) var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-hero-surface);
+    overflow-wrap: anywhere;
+}
+.hero-abilities__card--learned {
+    border-color: var(--color-difficulty-hero);
+    background: var(--color-hero-surface);
+}
+.hero-abilities__card h3 {
+    font-family: var(--font-body);
+    font-size: var(--text-20);
+    font-weight: var(--font-weight-semibold);
+}
+.hero-abilities__card p { margin-block: var(--space-12); font-size: var(--text-16); }
+.hero-abilities__card progress { display: block; width: 100%; margin-block: var(--space-12); accent-color: var(--color-difficulty-hero); }
+.hero-abilities__card .btn { width: auto; max-width: 100%; white-space: normal; }
+.hero-abilities__reward {
+    padding: var(--space-20);
+    margin-block: var(--space-20);
+    border-radius: var(--radius-lg);
+    background: var(--color-hero-surface);
+}
+.hero-abilities__label { font-family: var(--font-body); color: var(--color-difficulty-hero); text-transform: uppercase; }
+.hero-abilities__reward p { margin: 0; font-size: var(--text-16); }
+.hero-abilities-admin { width: 100%; max-width: none; box-sizing: border-box; }
+.hero-abilities-admin {
+    display: grid;
+    gap: var(--space-24);
+}
+.hero-abilities-admin > h2,
+.hero-abilities-admin > p,
+.hero-abilities-admin__heroes > h3,
+.hero-abilities-admin__heroes > p,
+.hero-abilities-admin__form > p {
+    margin: 0;
+}
+.hero-abilities-admin__picker,
+.hero-abilities-admin__form > label:not(.admin-checkbox-inline) {
+    display: grid;
+    gap: var(--space-8);
+}
+.hero-abilities-admin__picker { max-width: 480px; }
+.hero-abilities-admin__jump-links { display: flex; flex-wrap: wrap; gap: var(--space-16); font-size: var(--text-14); }
+.hero-abilities-admin__editor { display: grid; gap: var(--space-24); }
+.hero-abilities-admin__editor > h3,
+.hero-abilities-admin__editor > p { margin: 0; }
+.hero-abilities-admin__heroes,
+.hero-abilities-admin__editor { scroll-margin-block-start: var(--space-24); }
+.hero-abilities-admin__picker select { width: 100%; min-width: 0; }
+.hero-abilities-admin__form { min-width: 0; }
+.hero-abilities-admin__form > h3 { margin: 0; }
+.hero-abilities-admin__form > label:not(.admin-checkbox-inline) { min-width: 0; }
+.hero-abilities-admin__form > label > select,
+.hero-abilities-admin__form > label > input:not([type='checkbox']) { width: 100%; min-width: 0; box-sizing: border-box; }
+.hero-abilities-admin__form:not([hidden]),
+.hero-abilities-admin__heroes,
+.hero-abilities-admin__dialog {
+    display: grid;
+    gap: var(--space-20);
+}
+.hero-abilities-admin__hero-card {
+    font-family: var(--font-body);
+    font-size: var(--text-16);
+    line-height: var(--line-height-body);
+}
+.hero-abilities-admin__hero-card[aria-expanded='true'] {
+    border-color: var(--color-difficulty-hero);
+    background: var(--color-hero-surface);
+    box-shadow: var(--shadow-hero-selected);
+}
+
+.hero-abilities-admin__hero-image--inactive { filter: var(--filter-sepia); }
+.hero-abilities-admin__ability-labels {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    min-width: 0;
+}
+.hero-abilities-admin__ability-label {
+    padding: 0 var(--space-8);
+    border-radius: var(--radius-sm);
+    background: var(--color-hero-surface);
+    color: var(--color-text);
+    font-size: var(--text-12);
+    line-height: var(--line-height-body);
+    max-width: 100%;
+}
+.hero-abilities-admin__hero-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-16);
+    padding-right: var(--space-24);
+}
+.hero-abilities-admin__hero-heading img {
+    width: 112px;
+    height: 112px;
+    object-fit: contain;
+}
+.hero-abilities-admin__hero-heading h2 {
+    flex: 1 1 180px;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+.hero-abilities-admin__choices {
+    margin: 0;
+    padding: var(--space-16);
+    border: var(--border-input);
+    border-radius: var(--radius-md);
+}
+.hero-abilities-admin__choices > div { display: grid; gap: var(--space-12); }
+.hero-abilities-admin__choices label { display: flex; align-items: center; gap: var(--space-12); }
+.hero-abilities-admin__dialog > p { margin: 0; }
+.hero-abilities-admin__motif,
+.hero-abilities-admin__motif label { display: grid; gap: var(--space-12); min-width: 0; }
+.hero-abilities-admin__motif-preview { width: 144px; height: 144px; object-fit: contain; }
+.hero-abilities-admin__form .admin-dropzone input[type='file'] {
+    width: 1px;
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+}
+
+.hero-abilities__bar:not([hidden]) { position: relative; display: grid; gap: var(--space-8); margin-block: var(--space-12); }
+.hero-abilities__entry:not([hidden]) { display: flex; align-items: center; gap: var(--space-8); width: fit-content; max-width: 100%; min-height: var(--control-size-touch); padding: var(--space-4) 0; border: 0; background: none; color: var(--color-link); font: inherit; font-size: var(--text-14); cursor: pointer; text-align: start; }
+.hero-abilities__entry img { width: 28px; height: 28px; flex-shrink: 0; object-fit: contain; filter: var(--filter-sepia); }
+.hero-abilities__count { min-width: 0; color: var(--color-text-muted); font-size: var(--text-12); }
+@media (hover: hover) and (pointer: fine) {
+    .hero-abilities__entry:not(:disabled):hover .hero-abilities__entry-label { text-decoration: underline; }
+}
+.hero-abilities__spent img { filter: var(--filter-sepia); }
+.hero-abilities__status { margin: 0; font-size: var(--text-14); }
+.hero-preview__description .btn { margin-top: var(--space-12); }

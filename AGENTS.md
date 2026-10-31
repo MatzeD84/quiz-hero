@@ -7,11 +7,11 @@
 ## Dokumentation
 
 - Dokumentation gehoert zum Abschluss einer Aenderung und wird ohne gesonderte Aufforderung mitgepflegt.
-- Abgeschlossene oder geaenderte Features in `FEATURES.md` knapp und verstaendlich aktualisieren. Umgesetzte Funktionen, vorgemerkte Erweiterungen und unverbindliche Ideen klar unterscheiden.
+- Abgeschlossene oder geaenderte Features in `docs/FEATURES.md` knapp und verstaendlich aktualisieren. Umgesetzte Funktionen, vorgemerkte Erweiterungen und unverbindliche Ideen klar unterscheiden.
 - Entwicklungs-, Build-, Deployment-, Betriebs- und Wiederherstellungsprozesse in der passenden README oder Fachdokumentation unter `docs/` beschreiben. Bestehende Dokumentation aktualisieren und verlinken, statt widerspruechliche Doppelbeschreibungen anzulegen.
 - Datenbankaenderungen mit Migration, betroffenen Tabellen/Feldern, Zweck und Auswirkungen auf bestehende Daten dokumentieren. Erforderliche Anwendungsschritte, Backup-/Ruecksprunggrenzen und bekannte Einschraenkungen festhalten; keine Zugangsdaten oder personenbezogenen Beispieldaten aufnehmen.
 - Relevante Pruefungen und verbleibende Grenzen nachvollziehbar festhalten. Lokalen Implementierungsstand und tatsaechlich veroeffentlichten Stand nicht gleichsetzen. Umfang der Dokumentation an die Aenderung anpassen.
-- `hinweise.md` bleibt die persoenliche Erinnerung des Nutzers und wird nur auf ausdruecklichen Wunsch bearbeitet.
+- `docs/hinweise.md` bleibt die persoenliche Erinnerung des Nutzers und wird nur auf ausdruecklichen Wunsch bearbeitet.
 
 ## CSS und Design-Tokens
 

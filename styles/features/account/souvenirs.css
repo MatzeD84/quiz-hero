@@ -6,6 +6,8 @@
 .souvenir__card { display: grid; grid-template-columns: 112px minmax(0,1fr); align-items: center; gap: var(--space-16); padding: var(--space-20); border: var(--border-subtle); border-radius: var(--radius-md); background: var(--color-surface); min-width: 0; }
 .souvenir__image { width: 112px; height: auto; aspect-ratio: 1; object-fit: contain; }
 .souvenir__card--progress { background: color-mix(in srgb, var(--color-border-strong) 8%, var(--color-surface)); }
+.souvenir__card--hero { background: var(--color-hero-surface); }
+.souvenir__card--hero .souvenir__eyebrow { color: var(--color-difficulty-hero); }
 .souvenir__card--progress .souvenir__image { filter: var(--filter-sepia); }
 .souvenir__body { display: grid; gap: var(--space-8); min-width: 0; }
 .souvenir__body p { margin: 0; }
@@ -14,6 +16,20 @@
 .souvenir__visit { justify-self: start; font-size: var(--text-12); color: var(--color-link); background: var(--color-surface-muted); border-radius: var(--radius-pill); padding: var(--space-4) var(--space-8); }
 .souvenir-admin { max-width: none; }
 .souvenir-admin__workspace { display: grid; gap: var(--space-24); }
+.avatar-reward-admin { display: grid; gap: var(--space-20); width: 100%; max-width: none; min-width: 0; box-sizing: border-box; }
+.avatar-reward-admin > h2,
+.avatar-reward-admin > p { margin: 0; }
+.avatar-reward-admin__editor:not([hidden]) { display: grid; gap: var(--space-16); border-top: var(--border-subtle); padding-top: var(--space-24); }
+.avatar-reward-admin__editor h3 { margin: 0; }
+.avatar-reward-admin__fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-16); }
+.avatar-reward-admin__fields label,
+.avatar-reward-admin form > label { display: grid; gap: var(--space-8); min-width: 0; }
+.avatar-reward-admin select,
+.avatar-reward-admin input { width: 100%; min-width: 0; box-sizing: border-box; }
+.avatar-reward-admin__preview { width: 112px; height: 112px; object-fit: contain; }
+.avatar-reward-admin__summary { padding: var(--space-16); border: var(--border-subtle); border-radius: var(--radius-md); background: var(--color-hero-surface); }
+.avatar-reward-admin__summary p { margin: var(--space-8) 0 0; }
+@media (max-width:600px) { .avatar-reward-admin__fields { grid-template-columns: minmax(0,1fr); } }
 .souvenir-admin__inventory, .souvenir-admin__editor { min-width: 0; }
 .souvenir-admin__editor[hidden] { display: none; }
 .souvenir-admin__editor { border-top: var(--border-subtle); padding-top: var(--space-24); }
@@ -39,6 +55,7 @@
 .souvenir-unlock__image { width: 72px; height: 72px; object-fit: contain; }
 .souvenir-unlock__body { display: grid; gap: var(--space-4); min-width: 0; }
 .souvenir-unlock__title { overflow-wrap: anywhere; }
+.souvenir-unlock__reason { margin: 0; font-size: var(--text-12); color: var(--color-text-muted); overflow-wrap: anywhere; }
 @media (max-width:900px) { .souvenir__grid { grid-template-columns: minmax(0,1fr); } }
 @media (max-width:900px) { .souvenir__card--token { grid-column: 1; } }
 @media (max-width:360px) { .souvenir__card { grid-template-columns: 80px minmax(0,1fr); padding: var(--space-12); } .souvenir__image { width: 80px; } }

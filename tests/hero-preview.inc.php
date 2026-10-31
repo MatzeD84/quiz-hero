@@ -1,0 +1,24 @@
+<?php
+$publicPreview=request('hero-preview&heroKey=hero');
+check($publicPreview['hero']['key']==='hero'&&$publicPreview['items']===[],'registration preview shows the hero without advertising unlearned abilities');
+check(count(array_filter($publicPreview['items'],static fn($a)=>$a['unlocked']||$a['current']!==0))===0,'public preview never exposes personal learning progress even with a session cookie');
+$personalPreview=request('account-hero-preview',['heroKey'=>'hero']);
+check(count(array_filter($personalPreview['items'],static fn($a)=>$a['unlocked']))===3,'personal preview includes newly learned abilities for the chosen hero');
+$otherPreview=request('account-hero-preview',['heroKey'=>$otherAbilityHero]);
+check($otherPreview['hero']['key']===$otherAbilityHero&&$otherPreview['items']===[],'previewing an untrained hero shows no locked abilities or borrowed unlocks');
+check($pdo->query('SELECT avatar_key FROM quiz_users WHERE id='.$abilityUser)->fetchColumn()==='hero','preview does not change the selected hero');
+$previewHero=request('admin-avatar-save',['label'=>'Preview learner '.$suffix,'image'=>'images/website/avatar/quizo.png','kind'=>'free','enabled'=>true])['key'];
+$previewDefinition=array_column(request('admin-abilities')['heroes'],null,'avatar_key')[$previewHero];
+request('admin-hero-abilities-save',['heroKey'=>$previewHero,'contentVersion'=>$previewDefinition['contentVersion'],'abilityIds'=>['heldenblick','scharfblick','gluecksanker']]);
+$pdo->prepare('INSERT INTO quiz_user_abilities(user_id,ability_id,hero_key) VALUES(?,?,?)')->execute([$abilityUser,'heldenblick',$previewHero]);
+$partialPreview=request('account-hero-preview',['heroKey'=>$previewHero]);
+check(array_column($partialPreview['items'],'id')===['heldenblick'],'personal preview shows only the learned subset of the assigned repertoire');
+request('account-hero-preview',['heroKey'=>'hero'],403,'',false);
+request('account-hero-preview',['heroKey'=>['hero']],422);
+request('hero-preview&heroKey=missing-preview-hero',null,404);
+request('hero-preview',['heroKey'=>'hero'],405);
+check(true,'preview enforces CSRF, valid hero keys and HTTP methods');
+$privateCookies=$cookies;$cookies=[];
+request('account-hero-preview',['heroKey'=>'hero'],401);
+$cookies=$privateCookies;
+check(true,'personal hero preview cannot be read without the account session');

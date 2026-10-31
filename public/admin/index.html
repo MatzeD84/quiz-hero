@@ -40,7 +40,7 @@
                 <button class="tab" type="button" data-admin-tab="import" aria-pressed="false">Import</button>
                 <button class="tab" type="button" data-admin-tab="feedback" aria-pressed="false">Feedback</button>
                 <button class="tab" type="button" data-admin-tab="users" aria-pressed="false">Spieler</button>
-                <button class="tab" type="button" data-admin-tab="souvenirs" aria-pressed="false">Souvenirs</button>
+                <button class="tab" type="button" data-admin-tab="souvenirs" aria-pressed="false">Belohnungen</button>
             </nav>
 
             <div id="js-admin-question-panel" class="admin-panel">
@@ -135,7 +135,7 @@
                             <input id="js-admin-tags" type="hidden">
                             <div class="tag-picker__field">
                                 <div class="tag-picker__chips"></div>
-                                <input id="js-admin-tag-entry" type="text" placeholder="Tag hinzufügen …" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="js-admin-tag-options" aria-describedby="js-admin-tag-hint">
+                                <input id="js-admin-tag-entry" data-save-ignore="true" type="text" placeholder="Tag hinzufügen …" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="js-admin-tag-options" aria-describedby="js-admin-tag-hint">
                             </div>
                             <div id="js-admin-tag-options" class="tag-picker__options" role="listbox" aria-label="Vorhandene Tags" hidden></div>
                             <p id="js-admin-tag-hint" class="admin-form__hint">Vorhandene Tags auswählen oder eigene mit Enter hinzufügen.</p>

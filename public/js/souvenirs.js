@@ -64,6 +64,20 @@ export function renderSouvenirCollection(root,data={}){
     const collection=data.souvenirs||{},selections=data.selections||[];
     const items=souvenirItems(collection);
     root.replaceChildren(renderSouvenirs(items,selections,{full:true}));
+    const heroes=data.avatarRewards||[];
+    if(heroes.length){
+        const section=el('section','souvenir');
+        section.append(el('h2','passport__heading','Deine freigeschalteten Helden'),el('p','passport__muted',`${heroes.length} ${heroes.length===1?'Held freigeschaltet':'Helden freigeschaltet'}`));
+        const grid=el('div','souvenir__grid');
+        for(const hero of heroes){
+            const card=el('article','souvenir__card souvenir__card--hero');
+            const image=artwork(hero,'souvenir__image');if(image)card.append(image);
+            const body=el('div','souvenir__body');body.append(el('p','souvenir__eyebrow','HELDENBELOHNUNG'),el('h3','passport__station-title',hero.title));
+            const select=el('a','passport__link','Profilbild auswählen');select.href='account.html#avatar';select.setAttribute('aria-label',`${hero.title} als Profilbild auswählen`);body.append(select);
+            card.append(body);grid.append(card);
+        }
+        section.append(grid);root.append(section);
+    }
 }
 
 export function renderSouvenirUnlock(card,awards=[],avatarRewards=[]){
@@ -79,6 +93,7 @@ export function renderSouvenirUnlock(card,awards=[],avatarRewards=[]){
         const img=artwork(item,'souvenir-unlock__image');if(img)row.append(img);
         const body=el('div','souvenir-unlock__body');
         body.append(el('span','souvenir__eyebrow',item.avatarKey?'NEUES PROFILBILD FREIGESCHALTET':item.rule==='first_visit'?'REISESTEMPEL':'ENTDECKER-SOUVENIR'),el('strong','souvenir-unlock__title',item.title));
+        if(item.avatarKey&&item.reason)body.append(el('p','souvenir-unlock__reason',item.reason));
         if(item.avatarKey){const select=el('a','passport__link','Profilbild auswählen');select.href='account.html#avatar';body.append(select);}
         row.append(body);list.append(row);
     }

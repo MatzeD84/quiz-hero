@@ -1,0 +1,21 @@
+.viewport-status {
+    position: fixed;
+    inset-inline-start: var(--space-16);
+    bottom: var(--space-16);
+    z-index: var(--z-sticky-status);
+    max-width: calc(100% - var(--space-32));
+    display: grid;
+    gap: var(--space-8);
+    pointer-events: none;
+}
+.save-notice {
+    padding: var(--space-8) var(--space-12);
+    border: var(--border-width-thin) var(--border-style) var(--color-success);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-success);
+    box-shadow: var(--shadow-card);
+    font-size: var(--text-14);
+    overflow-wrap: anywhere;
+}
+.viewport-status > .admin-media-loading { position: static; max-width: none; }

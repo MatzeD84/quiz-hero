@@ -81,8 +81,9 @@ function start_round(): void
     $lock=db()->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
     require_account();
     $stmt->execute([$roundId, $user['id'], $category ?: null, $tag ?: null, $categoryTitle, $tagTitle, json_encode($questions, JSON_THROW_ON_ERROR), (int) $practice, $worldId ?: null, $worldTitle]);
+    $abilities=freeze_round_abilities(db(),(int)$user['id'],$roundId,normalize_avatar_key(require_account()['avatar_key']),$available,$practice,$questions);
     db()->commit();
-    json_response(['ok' => true, 'roundId' => $roundId, 'questions' => $questions, 'isPractice' => $practice]);
+    json_response(['ok' => true, 'roundId' => $roundId, 'questions' => $questions, 'isPractice' => $practice, 'abilities'=>$abilities]);
 }
 
 /** Recompute points from the frozen round; retries cannot create duplicate results. */
@@ -106,6 +107,8 @@ function save_result(): void
     $round = $stmt->fetch();
     if (!$round) { $pdo->rollBack(); json_response(['ok' => false, 'error' => 'Quizrunde nicht gefunden.'], 404); }
     $questions = json_decode($round['questions_json'], true, 512, JSON_THROW_ON_ERROR);
+    $abilityData=round_ability_data($pdo,$id);$abilityActions=$abilityData['actions']??[];
+    if(!ability_submission_valid($abilityActions,$answers))json_response(['ok'=>false,'error'=>'Antworten stimmen nicht mit den Fähigkeitseinsätzen überein.'],422);
     $score = $maxScore = $solved = 0;
     $questionResults = [];
     $valid = count($answers) === count($questions);
@@ -113,6 +116,8 @@ function save_result(): void
         $attempts = $answers[$i]['selectedAnswers'] ?? null;
         if (($answers[$i]['questionId'] ?? null) !== $question['id'] || !is_array($attempts) || !array_is_list($attempts) || count($attempts) > 2 || count(array_unique($attempts, SORT_REGULAR)) !== count($attempts)) { $valid = false; break; }
         $points = ['easy' => 2, 'medium' => 3, 'hero' => 5][$question['difficulty']] ?? 2;
+        $effects=array_column(array_column(array_values(array_filter($abilityActions,static fn($a)=>$a['position']===$i)),'ability'),'effect');
+        if(in_array('focus',$effects,true))$points=min($points,2);
         $maxScore += $points;
         $earned = 0;
         $outcome = count($attempts) === 0 ? 'skipped' : 'incorrect';
@@ -120,13 +125,15 @@ function save_result(): void
             if (!is_int($answer) || $answer < 0 || $answer >= count($question['answers'])) { $valid = false; break; }
             if ($answer === $question['correct']) {
                 if ($attempt !== count($attempts) - 1) $valid = false;
-                $earned = $attempt === 0 ? $points : 1;
+                $shield=(bool)array_filter($abilityActions,static fn($a)=>$a['position']===$i&&$a['ability']['effect']==='shield');
+                $earned = $attempt === 0 ? $points : ($shield?2:1);
                 $score += $earned;
                 $outcome = $attempt === 0 ? 'first_try' : 'second_try';
                 $solved++;
                 break;
             }
         }
+        if($outcome==='incorrect'&&count($attempts)===2&&in_array('lucky',$effects,true)){$earned=1;$score++;}
         // Empty answers represent an image that failed to load; they award zero points.
         if (count($attempts) === 1 && $attempts[0] !== $question['correct']) $valid = false;
         $version = question_result_version($question);
@@ -137,7 +144,7 @@ function save_result(): void
     if ($round['completed_at'] !== null) {
         $pdo->rollBack();
         if (!hash_equals($round['submission_hash'], $hash)) json_response(['ok' => false, 'error' => 'Diese Runde wurde bereits abgeschlossen.'], 409);
-        json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => (int) $round['result_id'], 'souvenirs'=>souvenir_awards($pdo,(int)$user['id'],(int)$round['result_id']), 'avatarRewards'=>avatar_rewards($pdo,(int)$user['id'],(int)$round['result_id'])]);
+        json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => (int) $round['result_id'], 'souvenirs'=>souvenir_awards($pdo,(int)$user['id'],(int)$round['result_id']), 'avatarRewards'=>avatar_rewards($pdo,(int)$user['id'],(int)$round['result_id']), 'abilityAwards'=>ability_awards($pdo,(int)$user['id'],(int)$round['result_id'])]);
     }
     if (strtotime($round['created_at']) < time() - 86400) { $pdo->rollBack(); json_response(['ok' => false, 'error' => 'Diese Runde ist abgelaufen.'], 410); }
     $stmt = $pdo->prepare('INSERT INTO quiz_results(user_id,category_id,tag_id,category_title,tag_title,score,max_score,solved,total_questions,is_practice,world_id,world_title) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
@@ -147,12 +154,14 @@ function save_result(): void
     foreach ($questionResults as $i => $questionResult) {
         $versionId = store_question_version($pdo, $questions[$i]);
         $detail->execute([$resultId, $user['id'], ...$questionResult, $versionId, $questions[$i]['categoryId']??$round['category_id']]);
+        foreach($abilityActions as $action)if($action['position']===$i){$pdo->prepare('UPDATE quiz_question_results SET assisted_ability=? WHERE result_id=? AND question_id=?')->execute([$action['ability']['id'],$resultId,$questions[$i]['id']]);break;}
     }
+    $abilityAwards=$abilityData?award_abilities($pdo,(int)$user['id'],$abilityData['snapshot']['heroKey'],$resultId,count(array_filter($questionResults,static fn($q)=>$q[5]!=='skipped')),$abilityData):[];
     $pdo->prepare('UPDATE quiz_rounds SET submission_hash=?,result_id=?,completed_at=NOW() WHERE id=?')->execute([$hash, $resultId, $id]);
     award_souvenirs($pdo,(int)$user['id'],$resultId);
     award_avatar_rewards($pdo,(int)$user['id'],$resultId);
     $souvenirs=souvenir_awards($pdo,(int)$user['id'],$resultId);
     $rewards=avatar_rewards($pdo,(int)$user['id'],$resultId);
     $pdo->commit();
-    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => $resultId, 'souvenirs'=>$souvenirs, 'avatarRewards'=>$rewards]);
+    json_response(['ok' => true, 'apiVersion' => QUIZ_HERO_API_VERSION, 'resultId' => $resultId, 'souvenirs'=>$souvenirs, 'avatarRewards'=>$rewards, 'abilityAwards'=>$abilityAwards]);
 }

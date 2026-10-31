@@ -1,4 +1,4 @@
-import { openDialog, closeDialog } from '../dialog.js?v=dev';
+import { openDialog, closeDialog, completeDialogSave } from '../dialog.js?v=dev';
 
 export function createMediaReplacement({ validateFile, replaceImage }) {
     const dialog = document.createElement('dialog');
@@ -66,7 +66,7 @@ export function createMediaReplacement({ validateFile, replaceImage }) {
         status.textContent = 'Bild wird ausgetauscht …';
         try {
             await replaceImage(item, file);
-            closeDialog(dialog);
+            completeDialogSave(dialog,'Bild gespeichert.');
         } catch (error) { status.textContent = error.message || 'Austausch fehlgeschlagen. Bitte erneut versuchen.'; }
         finally {
             busy = false;

@@ -32,8 +32,13 @@ function admin_avatar_save(): void
     $kind=$data['kind']??(!empty($row['unlock_rule'])?'reward':'free');
     $rule=$kind==='reward'?($data['rewardRule']??($row['unlock_rule']??'manual')):null;
     $enabled=$data['enabled']??(bool)($row['enabled']??true);
-    if(!in_array($kind,['free','reward'],true)||!is_bool($enabled)||($kind==='reward'&&!in_array($rule,['manual','hero_first_try'],true)))json_response(['ok'=>false,'error'=>'Art, Aktivierung und Freischaltung prüfen.'],422);
+    if(!in_array($kind,['free','reward'],true)||!is_bool($enabled)||($kind==='reward'&&!in_array($rule,['manual','hero_first_try','configured'],true)))json_response(['ok'=>false,'error'=>'Art, Aktivierung und Freischaltung prüfen.'],422);
     if($key==='hero'&&(!$enabled||$kind!=='free'))json_response(['ok'=>false,'error'=>'Der Standardheld muss aktiv und frei verfügbar bleiben.'],422);
+    // Combined hero editor: validate and write assignments in the same transaction.
+    if(array_key_exists('abilityIds',$data)) {
+        if(!$row)json_response(['ok'=>false,'error'=>'Bitte zuerst einen Helden anlegen.'],422);
+        save_hero_ability_assignment($pdo,$key,$data['abilityIds'],['contentVersion'=>$data['assignmentVersion']??'']);
+    }
     $reset=0;
     if($row){
         $pdo->prepare('UPDATE quiz_avatars SET label=?,image_url=?,unlock_rule=?,enabled=?,revision=revision+1 WHERE avatar_key=?')->execute([$label,$path,$rule,(int)$enabled,$key]);

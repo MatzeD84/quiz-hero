@@ -293,6 +293,7 @@ function account_delete(): void
     revoke_user_sessions((int) $user['id']);
     $pdo->prepare('DELETE FROM quiz_user_souvenirs WHERE user_id=?')->execute([(int)$user['id']]);
     $pdo->prepare('DELETE FROM quiz_user_avatar_unlocks WHERE user_id=?')->execute([(int)$user['id']]);
+    foreach(['quiz_user_abilities','quiz_ability_equipment','quiz_hero_round_history'] as $table)$pdo->prepare("DELETE FROM {$table} WHERE user_id=?")->execute([(int)$user['id']]);
     $pdo->prepare('DELETE FROM quiz_question_results WHERE user_id = ?')->execute([(int) $user['id']]);
     $pdo->prepare('DELETE FROM quiz_rounds WHERE user_id = ?')->execute([(int) $user['id']]);
     $stmt = $pdo->prepare('UPDATE quiz_results SET user_id = NULL WHERE user_id = :id');

@@ -425,3 +425,142 @@ WHERE qw.world_id='italien' AND q.category_id IN ('rom','neapel','florenz','amal
 AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='021_category_worlds.sql');
 
 INSERT IGNORE INTO schema_migrations(version) VALUES ('021_category_worlds.sql');
+
+
+-- Hero abilities: migration 022
+CREATE TABLE IF NOT EXISTS quiz_abilities (
+ id VARCHAR(80) PRIMARY KEY,
+ title VARCHAR(120) NOT NULL,
+ description VARCHAR(500) NOT NULL,
+ effect VARCHAR(40) NOT NULL,
+ scope VARCHAR(20) NOT NULL DEFAULT 'hero',
+ rounds_required INT UNSIGNED NOT NULL DEFAULT 3,
+ enabled TINYINT(1) NOT NULL DEFAULT 1,
+ revision INT UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS quiz_hero_abilities (
+ avatar_key VARCHAR(80) NOT NULL,
+ ability_id VARCHAR(80) NOT NULL,
+ is_basic TINYINT(1) NOT NULL DEFAULT 0,
+ PRIMARY KEY(avatar_key,ability_id),
+ FOREIGN KEY(avatar_key) REFERENCES quiz_avatars(avatar_key) ON DELETE CASCADE,
+ FOREIGN KEY(ability_id) REFERENCES quiz_abilities(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS quiz_user_abilities (
+ user_id INT UNSIGNED NOT NULL,
+ ability_id VARCHAR(80) NOT NULL,
+ hero_key VARCHAR(80) NOT NULL DEFAULT '',
+ source_result_id BIGINT UNSIGNED NULL,
+ awarded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY(user_id,ability_id,hero_key),
+ FOREIGN KEY(user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+ FOREIGN KEY(ability_id) REFERENCES quiz_abilities(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS quiz_ability_equipment (
+ user_id INT UNSIGNED NOT NULL,
+ hero_key VARCHAR(80) NOT NULL,
+ ability_id VARCHAR(80) NULL,
+ PRIMARY KEY(user_id,hero_key),
+ FOREIGN KEY(user_id) REFERENCES quiz_users(id) ON DELETE CASCADE,
+ FOREIGN KEY(ability_id) REFERENCES quiz_abilities(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS quiz_round_abilities (
+ round_id CHAR(64) CHARACTER SET ascii COLLATE ascii_bin PRIMARY KEY,
+ snapshot_json JSON NOT NULL,
+ action_json JSON NULL,
+ FOREIGN KEY(round_id) REFERENCES quiz_rounds(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS quiz_hero_round_history (
+ result_id BIGINT UNSIGNED PRIMARY KEY,
+ user_id INT UNSIGNED NOT NULL,
+ hero_key VARCHAR(80) NOT NULL,
+ answered_count INT UNSIGNED NOT NULL,
+ ability_json JSON NULL,
+ action_json JSON NULL,
+ INDEX idx_hero_history(user_id,hero_key),
+ FOREIGN KEY(result_id) REFERENCES quiz_results(id) ON DELETE CASCADE,
+ FOREIGN KEY(user_id) REFERENCES quiz_users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_question_results ADD COLUMN assisted_ability VARCHAR(80) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_question_results' AND COLUMN_NAME='assisted_ability');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+INSERT IGNORE INTO quiz_abilities(id,title,description,effect) VALUES
+ ('heldenblick','Heldenblick','Nach dem ersten Fehlversuch eine weitere falsche Antwort ausblenden.','eliminate'),
+ ('schutzschild','Schutzschild','Nach dem ersten Fehlversuch ausrüsten: Bei richtiger zweiter Antwort gibt es zwei statt eines Punktes.','shield'),
+ ('neues-abenteuer','Neues Abenteuer','Eine unbeantwortete Frage durch eine andere derselben Kategorie ersetzen, bevorzugt mit gleicher Schwierigkeit.','swap');
+INSERT IGNORE INTO quiz_hero_abilities(avatar_key,ability_id,is_basic)
+SELECT avatar_key,CASE MOD(sort_order,3) WHEN 0 THEN 'heldenblick' WHEN 1 THEN 'schutzschild' ELSE 'neues-abenteuer' END,1
+FROM quiz_avatars WHERE deleted_at IS NULL
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='022_hero_abilities.sql');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('022_hero_abilities.sql');
+
+-- Ability usage simplification: migration 023
+-- Only replace the obsolete shipped wording, never an administrator's custom text.
+UPDATE quiz_abilities
+SET description='Nach dem ersten Fehlversuch einsetzen: Bei richtiger zweiter Antwort gibt es zwei statt eines Punktes.',
+    revision=revision+1
+WHERE id='schutzschild'
+AND description='Nach dem ersten Fehlversuch ausrüsten: Bei richtiger zweiter Antwort gibt es zwei statt eines Punktes.';
+-- Equipment and basic-role legacy fields remain unused, preserving old local snapshots.
+-- Existing assignments, thresholds, entitlements and round history are unchanged.
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('023_ability_usage.sql');
+
+-- Ability artwork: migration 024
+SET @sql = (SELECT IF(COUNT(*) = 0, 'ALTER TABLE quiz_abilities ADD COLUMN image_url VARCHAR(500) NULL', 'SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_abilities' AND COLUMN_NAME='image_url');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+-- One-time defaults; preserve administrator choices, including later deliberate removal.
+UPDATE quiz_abilities SET image_url=CONCAT('images/abilities/',id,'-v1.png'),revision=revision+1
+WHERE id IN ('heldenblick','schutzschild','neues-abenteuer') AND (image_url IS NULL OR image_url='')
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='024_ability_images.sql');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('024_ability_images.sql');
+
+-- Configurable avatar rewards: migration 025
+CREATE TABLE IF NOT EXISTS quiz_avatar_reward_rules (
+    avatar_key VARCHAR(80) PRIMARY KEY,
+    target INT UNSIGNED NOT NULL DEFAULT 1,
+    difficulty ENUM('all','easy','medium','hero') NOT NULL DEFAULT 'hero',
+    attempts ENUM('first','any') NOT NULL DEFAULT 'first',
+    without_help TINYINT(1) NOT NULL DEFAULT 1,
+    category_id VARCHAR(120) NULL,
+    period ENUM('total','round') NOT NULL DEFAULT 'total',
+    state ENUM('draft','active','archived') NOT NULL DEFAULT 'draft',
+    revision INT UNSIGNED NOT NULL DEFAULT 1,
+    CONSTRAINT fk_avatar_reward_rule_avatar FOREIGN KEY (avatar_key) REFERENCES quiz_avatars(avatar_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET @sql = (SELECT IF(COUNT(*)=0,'ALTER TABLE quiz_user_avatar_unlocks ADD COLUMN rule_snapshot JSON NULL','SELECT 1') FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='quiz_user_avatar_unlocks' AND COLUMN_NAME='rule_snapshot');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Existing Astra keeps the legacy marker and all existing entitlements.
+-- Editing in the builder explicitly switches the avatar to the configured rule.
+INSERT IGNORE INTO quiz_avatar_reward_rules(avatar_key,target,difficulty,attempts,without_help,period,state)
+SELECT avatar_key,1,'hero','first',1,'total','active' FROM quiz_avatars WHERE avatar_key='astra' AND unlock_rule='hero_first_try' AND deleted_at IS NULL
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='025_avatar_reward_rules.sql');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('025_avatar_reward_rules.sql');
+
+-- Migration 026: additional implemented abilities
+INSERT IGNORE INTO quiz_abilities (id,title,description,effect,scope,rounds_required,enabled) VALUES
+('scharfblick','Scharfblick','Vor der ersten Antwort zwei falsche Möglichkeiten ausblenden. Für diese Frage sind danach höchstens zwei Punkte möglich.','focus','hero',3,1),
+('gluecksanker','Glücksanker','Nach dem ersten Fehlversuch einsetzen: Ist auch die zweite Antwort falsch, erhältst du einen Trostpunkt. Die Frage bleibt falsch.','lucky','hero',3,1);
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('026_focus_and_lucky_abilities.sql');
+
+-- Migration 027: focus and lucky motifs
+-- Initial motifs only; preserve later edits and intentionally removed images.
+UPDATE quiz_abilities SET image_url='images/abilities/scharfblick-v1.png',revision=revision+1
+WHERE id='scharfblick' AND image_url IS NULL AND revision=1
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='027_focus_lucky_images.sql');
+UPDATE quiz_abilities SET image_url='images/abilities/gluecksanker-v1.png',revision=revision+1
+WHERE id='gluecksanker' AND image_url IS NULL AND revision=1
+AND NOT EXISTS (SELECT 1 FROM schema_migrations WHERE version='027_focus_lucky_images.sql');
+
+INSERT IGNORE INTO schema_migrations(version) VALUES ('027_focus_lucky_images.sql');
