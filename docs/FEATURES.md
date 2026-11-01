@@ -16,6 +16,8 @@ Stand: 31.10.2026. Der hier beschriebene Funktionsumfang ist veröffentlicht. Di
 
 Die E-Mail-Bestätigung und Anmeldung sind getrennt: Ein Bestätigungslink allein gewährt keinen Kontozugriff. Ablauf: [Anmeldung und Sicherheit](ACCOUNT-SICHERHEIT.md).
 
+Textpflege vom 01.11.2026 (lokal, noch nicht veröffentlicht): Heldenbelohnungen heißen im Quizabschluss „Neuer Held freigeschaltet“. Die Aktion im Ergebnis und in der Sammlung lautet einheitlich „Held auswählen“.
+
 ## Vorgemerkt, noch nicht umgesetzt
 
 - Weitere Fähigkeiten und Lernbedingungen: siehe [Fähigkeitsideen](Heldenfähigkeit.md).

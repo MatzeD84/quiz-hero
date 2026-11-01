@@ -73,7 +73,7 @@ export function renderSouvenirCollection(root,data={}){
             const card=el('article','souvenir__card souvenir__card--hero');
             const image=artwork(hero,'souvenir__image');if(image)card.append(image);
             const body=el('div','souvenir__body');body.append(el('p','souvenir__eyebrow','HELDENBELOHNUNG'),el('h3','passport__station-title',hero.title));
-            const select=el('a','passport__link','Profilbild auswählen');select.href='account.html#avatar';select.setAttribute('aria-label',`${hero.title} als Profilbild auswählen`);body.append(select);
+            const select=el('a','passport__link','Held auswählen');select.href='account.html#avatar';select.setAttribute('aria-label',`${hero.title} als Held auswählen`);body.append(select);
             card.append(body);grid.append(card);
         }
         section.append(grid);root.append(section);
@@ -92,9 +92,9 @@ export function renderSouvenirUnlock(card,awards=[],avatarRewards=[]){
         const row=el('li','souvenir-unlock__item');
         const img=artwork(item,'souvenir-unlock__image');if(img)row.append(img);
         const body=el('div','souvenir-unlock__body');
-        body.append(el('span','souvenir__eyebrow',item.avatarKey?'NEUES PROFILBILD FREIGESCHALTET':item.rule==='first_visit'?'REISESTEMPEL':'ENTDECKER-SOUVENIR'),el('strong','souvenir-unlock__title',item.title));
+        body.append(el('span','souvenir__eyebrow',item.avatarKey?'NEUER HELD FREIGESCHALTET':item.rule==='first_visit'?'REISESTEMPEL':'ENTDECKER-SOUVENIR'),el('strong','souvenir-unlock__title',item.title));
         if(item.avatarKey&&item.reason)body.append(el('p','souvenir-unlock__reason',item.reason));
-        if(item.avatarKey){const select=el('a','passport__link','Profilbild auswählen');select.href='account.html#avatar';body.append(select);}
+        if(item.avatarKey){const select=el('a','passport__link','Held auswählen');select.href='account.html#avatar';body.append(select);}
         row.append(body);list.append(row);
     }
     const link=el('a','passport__link','Souvenirs ansehen');link.href='souvenirs.html';

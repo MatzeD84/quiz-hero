@@ -30,7 +30,7 @@ Die separate Seite **Souvenirs** ist über das Menü für angemeldete Spieler er
 
 Je Kategorie steht der Reisestempel links und die Reisemarke daneben. Noch nicht abgeschlossene Reisemarken haben den gemeinsamen Sepia-Filter und einen leicht grauen Kartenhintergrund. Nach Abschluss erscheinen sie farbig. Die Detailansicht erklärt Motiv, Bedingung und Vergabe.
 
-Zusätzlich werden **freigeschaltete Belohnungshelden** mit Bild und Namen gezeigt. „Profilbild auswählen“ führt direkt zum geöffneten Auswahlbereich im Konto. Freie und noch gesperrte Helden gehören nicht in diese Übersicht.
+Zusätzlich werden **freigeschaltete Belohnungshelden** mit Bild und Namen gezeigt. „Held auswählen“ führt direkt zum geöffneten Auswahlbereich im Konto. Freie und noch gesperrte Helden gehören nicht in diese Übersicht.
 
 Der Quizabschluss zeigt neue Erinnerungsstücke und Heldenbelohnungen nach erfolgreichem Speichern. Im **Reisepass** gibt es keine eigene Souvenirsektion mehr.
 

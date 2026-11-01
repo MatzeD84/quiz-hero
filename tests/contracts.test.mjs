@@ -48,7 +48,7 @@ test('souvenir collection links awarded heroes to the account hero picker and om
         assert.equal(root.children.length,2);
         const section=root.children[1];assert.equal(section.children[0].textContent,'Deine freigeschalteten Helden');assert.equal(section.children[1].textContent,'2 Helden freigeschaltet');
         const cards=section.children[2].children;assert.equal(cards.length,2);assert.equal(cards[0].children[1].children[1].textContent,'Astra');assert.equal(cards[0].children[0].src,'https://example.test/images/website/avatar/astra.png');
-        for(const card of cards){const link=card.children[1].children[2];assert.equal(link.textContent,'Profilbild auswählen');assert.equal(link.href,'account.html#avatar');}
+        for(const card of cards){const link=card.children[1].children[2];assert.equal(link.textContent,'Held auswählen');assert.equal(link.href,'account.html#avatar');}
         renderSouvenirCollection(root,{avatarRewards:[{title:'Astra',image:'images/website/avatar/astra.png'}]});assert.equal(root.children[1].children[1].textContent,'1 Held freigeschaltet');
     } finally {globalThis.document=previousDocument;globalThis.location=previousLocation;}
 });
