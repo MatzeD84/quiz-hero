@@ -138,7 +138,7 @@ const openAvatarPicker = () => {
 
         card.append(image,name);
         if(avatar.unlockRule){
-            const tag=document.createElement('span');tag.className='profile-avatar__reward-tag';tag.textContent='Belohnung';card.append(tag);
+            const tag=document.createElement('span');tag.className='profile-avatar__reward-tag';tag.textContent=avatar.unlockRule==='random_drop'?'Zufallsfund':'Belohnung';card.append(tag);
         }
         card.addEventListener('click',()=>{if(!updating)heroPreview.open(avatar);});grid.append(card);
     }

@@ -29,10 +29,16 @@ function admin_avatar_save(): void
         $key=$row['avatar_key'];
         assert_content_version($row,$data);
     }
-    $kind=$data['kind']??(!empty($row['unlock_rule'])?'reward':'free');
-    $rule=$kind==='reward'?($data['rewardRule']??($row['unlock_rule']??'manual')):null;
+    $kind=$data['kind']??(($row['unlock_rule']??null)==='random_drop'?'drop':(!empty($row['unlock_rule'])?'reward':'free'));
+    $previousRule=($row['unlock_rule']??null)==='random_drop'?'configured':($row['unlock_rule']??'manual');
+    $rule=$kind==='drop'?'random_drop':($kind==='reward'?($data['rewardRule']??$previousRule):null);
+    $chance=$row['drop_chance_bp']??0;
+    if($kind==='drop'){
+        $chance=array_key_exists('dropChance',$data)?avatar_drop_chance_bp($data['dropChance']):(int)$chance;
+        if($chance===null||$chance<1||$chance>10000)json_response(['ok'=>false,'error'=>'Bitte eine Fundchance von 0,01 bis 100 % mit höchstens zwei Nachkommastellen eingeben.'],422);
+    }
     $enabled=$data['enabled']??(bool)($row['enabled']??true);
-    if(!in_array($kind,['free','reward'],true)||!is_bool($enabled)||($kind==='reward'&&!in_array($rule,['manual','hero_first_try','configured'],true)))json_response(['ok'=>false,'error'=>'Art, Aktivierung und Freischaltung prüfen.'],422);
+    if(!in_array($kind,['free','reward','drop'],true)||!is_bool($enabled)||($kind==='reward'&&!in_array($rule,['manual','hero_first_try','configured'],true)))json_response(['ok'=>false,'error'=>'Art, Aktivierung und Freischaltung prüfen.'],422);
     if($key==='hero'&&(!$enabled||$kind!=='free'))json_response(['ok'=>false,'error'=>'Der Standardheld muss aktiv und frei verfügbar bleiben.'],422);
     // Combined hero editor: validate and write assignments in the same transaction.
     if(array_key_exists('abilityIds',$data)) {
@@ -41,12 +47,12 @@ function admin_avatar_save(): void
     }
     $reset=0;
     if($row){
-        $pdo->prepare('UPDATE quiz_avatars SET label=?,image_url=?,unlock_rule=?,enabled=?,revision=revision+1 WHERE avatar_key=?')->execute([$label,$path,$rule,(int)$enabled,$key]);
+        $pdo->prepare('UPDATE quiz_avatars SET label=?,image_url=?,unlock_rule=?,enabled=?,drop_chance_bp=?,revision=revision+1 WHERE avatar_key=?')->execute([$label,$path,$rule,(int)$enabled,$chance,$key]);
         if(!$enabled||$rule!==null)$reset=reset_avatar_users($pdo,$key,!$enabled);
         $pdo->prepare('UPDATE quiz_users SET profile_image_url=? WHERE avatar_key=? AND deleted_at IS NULL')->execute([$path,$key]);
     }else{
         $key=mb_substr(slugify($label),0,60).'-'.bin2hex(random_bytes(4));
-        $pdo->prepare('INSERT INTO quiz_avatars(avatar_key,label,image_url,unlock_rule,enabled) VALUES(?,?,?,?,?)')->execute([$key,$label,$path,$rule,(int)$enabled]);
+        $pdo->prepare('INSERT INTO quiz_avatars(avatar_key,label,image_url,unlock_rule,enabled,drop_chance_bp) VALUES(?,?,?,?,?,?)')->execute([$key,$label,$path,$rule,(int)$enabled,$chance]);
     }
     $pdo->commit();json_response(['ok'=>true,'key'=>$key,'resetUsers'=>$reset]);
 }

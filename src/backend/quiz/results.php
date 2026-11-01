@@ -81,6 +81,7 @@ function start_round(): void
     $lock=db()->prepare('SELECT id FROM quiz_users WHERE id=? FOR UPDATE');$lock->execute([$user['id']]);
     require_account();
     $stmt->execute([$roundId, $user['id'], $category ?: null, $tag ?: null, $categoryTitle, $tagTitle, json_encode($questions, JSON_THROW_ON_ERROR), (int) $practice, $worldId ?: null, $worldTitle]);
+    freeze_avatar_drops(db(), $roundId);
     $abilities=freeze_round_abilities(db(),(int)$user['id'],$roundId,normalize_avatar_key(require_account()['avatar_key']),$available,$practice,$questions);
     db()->commit();
     json_response(['ok' => true, 'roundId' => $roundId, 'questions' => $questions, 'isPractice' => $practice, 'abilities'=>$abilities]);
@@ -160,6 +161,7 @@ function save_result(): void
     $pdo->prepare('UPDATE quiz_rounds SET submission_hash=?,result_id=?,completed_at=NOW() WHERE id=?')->execute([$hash, $resultId, $id]);
     award_souvenirs($pdo,(int)$user['id'],$resultId);
     award_avatar_rewards($pdo,(int)$user['id'],$resultId);
+    award_avatar_drops($pdo,(int)$user['id'],$resultId,$round);
     $souvenirs=souvenir_awards($pdo,(int)$user['id'],$resultId);
     $rewards=avatar_rewards($pdo,(int)$user['id'],$resultId);
     $pdo->commit();

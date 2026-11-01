@@ -23,14 +23,14 @@ export function createAvatarRewardAdmin({ api, getCategories }) {
     }
     form.addEventListener('input',preview);form.addEventListener('change',preview);
     function fill(rule=null){
-        current=rule;form.reset();
-        field('avatarKey').replaceChildren(option('','Belohnungsheld auswählen'),...avatars.filter(a=>a.avatar_key===rule?.avatar_key||!rules.some(r=>r.avatar_key===a.avatar_key)).map(a=>option(a.avatar_key,a.label+(Number(a.enabled)?'':' (inaktiv)'))));
+        current=rule;form.reset();form.inert=rule?.unlock_rule==='random_drop';
+        field('avatarKey').replaceChildren(option('','Belohnungsheld auswählen'),...avatars.filter(a=>a.avatar_key===rule?.avatar_key||(a.unlock_rule!=='random_drop'&&!rules.some(r=>r.avatar_key===a.avatar_key))).map(a=>option(a.avatar_key,a.label+(Number(a.enabled)?'':' (inaktiv)'))));
         field('avatarKey').value=rule?.avatar_key||'';field('avatarKey').disabled=Boolean(rule);
         field('categoryId').replaceChildren(option('','Alle Kategorien'),...getCategories().map(c=>option(c.id,c.title)));
         if(rule?.category_id&&!getCategories().some(c=>c.id===rule.category_id))field('categoryId').append(option(rule.category_id,`Nicht mehr vorhandene Kategorie: ${rule.category_id}`));
         if(rule){for(const name of ['target','difficulty','attempts','period','state'])field(name).value=rule[name];field('help').value=Number(rule.without_help)?'without':'allowed';field('categoryId').value=rule.category_id||'';}
         const source=panel.querySelector('[data-source]');
-        source.textContent=rule&&rule.unlock_rule!=='configured'?'Momentan gilt die Freischaltung aus der Heldenverwaltung. Speichern übernimmt stattdessen die hier gezeigte Baukasten-Regel.':'';source.hidden=!source.textContent;
+        source.textContent=rule?.unlock_rule==='random_drop'?'Dieser Held ist ein Zufallsfund. Die Fundchance wird unter Helden gepflegt. Für eine Leistungsregel dort zuerst auf Belohnung umstellen.':rule&&rule.unlock_rule!=='configured'?'Momentan gilt die Freischaltung aus der Heldenverwaltung. Speichern übernimmt stattdessen die hier gezeigte Baukasten-Regel.':'';source.hidden=!source.textContent;
         preview();guard.clean(form);
     }
     function render(){
@@ -40,7 +40,7 @@ export function createAvatarRewardAdmin({ api, getCategories }) {
             const image=document.createElement('img');image.src='../'+rule.image_url;image.alt='';image.className='souvenir-admin__image';image.loading='lazy';
             const title=document.createElement('strong');title.textContent=rule.label;
             const summary=document.createElement('span');summary.className='souvenir-admin__meta';summary.textContent=avatarRewardSummary({target:rule.target,difficulty:rule.difficulty,attempts:rule.attempts,withoutHelp:Boolean(Number(rule.without_help)),period:rule.period},getCategories().find(c=>c.id===rule.category_id)?.title||rule.category_id);
-            const state=document.createElement('span');state.className='souvenir-admin__state';state.textContent={draft:'Entwurf',active:'Aktiv',archived:'Archiviert'}[rule.state]+(!Number(rule.enabled)?' · Held inaktiv':rule.unlock_rule==='manual'?' · In Heldenverwaltung pausiert':rule.unlock_rule==='hero_first_try'?' · Feste Helden-Regel':!rule.unlock_rule?' · Profil frei verfügbar':'');
+            const state=document.createElement('span');state.className='souvenir-admin__state';state.textContent={draft:'Entwurf',active:'Aktiv',archived:'Archiviert'}[rule.state]+(!Number(rule.enabled)?' · Held inaktiv':rule.unlock_rule==='random_drop'?' · Pausiert: Held ist Zufallsfund':rule.unlock_rule==='manual'?' · In Heldenverwaltung pausiert':rule.unlock_rule==='hero_first_try'?' · Feste Helden-Regel':!rule.unlock_rule?' · Profil frei verfügbar':'');
             button.append(image,title,summary,state);button.addEventListener('click',()=>{if(busy||loading||!guard.confirm())return;fill(rule);editor.hidden=false;editor.scrollIntoView({block:'start'});});inventory.append(button);
         }
         if(!rules.length)inventory.textContent='Noch keine Heldenbelohnungen angelegt.';

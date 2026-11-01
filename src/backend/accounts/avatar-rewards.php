@@ -54,6 +54,12 @@ function award_avatar_rewards(PDO $pdo,int $userId,?int $resultId): void
 function avatar_reward_reason(array $row,array $categoryTitles=[]): string
 {
     $rule=json_decode($row['rule_snapshot']??'null',true);
+    if (($row['rule_key']??'')==='random_drop') {
+        $chance=$rule['chanceBp']??null;
+        if (!is_int($chance)||$chance<1||$chance>10000) return '';
+        $percent=rtrim(rtrim(number_format($chance/100,2,',',''),'0'),',');
+        return 'Zufallsfund · '.$percent.' % Chance je richtiger Antwort.';
+    }
     // Older fixed-rule awards are known; never infer old builder criteria from today's rule.
     if(!is_array($rule))return ($row['rule_key']??'')==='hero_first_try'?'Eine Hero-Frage im ersten Versuch ohne Hilfe richtig beantwortet.':'';
     $target=(int)($rule['target']??0);

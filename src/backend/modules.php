@@ -4,6 +4,7 @@ require_once __DIR__ . '/content/catalog.php';
 require_once __DIR__ . '/content/worlds.php';
 require_once __DIR__ . '/accounts/model.php';
 require_once __DIR__ . '/accounts/avatar-rewards.php';
+require_once __DIR__ . '/accounts/avatar-drops.php';
 require_once __DIR__ . '/accounts/abilities.php';
 require_once __DIR__ . '/admin/abilities.php';
 require_once __DIR__ . '/infrastructure/mail.php';

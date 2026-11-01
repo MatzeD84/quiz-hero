@@ -20,6 +20,13 @@ export function createAbilityAdmin({ api, uploadImage, setupDropzone }) {
     const profileForm = document.createElement('form');profileForm.className='admin-form hero-abilities-admin__form';
     profileForm.innerHTML='<h3>Held bearbeiten</h3><label>Name<input name="label" maxlength="80" required></label><label>Verfügbarkeit<select name="kind"><option value="free">Frei verfügbar</option><option value="reward">Belohnung</option></select></label><label class="admin-checkbox-inline"><input name="enabled" type="checkbox">Aktiv</label><p>Deaktivieren stellt betroffene Accounts auf den Standardhelden um. Belohnungshelden sind erst nach Freischaltung auswählbar. Individuelle Bedingungen pflegst du unter Belohnungen.</p><button class="btn btn--modal" type="submit">Held speichern</button>';
     dialog.querySelector('header').after(profileForm);
+    const availability=profileForm.elements.namedItem('kind');
+    availability.append(new Option('Zufallsfund','drop'));
+    const dropSettings=document.createElement('div');
+    dropSettings.innerHTML='<label>Fundchance pro richtiger Antwort (%)<input name="dropChance" type="text" inputmode="decimal" pattern="[0-9]+([,.][0-9]{1,2})?" maxlength="6" aria-describedby="hero-drop-hint"></label><p id="hero-drop-hint" class="admin-form__hint">0,01 bis 100 %, bis zu zwei Nachkommastellen, z. B. 0,05. Jeder richtige erste oder zweite Versuch hat diese Chance, auch mit Hilfe. Die Vergabe erscheint nach dem Speichern der Runde; keine Garantie nach einer bestimmten Fragenzahl.</p>';
+    availability.closest('label').after(dropSettings);
+    const availabilityHint=profileForm.querySelector('p:not(#hero-drop-hint)');
+    availabilityHint.textContent='Deaktivieren stellt betroffene Accounts auf den Standardhelden um. Belohnungshelden und Zufallsfunde sind erst nach Freischaltung auswählbar. Leistungsbedingungen pflegst du unter Belohnungen, Fundchancen hier.';
     const assignmentForm=dialog.querySelector('form.hero-abilities-admin__form:last-child');
     const submitButton=profileForm.querySelector('[type=submit]');
     const assignmentHint=profileForm.nextElementSibling;
@@ -36,6 +43,11 @@ export function createAbilityAdmin({ api, uploadImage, setupDropzone }) {
     const field = name => form.elements.namedItem(name);
     let data = { abilities: [], heroes: [] }, current = null, hero = null, busy = false, loading = false;
     const profileField=name=>profileForm.elements.namedItem(name);
+    function updateDropSettings(){
+        const active=profileField('kind').value==='drop';dropSettings.hidden=!active;
+        profileField('dropChance').disabled=!active;profileField('dropChance').required=active;
+    }
+    availability.addEventListener('change',updateDropSettings);
     let avatars=[];
     const profileGuard=createFormGuard([profileForm],dialogStatus,updateLimit);
     const guard = createFormGuard([form], status, preview);
@@ -78,7 +90,8 @@ export function createAbilityAdmin({ api, uploadImage, setupDropzone }) {
             }
             button.append(image,name);
             if(avatars.find(a=>a.avatar_key===row.avatar_key)?.unlock_rule){
-                const tag=document.createElement('span');tag.className='profile-avatar__reward-tag';tag.textContent='Belohnung';button.append(tag);
+                const avatar=avatars.find(a=>a.avatar_key===row.avatar_key);
+                const tag=document.createElement('span');tag.className='profile-avatar__reward-tag';tag.textContent=avatar.unlock_rule==='random_drop'?`Zufallsfund · ${Number(avatar.drop_chance_bp/100).toLocaleString('de-DE',{maximumFractionDigits:2})} %`:'Belohnung';button.append(tag);
             }
             button.append(summary);if(row.abilityIds.length)button.append(names);
             button.addEventListener('click', () => {
@@ -92,7 +105,8 @@ export function createAbilityAdmin({ api, uploadImage, setupDropzone }) {
         hero = data.heroes.find(h => h.avatar_key === key) || null;list.replaceChildren();
         dialog.querySelector('h2').textContent = hero?.label || 'Held';
         const avatar=avatars.find(a=>a.avatar_key===key);
-        profileForm.reset();profileField('label').value=avatar?.label||'';profileField('kind').value=avatar?.unlock_rule?'reward':'free';profileField('enabled').checked=Boolean(Number(avatar?.enabled));
+        profileForm.reset();profileField('label').value=avatar?.label||'';profileField('kind').value=avatar?.unlock_rule==='random_drop'?'drop':avatar?.unlock_rule?'reward':'free';profileField('enabled').checked=Boolean(Number(avatar?.enabled));
+        profileField('dropChance').value=(Number(avatar?.drop_chance_bp||100)/100).toLocaleString('de-DE',{maximumFractionDigits:2});updateDropSettings();
         profileField('kind').disabled=profileField('enabled').disabled=key==='hero';profileGuard.clean(profileForm);
         const image = dialog.querySelector('header img');image.hidden = !hero;if (hero) image.src = '../' + hero.image_url;
         for (const a of data.abilities.filter(item => item.scope === 'hero')) {
@@ -158,7 +172,7 @@ export function createAbilityAdmin({ api, uploadImage, setupDropzone }) {
     profileForm.addEventListener('submit',event=>{
         event.preventDefault();if(busy||!hero)return;
         const avatar=avatars.find(a=>a.avatar_key===hero.avatar_key);if(!avatar)return;
-        save('admin-avatar-save',{key:avatar.avatar_key,label:profileField('label').value,image:avatar.image_url,kind:profileField('kind').value,rewardRule:avatar.unlock_rule||'configured',enabled:profileField('enabled').checked,contentVersion:avatar.contentVersion,assignmentVersion:hero.contentVersion,abilityIds:Array.from(list.querySelectorAll('input:checked'),input=>input.value)});
+        save('admin-avatar-save',{key:avatar.avatar_key,label:profileField('label').value,image:avatar.image_url,kind:profileField('kind').value,...(profileField('kind').value==='drop'?{dropChance:profileField('dropChance').value}:{}),rewardRule:avatar.unlock_rule==='random_drop'?'configured':avatar.unlock_rule||'configured',enabled:profileField('enabled').checked,contentVersion:avatar.contentVersion,assignmentVersion:hero.contentVersion,abilityIds:Array.from(list.querySelectorAll('input:checked'),input=>input.value)});
     });
     return {
         confirmLeave: () => !busy && !loading && guard.confirm() && (!dialog.open || profileGuard.confirm()),

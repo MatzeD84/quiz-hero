@@ -16,7 +16,7 @@ function admin_avatar_reward_save(): void {
     if(!is_string($key)||!is_int($target)||$target<1||$target>10000||!in_array($difficulty,['all','easy','medium','hero'],true)||!in_array($attempts,['first','any'],true)||!is_bool($help)||!in_array($period,['total','round'],true)||!in_array($state,['draft','active','archived'],true)||($category!==null&&!is_string($category)))json_response(['ok'=>false,'error'=>'Bitte alle Bedingungen prüfen (1–10.000 Fragen).'],422);
     $pdo=db();$pdo->beginTransaction();lock_avatar_catalog($pdo);
     $stmt=$pdo->prepare('SELECT * FROM quiz_avatars WHERE avatar_key=? FOR UPDATE');$stmt->execute([$key]);$avatar=$stmt->fetch();
-    if(!$avatar||$avatar['deleted_at']!==null||$avatar['unlock_rule']===null||$avatar['avatar_key']==='hero')json_response(['ok'=>false,'error'=>'Bitte einen Belohnungshelden aus der Mediathek auswählen. Freie Profile werden nicht umgestellt.'],422);
+    if(!$avatar||$avatar['deleted_at']!==null||$avatar['unlock_rule']===null||$avatar['unlock_rule']==='random_drop'||$avatar['avatar_key']==='hero')json_response(['ok'=>false,'error'=>'Bitte einen Belohnungshelden unter Helden auswählen. Freie Helden und Zufallsfunde werden hier nicht umgestellt.'],422);
     if($state==='active'&&!(bool)$avatar['enabled'])json_response(['ok'=>false,'error'=>'Diesen Helden zuerst unter Helden aktivieren oder die Regel als Entwurf speichern.'],422);
     $stmt=$pdo->prepare('SELECT * FROM quiz_avatar_reward_rules WHERE avatar_key=? FOR UPDATE');$stmt->execute([$key]);$old=$stmt->fetch();
     if($old) {

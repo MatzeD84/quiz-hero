@@ -536,6 +536,7 @@ try {
     require __DIR__.'/avatar-rule-builder.inc.php';
     require __DIR__.'/focus-lucky.inc.php';
     require __DIR__.'/default-abilities.inc.php';
+    require __DIR__.'/avatar-drops.inc.php';
     echo "{$checks} integration checks passed.\n";
 } finally {
     foreach ($mediaTestFiles as $file) if (is_file($file)) unlink($file);

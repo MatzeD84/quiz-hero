@@ -18,6 +18,8 @@ Die E-Mail-Bestätigung und Anmeldung sind getrennt: Ein Bestätigungslink allei
 
 Textpflege vom 01.11.2026 (lokal, noch nicht veröffentlicht): Heldenbelohnungen heißen im Quizabschluss „Neuer Held freigeschaltet“. Die Aktion im Ergebnis und in der Sammlung lautet einheitlich „Held auswählen“.
 
+**Zufallsfunde (lokal, noch nicht veröffentlicht):** Dritte Helden-Verfügbarkeit mit 0,01–100 % Chance je richtiger Antwort, zwei Nachkommastellen und Anzeige der damaligen Chance beim Fund. Winterseherin ist lokal mit 50 % eingerichtet. [Regeln und Pflege](HELDENBELOHNUNGEN.md).
+
 ## Vorgemerkt, noch nicht umgesetzt
 
 - Weitere Fähigkeiten und Lernbedingungen: siehe [Fähigkeitsideen](Heldenfähigkeit.md).

@@ -63,6 +63,11 @@ test('result hero rewards show a supplied reason as plain text and omit missing 
         assert.equal(rows[0].children[0].children[2].className,'souvenir-unlock__reason');
         assert.match(rows[0].children[0].children[2].textContent,/2 Hero-Fragen/);
         assert.equal(rows[1].children[0].children.some(c=>c.className==='souvenir-unlock__reason'),false);
+        const found=node();renderSouvenirUnlock(found,[],[{avatarKey:'winterseherin',title:'Winterseherin',rule:'random_drop',reason:'Zufallsfund · 0,05 % Chance je richtiger Antwort.'}]);
+        const body=found.children[0].children[1].children[0].children[0];
+        assert.equal(body.children[0].textContent,'NEUEN HELDEN ENTDECKT');
+        assert.equal(body.children[2].textContent,'Zufallsfund · 0,05 % Chance je richtiger Antwort.');
+        assert.equal(body.children[3].textContent,'Held auswählen');
     }finally{globalThis.document=previousDocument;globalThis.location=previousLocation;}
 });
 
