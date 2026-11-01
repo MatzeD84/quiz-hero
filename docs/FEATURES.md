@@ -1,6 +1,6 @@
 # Quiz-Hero – Funktionen im Überblick
 
-Stand: 31.10.2026. Der hier beschriebene Funktionsumfang ist veröffentlicht. Die erste Version von Helden, Fähigkeiten und Heldenbelohnungen ist vorerst abgeschlossen.
+Stand: 01.11.2026. Der hier beschriebene Funktionsumfang ist veröffentlicht. Die erste Version von Helden, Fähigkeiten und Heldenbelohnungen einschließlich Zufallsfunden ist vorerst abgeschlossen.
 
 | Bereich | Was bereits funktioniert | Erklärung |
 |---|---|---|
@@ -16,9 +16,9 @@ Stand: 31.10.2026. Der hier beschriebene Funktionsumfang ist veröffentlicht. Di
 
 Die E-Mail-Bestätigung und Anmeldung sind getrennt: Ein Bestätigungslink allein gewährt keinen Kontozugriff. Ablauf: [Anmeldung und Sicherheit](ACCOUNT-SICHERHEIT.md).
 
-Textpflege vom 01.11.2026 (lokal, noch nicht veröffentlicht): Heldenbelohnungen heißen im Quizabschluss „Neuer Held freigeschaltet“. Die Aktion im Ergebnis und in der Sammlung lautet einheitlich „Held auswählen“.
+Heldenbelohnungen heißen im Quizabschluss „Neuer Held freigeschaltet“. Die Aktion im Ergebnis und in der Sammlung lautet einheitlich „Held auswählen“.
 
-**Zufallsfunde (lokal, noch nicht veröffentlicht):** Dritte Helden-Verfügbarkeit mit 0,01–100 % Chance je richtiger Antwort, zwei Nachkommastellen und Anzeige der damaligen Chance beim Fund. Winterseherin ist lokal mit 50 % eingerichtet. [Regeln und Pflege](HELDENBELOHNUNGEN.md).
+**Zufallsfunde:** Dritte Helden-Verfügbarkeit mit 0,01–100 % Chance je richtiger Antwort, zwei Nachkommastellen und Anzeige der damaligen Chance beim Fund. Winterseherin ist mit 50 % eingerichtet, auch auf Production. [Regeln und Pflege](HELDENBELOHNUNGEN.md).
 
 ## Vorgemerkt, noch nicht umgesetzt
 

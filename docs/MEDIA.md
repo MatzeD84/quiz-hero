@@ -15,7 +15,7 @@ Uploads unterstützen PNG, JPG und WebP bis 6 MB. Profilbilder sollten quadratis
 
 ## Was passiert bei Änderungen an Helden?
 
-- **Frei und aktiv:** für alle auswählbar. **Belohnung und aktiv:** erst nach persönlicher Freischaltung auswählbar. Lokal ergänzt: **Zufallsfund und aktiv** ist ebenfalls erst nach persönlichem Fund auswählbar; die Fundchance pflegst du unter Helden.
+- **Frei und aktiv:** für alle auswählbar. **Belohnung und aktiv:** erst nach persönlicher Freischaltung auswählbar. **Zufallsfund und aktiv** ist ebenfalls erst nach persönlichem Fund auswählbar; die Fundchance pflegst du unter Helden.
 - **Deaktiviert:** nicht mehr auswählbar; betroffene aktuelle Profile wechseln zum Standardhelden. Verdiente Rechte bleiben erhalten. Erneutes Aktivieren stellt die alte Auswahl nicht automatisch wieder her.
 - **Gelöscht:** verschwindet aus der Auswahl; betroffene Profile erhalten den Standardhelden. Die zugehörigen persönlichen Freischaltungen werden entfernt.
 - **Frei wird Belohnung:** Wer keine Freischaltung besitzt, erhält ebenfalls den Standardhelden als Ersatz.

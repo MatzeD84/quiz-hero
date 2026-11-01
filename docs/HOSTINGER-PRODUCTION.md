@@ -1,5 +1,15 @@
 # Hostinger production
 
+## Zufallsfunde für Helden – 01.11.2026
+
+Release `b60be48625bc-20261101153903`, Commit `b60be48625bcf0b7c91aec26e654a5e8e392e46e`, auf https://quiz-hero.de aktiv. Migration 028 vor Aktivierung angewendet. Anschließend ausschließlich die vorhandene Winterseherin auf `random_drop`, aktiv, 5000 Hundertstelprozent (= 50 %) gesetzt. Keine aktive Leistungsregel überschrieben, kein neuer Held und keine persönliche Freischaltung angelegt. Pflege: **Helden → Winterseherin → Verfügbarkeit: Zufallsfund**.
+
+Vollständiges Datenbank-/Konfigurations-/Uploadbackup: `private/backups/before-random-finds-20261101153651/`. Vorheriges Dateirelease `8b933c187c67-20261031204504` bleibt erhalten. Die Migration ist additiv; bei Rücksprung vergibt alter Code keine Zufallsfunde und kennt die neue Adminpflege nicht. Fundkonfiguration separat berücksichtigen, bestehende Rechte nicht löschen. Details: [Betrieb und Migration](ZUFALLSFUNDE-BETRIEB.md).
+
+Erneut 58 Frontendtests und 337 isolierte Integrationstests erfolgreich. Serverbuild mit PHP-Lint, CSS-/Asset-/SEO-Build, Migrationsprüfung, atomarer Aktivierung und HTTP-Freigabe erfolgreich. Über HTTPS aktive Version, Startseite, Admin, Konto, Souvenirs, öffentliche Daten-API und Winterseherin-Bild bestätigt; ausgelieferte Module enthalten Fundchance-Eingabe, Kommahinweis und Fundtexte. Keine echte Productionrunde oder Testfreischaltung erzeugt.
+
+Vor/nach Deployment unverändert: 6 Kategorien, 297 Fragen, 6 Accounts, 16 Ergebnisse und 4 persönliche Heldenfreischaltungen. Kategorien und Fragen zusätzlich per Hash unverändert; keine betroffene aktive Heldenauswahl zurückgesetzt. Lokale Wegwerfdatenbank nach erfolgreicher Prüfung entfernt.
+
 ## E-Mail-Bestätigung ohne automatische Anmeldung – 31.10.2026
 
 Release `8b933c187c67-20261031204504`, Commit `8b933c187c67b9dd5ffc5e33fda58c0b52bcaae8`, auf https://quiz-hero.de veröffentlicht und über Versionsdatei, ausgelieferte Browsermodule sowie aktiven PHP-Handler bestätigt. Der Bestätigungslink setzt nur den Bestätigungsstatus; er erstellt keine Sitzung und liefert kein angemeldetes Profil oder Sitzungstoken. Danach bleibt die Loginmaske mit Erfolgsmeldung sichtbar. Bestehende Sitzungen bleiben erhalten. [Ablauf für Nutzer](ACCOUNT-SICHERHEIT.md).

@@ -1,10 +1,10 @@
 # Helden als Belohnung
 
-Stand: 31.10.2026 · veröffentlicht.
+Stand: 01.11.2026 · einschließlich Zufallsfunden veröffentlicht.
 
 ## Neu: Zufallsfunde
 
-Lokal umgesetzt am 01.11.2026, noch nicht veröffentlicht. Unter **Helden** gibt es zusätzlich zur freien Verfügbarkeit und Leistungsbelohnung die Auswahl **Zufallsfund**. Dort die Fundchance von **0,01 bis 100 %** mit höchstens zwei Nachkommastellen einstellen; Komma und Punkt sind erlaubt, etwa `0,05` oder `0.5`.
+Unter **Helden** gibt es zusätzlich zur freien Verfügbarkeit und Leistungsbelohnung die Auswahl **Zufallsfund**. Dort die Fundchance von **0,01 bis 100 %** mit höchstens zwei Nachkommastellen einstellen; Komma und Punkt sind erlaubt, etwa `0,05` oder `0.5`.
 
 Jede richtige Antwort hat diese Chance – im ersten oder zweiten Versuch, auch mit Heldenhilfe und in Übungsrunden. Wiederholte Fragen bieten in einer neuen Runde erneut eine Chance. Mehrere Helden werden unabhängig geprüft und können gemeinsam gefunden werden. Bereits freigeschaltete Helden sind ausgeschlossen. Eine Wahrscheinlichkeit ist keine Garantie nach einer bestimmten Anzahl Fragen.
 
@@ -12,7 +12,7 @@ Die Auswertung erfolgt zusammen mit dem erfolgreich gespeicherten Rundenabschlus
 
 Die Chance wird beim Rundenstart festgehalten. Deaktivierte, gelöschte oder inzwischen auf eine andere Verfügbarkeit umgestellte Helden werden nicht mehr neu gefunden. Persönlich verdiente Helden bleiben erhalten. Beim Fund steht im Ergebnis **„Neuen Helden entdeckt“** und darunter beispielsweise **„Zufallsfund · 0,05 % Chance je richtiger Antwort.“** Die damals geltende Chance bleibt bei späteren Änderungen nachvollziehbar. Im Konto und in der Sammlung kennzeichnet das Tag „Zufallsfund“ diese Verfügbarkeit.
 
-**Lokaler Testheld:** Winterseherin mit **50 %**. Bestehender Held, kein Duplikat und keine künstlichen persönlichen Freischaltungen. Diese Einstellung wurde nicht auf Production übertragen. Für Zufallsfunde ist keine zusätzliche Leistungsregel im Belohnungsbaukasten erforderlich.
+**Zum Testen eingerichtet:** Winterseherin mit **50 %**, lokal und auf Production. Bestehender Held, kein Duplikat und keine künstlichen persönlichen Freischaltungen. Für Zufallsfunde ist keine zusätzliche Leistungsregel im Belohnungsbaukasten erforderlich; sie stehen deshalb unter Helden und nicht unter „Belohnungen → Neue Helden“.
 
 Technische Anwendung und Rücksprung: [Zufallsfunde – Betrieb](ZUFALLSFUNDE-BETRIEB.md).
 

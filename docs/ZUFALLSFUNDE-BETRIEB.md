@@ -1,6 +1,6 @@
 # Zufallsfunde – Anwendung und Betrieb
 
-Stand 01.11.2026: lokal implementiert und angewendet, nicht auf Production. Bedienung und Spielregeln stehen unter [Heldenbelohnungen](HELDENBELOHNUNGEN.md).
+Stand 01.11.2026: lokal und auf Production veröffentlicht, Migration 028 angewendet. Release `b60be48625bc-20261101153903`. Bedienung und Spielregeln stehen unter [Heldenbelohnungen](HELDENBELOHNUNGEN.md); Backup und Veröffentlichungsnachweis im [Production-Protokoll](HOSTINGER-PRODUCTION.md).
 
 ## Migration 028
 

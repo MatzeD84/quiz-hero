@@ -47,6 +47,6 @@ Motive liegen unter **Mediathek → Souvenir-Bilder**. Heldenbelohnungen haben d
 - Lieblingssouvenir, zusätzliche kosmetische Belohnungen und freiwillig teilbare Sammelmotive.
 - Gezielte Fragen für offene Entdeckerziele; Vorschau der Auswirkungen von Regeländerungen.
 
-Keine tägliche Pflichtserie oder neue Währung vorgesehen. Souvenirs bleiben an feste Bedingungen gebunden. Für Helden sind zusätzlich [Zufallsfunde](HELDENBELOHNUNGEN.md) lokal umgesetzt. Weitere Ideen sind keine zugesagten Funktionen.
+Keine tägliche Pflichtserie oder neue Währung vorgesehen. Souvenirs bleiben an feste Bedingungen gebunden. Für Helden gibt es zusätzlich [Zufallsfunde](HELDENBELOHNUNGEN.md). Weitere Ideen sind keine zugesagten Funktionen.
 
 Weiterlesen: [Reisepass](QUIZ-REISEPASS.md), [Heldenfähigkeiten](Heldenfähigkeit.md), [Mediathek](MEDIA.md). Technische Unterlagen: [Production-Betrieb](HOSTINGER-PRODUCTION.md), [Helden-Rollout](HELDEN-ROLLOUT-2026-10-31.md), [ursprüngliche Umsetzung und Migrationen](archive/2026-10-31/Souvenir.md).
